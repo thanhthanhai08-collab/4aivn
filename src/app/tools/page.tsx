@@ -35,8 +35,16 @@ export default function ToolsPage() {
   }, [initialSearchQuery]);
 
   const categories = useMemo(() => {
-    const uniqueCategories = new Set(mockTools.map(tool => tool.context));
-    return Array.from(uniqueCategories);
+    // Get existing categories from tools
+    const existingCategoriesFromTools = new Set(mockTools.map(tool => tool.context));
+
+    // Add "Model AI" to the set
+    existingCategoriesFromTools.add("Model AI");
+
+    // Convert set to array and sort for consistent order (e.g., alphabetically)
+    const allCategories = Array.from(existingCategoriesFromTools).sort((a, b) => a.localeCompare(b));
+    
+    return allCategories;
   }, []);
 
   const filteredTools = useMemo(() => {
