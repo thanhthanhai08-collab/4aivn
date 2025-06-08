@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <AppLayout>
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-br from-accent to-background overflow-hidden">
+      <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
             {/* Decorative background elements */}
             <span className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-3xl animate-pulse"></span>
