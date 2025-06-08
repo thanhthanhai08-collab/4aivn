@@ -39,7 +39,7 @@ const prompt = ai.definePrompt({
 
   Chat History:
   {{#each chatHistory}}
-  {{#if (eq role \"user\")}}User:{{else}}Assistant:{{/if}} {{content}}
+  {{role}}: {{content}}
   {{/each}}
 
   User: {{message}}
@@ -57,3 +57,4 @@ const demoChatbotFlow = ai.defineFlow(
     return output!;
   }
 );
+
