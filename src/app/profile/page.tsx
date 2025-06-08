@@ -1,0 +1,129 @@
+// src/app/profile/page.tsx
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ToolCard } from "@/components/tools/tool-card";
+import { NewsCard } from "@/components/news/news-card";
+import { mockTools, mockNews } from "@/lib/mock-data";
+import { AppLayout } from "@/components/layout/app-layout";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LogOut, Edit3 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+
+export default function ProfilePage() {
+  const { currentUser, isLoading, logout } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (!isLoading && !currentUser) {
+      router.push("/login");
+    }
+  }, [currentUser, isLoading, router]);
+
+  const handleLogout = async () => {
+    await logout();
+    toast({ title: "Logged Out", description: "You have been successfully logged out." });
+    router.push("/");
+  };
+  
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return "U";
+    const names = name.split(' ');
+    if (names.length > 1) {
+      return names[0][0] + names[names.length - 1][0];
+    }
+    return name.substring(0, 2);
+  };
+
+  if (isLoading || !currentUser) {
+    return (
+      <AppLayout>
+        <div className="container py-12">
+           <div className="flex flex-col items-center space-y-4 mb-12">
+            <Skeleton className="h-24 w-24 rounded-full" />
+            <Skeleton className="h-8 w-1/3" />
+            <Skeleton className="h-6 w-1/2" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <Skeleton className="h-10 w-1/4 mb-4" />
+              <Skeleton className="h-40 w-full rounded-lg" />
+            </div>
+             <div>
+              <Skeleton className="h-10 w-1/4 mb-4" />
+              <Skeleton className="h-40 w-full rounded-lg" />
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  // Mock favorite tools and bookmarked news
+  const favoriteTools = mockTools.filter(tool => tool.isFavorite).slice(0, 2);
+  const bookmarkedNews = mockNews.slice(0, 1); // Assume one bookmarked news for demo
+
+  return (
+    <AppLayout>
+      <div className="container py-8 md:py-12">
+        <Card className="max-w-4xl mx-auto shadow-lg">
+          <CardHeader className="bg-muted/30 p-6">
+            <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
+                <AvatarImage src={currentUser.photoURL || ""} alt={currentUser.displayName || "User"} />
+                <AvatarFallback className="text-3xl">{getInitials(currentUser.displayName)}</AvatarFallback>
+              </Avatar>
+              <div className="text-center sm:text-left">
+                <CardTitle className="text-3xl font-headline">{currentUser.displayName}</CardTitle>
+                <CardDescription className="text-lg">{currentUser.email}</CardDescription>
+              </div>
+              <div className="sm:ml-auto flex flex-col sm:items-end space-y-2">
+                 <Button variant="outline" size="sm" onClick={() => toast({title: "Coming Soon!", description:"Profile editing will be available soon."})}>
+                    <Edit3 className="mr-2 h-4 w-4" /> Edit Profile
+                 </Button>
+                 <Button variant="destructive" size="sm" onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" /> Logout
+                 </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6 space-y-8">
+            <section>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Favorite Tools</h2>
+              {favoriteTools.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {favoriteTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">You haven&apos;t favorited any tools yet.</p>
+              )}
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Bookmarked News</h2>
+              {bookmarkedNews.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {bookmarkedNews.map((article) => (
+                     // Using NewsCard, but might need a smaller version for bookmarks
+                    <NewsCard key={article.id} article={article} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">You haven&apos;t bookmarked any news articles yet.</p>
+              )}
+            </section>
+          </CardContent>
+        </Card>
+      </div>
+    </AppLayout>
+  );
+}
