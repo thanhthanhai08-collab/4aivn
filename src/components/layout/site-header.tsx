@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home } from "lucide-react";
+import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 const navItems = [
   { href: "/", label: "Trang chủ", icon: Home },
   { href: "/tools", label: "Công cụ AI", icon: LayoutGrid },
+  { href: "/rankings", label: "Bảng xếp hạng", icon: TrendingUp },
   { href: "/news", label: "Tin tức AI", icon: Newspaper },
   { href: "/chat", label: "Chat Demo", icon: MessageSquare },
 ];

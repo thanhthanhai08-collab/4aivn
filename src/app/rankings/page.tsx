@@ -1,0 +1,70 @@
+// src/app/rankings/page.tsx
+"use client";
+
+import { AppLayout } from "@/components/layout/app-layout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { mockTools, mockAIModels } from "@/lib/mock-data";
+import { RankingsTable } from "@/components/rankings/rankings-table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
+
+export default function RankingsPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Simulate data fetching
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300); // Shorter delay for tabbed content
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <AppLayout>
+        <div className="container py-8 md:py-12">
+          <Skeleton className="h-12 w-1/2 mb-4 mx-auto" />
+          <Skeleton className="h-8 w-3/4 mb-8 mx-auto" />
+          <Skeleton className="h-10 w-1/3 mb-8" />
+          <Skeleton className="h-96 w-full rounded-lg" />
+        </div>
+      </AppLayout>
+    );
+  }
+
+  return (
+    <AppLayout>
+      <div className="container py-8 md:py-12">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl font-headline font-bold text-foreground">Bảng xếp hạng AI</h1>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Khám phá các Model AI và Công cụ AI hàng đầu dựa trên đánh giá của cộng đồng.
+          </p>
+        </header>
+
+        <Tabs defaultValue="tools" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 md:w-1/2 md:mx-auto mb-8">
+            <TabsTrigger value="tools">Công cụ AI</TabsTrigger>
+            <TabsTrigger value="models">Model AI</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tools">
+            {isLoading ? (
+              <Skeleton className="h-96 w-full rounded-lg" />
+            ) : (
+              <RankingsTable items={mockTools} itemType="tool" />
+            )}
+          </TabsContent>
+          <TabsContent value="models">
+            {isLoading ? (
+                <Skeleton className="h-96 w-full rounded-lg" />
+            ) : (
+              <RankingsTable items={mockAIModels} itemType="model" />
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
+    </AppLayout>
+  );
+}

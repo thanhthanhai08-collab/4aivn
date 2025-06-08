@@ -1,4 +1,4 @@
-import type { Tool, NewsArticle } from '@/lib/types';
+import type { Tool, NewsArticle, AIModel } from '@/lib/types';
 
 export const mockUser = {
   id: 'mock-user-123',
@@ -76,7 +76,7 @@ export const mockTools: Tool[] = [
     logoUrl: 'https://placehold.co/64x64.png?text=MK',
     link: 'https://www.make.com/',
     features: ['Trình xây dựng quy trình làm việc trực quan', 'Nhiều tích hợp ứng dụng', 'Tự động hóa tác vụ'],
-    userRating: 4.6,
+    userRating: 4.3,
   },
   {
     id: 'tavily',
@@ -89,7 +89,74 @@ export const mockTools: Tool[] = [
     features: ['Tìm kiếm thời gian thực', 'Kết quả được tối ưu hóa bằng AI', 'Tích hợp API dễ dàng'],
     userRating: 4.4,
   },
+  {
+    id: 'notion-ai',
+    name: 'Notion AI',
+    context: 'Hỗ trợ viết',
+    description: 'Tích hợp AI vào không gian làm việc Notion để hỗ trợ viết, tóm tắt và lên ý tưởng.',
+    logoUrl: 'https://placehold.co/64x64.png?text=NAI',
+    link: 'https://www.notion.so/product/ai',
+    userRating: 4.2,
+  }
 ];
+
+export const mockAIModels: AIModel[] = [
+  {
+    id: 'gpt-4',
+    name: 'GPT-4',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'Mô hình đa phương thức lớn nhất của OpenAI, có khả năng giải quyết các vấn đề khó khăn với độ chính xác cao hơn, nhờ kiến thức tổng quát rộng hơn và khả năng lý luận tiên tiến.',
+    logoUrl: 'https://placehold.co/64x64.png?text=G4',
+    link: 'https://openai.com/gpt-4',
+    userRating: 4.9,
+    features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức (văn bản, hình ảnh)', 'Khả năng sáng tạo và cộng tác'],
+  },
+  {
+    id: 'gemini-pro',
+    name: 'Gemini Pro',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Google',
+    description: 'Mô hình mạnh mẽ nhất của Google cho một loạt các tác vụ, vượt trội trong lý luận, tạo mã và hiểu đa phương thức.',
+    logoUrl: 'https://placehold.co/64x64.png?text=GMP',
+    link: 'https://deepmind.google/technologies/gemini/#introduction',
+    userRating: 4.8,
+    features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
+  },
+  {
+    id: 'claude-3-opus',
+    name: 'Claude 3 Opus',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Anthropic',
+    description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp. Nó có thể điều hướng các gợi ý mở và các kịch bản chưa từng thấy với sự trôi chảy và hiểu biết giống như con người.',
+    logoUrl: 'https://placehold.co/64x64.png?text=C3O',
+    link: 'https://www.anthropic.com/news/claude-3-family',
+    userRating: 4.85,
+    features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính (xử lý hình ảnh)'],
+  },
+  {
+    id: 'dall-e-3',
+    name: 'DALL·E 3',
+    type: 'Tạo hình ảnh',
+    developer: 'OpenAI',
+    description: 'Mô hình tạo hình ảnh mới nhất của OpenAI, có khả năng tạo ra hình ảnh rất chi tiết và chính xác từ mô tả văn bản.',
+    logoUrl: 'https://placehold.co/64x64.png?text=DE3',
+    link: 'https://openai.com/dall-e-3',
+    userRating: 4.7,
+    features: ['Hiểu rõ gợi ý phức tạp', 'Tạo hình ảnh chất lượng cao', 'Tích hợp với ChatGPT'],
+  },
+  {
+    id: 'stable-diffusion-3',
+    name: 'Stable Diffusion 3',
+    type: 'Tạo hình ảnh',
+    developer: 'Stability AI',
+    description: 'Thế hệ tiếp theo của mô hình tạo hình ảnh mã nguồn mở từ Stability AI, hứa hẹn cải thiện đáng kể về chất lượng hình ảnh, hiểu gợi ý và khả năng tạo văn bản trong hình ảnh.',
+    logoUrl: 'https://placehold.co/64x64.png?text=SD3',
+    userRating: 4.6,
+    features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh'],
+  }
+];
+
 
 export const mockNews: NewsArticle[] = [
   {

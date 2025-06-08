@@ -2,7 +2,7 @@ export interface Tool {
   id: string;
   name: string;
   context: string; // Category like 'Chatbot', 'Image Generation'
-  ranking: number;
+  ranking?: number; // Optional: current rank, might be dynamically calculated
   description: string;
   logoUrl: string; // URL to the tool's logo
   link: string; // Official link to the tool
@@ -19,10 +19,11 @@ export interface NewsArticle {
   publishedAt: string; // ISO date string
   imageUrl: string;
   link: string; // Link to the full article if 'content' is a summary
+  dataAiHint?: string;
 }
 
 export interface User {
-  id: string;
+  id:string;
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
@@ -34,4 +35,16 @@ export interface ChatMessage {
   text: string;
   sender: 'user' | 'ai';
   timestamp: number;
+}
+
+export interface AIModel {
+  id: string;
+  name: string;
+  type: string; // e.g., 'Mô hình ngôn ngữ', 'Tạo ảnh'
+  developer: string; // e.g., 'OpenAI', 'Google'
+  description: string;
+  logoUrl: string;
+  link?: string; // Link to project page or paper
+  userRating?: number;
+  features?: string[];
 }
