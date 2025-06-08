@@ -44,21 +44,21 @@ export default function RankingsPage() {
           </p>
         </header>
 
-        <Tabs defaultValue="tools" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:w-1/2 md:mx-auto mb-8">
+        <Tabs defaultValue="tools" className="w-full p-4 md:p-6 rounded-xl bg-gradient-to-br from-accent/60 via-accent/30 to-accent/10 shadow-lg">
+          <TabsList className="grid w-full grid-cols-2 md:w-1/2 md:mx-auto mb-8 bg-background/70 backdrop-blur-sm">
             <TabsTrigger value="tools">Công cụ AI</TabsTrigger>
             <TabsTrigger value="models">Model AI</TabsTrigger>
           </TabsList>
           <TabsContent value="tools">
             {isLoading ? (
-              <Skeleton className="h-96 w-full rounded-lg" />
+              <Skeleton className="h-96 w-full rounded-lg bg-background/50" />
             ) : (
               <RankingsTable items={mockTools} itemType="tool" />
             )}
           </TabsContent>
           <TabsContent value="models">
             {isLoading ? (
-                <Skeleton className="h-96 w-full rounded-lg" />
+                <Skeleton className="h-96 w-full rounded-lg bg-background/50" />
             ) : (
               <RankingsTable items={mockAIModels} itemType="model" />
             )}
