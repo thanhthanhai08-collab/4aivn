@@ -59,7 +59,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">
               <Link href="/tools">Xem tất cả Công cụ</Link>
             </Button>
           </div>
