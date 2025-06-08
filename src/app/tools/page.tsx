@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
 import { mockTools } from "@/lib/mock-data";
@@ -10,7 +11,10 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ToolsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+  const initialSearchQuery = searchParams.get('search_query') || "";
+  
+  const [searchTerm, setSearchTerm] = useState(initialSearchQuery);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -24,6 +28,11 @@ export default function ToolsPage() {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Update searchTerm if URL query changes
+  useEffect(() => {
+    setSearchTerm(initialSearchQuery);
+  }, [initialSearchQuery]);
 
   const categories = useMemo(() => {
     const uniqueCategories = new Set(mockTools.map(tool => tool.context));
@@ -39,7 +48,7 @@ export default function ToolsPage() {
     });
   }, [searchTerm, selectedCategory]);
 
-  if (!mounted) {
+  if (!mounted && !initialSearchQuery) { // Added !initialSearchQuery to prevent skeleton flash if search is active
      return (
       <AppLayout>
         <div className="container py-8">
@@ -69,9 +78,10 @@ export default function ToolsPage() {
           categories={categories}
           onSearchChange={setSearchTerm}
           onCategoryChange={setSelectedCategory}
+          initialSearchTerm={searchTerm} // Pass current searchTerm
         />
 
-        {isLoading ? (
+        {isLoading && !initialSearchQuery ? ( // Also check initialSearchQuery here
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
               <Skeleton key={i} className="h-64 w-full rounded-lg" />
@@ -85,7 +95,9 @@ export default function ToolsPage() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-xl text-muted-foreground">Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn.</p>
+            <p className="text-xl text-muted-foreground">
+              {initialSearchQuery && !filteredTools.length ? `Không tìm thấy kết quả nào cho "${initialSearchQuery}".` : "Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn."}
+            </p>
           </div>
         )}
       </div>

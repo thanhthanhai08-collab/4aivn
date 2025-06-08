@@ -5,20 +5,25 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, FilterX } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ToolFiltersProps {
   onSearchChange: (searchTerm: string) => void;
   onCategoryChange: (category: string) => void;
   categories: string[];
+  initialSearchTerm?: string;
 }
 
-export function ToolFilters({ onSearchChange, onCategoryChange, categories }: ToolFiltersProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+export function ToolFilters({ onSearchChange, onCategoryChange, categories, initialSearchTerm = "" }: ToolFiltersProps) {
+  const [currentSearchTerm, setCurrentSearchTerm] = useState(initialSearchTerm);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  useEffect(() => {
+    setCurrentSearchTerm(initialSearchTerm);
+  }, [initialSearchTerm]);
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentSearchTerm(e.target.value);
     onSearchChange(e.target.value);
   };
 
@@ -28,7 +33,7 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories }: To
   };
   
   const clearFilters = () => {
-    setSearchTerm("");
+    setCurrentSearchTerm("");
     setSelectedCategory("all");
     onSearchChange("");
     onCategoryChange("all");
@@ -46,8 +51,8 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories }: To
               id="search-tools"
               type="text"
               placeholder="Tìm theo tên hoặc từ khóa..."
-              value={searchTerm}
-              onChange={handleSearch}
+              value={currentSearchTerm}
+              onChange={handleSearchInputChange}
               className="pl-10"
             />
             <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />

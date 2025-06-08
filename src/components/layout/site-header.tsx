@@ -2,14 +2,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home, TrendingUp } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home, TrendingUp, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { UserNav } from "@/components/auth/user-nav";
 import { useAuth } from "@/contexts/auth-context";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 const navItems = [
   { href: "/", label: "Trang chủ", icon: Home },
@@ -21,14 +22,24 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const { currentUser, isLoading } = useAuth();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const handleSearchSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/tools?search_query=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm(""); // Clear search term after navigation
+      if (isSheetOpen) setIsSheetOpen(false); // Close sheet on mobile after search
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -55,18 +66,32 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-2 md:space-x-4">
+          {/* Desktop Search */}
+          <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center relative">
+            <Input 
+              type="search" 
+              placeholder="Tìm kiếm công cụ..." 
+              className="h-9 pr-8" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-9 w-9 text-muted-foreground">
+              <SearchIcon className="h-4 w-4" />
+              <span className="sr-only">Tìm kiếm</span>
+            </Button>
+          </form>
+
           {isClient && !isLoading && (currentUser ? (
             <UserNav user={currentUser} />
           ) : (
-            <Button asChild>
+            <Button asChild size="sm">
               <Link href="/login">Đăng nhập</Link>
             </Button>
           ))}
           {isClient && isLoading && (
-             <div className="h-8 w-20 animate-pulse rounded-md bg-muted"></div>
+             <div className="h-8 w-20 animate-pulse rounded-md bg-muted"></div> // Skeleton for login button
           )}
-
 
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
@@ -82,7 +107,25 @@ export function SiteHeader() {
                   Clean AI Hub
                 </span>
               </Link>
-              <div className="flex flex-col space-y-3">
+              
+              {/* Mobile Search */}
+              <form onSubmit={handleSearchSubmit} className="mb-4 px-2">
+                <div className="relative">
+                  <Input 
+                    type="search" 
+                    placeholder="Tìm kiếm công cụ..." 
+                    className="h-10 pr-10"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                   <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-10 w-10 text-muted-foreground">
+                    <SearchIcon className="h-5 w-5" />
+                    <span className="sr-only">Tìm kiếm</span>
+                  </Button>
+                </div>
+              </form>
+
+              <div className="flex flex-col space-y-3 px-2">
                 {navItems.map((item) => (
                   <SheetClose asChild key={item.href}>
                     <Link
