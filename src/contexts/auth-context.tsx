@@ -10,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   loginWithGoogle: () => Promise<void>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
+  registerWithEmail: (email: string, pass: string) => Promise<void>; // Added
   logout: () => Promise<void>;
 }
 
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    const userToLogin = {...mockUser, displayName: "Google User"};
+    const userToLogin = {...mockUser, displayName: "Google User", email: "googleuser@example.com"};
     setCurrentUser(userToLogin);
     localStorage.setItem("cleanAIUser", JSON.stringify(userToLogin));
     setIsLoading(false);
@@ -42,10 +43,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    const userToLogin = {...mockUser, email, displayName: email.split('@')[0]};
+    // For demo, allow login if email exists in a mock "registered" list or is the mockUser's email
+    // This is highly simplified for mock purposes.
+    const userToLogin = {...mockUser, email, displayName: email.split('@')[0] || "Người dùng Email"};
     setCurrentUser(userToLogin);
     localStorage.setItem("cleanAIUser", JSON.stringify(userToLogin));
     setIsLoading(false);
+  };
+
+  const registerWithEmail = async (email: string, _pass: string) => {
+    setIsLoading(true);
+    // Simulate API call for registration
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    // In a real app, you'd create the user here and a backend would send a confirmation email.
+    // For this mock, we'll just simulate success.
+    // We won't actually log the user in or store them persistently for loginWithEmail to find yet,
+    // as that complicates the mock without a backend.
+    // The user will be redirected to login and can use the "mock" login.
+    console.log(`Mock registration for email: ${email}`);
+    setIsLoading(false);
+    // Throw an error for specific email to test error handling
+    if (email === "error@example.com") {
+      throw new Error("Địa chỉ email này đã được sử dụng.");
+    }
+    // Simulate success
   };
 
   const logout = async () => {
@@ -58,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, logout }}>
+    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, registerWithEmail, logout }}>
       {children}
     </AuthContext.Provider>
   );

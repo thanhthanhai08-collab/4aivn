@@ -1,26 +1,26 @@
-// src/app/login/page.tsx
-import { LoginForm } from "@/components/auth/login-form";
+// src/app/signup/page.tsx
+import { SignupForm } from "@/components/auth/signup-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppLayout } from "@/components/layout/app-layout";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <AppLayout>
       <div className="container flex min-h-[calc(100vh-var(--header-height)-var(--footer-height)-2rem)] items-center justify-center py-12">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-headline">Chào mừng trở lại!</CardTitle>
+            <CardTitle className="text-2xl font-headline">Tạo tài khoản mới</CardTitle>
             <CardDescription>
-              Đăng nhập để truy cập hồ sơ, đánh giá công cụ và lưu mục yêu thích.
+              Điền thông tin bên dưới để đăng ký.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <LoginForm />
+            <SignupForm />
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              Chưa có tài khoản?{" "}
-              <Link href="/signup" className="font-medium text-primary hover:underline">
-                Đăng ký ngay
+              Đã có tài khoản?{" "}
+              <Link href="/login" className="font-medium text-primary hover:underline">
+                Đăng nhập
               </Link>
             </p>
           </CardContent>
