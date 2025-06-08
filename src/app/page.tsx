@@ -116,18 +116,25 @@ export default function HomePage() {
       </section>
       {/* END New Informational Section */}
 
-      {/* AI News Feed Section */}
-      <section className="py-16 bg-background"> {/* Changed from bg-secondary/30 to alternate */}
+      {/* AI News Feed Section - Carousel */}
+      <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
             Tin tức AI Mới nhất
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {latestNews.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
+          
+          <div className="w-full overflow-hidden">
+            <div className="flex w-[200%] animate-scroll-left">
+              {/* Render news items twice for continuous loop */}
+              {[...latestNews, ...latestNews].map((article, index) => (
+                <div key={`${article.id}-${index}-carousel`} className="w-full md:w-1/3 flex-none px-3"> {/* px-3 creates gap */}
+                  <NewsCard article={article} />
+                </div>
+              ))}
+            </div>
           </div>
+
           <div className="text-center mt-12">
             <Button asChild variant="outline" size="lg">
               <Link href="/news">Đọc thêm Tin tức</Link>
