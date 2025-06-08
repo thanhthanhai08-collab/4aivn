@@ -66,8 +66,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* AI News Feed Section */}
+      {/* New Informational Section */}
       <section className="py-16 bg-secondary/30">
+        <div className="container">
+          {/* Part 1: AI Assistance */}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
+            <div className="space-y-4">
+              <h2 className="text-4xl font-headline font-bold text-foreground leading-tight">
+                Giờ đây bạn có thể làm việc một cách <span className="text-primary">nhanh chóng</span> hơn, <span className="text-primary">tiện lợi</span> hơn với sự trợ giúp của AI.
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                AI giúp tự động hóa các tác vụ lặp đi lặp lại, phân tích dữ liệu phức tạp và cung cấp thông tin chi tiết để bạn đưa ra quyết định tốt hơn và tập trung vào những gì thực sự quan trọng.
+              </p>
+            </div>
+            <div>
+              <Image 
+                src="https://placehold.co/600x450.png" 
+                alt="AI hỗ trợ quy trình làm việc hiệu quả" 
+                width={600} 
+                height={450} 
+                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300" 
+                data-ai-hint="workflow automation" 
+              />
+            </div>
+          </div>
+
+          {/* Part 2: AI Agent Accessibility */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="md:order-2 space-y-4">
+              <h2 className="text-4xl font-headline font-bold text-foreground leading-tight">
+                AI Agent sẽ trở nên ngày càng dễ <span className="text-primary">sử dụng</span> và <span className="text-primary">tiếp cận</span>.
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                AI Agent đang ngày càng dễ tiếp cận với người dùng không chuyên về lập trình và có khả năng sử dụng dữ liệu, tri thức cụ thể do người dùng cung cấp để hỗ trợ công việc một cách chính xác theo mong muốn.
+              </p>
+            </div>
+            <div className="md:order-1">
+              <Image 
+                src="https://placehold.co/600x450.png" 
+                alt="Giao diện AI Agent thân thiện và dễ sử dụng" 
+                width={600} 
+                height={450} 
+                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300" 
+                data-ai-hint="dashboard interface" 
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* END New Informational Section */}
+
+      {/* AI News Feed Section */}
+      <section className="py-16 bg-background"> {/* Changed from bg-secondary/30 to alternate */}
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
             Tin tức AI Mới nhất
