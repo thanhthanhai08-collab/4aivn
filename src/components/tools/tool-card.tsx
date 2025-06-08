@@ -19,7 +19,7 @@ export function ToolCard({ tool }: ToolCardProps) {
           <div className="flex items-center space-x-3">
             <Image 
               src={tool.logoUrl} 
-              alt={`${tool.name} logo`} 
+              alt={`Logo ${tool.name}`} 
               width={48} 
               height={48} 
               className="rounded-md object-contain"
@@ -56,7 +56,7 @@ export function ToolCard({ tool }: ToolCardProps) {
         </div>
         <Button variant="ghost" size="sm" asChild>
           <a href={tool.link} target="_blank" rel="noopener noreferrer">
-            Visit Site <ExternalLink className="ml-2 h-4 w-4" />
+            Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
           </a>
         </Button>
       </CardFooter>

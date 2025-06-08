@@ -48,11 +48,11 @@ export function LoginForm() {
     setIsEmailLoading(true);
     try {
       await loginWithEmail(email, password);
-      toast({ title: "Login Successful", description: "Welcome back!" });
+      toast({ title: "Đăng nhập thành công", description: "Chào mừng trở lại!" });
       router.push("/profile");
     } catch (error) {
       console.error("Email login error:", error);
-      toast({ title: "Login Failed", description: (error as Error).message || "Please check your credentials.", variant: "destructive" });
+      toast({ title: "Đăng nhập thất bại", description: (error as Error).message || "Vui lòng kiểm tra thông tin đăng nhập.", variant: "destructive" });
     } finally {
       setIsEmailLoading(false);
     }
@@ -62,11 +62,11 @@ export function LoginForm() {
     setIsGoogleLoading(true);
     try {
       await loginWithGoogle();
-      toast({ title: "Login Successful", description: "Welcome!" });
+      toast({ title: "Đăng nhập thành công", description: "Chào mừng!" });
       router.push("/profile");
     } catch (error) {
       console.error("Google login error:", error);
-      toast({ title: "Google Login Failed", description: (error as Error).message || "Could not sign in with Google.", variant: "destructive" });
+      toast({ title: "Đăng nhập Google thất bại", description: (error as Error).message || "Không thể đăng nhập bằng Google.", variant: "destructive" });
     } finally {
       setIsGoogleLoading(false);
     }
@@ -88,7 +88,7 @@ export function LoginForm() {
           />
         </div>
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Mật khẩu</Label>
           <Input
             id="password"
             type="password"
@@ -101,7 +101,7 @@ export function LoginForm() {
         </div>
         <Button type="submit" className="w-full" disabled={isEmailLoading || isGoogleLoading}>
           {isEmailLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Login with Email
+          Đăng nhập bằng Email
         </Button>
       </form>
 
@@ -111,7 +111,7 @@ export function LoginForm() {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            Hoặc tiếp tục với
           </span>
         </div>
       </div>

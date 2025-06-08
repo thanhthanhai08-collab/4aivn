@@ -41,9 +41,9 @@ export default function NewsPage() {
     <AppLayout>
       <div className="container py-8 md:py-12">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl font-headline font-bold text-foreground">AI News & Updates</h1>
+          <h1 className="text-4xl font-headline font-bold text-foreground">Tin tức & Cập nhật AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Stay informed with the latest happenings in the world of Artificial Intelligence.
+            Luôn cập nhật những diễn biến mới nhất trong thế giới Trí tuệ Nhân tạo.
           </p>
         </header>
 
@@ -61,7 +61,7 @@ export default function NewsPage() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-xl text-muted-foreground">No news articles available at the moment.</p>
+            <p className="text-xl text-muted-foreground">Hiện tại không có tin tức nào.</p>
           </div>
         )}
       </div>

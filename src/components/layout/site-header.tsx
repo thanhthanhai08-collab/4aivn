@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X } from "lucide-react";
+import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -12,9 +12,10 @@ import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { href: "/tools", label: "AI Tools", icon: LayoutGrid },
-  { href: "/news", label: "AI News", icon: Newspaper },
-  { href: "/chat", label: "Demo Chat", icon: MessageSquare },
+  { href: "/", label: "Trang chủ", icon: Home },
+  { href: "/tools", label: "Công cụ AI", icon: LayoutGrid },
+  { href: "/news", label: "Tin tức AI", icon: Newspaper },
+  { href: "/chat", label: "Chat Demo", icon: MessageSquare },
 ];
 
 export function SiteHeader() {
@@ -58,7 +59,7 @@ export function SiteHeader() {
             <UserNav user={currentUser} />
           ) : (
             <Button asChild>
-              <Link href="/login">Login</Link>
+              <Link href="/login">Đăng nhập</Link>
             </Button>
           ))}
           {isClient && isLoading && (
@@ -70,7 +71,7 @@ export function SiteHeader() {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
+                <span className="sr-only">Mở/Đóng Menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">

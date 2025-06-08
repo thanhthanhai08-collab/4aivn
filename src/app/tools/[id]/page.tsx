@@ -37,7 +37,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
 
       // Optionally generate AI description
       // For demo, let's assume we always try to generate if description is short
-      if (foundTool.description.length < 100) { 
+      if (foundTool.description.length < 100 && foundTool.description.length > 0) { // Ensure description is not empty
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
           .then(output => setEnhancedDescription(output.description))
           .catch(err => console.error("Failed to generate AI description:", err));
@@ -48,22 +48,22 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
 
   const handleFavoriteToggle = () => {
     if (!currentUser) {
-      toast({ title: "Login Required", description: "Please log in to save favorites.", variant: "destructive" });
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
     setIsFavorite(!isFavorite);
     // Here you would typically update backend
-    toast({ title: isFavorite ? "Removed from Favorites" : "Added to Favorites" });
+    toast({ title: isFavorite ? "Đã xóa khỏi Yêu thích" : "Đã thêm vào Yêu thích" });
   };
 
   const handleRating = (rating: number) => {
      if (!currentUser) {
-      toast({ title: "Login Required", description: "Please log in to rate tools.", variant: "destructive" });
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
       return;
     }
     setCurrentRating(rating);
     // Here you would typically update backend
-    toast({ title: "Rating Submitted", description: `You rated ${tool?.name} ${rating} stars.` });
+    toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool?.name} ${rating} sao.` });
   };
 
 
@@ -92,9 +92,9 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
     return (
       <AppLayout>
         <div className="container py-12 text-center">
-          <h1 className="text-2xl font-bold">Tool not found</h1>
+          <h1 className="text-2xl font-bold">Không tìm thấy công cụ</h1>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/tools">Back to Tools</Link>
+            <Link href="/tools">Quay lại trang Công cụ</Link>
           </Button>
         </div>
       </AppLayout>
@@ -107,7 +107,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
     <AppLayout>
       <div className="container py-8 md:py-12">
         <Button variant="outline" asChild className="mb-6">
-          <Link href="/tools"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Tools</Link>
+          <Link href="/tools"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Công cụ</Link>
         </Button>
 
         <div className="grid md:grid-cols-3 gap-8 items-start">
@@ -117,20 +117,20 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
                   <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-                    <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
+                    <Image src={tool.logoUrl} alt={`Logo ${tool.name}`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
                     <div>
                       <CardTitle className="text-3xl font-headline">{tool.name}</CardTitle>
                       <Badge variant="secondary" className="mt-1">{tool.context}</Badge>
                     </div>
                   </div>
                   <div className="flex space-x-2">
-                     <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>
+                     <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}>
                        <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                       {isFavorite ? "Favorited" : "Favorite"}
+                       {isFavorite ? "Đã thích" : "Yêu thích"}
                      </Button>
                      <Button asChild>
                         <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                          Visit Site <ExternalLink className="ml-2 h-4 w-4" />
+                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>
                   </div>
@@ -144,7 +144,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
             {tool.features && tool.features.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl font-headline">Key Features</CardTitle>
+                  <CardTitle className="text-2xl font-headline">Tính năng chính</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
@@ -164,12 +164,12 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
           <div className="space-y-6 md:sticky md:top-24">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl font-headline">Rate this Tool</CardTitle>
+                <CardTitle className="text-xl font-headline">Đánh giá công cụ này</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center space-x-1 mb-2">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <button key={star} onClick={() => handleRating(star)} aria-label={`Rate ${star} stars`}>
+                    <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`}>
                       <Star
                         className={`h-7 w-7 cursor-pointer transition-colors ${
                           star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
@@ -178,28 +178,28 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                     </button>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground">Your rating: {currentRating > 0 ? `${currentRating} stars` : "Not rated yet"}</p>
-                {tool.userRating && <p className="text-sm text-muted-foreground mt-1">Average: {tool.userRating.toFixed(1)} stars</p>}
+                <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
+                {tool.userRating && <p className="text-sm text-muted-foreground mt-1">Trung bình: {tool.userRating.toFixed(1)} sao</p>}
               </CardContent>
             </Card>
             
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-xl font-headline">Details</CardTitle>
+                    <CardTitle className="text-xl font-headline">Chi tiết</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Ranking:</span>
-                        <span>#{tool.ranking || 'N/A'}</span>
+                        <span className="text-muted-foreground">Xếp hạng:</span>
+                        <span>#{tool.ranking || 'Chưa có'}</span>
                     </div>
                      <Separator />
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Category:</span>
+                        <span className="text-muted-foreground">Danh mục:</span>
                         <Badge variant="outline">{tool.context}</Badge>
                     </div>
                     <Separator />
                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Official Website:</span>
+                        <span className="text-muted-foreground">Trang web chính thức:</span>
                         <Button variant="link" size="sm" asChild className="p-0 h-auto">
                             <a href={tool.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
                                 {tool.link.replace(/^https?:\/\//, '')}

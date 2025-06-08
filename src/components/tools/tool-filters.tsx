@@ -39,13 +39,13 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories }: To
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div className="md:col-span-2">
           <label htmlFor="search-tools" className="block text-sm font-medium text-muted-foreground mb-1">
-            Search Tools
+            Tìm kiếm Công cụ
           </label>
           <div className="relative">
             <Input
               id="search-tools"
               type="text"
-              placeholder="Search by name or keyword..."
+              placeholder="Tìm theo tên hoặc từ khóa..."
               value={searchTerm}
               onChange={handleSearch}
               className="pl-10"
@@ -55,14 +55,14 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories }: To
         </div>
         <div>
           <label htmlFor="category-select" className="block text-sm font-medium text-muted-foreground mb-1">
-            Category
+            Danh mục
           </label>
           <Select value={selectedCategory} onValueChange={handleCategorySelect}>
             <SelectTrigger id="category-select">
-              <SelectValue placeholder="All Categories" />
+              <SelectValue placeholder="Tất cả Danh mục" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="all">Tất cả Danh mục</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -73,7 +73,7 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories }: To
         </div>
         <div className="md:col-start-3 flex justify-end">
            <Button variant="ghost" onClick={clearFilters} className="w-full md:w-auto">
-            <FilterX className="mr-2 h-4 w-4" /> Clear Filters
+            <FilterX className="mr-2 h-4 w-4" /> Xóa bộ lọc
           </Button>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
 import { format } from "date-fns";
+import { vi } from 'date-fns/locale';
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -41,12 +42,12 @@ export function NewsCard({ article }: NewsCardProps) {
           <p>{article.source}</p>
           <div className="flex items-center">
             <CalendarDays className="h-3 w-3 mr-1" />
-            {format(new Date(article.publishedAt), "MMM d, yyyy")}
+            {format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}
           </div>
         </div>
         <Button variant="outline" size="sm" asChild>
           <Link href={article.link} target="_blank" rel="noopener noreferrer">
-            Read More <ExternalLink className="ml-2 h-3 w-3" />
+            Đọc thêm <ExternalLink className="ml-2 h-3 w-3" />
           </Link>
         </Button>
       </CardFooter>

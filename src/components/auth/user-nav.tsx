@@ -32,7 +32,7 @@ export function UserNav({ user }: UserNavProps) {
   };
   
   const getInitials = (name: string | null | undefined) => {
-    if (!name) return "U";
+    if (!name) return "N"; // Người dùng
     const names = name.split(' ');
     if (names.length > 1) {
       return names[0][0] + names[names.length - 1][0];
@@ -45,7 +45,7 @@ export function UserNav({ user }: UserNavProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.photoURL || ""} alt={user.displayName || "User"} />
+            <AvatarImage src={user.photoURL || ""} alt={user.displayName || "Người dùng"} />
             <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
           </Avatar>
         </Button>
@@ -53,7 +53,7 @@ export function UserNav({ user }: UserNavProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.displayName || "User"}</p>
+            <p className="text-sm font-medium leading-none">{user.displayName || "Người dùng"}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
             </p>
@@ -64,14 +64,14 @@ export function UserNav({ user }: UserNavProps) {
           <DropdownMenuItem asChild>
             <Link href="/profile" className="flex items-center">
               <UserIcon className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <span>Hồ sơ</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className="flex items-center cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <span>Đăng xuất</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -19,7 +19,7 @@ export default function ChatPage() {
     setMessages([
       {
         id: "initial-ai-greeting",
-        text: "Hello! I'm the Clean AI Hub demo chatbot. How can I help you learn about AI tools or news today?",
+        text: "Xin chào! Tôi là chatbot demo của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ hoặc tin tức AI hôm nay?",
         sender: "ai",
         timestamp: Date.now(),
       },
@@ -55,14 +55,14 @@ export default function ChatPage() {
       console.error("Error getting AI response:", error);
       const errorAiMessage: ChatMessage = {
         id: `ai-error-${Date.now()}`,
-        text: "Sorry, I encountered an error. Please try again.",
+        text: "Xin lỗi, tôi đã gặp lỗi. Vui lòng thử lại.",
         sender: "ai",
         timestamp: Date.now(),
       };
       setMessages((prevMessages) => [...prevMessages, errorAiMessage]);
       toast({
-        title: "Chatbot Error",
-        description: "Could not get a response from the AI. Please check your connection or try again later.",
+        title: "Lỗi Chatbot",
+        description: "Không thể nhận được phản hồi từ AI. Vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.",
         variant: "destructive",
       });
     } finally {
@@ -74,9 +74,9 @@ export default function ChatPage() {
     <AppLayout>
       <div className="container py-8 md:py-12 flex flex-col h-[calc(100vh-var(--header-height)-var(--footer-height)-4rem)] max-h-[800px] "> {/* Adjust height based on header/footer */}
         <header className="mb-8 text-center">
-          <h1 className="text-4xl font-headline font-bold text-foreground">Demo AI Chatbot</h1>
+          <h1 className="text-4xl font-headline font-bold text-foreground">Chatbot AI Demo</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Interact with our AI to learn more about AI tools and news.
+            Tương tác với AI của chúng tôi để tìm hiểu thêm về các công cụ và tin tức AI.
           </p>
         </header>
         <div className="flex-grow flex flex-col bg-card shadow-lg rounded-lg overflow-hidden">

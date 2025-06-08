@@ -22,17 +22,17 @@ export default function HomePage() {
         </div>
         <div className="container relative text-center">
           <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
-            Navigate the World of AI
+            Điều hướng Thế giới AI
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
-            Discover, rank, and stay updated with the latest AI tools and cutting-edge news. Clean AI Hub is your trusted guide in the evolving landscape of artificial intelligence.
+            Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. Clean AI Hub là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
           </p>
           <div className="mt-10 flex justify-center space-x-4">
             <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-shadow">
-              <Link href="/tools">Explore AI Tools</Link>
+              <Link href="/tools">Khám phá Công cụ AI</Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="shadow-lg hover:shadow-md transition-shadow">
-              <Link href="/news">Latest AI News</Link>
+              <Link href="/news">Tin tức AI Mới nhất</Link>
             </Button>
           </div>
         </div>
@@ -50,9 +50,9 @@ export default function HomePage() {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Top AI Tools
+            Công cụ AI Hàng đầu
           </h2>
-          <p className="text-center text-muted-foreground mb-10">Curated list of the most popular and impactful AI tools.</p>
+          <p className="text-center text-muted-foreground mb-10">Danh sách tuyển chọn các công cụ AI phổ biến và có ảnh hưởng nhất.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {topTools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
@@ -60,7 +60,7 @@ export default function HomePage() {
           </div>
           <div className="text-center mt-12">
             <Button asChild variant="outline" size="lg">
-              <Link href="/tools">View All Tools</Link>
+              <Link href="/tools">Xem tất cả Công cụ</Link>
             </Button>
           </div>
         </div>
@@ -70,9 +70,9 @@ export default function HomePage() {
       <section className="py-16 bg-secondary/30">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Latest AI News
+            Tin tức AI Mới nhất
           </h2>
-          <p className="text-center text-muted-foreground mb-10">Stay informed with the latest advancements and discussions in AI.</p>
+          <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {latestNews.map((article) => (
               <NewsCard key={article.id} article={article} />
@@ -80,7 +80,7 @@ export default function HomePage() {
           </div>
           <div className="text-center mt-12">
             <Button asChild variant="outline" size="lg">
-              <Link href="/news">Read More News</Link>
+              <Link href="/news">Đọc thêm Tin tức</Link>
             </Button>
           </div>
         </div>

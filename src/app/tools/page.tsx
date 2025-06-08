@@ -59,9 +59,9 @@ export default function ToolsPage() {
     <AppLayout>
       <div className="container py-8">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl font-headline font-bold text-foreground">AI Tools Directory</h1>
+          <h1 className="text-4xl font-headline font-bold text-foreground">Thư mục Công cụ AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Discover and compare a wide range of AI tools.
+            Khám phá và so sánh một loạt các công cụ AI.
           </p>
         </header>
 
@@ -85,7 +85,7 @@ export default function ToolsPage() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-xl text-muted-foreground">No tools found matching your criteria.</p>
+            <p className="text-xl text-muted-foreground">Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn.</p>
           </div>
         )}
       </div>

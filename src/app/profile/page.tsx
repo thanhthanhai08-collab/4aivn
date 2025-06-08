@@ -29,12 +29,12 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     await logout();
-    toast({ title: "Logged Out", description: "You have been successfully logged out." });
+    toast({ title: "Đã đăng xuất", description: "Bạn đã đăng xuất thành công." });
     router.push("/");
   };
   
   const getInitials = (name: string | null | undefined) => {
-    if (!name) return "U";
+    if (!name) return "N"; // Người dùng
     const names = name.split(' ');
     if (names.length > 1) {
       return names[0][0] + names[names.length - 1][0];
@@ -77,7 +77,7 @@ export default function ProfilePage() {
           <CardHeader className="bg-muted/30 p-6">
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
-                <AvatarImage src={currentUser.photoURL || ""} alt={currentUser.displayName || "User"} />
+                <AvatarImage src={currentUser.photoURL || ""} alt={currentUser.displayName || "Người dùng"} />
                 <AvatarFallback className="text-3xl">{getInitials(currentUser.displayName)}</AvatarFallback>
               </Avatar>
               <div className="text-center sm:text-left">
@@ -85,18 +85,18 @@ export default function ProfilePage() {
                 <CardDescription className="text-lg">{currentUser.email}</CardDescription>
               </div>
               <div className="sm:ml-auto flex flex-col sm:items-end space-y-2">
-                 <Button variant="outline" size="sm" onClick={() => toast({title: "Coming Soon!", description:"Profile editing will be available soon."})}>
-                    <Edit3 className="mr-2 h-4 w-4" /> Edit Profile
+                 <Button variant="outline" size="sm" onClick={() => toast({title: "Sắp ra mắt!", description:"Tính năng chỉnh sửa hồ sơ sẽ sớm có sẵn."})}>
+                    <Edit3 className="mr-2 h-4 w-4" /> Chỉnh sửa Hồ sơ
                  </Button>
                  <Button variant="destructive" size="sm" onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" /> Logout
+                    <LogOut className="mr-2 h-4 w-4" /> Đăng xuất
                  </Button>
               </div>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-8">
             <section>
-              <h2 className="text-2xl font-semibold font-headline mb-4">Favorite Tools</h2>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ Yêu thích</h2>
               {favoriteTools.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {favoriteTools.map((tool) => (
@@ -104,12 +104,12 @@ export default function ProfilePage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">You haven&apos;t favorited any tools yet.</p>
+                <p className="text-muted-foreground">Bạn chưa yêu thích công cụ nào.</p>
               )}
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold font-headline mb-4">Bookmarked News</h2>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Tin tức Đã lưu</h2>
               {bookmarkedNews.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {bookmarkedNews.map((article) => (
@@ -118,7 +118,7 @@ export default function ProfilePage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">You haven&apos;t bookmarked any news articles yet.</p>
+                <p className="text-muted-foreground">Bạn chưa lưu tin tức nào.</p>
               )}
             </section>
           </CardContent>

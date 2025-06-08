@@ -7,8 +7,8 @@ import { AppLayout } from '@/components/layout/app-layout';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Clean AI Hub - Discover & Rank AI Tools',
-  description: 'Your central hub for AI tool rankings, latest AI news, and a demo chatbot experience.',
+  title: 'Clean AI Hub - Khám phá & Xếp hạng Công cụ AI',
+  description: 'Trung tâm của bạn về xếp hạng công cụ AI, tin tức AI mới nhất và trải nghiệm chatbot demo.',
   icons: {
     icon: '/favicon.ico', // Assuming a favicon might be added later
   }
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="vi" className={inter.variable} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
