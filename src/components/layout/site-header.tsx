@@ -35,7 +35,7 @@ export function SiteHeader() {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      router.push(`/tools?search_query=${encodeURIComponent(searchTerm.trim())}`);
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm(""); // Clear search term after navigation
       if (isSheetOpen) setIsSheetOpen(false); // Close sheet on mobile after search
     }
