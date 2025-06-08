@@ -1,11 +1,11 @@
 // src/app/tools/[id]/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockTools, mockUser } from "@/lib/mock-data";
+import { mockTools } from "@/lib/mock-data"; // mockUser is not used here, can be removed if not needed elsewhere implicitly
 import type { Tool } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +18,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 
 
-export default function ToolDetailPage({ params }: { params: { id: string } }) {
+export default function ToolDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
+  const params = use(paramsAsPromise); // Unwrap the params promise
+  const { id } = params; // Get id from resolved params
+
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -29,7 +32,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    const foundTool = mockTools.find((t) => t.id === params.id);
+    const foundTool = mockTools.find((t) => t.id === id);
     if (foundTool) {
       setTool(foundTool);
       setIsFavorite(foundTool.isFavorite || false);
@@ -44,7 +47,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
       }
     }
     setIsLoading(false);
-  }, [params.id]);
+  }, [id]); // Depend on the resolved id
 
   const handleFavoriteToggle = () => {
     if (!currentUser) {
