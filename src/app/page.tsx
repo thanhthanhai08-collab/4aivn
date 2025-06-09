@@ -84,11 +84,11 @@ export default function HomePage() {
             <div>
               <Image 
                 src="/image/AI_ket_noi_con_nguoi.png" 
-                alt="AI hỗ trợ quy trình làm việc hiệu quả" 
+                alt="AI kết nối con người" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="workflow automation" 
+                data-ai-hint="people connection" 
               />
             </div>
           </div>
