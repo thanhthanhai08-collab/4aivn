@@ -10,8 +10,6 @@ import Image from "next/image";
 export default function HomePage() {
   const topTools = mockTools.sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity)).slice(0, 4); // Show top 4 for homepage
   const latestNews = mockNews.slice(0, 3); // Show latest 3 news
-  const totalCarouselItems = latestNews.length * 2;
-
 
   return (
     <AppLayout>
@@ -23,7 +21,7 @@ export default function HomePage() {
             <span className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></span>
         </div>
         <div className="container relative text-center">
-          <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
+          <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-relaxed">
             KHÁM PHÁ THỂ GIỚI TRÍ TUỆ NHÂN TẠO AI
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
@@ -128,21 +126,16 @@ export default function HomePage() {
           
            <div className="relative w-full overflow-hidden">
             <div 
-              className="flex animate-scroll-left" 
-              style={{ width: `calc(${totalCarouselItems} * (100% / var(--items-per-screen-xs, 1)))`, '--items-per-screen-xs': 1 } as React.CSSProperties}
-              // On md screens and above, show 3 items. Adjust width accordingly.
-              // The track width needs to be (totalItems / itemsPerScreen) * 100%.
-              // Since we duplicate items for infinite scroll, totalItems in track is latestNews.length * 2.
-              // So for 3 items per screen: (latestNews.length * 2 / 3) * 100%
-              // However, the animation translates by -50% of the track width.
-              // So the track width should be 200% of the visible area if itemsPerScreen items are shown.
-              // Each item then takes (100 / itemsPerScreen)% of that visible area.
-              // Total track width: (latestNews.length * 2) * (100 / itemsPerScreen)%
+              className="flex animate-scroll-left"
+              style={{ 
+                width: `calc(${latestNews.length * 2} * (100% / var(--items-per-screen-xs, 1)))`,
+                '--items-per-screen-xs': 1,
+              } as React.CSSProperties}
             >
               {[...latestNews, ...latestNews].map((article, index) => (
                 <div 
                   key={`${article.id}-${index}-carousel`} 
-                  className="flex-none px-3 w-full md:w-1/3" // Full width on xs, 1/3 on md+
+                  className="flex-none px-3 w-full md:w-1/3"
                 >
                   <NewsCard article={article} />
                 </div>
