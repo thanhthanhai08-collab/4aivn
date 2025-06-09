@@ -83,7 +83,7 @@ export default function HomePage() {
             </div>
             <div>
               <Image 
-                src="/image/ai_platform_components.png" 
+                src="/home/user/studio/public/image/Gemini_Generated_Image_ndplhkndplhkndpl.png" 
                 alt="Sơ đồ các thành phần nền tảng AI" 
                 width={600} 
                 height={450} 
@@ -105,8 +105,8 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="/image/ai_platform_overview.png" 
-                alt="AI kết nối con người" 
+                src="/images/ai_platform_overview.png" 
+                alt="images/ai_platform_overview.png" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
