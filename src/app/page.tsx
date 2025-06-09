@@ -83,7 +83,7 @@ export default function HomePage() {
             </div>
             <div>
               <Image 
-                src="/image/ai_platform_overview.png" 
+                src="/image/ai_platform_components.png" 
                 alt="Sơ đồ tổng quan về nền tảng AI với các thành phần kết nối" 
                 width={600} 
                 height={450} 
@@ -106,11 +106,11 @@ export default function HomePage() {
             <div className="md:order-1">
               <Image 
                 src="/image/AI_ket_noi_con_nguoi.png" 
-                alt="AI càng dễ sử dụng" 
+                alt="AI Agent thân thiện và dễ sử dụng, kết nối con người với công nghệ" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="people connection" 
+                data-ai-hint="AI interface" 
               />
             </div>
           </div>
@@ -127,15 +127,9 @@ export default function HomePage() {
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
           <div className="w-full overflow-hidden">
-             {/* 
-              Track width:
-              - Mobile (1 item shown): latestNews.length * 2 * 100% = 3 * 2 * 100% = 600%
-              - Desktop (3 items shown): latestNews.length * 2 / 3 * 100% = 3 * 2 / 3 * 100% = 200%
-              Item width (relative to track): 1 / (latestNews.length * 2) = 1/6
-            */}
             <div className="flex w-[calc(var(--carousel-items,_6)_*_100%)] md:w-[calc(var(--carousel-items,_6)_*_100%_/_3)] animate-scroll-left" style={{ '--carousel-items': totalCarouselItems } as React.CSSProperties}>
               {[...latestNews, ...latestNews].map((article, index) => (
-                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%_/_var(--carousel-items,_6))] flex-none px-3"> {/* Each item is 1/totalCarouselItems of the track width */}
+                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%_/_var(--carousel-items,_6))] flex-none px-3">
                   <NewsCard article={article} />
                 </div>
               ))}
