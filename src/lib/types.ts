@@ -47,4 +47,6 @@ export interface AIModel {
   link?: string; // Link to project page or paper
   userRating?: number;
   features?: string[];
+  isFavorite?: boolean; // Added for favorite functionality
 }
+

@@ -112,6 +112,7 @@ export const mockAIModels: AIModel[] = [
     link: 'https://openai.com/gpt-4',
     userRating: 4.9,
     features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức (văn bản, hình ảnh)', 'Khả năng sáng tạo và cộng tác'],
+    isFavorite: true,
   },
   {
     id: 'gemini-pro',
@@ -123,6 +124,7 @@ export const mockAIModels: AIModel[] = [
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.8,
     features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
+    isFavorite: false,
   },
   {
     id: 'claude-3-opus',
@@ -134,6 +136,7 @@ export const mockAIModels: AIModel[] = [
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.85,
     features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính (xử lý hình ảnh)'],
+    isFavorite: false,
   },
   {
     id: 'dall-e-3',
@@ -145,6 +148,7 @@ export const mockAIModels: AIModel[] = [
     link: 'https://openai.com/dall-e-3',
     userRating: 4.7,
     features: ['Hiểu rõ gợi ý phức tạp', 'Tạo hình ảnh chất lượng cao', 'Tích hợp với ChatGPT'],
+    isFavorite: false,
   },
   {
     id: 'stable-diffusion-3',
@@ -155,6 +159,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: 'https://placehold.co/64x64.png?text=SD3',
     userRating: 4.6,
     features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh'],
+    isFavorite: false,
   }
 ];
 

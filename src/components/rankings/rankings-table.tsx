@@ -18,7 +18,7 @@ const renderStars = (rating?: number) => {
   if (rating === undefined || rating === null) return <span className="text-xs text-muted-foreground">Chưa có</span>;
   
   const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.4 && rating % 1 < 0.9; // consider .4 to .8 as half (visually full for simplicity here)
+  const halfStar = rating % 1 >= 0.4 && rating % 1 < 0.9; 
   const roundedRatingForDisplay = Math.round(rating * 10) / 10;
 
   return (
@@ -28,14 +28,7 @@ const renderStars = (rating?: number) => {
           return <Star key={`full-${i}`} className="h-4 w-4 fill-amber-400 text-amber-500" />;
         }
         if (i === fullStars && halfStar) {
-          // Lucide doesn't have a simple half-star, showing full for values >= x.5 after rounding.
-          // Or, if we want to be more precise, we'd need a half star icon.
-          // For now, if rating is 4.5, it shows 4 full, then this logic would skip.
-          // Let's adjust to show a filled star if rating is closer to it.
-          // If rating = 4.5, fullStars = 4. i = 4. halfStar = true.
-          // This means for 4.5, it shows 5 stars if we use rating itself.
-          // Let's use the rounded rating.
-           if ( i < rating ) { // Simplified: fill up to the actual rating
+           if ( i < rating ) { 
              return <Star key={`dec-${i}`} className="h-4 w-4 fill-amber-400 text-amber-500" />;
            }
         }
@@ -100,7 +93,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                         {item.name}
                       </Link>
                     ) : (
-                      <span className="font-medium">{item.name}</span>
+                       <Link href={`/models/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
+                        {item.name}
+                      </Link>
                     )}
                     <span className="text-xs text-muted-foreground truncate max-w-[200px] hidden sm:block">{item.description.substring(0,50)}{item.description.length > 50 ? '...' : ''}</span>
                   </div>
