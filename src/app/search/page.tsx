@@ -59,14 +59,11 @@ export default function SearchResultsPage() {
           <div className="space-y-6">
             <Card className="bg-accent/50 border-primary/30">
               <CardHeader>
-                <CardTitle className="text-xl">Chức năng Tìm kiếm Nâng cao</CardTitle>
+                <CardTitle className="text-xl">Tìm kiếm Nâng cao & Gợi ý</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Chức năng hiển thị kết quả tìm kiếm chi tiết từ nhiều nguồn (công cụ, tin tức, v.v.) trên toàn bộ trang web hiện đang được phát triển và sẽ sớm ra mắt.
-                </p>
-                <p className="mt-2 text-muted-foreground">
-                  Trong thời gian chờ đợi, bạn có thể tìm kiếm các công cụ AI cụ thể bằng cách sử dụng liên kết bên dưới:
+                  Nếu bạn muốn tìm kiếm nâng cao điều gì trên website Clean AI Hub thì bạn có thể chat trực tiếp với trợ lý AI của chúng tôi ở góc phải màn hình. Điều đó có thể nâng cao trải nghiệm web đó. Còn nếu bạn muốn tìm kiếm công cụ AI thì hoàn toàn có thể sử dụng đường dẫn dưới đây.
                 </p>
               </CardContent>
               <CardFooter>
