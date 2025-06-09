@@ -1,3 +1,4 @@
+
 import type { Tool, NewsArticle, AIModel } from '@/lib/types';
 
 export const mockUser = {
@@ -11,7 +12,7 @@ export const mockTools: Tool[] = [
   {
     id: 'chatgpt',
     name: 'ChatGPT',
-    context: 'Chatbot',
+    context: 'Model AI', // Changed from 'Chatbot'
     ranking: 1,
     description: 'Mô hình ngôn ngữ hàng đầu của OpenAI, có khả năng tạo văn bản giống người dựa trên gợi ý.',
     logoUrl: 'https://images.unsplash.com/photo-1562783912-21ad31ee2a83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsb2dvJTIwY29tcGFueXxlbnwwfHx8fDE3NDkzNzU4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080',
@@ -190,3 +191,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
+
+    
