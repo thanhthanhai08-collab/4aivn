@@ -10,6 +10,8 @@ import Image from "next/image";
 export default function HomePage() {
   const topTools = mockTools.sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity)).slice(0, 4); // Show top 4 for homepage
   const latestNews = mockNews.slice(0, 3); // Show latest 3 news
+  const totalCarouselItems = latestNews.length * 2;
+
 
   return (
     <AppLayout>
@@ -81,11 +83,11 @@ export default function HomePage() {
             </div>
             <div>
               <Image 
-                src="https://placehold.co/600x450.png" 
+                src="/image/AI_ket_noi_con_nguoi.png" 
                 alt="AI hỗ trợ quy trình làm việc hiệu quả" 
                 width={600} 
                 height={450} 
-                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300" 
+                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
                 data-ai-hint="workflow automation" 
               />
             </div>
@@ -103,11 +105,11 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="https://placehold.co/600x450.png" 
+                src="/image/AI_Agent_de_su_dung.png" 
                 alt="Giao diện AI Agent thân thiện và dễ sử dụng" 
                 width={600} 
                 height={450} 
-                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300" 
+                className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
                 data-ai-hint="dashboard interface" 
               />
             </div>
@@ -125,10 +127,15 @@ export default function HomePage() {
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
           <div className="w-full overflow-hidden">
-            <div className="flex w-[200%] animate-scroll-left">
-              {/* Render news items twice for continuous loop */}
+             {/* 
+              Track width:
+              - Mobile (1 item shown): latestNews.length * 2 * 100% = 3 * 2 * 100% = 600%
+              - Desktop (3 items shown): latestNews.length * 2 / 3 * 100% = 3 * 2 / 3 * 100% = 200%
+              Item width (relative to track): 1 / (latestNews.length * 2) = 1/6
+            */}
+            <div className="flex w-[600%] md:w-[200%] animate-scroll-left">
               {[...latestNews, ...latestNews].map((article, index) => (
-                <div key={`${article.id}-${index}-carousel`} className="w-full md:w-1/3 flex-none px-3"> {/* px-3 creates gap */}
+                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%/6)] flex-none px-3"> {/* Each item is 1/6th of the track width */}
                   <NewsCard article={article} />
                 </div>
               ))}
