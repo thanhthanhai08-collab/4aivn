@@ -46,8 +46,18 @@ export default function RankingsPage() {
 
         <Tabs defaultValue="tools" className="w-full p-4 md:p-6 rounded-xl bg-gradient-to-br from-accent/60 via-accent/30 to-accent/10 shadow-lg">
           <TabsList className="grid w-full grid-cols-2 md:w-1/2 md:mx-auto mb-8 bg-background/70 backdrop-blur-sm">
-            <TabsTrigger value="tools">Công cụ AI</TabsTrigger>
-            <TabsTrigger value="models">Model AI</TabsTrigger>
+            <TabsTrigger 
+              value="tools" 
+              className="text-foreground/70 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+            >
+              Công cụ AI
+            </TabsTrigger>
+            <TabsTrigger 
+              value="models" 
+              className="text-foreground/70 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+            >
+              Model AI
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="tools">
             {isLoading ? (
