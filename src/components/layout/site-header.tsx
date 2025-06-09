@@ -51,14 +51,14 @@ export function SiteHeader() {
           </span>
         </Link>
         
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-6 text-sm">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname === item.href ? "text-foreground" : "text-foreground/60"
+                "transition-colors hover:text-foreground/80 font-medium",
+                pathname === item.href ? "text-primary font-semibold" : "text-foreground/60"
               )}
             >
               {item.label}
@@ -132,8 +132,8 @@ export function SiteHeader() {
                       href={item.href}
                        onClick={() => setIsSheetOpen(false)}
                       className={cn(
-                        "flex items-center space-x-2 p-2 rounded-md hover:bg-accent",
-                        pathname === item.href ? "bg-accent text-accent-foreground" : "text-foreground/70"
+                        "flex items-center space-x-2 p-2 rounded-md hover:bg-accent font-medium",
+                        pathname === item.href ? "bg-accent text-primary font-semibold" : "text-foreground/70"
                       )}
                     >
                       <item.icon className="h-5 w-5" />
