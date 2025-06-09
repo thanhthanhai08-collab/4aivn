@@ -7,6 +7,7 @@ const quickLinks = [
   { href: "/tools", label: "Công cụ AI" },
   { href: "/rankings", label: "Bảng xếp hạng" },
   { href: "/news", label: "Tin tức AI" },
+  { href: "/chat", label: "Chat Demo" },
 ];
 
 const featuredTopics = [
@@ -111,14 +112,6 @@ export function SiteFooter() {
                     <MapPin className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
                     <span>Địa chỉ: 123 Đường AI, Quận Tech, TP. Sáng Tạo</span>
                 </li>
-                 <li>
-                    <Link
-                        href="/chat"
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline pt-2 inline-block"
-                    >
-                        Chat Demo
-                    </Link>
-                 </li>
             </ul>
           </div>
 
