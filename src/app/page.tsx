@@ -1,3 +1,4 @@
+
 // src/app/page.tsx
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -128,27 +129,15 @@ export default function HomePage() {
             <div 
               className="flex animate-scroll-left"
               style={{ 
-                 // Total width is number of items * 100% / items per screen (for each screen size)
-                 // For mobile (1 item per screen), total 6 items (3 original + 3 clones) -> 600%
-                 // For md (3 items per screen), total 6 items -> 200% (since 6 items / 3 per screen = 2 sets of 3)
-                width: `calc(${latestNews.length * 2} * (100% / var(--items-per-screen-xs, 1)))`,
                 '--items-per-screen-xs': 1,
-                 // md:width: `calc(${latestNews.length * 2} * (100% / var(--items-per-screen-md, 3)))`,
-                 // '--items-per-screen-md': 3,
+                '--items-per-screen-md': 3,
               } as React.CSSProperties}
             >
               {/* Duplicated for seamless scroll */}
               {[...latestNews, ...latestNews].map((article, index) => (
                 <div 
                   key={`${article.id}-${index}-carousel`} 
-                  // On mobile, each item takes 1/6 of the total track width (which is 600% of viewport) -> 100% of viewport
-                  // On md, each item takes 1/6 of the total track width (which is 200% of viewport) -> 33.33% of viewport
-                  className="flex-none px-3 w-[calc(100%/var(--items-per-screen-xs,1)/var(--num-sets,2))] md:w-[calc(100%/var(--items-per-screen-md,3)/var(--num-sets,2))]"
-                  style={{
-                    '--num-sets': latestNews.length, // This is actually number of original items
-                    '--items-per-screen-xs': 1,
-                    '--items-per-screen-md': 3,
-                  } as React.CSSProperties}
+                  className="flex-none px-3 w-[calc(100%/var(--items-per-screen-xs,1))] md:w-[calc(100%/var(--items-per-screen-md,3))]"
                 >
                   <NewsCard article={article} />
                 </div>
