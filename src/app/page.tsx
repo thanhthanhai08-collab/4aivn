@@ -24,7 +24,7 @@ export default function HomePage() {
         </div>
         <div className="container relative text-center">
           <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
-            Điều hướng Thế giới AI
+            KHÁM PHÁ THỂ GIỚI TRÍ TUỆ NHÂN TẠO AI
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
             Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. Clean AI Hub là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
@@ -83,8 +83,8 @@ export default function HomePage() {
             </div>
             <div>
               <Image 
-                src="/image/AI_tu_dong_hoa.png" 
-                alt="Sơ đồ các thành phần nền tảng AI" 
+                src="/image/ai_platform_components.png" 
+                alt="Sơ đồ tổng quan về nền tảng AI với các thành phần kết nối" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
@@ -105,8 +105,8 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="/image/AI_Agent_de_tiep_can.png" 
-                alt="ai agent ngày càng dễ tiếp cận" 
+                src="/image/ai_platform_overview.png" 
+                alt="AI kết nối con người" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
@@ -126,10 +126,24 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-          <div className="w-full overflow-hidden">
-            <div className="flex w-[calc(var(--carousel-items,_6)_*_100%)] md:w-[calc(var(--carousel-items,_6)_*_100%_/_3)] animate-scroll-left" style={{ '--carousel-items': totalCarouselItems } as React.CSSProperties}>
+           <div className="relative w-full overflow-hidden">
+            <div 
+              className="flex animate-scroll-left" 
+              style={{ width: `calc(${totalCarouselItems} * (100% / var(--items-per-screen-xs, 1)))`, '--items-per-screen-xs': 1 } as React.CSSProperties}
+              // On md screens and above, show 3 items. Adjust width accordingly.
+              // The track width needs to be (totalItems / itemsPerScreen) * 100%.
+              // Since we duplicate items for infinite scroll, totalItems in track is latestNews.length * 2.
+              // So for 3 items per screen: (latestNews.length * 2 / 3) * 100%
+              // However, the animation translates by -50% of the track width.
+              // So the track width should be 200% of the visible area if itemsPerScreen items are shown.
+              // Each item then takes (100 / itemsPerScreen)% of that visible area.
+              // Total track width: (latestNews.length * 2) * (100 / itemsPerScreen)%
+            >
               {[...latestNews, ...latestNews].map((article, index) => (
-                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%_/_var(--carousel-items,_6))] flex-none px-3">
+                <div 
+                  key={`${article.id}-${index}-carousel`} 
+                  className="flex-none px-3 w-full md:w-1/3" // Full width on xs, 1/3 on md+
+                >
                   <NewsCard article={article} />
                 </div>
               ))}
