@@ -105,12 +105,12 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="/image/AI_Agent_de_su_dung.png" 
-                alt="Giao diện AI Agent thân thiện và dễ sử dụng" 
+                src="/image/AI_ket_noi_con_nguoi.png" 
+                alt="AI kết nối con người" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="dashboard interface" 
+                data-ai-hint="people connection" 
               />
             </div>
           </div>
@@ -133,9 +133,9 @@ export default function HomePage() {
               - Desktop (3 items shown): latestNews.length * 2 / 3 * 100% = 3 * 2 / 3 * 100% = 200%
               Item width (relative to track): 1 / (latestNews.length * 2) = 1/6
             */}
-            <div className="flex w-[600%] md:w-[200%] animate-scroll-left">
+            <div className="flex w-[calc(var(--carousel-items,_6)_*_100%)] md:w-[calc(var(--carousel-items,_6)_*_100%_/_3)] animate-scroll-left" style={{ '--carousel-items': totalCarouselItems } as React.CSSProperties}>
               {[...latestNews, ...latestNews].map((article, index) => (
-                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%/6)] flex-none px-3"> {/* Each item is 1/6th of the track width */}
+                <div key={`${article.id}-${index}-carousel`} className="w-[calc(100%_/_var(--carousel-items,_6))] flex-none px-3"> {/* Each item is 1/totalCarouselItems of the track width */}
                   <NewsCard article={article} />
                 </div>
               ))}
