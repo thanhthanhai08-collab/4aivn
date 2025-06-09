@@ -1,24 +1,26 @@
 // src/components/layout/site-footer.tsx
 import Link from "next/link";
-import { ShieldCheck, Facebook, Twitter, Linkedin } from "lucide-react";
+import { ShieldCheck, Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
-const navItems = [
+const quickLinks = [
   { href: "/", label: "Trang chủ" },
   { href: "/tools", label: "Công cụ AI" },
   { href: "/rankings", label: "Bảng xếp hạng" },
   { href: "/news", label: "Tin tức AI" },
 ];
 
-const legalItems = [
-  { href: "#", label: "Điều khoản dịch vụ" },
-  { href: "#", label: "Chính sách bảo mật" },
-  { href: "#", label: "Liên hệ" },
+const featuredTopics = [
+  { href: "#", label: "Machine Learning" },
+  { href: "#", label: "Xử Lý Ngôn Ngữ Tự Nhiên" },
+  { href: "#", label: "Thị Giác Máy Tính" },
+  { href: "#", label: "Đạo Đức AI" },
 ];
 
-const socialLinks = [
+const socialMediaLinks = [
   { href: "#", label: "Facebook", icon: Facebook },
   { href: "#", label: "Twitter", icon: Twitter },
   { href: "#", label: "LinkedIn", icon: Linkedin },
+  { href: "#", label: "YouTube", icon: Youtube },
 ];
 
 export function SiteFooter() {
@@ -27,18 +29,18 @@ export function SiteFooter() {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Column 1: Brand & Social */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center space-x-2 mb-3">
               <ShieldCheck className="h-7 w-7 text-primary" />
-              <span className="font-bold font-headline text-xl text-foreground">
+              <span className="font-bold font-headline text-xl text-primary">
                 Clean AI Hub
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực Trí Tuệ Nhân Tạo.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((item) => (
+            <div className="flex space-x-4 pt-2">
+              {socialMediaLinks.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
@@ -53,13 +55,13 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Column 2: Navigation */}
+          {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">
-              Điều hướng
+            <h4 className="text-base font-semibold text-foreground mb-5">
+              Liên Kết Nhanh
             </h4>
             <ul className="space-y-3">
-              {navItems.map((item) => (
+              {quickLinks.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
@@ -72,13 +74,13 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 3: Legal */}
+          {/* Column 3: Featured Topics */}
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">
-              Pháp lý
+            <h4 className="text-base font-semibold text-foreground mb-5">
+              Chủ Đề Nổi Bật
             </h4>
             <ul className="space-y-3">
-              {legalItems.map((item) => (
+              {featuredTopics.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
@@ -91,15 +93,32 @@ export function SiteFooter() {
             </ul>
           </div>
           
-          {/* Column 4: Placeholder / Could be Newsletter in future */}
+          {/* Column 4: Contact */}
            <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">
-              Về Chúng Tôi
+            <h4 className="text-base font-semibold text-foreground mb-5">
+              Liên Hệ
             </h4>
-            <ul className="space-y-3">
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline">Câu chuyện</Link></li>
-                <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline">Đội ngũ</Link></li>
-                 <li><Link href="/chat" className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline">Chat Demo</Link></li>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex items-start">
+                    <Mail className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
+                    <span>Email: info@cleanai.vn</span>
+                </li>
+                 <li className="flex items-start">
+                    <Phone className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
+                    <span>Điện thoại: (+84) 123 456 789</span>
+                </li>
+                 <li className="flex items-start">
+                    <MapPin className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
+                    <span>Địa chỉ: 123 Đường AI, Quận Tech, TP. Sáng Tạo</span>
+                </li>
+                 <li>
+                    <Link
+                        href="/chat"
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline pt-2 inline-block"
+                    >
+                        Chat Demo
+                    </Link>
+                 </li>
             </ul>
           </div>
 
@@ -107,7 +126,7 @@ export function SiteFooter() {
 
         <div className="mt-12 pt-8 border-t border-border/60 text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Clean AI Hub. Mọi quyền được bảo lưu. Xây dựng bằng Next.js và Firebase.
+            &copy; {new Date().getFullYear()} Clean AI Hub. Mọi quyền được bảo lưu.
           </p>
         </div>
       </div>
