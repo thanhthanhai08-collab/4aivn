@@ -103,12 +103,12 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="/image/ai_platform_overview.png" 
-                alt="AI kết nối con người và nền tảng" 
+                src="/image/AI_Agent_de_tiep_can.png" 
+                alt="AI agent dễ tiếp cận và sử dụng" 
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="AI connection people" 
+                data-ai-hint="AI accessibility user friendly" 
               />
             </div>
           </div>
