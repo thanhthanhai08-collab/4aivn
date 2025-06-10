@@ -1,3 +1,4 @@
+
 // src/components/rankings/rankings-table.tsx
 "use client";
 
@@ -53,10 +54,19 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         <TableHeader>
           <TableRow>
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
-            <TableHead>Tên</TableHead>
-            <TableHead>{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
-            <TableHead className="text-center">Đánh giá</TableHead>
-            <TableHead className="text-right">Liên kết</TableHead>
+            <TableHead className="min-w-[250px]">Tên</TableHead>
+            <TableHead className="min-w-[120px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
+            {itemType === 'model' && (
+              <>
+                <TableHead className="text-center min-w-[120px]">Ngữ cảnh (token)</TableHead>
+                <TableHead className="text-center min-w-[100px]">Thông minh</TableHead>
+                <TableHead className="text-right min-w-[100px]">Giá ($/1M)</TableHead>
+                <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
+                <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
+              </>
+            )}
+            <TableHead className="text-center min-w-[120px]">Đánh giá</TableHead>
+            <TableHead className="text-right min-w-[120px]">Liên kết</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -73,6 +83,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             }
             
             const currentRankDisplay = item.userRating !== undefined && item.userRating !== null ? rank : '-';
+            const modelItem = item as AIModel; // Type assertion for model specific fields
 
             return (
             <TableRow key={item.id}>
@@ -105,9 +116,24 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 {itemType === 'tool' ? (
                   <Badge variant="outline">{(item as Tool).context}</Badge>
                 ) : (
-                  <span className="text-sm">{(item as AIModel).developer}</span>
+                  <span className="text-sm">{modelItem.developer}</span>
                 )}
               </TableCell>
+              {itemType === 'model' && (
+                <>
+                  <TableCell className="text-center">{modelItem.contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center">{modelItem.intelligenceScore !== undefined ? modelItem.intelligenceScore : '-'}</TableCell>
+                  <TableCell className="text-right">
+                    {modelItem.pricePerMillionTokens !== undefined ? `$${modelItem.pricePerMillionTokens.toFixed(2)}` : '-'}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {modelItem.speedTokensPerSecond !== undefined ? modelItem.speedTokensPerSecond.toFixed(1) : '-'}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {modelItem.latencyFirstChunkSeconds !== undefined ? modelItem.latencyFirstChunkSeconds.toFixed(2) : '-'}
+                  </TableCell>
+                </>
+              )}
               <TableCell className="text-center">
                 {renderStars(item.userRating)}
               </TableCell>

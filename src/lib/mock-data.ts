@@ -103,40 +103,55 @@ export const mockTools: Tool[] = [
 
 export const mockAIModels: AIModel[] = [
   {
-    id: 'gpt-4',
-    name: 'GPT-4',
+    id: 'gpt-4o-mini', // Updated ID and name
+    name: 'GPT-4o mini (high)', // Updated name
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: 'Mô hình đa phương thức lớn nhất của OpenAI, có khả năng giải quyết các vấn đề khó khăn với độ chính xác cao hơn, nhờ kiến thức tổng quát rộng hơn và khả năng lý luận tiên tiến.',
-    logoUrl: 'https://placehold.co/64x64.png?text=G4',
+    logoUrl: 'https://placehold.co/64x64.png?text=G4m', // Updated placeholder text
     link: 'https://openai.com/gpt-4',
-    userRating: 4.9,
+    userRating: 4.8, // Rating from image for "GPT o4-mini (high)"
     features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức (văn bản, hình ảnh)', 'Khả năng sáng tạo và cộng tác'],
     isFavorite: true,
+    contextLengthToken: '200k',
+    intelligenceScore: 70,
+    pricePerMillionTokens: 1.93,
+    speedTokensPerSecond: 139.3,
+    latencyFirstChunkSeconds: 29.26,
   },
   {
-    id: 'gemini-pro',
-    name: 'Gemini Pro',
+    id: 'gemini-2.5-pro', // Updated ID and name
+    name: 'Gemini 2.5 Pro', // Updated name, omitting date for simplicity
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
     description: 'Mô hình mạnh mẽ nhất của Google cho một loạt các tác vụ, vượt trội trong lý luận, tạo mã và hiểu đa phương thức.',
-    logoUrl: 'https://placehold.co/64x64.png?text=GMP',
+    logoUrl: 'https://placehold.co/64x64.png?text=G2P', // Updated placeholder text
     link: 'https://deepmind.google/technologies/gemini/#introduction',
-    userRating: 4.8,
+    userRating: 4.9, // Rating from image for "Gemini 2.5 Pro (Tháng 6-25)"
     features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
     isFavorite: false,
+    contextLengthToken: '1m',
+    intelligenceScore: 70,
+    pricePerMillionTokens: 3.44,
+    speedTokensPerSecond: 150.6,
+    latencyFirstChunkSeconds: 38.11,
   },
   {
-    id: 'claude-3-opus',
-    name: 'Claude 3 Opus',
+    id: 'claude-3-opus', // Keeping original ID
+    name: 'Claude 3 Opus', // Keeping original name, but data from "Claude 4 Opus Thinking"
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp. Nó có thể điều hướng các gợi ý mở và các kịch bản chưa từng thấy với sự trôi chảy và hiểu biết giống như con người.',
     logoUrl: 'https://placehold.co/64x64.png?text=C3O',
     link: 'https://www.anthropic.com/news/claude-3-family',
-    userRating: 4.85,
+    userRating: 4.8, // Rating from image for "Claude 4 Opus Thinking"
     features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính (xử lý hình ảnh)'],
     isFavorite: false,
+    contextLengthToken: '200k',
+    intelligenceScore: 64,
+    pricePerMillionTokens: 30.00,
+    speedTokensPerSecond: 57.9,
+    latencyFirstChunkSeconds: 3.08,
   },
   {
     id: 'dall-e-3',
@@ -149,6 +164,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.7,
     features: ['Hiểu rõ gợi ý phức tạp', 'Tạo hình ảnh chất lượng cao', 'Tích hợp với ChatGPT'],
     isFavorite: false,
+    // New fields remain undefined as they are not applicable
   },
   {
     id: 'stable-diffusion-3',
@@ -160,6 +176,56 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.6,
     features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh'],
     isFavorite: false,
+    // New fields remain undefined
+  },
+  // Adding new models from the image
+  {
+    id: 'gemini-2.5-flash-reasoning',
+    name: 'Gemini 2.5 Flash (Reasoning)',
+    type: 'AI Đa phương thức',
+    developer: 'Google',
+    description: 'Mô hình Gemini nhanh và hiệu quả cho các tác vụ suy luận, được cung cấp bởi Google.',
+    logoUrl: 'https://placehold.co/64x64.png?text=GFL',
+    link: 'https://deepmind.google/technologies/gemini/', // Generic Gemini link
+    userRating: 4.8, // Example rating, common in the image
+    features: ['Suy luận nhanh', 'Hiểu đa phương thức cơ bản', 'Tối ưu hóa tốc độ'],
+    contextLengthToken: '1m',
+    intelligenceScore: 65,
+    pricePerMillionTokens: 0.99,
+    speedTokensPerSecond: 330.9,
+    latencyFirstChunkSeconds: 16.01,
+  },
+  {
+    id: 'grok-3-mini-reasoning',
+    name: 'Grok 3 mini Reasoning (high)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'xAI',
+    description: 'Mô hình Grok 3 mini từ xAI, tối ưu hóa cho các tác vụ suy luận phức tạp.',
+    logoUrl: 'https://placehold.co/64x64.png?text=GRK',
+    link: '#', // Placeholder link
+    userRating: 4.8, // Example rating
+    features: ['Suy luận logic', 'Hiểu ngữ cảnh sâu', 'Tạo văn bản mạch lạc'],
+    contextLengthToken: '1m',
+    intelligenceScore: 67,
+    pricePerMillionTokens: 0.35,
+    speedTokensPerSecond: 204.3,
+    latencyFirstChunkSeconds: 0.37,
+  },
+  {
+    id: 'qwen3-235b-reasoning',
+    name: 'Qwen3 235B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình Qwen3 235B của Alibaba với khả năng suy luận nâng cao.',
+    logoUrl: 'https://placehold.co/64x64.png?text=QWN',
+    link: '#', // Placeholder link
+    userRating: 4.8, // Example rating
+    features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
+    contextLengthToken: '128k',
+    intelligenceScore: 62,
+    pricePerMillionTokens: 2.63,
+    speedTokensPerSecond: 70.5,
+    latencyFirstChunkSeconds: 1.17,
   }
 ];
 
@@ -196,6 +262,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-    

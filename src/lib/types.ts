@@ -1,3 +1,4 @@
+
 export interface Tool {
   id: string;
   name: string;
@@ -48,5 +49,10 @@ export interface AIModel {
   userRating?: number;
   features?: string[];
   isFavorite?: boolean; // Added for favorite functionality
+  contextLengthToken?: string; // e.g., "1m", "200k"
+  intelligenceScore?: number; // e.g., 70
+  pricePerMillionTokens?: number; // e.g., 3.44
+  speedTokensPerSecond?: number; // e.g., 150.6
+  latencyFirstChunkSeconds?: number; // e.g., 38.11
 }
 
