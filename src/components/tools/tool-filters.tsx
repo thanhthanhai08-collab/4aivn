@@ -40,7 +40,7 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
   };
 
   return (
-    <div className="mb-8 p-6 bg-card rounded-lg shadow">
+    <div className="mb-8 p-6 bg-gradient-to-br from-accent/60 via-accent/30 to-accent/10 rounded-lg shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div className="md:col-span-2">
           <label htmlFor="search-tools" className="block text-sm font-medium text-muted-foreground mb-1">
