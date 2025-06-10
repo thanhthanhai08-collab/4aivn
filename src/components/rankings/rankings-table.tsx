@@ -43,10 +43,10 @@ const renderStars = (rating?: number) => {
 
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
   const sortedItems = [...items]
-    .sort((a, b) => (b.userRating ?? -1) - (a.userRating ?? -1));
+    .sort((a, b) => (b.userRating ?? -1) - (a.userRating ?? -1)); // Sort by userRating DESC, undefined/null ratings last
 
-  let rank = 0;
-  let lastRating = Infinity;
+  let denseRankNumber = 0; // This will be incremented for each unique rating
+  let lastProcessedRating = Number.POSITIVE_INFINITY; // Initialize to a value higher than any possible rating
 
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm">
@@ -70,24 +70,24 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sortedItems.map((item, index) => {
+          {sortedItems.map((item) => {
+            let rankToDisplay: string | number = '-';
+
             if (item.userRating !== undefined && item.userRating !== null) {
-               if (item.userRating < lastRating) {
-                rank = index + 1;
-                lastRating = item.userRating;
-              } else if (item.userRating === lastRating) {
-                // Keep same rank for ties
+              if (item.userRating < lastProcessedRating) { // A new, lower rating is encountered (or first item)
+                denseRankNumber++; // Increment the rank number
+                lastProcessedRating = item.userRating; // Update the last processed rating
               }
-            } else {
-              // Items without rating are listed last without a rank number
+              // For ties (item.userRating === lastProcessedRating), denseRankNumber is not incremented
+              rankToDisplay = denseRankNumber;
             }
+            // else, item has no userRating, rankToDisplay remains '-'
             
-            const currentRankDisplay = item.userRating !== undefined && item.userRating !== null ? rank : '-';
             const modelItem = item as AIModel; // Type assertion for model specific fields
 
             return (
             <TableRow key={item.id}>
-              <TableCell className="text-center font-medium">{currentRankDisplay}</TableCell>
+              <TableCell className="text-center font-medium">{rankToDisplay}</TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
