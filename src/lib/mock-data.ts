@@ -103,31 +103,31 @@ export const mockTools: Tool[] = [
 
 export const mockAIModels: AIModel[] = [
   {
-    id: 'gpt-4o-mini', // Updated ID and name
-    name: 'GPT-4o mini (high)', // Updated name
+    id: 'gpt-4o-mini',
+    name: 'Open AI o3-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Mô hình đa phương thức lớn nhất của OpenAI, có khả năng giải quyết các vấn đề khó khăn với độ chính xác cao hơn, nhờ kiến thức tổng quát rộng hơn và khả năng lý luận tiên tiến.',
-    logoUrl: 'https://placehold.co/64x64.png?text=G4m', // Updated placeholder text
-    link: 'https://openai.com/gpt-4',
-    userRating: 4.7, // Rating from image for "GPT o4-mini (high)" - Changed from 4.8
-    features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức (văn bản, hình ảnh)', 'Khả năng sáng tạo và cộng tác'],
+    description: 'Mô hình đa phương thức tiên tiến của OpenAI, được tối ưu hóa cho hiệu suất cao.',
+    logoUrl: 'https://placehold.co/64x64.png?text=OAI3h',
+    link: 'https://openai.com/',
+    userRating: 4.7, // Sửa đổi từ 4.9 của ảnh sang 4.7 như yêu cầu trước
+    features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức', 'Khả năng sáng tạo'],
     isFavorite: true,
     contextLengthToken: '200k',
-    intelligenceScore: 70,
+    intelligenceScore: 66,
     pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 139.3,
-    latencyFirstChunkSeconds: 29.26,
+    speedTokensPerSecond: 183.3,
+    latencyFirstChunkSeconds: 40,
   },
   {
-    id: 'gemini-2.5-pro', // Updated ID and name
-    name: 'Gemini 2.5 Pro', // Updated name, omitting date for simplicity
+    id: 'gemini-2.5-pro',
+    name: 'Gemini 2.5 Pro', // Giữ tên cũ, vì trong ảnh "Gemini 2.5 Pro (Tháng 6-25)" không có chỉ số chi tiết
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
     description: 'Mô hình mạnh mẽ nhất của Google cho một loạt các tác vụ, vượt trội trong lý luận, tạo mã và hiểu đa phương thức.',
-    logoUrl: 'https://placehold.co/64x64.png?text=G2P', // Updated placeholder text
+    logoUrl: 'https://placehold.co/64x64.png?text=G2P',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
-    userRating: 4.9, // Rating from image for "Gemini 2.5 Pro (Tháng 6-25)"
+    userRating: 4.9,
     features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -137,15 +137,15 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 38.11,
   },
   {
-    id: 'claude-3-opus', // Keeping original ID
-    name: 'Claude 3 Opus', // Keeping original name, but data from "Claude 4 Opus Thinking"
+    id: 'claude-4-opus-thinking', // Đổi id và tên
+    name: 'Claude 4 Opus Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp. Nó có thể điều hướng các gợi ý mở và các kịch bản chưa từng thấy với sự trôi chảy và hiểu biết giống như con người.',
-    logoUrl: 'https://placehold.co/64x64.png?text=C3O',
-    link: 'https://www.anthropic.com/news/claude-3-family',
-    userRating: 4.8, // Rating from image for "Claude 4 Opus Thinking"
-    features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính (xử lý hình ảnh)'],
+    description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp với khả năng suy nghĩ sâu sắc.',
+    logoUrl: 'https://placehold.co/64x64.png?text=C4OT',
+    link: 'https://www.anthropic.com/news/claude-3-family', // Claude 3 family link as placeholder
+    userRating: 4.9,
+    features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính'],
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 64,
@@ -164,7 +164,6 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.7,
     features: ['Hiểu rõ gợi ý phức tạp', 'Tạo hình ảnh chất lượng cao', 'Tích hợp với ChatGPT'],
     isFavorite: false,
-    // New fields remain undefined as they are not applicable
   },
   {
     id: 'stable-diffusion-3',
@@ -176,18 +175,16 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.6,
     features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh'],
     isFavorite: false,
-    // New fields remain undefined
   },
-  // Adding new models from the image
   {
     id: 'gemini-2.5-flash-reasoning',
     name: 'Gemini 2.5 Flash (Reasoning)',
     type: 'AI Đa phương thức',
     developer: 'Google',
     description: 'Mô hình Gemini nhanh và hiệu quả cho các tác vụ suy luận, được cung cấp bởi Google.',
-    logoUrl: 'https://placehold.co/64x64.png?text=GFL',
-    link: 'https://deepmind.google/technologies/gemini/', // Generic Gemini link
-    userRating: 4.8, // Example rating, common in the image
+    logoUrl: 'https://placehold.co/64x64.png?text=GFAR',
+    link: 'https://deepmind.google/technologies/gemini/',
+    userRating: 4.9,
     features: ['Suy luận nhanh', 'Hiểu đa phương thức cơ bản', 'Tối ưu hóa tốc độ'],
     contextLengthToken: '1m',
     intelligenceScore: 65,
@@ -196,20 +193,20 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 16.01,
   },
   {
-    id: 'grok-3-mini-reasoning',
+    id: 'grok-3-mini-reasoning-high', // Original, slightly different from image's "Grok 3 Reasoning Beta"
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
     description: 'Mô hình Grok 3 mini từ xAI, tối ưu hóa cho các tác vụ suy luận phức tạp.',
     logoUrl: 'https://placehold.co/64x64.png?text=GRK',
-    link: '#', // Placeholder link
-    userRating: 4.8, // Example rating
+    link: '#',
+    userRating: 4.8,
     features: ['Suy luận logic', 'Hiểu ngữ cảnh sâu', 'Tạo văn bản mạch lạc'],
-    contextLengthToken: '1m',
-    intelligenceScore: 67,
-    pricePerMillionTokens: 0.35,
-    speedTokensPerSecond: 204.3,
-    latencyFirstChunkSeconds: 0.37,
+    contextLengthToken: '1m', // Matching image's "Grok 3 Reasoning Beta"
+    intelligenceScore: 67, // Existing value
+    pricePerMillionTokens: 0.35, // Existing value
+    speedTokensPerSecond: 204.3, // Existing value
+    latencyFirstChunkSeconds: 0.37, // Existing value
   },
   {
     id: 'qwen3-235b-reasoning',
@@ -217,15 +214,241 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 235B của Alibaba với khả năng suy luận nâng cao.',
-    logoUrl: 'https://placehold.co/64x64.png?text=QWN',
-    link: '#', // Placeholder link
-    userRating: 4.8, // Example rating
+    logoUrl: 'https://placehold.co/64x64.png?text=QW235',
+    link: '#',
+    userRating: 4.9,
     features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
     contextLengthToken: '128k',
     intelligenceScore: 62,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 70.5,
     latencyFirstChunkSeconds: 1.17,
+  },
+  // New models from image starting row 10
+  {
+    id: 'openai-o3-mini',
+    name: 'Open AI o3-mini',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Open AI',
+    description: 'Mô hình Open AI o3-mini cung cấp khả năng xử lý ngôn ngữ mạnh mẽ.',
+    logoUrl: 'https://placehold.co/64x64.png?text=OAI3m',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 63,
+    pricePerMillionTokens: 1.93,
+    speedTokensPerSecond: 153.1,
+    latencyFirstChunkSeconds: 12.37,
+  },
+  {
+    id: 'openai-o1',
+    name: 'Open AI o1',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Open AI',
+    description: 'Mô hình Open AI o1 từ OpenAI.',
+    logoUrl: 'https://placehold.co/64x64.png?text=OAIO1',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 62,
+    pricePerMillionTokens: 26.25,
+    speedTokensPerSecond: 171.9,
+    latencyFirstChunkSeconds: 17.43,
+  },
+  {
+    id: 'llama-nemotron-ultra-reasoning',
+    name: 'Llama Nemotron Ultra Reasoning',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Nvidia',
+    description: 'Mô hình Llama Nemotron Ultra Reasoning từ Nvidia, tối ưu cho suy luận.',
+    logoUrl: 'https://placehold.co/64x64.png?text=LNU',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 61,
+    pricePerMillionTokens: 0.90,
+    speedTokensPerSecond: 42,
+    latencyFirstChunkSeconds: 0.64,
+  },
+  {
+    id: 'claude-4-sonnet-thinking',
+    name: 'Claude 4 Sonnet Thinking',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Anthropic',
+    description: 'Mô hình Claude 4 Sonnet Thinking từ Anthropic với khả năng suy nghĩ.',
+    logoUrl: 'https://placehold.co/64x64.png?text=C4ST',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 61,
+    pricePerMillionTokens: 6.00,
+    speedTokensPerSecond: 60.8,
+    latencyFirstChunkSeconds: 1.28,
+  },
+  {
+    id: 'gemini-2.5-flash-apr25-reasoning',
+    name: 'Gemini 2.5 Flash (Tháng 4-25) (Reasoning)',
+    type: 'AI Đa phương thức',
+    developer: 'Google',
+    description: 'Phiên bản tháng 4-25 của Gemini 2.5 Flash, tối ưu cho suy luận.',
+    logoUrl: 'https://placehold.co/64x64.png?text=GFAP',
+    link: '#',
+    userRating: 4.8, // Based on 4.5 stars
+    contextLengthToken: '1m',
+    intelligenceScore: 60,
+    pricePerMillionTokens: 0.99,
+    speedTokensPerSecond: 397.4,
+    latencyFirstChunkSeconds: 7.68,
+  },
+  {
+    id: 'deepseek-r1-jan25',
+    name: 'DeepSeek R1 (Tháng 1-25)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Deepseek',
+    description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
+    logoUrl: 'https://placehold.co/64x64.png?text=DSR1J',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 60,
+    pricePerMillionTokens: 2.36,
+    speedTokensPerSecond: undefined, // Missing from OCR
+    latencyFirstChunkSeconds: undefined, // Missing from OCR
+  },
+  {
+    id: 'openai-o1-preview',
+    name: 'Open AI o1-preview',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Open AI',
+    description: 'Phiên bản xem trước của mô hình Open AI o1.',
+    logoUrl: 'https://placehold.co/64x64.png?text=OAIPR',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 60,
+    pricePerMillionTokens: 26.25,
+    speedTokensPerSecond: 141.4,
+    latencyFirstChunkSeconds: 26.13,
+  },
+  {
+    id: 'qwen3-32b-reasoning',
+    name: 'Qwen3 32B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình Qwen3 32B từ Alibaba, tối ưu cho suy luận.',
+    logoUrl: 'https://placehold.co/64x64.png?text=QW32R',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 59,
+    pricePerMillionTokens: 2.63,
+    speedTokensPerSecond: 61.6,
+    latencyFirstChunkSeconds: 1.09,
+  },
+  {
+    id: 'qwenq-32b',
+    name: 'QwenQ-32B',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình QwenQ-32B từ Alibaba.',
+    logoUrl: 'https://placehold.co/64x64.png?text=QQ32B',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '131k',
+    intelligenceScore: 58,
+    pricePerMillionTokens: 0.63,
+    speedTokensPerSecond: 92.9,
+    latencyFirstChunkSeconds: 0.4,
+  },
+  {
+    id: 'claude-4-opus',
+    name: 'Claude 4 Opus',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Anthropic',
+    description: 'Mô hình Claude 4 Opus của Anthropic.',
+    logoUrl: 'https://placehold.co/64x64.png?text=C4OPU',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 58,
+    pricePerMillionTokens: 30.00,
+    speedTokensPerSecond: 54.3,
+    latencyFirstChunkSeconds: 3.01,
+  },
+  {
+    id: 'claude-3.7-sonnet-thinking',
+    name: 'Claude 3.7 Sonnet Thinking',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Anthropic',
+    description: 'Mô hình Claude 3.7 Sonnet Thinking của Anthropic.',
+    logoUrl: 'https://placehold.co/64x64.png?text=C37ST',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 57,
+    pricePerMillionTokens: 6.00,
+    speedTokensPerSecond: 87.5,
+    latencyFirstChunkSeconds: 1.08,
+  },
+  {
+    id: 'openai-o1-pro',
+    name: 'Open AI o1-pro',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Open AI',
+    description: 'Phiên bản Pro của mô hình Open AI o1.',
+    logoUrl: 'https://placehold.co/64x64.png?text=OAO1P',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '200k',
+    intelligenceScore: 56,
+    pricePerMillionTokens: 262.50,
+    speedTokensPerSecond: undefined, // Missing from OCR
+    latencyFirstChunkSeconds: undefined, // Missing from OCR
+  },
+  {
+    id: 'grok-3-reasoning-beta',
+    name: 'Grok 3 Reasoning Beta',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'xAI',
+    description: 'Phiên bản Beta của Grok 3 Reasoning.',
+    logoUrl: 'https://placehold.co/64x64.png?text=G3RB',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '1m',
+    intelligenceScore: 56,
+    pricePerMillionTokens: 0.00,
+    speedTokensPerSecond: undefined, // Missing from OCR
+    latencyFirstChunkSeconds: undefined, // Missing from OCR
+  },
+  {
+    id: 'qwen3-14b-reasoning',
+    name: 'Qwen3 14B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình Qwen3 14B từ Alibaba, tối ưu cho suy luận.',
+    logoUrl: 'https://placehold.co/64x64.png?text=QW14R',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 56,
+    pricePerMillionTokens: 1.31,
+    speedTokensPerSecond: 65.5,
+    latencyFirstChunkSeconds: 1.05,
+  },
+  {
+    id: 'qwen3-30b-a3b-reasoning',
+    name: 'Qwen3 30B A3B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình Qwen3 30B A3B từ Alibaba, tối ưu cho suy luận.',
+    logoUrl: 'https://placehold.co/64x64.png?text=QW30A',
+    link: '#',
+    userRating: 4.9,
+    contextLengthToken: '128k',
+    intelligenceScore: 56,
+    pricePerMillionTokens: 0.75,
+    speedTokensPerSecond: 92.2,
+    latencyFirstChunkSeconds: 1.01,
   }
 ];
 
@@ -262,4 +485,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
