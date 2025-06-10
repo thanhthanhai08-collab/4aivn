@@ -35,8 +35,8 @@ export function ToolCard({ tool }: ToolCardProps) {
             </div>
           </div>
           {tool.ranking && (
-            <div className="flex items-center text-sm text-muted-foreground bg-accent px-2 py-1 rounded-full">
-              <ThumbsUp className="h-4 w-4 mr-1 text-primary" />
+            <div className="flex items-center text-sm text-primary bg-accent px-2 py-1 rounded-full">
+              <ThumbsUp className="h-4 w-4 mr-1" />
               #{tool.ranking}
             </div>
           )}
