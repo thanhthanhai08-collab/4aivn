@@ -110,7 +110,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình đa phương thức tiên tiến của OpenAI, được tối ưu hóa cho hiệu suất cao.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAI3h',
     link: 'https://openai.com/',
-    userRating: 4.7, // Sửa đổi từ 4.9 của ảnh sang 4.7 như yêu cầu trước
+    userRating: 4.7,
     features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức', 'Khả năng sáng tạo'],
     isFavorite: true,
     contextLengthToken: '200k',
@@ -121,13 +121,13 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'gemini-2.5-pro',
-    name: 'Gemini 2.5 Pro', // Giữ tên cũ, vì trong ảnh "Gemini 2.5 Pro (Tháng 6-25)" không có chỉ số chi tiết
+    name: 'Gemini 2.5 Pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
     description: 'Mô hình mạnh mẽ nhất của Google cho một loạt các tác vụ, vượt trội trong lý luận, tạo mã và hiểu đa phương thức.',
     logoUrl: 'https://placehold.co/64x64.png?text=G2P',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
-    userRating: 4.9,
+    userRating: 4.9, // Matches image "Gemini 2.5 Pro (Tháng 6-25)"
     features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -137,14 +137,14 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 38.11,
   },
   {
-    id: 'claude-4-opus-thinking', // Đổi id và tên
+    id: 'claude-4-opus-thinking',
     name: 'Claude 4 Opus Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp với khả năng suy nghĩ sâu sắc.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4OT',
-    link: 'https://www.anthropic.com/news/claude-3-family', // Claude 3 family link as placeholder
-    userRating: 4.9,
+    link: 'https://www.anthropic.com/news/claude-3-family',
+    userRating: 4.9, // Matches image
     features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính'],
     isFavorite: false,
     contextLengthToken: '200k',
@@ -152,18 +152,6 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 30.00,
     speedTokensPerSecond: 57.9,
     latencyFirstChunkSeconds: 3.08,
-  },
-  {
-    id: 'dall-e-3',
-    name: 'DALL·E 3',
-    type: 'Tạo hình ảnh',
-    developer: 'OpenAI',
-    description: 'Mô hình tạo hình ảnh mới nhất của OpenAI, có khả năng tạo ra hình ảnh rất chi tiết và chính xác từ mô tả văn bản.',
-    logoUrl: 'https://placehold.co/64x64.png?text=DE3',
-    link: 'https://openai.com/dall-e-3',
-    userRating: 4.7,
-    features: ['Hiểu rõ gợi ý phức tạp', 'Tạo hình ảnh chất lượng cao', 'Tích hợp với ChatGPT'],
-    isFavorite: false,
   },
   {
     id: 'stable-diffusion-3',
@@ -184,7 +172,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình Gemini nhanh và hiệu quả cho các tác vụ suy luận, được cung cấp bởi Google.',
     logoUrl: 'https://placehold.co/64x64.png?text=GFAR',
     link: 'https://deepmind.google/technologies/gemini/',
-    userRating: 4.9,
+    userRating: 4.9, // Matches image
     features: ['Suy luận nhanh', 'Hiểu đa phương thức cơ bản', 'Tối ưu hóa tốc độ'],
     contextLengthToken: '1m',
     intelligenceScore: 65,
@@ -193,20 +181,20 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 16.01,
   },
   {
-    id: 'grok-3-mini-reasoning-high', // Original, slightly different from image's "Grok 3 Reasoning Beta"
+    id: 'grok-3-mini-reasoning-high',
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
     description: 'Mô hình Grok 3 mini từ xAI, tối ưu hóa cho các tác vụ suy luận phức tạp.',
     logoUrl: 'https://placehold.co/64x64.png?text=GRK',
-    link: '#',
-    userRating: 4.8,
+    link: '#', // No official link provided in image
+    userRating: 4.8, // Matches image
     features: ['Suy luận logic', 'Hiểu ngữ cảnh sâu', 'Tạo văn bản mạch lạc'],
-    contextLengthToken: '1m', // Matching image's "Grok 3 Reasoning Beta"
-    intelligenceScore: 67, // Existing value
-    pricePerMillionTokens: 0.35, // Existing value
-    speedTokensPerSecond: 204.3, // Existing value
-    latencyFirstChunkSeconds: 0.37, // Existing value
+    contextLengthToken: '1m',
+    intelligenceScore: 67,
+    pricePerMillionTokens: 0.35,
+    speedTokensPerSecond: 204.3,
+    latencyFirstChunkSeconds: 0.37,
   },
   {
     id: 'qwen3-235b-reasoning',
@@ -215,8 +203,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 235B của Alibaba với khả năng suy luận nâng cao.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW235',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
     features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
     contextLengthToken: '128k',
     intelligenceScore: 62,
@@ -224,7 +212,6 @@ export const mockAIModels: AIModel[] = [
     speedTokensPerSecond: 70.5,
     latencyFirstChunkSeconds: 1.17,
   },
-  // New models from image starting row 10
   {
     id: 'openai-o3-mini',
     name: 'Open AI o3-mini',
@@ -232,8 +219,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Mô hình Open AI o3-mini cung cấp khả năng xử lý ngôn ngữ mạnh mẽ.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAI3m',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
     contextLengthToken: '200k',
     intelligenceScore: 63,
     pricePerMillionTokens: 1.93,
@@ -247,8 +234,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Mô hình Open AI o1 từ OpenAI.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAIO1',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
     contextLengthToken: '200k',
     intelligenceScore: 62,
     pricePerMillionTokens: 26.25,
@@ -262,8 +249,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Nvidia',
     description: 'Mô hình Llama Nemotron Ultra Reasoning từ Nvidia, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=LNU',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Suy luận tiên tiến', 'Tối ưu hóa phần cứng Nvidia', 'Khả năng mở rộng'],
     contextLengthToken: '128k',
     intelligenceScore: 61,
     pricePerMillionTokens: 0.90,
@@ -277,8 +265,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 4 Sonnet Thinking từ Anthropic với khả năng suy nghĩ.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4ST',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Cân bằng hiệu suất và tốc độ', 'Mạnh mẽ trong các tác vụ doanh nghiệp', 'An toàn và đáng tin cậy'],
     contextLengthToken: '200k',
     intelligenceScore: 61,
     pricePerMillionTokens: 6.00,
@@ -292,8 +281,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Google',
     description: 'Phiên bản tháng 4-25 của Gemini 2.5 Flash, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=GFAP',
-    link: '#',
-    userRating: 4.8, // Based on 4.5 stars
+    link: '#', // No official link provided in image
+    userRating: 4.8, // Matches image (4.5 stars rounds to 4.8 rating for consistency)
+    features: ['Suy luận nhanh và hiệu quả', 'Đa phương thức', 'Tối ưu chi phí'],
     contextLengthToken: '1m',
     intelligenceScore: 60,
     pricePerMillionTokens: 0.99,
@@ -307,13 +297,14 @@ export const mockAIModels: AIModel[] = [
     developer: 'Deepseek',
     description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
     logoUrl: 'https://placehold.co/64x64.png?text=DSR1J',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Khả năng viết mã mạnh mẽ', 'Hiểu biết ngôn ngữ sâu', 'Mô hình nguồn mở'],
     contextLengthToken: '128k',
     intelligenceScore: 60,
     pricePerMillionTokens: 2.36,
-    speedTokensPerSecond: undefined, // Missing from OCR
-    latencyFirstChunkSeconds: undefined, // Missing from OCR
+    speedTokensPerSecond: undefined,
+    latencyFirstChunkSeconds: undefined,
   },
   {
     id: 'openai-o1-preview',
@@ -322,8 +313,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Phiên bản xem trước của mô hình Open AI o1.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAIPR',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Truy cập sớm vào các tính năng mới', 'Mô hình mạnh mẽ', 'Dành cho nhà phát triển'],
     contextLengthToken: '128k',
     intelligenceScore: 60,
     pricePerMillionTokens: 26.25,
@@ -337,8 +329,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 32B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW32R',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
     intelligenceScore: 59,
     pricePerMillionTokens: 2.63,
@@ -352,8 +345,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình QwenQ-32B từ Alibaba.',
     logoUrl: 'https://placehold.co/64x64.png?text=QQ32B',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Biến thể của dòng Qwen', 'Tối ưu hóa cho các tác vụ cụ thể', 'Hiệu suất cao'],
     contextLengthToken: '131k',
     intelligenceScore: 58,
     pricePerMillionTokens: 0.63,
@@ -367,8 +361,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 4 Opus của Anthropic.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4OPU',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Khả năng lý luận hàng đầu', 'Hiểu biết sâu sắc', 'Tập trung vào an toàn'],
     contextLengthToken: '200k',
     intelligenceScore: 58,
     pricePerMillionTokens: 30.00,
@@ -382,8 +377,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 3.7 Sonnet Thinking của Anthropic.',
     logoUrl: 'https://placehold.co/64x64.png?text=C37ST',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Phiên bản cải tiến của Sonnet', 'Tăng cường khả năng suy nghĩ', 'Cân bằng giữa hiệu suất và tốc độ'],
     contextLengthToken: '200k',
     intelligenceScore: 57,
     pricePerMillionTokens: 6.00,
@@ -397,13 +393,14 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Phiên bản Pro của mô hình Open AI o1.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAO1P',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Dành cho người dùng chuyên nghiệp', 'Hiệu suất nâng cao', 'Khả năng mở rộng'],
     contextLengthToken: '200k',
     intelligenceScore: 56,
     pricePerMillionTokens: 262.50,
-    speedTokensPerSecond: undefined, // Missing from OCR
-    latencyFirstChunkSeconds: undefined, // Missing from OCR
+    speedTokensPerSecond: undefined,
+    latencyFirstChunkSeconds: undefined,
   },
   {
     id: 'grok-3-reasoning-beta',
@@ -412,13 +409,14 @@ export const mockAIModels: AIModel[] = [
     developer: 'xAI',
     description: 'Phiên bản Beta của Grok 3 Reasoning.',
     logoUrl: 'https://placehold.co/64x64.png?text=G3RB',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Truy cập sớm vào khả năng suy luận Grok 3', 'Tích hợp dữ liệu thời gian thực từ X', 'Phong cách hài hước'],
     contextLengthToken: '1m',
     intelligenceScore: 56,
     pricePerMillionTokens: 0.00,
-    speedTokensPerSecond: undefined, // Missing from OCR
-    latencyFirstChunkSeconds: undefined, // Missing from OCR
+    speedTokensPerSecond: undefined,
+    latencyFirstChunkSeconds: undefined,
   },
   {
     id: 'qwen3-14b-reasoning',
@@ -427,8 +425,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 14B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW14R',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
     contextLengthToken: '128k',
     intelligenceScore: 56,
     pricePerMillionTokens: 1.31,
@@ -442,8 +441,9 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 30B A3B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW30A',
-    link: '#',
-    userRating: 4.9,
+    link: '#', // No official link provided in image
+    userRating: 4.9, // Matches image
+    features: ['Biến thể cụ thể của Qwen3 30B', 'Tối ưu hóa cho suy luận A3B', 'Hiệu suất cao'],
     contextLengthToken: '128k',
     intelligenceScore: 56,
     pricePerMillionTokens: 0.75,
@@ -485,3 +485,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
