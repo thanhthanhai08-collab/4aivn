@@ -98,7 +98,19 @@ export const mockTools: Tool[] = [
     logoUrl: 'https://placehold.co/64x64.png?text=NAI',
     link: 'https://www.notion.so/product/ai',
     userRating: 4.2,
-  }
+  },
+  {
+    id: 'stable-diffusion-3-tool',
+    name: 'Stable Diffusion 3',
+    context: 'Tạo hình ảnh',
+    ranking: 8, // Example ranking, adjust as needed
+    description: 'Thế hệ tiếp theo của mô hình tạo hình ảnh mã nguồn mở từ Stability AI, hứa hẹn cải thiện đáng kể về chất lượng hình ảnh, hiểu gợi ý và khả năng tạo văn bản trong hình ảnh.',
+    logoUrl: 'https://placehold.co/64x64.png?text=SD3',
+    link: 'https://stability.ai/stablediffusion3', // Example link, adjust as needed
+    features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh', 'Mã nguồn mở'],
+    userRating: 4.6,
+    isFavorite: false,
+  },
 ];
 
 export const mockAIModels: AIModel[] = [
@@ -127,7 +139,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình mạnh mẽ nhất của Google cho một loạt các tác vụ, vượt trội trong lý luận, tạo mã và hiểu đa phương thức.',
     logoUrl: 'https://placehold.co/64x64.png?text=G2P',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
-    userRating: 4.9, // Matches image "Gemini 2.5 Pro (Tháng 6-25)"
+    userRating: 4.9,
     features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -144,7 +156,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình mạnh mẽ nhất của Anthropic, mang lại hiệu suất hàng đầu cho các tác vụ rất phức tạp với khả năng suy nghĩ sâu sắc.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4OT',
     link: 'https://www.anthropic.com/news/claude-3-family',
-    userRating: 4.9, // Matches image
+    userRating: 4.9,
     features: ['Phân tích và dự báo nâng cao', 'Tạo nội dung tinh vi', 'Thị giác máy tính'],
     isFavorite: false,
     contextLengthToken: '200k',
@@ -154,17 +166,6 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 3.08,
   },
   {
-    id: 'stable-diffusion-3',
-    name: 'Stable Diffusion 3',
-    type: 'Tạo hình ảnh',
-    developer: 'Stability AI',
-    description: 'Thế hệ tiếp theo của mô hình tạo hình ảnh mã nguồn mở từ Stability AI, hứa hẹn cải thiện đáng kể về chất lượng hình ảnh, hiểu gợi ý và khả năng tạo văn bản trong hình ảnh.',
-    logoUrl: 'https://placehold.co/64x64.png?text=SD3',
-    userRating: 4.6,
-    features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh'],
-    isFavorite: false,
-  },
-  {
     id: 'gemini-2.5-flash-reasoning',
     name: 'Gemini 2.5 Flash (Reasoning)',
     type: 'AI Đa phương thức',
@@ -172,7 +173,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình Gemini nhanh và hiệu quả cho các tác vụ suy luận, được cung cấp bởi Google.',
     logoUrl: 'https://placehold.co/64x64.png?text=GFAR',
     link: 'https://deepmind.google/technologies/gemini/',
-    userRating: 4.9, // Matches image
+    userRating: 4.9,
     features: ['Suy luận nhanh', 'Hiểu đa phương thức cơ bản', 'Tối ưu hóa tốc độ'],
     contextLengthToken: '1m',
     intelligenceScore: 65,
@@ -187,8 +188,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'xAI',
     description: 'Mô hình Grok 3 mini từ xAI, tối ưu hóa cho các tác vụ suy luận phức tạp.',
     logoUrl: 'https://placehold.co/64x64.png?text=GRK',
-    link: '#', // No official link provided in image
-    userRating: 4.8, // Matches image
+    link: '#', 
+    userRating: 4.8, 
     features: ['Suy luận logic', 'Hiểu ngữ cảnh sâu', 'Tạo văn bản mạch lạc'],
     contextLengthToken: '1m',
     intelligenceScore: 67,
@@ -203,8 +204,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 235B của Alibaba với khả năng suy luận nâng cao.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW235',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
     contextLengthToken: '128k',
     intelligenceScore: 62,
@@ -219,8 +220,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Mô hình Open AI o3-mini cung cấp khả năng xử lý ngôn ngữ mạnh mẽ.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAI3m',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     contextLengthToken: '200k',
     intelligenceScore: 63,
     pricePerMillionTokens: 1.93,
@@ -234,8 +235,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Mô hình Open AI o1 từ OpenAI.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAIO1',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     contextLengthToken: '200k',
     intelligenceScore: 62,
     pricePerMillionTokens: 26.25,
@@ -249,8 +250,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Nvidia',
     description: 'Mô hình Llama Nemotron Ultra Reasoning từ Nvidia, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=LNU',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Suy luận tiên tiến', 'Tối ưu hóa phần cứng Nvidia', 'Khả năng mở rộng'],
     contextLengthToken: '128k',
     intelligenceScore: 61,
@@ -265,8 +266,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 4 Sonnet Thinking từ Anthropic với khả năng suy nghĩ.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4ST',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Cân bằng hiệu suất và tốc độ', 'Mạnh mẽ trong các tác vụ doanh nghiệp', 'An toàn và đáng tin cậy'],
     contextLengthToken: '200k',
     intelligenceScore: 61,
@@ -281,8 +282,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Google',
     description: 'Phiên bản tháng 4-25 của Gemini 2.5 Flash, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=GFAP',
-    link: '#', // No official link provided in image
-    userRating: 4.8, // Matches image (4.5 stars rounds to 4.8 rating for consistency)
+    link: '#', 
+    userRating: 4.8, 
     features: ['Suy luận nhanh và hiệu quả', 'Đa phương thức', 'Tối ưu chi phí'],
     contextLengthToken: '1m',
     intelligenceScore: 60,
@@ -297,8 +298,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Deepseek',
     description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
     logoUrl: 'https://placehold.co/64x64.png?text=DSR1J',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Khả năng viết mã mạnh mẽ', 'Hiểu biết ngôn ngữ sâu', 'Mô hình nguồn mở'],
     contextLengthToken: '128k',
     intelligenceScore: 60,
@@ -313,8 +314,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Phiên bản xem trước của mô hình Open AI o1.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAIPR',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Truy cập sớm vào các tính năng mới', 'Mô hình mạnh mẽ', 'Dành cho nhà phát triển'],
     contextLengthToken: '128k',
     intelligenceScore: 60,
@@ -329,8 +330,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 32B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW32R',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
     intelligenceScore: 59,
@@ -345,8 +346,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình QwenQ-32B từ Alibaba.',
     logoUrl: 'https://placehold.co/64x64.png?text=QQ32B',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Biến thể của dòng Qwen', 'Tối ưu hóa cho các tác vụ cụ thể', 'Hiệu suất cao'],
     contextLengthToken: '131k',
     intelligenceScore: 58,
@@ -361,8 +362,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 4 Opus của Anthropic.',
     logoUrl: 'https://placehold.co/64x64.png?text=C4OPU',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Khả năng lý luận hàng đầu', 'Hiểu biết sâu sắc', 'Tập trung vào an toàn'],
     contextLengthToken: '200k',
     intelligenceScore: 58,
@@ -377,8 +378,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: 'Mô hình Claude 3.7 Sonnet Thinking của Anthropic.',
     logoUrl: 'https://placehold.co/64x64.png?text=C37ST',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Phiên bản cải tiến của Sonnet', 'Tăng cường khả năng suy nghĩ', 'Cân bằng giữa hiệu suất và tốc độ'],
     contextLengthToken: '200k',
     intelligenceScore: 57,
@@ -393,8 +394,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Open AI',
     description: 'Phiên bản Pro của mô hình Open AI o1.',
     logoUrl: 'https://placehold.co/64x64.png?text=OAO1P',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Dành cho người dùng chuyên nghiệp', 'Hiệu suất nâng cao', 'Khả năng mở rộng'],
     contextLengthToken: '200k',
     intelligenceScore: 56,
@@ -409,8 +410,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'xAI',
     description: 'Phiên bản Beta của Grok 3 Reasoning.',
     logoUrl: 'https://placehold.co/64x64.png?text=G3RB',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Truy cập sớm vào khả năng suy luận Grok 3', 'Tích hợp dữ liệu thời gian thực từ X', 'Phong cách hài hước'],
     contextLengthToken: '1m',
     intelligenceScore: 56,
@@ -425,8 +426,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 14B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW14R',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
     contextLengthToken: '128k',
     intelligenceScore: 56,
@@ -441,8 +442,8 @@ export const mockAIModels: AIModel[] = [
     developer: 'Alibaba',
     description: 'Mô hình Qwen3 30B A3B từ Alibaba, tối ưu cho suy luận.',
     logoUrl: 'https://placehold.co/64x64.png?text=QW30A',
-    link: '#', // No official link provided in image
-    userRating: 4.9, // Matches image
+    link: '#', 
+    userRating: 4.9, 
     features: ['Biến thể cụ thể của Qwen3 30B', 'Tối ưu hóa cho suy luận A3B', 'Hiệu suất cao'],
     contextLengthToken: '128k',
     intelligenceScore: 56,
@@ -486,3 +487,5 @@ export const mockNews: NewsArticle[] = [
   },
 ];
 
+
+    
