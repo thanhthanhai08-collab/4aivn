@@ -110,7 +110,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Mô hình đa phương thức lớn nhất của OpenAI, có khả năng giải quyết các vấn đề khó khăn với độ chính xác cao hơn, nhờ kiến thức tổng quát rộng hơn và khả năng lý luận tiên tiến.',
     logoUrl: 'https://placehold.co/64x64.png?text=G4m', // Updated placeholder text
     link: 'https://openai.com/gpt-4',
-    userRating: 4.8, // Rating from image for "GPT o4-mini (high)"
+    userRating: 4.7, // Rating from image for "GPT o4-mini (high)" - Changed from 4.8
     features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức (văn bản, hình ảnh)', 'Khả năng sáng tạo và cộng tác'],
     isFavorite: true,
     contextLengthToken: '200k',
@@ -262,3 +262,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
