@@ -66,7 +66,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               </>
             )}
             <TableHead className="text-center min-w-[120px]">Đánh giá</TableHead>
-            <TableHead className="text-right min-w-[120px]">Liên kết</TableHead>
+            {/* <TableHead className="text-right min-w-[120px]">Liên kết</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -137,6 +137,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               <TableCell className="text-center">
                 {renderStars(item.userRating)}
               </TableCell>
+              {/* 
               <TableCell className="text-right">
                 {item.link && (
                   <Button variant="ghost" size="sm" asChild>
@@ -147,6 +148,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   </Button>
                 )}
               </TableCell>
+              */}
             </TableRow>
           )})}
         </TableBody>
