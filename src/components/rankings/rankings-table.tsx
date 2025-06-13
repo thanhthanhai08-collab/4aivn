@@ -43,10 +43,34 @@ const renderStars = (rating?: number) => {
 
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
   const sortedItems = [...items]
-    .sort((a, b) => (b.userRating ?? -1) - (a.userRating ?? -1)); // Sort by userRating DESC, undefined/null ratings last
+    .sort((a, b) => {
+      if (itemType === 'model') {
+        const modelA = a as AIModel;
+        const modelB = b as AIModel;
+
+        // Primary sort: intelligenceScore (descending), undefined/null last
+        const intelA = modelA.intelligenceScore ?? -Infinity;
+        const intelB = modelB.intelligenceScore ?? -Infinity;
+        if (intelB !== intelA) {
+          return intelB - intelA;
+        }
+
+        // Secondary sort: userRating (descending), undefined/null last
+        const ratingA = modelA.userRating ?? -Infinity;
+        const ratingB = modelB.userRating ?? -Infinity;
+        return ratingB - ratingA;
+      } else { // Tool: sort by userRating only
+        const ratingA = a.userRating ?? -Infinity;
+        const ratingB = b.userRating ?? -Infinity;
+        return ratingB - ratingA;
+      }
+    });
 
   let denseRankNumber = 0; 
-  let lastProcessedRating = Number.POSITIVE_INFINITY;
+  let lastProcessedIntelScore = Number.POSITIVE_INFINITY;
+  let lastProcessedUserRating = Number.POSITIVE_INFINITY; // For models
+  let lastProcessedToolUserRating = Number.POSITIVE_INFINITY; // For tools
+
 
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm">
@@ -66,22 +90,39 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               </>
             )}
             <TableHead className="text-center min-w-[120px]">Đánh giá</TableHead>
-            
           </TableRow>
         </TableHeader>
         <TableBody>
           {sortedItems.map((item) => {
             let rankToDisplay: string | number = '-';
+            const currentItemIsModel = itemType === 'model';
+            
+            if (currentItemIsModel) {
+              const modelItem = item as AIModel;
+              // Only assign rank if intelligenceScore is defined for models, otherwise it remains '-'
+              if (modelItem.intelligenceScore !== undefined && modelItem.intelligenceScore !== null) {
+                  const currentIntel = modelItem.intelligenceScore;
+                  const currentUserRating = modelItem.userRating ?? -Infinity; // Use -Infinity for undefined ratings in comparison
 
-            if (item.userRating !== undefined && item.userRating !== null) {
-              if (item.userRating < lastProcessedRating) { 
-                denseRankNumber++; 
-                lastProcessedRating = item.userRating; 
+                  if (currentIntel < lastProcessedIntelScore || 
+                      (currentIntel === lastProcessedIntelScore && currentUserRating < lastProcessedUserRating)) {
+                      denseRankNumber++;
+                  }
+                  rankToDisplay = denseRankNumber;
+                  lastProcessedIntelScore = currentIntel;
+                  lastProcessedUserRating = currentUserRating;
               }
-              rankToDisplay = denseRankNumber;
+            } else { // Tool itemType
+              if (item.userRating !== undefined && item.userRating !== null) {
+                  if (item.userRating < lastProcessedToolUserRating) {
+                      denseRankNumber++; 
+                  }
+                  rankToDisplay = denseRankNumber;
+                  lastProcessedToolUserRating = item.userRating;
+              }
             }
             
-            const modelItem = item as AIModel; 
+            const modelItemForDetails = item as AIModel; 
 
             return (
             <TableRow key={item.id}>
@@ -114,28 +155,27 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 {itemType === 'tool' ? (
                   <Badge variant="outline">{(item as Tool).context}</Badge>
                 ) : (
-                  <span className="text-sm">{modelItem.developer}</span>
+                  <span className="text-sm">{modelItemForDetails.developer}</span>
                 )}
               </TableCell>
               {itemType === 'model' && (
                 <>
-                  <TableCell className="text-center">{modelItem.contextLengthToken || '-'}</TableCell>
-                  <TableCell className="text-center">{modelItem.intelligenceScore !== undefined ? modelItem.intelligenceScore : '-'}</TableCell>
+                  <TableCell className="text-center">{modelItemForDetails.contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center">{modelItemForDetails.intelligenceScore !== undefined ? modelItemForDetails.intelligenceScore : '-'}</TableCell>
                   <TableCell className="text-right">
-                    {modelItem.pricePerMillionTokens !== undefined ? `$${modelItem.pricePerMillionTokens.toFixed(2)}` : '-'}
+                    {modelItemForDetails.pricePerMillionTokens !== undefined ? `$${modelItemForDetails.pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
                   <TableCell className="text-right">
-                    {modelItem.speedTokensPerSecond !== undefined ? modelItem.speedTokensPerSecond.toFixed(1) : '-'}
+                    {modelItemForDetails.speedTokensPerSecond !== undefined ? modelItemForDetails.speedTokensPerSecond.toFixed(1) : '-'}
                   </TableCell>
                   <TableCell className="text-right">
-                    {modelItem.latencyFirstChunkSeconds !== undefined ? modelItem.latencyFirstChunkSeconds.toFixed(2) : '-'}
+                    {modelItemForDetails.latencyFirstChunkSeconds !== undefined ? modelItemForDetails.latencyFirstChunkSeconds.toFixed(2) : '-'}
                   </TableCell>
                 </>
               )}
               <TableCell className="text-center">
                 {renderStars(item.userRating)}
               </TableCell>
-              
             </TableRow>
           )})}
         </TableBody>
