@@ -58,7 +58,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             <TableHead className="min-w-[120px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
             {itemType === 'model' && (
               <>
-                <TableHead className="text-center min-w-[120px]">Ngữ cảnh (token)</TableHead>
+                <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
                 <TableHead className="text-center min-w-[100px]">Thông minh</TableHead>
                 <TableHead className="text-right min-w-[100px]">Giá ($/1M)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
@@ -66,7 +66,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               </>
             )}
             <TableHead className="text-center min-w-[120px]">Đánh giá</TableHead>
-            {/* <TableHead className="text-right min-w-[120px]">Liên kết</TableHead> */}
+            
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -137,18 +137,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               <TableCell className="text-center">
                 {renderStars(item.userRating)}
               </TableCell>
-              {/* 
-              <TableCell className="text-right">
-                {item.link && (
-                  <Button variant="ghost" size="sm" asChild>
-                    <a href={item.link} target="_blank" rel="noopener noreferrer">
-                      {itemType === 'tool' ? 'Truy cập' : 'Chi tiết'}
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                )}
-              </TableCell>
-              */}
+              
             </TableRow>
           )})}
         </TableBody>
@@ -161,3 +150,4 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
     </div>
   );
 }
+
