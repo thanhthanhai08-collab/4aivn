@@ -45,8 +45,8 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
   const sortedItems = [...items]
     .sort((a, b) => (b.userRating ?? -1) - (a.userRating ?? -1)); // Sort by userRating DESC, undefined/null ratings last
 
-  let denseRankNumber = 0; // This will be incremented for each unique rating
-  let lastProcessedRating = Number.POSITIVE_INFINITY; // Initialize to a value higher than any possible rating
+  let denseRankNumber = 0; 
+  let lastProcessedRating = Number.POSITIVE_INFINITY;
 
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm">
@@ -74,16 +74,14 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             let rankToDisplay: string | number = '-';
 
             if (item.userRating !== undefined && item.userRating !== null) {
-              if (item.userRating < lastProcessedRating) { // A new, lower rating is encountered (or first item)
-                denseRankNumber++; // Increment the rank number
-                lastProcessedRating = item.userRating; // Update the last processed rating
+              if (item.userRating < lastProcessedRating) { 
+                denseRankNumber++; 
+                lastProcessedRating = item.userRating; 
               }
-              // For ties (item.userRating === lastProcessedRating), denseRankNumber is not incremented
               rankToDisplay = denseRankNumber;
             }
-            // else, item has no userRating, rankToDisplay remains '-'
             
-            const modelItem = item as AIModel; // Type assertion for model specific fields
+            const modelItem = item as AIModel; 
 
             return (
             <TableRow key={item.id}>
@@ -150,4 +148,3 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
     </div>
   );
 }
-
