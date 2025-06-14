@@ -78,7 +78,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         <TableHeader>
           <TableRow>
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
-            <TableHead className="min-w-[250px]">Tên</TableHead>
+            <TableHead className="min-w-[250px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
             <TableHead className="min-w-[120px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
             {itemType === 'model' && (
               <>
@@ -188,3 +188,4 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
     </div>
   );
 }
+
