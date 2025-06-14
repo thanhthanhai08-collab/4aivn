@@ -63,7 +63,7 @@ export const mockTools: Tool[] = [
     context: 'Tự động hóa',
     ranking: 5,
     description: 'Công cụ tự động hóa quy trình làm việc dựa trên node, miễn phí và mã nguồn mở. Dễ dàng tự động hóa các tác vụ trên các dịch vụ khác nhau.',
-    logoUrl: '/image/logo n8n.png',
+    logoUrl: '/image/Logo n8n.png',
     link: 'https://n8n.io/',
     features: ['Tự động hóa quy trình làm việc', 'No-code/low-code', 'Tích hợp có thể mở rộng'],
     userRating: 4.5,
@@ -592,5 +592,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
