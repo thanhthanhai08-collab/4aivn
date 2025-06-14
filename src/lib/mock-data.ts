@@ -283,7 +283,7 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Deepseek',
     description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
-    logoUrl: 'https://placehold.co/64x64.png?text=DSR1J',
+    logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     userRating: 4.9,
     features: ['Khả năng viết mã mạnh mẽ', 'Hiểu biết ngôn ngữ sâu', 'Mô hình nguồn mở'],
