@@ -251,7 +251,7 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Nvidia',
     description: 'Mô hình Llama Nemotron Ultra Reasoning từ Nvidia, tối ưu cho suy luận.',
-    logoUrl: 'https://placehold.co/64x64.png?text=LNU',
+    logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png',
     link: '#', 
     userRating: 4.9,
     features: ['Suy luận tiên tiến', 'Tối ưu hóa phần cứng Nvidia', 'Khả năng mở rộng'],
@@ -529,7 +529,7 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Meta',
     description: 'Mô hình Llama 4 Maverick từ Meta, một phần của dòng mô hình Llama mã nguồn mở mạnh mẽ.',
-    logoUrl: 'https://placehold.co/64x64.png?text=LLM4M', 
+    logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png', 
     link: 'https://ai.meta.com/llama/',
     userRating: 4.4,
     features: ['Mã nguồn mở', 'Hiệu suất cao', 'Khả năng tùy chỉnh'],
@@ -593,5 +593,7 @@ export const mockNews: NewsArticle[] = [
   },
 ];
 
+
+    
 
     
