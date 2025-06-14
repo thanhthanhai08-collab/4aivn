@@ -44,7 +44,10 @@ const renderStars = (rating?: number) => {
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
   const sortedItems = [...items]
     .sort((a, b) => {
-      if (itemType === 'model') {
+      const itemAIsModel = itemType === 'model';
+      const itemBIsModel = itemType === 'model';
+
+      if (itemAIsModel && itemBIsModel) {
         const modelA = a as AIModel;
         const modelB = b as AIModel;
 
@@ -58,18 +61,26 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         // Secondary sort: userRating (descending), undefined/null last
         const ratingA = modelA.userRating ?? -Infinity;
         const ratingB = modelB.userRating ?? -Infinity;
-        return ratingB - ratingA;
-      } else { // Tool: sort by userRating only
+        if (ratingB !== ratingA) {
+          return ratingB - ratingA;
+        }
+        // Tertiary sort: by name if both primary and secondary are equal
+        return modelA.name.localeCompare(modelB.name);
+
+      } else { // Tool: sort by userRating only, then by name
         const ratingA = a.userRating ?? -Infinity;
         const ratingB = b.userRating ?? -Infinity;
-        return ratingB - ratingA;
+         if (ratingB !== ratingA) {
+          return ratingB - ratingA;
+        }
+        return a.name.localeCompare(b.name);
       }
     });
 
   let denseRankNumber = 0; 
   let lastProcessedIntelScore = Number.POSITIVE_INFINITY;
-  let lastProcessedUserRating = Number.POSITIVE_INFINITY; // For models
-  let lastProcessedToolUserRating = Number.POSITIVE_INFINITY; // For tools
+  let lastProcessedUserRatingForModel = Number.POSITIVE_INFINITY;
+  let lastProcessedToolUserRating = Number.POSITIVE_INFINITY;
 
 
   return (
@@ -82,9 +93,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             <TableHead className="min-w-[120px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
             {itemType === 'model' && (
               <>
-                <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
+                <TableHead className="text-center min-w-[140px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
                 <TableHead className="text-center min-w-[100px]">Thông minh</TableHead>
-                <TableHead className="text-right min-w-[100px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
+                <TableHead className="text-right min-w-[160px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
               </>
@@ -99,20 +110,19 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             
             if (currentItemIsModel) {
               const modelItem = item as AIModel;
-              // Only assign rank if intelligenceScore is defined for models, otherwise it remains '-'
               if (modelItem.intelligenceScore !== undefined && modelItem.intelligenceScore !== null) {
                   const currentIntel = modelItem.intelligenceScore;
-                  const currentUserRating = modelItem.userRating ?? -Infinity; // Use -Infinity for undefined ratings in comparison
+                  const currentUserRating = modelItem.userRating ?? -Infinity;
 
                   if (currentIntel < lastProcessedIntelScore || 
-                      (currentIntel === lastProcessedIntelScore && currentUserRating < lastProcessedUserRating)) {
+                      (currentIntel === lastProcessedIntelScore && currentUserRating < lastProcessedUserRatingForModel)) {
                       denseRankNumber++;
                   }
                   rankToDisplay = denseRankNumber;
                   lastProcessedIntelScore = currentIntel;
-                  lastProcessedUserRating = currentUserRating;
+                  lastProcessedUserRatingForModel = currentUserRating;
               }
-            } else { // Tool itemType
+            } else { 
               if (item.userRating !== undefined && item.userRating !== null) {
                   if (item.userRating < lastProcessedToolUserRating) {
                       denseRankNumber++; 
