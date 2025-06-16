@@ -95,7 +95,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               <>
                 <TableHead className="text-center min-w-[150px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
                 <TableHead className="text-center min-w-[100px]">Thông minh</TableHead>
-                <TableHead className="text-right min-w-[160px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
+                <TableHead className="text-center min-w-[160px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
               </>
@@ -172,7 +172,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 <>
                   <TableCell className="text-center">{modelItemForDetails.contextLengthToken || '-'}</TableCell>
                   <TableCell className="text-center">{modelItemForDetails.intelligenceScore !== undefined ? modelItemForDetails.intelligenceScore : '-'}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-center">
                     {modelItemForDetails.pricePerMillionTokens !== undefined ? `$${modelItemForDetails.pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
                   <TableCell className="text-right">
