@@ -94,7 +94,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             {itemType === 'model' && (
               <>
                 <TableHead className="text-center min-w-[150px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
-                <TableHead className="text-center min-w-[100px]">Thông minh</TableHead>
+                <TableHead className="text-center min-w-[100px]">Chỉ số thông minh</TableHead>
                 <TableHead className="text-center min-w-[160px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
