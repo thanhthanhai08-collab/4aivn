@@ -119,7 +119,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
-    description: 'Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal) mạnh mẽ nhất trong dòng Gemini do Google phát triển.<br> Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như văn bản, hình ảnh, video, âm thanh.<br> Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code), video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.<br> Bạn có thể dùng thử Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng Stream.',
+    description: 'Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal)<br>mạnh mẽ nhất trong dòng Gemini do Google phát triển.<br>Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như<br>văn bản, hình ảnh, video, âm thanh.<br>Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ<br>hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ<br>vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code),<br>video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.<br>Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini<br>API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người<br>dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực<br>tiếp và chia sẻ màn hình trong tính năng stream.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
@@ -603,10 +603,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
-
-
-
