@@ -119,7 +119,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
-    description: 'Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal)<br>mạnh mẽ nhất trong dòng Gemini do Google phát triển.<br>Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như<br>văn bản, hình ảnh, video, âm thanh.<br>Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ<br>hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ<br>vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code),<br>video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.<br>Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini<br>API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người<br>dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực<br>tiếp và chia sẻ màn hình trong tính năng stream.',
+    description: `Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal) mạnh mẽ nhất trong dòng Gemini do Google phát triển.
+Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như văn bản, hình ảnh, video, âm thanh.
+Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code), video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.
+Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng stream.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
@@ -321,6 +324,22 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 26.13,
   },
   {
+    id: 'qwen3-14b-reasoning',
+    name: 'Qwen3 14B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Mô hình Qwen3 14B từ Alibaba, tối ưu cho suy luận.',
+    logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
+    link: '#',
+    userRating: 4.9,
+    features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
+    contextLengthToken: '128k',
+    intelligenceScore: 56, // Corrected from previous 59 based on your image re-ordering
+    pricePerMillionTokens: 1.31,
+    speedTokensPerSecond: 65.5,
+    latencyFirstChunkSeconds: 1.05,
+  },
+  {
     id: 'qwen3-32b-reasoning',
     name: 'Qwen3 32B (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
@@ -331,7 +350,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.9,
     features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
-    intelligenceScore: 59,
+    intelligenceScore: 59, // Corrected from previous 56
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 61.6,
     latencyFirstChunkSeconds: 1.09,
@@ -416,22 +435,6 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 0.00,
     speedTokensPerSecond: undefined,
     latencyFirstChunkSeconds: undefined,
-  },
-  {
-    id: 'qwen3-14b-reasoning',
-    name: 'Qwen3 14B (Reasoning)',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'Alibaba',
-    description: 'Mô hình Qwen3 14B từ Alibaba, tối ưu cho suy luận.',
-    logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
-    link: '#',
-    userRating: 4.9,
-    features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
-    contextLengthToken: '128k',
-    intelligenceScore: 56,
-    pricePerMillionTokens: 1.31,
-    speedTokensPerSecond: 65.5,
-    latencyFirstChunkSeconds: 1.05,
   },
   {
     id: 'qwen3-30b-a3b-reasoning',
