@@ -124,9 +124,6 @@ export const mockAIModels: AIModel[] = [
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
     features: [
-      'Đa phương thức (văn bản, mã, hình ảnh, video)', 
-      'Hiệu suất cao trên nhiều lĩnh vực', 
-      'Tối ưu hóa cho khả năng mở rộng',
       "AIME 2025: ~92% → Mô hình đạt điểm số rất cao trong kỳ thi toán học Olympic Mỹ, thể hiện khả năng giải quyết bài toán logic phức tạp.",
       "GPQA: ~91% → Trả lời chính xác câu hỏi vật lý bậc đại học.",
       "MMLU: ~83% → Thể hiện sự hiểu biết rộng trên nhiều lĩnh vực từ y khoa, lịch sử, tâm lý học đến kỹ thuật.",
@@ -606,6 +603,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
