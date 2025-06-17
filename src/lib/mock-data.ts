@@ -123,7 +123,21 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
-    features: ['Đa phương thức (văn bản, mã, hình ảnh, video)', 'Hiệu suất cao trên nhiều lĩnh vực', 'Tối ưu hóa cho khả năng mở rộng'],
+    features: [
+      'Đa phương thức (văn bản, mã, hình ảnh, video)', 
+      'Hiệu suất cao trên nhiều lĩnh vực', 
+      'Tối ưu hóa cho khả năng mở rộng',
+      "AIME 2025: ~92% → Mô hình đạt điểm số rất cao trong kỳ thi toán học Olympic Mỹ, thể hiện khả năng giải quyết bài toán logic phức tạp.",
+      "GPQA: ~91% → Trả lời chính xác câu hỏi vật lý bậc đại học.",
+      "MMLU: ~83% → Thể hiện sự hiểu biết rộng trên nhiều lĩnh vực từ y khoa, lịch sử, tâm lý học đến kỹ thuật.",
+      "FACTS Grounding: ~92% → Nhận biết và xác minh thông tin thực tế tốt.",
+      "Vibe-Eval & SimpleQA: >70% → Giải thích mượt mà và trực quan các câu hỏi ngắn gọn và cảm xúc phức tạp.",
+      "Video+MMMU: ~90% → Phân tích thông tin từ video kết hợp với dữ liệu văn bản và hình ảnh.",
+      "SWE-Bench Verified: ~75% → Hiệu suất tốt trong kiểm tra, hiểu, và sửa lỗi phần mềm.",
+      "LiveCodeBench: ~80% → Đáp ứng yêu cầu viết mã theo thời gian thực.",
+      "Aider-Polyglot: ~89% → Hiểu nhiều ngôn ngữ và suy luận đa văn hóa.",
+      "MRCR v2 (8-needle): ~68% → Xử lý bài kiểm tra lý luận đa chiều hiệu quả."
+    ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 70,
@@ -592,6 +606,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
