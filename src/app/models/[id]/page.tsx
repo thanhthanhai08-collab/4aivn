@@ -38,7 +38,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
       setIsFavorite(foundModel.isFavorite || false);
       setCurrentRating(foundModel.userRating || 0);
 
-      if (foundModel.description.length < 100 && foundModel.description.length > 0) {
+      if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') { // Avoid regenerating for already detailed description
         generateAiModelDescription({ 
             name: foundModel.name, 
             type: foundModel.type, 
@@ -156,12 +156,21 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {model.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                    {model.features.map((feature, index) => {
+                      const isSubItem = feature.startsWith("• ");
+                      return (
+                        <li key={index} className="flex items-start">
+                          {!isSubItem ? (
+                            <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
+                          ) : (
+                            // Spacer for sub-items to align their text content
+                            // Width of icon (w-5 is 1.25rem) + margin-right (mr-2 is 0.5rem) = 1.75rem
+                            <div className="w-[1.75rem] shrink-0"></div>
+                          )}
+                          <span>{feature}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </CardContent>
               </Card>
