@@ -127,16 +127,21 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
     features: [
-      "AIME 2025: ~92% → Mô hình đạt điểm số rất cao trong kỳ thi toán học Olympic Mỹ, thể hiện khả năng giải quyết bài toán logic phức tạp.",
-      "GPQA: ~91% → Trả lời chính xác câu hỏi vật lý bậc đại học.",
-      "MMLU: ~83% → Thể hiện sự hiểu biết rộng trên nhiều lĩnh vực từ y khoa, lịch sử, tâm lý học đến kỹ thuật.",
-      "FACTS Grounding: ~92% → Nhận biết và xác minh thông tin thực tế tốt.",
-      "Vibe-Eval & SimpleQA: >70% → Giải thích mượt mà và trực quan các câu hỏi ngắn gọn và cảm xúc phức tạp.",
-      "Video+MMMU: ~90% → Phân tích thông tin từ video kết hợp với dữ liệu văn bản và hình ảnh.",
-      "SWE-Bench Verified: ~75% → Hiệu suất tốt trong kiểm tra, hiểu, và sửa lỗi phần mềm.",
-      "LiveCodeBench: ~80% → Đáp ứng yêu cầu viết mã theo thời gian thực.",
-      "Aider-Polyglot: ~89% → Hiểu nhiều ngôn ngữ và suy luận đa văn hóa.",
-      "MRCR v2 (8-needle): ~68% → Xử lý bài kiểm tra lý luận đa chiều hiệu quả."
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là:",
+      "MMLU-Pro (Reasoning & Knowledge) 86%",
+      "GPQA Diamond (Scientific Reasoning) 84%",
+      "Humanity's Last Exam (Reasoning & Knowledge) 21%",
+      "LiveCodeBench (Coding) 80%",
+      "SciCode (Coding) 43%",
+      "HumanEval (Coding)",
+      "MATH-500 (quantitative reasoning) 97%",
+      "AIME 2024 (Competition Math) 88%",
+      "Giá trung bình 3.44 USD/ 1 triệu token → Dựa trên các thông số giá:",
+      "Giá đầu vào 1.25 USD / 1 triệu token.",
+      "Giá đầu ra 10 USD /1 triệu token.",
+      "Tốc độ sinh token khá nhanh là 143.9 token /s.",
+      "Độ trễ 36.27s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -334,7 +339,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
     contextLengthToken: '128k',
-    intelligenceScore: 56, // Corrected from previous 59 based on your image re-ordering
+    intelligenceScore: 59,
     pricePerMillionTokens: 1.31,
     speedTokensPerSecond: 65.5,
     latencyFirstChunkSeconds: 1.05,
@@ -350,7 +355,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
-    intelligenceScore: 59, // Corrected from previous 56
+    intelligenceScore: 56,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 61.6,
     latencyFirstChunkSeconds: 1.09,
@@ -606,3 +611,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
