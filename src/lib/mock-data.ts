@@ -139,7 +139,7 @@ export const mockAIModels: AIModel[] = [
       "• AIME 2024 (Competition Math) 88%",
       "Giá trung bình 3.44 USD/ 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 1.25 USD / 1 triệu token.",
-      "• Giá đầu ra 10 USD /1 triệu token.",
+      "• Giá đầu ra 10 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 143.9 token /s.",
       "Độ trễ 36.27s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
@@ -611,3 +611,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
