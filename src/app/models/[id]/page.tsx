@@ -1,3 +1,4 @@
+
 // src/app/models/[id]/page.tsx
 "use client";
 
@@ -167,7 +168,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
                             // Width of icon (w-5 is 1.25rem) + margin-right (mr-2 is 0.5rem) = 1.75rem
                             <div className="w-[1.75rem] shrink-0"></div>
                           )}
-                          <span>{feature}</span>
+                          <span className="text-card-foreground">{feature}</span>
                         </li>
                       );
                     })}
