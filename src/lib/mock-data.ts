@@ -157,17 +157,33 @@ export const mockAIModels: AIModel[] = [
     developer: 'xAI',
     description: `+ Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
 + Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
-+ Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra .
++ Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra.
 + Phong cách phản hồi tự nhiên, thân thiện được học từ những người dùng mạng xã hội X nên Grok 3 và Grok 3 mini được đánh giá rất cao với cách trả lời gần gũi, hài hước và dễ tiếp cận với người dùng Việt Nam.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.8,
-    features: ['Suy luận logic', 'Hiểu ngữ cảnh sâu', 'Tạo văn bản mạch lạc'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 67 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 83%",
+      "• GPQA Diamond (Scientific Reasoning) 79%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 11.1%",
+      "• LiveCodeBench (Coding) 70%",
+      "• SciCode (Coding) 41%",
+      "• HumanEval (Coding) 98%",
+      "• MATH-500 (quantitative reasoning) 99%",
+      "• AIME 2024 (Competition Math) 93%",
+      "Giá trung bình 0.35 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 0.3 USD / 1 triệu token.",
+      "• Giá đầu ra 0.5 USD / 1 triệu token.",
+      "Tốc độ sinh token khá nhanh là 209.2 token /s.",
+      "Độ trễ 0.32s là thời gian chờ trung bình cực nhanh từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     contextLengthToken: '1m',
     intelligenceScore: 67,
     pricePerMillionTokens: 0.35,
-    speedTokensPerSecond: 204.3,
-    latencyFirstChunkSeconds: 0.37,
+    speedTokensPerSecond: 209.2,
+    latencyFirstChunkSeconds: 0.32,
   },
   {
     id: 'openai-o3-mini-high',
