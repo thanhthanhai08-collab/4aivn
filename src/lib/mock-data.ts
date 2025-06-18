@@ -155,7 +155,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: 'Mô hình Grok 3 mini từ xAI, tối ưu hóa cho các tác vụ suy luận phức tạp.',
+    description: `+ Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
++ Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
++ Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra .
++ Phong cách phản hồi tự nhiên, thân thiện được học từ những người dùng mạng xã hội X nên Grok 3 và Grok 3 mini được đánh giá rất cao với cách trả lời gần gũi, hài hước và dễ tiếp cận với người dùng Việt Nam.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.8,
@@ -243,7 +246,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.9,
     features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
     contextLengthToken: '128k',
-    intelligenceScore: 62,
+    intelligenceScore: 60,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 70.5,
     latencyFirstChunkSeconds: 1.17,
@@ -339,7 +342,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.9,
     features: ['Kích thước mô hình nhỏ gọn', 'Hiệu quả cho suy luận', 'Hỗ trợ đa ngôn ngữ'],
     contextLengthToken: '128k',
-    intelligenceScore: 59,
+    intelligenceScore: 62,
     pricePerMillionTokens: 1.31,
     speedTokensPerSecond: 65.5,
     latencyFirstChunkSeconds: 1.05,
@@ -355,7 +358,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.9,
     features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
-    intelligenceScore: 58,
+    intelligenceScore: 59,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 61.6,
     latencyFirstChunkSeconds: 1.09,
@@ -611,4 +614,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
