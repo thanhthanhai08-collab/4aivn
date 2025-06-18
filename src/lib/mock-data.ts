@@ -119,15 +119,15 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Google',
-    description: `Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal) mạnh mẽ nhất trong dòng Gemini do Google phát triển.
-Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như văn bản, hình ảnh, video, âm thanh.
-Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code), video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.
-Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng stream.`,
+    description: `+ Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal) mạnh mẽ nhất trong dòng Gemini do Google phát triển.
++ Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như văn bản, hình ảnh, video, âm thanh.
++ Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code), video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.
++ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng stream.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý .",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 86%",
       "• GPQA Diamond (Scientific Reasoning) 84%",
@@ -147,8 +147,8 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     contextLengthToken: '1m',
     intelligenceScore: 70,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 143.9, // Updated to match feature string
-    latencyFirstChunkSeconds: 36.27, // Updated to match feature string
+    speedTokensPerSecond: 143.9,
+    latencyFirstChunkSeconds: 36.27,
   },
   {
     id: 'grok-3-mini-reasoning-high',
@@ -243,7 +243,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
     contextLengthToken: '128k',
-    intelligenceScore: 62, // Was 62, matching previous state
+    intelligenceScore: 62,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 70.5,
     latencyFirstChunkSeconds: 1.17,
@@ -259,7 +259,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Mô hình cơ sở mạnh mẽ', 'Lý luận chung', 'Tạo văn bản'],
     contextLengthToken: '200k',
-    intelligenceScore: 62, // Was 62
+    intelligenceScore: 62,
     pricePerMillionTokens: 26.25,
     speedTokensPerSecond: 171.9,
     latencyFirstChunkSeconds: 17.43,
@@ -355,7 +355,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Hiệu suất suy luận tốt', 'Hỗ trợ đa ngôn ngữ', 'Dòng mô hình Qwen'],
     contextLengthToken: '128k',
-    intelligenceScore: 58, // Swapped with QwenQ-32B as per previous correction by user
+    intelligenceScore: 58,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 61.6,
     latencyFirstChunkSeconds: 1.09,
@@ -371,7 +371,7 @@ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Stu
     userRating: 4.9,
     features: ['Biến thể của dòng Qwen', 'Tối ưu hóa cho các tác vụ cụ thể', 'Hiệu suất cao'],
     contextLengthToken: '131k',
-    intelligenceScore: 56, // Swapped with Qwen3 32B (Reasoning) as per previous correction
+    intelligenceScore: 56,
     pricePerMillionTokens: 0.63,
     speedTokensPerSecond: 92.9,
     latencyFirstChunkSeconds: 0.4,
@@ -611,4 +611,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
