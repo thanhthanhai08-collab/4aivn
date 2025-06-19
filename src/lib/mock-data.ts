@@ -167,6 +167,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.8,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token.",
+      "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 67",
       "• Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
@@ -192,7 +193,7 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'openai-o4-mini-high',
-    name: 'Open AI o4-mini (high)',
+    name: 'OpenAI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: `+ OpenAI o4 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o4, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o4-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
@@ -234,18 +235,35 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Flash (Reasoning)',
     type: 'AI Đa phương thức',
     developer: 'Google',
-    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 6-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.
-+ Nâng cấp từ Gemini 2.0 flash nên độ dài ngữ cảnh (context window) ở mức 1 triệu token là mức trở nên bình thường đối với nhà Google.
-+ Gemini 2.5 flash đặc biệt phù hợp với các ứng dụng chatbot hoặc web /app cần phản hồi nhanh mà vẫn giữ được sự thông minh. Vì vậy sẽ là đối thủ trực tiếp với Claude 4 Sonnet Thinking nhưng Claude 4 Sonnet có giá chát hơn hẳn.`,
+    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 6-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.\n+ Nâng cấp từ Gemini 2.0 flash nên độ dài ngữ cảnh (context window) ở mức 1 triệu token là mức trở nên bình thường đối với nhà Google.\n+ Gemini 2.5 flash đặc biệt phù hợp với các ứng dụng chatbot hoặc web /app cần phản hồi nhanh mà vẫn giữ được sự thông minh. Vì vậy sẽ là đối thủ trực tiếp với Claude 4 Sonnet Thinking nhưng Claude 4 Sonnet có giá chát hơn hẳn.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/',
     userRating: 4.9,
-    features: ['Suy luận nhanh', 'Hiểu đa phương thức cơ bản', 'Tối ưu hóa tốc độ'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 1 triệu token",
+      "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 65",
+      "• Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 83%",
+      "• GPQA Diamond (Scientific Reasoning) 79%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 11.1%",
+      "• LiveCodeBench (Coding) 70%",
+      "• SciCode (Coding) 39%",
+      "• HumanEval (Coding) 96%",
+      "• MATH-500 (Quantitative reasoning) 98%",
+      "• AIME 2024 (Competition Math) 82%",
+      "Giá trung bình 0.99 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
+      "• Giá đầu vào 1.1 USD / 1 triệu token.",
+      "• Giá đầu ra 4.4 USD / 1 triệu token.",
+      "Tốc độ sinh token là 351.2 token /s.",
+      "Độ trễ 13.24s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     contextLengthToken: '1m',
     intelligenceScore: 65,
     pricePerMillionTokens: 0.99,
-    speedTokensPerSecond: 330.9,
-    latencyFirstChunkSeconds: 16.01,
+    speedTokensPerSecond: 351.2,
+    latencyFirstChunkSeconds: 13.24,
   },
   {
     id: 'claude-4-opus-thinking',
@@ -704,3 +722,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
