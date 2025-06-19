@@ -455,7 +455,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o3',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Phiên bản Pro của mô hình Open AI o1.',
+    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc
++ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.
++ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.
++ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
