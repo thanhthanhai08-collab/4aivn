@@ -127,8 +127,10 @@ export const mockAIModels: AIModel[] = [
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token",
+      "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 70",
+      "• Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 86%",
       "• GPQA Diamond (Scientific Reasoning) 84%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 21%",
@@ -137,7 +139,8 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding)",
       "• MATH-500 (quantitative reasoning) 97%",
       "• AIME 2024 (Competition Math) 88%",
-      "Giá trung bình 3.44 USD / 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 3.44 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
       "• Giá đầu vào 1.25 USD / 1 triệu token.",
       "• Giá đầu ra 10 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 143.9 token /s.",
@@ -164,7 +167,8 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.8,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token.",
-      "Chỉ số thông minh 67 → Dựa trên trung bình các điểm benmark là",
+      "Chỉ số thông minh 67",
+      "• Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 79%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 11.1%",
@@ -173,7 +177,8 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 98%",
       "• MATH-500 (quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 93%",
-      "Giá trung bình 0.35 USD / 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 0.35 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
       "• Giá đầu vào 0.3 USD / 1 triệu token.",
       "• Giá đầu ra 0.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 209.2 token /s.",
@@ -190,15 +195,18 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ o4-mini là phiên bản nhỏ gọn và hiệu quả nhất trong dòng model o4 của OpenAI, được tối ưu hóa cho các tác vụ đòi hỏi tốc độ và hiệu suất cao trên thiết bị di động và các ứng dụng có tài nguyên hạn chế.
-+ o4-mini vẫn giữ được khả năng suy luận mạnh mẽ, hiểu biết đa phương thức và sáng tạo của dòng o4, nhưng với kích thước nhỏ hơn và độ trễ thấp hơn.
-+ Model này lý tưởng cho các ứng dụng chatbot, trợ lý ảo, phân tích dữ liệu nhanh và các tác vụ AI nhúng.`,
+    description: `+ OpenAI o3 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o3, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o3-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
++ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o3 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
++ OpenAI o3 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
++ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o3 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.7,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token",
+      "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 70",
+      "• Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 78%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 17.5%",
@@ -207,7 +215,8 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 99%",
       "• MATH-500 (Quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 94%",
-      "Giá trung bình 1.93 USD / 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 1.93 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
       "• Giá đầu vào 1.1 USD / 1 triệu token.",
       "• Giá đầu ra 4.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 148.0 token /s.",
@@ -463,8 +472,10 @@ export const mockAIModels: AIModel[] = [
     link: 'https://openai.com/',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token",
+      "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 70",
+      "• Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 85%",
       "• GPQA Diamond (Scientific Reasoning) 83%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 20%",
@@ -473,7 +484,8 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 99%",
       "• MATH-500 (Quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 90%",
-      "Giá trung bình 3.5 USD / 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 3.5 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
       "• Giá đầu vào 2.0 USD / 1 triệu token.",
       "• Giá đầu ra 8.0 USD / 1 triệu token.",
       "Tốc độ sinh token là 117.0 token /s.",
@@ -671,3 +683,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
