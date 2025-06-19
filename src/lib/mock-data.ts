@@ -122,7 +122,7 @@ export const mockAIModels: AIModel[] = [
     description: `+ Gemini 2.5 Pro (cập nhật mới nhất tháng 06/2025) là mô hình đa phương thức (multimodal) mạnh mẽ nhất trong dòng Gemini do Google phát triển.
 + Gemini 2.5 Pro có thể hiểu và tạo ra nội dung dữ liệu dựa trên nhiều đầu vào khác nhau như văn bản, hình ảnh, video, âm thanh.
 + Mô hình hỗ trợ tới 1 triệu token trong một lần nhập liệu (tương đương khoảng 1,5 triệu từ hoặc 5.000 trang văn bản), với kế hoạch mở rộng lên 2 triệu token trong tương lai gần.Nhờ vậy, Gemini 2.5 Pro có thể xử lý các tài liệu dài, mã nguồn lớn (hơn 50.000 dòng code), video dài gần 1 giờ hoặc âm thanh lên đến 19 giờ trong một lần tương tác duy nhất.
-+ Bạn có thể dùng bản Preview của Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng stream.`,
++ Bạn có thể dùng thử Gemini 2.5 Pro ở trên Google AI Studio, Vertex AI, Gemini API.Ngoài ra, Gemini 2.5 Pro cũng được tích hợp trong ứng dụng Gemini dành cho người dùng cao cấp, với các tính năng mới như tăng gấp đôi giới hạn truy vấn, hỗ trợ camera trực tiếp và chia sẻ màn hình trong tính năng Stream.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
@@ -155,16 +155,16 @@ export const mockAIModels: AIModel[] = [
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: `+ Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
-+ Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
-+ Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra.
+    description: `+Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
++Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
++ Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra .
 + Phong cách phản hồi tự nhiên, thân thiện được học từ những người dùng mạng xã hội X nên Grok 3 và Grok 3 mini được đánh giá rất cao với cách trả lời gần gũi, hài hước và dễ tiếp cận với người dùng Việt Nam.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.8,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token",
-      "Chỉ số thông minh 67",
+      "Chỉ số thông minh 67 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 79%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 11.1%",
@@ -173,7 +173,7 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 98%",
       "• MATH-500 (quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 93%",
-      "Giá trung bình 0.35 USD / 1 triệu token",
+      "Giá trung bình 0.35 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 0.3 USD / 1 triệu token.",
       "• Giá đầu ra 0.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 209.2 token /s.",
@@ -198,7 +198,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.7,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200k token",
-      "Chỉ số thông minh 66",
+      "Chỉ số thông minh 70 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 80%",
       "• GPQA Diamond (Scientific Reasoning) 81%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 15%",
@@ -207,18 +207,18 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 90%",
       "• MATH-500 (quantitative reasoning) 95%",
       "• AIME 2024 (Competition Math) 80%",
-      "Giá trung bình 1.93 USD/ 1 triệu token",
+      "Giá trung bình 1.93 USD/ 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 0.25 USD / 1 triệu token.",
       "• Giá đầu ra 0.6 USD / 1 triệu token.",
-      "Tốc độ sinh token khá nhanh là 183.3 token /s.",
-      "Độ trễ 40s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token khá nhanh là 148.0 token /s.",
+      "Độ trễ 34.8s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: true,
     contextLengthToken: '200k',
-    intelligenceScore: 66,
+    intelligenceScore: 70,
     pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 183.3,
-    latencyFirstChunkSeconds: 40,
+    speedTokensPerSecond: 148.0,
+    latencyFirstChunkSeconds: 34.8,
   },
    {
     id: 'gemini-2.5-flash-reasoning',
@@ -254,20 +254,24 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 3.08,
   },
   {
-    id: 'openai-o3-mini',
-    name: 'Open AI o3-mini',
+    id: 'openai-o3-mini', 
+    name: 'Open AI o3-mini', 
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: 'Mô hình Open AI o3-mini cung cấp khả năng xử lý ngôn ngữ mạnh mẽ.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
-    features: ['Xử lý ngôn ngữ mạnh mẽ', 'Hiệu suất cân bằng', 'Linh hoạt'],
-    contextLengthToken: '200k',
-    intelligenceScore: 63,
-    pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 153.1,
-    latencyFirstChunkSeconds: 12.37,
+    features: [
+      "Xử lý ngôn ngữ mạnh mẽ",
+      "Hiệu suất cân bằng",
+      "Linh hoạt"
+    ],
+    contextLengthToken: '200k', 
+    intelligenceScore: 63, 
+    pricePerMillionTokens: 1.93, 
+    speedTokensPerSecond: 153.1, 
+    latencyFirstChunkSeconds: 12.37, 
   },
   {
     id: 'qwen3-235b-reasoning',
@@ -648,4 +652,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
