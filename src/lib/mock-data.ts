@@ -195,10 +195,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o3, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o3-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
-+ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o3 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
-+ OpenAI o3 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
-+ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o3 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
+    description: `+ OpenAI o4 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o4, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o4-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
++ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o4 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
++ OpenAI o4 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
++ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o4 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.7,
@@ -264,7 +264,7 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'openai-o3-mini',
-    name: 'Open AI o3-mini',
+    name: 'Open AI o3-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: 'Mô hình Open AI o3-mini cung cấp khả năng xử lý ngôn ngữ mạnh mẽ.',
@@ -683,4 +683,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
