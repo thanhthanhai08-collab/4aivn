@@ -155,15 +155,15 @@ export const mockAIModels: AIModel[] = [
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: `+Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
-+Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
+    description: `+ Grok 3 Mini là mô hình ngôn ngữ mini do xAI phát triển, tích hợp sâu với nền tảng X (Twitter). Phiên bản "Mini" của Grok 3 được tối ưu để giữ được khả năng tuyệt vời khi bật chế độ suy luận cao (reasoning (high)), trong khi vẫn đảm bảo tốc độ phản hồi nhanh và khả năng triển khai nhẹ hơn trên nhiều nền tảng.
++ Triển khai linh hoạt: Nhờ dung lượng nhỏ hơn, Grok 3 Mini dễ dàng tích hợp trên nhiều nền tảng, từ web, di động đến các ứng dụng doanh nghiệp.
 + Grok 3 mini do có sự hỗ trợ từ mạng xã hội X (Twitter) từ đó có khả năng truy cập và cập nhật dữ liệu thời gian thực từ X, giúp cung cấp thông tin mới nhất và phù hợp với các sự kiện đang diễn ra .
 + Phong cách phản hồi tự nhiên, thân thiện được học từ những người dùng mạng xã hội X nên Grok 3 và Grok 3 mini được đánh giá rất cao với cách trả lời gần gũi, hài hước và dễ tiếp cận với người dùng Việt Nam.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.8,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token.",
       "Chỉ số thông minh 67 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 79%",
@@ -198,7 +198,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.7,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 67 → Dựa trên trung bình các điểm benmark là",
+      "Chỉ số thông minh 70 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 78%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 17.5%",
@@ -215,7 +215,7 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: true,
     contextLengthToken: '200k',
-    intelligenceScore: 67,
+    intelligenceScore: 70,
     pricePerMillionTokens: 1.93,
     speedTokensPerSecond: 148.0,
     latencyFirstChunkSeconds: 34.8,
