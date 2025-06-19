@@ -163,8 +163,8 @@ export const mockAIModels: AIModel[] = [
     link: '#',
     userRating: 4.8,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 67 →Dựa trên trung bình các điểm benmark là",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token",
+      "Chỉ số thông minh 67",
       "• MMLU-Pro (Reasoning & Knowledge) 83%",
       "• GPQA Diamond (Scientific Reasoning) 79%",
       "• Humanity's Last Exam (Reasoning & Knowledge) 11.1%",
@@ -173,7 +173,7 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding) 98%",
       "• MATH-500 (quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 93%",
-      "Giá trung bình 0.35 USD / 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 0.35 USD / 1 triệu token",
       "• Giá đầu vào 0.3 USD / 1 triệu token.",
       "• Giá đầu ra 0.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 209.2 token /s.",
@@ -186,15 +186,33 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
   {
-    id: 'openai-o3-mini-high',
-    name: 'Open AI o3-mini (high)',
+    id: 'openai-o4-mini-high',
+    name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Mô hình đa phương thức tiên tiến của OpenAI, được tối ưu hóa cho hiệu suất cao.',
+    description: `+ o4-mini là phiên bản nhỏ gọn và hiệu quả nhất trong dòng model o4 của OpenAI, được tối ưu hóa cho các tác vụ đòi hỏi tốc độ và hiệu suất cao trên thiết bị di động và các ứng dụng có tài nguyên hạn chế.
++ o4-mini vẫn giữ được khả năng suy luận mạnh mẽ, hiểu biết đa phương thức và sáng tạo của dòng o4, nhưng với kích thước nhỏ hơn và độ trễ thấp hơn.
++ Model này lý tưởng cho các ứng dụng chatbot, trợ lý ảo, phân tích dữ liệu nhanh và các tác vụ AI nhúng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.7,
-    features: ['Lý luận nâng cao', 'Hiểu biết đa phương thức', 'Khả năng sáng tạo'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200k token",
+      "Chỉ số thông minh 66",
+      "• MMLU-Pro (Reasoning & Knowledge) 80%",
+      "• GPQA Diamond (Scientific Reasoning) 81%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 15%",
+      "• LiveCodeBench (Coding) 75%",
+      "• SciCode (Coding) 38%",
+      "• HumanEval (Coding) 90%",
+      "• MATH-500 (quantitative reasoning) 95%",
+      "• AIME 2024 (Competition Math) 80%",
+      "Giá trung bình 1.93 USD/ 1 triệu token",
+      "• Giá đầu vào 0.25 USD / 1 triệu token.",
+      "• Giá đầu ra 0.6 USD / 1 triệu token.",
+      "Tốc độ sinh token khá nhanh là 183.3 token /s.",
+      "Độ trễ 40s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     isFavorite: true,
     contextLengthToken: '200k',
     intelligenceScore: 66,
@@ -630,3 +648,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
