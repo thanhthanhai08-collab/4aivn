@@ -519,19 +519,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Claude 3.7 Sonnet Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp
-đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình
-suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
-+ Claude 3.7 Sonnet không phải là một mô hình riêng biệt cho suy luận mà là sự
-kết hợp giữa khả năng phản hồi nhanh và suy luận sâu, tương tự cách con
-người có thể trả lời ngay hoặc dành thời gian suy nghĩ kỹ càng.
-+ Khi bật suy luận (thinkin), mô hình Claude 3.7 Sonnet Thinking sẽ tự phản tỉnh
-và thực hiện suy luận đa bước trước khi trả lời, giúp nâng cao hiệu quả trong
-các lĩnh vực như toán học, vật lý, lập trình, và các tác vụ hướng dẫn phức tạp.
-+ Mặc dù là không phải mô hình mới nhất nhưng nó vẫn nổi lên như là giải pháp
-nằm giữa Claude 4 Opus và Claude 4 Sonnet mà vẫn đảm bảo chi phí phù hợp
-cho nên nó vẫn hữu dụng trong một số trường hợp khi mà người dùng chắc
-chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
+    description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
++ Claude 3.7 Sonnet không phải là một mô hình riêng biệt cho suy luận mà là sự kết hợp giữa khả năng phản hồi nhanh và suy luận sâu, tương tự cách con người có thể trả lời ngay hoặc dành thời gian suy nghĩ kỹ càng.
++ Khi bật suy luận (thinking), mô hình Claude 3.7 Sonnet Thinking sẽ tự phản tỉnh và thực hiện suy luận đa bước trước khi trả lời, giúp nâng cao hiệu quả trong các lĩnh vực như toán học, vật lý, lập trình, và các tác vụ hướng dẫn phức tạp.
++ Mặc dù là không phải mô hình mới nhất nhưng nó vẫn nổi lên như là giải pháp nằm giữa Claude 4 Opus và Claude 4 Sonnet mà vẫn đảm bảo chi phí phù hợp cho nên nó vẫn hữu dụng trong một số trường hợp khi mà người dùng chắc chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-5-sonnet',
     userRating: 4.9,
@@ -553,7 +544,7 @@ chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
       "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '200k',
-    intelligenceScore: 57, 
+    intelligenceScore: 57,
     pricePerMillionTokens: 6.00,
     speedTokensPerSecond: 87.1,
     latencyFirstChunkSeconds: 1.32,
@@ -981,10 +972,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
-
-
-
