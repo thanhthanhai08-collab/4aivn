@@ -353,12 +353,28 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
-    features: ['Khả năng suy luận đa bước', 'Hỗ trợ đa ngôn ngữ', 'Kiến thức rộng'],
+    features: [
+        "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
+        "Chỉ số thông minh 62 →Dựa trên trung bình các điểm benmark là",
+        "• MMLU-Pro (Reasoning & Knowledge) 83%",
+        "• GPQA Diamond (Scientific Reasoning) 70%",
+        "• Humanity's Last Exam (Reasoning & Knowledge) 11.7%",
+        "• LiveCodeBench (Coding) 62%",
+        "• SciCode (Coding) 40%",
+        "• HumanEval (Coding)",
+        "• MATH-500 (Quantitative reasoning) 93%",
+        "• AIME 2024 (Competition Math) 84%",
+        "Giá trung bình 2.63 USD / 1 triệu token → Dựa trên các thông số giá",
+        "• Giá đầu vào 0.7 USD / 1 triệu token.",
+        "• Giá đầu ra 8.4 USD / 1 triệu token.",
+        "Tốc độ sinh token là 71.1 token /s.",
+        "Độ trễ 1.13s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     contextLengthToken: '128k',
-    intelligenceScore: 60,
+    intelligenceScore: 62,
     pricePerMillionTokens: 2.63,
-    speedTokensPerSecond: 70.5,
-    latencyFirstChunkSeconds: 1.17,
+    speedTokensPerSecond: 71.1,
+    latencyFirstChunkSeconds: 1.13,
   },
   {
     id: 'openai-o3', 
@@ -749,6 +765,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
