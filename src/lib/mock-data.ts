@@ -537,26 +537,26 @@ chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
     userRating: 4.9,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 61 →Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 85%",
-      "• GPQA Diamond (Scientific Reasoning) 72%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 8.5%",
-      "• LiveCodeBench (Coding) 58%",
+      "Chỉ số thông minh 57 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 84%",
+      "• GPQA Diamond (Scientific Reasoning) 77%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 10.3%",
+      "• LiveCodeBench (Coding) 47%",
       "• SciCode (Coding) 40%",
-      "• HumanEval (Coding)",
-      "• MATH-500 (Quantitative reasoning) 98%",
-      "• AIME 2024 (Competition Math) 70%",
+      "• HumanEval (Coding) 98%",
+      "• MATH-500 (Quantitative reasoning) 95%",
+      "• AIME 2024 (Competition Math) 49%",
       "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 3.0 USD / 1 triệu token.",
       "• Giá đầu ra 15.0 USD / 1 triệu token.",
-      "Tốc độ sinh token là 51.9 token /s.",
-      "Độ trễ 1.38s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token là 87.1 token /s.",
+      "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '200k',
-    intelligenceScore: 61, 
+    intelligenceScore: 57, 
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 51.9,
-    latencyFirstChunkSeconds: 1.38,
+    speedTokensPerSecond: 87.1,
+    latencyFirstChunkSeconds: 1.32,
   },
   {
     id: 'grok-3-reasoning-beta',
@@ -911,4 +911,5 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
