@@ -723,7 +723,9 @@ export const mockAIModels: AIModel[] = [
     name: 'Claude 4 Sonnet Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: 'Mô hình Claude 4 Sonnet Thinking từ Anthropic với khả năng suy nghĩ.',
+    description: `+ Claude 4 Sonnet là một trong hai phiên bản chủ lực của dòng mô hình Claude 4 do Anthropic ra mắt vào tháng 5 năm 2025, bên cạnh phiên bản Opus 4. Sonnet 4 được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.
++ Claude 4 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 4 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 4 Opus
++ Khi được cấp quyền truy cập file, Sonnet 4 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
@@ -820,5 +822,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
