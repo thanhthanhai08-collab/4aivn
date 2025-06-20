@@ -543,10 +543,10 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 1.38s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '200k',
-    intelligenceScore: 57, // Kept the old score as the features list points to 61, but this one says 57. User requested "giống như trong ảnh" for features, so I'll keep the data values that were already there for these specific numeric fields unless the features list itself dictates a direct numeric change. The features list gives intelligence score as 61. I will update this.
+    intelligenceScore: 61, 
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 87.5,
-    latencyFirstChunkSeconds: 1.08,
+    speedTokensPerSecond: 51.9,
+    latencyFirstChunkSeconds: 1.38,
   },
   {
     id: 'grok-3-reasoning-beta',
@@ -598,13 +598,29 @@ hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.5,
-    features: ['Hiệu suất đáng tin cậy', 'Tốc độ cao', 'Lý luận phức tạp'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
+      "Chỉ số thông minh 53 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 84%",
+      "• GPQA Diamond (Scientific Reasoning) 68%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 4%",
+      "• LiveCodeBench (Coding) 45%",
+      "• SciCode (Coding) 37%",
+      "• HumanEval (Coding) 97%",
+      "• MATH-500 (Quantitative reasoning) 93%",
+      "• AIME 2024 (Competition Math) 41%",
+      "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 3.0 USD / 1 triệu token.",
+      "• Giá đầu ra 15.0 USD / 1 triệu token.",
+      "Tốc độ sinh token là 48.1 token /s.",
+      "Độ trễ 1.52s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 53,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 62.9,
-    latencyFirstChunkSeconds: 1.49,
+    speedTokensPerSecond: 48.1,
+    latencyFirstChunkSeconds: 1.52,
   },
   {
     id: 'gpt-4.5-preview',
@@ -885,10 +901,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
-
-
 
