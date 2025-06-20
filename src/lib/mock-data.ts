@@ -729,12 +729,28 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
-    features: ['Cân bằng hiệu suất và tốc độ', 'Mạnh mẽ trong các tác vụ doanh nghiệp', 'An toàn và đáng tin cậy'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
+      "Chỉ số thông minh 61 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 85%",
+      "• GPQA Diamond (Scientific Reasoning) 72%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 8.5%",
+      "• LiveCodeBench (Coding) 58%",
+      "• SciCode (Coding) 40%",
+      "• HumanEval (Coding)",
+      "• MATH-500 (Quantitative reasoning) 98%",
+      "• AIME 2024 (Competition Math) 70%",
+      "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 3.0 USD / 1 triệu token.",
+      "• Giá đầu ra 15.0 USD / 1 triệu token.",
+      "Tốc độ sinh token là 51.9 token /s.",
+      "Độ trễ 1.38s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     contextLengthToken: '200k',
     intelligenceScore: 61,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 60.8,
-    latencyFirstChunkSeconds: 1.28,
+    speedTokensPerSecond: 51.9,
+    latencyFirstChunkSeconds: 1.38,
   },
   {
     id: 'grok-3',
@@ -822,6 +838,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
