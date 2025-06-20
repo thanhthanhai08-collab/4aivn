@@ -688,11 +688,19 @@ o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.
     name: 'GPT-4.1 mini',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Một phiên bản nhỏ gọn hơn của GPT-4.1, được tối ưu hóa cho hiệu quả và tốc độ.',
+    description: `GPT-4.1 Mini là biến thể nhỏ gọn của mô hình GPT-4.1 do OpenAl phát triển, ra mắt vào tháng 4 năm 2025. Đây là phiên bản được thiết kế tối ưu cho các ứng dụng cần tốc độ phản hồi nhanh, chi phí thấp nhưng vẫn giữ được hiệu suất và chất lượng cao hơn một chút với GPT-4o.
+GPT-4.1 Mini được tối ưu để giảm độ trễ trong quá trình sinh câu trả lời, phù hợp với các ứng dụng tương tác thời gian thực như chatbot, trợ lý ảo, hay các hệ thống tự động hóa quy trình công việc.
+Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năng xử lý ngữ cảnh dài lên đến 1 triệu token, giúp mô hình duy trì hiệu quả trong các tác vụ phân tích tài liệu lớn, lập trình phức tạp và các ứng dụng đòi hỏi lưu giữ thông tin dài hạn.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
-    features: ['Hiệu quả chi phí', 'Tốc độ phản hồi nhanh', 'Lý luận mạnh mẽ'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+      "Thiết kế tối ưu cho tốc độ phản hồi nhanh và chi phí thấp.",
+      "Giảm độ trễ, phù hợp cho chatbot, trợ lý ảo, và tự động hóa quy trình.",
+      "Hiệu suất và chất lượng được cải thiện so với GPT-4o.",
+      "Hiệu quả trong phân tích tài liệu lớn và lập trình phức tạp."
+    ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 53,
@@ -973,6 +981,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
