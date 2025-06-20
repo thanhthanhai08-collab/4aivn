@@ -192,43 +192,42 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
   {
-    id: 'openai-o4-mini-high',
-    name: 'OpenAI o4-mini (high)',
+    id: 'openai-o3-mini',
+    name: 'Open AI o3-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o4 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o4, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o4-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
-+ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o4 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
-+ OpenAI o4 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
-+ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o4 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
+    description: `+ OpenAI o3 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o3, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o3-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
++ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o3 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
++ OpenAI o3 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
++ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o3 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
-    userRating: 4.7,
+    userRating: 4.9,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token",
       "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70",
+      "Chỉ số thông minh 66",
       "• Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 83%",
-      "• GPQA Diamond (Scientific Reasoning) 78%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 17.5%",
-      "• LiveCodeBench (Coding) 80%",
-      "• SciCode (Coding) 47%",
-      "• HumanEval (Coding) 99%",
+      "• MMLU-Pro (Reasoning & Knowledge) 80%",
+      "• GPQA Diamond (Scientific Reasoning) 77%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 12.3%",
+      "• LiveCodeBench (Coding) 73%",
+      "• SciCode (Coding) 40%",
+      "• HumanEval (Coding) 98%",
       "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 94%",
+      "• AIME 2024 (Competition Math) 86%",
       "Giá trung bình 1.93 USD / 1 triệu token",
       "• Dựa trên các thông số giá",
       "• Giá đầu vào 1.1 USD / 1 triệu token.",
-      "• Giá đầu ra 4.5 USD / 1 triệu token.",
-      "Tốc độ sinh token khá nhanh là 148.0 token /s.",
-      "Độ trễ 34.8s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "• Giá đầu ra 4.4 USD / 1 triệu token.",
+      "Tốc độ sinh token là 151.2 token /s.",
+      "Độ trễ 48.85s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    isFavorite: true,
     contextLengthToken: '200k',
-    intelligenceScore: 70,
+    intelligenceScore: 66,
     pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 148.0,
-    latencyFirstChunkSeconds: 34.8,
+    speedTokensPerSecond: 151.2,
+    latencyFirstChunkSeconds: 48.85,
   },
    {
     id: 'gemini-2.5-flash-reasoning',
@@ -305,49 +304,52 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 3.22,
   },
   {
-    id: 'openai-o3-mini',
-    name: 'Open AI o3-mini (high)',
+    id: 'openai-o4-mini-high', // ID corrected based on previous request
+    name: 'OpenAI o4-mini (high)', // Name corrected based on previous request
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o3, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o3-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
-+ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o3 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
-+ OpenAI o3 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
-+ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o3 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
+    description: `+ OpenAI o4 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o4, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o4-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
++ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o4 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
++ OpenAI o4 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
++ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o4 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
-    userRating: 4.9,
+    userRating: 4.7,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token",
       "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 66",
+      "Chỉ số thông minh 70",
       "• Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 80%",
-      "• GPQA Diamond (Scientific Reasoning) 77%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 12.3%",
-      "• LiveCodeBench (Coding) 73%",
-      "• SciCode (Coding) 40%",
-      "• HumanEval (Coding) 98%",
+      "• MMLU-Pro (Reasoning & Knowledge) 83%",
+      "• GPQA Diamond (Scientific Reasoning) 78%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 17.5%",
+      "• LiveCodeBench (Coding) 80%",
+      "• SciCode (Coding) 47%",
+      "• HumanEval (Coding) 99%",
       "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 86%",
+      "• AIME 2024 (Competition Math) 94%",
       "Giá trung bình 1.93 USD / 1 triệu token",
       "• Dựa trên các thông số giá",
       "• Giá đầu vào 1.1 USD / 1 triệu token.",
-      "• Giá đầu ra 4.4 USD / 1 triệu token.",
-      "Tốc độ sinh token là 151.2 token /s.",
-      "Độ trễ 48.85s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "• Giá đầu ra 4.5 USD / 1 triệu token.",
+      "Tốc độ sinh token khá nhanh là 148.0 token /s.",
+      "Độ trễ 34.8s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
+    isFavorite: true,
     contextLengthToken: '200k',
-    intelligenceScore: 66,
+    intelligenceScore: 70,
     pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 151.2,
-    latencyFirstChunkSeconds: 48.85,
+    speedTokensPerSecond: 148.0,
+    latencyFirstChunkSeconds: 34.8,
   },
   {
     id: 'qwen3-235b-reasoning',
     name: 'Qwen3 235B (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
-    description: 'Mô hình Qwen3 235B của Alibaba với khả năng suy luận nâng cao.',
+    description: `+ Qwen3-235B-A22B, hay gọi tắt là Qwen 235B, là phiên bản flagship mới nhất trong dòng mô hình Qwen do Alibaba phát triển, ra mắt vào đầu năm 2025. Đây là một trong những mô hình Al tiên tiến nhất hiện nay, nổi bật với khả năng suy luận đa bước sâu sắc, hiệu suất cao trong toán học, lập trình và xử lý ngôn ngữ tự nhiên, đồng thời hỗ trợ đa ngôn ngữ lên đến 119 ngôn ngữ và phương ngữ.
++ Mô hình Qwen 235B hoạt động ở 2 chế độ đặc biệt ở chế độ Thinking (chế độ suy nghĩ): Mô hình thực hiện suy luận từng bước, phù hợp với các bài toán phức tạp như toán học, lập trình, và các tác vụ logic đa bước, còn khi không bật Thinking thì mô hình chỉ đáp ứng những câu hỏi đơn giản yêu cầu truy xuất nhanh.
++ Mô hình sở hữu 235 tỷ tham số tổng thể, trong đó mỗi truy vấn chỉ kích hoạt 22 tỷ tham số, giúp giảm đáng kể chi phí tính toán và độ trễ mà vẫn duy trì hiệu suất .`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
@@ -403,7 +405,7 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Nvidia',
     description: 'Mô hình Llama Nemotron Ultra Reasoning từ Nvidia, tối ưu cho suy luận.',
-    logoUrl: '/image/Logo Llama Nemotron Ultra Reasoning cho bảng xếp hạng.png',
+    logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
     features: ['Suy luận tiên tiến', 'Tối ưu hóa phần cứng Nvidia', 'Khả năng mở rộng'],
@@ -747,6 +749,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
