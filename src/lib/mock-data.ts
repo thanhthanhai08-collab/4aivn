@@ -637,7 +637,25 @@ hiệu quả trong công việc.`,
     name: 'GPT-4.5 (Preview)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Phiên bản xem trước của GPT-4.5, cung cấp các cải tiến so với các mô hình trước đó.',
+    description: `+ GPT-4.5 là phiên bản nâng cấp của GPT-4 được OpenAl chính thức ra mắt vào
+cuối tháng 2 năm 2025 dưới dạng bản preview nghiên cứu dành cho người
+dùng ChatGPT Pro. Đây được xem là “mô hình giàu kiến thức nhất” của
+OpenAl tính đến thời điểm hiện tại, với nhiều cải tiến về khả năng hiểu ngữ
+cảnh, tạo sinh văn bản tự nhiên và giảm thiểu hiện tượng ảo giác
+(hallucination) so với các phiên bản trước.
++ Một trong những vấn đề lớn của các mô hình Al trước đây là tạo ra thông tin
+sai lệch hoặc không chính xác. GPT-4.5 đã giảm tỷ lệ ảo giác xuống còn
+khoảng 37%, thấp hơn nhiều so với gần 60% của GPT-4o, giúp tăng độ tin cậy
+cho người dùng khi sử dụng trong các tác vụ viết lách, lập trình và giải quyết
+vấn đề thực tế.
++ OpenAl cho biết GPT-4.5 sở hữu “cá tính tinh tế hơn” so với các phiên bản
+trước, giúp chatbot vận hành trên nền tảng này có cảm giác tự nhiên và dễ
+tiếp cận hơn, phù hợp với nhiều đối tượng người dùng và mục đích sử dụng
+khác nhau.
++ Mặc dù có nhiều cải tiến, GPT-4.5 không phải là một bước đột phá về sức
+mạnh suy luận so với các mô hình nội bộ như o1 hay o3-mini. Thậm chí trong
+một số trường hợp, khả năng lý luận nhiều bước của GPT-4.5 còn kém hơn
+o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.5`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
@@ -816,14 +834,14 @@ hiệu quả trong công việc.`,
         "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
         "• Giá đầu vào 3.0 USD / 1 triệu token.",
         "• Giá đầu ra 15.0 USD / 1 triệu token.",
-        "Tốc độ sinh token là 51.9 token /s.",
-        "Độ trễ 1.38s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+        "Tốc độ sinh token là 87.1 token /s.",
+        "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '200k',
     intelligenceScore: 61,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 51.9,
-    latencyFirstChunkSeconds: 1.38,
+    speedTokensPerSecond: 87.1,
+    latencyFirstChunkSeconds: 1.32,
   },
   {
     id: 'grok-3',
@@ -911,5 +929,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
