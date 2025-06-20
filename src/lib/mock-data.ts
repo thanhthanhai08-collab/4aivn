@@ -359,8 +359,8 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 1.17,
   },
   {
-    id: 'openai-o3', // Changed from openai-o1
-    name: 'Open AI o3', // Changed from Open AI o1-pro
+    id: 'openai-o3', 
+    name: 'Open AI o3', 
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc
@@ -434,7 +434,10 @@ export const mockAIModels: AIModel[] = [
     name: 'DeepSeek R1 0528',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Deepseek',
-    description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
+    description: `+ DeepSeek R1-0528 là phiên bản nâng cấp mới nhất DeepSeek, được công bố vào tháng 5 năm 2025 và cũng là mô hình mã nguồn mở nên người dùng có thể triển khai cục bộ trên chính máy chủ của các bạn.
++ Phiên bản này đánh dấu bước tiến quan trọng trong khả năng suy luận sâu sắc, hiệu suất xử lý và tối ưu tài nguyên, giúp DeepSeek R1 có thể cạnh tranh trực tiếp cả về chất lượng và giá cả với các mô hình của Google và Open Al.
++ Không giống các mô hình "open-weight" nhưng hạn chế giấy phép (như LLaMA), DeepSeek R1 cho phép sử dụng thương mại, tùy chỉnh và triển khai tự do, khiến nó trở thành “trụ cột" mới cho các startup, nhà nghiên cứu, và ứng dụng Al độc lập.
++ Đổi lại là tốc độ sinh token khá chậm 28.6 token/s cho nên người dùng sẽ chờ đợi hơi lâu nhưng đó không là gì so với tiềm năng nó mang lại.`,
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     userRating: 4.9,
@@ -728,4 +731,5 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
