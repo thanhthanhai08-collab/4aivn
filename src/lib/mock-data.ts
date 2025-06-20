@@ -235,7 +235,9 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Flash (Reasoning)',
     type: 'AI Đa phương thức',
     developer: 'Google',
-    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 6-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.\n+ Nâng cấp từ Gemini 2.0 flash nên độ dài ngữ cảnh (context window) ở mức 1 triệu token là mức trở nên bình thường đối với nhà Google.\n+ Gemini 2.5 flash đặc biệt phù hợp với các ứng dụng chatbot hoặc web /app cần phản hồi nhanh mà vẫn giữ được sự thông minh. Vì vậy sẽ là đối thủ trực tiếp với Claude 4 Sonnet Thinking nhưng Claude 4 Sonnet có giá chát hơn hẳn.`,
+    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 6-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.
++ Nâng cấp từ Gemini 2.0 flash nên độ dài ngữ cảnh (context window) ở mức 1 triệu token là mức trở nên bình thường đối với nhà Google.
++ Gemini 2.5 flash đặc biệt phù hợp với các ứng dụng chatbot hoặc web /app cần phản hồi nhanh mà vẫn giữ được sự thông minh. Vì vậy sẽ là đối thủ trực tiếp với Claude 4 Sonnet Thinking nhưng Claude 4 Sonnet có giá chát hơn hẳn.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/',
     userRating: 4.9,
@@ -357,20 +359,43 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 1.17,
   },
   {
-    id: 'openai-o1',
-    name: 'Open AI o1',
+    id: 'openai-o3', // Changed from openai-o1
+    name: 'Open AI o3', // Changed from Open AI o1-pro
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Mô hình Open AI o1 từ OpenAI.',
+    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc
++ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.
++ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.
++ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
-    features: ['Mô hình cơ sở mạnh mẽ', 'Lý luận chung', 'Tạo văn bản'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token",
+      "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 70",
+      "• Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 85%",
+      "• GPQA Diamond (Scientific Reasoning) 83%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 20%",
+      "• LiveCodeBench (Coding) 78%",
+      "• SciCode (Coding) 41%",
+      "• HumanEval (Coding) 99%",
+      "• MATH-500 (Quantitative reasoning) 99%",
+      "• AIME 2024 (Competition Math) 90%",
+      "Giá trung bình 3.5 USD / 1 triệu token",
+      "• Dựa trên các thông số giá",
+      "• Giá đầu vào 2.0 USD / 1 triệu token.",
+      "• Giá đầu ra 8.0 USD / 1 triệu token.",
+      "Tốc độ sinh token là 117.0 token /s.",
+      "Độ trễ 22.17s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
+    isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 62,
-    pricePerMillionTokens: 26.25,
-    speedTokensPerSecond: 171.9,
-    latencyFirstChunkSeconds: 17.43,
+    intelligenceScore: 70,
+    pricePerMillionTokens: 3.5,
+    speedTokensPerSecond: 117.0,
+    latencyFirstChunkSeconds: 22.17,
   },
   {
     id: 'llama-nemotron-ultra-reasoning',
@@ -406,7 +431,7 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'deepseek-r1-jan25',
-    name: 'DeepSeek R1 (Tháng 1-25)',
+    name: 'DeepSeek R1 0528',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Deepseek',
     description: 'Mô hình DeepSeek R1, phiên bản tháng 1-25.',
@@ -516,45 +541,6 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 6.00,
     speedTokensPerSecond: 87.5,
     latencyFirstChunkSeconds: 1.08,
-  },
-  {
-    id: 'openai-o3',
-    name: 'Open AI o3',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'OpenAI',
-    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc
-+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.
-+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.
-+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground`,
-    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
-    link: 'https://openai.com/',
-    userRating: 4.9,
-    features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token",
-      "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70",
-      "• Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 85%",
-      "• GPQA Diamond (Scientific Reasoning) 83%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 20%",
-      "• LiveCodeBench (Coding) 78%",
-      "• SciCode (Coding) 41%",
-      "• HumanEval (Coding) 99%",
-      "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 90%",
-      "Giá trung bình 3.5 USD / 1 triệu token",
-      "• Dựa trên các thông số giá",
-      "• Giá đầu vào 2.0 USD / 1 triệu token.",
-      "• Giá đầu ra 8.0 USD / 1 triệu token.",
-      "Tốc độ sinh token là 117.0 token /s.",
-      "Độ trễ 22.17s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
-    ],
-    isFavorite: false,
-    contextLengthToken: '200k',
-    intelligenceScore: 70,
-    pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 117.0,
-    latencyFirstChunkSeconds: 22.17,
   },
   {
     id: 'grok-3-reasoning-beta',
