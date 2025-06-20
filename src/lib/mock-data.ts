@@ -705,7 +705,19 @@ o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.
     name: 'GPT-4.1',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Một mô hình mạnh mẽ trong dòng GPT-4, cung cấp khả năng lý luận và hiểu biết mạnh mẽ.',
+    description: `+ GPT-4.1 là mô hình Al thế hệ mới được OpenAl ra mắt vào tháng 4 năm 2025,
+đánh dấu bước tiến vượt bậc so với phiên bản GPT-4o trước đó. Với nhiều cải
+tiến về khả năng lập trình, hiểu ngữ cảnh dài và tuân thủ hướng dẫn, GPT-4.1
+mang đến hiệu suất vượt trội cùng chi phí sử dụng giảm đến 26%, phù hợp
+cho cả doanh nghiệp và nhà phát triển cá nhân.
++ GPT-4.1 thể hiện khả năng lập trình tốt hơn 21% so với GPT-4o và 27% so với
+GPT-4.5 trong các bài kiểm tra nội bộ của OpenAI. Mô hình cũng cải thiện khả
+năng tuân theo hướng dẫn và xử lý ngữ cảnh dài, giúp vận hành các tác tử Al
+hiệu quả hơn..
++ GPT-4.1 có thể xử lý lên đến 1 triệu token trong một lần truy vấn, gấp tám lần
+giới hạn 128.000 token của GPT-4o.
++ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng kể cho các
+doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy mô lớn.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
@@ -961,6 +973,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
