@@ -686,18 +686,28 @@ Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năn
     link: 'https://openai.com/',
     userRating: 4.5,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
-      "Thiết kế tối ưu cho tốc độ phản hồi nhanh và chi phí thấp.",
-      "Giảm độ trễ, phù hợp cho chatbot, trợ lý ảo, và tự động hóa quy trình.",
-      "Hiệu suất và chất lượng được cải thiện so với GPT-4o.",
-      "Hiệu quả trong phân tích tài liệu lớn và lập trình phức tạp."
+        "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token → Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+        "Chỉ số thông minh 53 → Dựa trên trung bình các điểm benmark là",
+        "• MMLU-Pro (Reasoning & Knowledge) 78%",
+        "• GPQA Diamond (Scientific Reasoning) 66%",
+        "• Humanity's Last Exam (Reasoning & Knowledge) 4.6%",
+        "• LiveCodeBench (Coding) 48%",
+        "• SciCode (Coding) 40%",
+        "• HumanEval (Coding) 95%",
+        "• MATH-500 (Quantitative reasoning) 93%",
+        "• AIME 2024 (Competition Math) 43%",
+        "Giá trung bình 0.7 USD / 1 triệu token → Dựa trên các thông số giá",
+        "• Giá đầu vào 0.4 USD / 1 triệu token.",
+        "• Giá đầu ra 1.6 USD / 1 triệu token.",
+        "Tốc độ sinh token là 66.8 token /s.",
+        "Độ trễ 0.5s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 53,
-    pricePerMillionTokens: 0.70,
-    speedTokensPerSecond: 72.9,
-    latencyFirstChunkSeconds: 0.43,
+    pricePerMillionTokens: 0.7,
+    speedTokensPerSecond: 66.8,
+    latencyFirstChunkSeconds: 0.5,
   },
   {
     id: 'gpt-4.1',
@@ -972,3 +982,4 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
