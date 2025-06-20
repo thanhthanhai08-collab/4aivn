@@ -441,12 +441,28 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     userRating: 4.9,
-    features: ['Khả năng viết mã mạnh mẽ', 'Hiểu biết ngôn ngữ sâu', 'Mô hình nguồn mở'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 68 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 85%",
+      "• GPQA Diamond (Scientific Reasoning) 81%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 14.9%",
+      "• LiveCodeBench (Coding) 77%",
+      "• SciCode (Coding) 40%",
+      "• HumanEval (Coding) 97%",
+      "• MATH-500 (Quantitative reasoning) 98%",
+      "• AIME 2024 (Competition Math) 89%",
+      "Giá trung bình 0.96 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 0.55 USD / 1 triệu token.",
+      "• Giá đầu ra 2.19 USD / 1 triệu token.",
+      "Tốc độ sinh token là 28.6 token /s.",
+      "Độ trễ 2.49s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     contextLengthToken: '128k',
-    intelligenceScore: 60,
-    pricePerMillionTokens: 2.36,
-    speedTokensPerSecond: undefined,
-    latencyFirstChunkSeconds: undefined,
+    intelligenceScore: 68,
+    pricePerMillionTokens: 0.96,
+    speedTokensPerSecond: 28.6,
+    latencyFirstChunkSeconds: 2.49,
   },
   {
     id: 'openai-o1-preview',
@@ -731,5 +747,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
