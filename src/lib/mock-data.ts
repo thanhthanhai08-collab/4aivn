@@ -709,13 +709,29 @@ o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
-    features: ['Lý luận nâng cao', 'Hiểu biết ngữ cảnh sâu', 'Tạo văn bản chất lượng cao'],
+    features: [
+        "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
+        "Chỉ số thông minh 53 →Dựa trên trung bình các điểm benmark là",
+        "• MMLU-Pro (Reasoning & Knowledge) 81%",
+        "• GPQA Diamond (Scientific Reasoning) 67%",
+        "• Humanity's Last Exam (Reasoning & Knowledge) 4.6%",
+        "• LiveCodeBench (Coding) 46%",
+        "• SciCode (Coding) 38%",
+        "• HumanEval (Coding) 96%",
+        "• MATH-500 (Quantitative reasoning) 91%",
+        "• AIME 2024 (Competition Math) 44%",
+        "Giá trung bình 3.5 USD / 1 triệu token → Dựa trên các thông số giá",
+        "• Giá đầu vào 2 USD / 1 triệu token.",
+        "• Giá đầu ra 8 USD / 1 triệu token.",
+        "Tốc độ sinh token là 97.2 token/s.",
+        "Độ trễ 0.54s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 53,
-    pricePerMillionTokens: 3.50,
-    speedTokensPerSecond: 112.0,
-    latencyFirstChunkSeconds: 0.48,
+    pricePerMillionTokens: 3.5,
+    speedTokensPerSecond: 97.2,
+    latencyFirstChunkSeconds: 0.54,
   },
   {
     id: 'deepseek-r1-jan25',
@@ -945,6 +961,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
