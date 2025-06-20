@@ -519,7 +519,9 @@ export const mockAIModels: AIModel[] = [
     name: 'Qwen3 32B (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
-    description: 'Mô hình Qwen3 32B từ Alibaba, tối ưu cho suy luận.',
+    description: `+ Qwen3 32B là phiên bản cận flagship trong dòng mô hình Qwen3 do Alibaba phát triển, ra mắt đầu năm 2025, đánh dấu bước tiến lớn trong khả năng suy luận đa bước, xử lý toán học, lập trình và ngôn ngữ tự nhiên. Với 32 tỷ tham số, Qwen3 32B nổi bật nhờ kiến trúc tối ưu, hỗ trợ hai chế độ vận hành linh hoạt: Reasoning Mode (suy luận từng bước cho các tác vụ phức tạp) và Non-Reasoning/Mode (phản hồi nhanh cho các câu hỏi đơn giản), giúp cân bằng hiệu suất và tốc độ theo nhu cầu sử dụng.
++ Mô hình cho phép chuyển đổi mượt mà giữa suy luận sâu sắc (reasoning) và phản hồi nhanh (non reasoning), giúp xử lý hiệu quả các bài toán phức tạp như toán học, lập trình, logic đa bước cũng như các tác vụ hội thoại thông thường.
++ Qwen3 32B được phát hành dưới dạng mã nguồn mở, cho phép các nhà phát triển dễ dàng tích hợp và tùy chỉnh theo nhu cầu, đồng thời có thể truy cập qua API của các nền tảng như Lambda hoặc Groqt.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
@@ -781,9 +783,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
-
-
