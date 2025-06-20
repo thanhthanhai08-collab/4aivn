@@ -519,9 +519,19 @@ export const mockAIModels: AIModel[] = [
     name: 'Claude 3.7 Sonnet Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: `+ Claude 3.7 Sonnet Thinking là một trong hai phiên bản chủ lực của dòng mô hình Claude 3.7 do Anthropic ra mắt vào tháng 5 năm 2025, bên cạnh phiên bản Opus 3.7. Sonnet 3.7 được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.
-+ Claude 3.7 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 3.7 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 3.7 Opus
-+ Khi được cấp quyền truy cập file, Sonnet 3.7 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và hiệu quả trong công việc.`,
+    description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp
+đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình
+suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
++ Claude 3.7 Sonnet không phải là một mô hình riêng biệt cho suy luận mà là sự
+kết hợp giữa khả năng phản hồi nhanh và suy luận sâu, tương tự cách con
+người có thể trả lời ngay hoặc dành thời gian suy nghĩ kỹ càng.
++ Khi bật suy luận (thinkin), mô hình Claude 3.7 Sonnet Thinking sẽ tự phản tỉnh
+và thực hiện suy luận đa bước trước khi trả lời, giúp nâng cao hiệu quả trong
+các lĩnh vực như toán học, vật lý, lập trình, và các tác vụ hướng dẫn phức tạp.
++ Mặc dù là không phải mô hình mới nhất nhưng nó vẫn nổi lên như là giải pháp
+nằm giữa Claude 4 Opus và Claude 4 Sonnet mà vẫn đảm bảo chi phí phù hợp
+cho nên nó vẫn hữu dụng trong một số trường hợp khi mà người dùng chắc
+chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-5-sonnet',
     userRating: 4.9,
