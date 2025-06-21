@@ -921,7 +921,9 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     name: 'Llama 4 Maverick',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Meta',
-    description: 'Mô hình Llama 4 Maverick từ Meta, một phần của dòng mô hình Llama mã nguồn mở mạnh mẽ.',
+    description: `+ Llama 4 Maverick là một trong những phiên bản nổi bật nhất thuộc dòng Llama 4 do Meta phát triển, chính thức ra mắt vào tháng 4 năm 2025. Đây là mô hình Al đa phương thức (multimodal) đầu tiên của Meta sử dụng kiến trúc Mixture-of-Experts (MoE) với khả năng xử lý hiệu quả, mạnh mẽ và tiết kiệm tài nguyên.
++ Llama 4 Maverick sở hữu 17 tỷ tham số hoạt động (active parameters) trong tổng số khoảng 400 tỷ tham số, được tổ chức thành 128 chuyên gia (experts). Mỗi token đầu vào được xử lý bởi một chuyên gia riêng biệt cùng với một chuyên gia chung, giúp mô hình chỉ kích hoạt một phần tham số trong quá trình suy luận, từ đó giảm chi phí tính toán và độ trễ khi triển khai. Mô hình có thể chạy hiệu quả trên một máy chủ NVIDIA H100 DGX duy nhất hoặc triển khai phân tán để tối ưu hiệu suất.
++ Llama 4 Maverick được huấn luyện trên dữ liệu đa ngôn ngữ với hơn 200 ngôn ngữ, hỗ trợ tốt 12 ngôn ngữ chính bao gồm tiếng Việt, tiếng Anh, tiếng Pháp, tiếng Đức, tiếng Thái và nhiều ngôn ngữ khác. Mô hình phù hợp với các ứng dụng đa dạng như trợ lý ảo, phân tích hình ảnh, dịch thuật, lập trình, và các hệ thống Al đa nhiệm trong doanh nghiệp.`,
     logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png',
     link: 'https://ai.meta.com/llama/',
     userRating: 4.4,
@@ -985,6 +987,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
