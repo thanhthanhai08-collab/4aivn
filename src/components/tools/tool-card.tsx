@@ -55,9 +55,10 @@ export function ToolCard({ tool }: ToolCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <a href={tool.link} target="_blank" rel="noopener noreferrer">
-            Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
-          </a>
+          <Link href={`/tools/${tool.id}`}>
+            Xem chi tiết
+            <ExternalLink className="ml-2 h-4 w-4" />
+          </Link>
         </Button>
       </CardFooter>
     </Card>
