@@ -195,16 +195,23 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 </>
               )}
               <TableCell>
-                <div className="flex items-center justify-center space-x-0.5">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
-                      <Star
-                        className={`h-5 w-5 cursor-pointer transition-colors ${
-                          star <= displayRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
-                        }`}
-                      />
-                    </button>
-                  ))}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex items-center justify-center space-x-0.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
+                        <Star
+                          className={`h-5 w-5 cursor-pointer transition-colors ${
+                            star <= displayRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  {item.userRating && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {item.userRating.toFixed(1)}
+                    </p>
+                  )}
                 </div>
               </TableCell>
             </TableRow>
