@@ -6,9 +6,21 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Tool, AIModel } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ExternalLink } from "lucide-react";
+import { Star } from "lucide-react";
+
+// Helper function to parse context length strings (e.g., "1m", "200k") into numbers
+const parseContextLength = (tokenStr?: string): number => {
+  if (!tokenStr) return -Infinity;
+  const lower = tokenStr.toLowerCase();
+  if (lower.endsWith('m')) {
+    return parseFloat(lower.replace('m', '')) * 1000000;
+  }
+  if (lower.endsWith('k')) {
+    return parseFloat(lower.replace('k', '')) * 1000;
+  }
+  return parseFloat(lower) || -Infinity;
+};
 
 interface RankingsTableProps<T extends Tool | AIModel> {
   items: T[];
@@ -44,44 +56,42 @@ const renderStars = (rating?: number) => {
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
   const sortedItems = [...items]
     .sort((a, b) => {
-      const itemAIsModel = itemType === 'model';
-      const itemBIsModel = itemType === 'model';
-
-      if (itemAIsModel && itemBIsModel) {
+      if (itemType === 'model') {
         const modelA = a as AIModel;
         const modelB = b as AIModel;
 
-        // Primary sort: intelligenceScore (descending), undefined/null last
+        // 1. Sort by intelligenceScore (descending)
         const intelA = modelA.intelligenceScore ?? -Infinity;
         const intelB = modelB.intelligenceScore ?? -Infinity;
-        if (intelB !== intelA) {
-          return intelB - intelA;
-        }
+        if (intelB !== intelA) return intelB - intelA;
 
-        // Secondary sort: userRating (descending), undefined/null last
+        // 2. Sort by contextLengthToken (descending)
+        const contextA = parseContextLength(modelA.contextLengthToken);
+        const contextB = parseContextLength(modelB.contextLengthToken);
+        if (contextB !== contextA) return contextB - contextA;
+
+        // 3. Sort by pricePerMillionTokens (ascending)
+        const priceA = modelA.pricePerMillionTokens ?? Infinity;
+        const priceB = modelB.pricePerMillionTokens ?? Infinity;
+        if (priceA !== priceB) return priceA - priceB;
+
+        // 4. Sort by userRating (descending)
         const ratingA = modelA.userRating ?? -Infinity;
         const ratingB = modelB.userRating ?? -Infinity;
-        if (ratingB !== ratingA) {
-          return ratingB - ratingA;
-        }
-        // Tertiary sort: by name if both primary and secondary are equal
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        
         return modelA.name.localeCompare(modelB.name);
 
-      } else { // Tool: sort by userRating only, then by name
+      } else { // Tool sorting: by userRating only, then by name
         const ratingA = a.userRating ?? -Infinity;
         const ratingB = b.userRating ?? -Infinity;
-         if (ratingB !== ratingA) {
-          return ratingB - ratingA;
-        }
+         if (ratingB !== ratingA) return ratingB - ratingA;
         return a.name.localeCompare(b.name);
       }
     });
-
-  let denseRankNumber = 0; 
-  let lastProcessedIntelScore = Number.POSITIVE_INFINITY;
-  let lastProcessedUserRatingForModel = Number.POSITIVE_INFINITY;
-  let lastProcessedToolUserRating = Number.POSITIVE_INFINITY;
-
+  
+  let denseRank = 0;
+  let lastSignature = "";
 
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm">
@@ -105,38 +115,29 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         </TableHeader>
         <TableBody>
           {sortedItems.map((item) => {
-            let rankToDisplay: string | number = '-';
-            const currentItemIsModel = itemType === 'model';
-            
-            if (currentItemIsModel) {
+            let currentSignature: string;
+            if (itemType === 'model') {
               const modelItem = item as AIModel;
-              if (modelItem.intelligenceScore !== undefined && modelItem.intelligenceScore !== null) {
-                  const currentIntel = modelItem.intelligenceScore;
-                  const currentUserRating = modelItem.userRating ?? -Infinity;
-
-                  if (currentIntel < lastProcessedIntelScore || 
-                      (currentIntel === lastProcessedIntelScore && currentUserRating < lastProcessedUserRatingForModel)) {
-                      denseRankNumber++;
-                  }
-                  rankToDisplay = denseRankNumber;
-                  lastProcessedIntelScore = currentIntel;
-                  lastProcessedUserRatingForModel = currentUserRating;
-              }
-            } else { 
-              if (item.userRating !== undefined && item.userRating !== null) {
-                  if (item.userRating < lastProcessedToolUserRating) {
-                      denseRankNumber++; 
-                  }
-                  rankToDisplay = denseRankNumber;
-                  lastProcessedToolUserRating = item.userRating;
-              }
+              currentSignature = [
+                modelItem.intelligenceScore,
+                parseContextLength(modelItem.contextLengthToken),
+                modelItem.pricePerMillionTokens,
+                modelItem.userRating,
+              ].join('-');
+            } else {
+              currentSignature = String(item.userRating ?? -Infinity);
             }
-            
+
+            if (currentSignature !== lastSignature) {
+              denseRank++;
+            }
+            lastSignature = currentSignature;
+
             const modelItemForDetails = item as AIModel; 
 
             return (
             <TableRow key={item.id}>
-              <TableCell className="text-center font-medium">{rankToDisplay}</TableCell>
+              <TableCell className="text-center font-medium">{denseRank}</TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
