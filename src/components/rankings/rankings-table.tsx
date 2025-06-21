@@ -81,7 +81,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         const priceA = modelA.pricePerMillionTokens ?? Infinity;
         const priceB = modelB.pricePerMillionTokens ?? Infinity;
         if (priceA !== priceB) return priceA - priceB;
-
+        
         // 4. Sort by userRating (descending)
         const ratingA = a.userRating ?? -Infinity;
         const ratingB = b.userRating ?? -Infinity;
@@ -117,7 +117,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
               </>
             )}
-            <TableHead className="text-center min-w-[140px]">Đánh giá của bạn</TableHead>
+            <TableHead className="text-center min-w-[140px]">Đánh giá</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -129,7 +129,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 modelItem.intelligenceScore,
                 parseContextLength(modelItem.contextLengthToken),
                 modelItem.pricePerMillionTokens,
-                modelItem.userRating,
+                item.userRating,
               ].join('-');
             } else {
               currentSignature = String(item.userRating ?? -Infinity);
@@ -195,8 +195,8 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 </>
               )}
               <TableCell>
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex items-center justify-center space-x-0.5">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="flex items-center">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
                         <Star
@@ -208,9 +208,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     ))}
                   </div>
                   {item.userRating && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {item.userRating.toFixed(1)}
-                    </p>
+                    <span className="font-semibold text-foreground">
+                      ({item.userRating.toFixed(1)})
+                    </span>
                   )}
                 </div>
               </TableCell>
