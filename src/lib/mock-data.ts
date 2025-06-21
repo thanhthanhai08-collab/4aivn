@@ -579,7 +579,9 @@ export const mockAIModels: AIModel[] = [
     name: 'Grok 3 Reasoning Beta',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: 'Phiên bản Beta của Grok 3 Reasoning.',
+    description: `+ Grok 3 Reasoning được thiết kế để thực hiện suy luận theo chuỗi (chain-of-thought reasoning), nghĩa là mô hình sẽ phân tích và giải quyết vấn đề từng bước một cách logic và có hệ thống. Thay vì trả lời ngay lập tức, Grok 3 dành thời gian “suy nghĩ”, thử nghiệm các giả thuyết, phát hiện lỗi và chỉnh sửa trước khi đưa ra kết quả cuối cùng. Điều này giúp tăng độ chính xác và giảm thiểu sai sót trong các bài toán phức tạp.
++ Grok 3 Reasoning vẫn giữ được khả năng truy cập internet và mạng xã hội X (trước đây là Twitter) để tìm kiếm, xác minh nguồn thông tin và tổng hợp dữ liệu mới nhất trước khi trả lời. Tính năng này giúp mô hình cung cấp các câu trả lời cập nhật, chính xác và phù hợp với bối cảnh thực tế, đây tính năng quan trọng nhất đối với những dự án cần cập nhật tin tức liên tục giúp giữ được độ chính xác.
++ Vậy là Grok 3 Reasoning với nền tảng vẫn là Grok 3 nhưng thể hiện thông minh hơn.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
