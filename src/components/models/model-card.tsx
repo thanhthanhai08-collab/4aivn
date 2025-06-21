@@ -40,12 +40,32 @@ export function ModelCard({ model }: ModelCardProps) {
         <CardDescription className="text-sm line-clamp-3">{model.description}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
-        <div className="flex items-center text-sm text-amber-500">
-          {model.userRating && (
-            <>
+        <div className="flex-grow">
+          {model.myRating !== undefined ? (
+            <div>
+              <div className="flex items-center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star
+                    key={star}
+                    className={`h-5 w-5 transition-colors ${
+                      star <= (model.myRating || 0)
+                        ? "fill-amber-400 text-amber-500"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">
+                Đánh giá của bạn: {model.myRating} sao
+              </p>
+            </div>
+          ) : model.userRating ? (
+            <div className="flex items-center text-sm text-amber-500">
               <Star className="h-4 w-4 mr-1 fill-amber-400 text-amber-500" />
               {model.userRating.toFixed(1)}
-            </>
+            </div>
+          ) : (
+            <div className="h-5" /> // Placeholder to keep height consistent
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>

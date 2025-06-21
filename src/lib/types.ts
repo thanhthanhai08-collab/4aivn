@@ -47,6 +47,7 @@ export interface AIModel {
   logoUrl: string;
   link?: string; // Link to project page or paper
   userRating?: number;
+  myRating?: number;
   features?: string[];
   isFavorite?: boolean; // Added for favorite functionality
   contextLengthToken?: string; // e.g., "1m", "200k"
@@ -55,4 +56,5 @@ export interface AIModel {
   speedTokensPerSecond?: number; // e.g., 150.6
   latencyFirstChunkSeconds?: number; // e.g., 38.11
 }
+
 
