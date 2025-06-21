@@ -74,12 +74,12 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           <TableRow>
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
             <TableHead className="min-w-[200px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
-            <TableHead className="min-w-[110px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
+            <TableHead className="min-w-[100px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
             {itemType === 'model' && (
               <>
                 <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
                 <TableHead className="text-center min-w-[120px]">Chỉ số thông minh</TableHead>
-                <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
+                <TableHead className="text-center min-w-[150px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
               </>
@@ -174,7 +174,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     ))}
                   </div>
                   {item.userRating && (
-                    <span className="text-muted-foreground font-normal">
+                    <span className="text-muted-foreground">
                       ({item.userRating.toFixed(1)})
                     </span>
                   )}
