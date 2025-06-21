@@ -363,6 +363,7 @@ export const mockAIModels: AIModel[] = [
       "Tốc độ sinh token khá nhanh là 138.6 token /s.",
       "Độ trễ 34.8s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
+    isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 70,
     pricePerMillionTokens: 1.93,
@@ -374,9 +375,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o3-pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 Pro là phiên bản nâng cấp mới nhất thuộc dòng OpenAI o3 được phát hành vào cuối năm 2024, được thiết kế như một mô hình transformer phản chiếu (reflective generative pre-trained transformer) với khả năng suy luận logic nhiều bước, tư duy phân tích sâu sắc, và sử dụng công cụ tự động để truy cập thông tin thời gian thực, giúp giải quyết các vấn đề phức tạp một cách hiệu quả.
-+ So với phiên bản o3 tiêu chuẩn, o3 Pro cải thiện hiệu suất xử lý, tăng cường tốc độ sinh token và giảm độ trễ, phù hợp cho các ứng dụng doanh nghiệp đòi hỏi hiệu năng cao và độ chính xác tối đa. Mô hình cũng được tinh chỉnh để giảm thiểu kết quả gây hại, tăng cường tính minh bạch và tích hợp mượt mà trong các dịch vụ của OpenAI như API, Playground và các ứng dụng tùy chỉnh.
-+ Với sức mạnh vượt trội, o3 Pro là lựa chọn lý tưởng cho các tác vụ chuyên sâu như phân tích dữ liệu, lập trình phức tạp và các hệ thống AI tự động hóa tiên tiến.`,
+    description: `+ OpenAI o3 Pro là phiên bản nâng cấp mới nhất thuộc dòng mô hình lý luận o3, chính thức ra mắt vào ngày 10/6/2025. Đây là bước tiến vượt bậc trong công nghệ AI của OpenAI, được tích hợp trong các gói ChatGPT Pro, Team, Enterprise và API, nhằm thay thế hoàn toàn phiên bản o1 Pro trước đó.\n+ Hiệu suất vượt trội trên các bài kiểm tra chuyên sâu:\n+ Trong các bài đánh giá nội bộ, o3 Pro vượt qua các đối thủ như Google Gemini 2.5 Pro và Claude 4 Opus tuy nhiên thời gian phản hồi và tốc độ kém xa cho với 2 đối thủ và cả các model trước của OpenAI vì vậy OpenAI khuyến nghị người dùng lựa chọn o3 Pro cho các tác vụ đòi hỏi độ tin cậy và độ chính xác cao, nơi việc chờ đợi vài phút là xứng đáng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
