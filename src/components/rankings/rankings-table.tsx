@@ -107,11 +107,11 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           <TableRow>
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
             <TableHead className="min-w-[250px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
-            <TableHead className="min-w-[100px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
+            <TableHead className="min-w-[120px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
             {itemType === 'model' && (
               <>
                 <TableHead className="text-center min-w-[150px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
-                <TableHead className="text-center min-w-[100px]">Chỉ số thông minh</TableHead>
+                <TableHead className="text-center min-w-[140px]">Chỉ số thông minh</TableHead>
                 <TableHead className="text-center min-w-[160px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
