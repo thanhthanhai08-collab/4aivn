@@ -952,8 +952,8 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     latencyFirstChunkSeconds: 0.33,
   },
   {
-    id: 'gpt-4o',
-    name: 'GPT-4o',
+    id: 'openai-o3-pro',
+    name: 'Open AI o3-pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: 'Mô hình GPT-4o ("omni") của OpenAI, mang đến khả năng đa phương thức và hiệu suất cao.',
@@ -1003,6 +1003,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
