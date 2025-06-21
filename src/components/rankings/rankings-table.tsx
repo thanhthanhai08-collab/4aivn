@@ -7,10 +7,6 @@ import type { Tool, AIModel } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
-import { useState } from "react";
-import { useAuth } from "@/contexts/auth-context";
-import { useToast } from "@/hooks/use-toast";
-
 
 // Helper function to parse context length strings (e.g., "1m", "200k") into numbers
 const parseContextLength = (tokenStr?: string): number => {
@@ -31,35 +27,6 @@ interface RankingsTableProps<T extends Tool | AIModel> {
 }
 
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
-  const { currentUser } = useAuth();
-  const { toast } = useToast();
-  // Store the user's rating for this session. Key: itemId, Value: rating
-  const [sessionRatings, setSessionRatings] = useState<Record<string, number>>({});
-
-  // This is a mock function. In a real app, this would trigger a backend update
-  // and the new average would be fetched or calculated.
-  const handleRating = (itemId: string, itemName: string, newRating: number) => {
-    if (!currentUser) {
-      toast({
-        title: "Yêu cầu đăng nhập",
-        description: "Vui lòng đăng nhập để đánh giá.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    // Update the state to reflect the user's choice for this session
-    setSessionRatings(prev => ({
-      ...prev,
-      [itemId]: newRating
-    }));
-    
-    toast({
-      title: "Đã gửi đánh giá",
-      description: `Cảm ơn bạn đã đánh giá ${itemName} ${newRating} sao.`,
-    });
-    // Note: The overall average displayed and the ranking won't change in this mock-up.
-  };
 
   const sortedItems = [...items]
     .sort((a, b) => {
@@ -141,9 +108,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             lastSignature = currentSignature;
 
             const modelItemForDetails = item as AIModel; 
-            const userRatingForThisItem = sessionRatings[item.id];
             const averageRating = item.userRating ?? 0;
-            const displayRating = userRatingForThisItem !== undefined ? userRatingForThisItem : averageRating;
 
             return (
             <TableRow key={item.id}>
@@ -198,13 +163,14 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 <div className="flex items-center justify-center space-x-2">
                   <div className="flex items-center">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
-                        <Star
-                          className={`h-5 w-5 cursor-pointer transition-colors ${
-                            star <= displayRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
-                          }`}
-                        />
-                      </button>
+                      <Star
+                        key={star}
+                        className={`h-5 w-5 ${
+                          star <= averageRating
+                            ? "fill-amber-400 text-amber-500"
+                            : "text-gray-300"
+                        }`}
+                      />
                     ))}
                   </div>
                   {item.userRating && (
