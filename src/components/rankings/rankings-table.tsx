@@ -121,7 +121,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sortedItems.map((item) => {
+          {sortedItems.map((item, index) => {
             let currentSignature: string;
             if (itemType === 'model') {
               const modelItem = item as AIModel;
@@ -136,13 +136,14 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             }
 
             if (currentSignature !== lastSignature) {
-              denseRank++;
+              denseRank = index + 1;
             }
             lastSignature = currentSignature;
 
             const modelItemForDetails = item as AIModel; 
-            const userRatingForThisItem = sessionRatings[item.id] || 0; // The user's vote in this session
+            const userRatingForThisItem = sessionRatings[item.id];
             const averageRating = item.userRating ?? 0;
+            const displayRating = userRatingForThisItem !== undefined ? userRatingForThisItem : averageRating;
 
             return (
             <TableRow key={item.id}>
@@ -193,20 +194,17 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   </TableCell>
                 </>
               )}
-              <TableCell className="text-center">
-                 <div className="flex flex-col items-center gap-1">
-                  <div className="flex items-center space-x-0.5">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                      <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
-                          <Star
-                          className={`h-5 w-5 cursor-pointer transition-colors ${
-                              star <= userRatingForThisItem ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
-                          }`}
-                          />
-                      </button>
-                      ))}
-                  </div>
-                  {averageRating > 0 && <span className="text-xs text-muted-foreground">TB: {averageRating.toFixed(1)}</span>}
+              <TableCell>
+                <div className="flex items-center justify-center space-x-0.5">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button key={star} onClick={() => handleRating(item.id, item.name, star)} aria-label={`Đánh giá ${star} sao`}>
+                      <Star
+                        className={`h-5 w-5 cursor-pointer transition-colors ${
+                          star <= displayRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
+                        }`}
+                      />
+                    </button>
+                  ))}
                 </div>
               </TableCell>
             </TableRow>
