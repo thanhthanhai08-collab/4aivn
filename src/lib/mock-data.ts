@@ -342,7 +342,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Phiên bản xem trước của mô hình Open AI o1.',
+    description: 'OpenAl o4 Mini (High) là phiên bản nâng cấp hiệu suất của dòng mô hình o4 Mini, được ra mắt vào đầu năm 2025. Đây là biến thể được tối ưu để xử lý các tác vụ suy luận phức tạp hơn, phù hợp với các nhu cầu nghiên cứu khoa học nâng cao, lập trình mã nguồn phức tạp và giải quyết các bài toán toán học khó khăn, trong khi vẫn giữ được chi phí vận hành thấp và tốc độ phản hồi nhanh hơn nhiều so với các mô hình cao cấp như o3 hay GPT-4\n+ Mặc dù có sức mạnh tính toán gần bằng các mô hình cao cấp, o4 Mini (High) vẫn duy trì chi phí vận hành hợp lý, giúp người dùng tiết kiệm ngân sách so với việc sử dụng các mô hình lớn hơn. Tốc độ phản hồi của mô hình vẫn nhanh, tuy có độ trễ cao hơn một chút so với o4 Mini tiêu chuẩn do yêu cầu tính toán phức tạp hơn.\n+ Open Al o4 Mini (High) phù hợp với các ứng dụng đòi hỏi độ chính xác cao và suy luận chuyên sâu như soạn truy vấn SQL phức tạp, giải thích các khái niệm khoa học nâng cao, phát triển phần mềm phức tạp và nghiên cứu chuyên ngành.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
@@ -383,12 +383,12 @@ export const mockAIModels: AIModel[] = [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 71 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 85%",
-      "• GPQA Diamond (Scientific Reasoning)",
-      "• Humanity's Last Exam (Reasoning & Knowledge)",
-      "• LiveCodeBench (Coding)",
-      "• SciCode (Coding)",
-      "• HumanEval (Coding)",
-      "• MATH-500 (Quantitative reasoning)",
+      "• GPQA Diamond (Scientific Reasoning) 84%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 18.2%",
+      "• LiveCodeBench (Coding) 81%",
+      "• SciCode (Coding) 42%",
+      "• HumanEval (Coding) 99%",
+      "• MATH-500 (Quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 93%",
       "Giá trung bình 35 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 20 USD / 1 triệu token.",
@@ -633,10 +633,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Qwen3 30B A3B (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
-    description: `+ Qwen3 30B A3B là một trong hai phiên bản mô hình Mixture-of-Experts (MoE) tiên tiến thuộc dòng Qwen3 do Alibaba Cloud phát triển, ra mắt đầu năm 2025. Với tổng cộng 30 tỷ tham số nhưng chỉ kích hoạt khoảng 3 tỷ tham số cho mỗi tác vụ, Qwen3 30B A3B tối ưu hóa hiệu quả tính toán trong khi vẫn duy trì khả năng suy luận và xử lý ngôn ngữ vượt trội.
-+ Qwen3 30B A3B hỗ trợ hơn 100 ngôn ngữ và phương ngữ, trong đó có tiếng Việt, giúp mô hình dễ dàng ứng dụng trên phạm vi toàn cầu với khả năng giao tiếp tự nhiên và chính xác.
-+ Mô hình tích hợp chế độ suy nghĩ (reasoning mode), cho phép thực hiện lập luận từng bước để giải quyết các vấn đề phức tạp như toán học, lập trình và logic đa bước, đồng thời có chế độ không suy nghĩ cho các câu hỏi đơn giản nhằm tối ưu tốc độ phản hồi.
-+ Người dùng có thể truy cập miễn phí Qwen3 30B A3B thông qua các API do OpenRouter và Alibaba Cloud cung cấp. Mô hình cũng hỗ trợ tích hợp dễ dàng qua các thư viện phổ biến như Hugging Face Transformers, giúp nhà phát triển nhanh chóng xây dựng và triển khai các ứng dụng Al đa dạng.`,
+    description: `+ Qwen3 30B A3B là một trong hai phiên bản mô hình Mixture-of-Experts (MoE) tiên tiến thuộc dòng Qwen3 do Alibaba Cloud phát triển, ra mắt đầu năm 2025. Với tổng cộng 30 tỷ tham số nhưng chỉ kích hoạt khoảng 3 tỷ tham số cho mỗi tác vụ, Qwen3 30B A3B tối ưu hóa hiệu quả tính toán trong khi vẫn duy trì khả năng suy luận và xử lý ngôn ngữ vượt trội.\n+ Qwen3 30B A3B hỗ trợ hơn 100 ngôn ngữ và phương ngữ, trong đó có tiếng Việt, giúp mô hình dễ dàng ứng dụng trên phạm vi toàn cầu với khả năng giao tiếp tự nhiên và chính xác.\n+ Mô hình tích hợp chế độ suy nghĩ (reasoning mode), cho phép thực hiện lập luận từng bước để giải quyết các vấn đề phức tạp như toán học, lập trình và logic đa bước, đồng thời có chế độ không suy nghĩ cho các câu hỏi đơn giản nhằm tối ưu tốc độ phản hồi.\n+ Người dùng có thể truy cập miễn phí Qwen3 30B A3B thông qua các API do OpenRouter và Alibaba Cloud cung cấp. Mô hình cũng hỗ trợ tích hợp dễ dàng qua các thư viện phổ biến như Hugging Face Transformers, giúp nhà phát triển nhanh chóng xây dựng và triển khai các ứng dụng Al đa dạng.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
@@ -781,10 +778,7 @@ Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năn
     name: 'GPT-4.1',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ GPT-4.1 là mô hình Al thế hệ mới được OpenAl ra mắt vào tháng 4 năm 2025, đánh dấu bước tiến vượt bậc so với phiên bản GPT-4o trước đó. Với nhiều cải tiến về khả năng lập trình, hiểu ngữ cảnh dài và tuân thủ hướng dẫn, GPT-4.1 mang đến hiệu suất vượt trội cùng chi phí sử dụng giảm đến 26%, phù hợp cho cả doanh nghiệp và nhà phát triển cá nhân.
-+ GPT-4.1 thể hiện khả năng lập trình tốt hơn 21% so với GPT-4o và 27% so với GPT-4.5 trong các bài kiểm tra nội bộ của OpenAI. Mô hình cũng cải thiện khả năng tuân theo hướng dẫn và xử lý ngữ cảnh dài, giúp vận hành các tác tử Al hiệu quả hơn.
-+ GPT-4.1 có thể xử lý lên đến 1 triệu token trong một lần truy vấn, gấp tám lần giới hạn 128.000 token của GPT-4o.
-+ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng kể cho các doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy mô lớn.`,
+    description: `+ GPT-4.1 là mô hình Al thế hệ mới được OpenAl ra mắt vào tháng 4 năm 2025, đánh dấu bước tiến vượt bậc so với phiên bản GPT-4o trước đó. Với nhiều cải tiến về khả năng lập trình, hiểu ngữ cảnh dài và tuân thủ hướng dẫn, GPT-4.1 mang đến hiệu suất vượt trội cùng chi phí sử dụng giảm đến 26%, phù hợp cho cả doanh nghiệp và nhà phát triển cá nhân.\n+ GPT-4.1 thể hiện khả năng lập trình tốt hơn 21% so với GPT-4o và 27% so với GPT-4.5 trong các bài kiểm tra nội bộ của OpenAI. Mô hình cũng cải thiện khả năng tuân theo hướng dẫn và xử lý ngữ cảnh dài, giúp vận hành các tác tử Al hiệu quả hơn.\n+ GPT-4.1 có thể xử lý lên đến 1 triệu token trong một lần truy vấn, gấp tám lần giới hạn 128.000 token của GPT-4o.\n+ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng kể cho các doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy mô lớn.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
@@ -989,5 +983,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
