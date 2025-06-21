@@ -338,8 +338,8 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 1.13,
   },
   {
-    id: 'openai-o1-preview',
-    name: 'Open AI o1-preview',
+    id: 'openai-o4-mini-high',
+    name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: 'Phiên bản xem trước của mô hình Open AI o1.',
@@ -515,7 +515,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Grok 3',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: `+ Grok 3 là phiên bản mô hình Al mới nhất do xAI, công ty của Elon Musk, phát triển và ra mắt chính thức vào tháng 2 năm 2025. Được huấn luyện trên siêu máy tính Colossus với hơn 100.000 GPU Nvidia H100, Grok 3 sở hữu sức mạnh tính toán gấp 10 lần so với các mô hình trước đó của xAI.
+    description: `+ Grok 3 là phiên bản mô hình AI mới nhất do xAI, công ty của Elon Musk, phát triển và ra mắt chính thức vào tháng 2 năm 2025. Được huấn luyện trên siêu máy tính Colossus với hơn 100.000 GPU Nvidia H100, Grok 3 sở hữu sức mạnh tính toán gấp 10 lần so với các mô hình trước đó của xAI.
 + Grok 3 chính là nền tảng để xAI phát triển Grok 3 Mini Reasoning và hãy nhìn vào sự thể hiện của Grok 3 Mini Reasoning thì thấy Grok 3 thật sự là nền tảng thật sự tuyệt vời.
 + Grok 3 có khả năng truy cập internet và mạng xã hội X (trước đây là Twitter) để tìm kiếm, xác minh nguồn thông tin và tổng hợp dữ liệu mới nhất trước khi trả lời. Tính năng này giúp mô hình cung cấp các câu trả lời cập nhật, chính xác và phù hợp với bối cảnh thực tế, đây tính năng quan trọng nhất đối với những dự án cần cập nhật tin tức liên tục giúp giữ được độ chính xác.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
@@ -536,7 +536,7 @@ export const mockAIModels: AIModel[] = [
       "• Giá đầu vào 3 USD / 1 triệu token.",
       "• Giá đầu ra 15 USD / 1 triệu token.",
       "Tốc độ sinh token là 92.9 token /s.",
-      "Độ trễ 0.47s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên.",
+      "Độ trễ 0.47s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -550,9 +550,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Llama 4 Maverick',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Meta',
-    description: `Llama 4 Maverick là một trong những phiên bản nổi bật nhất thuộc dòng Llama 4 do Meta phát triển, chính thức ra mắt vào tháng 4 năm 2025. Đây là mô hình Al đa phương thức (multimodal) đầu tiên của Meta sử dụng kiến trúc Mixture-of-Experts (MoE) với khả năng xử lý hiệu quả, mạnh mẽ và tiết kiệm tài nguyên.
-Llama 4 Maverick sở hữu 17 tỷ tham số hoạt động (active parameters) trong tổng số khoảng 400 tỷ tham số, được tổ chức thành 128 chuyên gia (experts). Mỗi token đầu vào được xử lý bởi một chuyên gia riêng biệt cùng với một chuyên gia chung, giúp mô hình chỉ kích hoạt một phần tham số trong quá trình suy luận, từ đó giảm chi phí tính toán và độ trễ khi triển khai. Mô hình có thể chạy hiệu quả trên một máy chủ NVIDIA H100 DGX duy nhất hoặc triển khai phân tán để tối ưu hiệu suất.
-Llama 4 Maverick được huấn luyện trên dữ liệu đa ngôn ngữ với hơn 200 ngôn ngữ, hỗ trợ tốt 12 ngôn ngữ chính bao gồm tiếng Việt, tiếng Anh, tiếng Pháp, tiếng Đức, tiếng Thái và nhiều ngôn ngữ khác. Mô hình phù hợp với các ứng dụng đa dạng như trợ lý ảo, phân tích hình ảnh, dịch thuật, lập trình, và các hệ thống Al đa nhiệm trong doanh nghiệp.`,
+    description: `Llama 4 Maverick là một trong những phiên bản nổi bật nhất thuộc dòng Llama 4 do Meta phát triển, chính thức ra mắt vào tháng 4 năm 2025. Đây là mô hình Al đa phương thức (multimodal) đầu tiên của Meta sử dụng kiến trúc Mixture-of-Experts (MoE) với khả năng xử lý hiệu quả, mạnh mẽ và tiết kiệm tài nguyên. Llama 4 Maverick sở hữu 17 tỷ tham số hoạt động (active parameters) trong tổng số khoảng 400 tỷ tham số, được tổ chức thành 128 chuyên gia (experts). Mỗi token đầu vào được xử lý bởi một chuyên gia riêng biệt cùng với một chuyên gia chung, giúp mô hình chỉ kích hoạt một phần tham số trong quá trình suy luận, từ đó giảm chi phí tính toán và độ trễ khi triển khai. Mô hình có thể chạy hiệu quả trên một máy chủ NVIDIA H100 DGX duy nhất hoặc triển khai phân tán để tối ưu hiệu suất. Llama 4 Maverick được huấn luyện trên dữ liệu đa ngôn ngữ với hơn 200 ngôn ngữ, hỗ trợ tốt 12 ngôn ngữ chính bao gồm tiếng Việt, tiếng Anh, tiếng Pháp, tiếng Đức, tiếng Thái và nhiều ngôn ngữ khác. Mô hình phù hợp với các ứng dụng đa dạng như trợ lý ảo, phân tích hình ảnh, dịch thuật, lập trình, và các hệ thống Al đa nhiệm trong doanh nghiệp.`,
     logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png',
     link: 'https://ai.meta.com/llama/',
     userRating: 4.4,
@@ -571,7 +569,7 @@ Llama 4 Maverick được huấn luyện trên dữ liệu đa ngôn ngữ với
       "• Giá đầu vào 0.22 USD / 1 triệu token.",
       "• Giá đầu ra 0.85 USD / 1 triệu token.",
       "Tốc độ sinh token là 164.4 token /s.",
-      "Độ trễ 0.33s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên.",
+      "Độ trễ 0.33s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
@@ -609,21 +607,21 @@ Llama 4 Maverick được huấn luyện trên dữ liệu đa ngôn ngữ với
     link: '#',
     userRating: 4.9,
     features: [
-        "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token→ Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý .",
-        "Chỉ số thông minh 56 →Dựa trên trung bình các điểm benmark là",
-        "• MMLU-Pro (Reasoning & Knowledge) 78%",
-        "• GPQA Diamond (Scientific Reasoning) 62%",
-        "• Humanity's Last Exam (Reasoning & Knowledge) 6.6%",
-        "• LiveCodeBench (Coding) 51%",
-        "• SciCode (Coding) 28%",
-        "• HumanEval (Coding)",
-        "• MATH-500 (Quantitative reasoning) 96%",
-        "• AIME 2024 (Competition Math) 75%",
-        "Giá trung bình 0.75 USD / 1 triệu token → Dựa trên các thông số giá",
-        "• Giá đầu vào 0.2 USD / 1 triệu token.",
-        "• Giá đầu ra 2.4 USD / 1 triệu token.",
-        "Tốc độ sinh token là 91.7 token /s.",
-        "Độ trễ 1.05s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token→ Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý .",
+      "Chỉ số thông minh 56 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 78%",
+      "• GPQA Diamond (Scientific Reasoning) 62%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 6.6%",
+      "• LiveCodeBench (Coding) 51%",
+      "• SciCode (Coding) 28%",
+      "• HumanEval (Coding)",
+      "• MATH-500 (Quantitative reasoning) 96%",
+      "• AIME 2024 (Competition Math) 75%",
+      "Giá trung bình 0.75 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 0.2 USD / 1 triệu token.",
+      "• Giá đầu ra 2.4 USD / 1 triệu token.",
+      "Tốc độ sinh token là 91.7 token /s.",
+      "Độ trễ 1.05s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '128k',
     intelligenceScore: 56,
@@ -735,7 +733,7 @@ Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năn
       "• Giá đầu vào 0.4 USD / 1 triệu token.",
       "• Giá đầu ra 1.6 USD / 1 triệu token.",
       "Tốc độ sinh token là 66.8 token /s.",
-      "Độ trễ 0.5s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên.",
+      "Độ trễ 0.5s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
