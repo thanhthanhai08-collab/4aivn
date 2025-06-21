@@ -55,6 +55,8 @@ export interface AIModel {
   pricePerMillionTokens?: number; // e.g., 3.44
   speedTokensPerSecond?: number; // e.g., 150.6
   latencyFirstChunkSeconds?: number; // e.g., 38.11
+  ratingCount?: number;
 }
+
 
 

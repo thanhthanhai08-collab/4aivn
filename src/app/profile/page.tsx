@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews, mockAIModels } from "@/lib/mock-data";
+import { mockTools, mockNews, mockAIModels as initialMockModels } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
@@ -30,11 +30,21 @@ export default function ProfilePage() {
     if (!isLoading && !currentUser) {
       router.push("/login");
     } else if (currentUser) {
+        // On mount, get models from localStorage or initialize it
+        const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
+        let currentModels: AIModel[];
+        if (storedModelsRaw) {
+          currentModels = JSON.parse(storedModelsRaw);
+        } else {
+          currentModels = initialMockModels;
+          localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
+        }
+
         // Load rated models from localStorage
         const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
         const ratedModelIds = Object.keys(storedRatings);
 
-        const userRatedModels = mockAIModels
+        const userRatedModels = currentModels
             .filter(model => ratedModelIds.includes(model.id))
             .map(model => ({
                 ...model,

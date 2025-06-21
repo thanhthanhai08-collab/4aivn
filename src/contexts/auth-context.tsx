@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setCurrentUser(null);
     localStorage.removeItem("cleanAIUser");
     localStorage.removeItem("cleanAIModelRatings");
+    localStorage.removeItem("cleanAIPersistedModels");
     setIsLoading(false);
   };
 

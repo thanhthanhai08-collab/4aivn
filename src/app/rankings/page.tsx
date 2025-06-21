@@ -1,9 +1,11 @@
+
 // src/app/rankings/page.tsx
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockTools, mockAIModels } from "@/lib/mock-data";
+import { mockTools, mockAIModels as initialMockModels } from "@/lib/mock-data";
+import type { AIModel } from "@/lib/types";
 import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
@@ -14,8 +16,17 @@ export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [allModels, setAllModels] = useState<AIModel[]>(initialMockModels);
 
   useEffect(() => {
+    const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
+    if (storedModelsRaw) {
+      setAllModels(JSON.parse(storedModelsRaw));
+    } else {
+      localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
+      setAllModels(initialMockModels);
+    }
+    
     setMounted(true);
     // Simulate data fetching
     const timer = setTimeout(() => {
@@ -25,11 +36,11 @@ export default function RankingsPage() {
   }, []);
 
   const filteredModels = useMemo(() => {
-    if (!searchTerm.trim()) return mockAIModels;
-    return mockAIModels.filter(model =>
+    if (!searchTerm.trim()) return allModels;
+    return allModels.filter(model =>
       model.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchTerm, allModels]);
 
   const filteredTools = useMemo(() => {
     if (!searchTerm.trim()) return mockTools;

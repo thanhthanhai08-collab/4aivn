@@ -126,6 +126,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
+    ratingCount: 250,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý .",
       "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
@@ -162,6 +163,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.8,
+    ratingCount: 180,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token.",
       "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
@@ -198,6 +200,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
+    ratingCount: 320,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 71 → Dựa trên trung bình các điểm benmark là",
@@ -233,6 +236,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/',
     userRating: 4.9,
+    ratingCount: 195,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 1 triệu token",
       "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
@@ -272,6 +276,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
+    ratingCount: 280,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 64 →Dựa trên trung bình các điểm benmark là",
@@ -307,6 +312,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 150,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 62 →Dựa trên trung bình các điểm benmark là",
@@ -341,6 +347,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
+    ratingCount: 210,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
       "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
@@ -376,6 +383,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 165,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 59 →Dựa trên trung bình các điểm benmark là",
@@ -411,6 +419,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 140,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 131 nghìn token → Tức là có thể xử lý khoảng 135 nghìn từ hoặc 500 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 58 →Dựa trên trung bình các điểm benmark là",
@@ -447,6 +456,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
+    ratingCount: 310,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
         "Chỉ số thông minh 58 →Dựa trên trung bình các điểm benmark là",
@@ -483,6 +493,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-5-sonnet',
     userRating: 4.9,
+    ratingCount: 220,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 57 →Dựa trên trung bình các điểm benmark là",
@@ -517,6 +528,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: 'https://x.ai/grok',
     userRating: 4.4,
+    ratingCount: 177,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 51 →Dựa trên trung bình các điểm benmark là",
@@ -550,6 +562,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo LLMA cho bảng xếp hạng.png',
     link: 'https://ai.meta.com/llama/',
     userRating: 4.4,
+    ratingCount: 160,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 51 →Dựa trên trung bình các điểm benmark là",
@@ -585,6 +598,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 120,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 51 →Dựa trên trung bình các điểm benmark là",
@@ -620,6 +634,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 130,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token→ Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý .",
         "Chỉ số thông minh 56 →Dựa trên trung bình các điểm benmark là",
@@ -661,6 +676,7 @@ hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.5,
+    ratingCount: 240,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
         "Chỉ số thông minh 53 →Dựa trên trung bình các điểm benmark là",
@@ -697,6 +713,7 @@ hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
+    ratingCount: 190,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token→ Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 53 →Dựa trên trung bình các điểm benmark là",
@@ -732,6 +749,7 @@ Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năn
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
+    ratingCount: 225,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token → Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 53 → Dựa trên trung bình các điểm benmark là",
@@ -768,6 +786,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
+    ratingCount: 260,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 53 →Dựa trên trung bình các điểm benmark là",
@@ -804,6 +823,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     userRating: 4.9,
+    ratingCount: 155,
     features: [
         "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
         "Chỉ số thông minh 68 →Dựa trên trung bình các điểm benmark là",
@@ -839,6 +859,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
+    ratingCount: 350,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
@@ -874,6 +895,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     logoUrl: '/image/Logo Llama Nemotron Ultra Reasoning cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
+    ratingCount: 188,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 128 nghìn token → Tức là có thể xử lý khoảng 120 nghìn từ hoặc 400 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 61 →Dựa trên trung bình các điểm benmark là",
@@ -908,6 +930,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
+    ratingCount: 215,
     features: [
       "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 61 →Dựa trên trung bình các điểm benmark là",

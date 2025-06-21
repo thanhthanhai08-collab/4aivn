@@ -6,7 +6,7 @@ import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockAIModels } from "@/lib/mock-data";
+import { mockAIModels as initialMockModels } from "@/lib/mock-data";
 import type { AIModel } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +23,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
   const params = use(paramsAsPromise); 
   const { id } = params;
 
+  const [allModels, setAllModels] = useState<AIModel[]>(initialMockModels);
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -33,16 +34,27 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
   const { toast } = useToast();
 
   useEffect(() => {
-    const foundModel = mockAIModels.find((m) => m.id === id);
+    // On mount, get models from localStorage or initialize it
+    const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
+    let currentModels: AIModel[];
+    if (storedModelsRaw) {
+      currentModels = JSON.parse(storedModelsRaw);
+    } else {
+      currentModels = initialMockModels;
+      localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
+    }
+    setAllModels(currentModels);
+
+    const foundModel = currentModels.find((m) => m.id === id);
     if (foundModel) {
       setModel(foundModel);
       setIsFavorite(foundModel.isFavorite || false);
       
       // Load user-specific rating from localStorage
       const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
-      setCurrentRating(storedRatings[id] || 0); // Prioritize stored rating, default to 0 if not rated
+      setCurrentRating(storedRatings[id] || 0);
 
-      if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') { // Avoid regenerating for already detailed description
+      if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
         generateAiModelDescription({ 
             name: foundModel.name, 
             type: foundModel.type, 
@@ -71,13 +83,45 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá model.", variant: "destructive" });
       return;
     }
-    setCurrentRating(rating);
+    if (!model) return;
+
+    // Get old rating to see if user is re-rating or rating for the first time
+    const storedUserRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+    const oldRatingForModel = storedUserRatings[id] as number | undefined;
+
+    let newRatingCount = model.ratingCount || 0;
+    const currentTotalRatingPoints = (model.userRating || 0) * newRatingCount;
+    let newTotalRatingPoints;
+
+    if (oldRatingForModel !== undefined) {
+      // User is changing their rating
+      newTotalRatingPoints = currentTotalRatingPoints - oldRatingForModel + rating;
+    } else {
+      // User is rating for the first time
+      newTotalRatingPoints = currentTotalRatingPoints + rating;
+      newRatingCount += 1;
+    }
     
-    // Save rating to localStorage
+    const newAverageRating = newRatingCount > 0 ? newTotalRatingPoints / newRatingCount : 0;
+
+    setCurrentRating(rating);
+
+    const updatedModel: AIModel = {
+      ...model,
+      userRating: newAverageRating,
+      ratingCount: newRatingCount,
+    };
+    
+    // Update the model in the main list and persist to localStorage
+    const updatedModelsList = allModels.map(m => m.id === id ? updatedModel : m);
+    localStorage.setItem("cleanAIPersistedModels", JSON.stringify(updatedModelsList));
+    setAllModels(updatedModelsList);
+    setModel(updatedModel);
+    
+    // Save/update the specific rating for this user in localStorage
     try {
-        const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
-        storedRatings[id] = rating;
-        localStorage.setItem("cleanAIModelRatings", JSON.stringify(storedRatings));
+        storedUserRatings[id] = rating;
+        localStorage.setItem("cleanAIModelRatings", JSON.stringify(storedUserRatings));
     } catch (error) {
         console.error("Failed to save rating to localStorage", error);
     }
