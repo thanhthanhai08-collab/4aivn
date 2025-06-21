@@ -787,7 +787,7 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     link: 'https://openai.com/',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token",
       "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
       "Chỉ số thông minh 70",
       "• Dựa trên trung bình các điểm benmark là",
@@ -962,13 +962,29 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.3,
-    features: ['Đa phương thức (văn bản, âm thanh, hình ảnh)', 'Tốc độ phản hồi nhanh hơn', 'Cải thiện khả năng hiểu'],
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 71 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 85%",
+      "• GPQA Diamond (Scientific Reasoning)",
+      "• Humanity's Last Exam (Reasoning & Knowledge)",
+      "• LiveCodeBench (Coding)",
+      "• SciCode (Coding)",
+      "• HumanEval (Coding)",
+      "• MATH-500 (Quantitative reasoning)",
+      "• AIME 2024 (Competition Math) 93%",
+      "Giá trung bình 35 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 20 USD / 1 triệu token.",
+      "• Giá đầu ra 80 USD / 1 triệu token.",
+      "Tốc độ sinh token là 23.5 token /s.",
+      "Độ trễ 110.86s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
     isFavorite: false,
-    contextLengthToken: '128k',
-    intelligenceScore: 50,
-    pricePerMillionTokens: 7.50,
-    speedTokensPerSecond: 168.6,
-    latencyFirstChunkSeconds: 0.45,
+    contextLengthToken: '200k',
+    intelligenceScore: 71,
+    pricePerMillionTokens: 35.00,
+    speedTokensPerSecond: 23.5,
+    latencyFirstChunkSeconds: 110.86,
   }
 ];
 
@@ -1005,10 +1021,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
-
-
-
