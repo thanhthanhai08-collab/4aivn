@@ -628,25 +628,10 @@ hiệu quả trong công việc.`,
     name: 'GPT-4.5 (Preview)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ GPT-4.5 là phiên bản nâng cấp của GPT-4 được OpenAl chính thức ra mắt vào
-cuối tháng 2 năm 2025 dưới dạng bản preview nghiên cứu dành cho người
-dùng ChatGPT Pro. Đây được xem là “mô hình giàu kiến thức nhất” của
-OpenAl tính đến thời điểm hiện tại, với nhiều cải tiến về khả năng hiểu ngữ
-cảnh, tạo sinh văn bản tự nhiên và giảm thiểu hiện tượng ảo giác
-(hallucination) so với các phiên bản trước.
-+ Một trong những vấn đề lớn của các mô hình Al trước đây là tạo ra thông tin
-sai lệch hoặc không chính xác. GPT-4.5 đã giảm tỷ lệ ảo giác xuống còn
-khoảng 37%, thấp hơn nhiều so với gần 60% của GPT-4o, giúp tăng độ tin cậy
-cho người dùng khi sử dụng trong các tác vụ viết lách, lập trình và giải quyết
-vấn đề thực tế.
-+ OpenAl cho biết GPT-4.5 sở hữu “cá tính tinh tế hơn” so với các phiên bản
-trước, giúp chatbot vận hành trên nền tảng này có cảm giác tự nhiên và dễ
-tiếp cận hơn, phù hợp với nhiều đối tượng người dùng và mục đích sử dụng
-khác nhau.
-+ Mặc dù có nhiều cải tiến, GPT-4.5 không phải là một bước đột phá về sức
-mạnh suy luận so với các mô hình nội bộ như o1 hay o3-mini. Thậm chí trong
-một số trường hợp, khả năng lý luận nhiều bước của GPT-4.5 còn kém hơn
-o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.5`,
+    description: `+ GPT-4.5 là phiên bản nâng cấp của GPT-4 được OpenAl chính thức ra mắt vào cuối tháng 2 năm 2025 dưới dạng bản preview nghiên cứu dành cho người dùng ChatGPT Pro. Đây được xem là “mô hình giàu kiến thức nhất” của OpenAl tính đến thời điểm hiện tại, với nhiều cải tiến về khả năng hiểu ngữ cảnh, tạo sinh văn bản tự nhiên và giảm thiểu hiện tượng ảo giác (hallucination) so với các phiên bản trước.
++ Một trong những vấn đề lớn của các mô hình Al trước đây là tạo ra thông tin sai lệch hoặc không chính xác. GPT-4.5 đã giảm tỷ lệ ảo giác xuống còn khoảng 37%, thấp hơn nhiều so với gần 60% của GPT-4o, giúp tăng độ tin cậy cho người dùng khi sử dụng trong các tác vụ viết lách, lập trình và giải quyết vấn đề thực tế.
++ OpenAl cho biết GPT-4.5 sở hữu “cá tính tinh tế hơn” so với các phiên bản trước, giúp chatbot vận hành trên nền tảng này có cảm giác tự nhiên và dễ tiếp cận hơn, phù hợp với nhiều đối tượng người dùng và mục đích sử dụng khác nhau.
++ Mặc dù có nhiều cải tiến, GPT-4.5 không phải là một bước đột phá về sức mạnh suy luận so với các mô hình nội bộ như o1 hay o3-mini. Thậm chí trong một số trường hợp, khả năng lý luận nhiều bước của GPT-4.5 còn kém hơn o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.5`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
@@ -901,7 +886,9 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     name: 'Grok 3',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'xAI',
-    description: 'Mô hình Grok 3 từ xAI, được biết đến với khả năng truy cập thông tin thời gian thực và phong cách phản hồi độc đáo.',
+    description: `+ Grok 3 là phiên bản mô hình Al mới nhất do xAI, công ty của Elon Musk, phát triển và ra mắt chính thức vào tháng 2 năm 2025. Được huấn luyện trên siêu máy tính Colossus với hơn 100.000 GPU Nvidia H100, Grok 3 sở hữu sức mạnh tính toán gấp 10 lần so với các mô hình trước đó của xAI.
++ Grok 3 chính là nền tảng để xAI phát triển Grok 3 Mini Reasoning và hãy nhìn vào sự thể hiện của Grok 3 Mini Reasoning thì thấy Grok 3 thật sự là nền tảng thật sự tuyệt vời.
++ Grok 3 có khả năng truy cập internet và mạng xã hội X (trước đây là Twitter) để tìm kiếm, xác minh nguồn thông tin và tổng hợp dữ liệu mới nhất trước khi trả lời. Tính năng này giúp mô hình cung cấp các câu trả lời cập nhật, chính xác và phù hợp với bối cảnh thực tế, đây tính năng quan trọng nhất đối với những dự án cần cập nhật tin tức liên tục giúp giữ được độ chính xác.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: 'https://x.ai/grok',
     userRating: 4.4,
@@ -998,5 +985,6 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
