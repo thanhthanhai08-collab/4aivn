@@ -956,9 +956,11 @@ doanh nghiệp và nhà phát triển khi triển khai các ứng dụng Al quy 
     name: 'Open AI o3-pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'Mô hình GPT-4o ("omni") của OpenAI, mang đến khả năng đa phương thức và hiệu suất cao.',
+    description: `+ OpenAI o3 Pro là phiên bản nâng cấp mới nhất thuộc dòng mô hình lý luận o3, chính thức ra mắt vào ngày 10/6/2025. Đây là bước tiến vượt bậc trong công nghệ AI của OpenAI, được tích hợp trong các gói ChatGPT Pro, Team, Enterprise và API, nhằm thay thế hoàn toàn phiên bản o1 Pro trước đó.
++ Hiệu suất vượt trội trên các bài kiểm tra chuyên sâu.
++ Trong các bài đánh giá nội bộ, o3 Pro vượt qua các đối thủ như Google Gemini 2.5 Pro và Claude 4 Opus. Tuy nhiên, thời gian phản hồi và tốc độ kém xa so với 2 đối thủ này và cả các model trước của OpenAI. Vì vậy, OpenAI khuyến nghị người dùng lựa chọn o3 Pro cho các tác vụ đòi hỏi độ tin cậy và độ chính xác cao, nơi việc chờ đợi vài phút là xứng đáng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
-    link: 'https://openai.com/gpt-4o',
+    link: 'https://openai.com/',
     userRating: 4.3,
     features: ['Đa phương thức (văn bản, âm thanh, hình ảnh)', 'Tốc độ phản hồi nhanh hơn', 'Cải thiện khả năng hiểu'],
     isFavorite: false,
@@ -1003,6 +1005,7 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
+
 
 
 
