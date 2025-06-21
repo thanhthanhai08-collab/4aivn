@@ -15,6 +15,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ModelCard } from "@/components/models/model-card";
+import type { AIModel } from "@/lib/types";
 
 
 export default function ProfilePage() {
@@ -119,34 +121,7 @@ export default function ProfilePage() {
               {ratedModels.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {ratedModels.map((model) => (
-                    <Card key={model.id} className="flex flex-col">
-                      <CardHeader>
-                        <CardTitle>{model.name}</CardTitle>
-                        <CardDescription>{model.developer}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex-grow">
-                        <div className="flex items-center space-x-2">
-                          <p className="text-sm text-muted-foreground">Đánh giá của bạn:</p>
-                          <div className="flex items-center">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star
-                                key={star}
-                                className={`h-5 w-5 ${
-                                  star <= (model.myRating || 0)
-                                    ? "fill-amber-400 text-amber-500"
-                                    : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button asChild variant="secondary" size="sm" className="w-full">
-                          <Link href={`/models/${model.id}`}>Xem chi tiết Model</Link>
-                        </Button>
-                      </CardFooter>
-                    </Card>
+                    <ModelCard key={model.id} model={model as AIModel} />
                   ))}
                 </div>
               ) : (
