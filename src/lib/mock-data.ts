@@ -127,31 +127,28 @@ export const mockAIModels: AIModel[] = [
     link: 'https://deepmind.google/technologies/gemini/#introduction',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token",
-      "• Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 70",
-      "• Dựa trên trung bình các điểm benmark là",
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý .",
+      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 86%",
       "• GPQA Diamond (Scientific Reasoning) 84%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 21%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 21.1%",
       "• LiveCodeBench (Coding) 80%",
       "• SciCode (Coding) 43%",
       "• HumanEval (Coding)",
       "• MATH-500 (quantitative reasoning) 97%",
-      "• AIME 2024 (Competition Math) 88%",
-      "Giá trung bình 3.44 USD / 1 triệu token",
-      "• Dựa trên các thông số giá",
+      "• AIME 2024 (Competition Math) 89%",
+      "Giá trung bình 3.44 USD/ 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 1.25 USD / 1 triệu token.",
       "• Giá đầu ra 10 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 143.9 token /s.",
-      "Độ trễ 36.27s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Độ trễ 36.13s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 70,
     pricePerMillionTokens: 3.44,
     speedTokensPerSecond: 143.9,
-    latencyFirstChunkSeconds: 36.27,
+    latencyFirstChunkSeconds: 36.13,
   },
   {
     id: 'grok-3-mini-reasoning-high',
@@ -183,7 +180,7 @@ export const mockAIModels: AIModel[] = [
       "• Giá đầu vào 0.3 USD / 1 triệu token.",
       "• Giá đầu ra 0.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 209.2 token /s.",
-      "Độ trễ 0.32s là thời gian chờ trung bình cực nhanh từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Độ trễ 0.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '1m',
     intelligenceScore: 67,
@@ -192,42 +189,38 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
   {
-    id: 'openai-o3-mini',
-    name: 'Open AI o3-mini (high)',
+    id: 'openai-o3-pro',
+    name: 'Open AI o3-pro',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 Mini là phiên bản nhỏ gọn của mô hình ngôn ngữ thế hệ mới OpenAI o3, được thiết kế để cân bằng giữa khả năng suy luận cao cấp và tốc độ phản hồi nhanh, đặc biệt với chế độ suy luận cao (o3-mini-high) dành cho người dùng trả phí giúp xử lý các vấn đề phức tạp với độ chính xác và logic vượt trội.
-+ Với dung lượng nhỏ hơn so với phiên bản đầy đủ, o3 Mini dễ dàng tích hợp trên nhiều nền tảng như web, ứng dụng di động và các hệ thống doanh nghiệp, mang lại trải nghiệm mượt mà và phản hồi nhanh chóng, phù hợp với các ứng dụng cần tốc độ và độ chính xác cao.
-+ OpenAI o3 Mini được trang bị khả năng sử dụng các công cụ hỗ trợ như tìm kiếm web, xử lý hình ảnh, và các hàm lập trình thông qua API, giúp mô hình có thể truy cập và cập nhật thông tin thời gian thực, cung cấp câu trả lời mới nhất và chính xác nhất cho người dùng.
-+ Mô hình được huấn luyện với sự kết hợp của các dữ liệu đa dạng, bao gồm cả các tương tác thực tế, giúp o3 Mini có phong cách trả lời gần gũi, dễ hiểu và thân thiện với người dùng.`,
+    description: `+ OpenAI o3 Pro là phiên bản nâng cấp mới nhất thuộc dòng mô hình lý luận o3, chính thức ra mắt vào ngày 10/6/2025. Đây là bước tiến vượt bậc trong công nghệ AI của OpenAI, được tích hợp trong các gói ChatGPT Pro, Team, Enterprise và API, nhằm thay thế hoàn toàn phiên bản o1 Pro trước đó.
++ OpenAI khuyến nghị người dùng lựa chọn o3 Pro cho các tác vụ đòi hỏi độ tin cậy và độ chính xác cao, nơi việc chờ đợi vài phút là xứng đáng.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 200 nghìn token",
-      "• Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 66",
-      "• Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 80%",
-      "• GPQA Diamond (Scientific Reasoning) 77%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 12.3%",
-      "• LiveCodeBench (Coding) 73%",
-      "• SciCode (Coding) 40%",
-      "• HumanEval (Coding) 98%",
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 71 → Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 85%",
+      "• GPQA Diamond (Scientific Reasoning) 84%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 18.2%",
+      "• LiveCodeBench (Coding) 81%",
+      "• SciCode (Coding) 42%",
+      "• HumanEval (Coding) 99%",
       "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 86%",
-      "Giá trung bình 1.93 USD / 1 triệu token",
-      "• Dựa trên các thông số giá",
-      "• Giá đầu vào 1.1 USD / 1 triệu token.",
-      "• Giá đầu ra 4.4 USD / 1 triệu token.",
-      "Tốc độ sinh token là 151.2 token /s.",
-      "Độ trễ 48.85s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "• AIME 2024 (Competition Math) 93%",
+      "Giá trung bình 35 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 20 USD / 1 triệu token.",
+      "• Giá đầu ra 80 USD / 1 triệu token.",
+      "Tốc độ sinh token là 23.5 token /s.",
+      "Độ trễ 110.86s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
+    isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 66,
-    pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 151.2,
-    latencyFirstChunkSeconds: 48.85,
+    intelligenceScore: 71,
+    pricePerMillionTokens: 35,
+    speedTokensPerSecond: 23.5,
+    latencyFirstChunkSeconds: 110.86,
   },
    {
     id: 'gemini-2.5-flash-reasoning',
@@ -342,7 +335,9 @@ export const mockAIModels: AIModel[] = [
     name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'OpenAl o4 Mini (High) là phiên bản nâng cấp hiệu suất của dòng mô hình o4 Mini, được ra mắt vào đầu năm 2025. Đây là biến thể được tối ưu để xử lý các tác vụ suy luận phức tạp hơn, phù hợp với các nhu cầu nghiên cứu khoa học nâng cao, lập trình mã nguồn phức tạp và giải quyết các bài toán toán học khó khăn, trong khi vẫn giữ được chi phí vận hành thấp và tốc độ phản hồi nhanh hơn nhiều so với các mô hình cao cấp như o3 hay GPT-4\n+ Mặc dù có sức mạnh tính toán gần bằng các mô hình cao cấp, o4 Mini (High) vẫn duy trì chi phí vận hành hợp lý, giúp người dùng tiết kiệm ngân sách so với việc sử dụng các mô hình lớn hơn. Tốc độ phản hồi của mô hình vẫn nhanh, tuy có độ trễ cao hơn một chút so với o4 Mini tiêu chuẩn do yêu cầu tính toán phức tạp hơn.\n+ Open Al o4 Mini (High) phù hợp với các ứng dụng đòi hỏi độ chính xác cao và suy luận chuyên sâu như soạn truy vấn SQL phức tạp, giải thích các khái niệm khoa học nâng cao, phát triển phần mềm phức tạp và nghiên cứu chuyên ngành.',
+    description: `+ OpenAl o4 Mini (High) là phiên bản nâng cấp hiệu suất của dòng mô hình o4 Mini, được ra mắt vào đầu năm 2025. Đây là biến thể được tối ưu để xử lý các tác vụ suy luận phức tạp hơn, phù hợp với các nhu cầu nghiên cứu khoa học nâng cao, lập trình mã nguồn phức tạp và giải quyết các bài toán toán học khó khăn, trong khi vẫn giữ được chi phí vận hành thấp và tốc độ phản hồi nhanh hơn nhiều so với các mô hình cao cấp như o3 hay GPT-4.
++ Mặc dù có sức mạnh tính toán gần bằng các mô hình cao cấp, o4 Mini (High) vẫn duy trì chi phí vận hành hợp lý, giúp người dùng tiết kiệm ngân sách so với việc sử dụng các mô hình lớn hơn. Tốc độ phản hồi của mô hình vẫn nhanh, tuy có độ trễ cao hơn một chút so với o4 Mini tiêu chuẩn do yêu cầu tính toán phức tạp hơn.
++ Open Al o4 Mini (High) phù hợp với các ứng dụng đòi hỏi độ chính xác cao và suy luận chuyên sâu như soạn truy vấn SQL phức tạp, giải thích các khái niệm khoa học nâng cao, phát triển phần mềm phức tạp và nghiên cứu chuyên ngành.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
@@ -369,39 +364,6 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 1.93,
     speedTokensPerSecond: 138.6,
     latencyFirstChunkSeconds: 34.8,
-  },
-  {
-    id: 'openai-o3-pro',
-    name: 'Open AI o3-pro',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'OpenAI',
-    description: `+ OpenAI o3 Pro là phiên bản nâng cấp mới nhất thuộc dòng mô hình lý luận o3, chính thức ra mắt vào ngày 10/6/2025. Đây là bước tiến vượt bậc trong công nghệ AI của OpenAI, được tích hợp trong các gói ChatGPT Pro, Team, Enterprise và API, nhằm thay thế hoàn toàn phiên bản o1 Pro trước đó.\n+ Hiệu suất vượt trội trên các bài kiểm tra chuyên sâu:\n+ Trong các bài đánh giá nội bộ, o3 Pro vượt qua các đối thủ như Google Gemini 2.5 Pro và Claude 4 Opus tuy nhiên thời gian phản hồi và tốc độ kém xa cho với 2 đối thủ và cả các model trước của OpenAI vì vậy OpenAI khuyến nghị người dùng lựa chọn o3 Pro cho các tác vụ đòi hỏi độ tin cậy và độ chính xác cao, nơi việc chờ đợi vài phút là xứng đáng.`,
-    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
-    link: 'https://openai.com/',
-    userRating: 4.9,
-    features: [
-        "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-        "Chỉ số thông minh 71 → Dựa trên trung bình các điểm benmark là",
-        "• MMLU-Pro (Reasoning & Knowledge) 85%",
-        "• GPQA Diamond (Scientific Reasoning) 84%",
-        "• Humanity's Last Exam (Reasoning & Knowledge) 18.2%",
-        "• LiveCodeBench (Coding) 81%",
-        "• SciCode (Coding) 42%",
-        "• HumanEval (Coding) 99%",
-        "• MATH-500 (Quantitative reasoning) 99%",
-        "• AIME 2024 (Competition Math) 93%",
-        "Giá trung bình 35 USD / 1 triệu token → Dựa trên các thông số giá",
-        "• Giá đầu vào 20 USD / 1 triệu token.",
-        "• Giá đầu ra 80 USD / 1 triệu token.",
-        "Tốc độ sinh token là 23.5 token /s.",
-        "Độ trễ 110.86s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
-    ],
-    isFavorite: false,
-    contextLengthToken: '200k',
-    intelligenceScore: 71,
-    pricePerMillionTokens: 35,
-    speedTokensPerSecond: 23.5,
-    latencyFirstChunkSeconds: 110.86,
   },
   {
     id: 'qwen3-32b-reasoning',
@@ -633,7 +595,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Qwen3 30B A3B (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
-    description: `+ Qwen3 30B A3B là một trong hai phiên bản mô hình Mixture-of-Experts (MoE) tiên tiến thuộc dòng Qwen3 do Alibaba Cloud phát triển, ra mắt đầu năm 2025. Với tổng cộng 30 tỷ tham số nhưng chỉ kích hoạt khoảng 3 tỷ tham số cho mỗi tác vụ, Qwen3 30B A3B tối ưu hóa hiệu quả tính toán trong khi vẫn duy trì khả năng suy luận và xử lý ngôn ngữ vượt trội.\n+ Qwen3 30B A3B hỗ trợ hơn 100 ngôn ngữ và phương ngữ, trong đó có tiếng Việt, giúp mô hình dễ dàng ứng dụng trên phạm vi toàn cầu với khả năng giao tiếp tự nhiên và chính xác.\n+ Mô hình tích hợp chế độ suy nghĩ (reasoning mode), cho phép thực hiện lập luận từng bước để giải quyết các vấn đề phức tạp như toán học, lập trình và logic đa bước, đồng thời có chế độ không suy nghĩ cho các câu hỏi đơn giản nhằm tối ưu tốc độ phản hồi.\n+ Người dùng có thể truy cập miễn phí Qwen3 30B A3B thông qua các API do OpenRouter và Alibaba Cloud cung cấp. Mô hình cũng hỗ trợ tích hợp dễ dàng qua các thư viện phổ biến như Hugging Face Transformers, giúp nhà phát triển nhanh chóng xây dựng và triển khai các ứng dụng Al đa dạng.`,
+    description: `+ Qwen3 30B A3B là một trong hai phiên bản mô hình Mixture-of-Experts (MoE) tiên tiến thuộc dòng Qwen3 do Alibaba Cloud phát triển, ra mắt đầu năm 2025. Với tổng cộng 30 tỷ tham số nhưng chỉ kích hoạt khoảng 3 tỷ tham số cho mỗi tác vụ, Qwen3 30B A3B tối ưu hóa hiệu quả tính toán trong khi vẫn duy trì khả năng suy luận và xử lý ngôn ngữ vượt trội.
++ Qwen3 30B A3B hỗ trợ hơn 100 ngôn ngữ và phương ngữ, trong đó có tiếng Việt, giúp mô hình dễ dàng ứng dụng trên phạm vi toàn cầu với khả năng giao tiếp tự nhiên và chính xác.
++ Mô hình tích hợp chế độ suy nghĩ (reasoning mode), cho phép thực hiện lập luận từng bước để giải quyết các vấn đề phức tạp như toán học, lập trình và logic đa bước, đồng thời có chế độ không suy nghĩ cho các câu hỏi đơn giản nhằm tối ưu tốc độ phản hồi.
++ Người dùng có thể truy cập miễn phí Qwen3 30B A3B thông qua các API do OpenRouter và Alibaba Cloud cung cấp. Mô hình cũng hỗ trợ tích hợp dễ dàng qua các thư viện phổ biến như Hugging Face Transformers, giúp nhà phát triển nhanh chóng xây dựng và triển khai các ứng dụng Al đa dạng.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
@@ -983,7 +948,3 @@ export const mockNews: NewsArticle[] = [
     dataAiHint: 'AI ethics'
   },
 ];
-
-
-
-
