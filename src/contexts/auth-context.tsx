@@ -1,3 +1,4 @@
+
 // src/contexts/auth-context.tsx
 "use client";
 
@@ -75,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await new Promise(resolve => setTimeout(resolve, 500));
     setCurrentUser(null);
     localStorage.removeItem("cleanAIUser");
+    localStorage.removeItem("cleanAIModelRatings");
     setIsLoading(false);
   };
 

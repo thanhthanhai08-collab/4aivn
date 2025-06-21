@@ -1,7 +1,8 @@
+
 // src/app/profile/page.tsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
@@ -13,7 +14,7 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools, mockNews, mockAIModels } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LogOut, Edit3, Star } from "lucide-react";
+import { LogOut, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ModelCard } from "@/components/models/model-card";
 import type { AIModel } from "@/lib/types";
@@ -23,10 +24,24 @@ export default function ProfilePage() {
   const { currentUser, isLoading, logout } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
       router.push("/login");
+    } else if (currentUser) {
+        // Load rated models from localStorage
+        const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+        const ratedModelIds = Object.keys(storedRatings);
+
+        const userRatedModels = mockAIModels
+            .filter(model => ratedModelIds.includes(model.id))
+            .map(model => ({
+                ...model,
+                myRating: storedRatings[model.id]
+            }));
+        
+        setRatedModels(userRatedModels);
     }
   }, [currentUser, isLoading, router]);
 
@@ -69,12 +84,8 @@ export default function ProfilePage() {
     );
   }
 
-  // Mock favorite tools, rated models, and bookmarked news
+  // Mock favorite tools, and bookmarked news
   const favoriteTools = mockTools.filter(tool => tool.isFavorite).slice(0, 2);
-  const ratedModels = [
-    { ...mockAIModels.find(m => m.id === 'gemini-2.5-pro'), myRating: 5 },
-    { ...mockAIModels.find(m => m.id === 'openai-o3-pro'), myRating: 4 },
-  ].filter(m => m.id); // Filter out undefined if find fails
   const bookmarkedNews = mockNews.slice(0, 1); // Assume one bookmarked news for demo
 
 

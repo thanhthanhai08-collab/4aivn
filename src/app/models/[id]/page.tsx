@@ -37,7 +37,10 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     if (foundModel) {
       setModel(foundModel);
       setIsFavorite(foundModel.isFavorite || false);
-      setCurrentRating(foundModel.userRating || 0);
+      
+      // Load user-specific rating from localStorage
+      const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+      setCurrentRating(storedRatings[id] || 0); // Prioritize stored rating, default to 0 if not rated
 
       if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') { // Avoid regenerating for already detailed description
         generateAiModelDescription({ 
@@ -69,7 +72,16 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
       return;
     }
     setCurrentRating(rating);
-    // Backend update would go here
+    
+    // Save rating to localStorage
+    try {
+        const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+        storedRatings[id] = rating;
+        localStorage.setItem("cleanAIModelRatings", JSON.stringify(storedRatings));
+    } catch (error) {
+        console.error("Failed to save rating to localStorage", error);
+    }
+
     toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model?.name} ${rating} sao.` });
   };
 
