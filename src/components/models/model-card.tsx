@@ -1,7 +1,7 @@
 // src/components/models/model-card.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -48,13 +48,11 @@ export function ModelCard({ model }: ModelCardProps) {
             </>
           )}
         </div>
-        {model.link && (
-            <Button variant="ghost" size="sm" asChild>
-                <a href={model.link} target="_blank" rel="noopener noreferrer">
-                    Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-            </Button>
-        )}
+        <Button variant="ghost" size="sm" asChild>
+          <Link href={`/models/${model.id}`}>
+            Xem chi tiết
+          </Link>
+        </Button>
       </CardFooter>
     </Card>
   );
