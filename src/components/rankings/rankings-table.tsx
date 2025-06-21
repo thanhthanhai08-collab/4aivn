@@ -208,7 +208,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     ))}
                   </div>
                   {item.userRating && (
-                    <span className="font-semibold text-sidebar-foreground">
+                    <span className="text-sidebar-foreground">
                       ({item.userRating.toFixed(1)})
                     </span>
                   )}
