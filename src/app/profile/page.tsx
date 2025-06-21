@@ -3,16 +3,17 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews } from "@/lib/mock-data";
+import { mockTools, mockNews, mockAIModels } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LogOut, Edit3 } from "lucide-react";
+import { LogOut, Edit3, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 
@@ -66,9 +67,14 @@ export default function ProfilePage() {
     );
   }
 
-  // Mock favorite tools and bookmarked news
+  // Mock favorite tools, rated models, and bookmarked news
   const favoriteTools = mockTools.filter(tool => tool.isFavorite).slice(0, 2);
+  const ratedModels = [
+    { ...mockAIModels.find(m => m.id === 'gemini-2.5-pro'), myRating: 5 },
+    { ...mockAIModels.find(m => m.id === 'openai-o3-pro'), myRating: 4 },
+  ].filter(m => m.id); // Filter out undefined if find fails
   const bookmarkedNews = mockNews.slice(0, 1); // Assume one bookmarked news for demo
+
 
   return (
     <AppLayout>
@@ -105,6 +111,46 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <p className="text-muted-foreground">Bạn chưa yêu thích công cụ nào.</p>
+              )}
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Model AI Đã đánh giá</h2>
+              {ratedModels.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {ratedModels.map((model) => (
+                    <Card key={model.id} className="flex flex-col">
+                      <CardHeader>
+                        <CardTitle>{model.name}</CardTitle>
+                        <CardDescription>{model.developer}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-grow">
+                        <div className="flex items-center space-x-2">
+                          <p className="text-sm text-muted-foreground">Đánh giá của bạn:</p>
+                          <div className="flex items-center">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star
+                                key={star}
+                                className={`h-5 w-5 ${
+                                  star <= (model.myRating || 0)
+                                    ? "fill-amber-400 text-amber-500"
+                                    : "text-gray-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button asChild variant="secondary" size="sm" className="w-full">
+                          <Link href={`/models/${model.id}`}>Xem chi tiết Model</Link>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">Bạn chưa đánh giá model AI nào.</p>
               )}
             </section>
 
