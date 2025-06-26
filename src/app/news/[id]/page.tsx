@@ -145,7 +145,7 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
               </div>
 
               <footer className="mt-12 pt-6 border-t flex items-center space-x-1">
-                  <p className="text-sm text-muted-foreground">Theo</p>
+                  <p className="text-sm text-muted-foreground">Nguồn</p>
                   <Button asChild variant="link" className="p-0 h-auto text-base">
                     <a href={article.link} target="_blank" rel="noopener noreferrer">
                         {article.source} <Globe className="ml-2 h-4 w-4" />
