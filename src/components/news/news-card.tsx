@@ -1,7 +1,7 @@
 // src/components/news/news-card.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, ExternalLink } from "lucide-react";
+import { CalendarDays, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
@@ -14,22 +14,24 @@ interface NewsCardProps {
 
 export function NewsCard({ article }: NewsCardProps) {
   return (
-    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
-      {article.imageUrl && (
-        <div className="relative w-full h-48">
-          <Image 
-            src={article.imageUrl} 
-            alt={article.title} 
-            layout="fill" 
-            objectFit="cover" 
-            className="rounded-t-lg"
-            data-ai-hint={article.dataAiHint || "technology abstract"}
-          />
-        </div>
-      )}
+    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden group">
+      <Link href={`/news/${article.id}`} className="block">
+        {article.imageUrl && (
+          <div className="relative w-full h-48 overflow-hidden">
+            <Image 
+              src={article.imageUrl} 
+              alt={article.title} 
+              layout="fill" 
+              objectFit="cover" 
+              className="rounded-t-lg transition-transform duration-300 group-hover:scale-105"
+              data-ai-hint={article.dataAiHint || "technology abstract"}
+            />
+          </div>
+        )}
+      </Link>
       <CardHeader className="p-4">
-        <CardTitle className="text-lg font-headline line-clamp-2 hover:text-primary">
-           <Link href={article.link} target="_blank" rel="noopener noreferrer">
+        <CardTitle className="text-lg font-headline line-clamp-2">
+           <Link href={`/news/${article.id}`} className="hover:text-primary transition-colors">
             {article.title}
           </Link>
         </CardTitle>
@@ -46,8 +48,8 @@ export function NewsCard({ article }: NewsCardProps) {
           </div>
         </div>
         <Button variant="outline" size="sm" asChild>
-          <Link href={article.link} target="_blank" rel="noopener noreferrer">
-            Đọc thêm <ExternalLink className="ml-2 h-3 w-3" />
+          <Link href={`/news/${article.id}`}>
+            Đọc thêm <ArrowRight className="ml-2 h-3 w-3" />
           </Link>
         </Button>
       </CardFooter>
