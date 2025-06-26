@@ -158,7 +158,7 @@ export default function ProfilePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI Đã đánh giá</h2>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI đã đánh giá</h2>
               {ratedTools.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {ratedTools.map((tool) => (
@@ -171,7 +171,7 @@ export default function ProfilePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold font-headline mb-4">Model AI Đã đánh giá</h2>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Model AI đã đánh giá</h2>
               {ratedModels.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {ratedModels.map((model) => (
