@@ -75,10 +75,10 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 3: Featured Topics */}
+          {/* Column 3: Information */}
           <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Chủ Đề Nổi Bật
+              Thông tin
             </h4>
             <ul className="space-y-3">
               {featuredTopics.map((item) => (
