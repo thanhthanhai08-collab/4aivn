@@ -977,6 +977,33 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'chatgpt-free-mobile',
+    title: 'Tất cả các tính năng ChatGPT miễn phí có thể sẽ có trên điện thoại di động',
+    source: 'Tinhte.vn',
+    content: `Theo các nguồn tin đáng tin cậy, OpenAI đang chuẩn bị đưa tất cả các tính năng miễn phí của ChatGPT lên các ứng dụng di động của mình. Điều này bao gồm khả năng truy cập vào mô hình GPT-4o, tải lên tệp và hình ảnh, sử dụng các công cụ tìm kiếm, phân tích dữ liệu và khám phá các GPT tùy chỉnh.
+
+Hiện tại, các tính năng này chỉ có sẵn cho người dùng trả phí trên di động hoặc người dùng miễn phí trên phiên bản web. Việc mở rộng này sẽ mang lại trải nghiệm nhất quán hơn cho tất cả người dùng, bất kể họ sử dụng ChatGPT trên nền tảng nào.
+
+[IMAGE:https://placehold.co/750x420.png|Một tòa nhà văn phòng hiện đại|office building]
+
+Động thái này diễn ra trong bối cảnh cạnh tranh ngày càng gay gắt trong lĩnh vực AI. Google gần đây đã công bố các tính năng AI mới trong tìm kiếm và Microsoft cũng đang tích hợp Copilot sâu hơn vào các sản phẩm của mình. Bằng cách cung cấp các tính năng mạnh mẽ miễn phí trên di động, OpenAI hy vọng sẽ thu hút thêm nhiều người dùng và củng cố vị trí dẫn đầu của mình trên thị trường.
+
+Việc này cũng được cho là một bước đi để chuẩn bị cho việc tích hợp ChatGPT vào các hệ điều hành di động trong tương lai, khi Apple được đồn đoán sẽ công bố quan hệ đối tác với OpenAI tại sự kiện WWDC sắp tới.
+
+[IMAGE:https://placehold.co/750x420.png|Một không gian làm việc văn phòng hợp tác|office interior]
+
+Người dùng di động sẽ sớm có thể tận hưởng các tính năng như:
+- **Phân tích biểu đồ và bảng biểu:** Tải lên và đặt câu hỏi về dữ liệu của bạn.
+- **Hỏi về hình ảnh:** Chụp ảnh và nhận câu trả lời liên quan.
+- **Tải lên tệp:** Nhận bản tóm tắt hoặc câu trả lời từ tài liệu PDF và các tệp khác.
+
+Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu trong mã nguồn ứng dụng cho thấy việc triển khai có thể diễn ra trong vài tuần tới.`,
+    publishedAt: '2025-05-12T08:00:00Z',
+    imageUrl: 'https://placehold.co/800x450.png',
+    link: '#',
+    dataAiHint: 'phone chat'
+  },
+  {
     id: 'news1',
     title: 'Claude 3 Opus Giành Vị trí Dẫn đầu trong Đấu trường AI, Vượt qua GPT-4',
     source: 'Anthropic',
