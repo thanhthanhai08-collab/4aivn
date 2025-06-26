@@ -14,7 +14,7 @@ const quickLinks = [
 const featuredTopics = [
   { href: "/privacy-policy", label: "Chính sách quyền riêng tư" },
   { href: "/terms-of-service", label: "Điều khoản dịch vụ" },
-  { href: "#", label: "Điều khoản sử dụng AI" },
+  { href: "/ai-terms-of-use", label: "Điều khoản sử dụng AI" },
   { href: "#", label: "Chính sách Cookies" },
 ];
 
