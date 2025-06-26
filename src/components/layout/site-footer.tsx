@@ -11,7 +11,7 @@ const quickLinks = [
 ];
 
 const featuredTopics = [
-  { href: "#", label: "Machine Learning" },
+  { href: "#", label: "Chính sách quyền riêng tư" },
   { href: "#", label: "Xử Lý Ngôn Ngữ Tự Nhiên" },
   { href: "#", label: "Thị Giác Máy Tính" },
   { href: "#", label: "Đạo Đức AI" },
