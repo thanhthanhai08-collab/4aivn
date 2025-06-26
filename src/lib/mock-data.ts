@@ -98,7 +98,7 @@ export const mockTools: Tool[] = [
     developer: 'Tavily',
     ranking: 7,
     description: 'Một API tìm kiếm được hỗ trợ bởi AI dành cho nhà phát triển, cung cấp kết quả tìm kiếm thời gian thực, chính xác và toàn diện.',
-    logoUrl: 'https://placehold.co/64x64.png?text=TVL',
+    logoUrl: '/image/Logo Tavily.png',
     link: 'https://tavily.com/',
     features: ['Tìm kiếm thời gian thực', 'Kết quả được tối ưu hóa bằng AI', 'Tích hợp API dễ dàng'],
     userRating: 4.4,
