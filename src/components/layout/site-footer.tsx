@@ -15,7 +15,7 @@ const featuredTopics = [
   { href: "/privacy-policy", label: "Chính sách quyền riêng tư" },
   { href: "/terms-of-service", label: "Điều khoản dịch vụ" },
   { href: "/ai-terms-of-use", label: "Điều khoản sử dụng AI" },
-  { href: "#", label: "Chính sách Cookies" },
+  { href: "/cookie-policy", label: "Chính sách Cookies" },
 ];
 
 const socialMediaLinks = [
