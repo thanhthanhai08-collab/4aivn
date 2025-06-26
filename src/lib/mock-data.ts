@@ -85,7 +85,7 @@ export const mockTools: Tool[] = [
     developer: 'Celonis',
     ranking: 6,
     description: 'Một nền tảng tích hợp mạnh mẽ cho phép bạn hình dung, thiết kế và tự động hóa công việc của mình trong vài phút.',
-    logoUrl: 'https://placehold.co/64x64.png?text=MK',
+    logoUrl: '/image/Logo Make.com.png',
     link: 'https://www.make.com/',
     features: ['Trình xây dựng quy trình làm việc trực quan', 'Nhiều tích hợp ứng dụng', 'Tự động hóa tác vụ'],
     userRating: 4.3,
@@ -220,7 +220,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.9,
     ratingCount: 320,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
       "Chỉ số thông minh 71 → Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 85%",
       "• GPQA Diamond (Scientific Reasoning) 84%",
