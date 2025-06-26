@@ -13,6 +13,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   registerWithEmail: (email: string, pass: string) => Promise<void>; // Added
   logout: () => Promise<void>;
+  updateUserProfile: (data: { displayName: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,17 +71,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Simulate success
   };
 
+  const updateUserProfile = async (data: { displayName: string }) => {
+    setIsLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
+
+    if (currentUser) {
+      const updatedUser = { ...currentUser, displayName: data.displayName };
+      setCurrentUser(updatedUser);
+      localStorage.setItem("cleanAIUser", JSON.stringify(updatedUser));
+    } else {
+      setIsLoading(false);
+      throw new Error("Không tìm thấy người dùng để cập nhật.");
+    }
+    setIsLoading(false);
+  };
+
   const logout = async () => {
     setIsLoading(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 500));
     setCurrentUser(null);
+    // Keep user ratings even after logout
+    // localStorage.removeItem("cleanAIUser");
     localStorage.removeItem("cleanAIUser");
     setIsLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, registerWithEmail, logout }}>
+    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, registerWithEmail, logout, updateUserProfile }}>
       {children}
     </AuthContext.Provider>
   );

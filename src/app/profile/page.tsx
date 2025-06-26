@@ -18,6 +18,14 @@ import { LogOut, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ModelCard } from "@/components/models/model-card";
 import type { AIModel, Tool } from "@/lib/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { EditProfileForm } from "@/components/profile/edit-profile-form";
 
 
 export default function ProfilePage() {
@@ -27,6 +35,7 @@ export default function ProfilePage() {
   const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
   const [ratedTools, setRatedTools] = useState<Tool[]>([]);
   const [favoriteTools, setFavoriteTools] = useState<Tool[]>([]);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
@@ -103,7 +112,7 @@ export default function ProfilePage() {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <Card className="max-w-6xl mx-auto shadow-lg">
+        <Card className="w-full max-w-6xl mx-auto shadow-lg">
           <CardHeader className="bg-muted/30 p-6">
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
@@ -115,9 +124,19 @@ export default function ProfilePage() {
                 <CardDescription className="text-lg">{currentUser.email}</CardDescription>
               </div>
               <div className="sm:ml-auto flex flex-col sm:items-end space-y-2">
-                 <Button variant="outline" size="sm" onClick={() => toast({title: "Sắp ra mắt!", description:"Tính năng chỉnh sửa hồ sơ sẽ sớm có sẵn."})}>
-                    <Edit3 className="mr-2 h-4 w-4" /> Chỉnh sửa Hồ sơ
-                 </Button>
+                 <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <Edit3 className="mr-2 h-4 w-4" /> Chỉnh sửa Hồ sơ
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Chỉnh sửa hồ sơ</DialogTitle>
+                    </DialogHeader>
+                    <EditProfileForm onSuccess={() => setIsEditDialogOpen(false)} />
+                  </DialogContent>
+                </Dialog>
                  <Button variant="destructive" size="sm" onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" /> Đăng xuất
                  </Button>
