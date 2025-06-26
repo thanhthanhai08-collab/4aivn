@@ -12,7 +12,7 @@ const quickLinks = [
 
 const featuredTopics = [
   { href: "#", label: "Chính sách quyền riêng tư" },
-  { href: "#", label: "Xử Lý Ngôn Ngữ Tự Nhiên" },
+  { href: "#", label: "Điều khoản dịch vụ" },
   { href: "#", label: "Thị Giác Máy Tính" },
   { href: "#", label: "Đạo Đức AI" },
 ];
