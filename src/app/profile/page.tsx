@@ -103,7 +103,7 @@ export default function ProfilePage() {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <Card className="max-w-5xl mx-auto shadow-lg">
+        <Card className="max-w-6xl mx-auto shadow-lg">
           <CardHeader className="bg-muted/30 p-6">
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
@@ -128,7 +128,7 @@ export default function ProfilePage() {
             <section>
               <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ Yêu thích</h2>
               {favoriteTools.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {favoriteTools.map((tool) => (
                     <ToolCard key={tool.id} tool={tool} />
                   ))}
@@ -141,7 +141,7 @@ export default function ProfilePage() {
             <section>
               <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI Đã đánh giá</h2>
               {ratedTools.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {ratedTools.map((tool) => (
                     <ToolCard key={tool.id} tool={tool} />
                   ))}
@@ -154,7 +154,7 @@ export default function ProfilePage() {
             <section>
               <h2 className="text-2xl font-semibold font-headline mb-4">Model AI Đã đánh giá</h2>
               {ratedModels.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {ratedModels.map((model) => (
                     <ModelCard key={model.id} model={model as AIModel} />
                   ))}
@@ -167,7 +167,7 @@ export default function ProfilePage() {
             <section>
               <h2 className="text-2xl font-semibold font-headline mb-4">Tin tức Đã lưu</h2>
               {bookmarkedNews.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {bookmarkedNews.map((article) => (
                      // Using NewsCard, but might need a smaller version for bookmarks
                     <NewsCard key={article.id} article={article} />
