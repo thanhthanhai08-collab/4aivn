@@ -103,7 +103,7 @@ export default function ProfilePage() {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <Card className="max-w-4xl mx-auto shadow-lg">
+        <Card className="max-w-5xl mx-auto shadow-lg">
           <CardHeader className="bg-muted/30 p-6">
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
