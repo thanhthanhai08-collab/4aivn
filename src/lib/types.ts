@@ -24,6 +24,7 @@ export interface NewsArticle {
   imageUrl: string;
   link: string; // Link to the full article if 'content' is a summary
   dataAiHint?: string;
+  isBookmarked?: boolean;
 }
 
 export interface User {
@@ -60,6 +61,7 @@ export interface AIModel {
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
 }
+
 
 
 

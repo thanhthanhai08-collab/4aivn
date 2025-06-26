@@ -17,7 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ModelCard } from "@/components/models/model-card";
-import type { AIModel, Tool } from "@/lib/types";
+import type { AIModel, Tool, NewsArticle } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +35,7 @@ export default function ProfilePage() {
   const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
   const [ratedTools, setRatedTools] = useState<Tool[]>([]);
   const [favoriteTools, setFavoriteTools] = useState<Tool[]>([]);
+  const [bookmarkedNews, setBookmarkedNews] = useState<NewsArticle[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -64,6 +65,11 @@ export default function ProfilePage() {
         // Set favorite tools from the same persisted list
         const userFavoriteTools = currentTools.filter(tool => tool.isFavorite).slice(0, 4);
         setFavoriteTools(userFavoriteTools);
+        
+        // Load bookmarked news
+        const bookmarkedIds: string[] = JSON.parse(localStorage.getItem("cleanAINewsBookmarks") || "[]");
+        const userBookmarkedNews = mockNews.filter(article => bookmarkedIds.includes(article.id));
+        setBookmarkedNews(userBookmarkedNews);
     }
   }, [currentUser, isLoading, router]);
 
@@ -105,8 +111,6 @@ export default function ProfilePage() {
       </AppLayout>
     );
   }
-  
-  const bookmarkedNews = mockNews.slice(0, 1); // Assume one bookmarked news for demo
 
 
   return (
@@ -188,7 +192,6 @@ export default function ProfilePage() {
               {bookmarkedNews.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {bookmarkedNews.map((article) => (
-                     // Using NewsCard, but might need a smaller version for bookmarks
                     <NewsCard key={article.id} article={article} />
                   ))}
                 </div>
