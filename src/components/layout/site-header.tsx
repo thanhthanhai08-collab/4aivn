@@ -71,7 +71,7 @@ export function SiteHeader() {
           <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center relative">
             <Input 
               type="search" 
-              placeholder="Tìm kiếm công cụ..." 
+              placeholder="Tìm kiếm..." 
               className="h-9 pr-8" 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -113,7 +113,7 @@ export function SiteHeader() {
                 <div className="relative">
                   <Input 
                     type="search" 
-                    placeholder="Tìm kiếm công cụ..." 
+                    placeholder="Tìm kiếm..." 
                     className="h-10 pr-10"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
