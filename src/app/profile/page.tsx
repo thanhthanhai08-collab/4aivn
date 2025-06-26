@@ -11,13 +11,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews, mockAIModels as initialMockModels } from "@/lib/mock-data";
+import { mockTools as initialMockTools, mockNews, mockAIModels as initialMockModels } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ModelCard } from "@/components/models/model-card";
-import type { AIModel } from "@/lib/types";
+import type { AIModel, Tool } from "@/lib/types";
 
 
 export default function ProfilePage() {
@@ -25,33 +25,36 @@ export default function ProfilePage() {
   const router = useRouter();
   const { toast } = useToast();
   const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
+  const [ratedTools, setRatedTools] = useState<Tool[]>([]);
+  const [favoriteTools, setFavoriteTools] = useState<Tool[]>([]);
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
       router.push("/login");
     } else if (currentUser) {
-        // On mount, get models from localStorage or initialize it
+        // Load persisted models
         const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
-        let currentModels: AIModel[];
-        if (storedModelsRaw) {
-          currentModels = JSON.parse(storedModelsRaw);
-        } else {
-          currentModels = initialMockModels;
-          localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
-        }
-
-        // Load rated models from localStorage
-        const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
-        const ratedModelIds = Object.keys(storedRatings);
-
+        const currentModels: AIModel[] = storedModelsRaw ? JSON.parse(storedModelsRaw) : initialMockModels;
+        const storedModelRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+        const ratedModelIds = Object.keys(storedModelRatings);
         const userRatedModels = currentModels
             .filter(model => ratedModelIds.includes(model.id))
-            .map(model => ({
-                ...model,
-                myRating: storedRatings[model.id]
-            }));
-        
+            .map(model => ({ ...model, myRating: storedModelRatings[model.id] }));
         setRatedModels(userRatedModels);
+
+        // Load persisted tools
+        const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
+        const currentTools: Tool[] = storedToolsRaw ? JSON.parse(storedToolsRaw) : initialMockTools;
+        const storedToolRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
+        const ratedToolIds = Object.keys(storedToolRatings);
+        const userRatedTools = currentTools
+            .filter(tool => ratedToolIds.includes(tool.id))
+            .map(tool => ({ ...tool, myRating: storedToolRatings[tool.id] }));
+        setRatedTools(userRatedTools);
+
+        // Set favorite tools from the same persisted list
+        const userFavoriteTools = currentTools.filter(tool => tool.isFavorite).slice(0, 4);
+        setFavoriteTools(userFavoriteTools);
     }
   }, [currentUser, isLoading, router]);
 
@@ -93,9 +96,7 @@ export default function ProfilePage() {
       </AppLayout>
     );
   }
-
-  // Mock favorite tools, and bookmarked news
-  const favoriteTools = mockTools.filter(tool => tool.isFavorite).slice(0, 2);
+  
   const bookmarkedNews = mockNews.slice(0, 1); // Assume one bookmarked news for demo
 
 
@@ -134,6 +135,19 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <p className="text-muted-foreground">Bạn chưa yêu thích công cụ nào.</p>
+              )}
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI Đã đánh giá</h2>
+              {ratedTools.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {ratedTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">Bạn chưa đánh giá công cụ AI nào.</p>
               )}
             </section>
 

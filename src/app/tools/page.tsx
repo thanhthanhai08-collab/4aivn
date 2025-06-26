@@ -5,7 +5,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
-import { mockTools } from "@/lib/mock-data";
+import { mockTools as initialMockTools } from "@/lib/mock-data";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,6 +14,7 @@ export default function ToolsPage() {
   const searchParams = useSearchParams();
   const initialSearchQuery = searchParams.get('search_query') || "";
   
+  const [allTools, setAllTools] = useState<Tool[]>(initialMockTools);
   const [searchTerm, setSearchTerm] = useState(initialSearchQuery);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,10 @@ export default function ToolsPage() {
 
   useEffect(() => {
     setMounted(true);
+    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
+    if(storedToolsRaw) {
+        setAllTools(JSON.parse(storedToolsRaw));
+    }
     // Simulate data fetching
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -36,7 +41,7 @@ export default function ToolsPage() {
 
   const categories = useMemo(() => {
     // Get existing categories from tools
-    const existingCategoriesFromTools = new Set(mockTools.map(tool => tool.context));
+    const existingCategoriesFromTools = new Set(allTools.map(tool => tool.context));
 
     // Add "Model AI" to the set
     existingCategoriesFromTools.add("Model AI");
@@ -45,16 +50,16 @@ export default function ToolsPage() {
     const allCategories = Array.from(existingCategoriesFromTools).sort((a, b) => a.localeCompare(b));
     
     return allCategories;
-  }, []);
+  }, [allTools]);
 
   const filteredTools = useMemo(() => {
-    return mockTools.filter((tool) => {
+    return allTools.filter((tool) => {
       const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             tool.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, allTools]);
 
   if (!mounted && !initialSearchQuery) { // Added !initialSearchQuery to prevent skeleton flash if search is active
      return (

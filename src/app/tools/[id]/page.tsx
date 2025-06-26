@@ -5,7 +5,7 @@ import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockTools } from "@/lib/mock-data"; // mockUser is not used here, can be removed if not needed elsewhere implicitly
+import { mockTools as initialMockTools } from "@/lib/mock-data";
 import type { Tool } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +19,10 @@ import { useToast } from "@/hooks/use-toast";
 
 
 export default function ToolDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
-  const params = use(paramsAsPromise); // Unwrap the params promise
-  const { id } = params; // Get id from resolved params
+  const params = use(paramsAsPromise); 
+  const { id } = params;
 
+  const [allTools, setAllTools] = useState<Tool[]>(initialMockTools);
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -32,22 +33,34 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
   const { toast } = useToast();
 
   useEffect(() => {
-    const foundTool = mockTools.find((t) => t.id === id);
+    // On mount, get tools from localStorage or initialize it
+    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
+    let currentTools: Tool[];
+    if (storedToolsRaw) {
+      currentTools = JSON.parse(storedToolsRaw);
+    } else {
+      currentTools = initialMockTools;
+      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
+    }
+    setAllTools(currentTools);
+
+    const foundTool = currentTools.find((t) => t.id === id);
     if (foundTool) {
       setTool(foundTool);
       setIsFavorite(foundTool.isFavorite || false);
-      setCurrentRating(foundTool.userRating || 0);
+      
+      // Load user-specific rating from localStorage
+      const storedRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
+      setCurrentRating(storedRatings[id] || 0);
 
-      // Optionally generate AI description
-      // For demo, let's assume we always try to generate if description is short
-      if (foundTool.description.length < 100 && foundTool.description.length > 0) { // Ensure description is not empty
+      if (foundTool.description.length < 100 && foundTool.description.length > 0) {
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
           .then(output => setEnhancedDescription(output.description))
           .catch(err => console.error("Failed to generate AI description:", err));
       }
     }
     setIsLoading(false);
-  }, [id]); // Depend on the resolved id
+  }, [id]);
 
   const handleFavoriteToggle = () => {
     if (!currentUser) {
@@ -55,7 +68,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
       return;
     }
     setIsFavorite(!isFavorite);
-    // Here you would typically update backend
+    // Backend update would go here
     toast({ title: isFavorite ? "Đã xóa khỏi Yêu thích" : "Đã thêm vào Yêu thích" });
   };
 
@@ -64,8 +77,49 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
       return;
     }
+    if (!tool) return;
+
+    // Get old rating to see if user is re-rating or rating for the first time
+    const storedUserRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
+    const oldRatingForTool = storedUserRatings[id] as number | undefined;
+
+    let newRatingCount = tool.ratingCount || 0;
+    const currentTotalRatingPoints = (tool.userRating || 0) * newRatingCount;
+    let newTotalRatingPoints;
+
+    if (oldRatingForTool !== undefined) {
+      // User is changing their rating
+      newTotalRatingPoints = currentTotalRatingPoints - oldRatingForTool + rating;
+    } else {
+      // User is rating for the first time
+      newTotalRatingPoints = currentTotalRatingPoints + rating;
+      newRatingCount += 1;
+    }
+    
+    const newAverageRating = newRatingCount > 0 ? newTotalRatingPoints / newRatingCount : 0;
+
     setCurrentRating(rating);
-    // Here you would typically update backend
+
+    const updatedTool: Tool = {
+      ...tool,
+      userRating: newAverageRating,
+      ratingCount: newRatingCount,
+    };
+    
+    // Update the tool in the main list and persist to localStorage
+    const updatedToolsList = allTools.map(t => t.id === id ? updatedTool : t);
+    localStorage.setItem("cleanAIPersistedTools", JSON.stringify(updatedToolsList));
+    setAllTools(updatedToolsList);
+    setTool(updatedTool);
+    
+    // Save/update the specific rating for this user in localStorage
+    try {
+        storedUserRatings[id] = rating;
+        localStorage.setItem("cleanAIToolRatings", JSON.stringify(storedUserRatings));
+    } catch (error) {
+        console.error("Failed to save rating to localStorage", error);
+    }
+
     toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool?.name} ${rating} sao.` });
   };
 

@@ -4,8 +4,8 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockTools, mockAIModels as initialMockModels } from "@/lib/mock-data";
-import type { AIModel } from "@/lib/types";
+import { mockTools as initialMockTools, mockAIModels as initialMockModels } from "@/lib/mock-data";
+import type { AIModel, Tool } from "@/lib/types";
 import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
@@ -17,6 +17,8 @@ export default function RankingsPage() {
   const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [allModels, setAllModels] = useState<AIModel[]>(initialMockModels);
+  const [allTools, setAllTools] = useState<Tool[]>(initialMockTools);
+
 
   useEffect(() => {
     const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
@@ -25,6 +27,14 @@ export default function RankingsPage() {
     } else {
       localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
       setAllModels(initialMockModels);
+    }
+    
+    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
+    if (storedToolsRaw) {
+      setAllTools(JSON.parse(storedToolsRaw));
+    } else {
+      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
+      setAllTools(initialMockTools);
     }
     
     setMounted(true);
@@ -43,11 +53,11 @@ export default function RankingsPage() {
   }, [searchTerm, allModels]);
 
   const filteredTools = useMemo(() => {
-    if (!searchTerm.trim()) return mockTools;
-    return mockTools.filter(tool =>
+    if (!searchTerm.trim()) return allTools;
+    return allTools.filter(tool =>
       tool.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchTerm, allTools]);
 
   if (!mounted) {
     return (

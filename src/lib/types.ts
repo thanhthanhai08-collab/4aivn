@@ -10,6 +10,8 @@ export interface Tool {
   features?: string[];
   userRating?: number; // Average user rating (1-5)
   isFavorite?: boolean;
+  myRating?: number;
+  ratingCount?: number;
 }
 
 export interface NewsArticle {
@@ -57,6 +59,7 @@ export interface AIModel {
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
 }
+
 
 
 

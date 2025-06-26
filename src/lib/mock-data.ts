@@ -19,6 +19,7 @@ export const mockTools: Tool[] = [
     link: 'https://chat.openai.com',
     features: ['Hiểu ngôn ngữ tự nhiên', 'Tạo văn bản', 'Tạo mã nguồn', 'Dịch thuật'],
     userRating: 4.8,
+    ratingCount: 150,
     isFavorite: false,
   },
   {
@@ -31,6 +32,7 @@ export const mockTools: Tool[] = [
     link: 'https://deepmind.google/technologies/gemini/',
     features: ['Hiểu văn bản, hình ảnh, âm thanh, video', 'Lý luận nâng cao', 'Tạo mã nguồn'],
     userRating: 4.7,
+    ratingCount: 135,
     isFavorite: true,
   },
   {
@@ -43,6 +45,7 @@ export const mockTools: Tool[] = [
     link: 'https://www.anthropic.com/claude',
     features: ['AI hội thoại', 'Tóm tắt nội dung', 'Viết sáng tạo'],
     userRating: 4.6,
+    ratingCount: 110,
     isFavorite: false,
   },
   {
@@ -55,6 +58,7 @@ export const mockTools: Tool[] = [
     link: 'https://www.midjourney.com',
     features: ['Tạo hình ảnh chất lượng cao', 'Phong cách nghệ thuật', 'Sáng tạo dựa trên gợi ý'],
     userRating: 4.9,
+    ratingCount: 200,
     isFavorite: true,
   },
   {
@@ -67,6 +71,7 @@ export const mockTools: Tool[] = [
     link: 'https://n8n.io/',
     features: ['Tự động hóa quy trình làm việc', 'No-code/low-code', 'Tích hợp có thể mở rộng'],
     userRating: 4.5,
+    ratingCount: 80,
   },
    {
     id: 'make',
@@ -78,6 +83,7 @@ export const mockTools: Tool[] = [
     link: 'https://www.make.com/',
     features: ['Trình xây dựng quy trình làm việc trực quan', 'Nhiều tích hợp ứng dụng', 'Tự động hóa tác vụ'],
     userRating: 4.3,
+    ratingCount: 75,
   },
   {
     id: 'tavily',
@@ -89,6 +95,7 @@ export const mockTools: Tool[] = [
     link: 'https://tavily.com/',
     features: ['Tìm kiếm thời gian thực', 'Kết quả được tối ưu hóa bằng AI', 'Tích hợp API dễ dàng'],
     userRating: 4.4,
+    ratingCount: 60,
   },
   {
     id: 'notion-ai',
@@ -98,6 +105,7 @@ export const mockTools: Tool[] = [
     logoUrl: 'https://placehold.co/64x64.png?text=NAI',
     link: 'https://www.notion.so/product/ai',
     userRating: 4.2,
+    ratingCount: 95,
   },
   {
     id: 'stable-diffusion-3-tool',
@@ -109,6 +117,7 @@ export const mockTools: Tool[] = [
     link: 'https://stability.ai/stablediffusion3',
     features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh', 'Mã nguồn mở'],
     userRating: 4.6,
+    ratingCount: 140,
     isFavorite: false,
   },
 ];

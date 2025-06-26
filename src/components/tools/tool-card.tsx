@@ -46,12 +46,32 @@ export function ToolCard({ tool }: ToolCardProps) {
         <CardDescription className="text-sm line-clamp-3">{tool.description}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
-        <div className="flex items-center text-sm text-amber-500">
-          {tool.userRating && (
-            <>
-              <Star className="h-4 w-4 mr-1 fill-amber-400 text-amber-500" />
-              {tool.userRating.toFixed(1)}
-            </>
+        <div className="flex-grow">
+          {tool.myRating !== undefined ? (
+            <div>
+              <div className="flex items-center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star
+                    key={star}
+                    className={`h-5 w-5 transition-colors ${
+                      star <= (tool.myRating || 0)
+                        ? "fill-amber-400 text-amber-500"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">
+                Đánh giá của bạn: {tool.myRating} sao
+              </p>
+            </div>
+          ) : tool.userRating ? (
+            <div className="flex items-center text-sm">
+                <Star className="h-4 w-4 mr-1 fill-amber-400 text-amber-500" />
+                <span className="text-muted-foreground">{tool.userRating.toFixed(1)}</span>
+            </div>
+          ) : (
+            <div className="h-5" /> // Placeholder to keep height consistent
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
