@@ -3,6 +3,7 @@ export interface Tool {
   id: string;
   name: string;
   context: string; // Category like 'Chatbot', 'Image Generation'
+  developer: string;
   ranking?: number; // Optional: current rank, might be dynamically calculated
   description: string;
   logoUrl: string; // URL to the tool's logo
@@ -59,6 +60,7 @@ export interface AIModel {
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
 }
+
 
 
 

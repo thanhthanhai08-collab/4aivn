@@ -1,3 +1,4 @@
+
 // src/components/rankings/rankings-table.tsx
 "use client";
 
@@ -74,16 +75,23 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           <TableRow>
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
             <TableHead className="min-w-[200px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
-            <TableHead className="min-w-[100px]">{itemType === 'tool' ? 'Hạng mục' : 'Nhà phát triển'}</TableHead>
-            {itemType === 'model' && (
+
+            {itemType === 'tool' ? (
               <>
+                <TableHead className="min-w-[150px]">Hạng mục</TableHead>
+                <TableHead className="min-w-[150px]">Nhà phát triển</TableHead>
+              </>
+            ) : (
+              <>
+                <TableHead className="min-w-[120px]">Nhà phát triển</TableHead>
                 <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
-                <TableHead className="text-center min-w-[120px]">Chỉ số thông minh</TableHead>
-                <TableHead className="text-center min-w-[150px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br> (USD/1M token)" }} />
+                <TableHead className="text-center min-w-[100px]">Chỉ số thông minh</TableHead>
+                <TableHead className="text-center min-w-[140px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br>(USD/1M token)" }} />
                 <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
                 <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
               </>
             )}
+
             <TableHead className="text-center min-w-[120px]">Đánh giá</TableHead>
           </TableRow>
         </TableHeader>
@@ -106,8 +114,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               denseRank = index + 1;
             }
             lastSignature = currentSignature;
-
-            const modelItemForDetails = item as AIModel; 
+            
             const averageRating = item.userRating ?? 0;
 
             return (
@@ -124,41 +131,42 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     data-ai-hint="logo company"
                   />
                   <div className="flex flex-col">
-                    {itemType === 'tool' ? (
-                      <Link href={`/tools/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
+                    <Link href={`/${itemType}s/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
                         {item.name}
-                      </Link>
-                    ) : (
-                       <Link href={`/models/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
-                        {item.name}
-                      </Link>
-                    )}
+                    </Link>
                     <span className="text-xs text-muted-foreground truncate max-w-[200px] hidden sm:block">{item.description.substring(0,50)}{item.description.length > 50 ? '...' : ''}</span>
                   </div>
                 </div>
               </TableCell>
-              <TableCell>
-                {itemType === 'tool' ? (
-                  <Badge variant="outline">{(item as Tool).context}</Badge>
-                ) : (
-                  <span className="text-sm">{modelItemForDetails.developer}</span>
-                )}
-              </TableCell>
-              {itemType === 'model' && (
+              
+              {itemType === 'tool' ? (
                 <>
-                  <TableCell className="text-center">{modelItemForDetails.contextLengthToken || '-'}</TableCell>
-                  <TableCell className="text-center">{modelItemForDetails.intelligenceScore !== undefined ? modelItemForDetails.intelligenceScore : '-'}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{(item as Tool).context}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{(item as Tool).developer}</span>
+                  </TableCell>
+                </>
+              ) : (
+                <>
+                  <TableCell>
+                    <span className="text-sm">{(item as AIModel).developer}</span>
+                  </TableCell>
+                  <TableCell className="text-center">{(item as AIModel).contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
                   <TableCell className="text-center">
-                    {modelItemForDetails.pricePerMillionTokens !== undefined ? `$${modelItemForDetails.pricePerMillionTokens.toFixed(2)}` : '-'}
+                    {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
                   <TableCell className="text-right">
-                    {modelItemForDetails.speedTokensPerSecond !== undefined ? modelItemForDetails.speedTokensPerSecond.toFixed(1) : '-'}
+                    {(item as AIModel).speedTokensPerSecond !== undefined ? (item as AIModel).speedTokensPerSecond.toFixed(1) : '-'}
                   </TableCell>
                   <TableCell className="text-right">
-                    {modelItemForDetails.latencyFirstChunkSeconds !== undefined ? modelItemForDetails.latencyFirstChunkSeconds.toFixed(2) : '-'}
+                    {(item as AIModel).latencyFirstChunkSeconds !== undefined ? (item as AIModel).latencyFirstChunkSeconds.toFixed(2) : '-'}
                   </TableCell>
                 </>
               )}
+
               <TableCell>
                 <div className="flex items-center justify-center space-x-2">
                   <div className="flex items-center">
