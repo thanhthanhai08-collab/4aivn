@@ -107,11 +107,13 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
                 <Button variant="outline" size="sm" asChild className="mb-6">
                   <Link href="/news"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
                 </Button>
-                <Badge variant="secondary" className="mb-2">{article.source}</Badge>
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <CalendarDays className="mr-2 h-4 w-4" />
-                  <span>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                   <Badge variant="secondary">{article.source}</Badge>
+                   <div className="flex items-center">
+                     <CalendarDays className="mr-2 h-4 w-4" />
+                     <span>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                   </div>
                 </div>
               </header>
 
