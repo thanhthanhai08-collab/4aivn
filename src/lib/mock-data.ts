@@ -11,8 +11,8 @@ export const mockUser = {
 export const mockTools: Tool[] = [
   {
     id: 'chatgpt',
-    name: 'ChatGPT',
-    context: 'Model AI', // Changed from 'Chatbot'
+    name: 'GPT Image 1',
+    context: 'Tạo hình ảnh',
     developer: 'OpenAI',
     ranking: 1,
     description: 'Mô hình ngôn ngữ hàng đầu của OpenAI, có khả năng tạo văn bản giống người dựa trên gợi ý.',
@@ -288,7 +288,7 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: `+ Claude 4 Opus Thinking là phiên bản cao cấp nhất trong dòng mô hình Claude 4 của Anthropic ( vừa ra mắt tháng 5 năm 2025) Claude Opus 4 được tối ưu đặc biệt cho các tác vụ đòi hỏi khả năng suy luận sâu với nhiều bước phức tạp đi kèm độ chính xác.
 + Claude 4 Opus Thinking thật sự có lẽ là mô hình thông minh nhất hiện nay vì các lý do
-+ Claude Opus 4 có khả năng suy luận qua nhiều bước (multi-step reasoning), giúp mô hình xử lý vấn đề logic và có hệ thống, giảm tối đa"lối tắt" hay thủ thuật không những thế nó còn bổ sung chế độ Thinking cho phép mô hình tạm dừng để cân nhắc kỹ lưỡng nhiều bước trước khi đưa ra câu trả lời cuối cùng, điều đó giúp nó thông minh hơn 65% so với Claude 3.7 Sonnet.
++ Claude 4 Opus 4 có khả năng suy luận qua nhiều bước (multi-step reasoning), giúp mô hình xử lý vấn đề logic và có hệ thống, giảm tối đa"lối tắt" hay thủ thuật không những thế nó còn bổ sung chế độ Thinking cho phép mô hình tạm dừng để cân nhắc kỹ lưỡng nhiều bước trước khi đưa ra câu trả lời cuối cùng, điều đó giúp nó thông minh hơn 65% so với Claude 3.7 Sonnet.
 + Trong điểm thông minh ở đây không bổ sung benchmark như SWE-bench (78.3%) và Terminal-bench (85.2%) mà Claude 4 Opus Thinking đạt được chứ không là nó bỏ xa các mô hình GPT-4.1 (54.6%) và Gemini 2.5 Pro (63.8%).
 + Claude 4 Opus Thinking còn rất thân thiện và khả năng hoạt động ổn định với tiếng Việt. Mô hình này là ít lỗi nhất và ổn định nhất so với GPT 4.1 và Gemini 2.5 Pro nếu ai đã từng trải nghiệm nhưng có nhược điểm là giá rất cao vì vậy chỉ phù hợp với những ai có điều kiện và mô hình là doanh nghiệp.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
@@ -468,7 +468,7 @@ export const mockAIModels: AIModel[] = [
     developer: 'Anthropic',
     description: `+ Claude 4 Opus là phiên bản cao cấp nhất trong dòng mô hình Claude 4 của Anthropic ( vừa ra mắt tháng 5 năm 2025) Claude Opus 4 được tối ưu đặc biệt cho các tác vụ đòi hỏi khả năng suy luận sâu với nhiều bước phức tạp đi kèm độ chính xác.
 + Claude 4 Opus thật sự có lẽ là mô hình thông minh nhất hiện nay vì các lý do
-+ Claude Opus 4 có khả năng suy luận qua nhiều bước (multi-step reasoning), giúp mô hình xử lý vấn đề logic và có hệ thống, giảm tối đa"lối tắt" hay thủ thuật không những thế nó còn bổ sung chế độ  cho phép mô hình tạm dừng để cân nhắc kỹ lưỡng nhiều bước trước khi đưa ra câu trả lời cuối cùng, điều đó giúp nó thông minh hơn 65% so với Claude 3.7 Sonnet.
++ Claude 4 Opus có khả năng suy luận qua nhiều bước (multi-step reasoning), giúp mô hình xử lý vấn đề logic và có hệ thống, giảm tối đa"lối tắt" hay thủ thuật không những thế nó còn bổ sung chế độ  cho phép mô hình tạm dừng để cân nhắc kỹ lưỡng nhiều bước trước khi đưa ra câu trả lời cuối cùng, điều đó giúp nó thông minh hơn 65% so với Claude 3.7 Sonnet.
 + Trong điểm thông minh ở đây không bổ sung benchmark như SWE-bench (78.3%) và Terminal-bench (85.2%) mà Claude 4 Opus đạt được chứ không là nó bỏ xa các mô hình GPT-4.1 (54.6%) và Gemini 2.5 Pro (63.8%).
 + Claude 4 Opus còn rất thân thiện và khả năng hoạt động ổn định với tiếng Việt. Mô hình này là ít lỗi nhất và ổn định nhất so với GPT 4.1 và Gemini 2.5 Pro nếu ai đã từng trải nghiệm nhưng có nhược điểm là giá rất cao vì vậy chỉ phù hợp với những ai có điều kiện và mô hình là doanh nghiệp.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
