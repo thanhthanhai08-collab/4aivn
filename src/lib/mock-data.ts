@@ -10,7 +10,7 @@ export const mockUser = {
 
 export const mockTools: Tool[] = [
   {
-    id: 'chatgpt',
+    id: 'gpt-image-1',
     name: 'GPT Image 1',
     context: 'Tạo hình ảnh',
     developer: 'OpenAI',
@@ -24,7 +24,7 @@ export const mockTools: Tool[] = [
     isFavorite: false,
   },
   {
-    id: 'gemini',
+    id: 'imagen-3',
     name: 'Imagen 3',
     context: 'Tạo hình ảnh',
     developer: 'Google',
@@ -38,7 +38,7 @@ export const mockTools: Tool[] = [
     isFavorite: true,
   },
   {
-    id: 'claude',
+    id: 'flowith',
     name: 'Flowith',
     context: 'Chatbot',
     developer: 'Anthropic',
@@ -58,7 +58,7 @@ export const mockTools: Tool[] = [
     developer: 'Midjourney',
     ranking: 4,
     description: 'Một phòng nghiên cứu độc lập sản xuất chương trình trí tuệ nhân tạo độc quyền tạo ra hình ảnh từ mô tả văn bản.',
-    logoUrl: 'https://images.unsplash.com/photo-1554049697-02e809699995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsb2dvJTIwY29tcGFueXxlbnwwfHx8fDE3NDkzNzU4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    logoUrl: '/image/midjourney-logo.png',
     link: 'https://www.midjourney.com',
     features: ['Tạo hình ảnh chất lượng cao', 'Phong cách nghệ thuật', 'Sáng tạo dựa trên gợi ý'],
     userRating: 4.9,
@@ -110,7 +110,7 @@ export const mockTools: Tool[] = [
     context: 'Hỗ trợ viết',
     developer: 'Notion',
     description: 'Tích hợp AI vào không gian làm việc Notion để hỗ trợ viết, tóm tắt và lên ý tưởng.',
-    logoUrl: 'https://placehold.co/64x64.png?text=NAI',
+    logoUrl: '/image/notion-ai-logo.png',
     link: 'https://www.notion.so/product/ai',
     userRating: 4.2,
     ratingCount: 95,
@@ -122,7 +122,7 @@ export const mockTools: Tool[] = [
     developer: 'Stability AI',
     ranking: 8,
     description: 'Thế hệ tiếp theo của mô hình tạo hình ảnh mã nguồn mở từ Stability AI, hứa hẹn cải thiện đáng kể về chất lượng hình ảnh, hiểu gợi ý và khả năng tạo văn bản trong hình ảnh.',
-    logoUrl: 'https://placehold.co/64x64.png?text=SD3T',
+    logoUrl: '/image/stability-ai-logo.png',
     link: 'https://stability.ai/stablediffusion3',
     features: ['Tạo hình ảnh từ văn bản', 'Chất lượng hình ảnh được cải thiện', 'Khả năng tạo văn bản trong hình ảnh', 'Mã nguồn mở'],
     userRating: 4.6,
@@ -878,7 +878,7 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     userRating: 4.9,
     ratingCount: 350,
     features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
       "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
       "• MMLU-Pro (Reasoning & Knowledge) 85%",
       "• GPQA Diamond (Scientific Reasoning) 83%",
