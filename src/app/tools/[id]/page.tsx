@@ -22,7 +22,6 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
   const params = use(paramsAsPromise); 
   const { id } = params;
 
-  const [allTools, setAllTools] = useState<Tool[]>(initialMockTools);
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -33,23 +32,14 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
   const { toast } = useToast();
 
   useEffect(() => {
-    // On mount, get tools from localStorage or initialize it
-    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
-    let currentTools: Tool[];
-    if (storedToolsRaw) {
-      currentTools = JSON.parse(storedToolsRaw);
-    } else {
-      currentTools = initialMockTools;
-      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
-    }
-    setAllTools(currentTools);
-
-    const foundTool = currentTools.find((t) => t.id === id);
+    // Find tool directly from mock-data.ts to ensure it's always up-to-date.
+    const foundTool = initialMockTools.find((t) => t.id === id);
+    
     if (foundTool) {
       setTool(foundTool);
       setIsFavorite(foundTool.isFavorite || false);
       
-      // Load user-specific rating from localStorage
+      // Load user-specific rating from localStorage for display
       const storedRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
       setCurrentRating(storedRatings[id] || 0);
 
@@ -100,16 +90,13 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
 
     setCurrentRating(rating);
 
+    // Update the local state of the tool for immediate UI feedback.
+    // Note: This average rating will reset on page load as the data source is mock-data.ts
     const updatedTool: Tool = {
       ...tool,
       userRating: newAverageRating,
       ratingCount: newRatingCount,
     };
-    
-    // Update the tool in the main list and persist to localStorage
-    const updatedToolsList = allTools.map(t => t.id === id ? updatedTool : t);
-    localStorage.setItem("cleanAIPersistedTools", JSON.stringify(updatedToolsList));
-    setAllTools(updatedToolsList);
     setTool(updatedTool);
     
     // Save/update the specific rating for this user in localStorage

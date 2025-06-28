@@ -1,4 +1,3 @@
-
 // src/app/models/[id]/page.tsx
 "use client";
 
@@ -23,7 +22,6 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
   const params = use(paramsAsPromise); 
   const { id } = params;
 
-  const [allModels, setAllModels] = useState<AIModel[]>(initialMockModels);
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -34,18 +32,9 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
   const { toast } = useToast();
 
   useEffect(() => {
-    // On mount, get models from localStorage or initialize it
-    const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
-    let currentModels: AIModel[];
-    if (storedModelsRaw) {
-      currentModels = JSON.parse(storedModelsRaw);
-    } else {
-      currentModels = initialMockModels;
-      localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
-    }
-    setAllModels(currentModels);
-
-    const foundModel = currentModels.find((m) => m.id === id);
+    // Find model directly from mock-data.ts to ensure it's always up-to-date.
+    const foundModel = initialMockModels.find((m) => m.id === id);
+    
     if (foundModel) {
       setModel(foundModel);
       setIsFavorite(foundModel.isFavorite || false);
@@ -106,16 +95,13 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
 
     setCurrentRating(rating);
 
+    // Update the local state of the model for immediate UI feedback.
+    // Note: This average rating will reset on page load as the data source is mock-data.ts
     const updatedModel: AIModel = {
       ...model,
       userRating: newAverageRating,
       ratingCount: newRatingCount,
     };
-    
-    // Update the model in the main list and persist to localStorage
-    const updatedModelsList = allModels.map(m => m.id === id ? updatedModel : m);
-    localStorage.setItem("cleanAIPersistedModels", JSON.stringify(updatedModelsList));
-    setAllModels(updatedModelsList);
     setModel(updatedModel);
     
     // Save/update the specific rating for this user in localStorage
