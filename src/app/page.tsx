@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools as initialMockTools, mockNews } from "@/lib/mock-data";
+import { mockTools, mockNews } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import type { Tool } from "@/lib/types";
@@ -17,18 +17,8 @@ export default function HomePage() {
   const latestNews = mockNews.slice(0, 3); // Show latest 3 news
 
   useEffect(() => {
-    // On mount, get tools from localStorage or initialize it
-    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
-    let currentTools: Tool[];
-    if (storedToolsRaw) {
-      currentTools = JSON.parse(storedToolsRaw);
-    } else {
-      currentTools = initialMockTools;
-      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
-    }
-    
-    // Sort and get top tools
-    const sortedTopTools = currentTools
+    // Directly use mock data, no localStorage.
+    const sortedTopTools = mockTools
       .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
       .slice(0, 4);
     
@@ -182,4 +172,3 @@ export default function HomePage() {
     </AppLayout>
   );
 }
-
