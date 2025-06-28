@@ -83,7 +83,7 @@ export const mockTools: Tool[] = [
     developer: 'Midjourney',
     ranking: 1,
     description: 'Midjourney là công cụ chuyên tạo hình ảnh nghệ thuật từ văn bản ra mắt năm 2022 chủ yếu hoạt động trên Discord. Nếu ai là dân chuyên sáng tạo, concept art, quảng cáo không lạ gì nền tảng này nữa vì công cụ này khá được ưa chuộng đối với người làm trong lĩnh vực này với những tác phẩm đa phong cách, chi tiết, sắc nét.\n+ Midjourney sử dụng mô hình ngôn ngữ lớn (LLM) phát triển riêng để phân tích tổng hợp tạo ra những bức ảnh giống như tác phẩm sống động với bố cục nghệ thuật.\n+ Midjourney có các lợi thế mà rất nhiều ông lớn trong ngành AI muốn có\n• Tạo ảnh từ mô tả văn bản: Có thể tạo ảnh từ prompt tiếng Việt lẫn tiếng Anh đều có độ chính xác, sáng tạo cao. Tất nhiên là vẫn ưu tiên tiếng Anh hơn.\n• Đa phong cách nghệ thuật: Có thể coi mỗi bức hình tạo ra là một tác phẩm nghệ thuật luôn vì Midjourney hỗ trợ vô vàn phong cách nghệ thuật từ siêu thực đến trừu tượng từ màu sắc đến bố cục.\n• Giao diện dễ sử dụng tương tác tùy chỉnh: Discord là nền tảng lớn thế nào chắc ai cũng biết rồi, chỉ cần hiểu giao diện chat đơn giản là sử dụng được. Cũng giống như nền tảng khác là hoàn toàn có thể nâng cấp, tùy chỉnh bức ảnh thông qua prompt văn bản. \n• Nguồn cảm hứng sáng tạo: Hoạt động từ năm 2022 đến nay thì Midjourney chắc chắn có kho dữ liệu sáng tạo khổng lồ hoàn toàn đủ sức cung cấp ý tưởng độc đáo cho người dùng.\n• Chi phí: Với các gói \nGói Basic là 10 USD / 1 tháng phù hợp với người thử nghiệm nhu cầu cơ bản giới hạn GPU nhanh 3.3 giờ/ tháng còn bình thường thì chúng ta phải đợi tính từ 10 đến 20 phút.\nGói Standard (30 USD /1 tháng) lựa chọn phổ biến với 15 giờ GPU nhanh mỗi tháng và chế độ Relax cho phép tạo ảnh không giới hạn.\nGói Pro (60 USD/1 tháng) và Mega (120 USD/1 tháng) dùng cho người dùng chuyên nghiệp doanh nghiệp cần nhiều tài nguyên với 30 giờ và 60 giờ GPU nhanh tất nhiên là tạo ảnh không giới hạn.\n',
-    logoUrl: '/image/midjourney-logo.png',
+    logoUrl: '/image/Logo Midjourney.png',
     link: 'https://www.midjourney.com',
     features: [
       "Là công cụ chuyên tạo hình ảnh nghệ thuật với rất nhiều phong cách nghệ thuật.",
@@ -141,7 +141,6 @@ export const mockTools: Tool[] = [
     name: 'Notion AI',
     context: 'Hỗ trợ viết',
     developer: 'Notion',
-    ranking: 9,
     description: 'Tích hợp AI vào không gian làm việc Notion để hỗ trợ viết, tóm tắt và lên ý tưởng.',
     logoUrl: '/image/notion-ai-logo.png',
     link: 'https://www.notion.so/product/ai',
