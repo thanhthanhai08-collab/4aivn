@@ -1,16 +1,39 @@
 
-// src/app/page.tsx
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews } from "@/lib/mock-data";
+import { mockTools as initialMockTools, mockNews } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
+import type { Tool } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
-  const topTools = mockTools.sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity)).slice(0, 4); // Show top 4 for homepage
+  const [topTools, setTopTools] = useState<Tool[]>([]);
   const latestNews = mockNews.slice(0, 3); // Show latest 3 news
+
+  useEffect(() => {
+    // On mount, get tools from localStorage or initialize it
+    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
+    let currentTools: Tool[];
+    if (storedToolsRaw) {
+      currentTools = JSON.parse(storedToolsRaw);
+    } else {
+      currentTools = initialMockTools;
+      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
+    }
+    
+    // Sort and get top tools
+    const sortedTopTools = currentTools
+      .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
+      .slice(0, 4);
+    
+    setTopTools(sortedTopTools);
+  }, []);
 
   return (
     <AppLayout>
@@ -55,9 +78,13 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Danh sách tuyển chọn các công cụ AI phổ biến và có ảnh hưởng nhất.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {topTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
+            {topTools.length > 0 ? (
+                topTools.map((tool) => (
+                  <ToolCard key={tool.id} tool={tool} />
+                ))
+            ) : (
+                [...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-lg" />)
+            )}
           </div>
           <div className="text-center mt-12">
             <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">

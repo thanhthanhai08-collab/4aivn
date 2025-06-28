@@ -1,3 +1,4 @@
+
 // src/app/tools/page.tsx
 "use client";
 
@@ -24,8 +25,11 @@ export default function ToolsPage() {
   useEffect(() => {
     setMounted(true);
     const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
-    if(storedToolsRaw) {
+    if (storedToolsRaw) {
         setAllTools(JSON.parse(storedToolsRaw));
+    } else {
+        setAllTools(initialMockTools);
+        localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
     }
     // Simulate data fetching
     const timer = setTimeout(() => {
