@@ -40,7 +40,7 @@ export const mockTools: Tool[] = [
   {
     id: 'flowith',
     name: 'Flowith',
-    context: 'Chatbot',
+    context: 'AI Agent',
     developer: 'Anthropic',
     ranking: 3,
     description: 'Một dòng các mô hình ngôn ngữ lớn được phát triển bởi Anthropic, tập trung vào tính an toàn và hữu ích.',
@@ -92,7 +92,7 @@ export const mockTools: Tool[] = [
     ratingCount: 75,
   },
   {
-    id: 'tavily',
+    id: 'tavily-ai',
     name: 'Tavily AI',
     context: 'API Tìm kiếm',
     developer: 'Tavily',
