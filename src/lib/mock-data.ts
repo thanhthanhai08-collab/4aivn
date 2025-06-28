@@ -80,7 +80,7 @@ export const mockTools: Tool[] = [
   },
    {
     id: 'make',
-    name: 'Make (Integromat)',
+    name: 'Make',
     context: 'Tự động hóa',
     developer: 'Celonis',
     ranking: 6,
