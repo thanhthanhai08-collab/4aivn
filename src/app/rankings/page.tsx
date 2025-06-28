@@ -4,7 +4,7 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockTools as initialMockTools, mockAIModels as initialMockModels } from "@/lib/mock-data";
+import { mockTools, mockAIModels } from "@/lib/mock-data";
 import type { AIModel, Tool } from "@/lib/types";
 import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,27 +16,12 @@ export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [allModels, setAllModels] = useState<AIModel[]>(initialMockModels);
-  const [allTools, setAllTools] = useState<Tool[]>(initialMockTools);
+  
+  const allModels: AIModel[] = mockAIModels;
+  const allTools: Tool[] = mockTools;
 
 
   useEffect(() => {
-    const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
-    if (storedModelsRaw) {
-      setAllModels(JSON.parse(storedModelsRaw));
-    } else {
-      localStorage.setItem("cleanAIPersistedModels", JSON.stringify(initialMockModels));
-      setAllModels(initialMockModels);
-    }
-    
-    const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
-    if (storedToolsRaw) {
-      setAllTools(JSON.parse(storedToolsRaw));
-    } else {
-      localStorage.setItem("cleanAIPersistedTools", JSON.stringify(initialMockTools));
-      setAllTools(initialMockTools);
-    }
-    
     setMounted(true);
     // Simulate data fetching
     const timer = setTimeout(() => {
