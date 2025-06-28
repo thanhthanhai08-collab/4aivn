@@ -37,7 +37,10 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     
     if (foundTool) {
       setTool(foundTool);
-      setIsFavorite(foundTool.isFavorite || false);
+      
+      // Load favorite status from localStorage
+      const favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
+      setIsFavorite(favoriteToolIds.includes(id));
       
       // Load user-specific rating from localStorage for display
       const storedRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
@@ -57,9 +60,25 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
-    setIsFavorite(!isFavorite);
-    // Backend update would go here
-    toast({ title: isFavorite ? "Đã xóa khỏi Yêu thích" : "Đã thêm vào Yêu thích" });
+    
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+
+    try {
+        let favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
+        if (newFavoriteState) {
+            if (!favoriteToolIds.includes(id)) {
+                favoriteToolIds.push(id);
+            }
+        } else {
+            favoriteToolIds = favoriteToolIds.filter(toolId => toolId !== id);
+        }
+        localStorage.setItem("cleanAIFavoriteTools", JSON.stringify(favoriteToolIds));
+    } catch (error) {
+        console.error("Failed to save favorite status to localStorage", error);
+    }
+
+    toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
   };
 
   const handleRating = (rating: number) => {

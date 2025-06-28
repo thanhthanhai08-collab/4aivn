@@ -1,4 +1,3 @@
-
 // src/app/profile/page.tsx
 "use client";
 
@@ -11,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools as initialMockTools, mockNews, mockAIModels as initialMockModels } from "@/lib/mock-data";
+import { mockTools, mockNews, mockAIModels } from "@/lib/mock-data";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
@@ -42,28 +41,25 @@ export default function ProfilePage() {
     if (!isLoading && !currentUser) {
       router.push("/login");
     } else if (currentUser) {
-        // Load persisted models
-        const storedModelsRaw = localStorage.getItem("cleanAIPersistedModels");
-        const currentModels: AIModel[] = storedModelsRaw ? JSON.parse(storedModelsRaw) : initialMockModels;
+        // Load rated models
         const storedModelRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
         const ratedModelIds = Object.keys(storedModelRatings);
-        const userRatedModels = currentModels
+        const userRatedModels = mockAIModels
             .filter(model => ratedModelIds.includes(model.id))
             .map(model => ({ ...model, myRating: storedModelRatings[model.id] }));
         setRatedModels(userRatedModels);
 
-        // Load persisted tools
-        const storedToolsRaw = localStorage.getItem("cleanAIPersistedTools");
-        const currentTools: Tool[] = storedToolsRaw ? JSON.parse(storedToolsRaw) : initialMockTools;
+        // Load rated tools
         const storedToolRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
         const ratedToolIds = Object.keys(storedToolRatings);
-        const userRatedTools = currentTools
+        const userRatedTools = mockTools
             .filter(tool => ratedToolIds.includes(tool.id))
             .map(tool => ({ ...tool, myRating: storedToolRatings[tool.id] }));
         setRatedTools(userRatedTools);
 
-        // Set favorite tools from the same persisted list
-        const userFavoriteTools = currentTools.filter(tool => tool.isFavorite).slice(0, 4);
+        // Load favorite tools
+        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
+        const userFavoriteTools = mockTools.filter(tool => favoriteToolIds.includes(tool.id));
         setFavoriteTools(userFavoriteTools);
         
         // Load bookmarked news
