@@ -1,7 +1,7 @@
 // src/components/tools/tool-card.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, ThumbsUp, CheckCircle } from "lucide-react";
+import { ExternalLink, Star, ThumbsUp } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,8 +12,6 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool }: ToolCardProps) {
-  const mainFeatures = tool.features?.filter(f => !f.trim().startsWith('•')) || [];
-
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
       <CardHeader className="p-4">
@@ -44,20 +42,8 @@ export function ToolCard({ tool }: ToolCardProps) {
           )}
         </div>
       </CardHeader>
-      <CardContent className="p-4 flex-grow space-y-3">
+      <CardContent className="p-4 flex-grow">
         <CardDescription className="text-sm line-clamp-3">{tool.description}</CardDescription>
-        {mainFeatures.length > 0 && (
-          <div className="pt-2">
-            <ul className="space-y-1.5 text-xs text-muted-foreground">
-              {mainFeatures.slice(0, 2).map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                      <CheckCircle className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 shrink-0" />
-                      <span className="line-clamp-2">{feature}</span>
-                  </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
         <div className="flex-grow">
