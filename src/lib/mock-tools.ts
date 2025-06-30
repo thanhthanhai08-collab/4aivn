@@ -1,3 +1,4 @@
+
 import type { Tool } from '@/lib/types';
 
 export const mockTools: Tool[] = [
@@ -76,14 +77,13 @@ export const mockTools: Tool[] = [
     link: 'https://www.try.flowith.io',
     features:  [
       "Làm việc trên không gian ảo mà vẫn thực hiện đầy đủ các bước.",
-"Có thể thực hiện và lập kế hoạch thực hiện lên tới hơn 1000 bước .",
-      "Đầy đủ các loại ứng dụng của Ai Agent",
-      "• Tự động lập kế hoạch.",
-      "• Tự động phối hợp các Ai Agent.",
-      "• Hỗ trợ làm việc nhóm.",
-      "• Tìm kiếm và phản hồi theo thời gian thực.",
-"• Tạo tri thức tự động qua Knowledge Garden.",
-"• Quản lý tác vụ linh hoạt.",
+      "Có thể thực hiện và lập kế hoạch thực hiện lên tới hơn 1000 bước .",
+      "Flowith có thể tự động lập kế hoạch thực hiện.",
+      "Nền tảng sẽ tự động phối hợp các AI Agent làm việc, mỗi AI Agent sẽ đảm nhiệm một công việc.",
+      " Hỗ trợ làm việc nhóm.",
+      " Tìm kiếm và phản hồi theo thời gian thực.",
+      " Tạo tri thức tự động qua Knowledge Garden.",
+      " Quản lý tác vụ linh hoạt hoàn toàn theo điều chỉnh của người dùng.",
     ],
     userRating: 4.6,
     ratingCount: 110,
