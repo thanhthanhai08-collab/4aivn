@@ -1,3 +1,4 @@
+
 // src/app/profile/page.tsx
 "use client";
 
@@ -54,12 +55,15 @@ export default function ProfilePage() {
         const ratedToolIds = Object.keys(storedToolRatings);
         const userRatedTools = mockTools
             .filter(tool => ratedToolIds.includes(tool.id))
-            .map(tool => ({ ...tool, myRating: storedToolRatings[tool.id] }));
+            .map(tool => ({ ...tool, myRating: storedToolRatings[tool.id] }))
+            .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
         setRatedTools(userRatedTools);
 
         // Load favorite tools
         const favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
-        const userFavoriteTools = mockTools.filter(tool => favoriteToolIds.includes(tool.id));
+        const userFavoriteTools = mockTools
+            .filter(tool => favoriteToolIds.includes(tool.id))
+            .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
         setFavoriteTools(userFavoriteTools);
         
         // Load bookmarked news
@@ -201,3 +205,4 @@ export default function ProfilePage() {
     </AppLayout>
   );
 }
+

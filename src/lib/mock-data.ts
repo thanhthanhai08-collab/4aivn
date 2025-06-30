@@ -57,7 +57,7 @@ export const mockTools: Tool[] = [
     name: 'Flowith',
     context: 'AI Agent',
     developer: 'Flowith',
-    ranking: 5,
+    ranking: 4,
     description: 'Flowith là nền tảng AI Agent thế hệ mới với Agent Neo được thiết kế làm việc thông qua giao diện canvas cho phép người dùng quản lý thực hiện các tác vụ phức tạp qua các bước.\n+ Flowith không giống với các nền tảng AI truyền thống như Gemini, Chagpt, Claude dựa trên chat mà nó tạo ra một không gian làm việc khác người dùng có thể xem trực tiếp nó làm việc theo các bước dựa trên ý tưởng đưa vào canvas.\n+ Nền tảng này tích hợp AI Oracle có thể là Gemini hoàn toàn có thể thực hiện liên tục trên 1000 bước hoặc có thể cài đặt thời gian thực hiện các bước chỉ qua câu prompt yêu cầu thực sự vượt trội so với Manus và Genspark chỉ thực hiện được vài chục bước\n+ Flowith tất nhiên vẫn có đầy đủ các ứng dụng thông minh của Manus hay Genspark như:\n• Tự động lập kế hoạch: Tự động lập kế hoạch làm việc trên không gian ảo canvas khi người dùng không cần prompt chi tiết đặc biệt người dùng có thể can thiệp prompt ngay cả khi Agent Neo đang hoạt động.\n• Hệ thống tự phối hợp các AI Agent: Có thể tạo ra một đội AI Agent tự phối hợp với nhau làm việc như một Agent để viêt, Agent để tạo ảnh, Agent để review,.. \n• Hỗ trợ làm việc nhóm: Tất nhiên cái này là cần thiết cho một dự án có nhiều người tham gia, họ có thể chỉnh sửa trực tiếp thông qua phân quyền nhưng có lẽ tính năng chỉ có ở bản trả phí.\n• Tìm kiếm và phản hồi trực tiếp: Có thể tìm kiếm thông tin theo thời gian thực và trả lời trực tiếp thông qua Agent Neo.\n• Tạo tri thức tự động thông qua Knowledge Garden: Agent Neo tự động phân tích thông tin và kết nối tài liệu tải lên thành tri thức có thể sử dụng.\n• Quản lý tác vụ linh hoạt: Người dùng có thể điều chỉnh lập kế hoạch theo thời gian thực thậm chỉ có thể can thiệp khi thấy Agent Neo đang thực hiện các bước không theo ý người dùng. \n• Chi phí với các gói \nGói Free có thể dùng miễn phí với 1000 credit / 1 tháng.\nGói Professional (19.9 USD/ 1 tháng) có thể tạo video với 20000 credit /1 tháng.\nGói Ultimate(49.9 USD/ 1 tháng) có thể tạo video với 50000 credit /1 tháng\n ',
     logoUrl: '/image/Logo flowith.png',
     link: 'https://www.try.flowith.io',
@@ -175,7 +175,7 @@ export const mockTools: Tool[] = [
     name: 'Stable Diffusion 3',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
-    ranking: 4,
+    ranking: 5,
     description: 'Stable Diffusion 3 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh.\n+ Stable Diffusion 3 là mã nguồn mở, cho phép tự do tải về, chạy offline và tùy chỉnh ngay trên máy chủ của người dùng luôn.\n+ Stable Diffusion 3 không giống với Midjourney hay Leonardo nó có những đặc điểm đặc biệt dưới đây vì vậy để khai thác tối đa mô hình hoặc tinh chỉnh chi tiết thì người dùng cần biết nhiều kĩ thuật prompt:\n• Stable Diffusion 3 sử dụng kiến trúc Multimodal Diffusion Transformer (MMDiT) với MMDiT là sự kết hợp biểu diễn riêng biệt cho ngôn ngữ và hình ảnh, sử dụng attention và MLP để xử lý tuần tự, giúp mô hình hiểu sâu hơn về nội dung prompt.\n• Tùy chọn kích thước mô hình đa dạng: Từ 800 triệu đến 8 tỷ tham số, phù hợp với nhiều loại phần cứng từ máy tính cá nhân đến GPU doanh nghiệp.\n• Khả năng tùy chỉnh và fine-tuning dễ dàng: Dễ dàng điều chỉnh mô hình với bộ dữ liệu nhỏ để tạo ra các phiên bản chuyên biệt theo nhu cầu.\n• Cải thiện xử lý đa đối tượng (multi-subject prompts): Mô hình hiểu và tái tạo chính xác nhiều đối tượng cùng lúc trong một prompt, giúp tạo ra hình ảnh phức tạp và chi tiết hơn.\n• Cam kết an toàn và trách nhiệm: Stability AI tích hợp nhiều biện pháp bảo vệ để hạn chế việc sử dụng mô hình vào các mục đích xấu, đồng thời hợp tác với cộng đồng và chuyên gia để phát triển bền vững.\n• Có phiên bản miễn phí trên Hugging Face: Chúng ta có thể hoàn toàn kết nối với Stable Diffusion 3 thông qua API của Hugging Face mà không cần cài thêm bất cứ phần mềm nào, cực kì tiện lợi.\n  ',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stablediffusion3',
@@ -1094,3 +1094,4 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'AI ethics'
   },
 ];
+
