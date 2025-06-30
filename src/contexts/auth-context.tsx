@@ -1,17 +1,27 @@
-
 // src/contexts/auth-context.tsx
 "use client";
 
+import type { User as FirebaseUser } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import type { User } from "@/lib/types";
+import { auth } from "@/lib/firebase";
 import React, { createContext, useState, useContext, useEffect, type ReactNode } from "react";
-import { mockUser } from "@/lib/mock-user";
 
 interface AuthContextType {
   currentUser: User | null;
   isLoading: boolean;
   loginWithGoogle: () => Promise<void>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
-  registerWithEmail: (email: string, pass: string) => Promise<void>; // Added
+  registerWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserProfile: (data: { displayName: string }) => Promise<void>;
 }
@@ -23,78 +33,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking auth state on mount
-    const storedUser = localStorage.getItem("cleanAIUser");
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const formattedUser: User = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          emailVerified: user.emailVerified,
+        };
+        setCurrentUser(formattedUser);
+      } else {
+        setCurrentUser(null);
+      }
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const loginWithGoogle = async () => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    const userToLogin = {...mockUser, displayName: "Google User", email: "googleuser@example.com"};
-    setCurrentUser(userToLogin);
-    localStorage.setItem("cleanAIUser", JSON.stringify(userToLogin));
-    setIsLoading(false);
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
   };
   
-  const loginWithEmail = async (email: string, _pass: string) => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // For demo, allow login if email exists in a mock "registered" list or is the mockUser's email
-    // This is highly simplified for mock purposes.
-    const userToLogin = {...mockUser, email, displayName: email.split('@')[0] || "Người dùng Email"};
-    setCurrentUser(userToLogin);
-    localStorage.setItem("cleanAIUser", JSON.stringify(userToLogin));
-    setIsLoading(false);
+  const loginWithEmail = async (email: string, pass: string) => {
+    await signInWithEmailAndPassword(auth, email, pass);
   };
 
-  const registerWithEmail = async (email: string, _pass: string) => {
-    setIsLoading(true);
-    // Simulate API call for registration
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    // In a real app, you'd create the user here and a backend would send a confirmation email.
-    // For this mock, we'll just simulate success.
-    // We won't actually log the user in or store them persistently for loginWithEmail to find yet,
-    // as that complicates the mock without a backend.
-    // The user will be redirected to login and can use the "mock" login.
-    console.log(`Mock registration for email: ${email}`);
-    setIsLoading(false);
-    // Throw an error for specific email to test error handling
-    if (email === "error@example.com") {
-      throw new Error("Địa chỉ email này đã được sử dụng.");
-    }
-    // Simulate success
+  const registerWithEmail = async (email: string, pass: string) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    await sendEmailVerification(userCredential.user);
   };
 
   const updateUserProfile = async (data: { displayName: string }) => {
-    setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
-
-    if (currentUser) {
-      const updatedUser = { ...currentUser, displayName: data.displayName };
-      setCurrentUser(updatedUser);
-      localStorage.setItem("cleanAIUser", JSON.stringify(updatedUser));
-    } else {
-      setIsLoading(false);
+    if (!auth.currentUser) {
       throw new Error("Không tìm thấy người dùng để cập nhật.");
     }
-    setIsLoading(false);
+    await updateProfile(auth.currentUser, { displayName: data.displayName });
+    // Refresh user state to get the latest profile info
+    setCurrentUser(prevUser => prevUser ? { ...prevUser, displayName: data.displayName } : null);
   };
 
   const logout = async () => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setCurrentUser(null);
-    // Keep user ratings even after logout
-    // localStorage.removeItem("cleanAIUser");
-    localStorage.removeItem("cleanAIUser");
-    setIsLoading(false);
+    await signOut(auth);
   };
 
   return (

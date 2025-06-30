@@ -28,10 +28,11 @@ export interface NewsArticle {
 }
 
 export interface User {
-  id:string;
+  uid: string;
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
+  emailVerified: boolean;
   isAnonymous?: boolean;
 }
 
@@ -61,9 +62,3 @@ export interface AIModel {
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
 }
-
-
-
-
-
-
