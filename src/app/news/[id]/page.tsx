@@ -5,7 +5,7 @@ import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare } from "lucide-react";
-import { mockNews } from "@/lib/mock-tools";
+import { mockNews } from "@/lib/mock-news";
 import type { NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

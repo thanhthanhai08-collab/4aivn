@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { NewsCard } from "@/components/news/news-card";
-import { mockNews } from "@/lib/mock-tools";
+import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 
