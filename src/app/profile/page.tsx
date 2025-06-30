@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews, mockAIModels } from "@/lib/mock-data";
+import { mockTools, mockNews } from "@/lib/mock-tools";
+import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
@@ -205,4 +206,3 @@ export default function ProfilePage() {
     </AppLayout>
   );
 }
-

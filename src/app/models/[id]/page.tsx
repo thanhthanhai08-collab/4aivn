@@ -5,7 +5,7 @@ import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockAIModels as initialMockModels } from "@/lib/mock-data";
+import { mockAIModels as initialMockModels } from "@/lib/mock-models";
 import type { AIModel } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +32,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Find model directly from mock-data.ts to ensure it's always up-to-date.
+    // Find model directly from mock-data to ensure it's always up-to-date.
     const foundModel = initialMockModels.find((m) => m.id === id);
     
     if (foundModel) {
@@ -96,7 +96,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     setCurrentRating(rating);
 
     // Update the local state of the model for immediate UI feedback.
-    // Note: This average rating will reset on page load as the data source is mock-data.ts
+    // Note: This average rating will reset on page load as the data source is mock-data
     const updatedModel: AIModel = {
       ...model,
       userRating: newAverageRating,

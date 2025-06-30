@@ -1,0 +1,260 @@
+import type { Tool, NewsArticle, User } from '@/lib/types';
+
+export const mockUser = {
+  id: 'mock-user-123',
+  email: 'user@example.com',
+  displayName: 'Người dùng Demo',
+  photoURL: 'https://placehold.co/100x100.png',
+};
+
+export const mockTools: Tool[] = [
+  {
+    id: 'midjourney',
+    name: 'Midjourney',
+    context: 'Tạo hình ảnh',
+    developer: 'Midjourney',
+    ranking: 1,
+    description: 'Midjourney là công cụ chuyên tạo hình ảnh nghệ thuật từ văn bản ra mắt năm 2022 chủ yếu hoạt động trên Discord. Nếu ai là dân chuyên sáng tạo, concept art, quảng cáo không lạ gì nền tảng này nữa vì công cụ này khá được ưa chuộng đối với người làm trong lĩnh vực này với những tác phẩm đa phong cách, chi tiết, sắc nét.\n+ Midjourney sử dụng mô hình ngôn ngữ lớn (LLM) phát triển riêng để phân tích tổng hợp tạo ra những bức ảnh giống như tác phẩm sống động với bố cục nghệ thuật.\n+ Midjourney có các lợi thế mà rất nhiều ông lớn trong ngành AI muốn có\n• Tạo ảnh từ mô tả văn bản: Có thể tạo ảnh từ prompt tiếng Việt lẫn tiếng Anh đều có độ chính xác, sáng tạo cao. Tất nhiên là vẫn ưu tiên tiếng Anh hơn.\n• Đa phong cách nghệ thuật: Có thể coi mỗi bức hình tạo ra là một tác phẩm nghệ thuật luôn vì Midjourney hỗ trợ vô vàn phong cách nghệ thuật từ siêu thực đến trừu tượng từ màu sắc đến bố cục.\n• Giao diện dễ sử dụng tương tác tùy chỉnh: Discord là nền tảng lớn thế nào chắc ai cũng biết rồi, chỉ cần hiểu giao diện chat đơn giản là sử dụng được. Cũng giống như nền tảng khác là hoàn toàn có thể nâng cấp, tùy chỉnh bức ảnh thông qua prompt văn bản. \n• Nguồn cảm hứng sáng tạo: Hoạt động từ năm 2022 đến nay thì Midjourney chắc chắn có kho dữ liệu sáng tạo khổng lồ hoàn toàn đủ sức cung cấp ý tưởng độc đáo cho người dùng.\n• Chi phí: Với các gói \nGói Basic là 10 USD / 1 tháng phù hợp với người thử nghiệm nhu cầu cơ bản giới hạn GPU nhanh 3.3 giờ/ tháng còn bình thường thì chúng ta phải đợi tính từ 10 đến 20 phút.\nGói Standard (30 USD /1 tháng) lựa chọn phổ biến với 15 giờ GPU nhanh mỗi tháng và chế độ Relax cho phép tạo ảnh không giới hạn.\nGói Pro (60 USD/1 tháng) và Mega (120 USD/1 tháng) dùng cho người dùng chuyên nghiệp doanh nghiệp cần nhiều tài nguyên với 30 giờ và 60 giờ GPU nhanh tất nhiên là tạo ảnh không giới hạn.\n',
+    logoUrl: '/image/Logo Midjourney.png',
+    link: 'https://www.midjourney.com',
+    features: [
+      "Là công cụ chuyên tạo hình ảnh nghệ thuật với rất nhiều phong cách nghệ thuật.",
+"Mỗi lần có thể tạo ra được 4 bức ảnh khác nhau dựa trên prompt văn bản tiếng Việt hoặc tiếng Anh .",
+"Độ phân giải mỗi bức ảnh rất cao và còn có thể prompt tăng độ phân giải nữa",
+      "Giao diện rất dễ tương tác tùy chỉnh",
+      "Nguồn cảm hứng sáng tạo cho mọi người.",
+      "Chi phí nhỏ nhất là 10 USD / 1 tháng.",
+    ],
+    userRating: 4.9,
+    ratingCount: 200,
+    isFavorite: true,
+  },
+  {
+    id: 'gpt-image-1',
+    name: 'GPT Image 1',
+    context: 'Tạo hình ảnh',
+    developer: 'OpenAI',
+    ranking: 2,
+    description: 'GPT Image 1 là mô hình tạo, chỉnh sửa hình ảnh do OpenAI phát triển nội bộ, chính thức được ra mắt vào tháng 5 năm 2024 được tích hợp sẵn vào model GPT-4o không giống như DALL·E là một model riêng, GPT Image 1 được xây dựng hoàn toàn mới, với mục tiêu tạo ra hình ảnh thực tế, logic và mạch lạc với văn bản đầu vào(prompt).\n+ Vì được tích hợp sâu với GPT 4o cho nên GPT Image 1 hoàn toàn có thể hiểu ngữ cảnh hội thoại đưa ra hình ảnh phù hợp với yêu cầu chi tiết. Hoặc mọi người có thể sử dụng tùy chỉnh GPT Image 1 thông qua API.\n+ Hỗ trợ tất cả các kiểu tạo hình ảnh đó là tạo hình ảnh từ hình ảnh, tạo hình ảnh từ mô tả, chỉnh sửa hình ảnh từ hình ảnh, chỉnh sửa hình ảnh từ mô tả\n+ Đặc biệt là có thể tạo nhân vật và hành động nhất quán với mô tả và một điểm cộng nữa là chữ trên hình ảnh tiếng Anh thì cực kì chính xác còn tiếng Việt thì độ chuẩn xác chỉ tầm 50%.\n+ Đến hiện tại thì GPT Image chỉ hỗ trợ 3 loại kích thước ảnh giống như ở phần chi phí. Còn về chi phí tạo ảnh là: \n• Chất lượng LOW thì ảnh 1024x1024 (0.011 USD/1 ảnh) ảnh 1024x1536 (0.016 USD/1 ảnh) ảnh 1536x1024 (0.016 USD/1 ảnh).\n• Chất lượng Medium thì ảnh 1024x1024 (0.042 USD/1 ảnh) ảnh 1024x1536 (0.063 USD/1 ảnh) ảnh 1536x1024 (0.063 USD/1 ảnh).\n• Chất lượng High thì ảnh 1024x1024 (0.167 USD/1 ảnh) ảnh 1024x1536 (0.25 USD/1 ảnh) ảnh 1536x1024 (0.25 USD/1 ảnh).\nSau đó chi phí chỉnh sửa ảnh là:\n• Chi phí phân tích ảnh đầu vào 10 USD/ 1M token.\n• Nếu đã có ảnh lưu bộ nhớ  2.5 USD/ 1M token.\n• Chi phí tạo ảnh đầu ra  40 USD/ 1M token.\n ',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://chat.openai.com',
+    features:  [
+      "Tích hợp sẵn vào Gpt 4o cực kì tiện lợi chỉ việc sử dụng không phải chuyển trang như Dall E.",
+      "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh",
+      "• Tạo hình ảnh từ hình ảnh",
+      "• Tạo hình ảnh từ mô tả văn bản, giọng nói",
+      "• Chỉnh sửa hình ảnh từ hình ảnh mẫu",
+      "• Chỉnh sửa hình ảnh từ mô tả văn bản, giọng nói",
+    ],
+    userRating: 4.8,
+    ratingCount: 150,
+    isFavorite: false,
+  },
+  {
+    id: 'imagen-4',
+    name: 'Imagen 4',
+    context: 'Tạo hình ảnh',
+    developer: 'Google',
+    ranking: 3,
+    description: 'Mô hình tạo hình ảnh từ văn bản thế hệ mới nhất của Google, nổi tiếng với khả năng tạo ra hình ảnh quang học giống y như thật mà lại còn có tùy chọn 2k tất cả từ kết cấu vải, giọt nước, lông thú,.. đều đủ chi tiết và chiều sâu. Imagen 4 còn có tùy chọn tốc độ nhanh hơn 10 lần Imagen 3 thật là khủng khiếp.\n+ Đặc biệt Imagen 4 có khả năng hiển thị chữ viết trên ảnh cực kì chính xác, rõ ràng hoàn toàn có thể so với GPT Image 1 tốt hơn hẳn Imagen 3 với tiếng Anh còn tiếng Việt theo như mình đánh giá mới chỉ mức 60%\n+ Hỗ trợ tất cả các kiểu tạo hình ảnh đó là tạo hình ảnh từ hình ảnh, tạo hình ảnh từ mô tả, chỉnh sửa hình ảnh từ hình ảnh, chỉnh sửa hình ảnh từ mô tả.\n+ Người dùng có thể tạo ảnh với nhiều khung hình khác nhau như 16:9 hoặc 9:16 hoặc 1:1 hoặc 2:3 và nhiều phong cách khác nhau từ siêu thực đến trừu tượng.\n+ Giá thì hiện tại có 2 phiên bản của Imagen 4 là \n• Imagen 4: Phiên bản tiêu chuẩn phù hợp hầu hết các tác vụ tạo ảnh thông thường(0.04 USD/1 ảnh)nhưng ở phiên bản này độ chính xác giống prompt mô tả ở mức thấp.\n• Imagen 4 Ultra: Phiên bản cao cấp tập trung trung vào độ chính xác so với prompt mô tả và tạo ảnh chất lượng vượt trội hơn so với Imagen 4 có giá 0.06 USD/1 ảnh.',
+    logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
+    link: 'https://deepmind.google/technologies/imagen/',
+    features: [
+      "Tạo ảnh siêu chân thực và có chiều sâu có tùy chọn ảnh lên tới 2K.",
+"Hỗ trợ nhiều loại kích thước ảnh 16:9 hoặc 9:16 hoặc 2:3 hoặc 1:1.",
+      "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh",
+      "• Tạo hình ảnh từ hình ảnh",
+      "• Tạo hình ảnh từ mô tả văn bản, giọng nói",
+      "• Chỉnh sửa hình ảnh từ hình ảnh mẫu",
+      "• Chỉnh sửa hình ảnh từ mô tả văn bản, giọng nói",
+    ],
+    userRating: 4.7,
+    ratingCount: 135,
+    isFavorite: true,
+  },
+  {
+    id: 'flowith',
+    name: 'Flowith',
+    context: 'AI Agent',
+    developer: 'Flowith',
+    ranking: 4,
+    description: 'Flowith là nền tảng AI Agent thế hệ mới với Agent Neo được thiết kế làm việc thông qua giao diện canvas cho phép người dùng quản lý thực hiện các tác vụ phức tạp qua các bước.\n+ Flowith không giống với các nền tảng AI truyền thống như Gemini, Chagpt, Claude dựa trên chat mà nó tạo ra một không gian làm việc khác người dùng có thể xem trực tiếp nó làm việc theo các bước dựa trên ý tưởng đưa vào canvas.\n+ Nền tảng này tích hợp AI Oracle có thể là Gemini hoàn toàn có thể thực hiện liên tục trên 1000 bước hoặc có thể cài đặt thời gian thực hiện các bước chỉ qua câu prompt yêu cầu thực sự vượt trội so với Manus và Genspark chỉ thực hiện được vài chục bước\n+ Flowith tất nhiên vẫn có đầy đủ các ứng dụng thông minh của Manus hay Genspark như:\n• Tự động lập kế hoạch: Tự động lập kế hoạch làm việc trên không gian ảo canvas khi người dùng không cần prompt chi tiết đặc biệt người dùng có thể can thiệp prompt ngay cả khi Agent Neo đang hoạt động.\n• Hệ thống tự phối hợp các AI Agent: Có thể tạo ra một đội AI Agent tự phối hợp với nhau làm việc như một Agent để viêt, Agent để tạo ảnh, Agent để review,.. \n• Hỗ trợ làm việc nhóm: Tất nhiên cái này là cần thiết cho một dự án có nhiều người tham gia, họ có thể chỉnh sửa trực tiếp thông qua phân quyền nhưng có lẽ tính năng chỉ có ở bản trả phí.\n• Tìm kiếm và phản hồi trực tiếp: Có thể tìm kiếm thông tin theo thời gian thực và trả lời trực tiếp thông qua Agent Neo.\n• Tạo tri thức tự động thông qua Knowledge Garden: Agent Neo tự động phân tích thông tin và kết nối tài liệu tải lên thành tri thức có thể sử dụng.\n• Quản lý tác vụ linh hoạt: Người dùng có thể điều chỉnh lập kế hoạch theo thời gian thực thậm chỉ có thể can thiệp khi thấy Agent Neo đang thực hiện các bước không theo ý người dùng. \n• Chi phí với các gói \nGói Free có thể dùng miễn phí với 1000 credit / 1 tháng.\nGói Professional (19.9 USD/ 1 tháng) có thể tạo video với 20000 credit /1 tháng.\nGói Ultimate(49.9 USD/ 1 tháng) có thể tạo video với 50000 credit /1 tháng\n ',
+    logoUrl: '/image/Logo flowith.png',
+    link: 'https://www.try.flowith.io',
+    features:  [
+      "Làm việc trên không gian ảo mà vẫn thực hiện đầy đủ các bước.",
+"Có thể thực hiện và lập kế hoạch thực hiện lên tới hơn 1000 bước .",
+      "Đầy đủ các loại ứng dụng của Ai Agent",
+      "• Tự động lập kế hoạch.",
+      "• Tự động phối hợp các Ai Agent.",
+      "• Hỗ trợ làm việc nhóm.",
+      "• Tìm kiếm và phản hồi theo thời gian thực.",
+"• Tạo tri thức tự động qua Knowledge Garden.",
+"• Quản lý tác vụ linh hoạt.",
+    ],
+    userRating: 4.6,
+    ratingCount: 110,
+    isFavorite: false,
+  },
+  {
+    id: 'n8n',
+    name: 'n8n',
+    context: 'Tự động hóa',
+    developer: 'n8n',
+    ranking: 5,
+    description: 'n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau (đã tích hợp được hơn 400 ứng dụng , dịch vụ) để tự động hóa các tác vụ phức tạp thông qua giao diện kéo-thả trực quan, mà không cần hoặc ít cần viết code.\n+ n8n phù hợp cho cả người không chuyên và lập trình viên nhờ những ưu điểm sau :\n• Giao diện kéo thả cực kì trực quan: n8n hoạt động dựa trên kiến trúc node-based, trong đó mỗi node đại diện cho một hành động hoặc ứng dụng cụ thể (ví dụ: gửi email, gọi API, xử lý dữ liệu). Người dùng có thể tạo các workflow logic bằng cách kết nối các node này thành chuỗi quy trình tự động hóa từ đó tiết kiệm thời gian và giảm lỗi.\n• Hỗ trợ nhiều loại code và tùy chỉnh: Người dùng hoàn toàn có thể sử dụng JavaScript hoặc Python để xử lý logic phức tạp. \n• Tích hợp hơn 400 ứng dụng: Người dùng có thể sử dụng hơn 400 dịch vụ và ứng dụng được tích hợp sẵn trên n8n khá là khiêm tốn so với Make và Zapier nhưng đối với những ứng dụng chưa tích hợp chúng ta có thể kết nối bằng node http request và API nên đây không phải vấn đề lớn.\n• Có thể quản lý và kết hợp nhiều AI Agent: Người dùng có thể kết hợp nhiều AI Agent khác nhau trong cùng một workflow hoặc cùng một hệ thống để xử lý quy trình phức tạp. Với mỗi node AI Agent thì người dùng có thể lựa chọn kết nối tới mô hình LLM của OpenAI, Hugging Face, Anthropic Claude còn ở phần tool đặc biệt có thể cung cấp bộ nhớ cho mô hình LLM với kết nối tới nền tảng như MogoDB, Suparbase, Redis,.. đặc biệt là node Think do n8n tự phát triển giúp cung cấp nhiều tầng suy nghĩ cho mô hình LLM từ đó có thể giúp mô hình LLM thông minh hơn 40%. Tất nhiên node AI Agent cũng đã hỗ trợ chuẩn kết nối LLM mới nhất là MCP, A2A,...\n• Tùy chọn triển khai linh hoạt, làm việc nhóm: Người dùng có thể tự host trên máy chủ riêng có thể quản lý, tùy chỉnh toàn bộ dữ liệu của mình hoặc sử dụng phiên bản cloud (thường rất ít người sử dụng vì giá khá cao) và cả 2 cách sử dụng này đều hỗ trợ làm việc nhóm hiệu quả.\n• Quản lý phiên bản và bảo mật: Hỗ trợ Git control, phân quyền RBAC, mã hóa dữ liệu, audit logs, tích hợp SSO/SAML/LDAP.\n• Cộng đồng người dùng, tài nguyên cực lớn: Vì mã nguồn mở và tính tương thích cao cho nên cộng đồng người sử dụng, diễn đàn, tài nguyên trực tuyến cực kì khổng lồ tạo nên hệ sinh thái mạnh mẽ hỗ trợ người dùng.\n• Chi phí: Đối với n8n cloud thì có gói Starter (24 Euro/1 tháng) bao gồm 2.500 lần thực thi workflow và 5 workflow hoạt động cùng lúc và gói Pro (60 Euro/1 tháng) , bao gồm 10.000 lần thực thi workflow và 15 workflow hoạt động.\nĐối với n8n self host thì bạn được miễn phí phần mềm chỉ phải trả chi phí thuê VPS (4-15 USD/1 tháng) tên miền (3-10 USD/1 năm) chi phí vận hành, bảo trì đặc biệt là không bị giới hạn số lần thực thi và workflow hoạt động vì vậy ở Việt Nam có rất ít người sử dụng gói cloud chỉ có người sử dụng không muốn cài đặt gì thì mới sử dụng gói cloud của n8n.\n ',
+    logoUrl: '/image/Logo n8n.png',
+    link: 'https://n8n.io/',
+    features: [
+      "Giao diện kéo thả không hề phức tạp cực kì trực quan giúp tiết kiệm thời gian và giảm lỗi.",
+"Tích hợp hơn 400 ứng dụng khác nhau và có đầy đủ các mô hình LLM .",
+"Có thể quản lý và kết hợp nhiều AI Agent với nhiều tác vụ khác nhau.",
+      "Tùy chọn triển khai linh hoạt vì là mã nguồn mở.",
+      "Quản lý phiên bản và bảo mật dễ dàng.",
+      "Cộng đồng người dùng, tài nguyên khổng lồ.",
+    ],
+    userRating: 4.5,
+    ratingCount: 80,
+  },
+   {
+    id: 'make',
+    name: 'Make',
+    context: 'Tự động hóa',
+    developer: 'Celonis',
+    ranking: 6,
+    description: 'Make.com là nền tảng tự động hóa quy trình làm việc (workflow automation) không cần mã (no-code/low-code), giúp người dùng kết nối và tự động hóa các ứng dụng quen thuộc như CRM, nền tảng lưu trữ đám mây, công cụ marketing, bán hàng… thông qua giao diện kéo-thả trực quan mà không cần kỹ năng lập trình.\n+ Make.com cho phép người dùng xây dựng các kịch bản tự động hóa (scenario) bằng cách kết nối các module đại diện cho từng hành động cụ thể trong quy trình làm việc. Make có những đặc điểm như sau:\n• Giao diện kéo thả trực quan : Giao diện kéo thả kết nối khá trực quan nhưng khó tùy chỉnh sâu như n8n, và đặc biệt có thể nhìn tổng quát không bị như zapier rất khó nhìn tổng quát.\n• Tích hợp hơn 1500 ứng dụng: Tuy vẫn chưa nhiều và phổ biến bằng Zapier nhưng đây vẫn đủ với hầu hết các công cụ hiện nay email, cloud, crm, thương mại điện tử, đầy đủ các dịch vụ AI của OpenAI, Claude AI, Google AI, Microsoft Azure AI. Còn các ứng dụng chưa kết nối trực tiếp thì đã có API và Http Request nên đây không phải vấn đề lớn.\n• Chỉ hỗ trợ JavaScript: Make hiện nay chỉ hỗ trợ code JavaScript để xử lý các logic phức tạp.\n• Có thể thêm AI để xử lý các quy trình làm việc: Hiện nay Make đã hỗ trợ các node AI để gửi và nhận dữ liệu thông qua API đến các nền tảng LLM của Google, Open AI, Claude,... còn về Make AI Agent thì nền tảng này mới triển khai tháng 4-2025 những AI Agent này được xây dựng dựa trên các mô hình ngôn ngữ lớn (LLM) hàng đầu như OpenAI, Claude AI, Google AI và Microsoft Azure AI, cho phép xử lý ngôn ngữ tự nhiên chính xác và linh hoạt. AI Agent trong Make có khả năng phối hợp với các module khác trong workflow để tự động hóa, thực thi các yêu cầu của người dùng.\n• Xử lý lỗi và gỡ lỗi hoặc có thể tạo scenario nhanh chóng với AI Assistant: Make cung cấp lịch sử chạy chi tiết, dữ liệu vào/ra từng module từ đó có thể cung cấp nhanh chóng cách sửa lỗi hoặc tạo mới scenario để xử lý vấn đề từ AI Assistant của Make nằm ở góc phải màn hình. Tuy người dùng vẫn phải sửa lỗi hoặc tạo scenario thủ công nhưng nên sử dụng AI Assistant của Make vì thực sự rất tốt nhưng mới triển khai ở dạng Beta thôi trong khi n8n và Zapier chưa triển khai.\n• Cộng đồng người dùng, tài nguyên cực lớn: Cộng đồng người dùng cũng rất lớn nhưng ý kiến cá nhân so với Zapier, n8n có thể chưa lớn bằng.\n• Chi phí: \nGói Free được dùng miễn phí với giới hạn 1000 lượt chạy / 1 tháng sau 1 tháng reset lại và 2 kịch bản chạy liên tục (active) 5 Mb file size (tức là gửi khoảng 4 bức ảnh lúc trở lên cùng lúc đến server thì make không thể xử lý được)\nGói Core với giá 9 - 11 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 100 Mb file size và không giới hạn kịch bản chạy active đó cũng là lý do người sử dụng n8n cloud có rất ít vì đối với người không biết nhiều về kĩ thuật thì hay dùng make vì có giá rẻ hơn.\nGói Pro với giá 16 - 19 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 250 Mb file size (hoàn toàn có thể xử lý nhiều video ở gói này ) và không giới hạn kịch bản chạy active đặc biệt hỗ trợ biến tùy chỉnh, đầu vào kịch bản, tìm kiếm nhật ký thực thi toàn văn bản.\nGói Teams với giá 29 - 34.12 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 500 Mb file size (hoàn toàn có thể xử lý nhiều video hơn ở gói này ) và không giới hạn kịch bản chạy active gói này có hỗ trợ thêm nhiều nhóm và phân quyền người dùng.\n.\n ',
+    logoUrl: '/image/Logo Make.com.png',
+    link: 'https://www.make.com/',
+    features: [
+      "Giao diện kéo thả trực quan.",
+"Tích hợp hơn 1500 ứng dụng khác nhau và có đầy đủ các mô hình LLM .",
+"AI Agent đã có thể phối hợp với module trong scenario để tự động hóa yêu cầu của người dùng rất tốt nhưng vẫn chưa so sánh được với Agent của n8n.",
+      "Có thể gỡ lỗi sửa lỗi hoặc hướng dẫn tạo scenario với AI Assistant.",
+      "Có gói miễn phí hoàn toàn có thể sử dụng được.",
+      "Cộng đồng người dùng, tài nguyên rất lớn.",
+    ],
+    userRating: 4.3,
+    ratingCount: 75,
+  },
+  {
+    id: 'tavily-ai',
+    name: 'Tavily AI',
+    context: 'API Tìm kiếm',
+    developer: 'Tavily',
+    ranking: 7,
+    description: 'Tavily AI là công cụ tìm kiếm và nghiên cứu hỗ trợ trí tuệ nhân tạo, được thiết kế tối ưu cho các mô hình ngôn ngữ lớn (LLM) và các hệ thống tạo-tái-tìm kiếm (RAG). Tavily cung cấp kết quả tìm kiếm chính xác, cập nhật theo thời gian thực, kèm theo trích dẫn nguồn đáng tin cậy, giúp giảm thiểu sai sót do ảo giác thông tin hoặc dữ liệu lỗi thời.\n+ Tavily có 4 tính năng chính qua API là tìm kiếm (Tavily search) trích xuất (Tavily extract) cào dữ liệu web (Tavily crawl) sơ đồ thông tin (Tavily map) được tổng hợp lại các ưu điểm sau:\n• Tìm kiếm thời gian thực: Kết hợp tìm kiếm web trực tiếp từ nhiều nguồn (Google, Bing, DuckDuckGo, v.v.) để cung cấp dữ liệu mới nhất và nhanh nhất cho các LLM hoặc AI Agen hoặc hệ thống RAG và từ đó tổng hợp lại thông tin tất nhiên là có trích dẫn nguồn để đảm bảo tính minh bạch và chính xác.\n• API của Tavily cực kì thân thiện với LLM và RAG: API của Tavily cực kì thân thiện với LLM giúp Tavily có thể tham gia dễ dàng vào các workflow tự động hóa công việc không giống Perplexity tập trung vào trả lời hỏi đáp với AI dựa trên các dữ liệu tổng hợp và web search.\n• Hỗ trợ cả web crawl và web extract: Người dùng hoàn toàn có thể dựa trên AI để trích xuất nội dung văn bản đơn thuần của web thông qua Tavily crawl hoặc có thể chọn trích xuất nội dung đã được AI xử lý giúp phân biệt và chuẩn hóa tiêu đề, đoạn văn, metadata, bảng biểu, và các phần nội dung có ý nghĩa khác trên trang web thông qua Tavily extract với AI giúp giảm thiểu các công đoạn xử lý dữ liệu trong RAG.\n• Hỗ trợ tạo map cho web: Tavily sẽ trả về danh sách cả url được phát hiện trong website đó giúp người dùng có cái nhìn tổng quan về web đó, nếu ai đã dùng Webflow hoặc Relume hoặc làm SEO thì sẽ hiểu rõ về site map.\n• Hỗ trợ đa dạng nguồn dữ liệu: Ngoài dữ liệu web công khai, Tavily còn tích hợp các nguồn dữ liệu nội bộ riêng tư về tài chính, mã hóa, tin tức, v.v., giúp mở rộng phạm vi thông tin.\n• Chi phí: Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí là 1000 credit / 1 tháng khi hết thì mua thêm là 0.008 USD/1 credit \nGói Project là 30 USD / 1 tháng với  4000 credit / 1 tháng khá là dư dùng.\n',
+    logoUrl: '/image/Logo Tavily.png',
+    link: 'https://tavily.com/',
+    features: [
+      "Tìm kiếm theo thời gian thực từ đó tổng hợp lại thông tin dựa trên AI có trích dẫn nguồn.",
+"API cực kì thân thiện với LLM và RAG giúp Tavily dễ dàng vào các workflow .",
+"Hỗ trợ cả web crawl và web extract và đều dựa trên AI.",
+      "Hỗ trợ tạo map cho web",
+      "Hỗ trợ đa dạng nguồn dữ liệu.",
+      "Gói miễn phí hoàn toàn có thể dùng cho nghiên cứu sinh, sinh viên.",
+    ],
+    userRating: 4.4,
+    ratingCount: 60,
+  },
+  {
+    id: 'stable-diffusion-3-tool',
+    name: 'Stable Diffusion 3',
+    context: 'Tạo hình ảnh',
+    developer: 'Stability AI',
+    ranking: 8,
+    description: 'Stable Diffusion 3 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh.\n+ Stable Diffusion 3 là mã nguồn mở, cho phép tự do tải về, chạy offline và tùy chỉnh ngay trên máy chủ của người dùng luôn.\n+ Stable Diffusion 3 không giống với Midjourney hay Leonardo nó có những đặc điểm đặc biệt dưới đây vì vậy để khai thác tối đa mô hình hoặc tinh chỉnh chi tiết thì người dùng cần biết nhiều kĩ thuật prompt:\n• Stable Diffusion 3 sử dụng kiến trúc Multimodal Diffusion Transformer (MMDiT) với MMDiT là sự kết hợp biểu diễn riêng biệt cho ngôn ngữ và hình ảnh, sử dụng attention và MLP để xử lý tuần tự, giúp mô hình hiểu sâu hơn về nội dung prompt.\n• Tùy chọn kích thước mô hình đa dạng: Từ 800 triệu đến 8 tỷ tham số, phù hợp với nhiều loại phần cứng từ máy tính cá nhân đến GPU doanh nghiệp.\n• Khả năng tùy chỉnh và fine-tuning dễ dàng: Dễ dàng điều chỉnh mô hình với bộ dữ liệu nhỏ để tạo ra các phiên bản chuyên biệt theo nhu cầu.\n• Cải thiện xử lý đa đối tượng (multi-subject prompts): Mô hình hiểu và tái tạo chính xác nhiều đối tượng cùng lúc trong một prompt, giúp tạo ra hình ảnh phức tạp và chi tiết hơn.\n• Cam kết an toàn và trách nhiệm: Stability AI tích hợp nhiều biện pháp bảo vệ để hạn chế việc sử dụng mô hình vào các mục đích xấu, đồng thời hợp tác với cộng đồng và chuyên gia để phát triển bền vững.\n• Có phiên bản miễn phí trên Hugging Face: Chúng ta có thể hoàn toàn kết nối với Stable Diffusion 3 thông qua API của Hugging Face mà không cần cài thêm bất cứ phần mềm nào, cực kì tiện lợi.\n  ',
+    logoUrl: '/image/Logo Stability AI.png',
+    link: 'https://stability.ai/stablediffusion3',
+    features: [
+      "Stable Diffusion 3 là mã nguồn mở nền hoàn toàn có thể tải về chạy offline ngay trên máy chủ của người sử dụng.",
+"Sử dụng kiến trúc MMDiT biểu diễn riêng biệt ngôn ngữ và hình ảnh xử lý tuần tự giúp nền tảng hiểu prompt hơn .",
+"Tùy chọn kích thước mô hình đa dạng.",
+      "Khả năng tùy chỉnh và fine tuning dễ dàng",
+      "Cải thiện xử lý đa đối tượng trong một prompt.",
+      "Kết nối miễn phí qua API của Hugging Face.",
+    ],
+    userRating: 4.6,
+    ratingCount: 140,
+    isFavorite: false,
+  },
+  {
+    id: 'notion-ai',
+    name: 'Notion AI',
+    context: 'Hỗ trợ viết',
+    developer: 'Notion',
+    ranking: 9,
+    description: 'Notion AI không phải là ứng dụng độc lập mà nó hoạt động như trợ lý ảo thông minh được tích hợp ngay trên nền tảng Notion. Nó có khả năng hỗ trợ người dùng trong việc soạn thảo văn bản, tóm tắt nội dung, dịch thuật, tạo dàn ý, và đề xuất ý tưởng sáng tạo. \nNotion AI giúp tối ưu hóa quy trình làm việc cá nhân và nhóm bằng cách tự động hóa các tác vụ lặp đi lặp lại, đồng thời nâng cao chất lượng và tốc độ sản xuất nội dung ngay trên Notion. Với khả năng hiểu ngữ cảnh và cá nhân hóa theo thói quen làm việc, từ đó giúp người dùng làm việc thông minh và hiệu quả hơn.\n• Lên kế hoạch nội dung và tạo nội dung tự động: Người dùng có thể soạn thảo nhanh các văn bản như mô tả sản phẩm, email, bài thuyết trình với yêu cầu đơn giản hoặc chỉ đơn giản viết ra một ý chính rồi Notion AI tự động đưa ra ý tưởng và dàn ý.\n• Tóm tắt và giải thích văn bản: Tính năng này cực kì phù hợp với các bạn học sinh, sinh viên hoặc người làm marketing, Notion AI giúp rút gọn tài liệu dài thành các điểm chính hoặc đoạn văn ngắn dễ hiểu, giải thích các khái niệm phức tạp.\n• Dịch thuật đa ngôn ngữ: Hỗ trợ dịch nội dung sang hơn 10 ngôn ngữ phổ biến như tiếng Anh, Trung, Tây Ban Nha, Hàn, Việt, và Notion AI hoàn toàn có thể viết lại nội dung đó sang tiếng mà người dùng yêu cầu.\n• Tổ chức tài liệu và ghi chú khoa học: Tự động tạo ghi chú, sắp xếp tài liệu theo chủ đề, giúp quản lý kiến ​​thức mạch lạc và dễ truy xuất.\n• Dashboard AI được cá nhân hóa: Theo dõi tiến độ công việc, ưu tiên nhiệm vụ hoặc đồng bộ dữ liệu với các workflow tự động khác để đưa nhắc nhở thông minh cho từng cá nhân dựa trên thói quen và hiệu suất làm việc thực tế.\n• Hỗ trợ làm việc nhóm thông qua AI: Cho phép tự động chia sẻ, bình luận, chỉnh sửa đồng thời trên tài liệu, nâng cao hiệu quả làm việc nhóm.\n• Tìm kiếm và trả lời với AI dựa ngay trên dữ liệu người dùng trực tiếp: Chỉ cần gõ “/**” hoặc nhấn vào nút “Ask AI”, bạn có thể bắt đầu trò chuyện hoặc yêu cầu hỗ trợ từ AI ngay trong trang làm việc.\n\n\n• GIá cả: Notion AI có thể dùng miễn phí với Limited Trial tức là khoảng 20-40 lần sử dụng sau đó phải mua thêm gói Add on Notion AI, nhưng chú ý với đối với những người dùng gói Plus của Notion (10 - 12 USD/1 tháng) thì vẫn chỉ được dùng Limited Trial, người dùng phải nâng cấp lên gói Business (20 -24 USD/1 tháng) hoặc gói Enterprise thì mới được sử dụng Notion AI không giới hạn\n',
+    logoUrl: '/image/Logo Notion AI.png',
+    link: 'https://www.notion.so/product/ai',
+    features: [
+      "Notion AI có thể lên kế hoạch và tạo nội dung tự động.",
+"Tóm tắt và giải thích văn bản tự động .",
+"Tổ chức tài liệu ghi chú khoa học.",
+      "Dashboard AI được cá nhân hóa tự động",
+      "Hỗ trợ làm việc nhóm thông qua AI.",
+      "Tìm kiếm và tương tác với người dùng dựa trên dữ liệu của Notion.",
+    ],
+    userRating: 4.2,
+    ratingCount: 95,
+  },
+];
+
+export const mockNews: NewsArticle[] = [
+  {
+    id: 'chatgpt-free-mobile',
+    title: 'Tất cả các tính năng ChatGPT miễn phí có thể sẽ có trên điện thoại di động',
+    source: 'Tinhte.vn',
+    content: `Theo các nguồn tin đáng tin cậy, OpenAI đang chuẩn bị đưa tất cả các tính năng miễn phí của ChatGPT lên các ứng dụng di động của mình. Điều này bao gồm khả năng truy cập vào mô hình GPT-4o, tải lên tệp và hình ảnh, sử dụng các công cụ tìm kiếm, phân tích dữ liệu và khám phá các GPT tùy chỉnh.
+
+Hiện tại, các tính năng này chỉ có sẵn cho người dùng trả phí trên di động hoặc người dùng miễn phí trên phiên bản web. Việc mở rộng này sẽ mang lại trải nghiệm nhất quán hơn cho tất cả người dùng, bất kể họ sử dụng ChatGPT trên nền tảng nào.
+
+[IMAGE:https://placehold.co/750x420.png|Một tòa nhà văn phòng hiện đại|office building]
+
+Động thái này diễn ra trong bối cảnh cạnh tranh ngày càng gay gắt trong lĩnh vực AI. Google gần đây đã công bố các tính năng AI mới trong tìm kiếm và Microsoft cũng đang tích hợp Copilot sâu hơn vào các sản phẩm của mình. Bằng cách cung cấp các tính năng mạnh mẽ miễn phí trên di động, OpenAI hy vọng sẽ thu hút thêm nhiều người dùng và củng cố vị trí dẫn đầu của mình trên thị trường.
+
+Việc này cũng được cho là một bước đi để chuẩn bị cho việc tích hợp ChatGPT vào các hệ điều hành di động trong tương lai, khi Apple được đồn đoán sẽ công bố quan hệ đối tác với OpenAI tại sự kiện WWDC sắp tới.
+
+[IMAGE:https://placehold.co/750x420.png|Một không gian làm việc văn phòng hợp tác|office interior]
+
+Người dùng di động sẽ sớm có thể tận hưởng các tính năng như:
+- **Phân tích biểu đồ và bảng biểu:** Tải lên và đặt câu hỏi về dữ liệu của bạn.
+- **Hỏi về hình ảnh:** Chụp ảnh và nhận câu trả lời liên quan.
+- **Tải lên tệp:** Nhận bản tóm tắt hoặc câu trả lời từ tài liệu PDF và các tệp khác.
+
+Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu trong mã nguồn ứng dụng cho thấy việc triển khai có thể diễn ra trong vài tuần tới.`,
+    publishedAt: '2025-05-12T08:00:00Z',
+    imageUrl: 'https://placehold.co/800x450.png',
+    link: '#',
+    dataAiHint: 'phone chat'
+  },
+  {
+    id: 'news1',
+    title: 'Claude 3 Opus Giành Vị trí Dẫn đầu trong Đấu trường AI, Vượt qua GPT-4',
+    source: 'Anthropic',
+    content: 'Mô hình mới nhất của Anthropic, Claude 3 Opus, đã chứng minh hiệu suất vượt trội trong các bài kiểm tra khác nhau, có khả năng vượt qua GPT-4 của OpenAI trong các lĩnh vực quan trọng về lý luận và kiến thức.',
+    publishedAt: '2025-06-08T10:00:00Z',
+    imageUrl: 'https://placehold.co/400x225.png',
+    link: '#',
+    dataAiHint: 'AI model'
+  },
+  {
+    id: 'news2',
+    title: 'Tương lai của AI trong Chăm sóc Sức khỏe: Dự đoán cho năm 2025',
+    source: 'Tech Journal',
+    content: 'Các chuyên gia dự đoán AI sẽ cách mạng hóa chẩn đoán, y học cá nhân hóa và khám phá thuốc trong vài năm tới, dẫn đến việc chăm sóc sức khỏe hiệu quả hơn.',
+    publishedAt: '2025-06-07T14:30:00Z',
+    imageUrl: 'https://placehold.co/400x225.png',
+    link: '#',
+    dataAiHint: 'AI healthcare'
+  },
+  {
+    id: 'news3',
+    title: 'AI Đạo đức: Điều hướng các Thách thức về Thiên vị và Minh bạch',
+    source: 'AI Ethics Weekly',
+    content: 'Khi các hệ thống AI ngày càng được tích hợp vào xã hội, việc giải quyết các vấn đề về thiên vị, công bằng và minh bạch là rất quan trọng để phát triển và triển khai có trách nhiệm.',
+    publishedAt: '2025-06-06T09:15:00Z',
+    imageUrl: 'https://placehold.co/400x225.png',
+    link: '#',
+    dataAiHint: 'AI ethics'
+  },
+];

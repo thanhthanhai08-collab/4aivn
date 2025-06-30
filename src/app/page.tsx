@@ -1,29 +1,20 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools, mockNews } from "@/lib/mock-data";
+import { mockTools, mockNews } from "@/lib/mock-tools";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
-import type { Tool } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
-  const [topTools, setTopTools] = useState<Tool[]>([]);
-  const latestNews = mockNews.slice(0, 3); // Show latest 3 news
-
-  useEffect(() => {
-    // Directly use mock data, no localStorage.
-    const sortedTopTools = mockTools
-      .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
-      .slice(0, 4);
-    
-    setTopTools(sortedTopTools);
-  }, []);
+  const latestNews = mockNews.slice(0, 3);
+  const topTools = mockTools
+    .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
+    .slice(0, 4);
 
   return (
     <AppLayout>

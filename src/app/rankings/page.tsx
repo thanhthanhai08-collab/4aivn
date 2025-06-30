@@ -4,7 +4,8 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockTools, mockAIModels } from "@/lib/mock-data";
+import { mockTools } from "@/lib/mock-tools";
+import { mockAIModels } from "@/lib/mock-models";
 import type { AIModel, Tool } from "@/lib/types";
 import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";

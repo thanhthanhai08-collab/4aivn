@@ -5,7 +5,7 @@ import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockTools as initialMockTools } from "@/lib/mock-data";
+import { mockTools as initialMockTools } from "@/lib/mock-tools";
 import type { Tool } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +32,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
   const { toast } = useToast();
 
   useEffect(() => {
-    // Find tool directly from mock-data.ts to ensure it's always up-to-date.
+    // Find tool directly from mock-data to ensure it's always up-to-date.
     const foundTool = initialMockTools.find((t) => t.id === id);
     
     if (foundTool) {
@@ -110,7 +110,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     setCurrentRating(rating);
 
     // Update the local state of the tool for immediate UI feedback.
-    // Note: This average rating will reset on page load as the data source is mock-data.ts
+    // Note: This average rating will reset on page load as the data source is mock-data
     const updatedTool: Tool = {
       ...tool,
       userRating: newAverageRating,

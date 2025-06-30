@@ -6,7 +6,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
-import { mockTools } from "@/lib/mock-data";
+import { mockTools } from "@/lib/mock-tools";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -115,4 +115,3 @@ export default function ToolsPage() {
     </AppLayout>
   );
 }
-

@@ -4,7 +4,7 @@
 
 import type { User } from "@/lib/types";
 import React, { createContext, useState, useContext, useEffect, type ReactNode } from "react";
-import { mockUser } from "@/lib/mock-data";
+import { mockUser } from "@/lib/mock-tools";
 
 interface AuthContextType {
   currentUser: User | null;
