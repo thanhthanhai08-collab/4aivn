@@ -57,10 +57,12 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         
         return modelA.name.localeCompare(modelB.name);
 
-      } else { // Tool sorting: by userRating only, then by name
-        const ratingA = a.userRating ?? -Infinity;
-        const ratingB = b.userRating ?? -Infinity;
-         if (ratingB !== ratingA) return ratingB - ratingA;
+      } else { // Tool sorting: by ranking property
+        const rankA = (a as Tool).ranking ?? Infinity;
+        const rankB = (b as Tool).ranking ?? Infinity;
+        if (rankA !== rankB) {
+            return rankA - rankB;
+        }
         return a.name.localeCompare(b.name);
       }
     });
@@ -97,29 +99,28 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, index) => {
-            let currentSignature: string;
             if (itemType === 'model') {
               const modelItem = item as AIModel;
-              currentSignature = [
+              const currentSignature = [
                 modelItem.intelligenceScore,
                 parseContextLength(modelItem.contextLengthToken),
                 modelItem.pricePerMillionTokens,
                 item.userRating,
               ].join('-');
-            } else {
-              currentSignature = String(item.userRating ?? -Infinity);
-            }
 
-            if (currentSignature !== lastSignature) {
-              denseRank = index + 1;
+              if (currentSignature !== lastSignature) {
+                denseRank = index + 1;
+              }
+              lastSignature = currentSignature;
             }
-            lastSignature = currentSignature;
             
             const averageRating = item.userRating ?? 0;
 
             return (
             <TableRow key={item.id}>
-              <TableCell className="text-center font-medium">{denseRank}</TableCell>
+              <TableCell className="text-center font-medium">
+                {itemType === 'model' ? denseRank : (item as Tool).ranking || '-'}
+              </TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">
                   <Image
