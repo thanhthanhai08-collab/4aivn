@@ -39,7 +39,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const { loginWithEmail, loginWithGoogle } = useAuth();
+  const { loginWithEmail, loginWithGoogle, sendPasswordReset } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -71,6 +71,31 @@ export function LoginForm() {
       setIsGoogleLoading(false);
     }
   };
+  
+  const handlePasswordReset = async () => {
+    if (!email) {
+      toast({
+        title: "Yêu cầu Email",
+        description: "Vui lòng nhập địa chỉ email của bạn để đặt lại mật khẩu.",
+        variant: "destructive",
+      });
+      return;
+    }
+    try {
+      await sendPasswordReset(email);
+      toast({
+        title: "Đã gửi Email đặt lại mật khẩu",
+        description: "Vui lòng kiểm tra hộp thư đến của bạn để làm theo hướng dẫn.",
+      });
+    } catch (error) {
+      console.error("Password reset error:", error);
+      toast({
+        title: "Lỗi",
+        description: (error as Error).message || "Không thể gửi email đặt lại mật khẩu.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -88,7 +113,18 @@ export function LoginForm() {
           />
         </div>
         <div>
-          <Label htmlFor="password">Mật khẩu</Label>
+           <div className="flex items-center justify-between">
+            <Label htmlFor="password">Mật khẩu</Label>
+            <Button
+              type="button"
+              variant="link"
+              className="h-auto p-0 text-sm font-medium"
+              onClick={handlePasswordReset}
+              disabled={isEmailLoading || isGoogleLoading}
+            >
+              Quên mật khẩu?
+            </Button>
+          </div>
           <Input
             id="password"
             type="password"

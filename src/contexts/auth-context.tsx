@@ -11,10 +11,12 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import type { User } from "@/lib/types";
 import { auth } from "@/lib/firebase";
 import React, { createContext, useState, useContext, useEffect, type ReactNode } from "react";
+import { FirebaseError } from "firebase/app";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -24,6 +26,7 @@ interface AuthContextType {
   registerWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserProfile: (data: { displayName: string }) => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -74,13 +77,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Refresh user state to get the latest profile info
     setCurrentUser(prevUser => prevUser ? { ...prevUser, displayName: data.displayName } : null);
   };
+  
+  const sendPasswordReset = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
+  };
 
   const logout = async () => {
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, registerWithEmail, logout, updateUserProfile }}>
+    <AuthContext.Provider value={{ currentUser, isLoading, loginWithGoogle, loginWithEmail, registerWithEmail, logout, updateUserProfile, sendPasswordReset }}>
       {children}
     </AuthContext.Provider>
   );
