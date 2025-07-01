@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { FirebaseError } from "firebase/app";
 
 // Simple SVG for Google icon
 const GoogleIcon = () => (
@@ -52,7 +53,17 @@ export function LoginForm() {
       router.push("/profile");
     } catch (error) {
       console.error("Email login error:", error);
-      toast({ title: "Đăng nhập thất bại", description: (error as Error).message || "Vui lòng kiểm tra thông tin đăng nhập.", variant: "destructive" });
+      let description = "Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.";
+      if (error instanceof FirebaseError) {
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          description = "Email hoặc mật khẩu không chính xác. Vui lòng thử lại.";
+        }
+      }
+      toast({ 
+        title: "Đăng nhập thất bại", 
+        description: description, 
+        variant: "destructive" 
+      });
     } finally {
       setIsEmailLoading(false);
     }
