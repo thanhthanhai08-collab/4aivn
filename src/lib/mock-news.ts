@@ -29,6 +29,16 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'phone chat'
   },
   {
+    id: 'claude-3-opus-tops-ai-arena',
+    title: 'Claude 3 Opus Giành Vị trí Dẫn đầu trong Đấu trường AI, Vượt qua GPT-4',
+    source: 'AI Insights',
+    content: 'Trong một bước tiến đáng kinh ngạc, Claude 3 Opus của Anthropic đã chính thức vượt qua GPT-4 của OpenAI trong một loạt các bài kiểm tra benchmark, khẳng định vị thế dẫn đầu mới trong cuộc đua AI. Mô hình này thể hiện khả năng suy luận, hiểu ngữ cảnh và sáng tạo nội dung ở một tầm cao mới. Các chuyên gia nhận định đây là một cột mốc quan trọng, báo hiệu sự cạnh tranh ngày càng khốc liệt và những đột phá sắp tới trong lĩnh vực trí tuệ nhân tạo.',
+    publishedAt: '2025-06-15T11:00:00Z',
+    imageUrl: 'https://placehold.co/800x450.png',
+    link: '#',
+    dataAiHint: 'AI competition abstract'
+  },
+  {
     id: 'tuong-lai-cua-ai-la-agentic-du-lieu-cua-ban-da-san-sang-chua',
     title: "Tương lai của AI là Agentic: Dữ liệu của bạn đã sẵn sàng chưa?",
     source: "Amperity",
