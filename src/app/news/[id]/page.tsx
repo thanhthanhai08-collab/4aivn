@@ -37,6 +37,13 @@ const renderContent = (content: string) => {
         </div>
       );
     }
+    
+    // If the part looks like HTML, render it directly.
+    // Otherwise, wrap it in a <p> tag for plain text.
+    if (part.trim().startsWith('<')) {
+      return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+    }
+    
     return <p key={index}>{part}</p>;
   });
 };
