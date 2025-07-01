@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { FirebaseError } from "firebase/app";
 
 export function SignupForm() {
   const [email, setEmail] = useState("");
@@ -34,15 +35,25 @@ export function SignupForm() {
       await registerWithEmail(email, password);
       toast({
         title: "Đăng ký Thành công!",
-        description: "Vui lòng kiểm tra email của bạn để hoàn tất quá trình xác minh. (Đây là thông báo mô phỏng, không có email nào được gửi đi trong bản demo này).",
-        duration: 7000, // Longer duration for important message
+        description: "Vui lòng kiểm tra email của bạn để hoàn tất quá trình xác minh.",
+        duration: 7000,
       });
       router.push("/login"); 
     } catch (error) {
       console.error("Email signup error:", error);
+      let description = "Đã có lỗi xảy ra. Vui lòng thử lại.";
+      if (error instanceof FirebaseError) {
+        if (error.code === 'auth/email-already-in-use') {
+          description = "Email này đã được sử dụng. Vui lòng sử dụng một email khác.";
+        } else {
+          description = "Lỗi đăng ký. Vui lòng kiểm tra lại thông tin của bạn.";
+        }
+      } else if (error instanceof Error) {
+        description = error.message;
+      }
       toast({
         title: "Đăng ký thất bại",
-        description: (error as Error).message || "Đã có lỗi xảy ra. Vui lòng thử lại.",
+        description: description,
         variant: "destructive",
       });
     } finally {
