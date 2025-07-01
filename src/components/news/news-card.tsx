@@ -60,6 +60,12 @@ export function NewsCard({ article }: NewsCardProps) {
       toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
     }
   };
+  
+  // Remove HTML and [IMAGE:...] tags for the summary display
+  const descriptionText = article.content
+    .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
+    .replace(/&nbsp;/g, " ")
+    .trim();
 
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden group">
@@ -85,7 +91,7 @@ export function NewsCard({ article }: NewsCardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
-        <CardDescription className="text-sm line-clamp-3">{article.content}</CardDescription>
+        <CardDescription className="text-sm line-clamp-3">{descriptionText}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
         <div className="text-xs text-muted-foreground">
