@@ -112,9 +112,18 @@ export function LoginForm() {
             disabled={isEmailLoading || isGoogleLoading}
           />
         </div>
-        <div>
-           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Mật khẩu</Label>
+        <div className="space-y-2">
+          <Label htmlFor="password">Mật khẩu</Label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={isEmailLoading || isGoogleLoading}
+          />
+          <div className="flex justify-end">
             <Button
               type="button"
               variant="link"
@@ -125,15 +134,6 @@ export function LoginForm() {
               Quên mật khẩu?
             </Button>
           </div>
-          <Input
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={isEmailLoading || isGoogleLoading}
-          />
         </div>
         <Button type="submit" className="w-full" disabled={isEmailLoading || isGoogleLoading}>
           {isEmailLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
