@@ -34,7 +34,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     source: "Amperity",
     content: "Các tác nhân AI hứa hẹn sẽ thay đổi toàn bộ hoạt động doanh nghiệp – nhưng liệu dữ liệu của bạn đã sẵn sàng để theo kịp tốc độ học hỏi và hành động của chúng? Chất lượng dữ liệu là nút thắt thực sự của AI. Bất chấp những tiến bộ trong học máy và kiến trúc AI, chất lượng dữ liệu vẫn là rào cản hàng đầu. Bốn trụ cột của sự sẵn sàng dữ liệu bao gồm: Cơ sở hạ tầng dữ liệu được kết nối, Giải quyết danh tính chính xác, Tính khả dụng trong thời gian thực và Kiến trúc tuân thủ đầu tiên. Các tổ chức nên kiểm toán dữ liệu, đầu tư công nghệ ngữ cảnh hóa, và xây dựng vòng giám sát – để đảm bảo các tác nhân AI thực sự hoạt động hiệu quả.",
     publishedAt: '2025-06-25T10:00:00Z',
-    imageUrl: 'https://placehold.co/400x225.png',
+    imageUrl: '/image/news/Ảnh Tương lai của AI là Agentic.png',
     link: '#',
     dataAiHint: 'AI agent data'
   },
