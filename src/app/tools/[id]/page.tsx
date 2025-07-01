@@ -38,13 +38,15 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     if (foundTool) {
       setTool(foundTool);
       
-      // Load favorite status from localStorage
-      const favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
-      setIsFavorite(favoriteToolIds.includes(id));
-      
-      // Load user-specific rating from localStorage for display
-      const storedRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
-      setCurrentRating(storedRatings[id] || 0);
+      if (currentUser) {
+        // Load favorite status from localStorage
+        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem(`cleanAIFavoriteTools_${currentUser.uid}`) || "[]");
+        setIsFavorite(favoriteToolIds.includes(id));
+        
+        // Load user-specific rating from localStorage for display
+        const storedRatings = JSON.parse(localStorage.getItem(`cleanAIToolRatings_${currentUser.uid}`) || "{}");
+        setCurrentRating(storedRatings[id] || 0);
+      }
 
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
@@ -53,7 +55,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
       }
     }
     setIsLoading(false);
-  }, [id]);
+  }, [id, currentUser]);
 
   const handleFavoriteToggle = () => {
     if (!currentUser) {
@@ -65,7 +67,8 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     setIsFavorite(newFavoriteState);
 
     try {
-        let favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
+        const key = `cleanAIFavoriteTools_${currentUser.uid}`;
+        let favoriteToolIds: string[] = JSON.parse(localStorage.getItem(key) || "[]");
         if (newFavoriteState) {
             if (!favoriteToolIds.includes(id)) {
                 favoriteToolIds.push(id);
@@ -73,7 +76,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
         } else {
             favoriteToolIds = favoriteToolIds.filter(toolId => toolId !== id);
         }
-        localStorage.setItem("cleanAIFavoriteTools", JSON.stringify(favoriteToolIds));
+        localStorage.setItem(key, JSON.stringify(favoriteToolIds));
     } catch (error) {
         console.error("Failed to save favorite status to localStorage", error);
     }
@@ -88,8 +91,10 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     }
     if (!tool) return;
 
+    const key = `cleanAIToolRatings_${currentUser.uid}`;
+
     // Get old rating to see if user is re-rating or rating for the first time
-    const storedUserRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
+    const storedUserRatings = JSON.parse(localStorage.getItem(key) || "{}");
     const oldRatingForTool = storedUserRatings[id] as number | undefined;
 
     let newRatingCount = tool.ratingCount || 0;
@@ -121,7 +126,7 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     // Save/update the specific rating for this user in localStorage
     try {
         storedUserRatings[id] = rating;
-        localStorage.setItem("cleanAIToolRatings", JSON.stringify(storedUserRatings));
+        localStorage.setItem(key, JSON.stringify(storedUserRatings));
     } catch (error) {
         console.error("Failed to save rating to localStorage", error);
     }

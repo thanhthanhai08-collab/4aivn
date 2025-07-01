@@ -1,4 +1,3 @@
-
 // src/app/profile/page.tsx
 "use client";
 
@@ -44,8 +43,13 @@ export default function ProfilePage() {
     if (!isLoading && !currentUser) {
       router.push("/login");
     } else if (currentUser) {
+        const modelRatingsKey = `cleanAIModelRatings_${currentUser.uid}`;
+        const toolRatingsKey = `cleanAIToolRatings_${currentUser.uid}`;
+        const favoriteToolsKey = `cleanAIFavoriteTools_${currentUser.uid}`;
+        const newsBookmarksKey = `cleanAINewsBookmarks_${currentUser.uid}`;
+
         // Load rated models
-        const storedModelRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+        const storedModelRatings = JSON.parse(localStorage.getItem(modelRatingsKey) || "{}");
         const ratedModelIds = Object.keys(storedModelRatings);
         const userRatedModels = mockAIModels
             .filter(model => ratedModelIds.includes(model.id))
@@ -53,7 +57,7 @@ export default function ProfilePage() {
         setRatedModels(userRatedModels);
 
         // Load rated tools
-        const storedToolRatings = JSON.parse(localStorage.getItem("cleanAIToolRatings") || "{}");
+        const storedToolRatings = JSON.parse(localStorage.getItem(toolRatingsKey) || "{}");
         const ratedToolIds = Object.keys(storedToolRatings);
         const userRatedTools = mockTools
             .filter(tool => ratedToolIds.includes(tool.id))
@@ -62,14 +66,14 @@ export default function ProfilePage() {
         setRatedTools(userRatedTools);
 
         // Load favorite tools
-        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem("cleanAIFavoriteTools") || "[]");
+        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem(favoriteToolsKey) || "[]");
         const userFavoriteTools = mockTools
             .filter(tool => favoriteToolIds.includes(tool.id))
             .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
         setFavoriteTools(userFavoriteTools);
         
         // Load bookmarked news
-        const bookmarkedIds: string[] = JSON.parse(localStorage.getItem("cleanAINewsBookmarks") || "[]");
+        const bookmarkedIds: string[] = JSON.parse(localStorage.getItem(newsBookmarksKey) || "[]");
         const userBookmarkedNews = mockNews.filter(article => bookmarkedIds.includes(article.id));
         setBookmarkedNews(userBookmarkedNews);
     }

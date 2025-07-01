@@ -24,10 +24,14 @@ export function NewsCard({ article }: NewsCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
-    // Sync with localStorage on mount and when article.id changes
-    const bookmarkedIds: string[] = JSON.parse(localStorage.getItem("cleanAINewsBookmarks") || "[]");
-    setIsBookmarked(bookmarkedIds.includes(article.id));
-  }, [article.id]);
+    if (currentUser) {
+      // Sync with localStorage on mount and when article.id or user changes
+      const bookmarkedIds: string[] = JSON.parse(localStorage.getItem(`cleanAINewsBookmarks_${currentUser.uid}`) || "[]");
+      setIsBookmarked(bookmarkedIds.includes(article.id));
+    } else {
+      setIsBookmarked(false);
+    }
+  }, [article.id, currentUser]);
 
   const handleBookmarkToggle = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent link navigation which is the default behavior of parent
@@ -42,8 +46,9 @@ export function NewsCard({ article }: NewsCardProps) {
       return;
     }
 
+    const key = `cleanAINewsBookmarks_${currentUser.uid}`;
     // Read the LATEST state from localStorage inside the handler
-    let bookmarkedIds: string[] = JSON.parse(localStorage.getItem("cleanAINewsBookmarks") || "[]");
+    let bookmarkedIds: string[] = JSON.parse(localStorage.getItem(key) || "[]");
     const isCurrentlyBookmarked = bookmarkedIds.includes(article.id);
 
     if (isCurrentlyBookmarked) {
@@ -54,7 +59,7 @@ export function NewsCard({ article }: NewsCardProps) {
       toast({ title: "Đã lưu tin tức thành công" });
     }
 
-    localStorage.setItem("cleanAINewsBookmarks", JSON.stringify(bookmarkedIds));
+    localStorage.setItem(key, JSON.stringify(bookmarkedIds));
     // Update the state to re-render the icon
     setIsBookmarked(!isCurrentlyBookmarked);
   };

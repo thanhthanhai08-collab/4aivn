@@ -39,9 +39,11 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
       setModel(foundModel);
       setIsFavorite(foundModel.isFavorite || false);
       
-      // Load user-specific rating from localStorage
-      const storedRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
-      setCurrentRating(storedRatings[id] || 0);
+      if (currentUser) {
+        // Load user-specific rating from localStorage
+        const storedRatings = JSON.parse(localStorage.getItem(`cleanAIModelRatings_${currentUser.uid}`) || "{}");
+        setCurrentRating(storedRatings[id] || 0);
+      }
 
       if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
         generateAiModelDescription({ 
@@ -55,7 +57,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
       }
     }
     setIsLoading(false);
-  }, [id]);
+  }, [id, currentUser]);
 
   const handleFavoriteToggle = () => {
     if (!currentUser) {
@@ -74,8 +76,10 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     }
     if (!model) return;
 
+    const key = `cleanAIModelRatings_${currentUser.uid}`;
+
     // Get old rating to see if user is re-rating or rating for the first time
-    const storedUserRatings = JSON.parse(localStorage.getItem("cleanAIModelRatings") || "{}");
+    const storedUserRatings = JSON.parse(localStorage.getItem(key) || "{}");
     const oldRatingForModel = storedUserRatings[id] as number | undefined;
 
     let newRatingCount = model.ratingCount || 0;
@@ -107,7 +111,7 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     // Save/update the specific rating for this user in localStorage
     try {
         storedUserRatings[id] = rating;
-        localStorage.setItem("cleanAIModelRatings", JSON.stringify(storedUserRatings));
+        localStorage.setItem(key, JSON.stringify(storedUserRatings));
     } catch (error) {
         console.error("Failed to save rating to localStorage", error);
     }
