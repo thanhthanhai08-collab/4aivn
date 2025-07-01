@@ -27,6 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
+import { getUserProfileData } from "@/lib/user-data-service";
 
 
 export default function ProfilePage() {
@@ -36,6 +37,7 @@ export default function ProfilePage() {
   const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
   const [ratedTools, setRatedTools] = useState<Tool[]>([]);
   const [favoriteTools, setFavoriteTools] = useState<Tool[]>([]);
+  const [favoriteModels, setFavoriteModels] = useState<AIModel[]>([]);
   const [bookmarkedNews, setBookmarkedNews] = useState<NewsArticle[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
@@ -43,41 +45,46 @@ export default function ProfilePage() {
     if (!isLoading && !currentUser) {
       router.push("/login");
     } else if (currentUser) {
-        const modelRatingsKey = `cleanAIModelRatings_${currentUser.uid}`;
-        const toolRatingsKey = `cleanAIToolRatings_${currentUser.uid}`;
-        const favoriteToolsKey = `cleanAIFavoriteTools_${currentUser.uid}`;
-        const newsBookmarksKey = `cleanAINewsBookmarks_${currentUser.uid}`;
+        getUserProfileData(currentUser.uid).then(data => {
+            // Load rated models
+            const ratedModelIds = Object.keys(data.ratedModels || {});
+            const userRatedModels = mockAIModels
+                .filter(model => ratedModelIds.includes(model.id))
+                .map(model => ({ ...model, myRating: data.ratedModels?.[model.id] }));
+            setRatedModels(userRatedModels);
 
-        // Load rated models
-        const storedModelRatings = JSON.parse(localStorage.getItem(modelRatingsKey) || "{}");
-        const ratedModelIds = Object.keys(storedModelRatings);
-        const userRatedModels = mockAIModels
-            .filter(model => ratedModelIds.includes(model.id))
-            .map(model => ({ ...model, myRating: storedModelRatings[model.id] }));
-        setRatedModels(userRatedModels);
+            // Load rated tools
+            const ratedToolIds = Object.keys(data.ratedTools || {});
+            const userRatedTools = mockTools
+                .filter(tool => ratedToolIds.includes(tool.id))
+                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id] }))
+                .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
+            setRatedTools(userRatedTools);
 
-        // Load rated tools
-        const storedToolRatings = JSON.parse(localStorage.getItem(toolRatingsKey) || "{}");
-        const ratedToolIds = Object.keys(storedToolRatings);
-        const userRatedTools = mockTools
-            .filter(tool => ratedToolIds.includes(tool.id))
-            .map(tool => ({ ...tool, myRating: storedToolRatings[tool.id] }))
-            .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
-        setRatedTools(userRatedTools);
+            // Load favorite models
+            const userFavoriteModels = mockAIModels
+              .filter(model => (data.favoriteModels || []).includes(model.id));
+            setFavoriteModels(userFavoriteModels);
 
-        // Load favorite tools
-        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem(favoriteToolsKey) || "[]");
-        const userFavoriteTools = mockTools
-            .filter(tool => favoriteToolIds.includes(tool.id))
-            .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
-        setFavoriteTools(userFavoriteTools);
-        
-        // Load bookmarked news
-        const bookmarkedIds: string[] = JSON.parse(localStorage.getItem(newsBookmarksKey) || "[]");
-        const userBookmarkedNews = mockNews.filter(article => bookmarkedIds.includes(article.id));
-        setBookmarkedNews(userBookmarkedNews);
+            // Load favorite tools
+            const userFavoriteTools = mockTools
+                .filter(tool => (data.favoriteTools || []).includes(tool.id))
+                .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
+            setFavoriteTools(userFavoriteTools);
+            
+            // Load bookmarked news
+            const userBookmarkedNews = mockNews.filter(article => (data.bookmarkedNews || []).includes(article.id));
+            setBookmarkedNews(userBookmarkedNews);
+        }).catch(error => {
+            console.error("Failed to fetch user profile data:", error);
+            toast({
+                title: "Lỗi tải dữ liệu",
+                description: "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
+                variant: "destructive"
+            });
+        });
     }
-  }, [currentUser, isLoading, router]);
+  }, [currentUser, isLoading, router, toast]);
 
   const handleLogout = async () => {
     await logout();
@@ -164,6 +171,19 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <p className="text-muted-foreground">Bạn chưa yêu thích công cụ nào.</p>
+              )}
+            </section>
+
+             <section>
+              <h2 className="text-2xl font-semibold font-headline mb-4">Model AI yêu thích</h2>
+              {favoriteModels.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {favoriteModels.map((model) => (
+                    <ModelCard key={model.id} model={model} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">Bạn chưa yêu thích model AI nào.</p>
               )}
             </section>
 

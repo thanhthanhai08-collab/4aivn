@@ -13,6 +13,7 @@ import { useState, useEffect, type MouseEvent } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -24,16 +25,17 @@ export function NewsCard({ article }: NewsCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
+    // Sync with Firestore on mount and when article.id or user changes
     if (currentUser) {
-      // Sync with localStorage on mount and when article.id or user changes
-      const bookmarkedIds: string[] = JSON.parse(localStorage.getItem(`cleanAINewsBookmarks_${currentUser.uid}`) || "[]");
-      setIsBookmarked(bookmarkedIds.includes(article.id));
+      getUserProfileData(currentUser.uid).then(userData => {
+        setIsBookmarked(userData.bookmarkedNews?.includes(article.id) || false);
+      });
     } else {
       setIsBookmarked(false);
     }
   }, [article.id, currentUser]);
 
-  const handleBookmarkToggle = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleBookmarkToggle = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent link navigation which is the default behavior of parent
     e.stopPropagation();
 
@@ -45,23 +47,18 @@ export function NewsCard({ article }: NewsCardProps) {
       });
       return;
     }
+    
+    const newBookmarkState = !isBookmarked;
+    setIsBookmarked(newBookmarkState); // Optimistic UI update
 
-    const key = `cleanAINewsBookmarks_${currentUser.uid}`;
-    // Read the LATEST state from localStorage inside the handler
-    let bookmarkedIds: string[] = JSON.parse(localStorage.getItem(key) || "[]");
-    const isCurrentlyBookmarked = bookmarkedIds.includes(article.id);
-
-    if (isCurrentlyBookmarked) {
-      bookmarkedIds = bookmarkedIds.filter(id => id !== article.id);
-      toast({ title: "Đã xóa khỏi tin tức đã lưu" });
-    } else {
-      bookmarkedIds.push(article.id);
-      toast({ title: "Đã lưu tin tức thành công" });
+    try {
+      await toggleNewsBookmark(currentUser.uid, article.id, isBookmarked);
+      toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
+    } catch (error) {
+      console.error("Failed to update bookmark:", error);
+      setIsBookmarked(!newBookmarkState); // Revert on error
+      toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
     }
-
-    localStorage.setItem(key, JSON.stringify(bookmarkedIds));
-    // Update the state to re-render the icon
-    setIsBookmarked(!isCurrentlyBookmarked);
   };
 
   return (

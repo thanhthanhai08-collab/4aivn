@@ -16,6 +16,11 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { generateAiToolDescription } from "@/ai/flows/ai-tool-description-generator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import {
+  setToolRating,
+  toggleToolFavorite,
+  getUserProfileData,
+} from "@/lib/user-data-service";
 
 
 export default function ToolDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
@@ -39,13 +44,11 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
       setTool(foundTool);
       
       if (currentUser) {
-        // Load favorite status from localStorage
-        const favoriteToolIds: string[] = JSON.parse(localStorage.getItem(`cleanAIFavoriteTools_${currentUser.uid}`) || "[]");
-        setIsFavorite(favoriteToolIds.includes(id));
-        
-        // Load user-specific rating from localStorage for display
-        const storedRatings = JSON.parse(localStorage.getItem(`cleanAIToolRatings_${currentUser.uid}`) || "{}");
-        setCurrentRating(storedRatings[id] || 0);
+        // Load user-specific data from Firestore
+        getUserProfileData(currentUser.uid).then(userData => {
+          setIsFavorite(userData.favoriteTools?.includes(id) || false);
+          setCurrentRating(userData.ratedTools?.[id] || 0);
+        });
       }
 
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
@@ -57,81 +60,47 @@ export default function ToolDetailPage({ params: paramsAsPromise }: { params: { 
     setIsLoading(false);
   }, [id, currentUser]);
 
-  const handleFavoriteToggle = () => {
+  const handleFavoriteToggle = async () => {
     if (!currentUser) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
     
     const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState);
+    setIsFavorite(newFavoriteState); // Optimistic UI update
 
     try {
-        const key = `cleanAIFavoriteTools_${currentUser.uid}`;
-        let favoriteToolIds: string[] = JSON.parse(localStorage.getItem(key) || "[]");
-        if (newFavoriteState) {
-            if (!favoriteToolIds.includes(id)) {
-                favoriteToolIds.push(id);
-            }
-        } else {
-            favoriteToolIds = favoriteToolIds.filter(toolId => toolId !== id);
-        }
-        localStorage.setItem(key, JSON.stringify(favoriteToolIds));
+        await toggleToolFavorite(currentUser.uid, id, isFavorite);
+        toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
     } catch (error) {
-        console.error("Failed to save favorite status to localStorage", error);
+        console.error("Failed to update favorite status:", error);
+        setIsFavorite(!newFavoriteState); // Revert on error
+        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
     }
-
-    toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
   };
 
-  const handleRating = (rating: number) => {
-     if (!currentUser) {
+  const handleRating = async (rating: number) => {
+    if (!currentUser || !tool) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
       return;
     }
-    if (!tool) return;
 
-    const key = `cleanAIToolRatings_${currentUser.uid}`;
+    const oldRating = currentRating;
+    setCurrentRating(rating); // Optimistic UI update
 
-    // Get old rating to see if user is re-rating or rating for the first time
-    const storedUserRatings = JSON.parse(localStorage.getItem(key) || "{}");
-    const oldRatingForTool = storedUserRatings[id] as number | undefined;
-
-    let newRatingCount = tool.ratingCount || 0;
-    const currentTotalRatingPoints = (tool.userRating || 0) * newRatingCount;
-    let newTotalRatingPoints;
-
-    if (oldRatingForTool !== undefined) {
-      // User is changing their rating
-      newTotalRatingPoints = currentTotalRatingPoints - oldRatingForTool + rating;
-    } else {
-      // User is rating for the first time
-      newTotalRatingPoints = currentTotalRatingPoints + rating;
-      newRatingCount += 1;
-    }
-    
-    const newAverageRating = newRatingCount > 0 ? newTotalRatingPoints / newRatingCount : 0;
-
-    setCurrentRating(rating);
-
-    // Update the local state of the tool for immediate UI feedback.
-    // Note: This average rating will reset on page load as the data source is mock-data
-    const updatedTool: Tool = {
-      ...tool,
-      userRating: newAverageRating,
-      ratingCount: newRatingCount,
-    };
-    setTool(updatedTool);
-    
-    // Save/update the specific rating for this user in localStorage
     try {
-        storedUserRatings[id] = rating;
-        localStorage.setItem(key, JSON.stringify(storedUserRatings));
-    } catch (error) {
-        console.error("Failed to save rating to localStorage", error);
-    }
+      await setToolRating(currentUser.uid, tool.id, rating);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${rating} sao.` });
 
-    toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool?.name} ${rating} sao.` });
+      // Note: We no longer update the average rating in the mock data.
+      // This would require a more complex backend setup (e.g., Cloud Functions)
+      // to calculate and store averages. The current scope is user-specific data.
+
+    } catch(error) {
+      console.error("Failed to save rating:", error);
+      setCurrentRating(oldRating); // Revert UI on error
+      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
+    }
   };
 
 

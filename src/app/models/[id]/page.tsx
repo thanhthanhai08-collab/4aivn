@@ -16,6 +16,11 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { generateAiModelDescription } from "@/ai/flows/ai-model-description-generator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import {
+  setModelRating,
+  toggleModelFavorite,
+  getUserProfileData,
+} from "@/lib/user-data-service";
 
 
 export default function ModelDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
@@ -37,12 +42,13 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     
     if (foundModel) {
       setModel(foundModel);
-      setIsFavorite(foundModel.isFavorite || false);
       
       if (currentUser) {
-        // Load user-specific rating from localStorage
-        const storedRatings = JSON.parse(localStorage.getItem(`cleanAIModelRatings_${currentUser.uid}`) || "{}");
-        setCurrentRating(storedRatings[id] || 0);
+        // Load user-specific data from Firestore
+        getUserProfileData(currentUser.uid).then(userData => {
+          setIsFavorite(userData.favoriteModels?.includes(id) || false);
+          setCurrentRating(userData.ratedModels?.[id] || 0);
+        });
       }
 
       if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
@@ -59,64 +65,41 @@ export default function ModelDetailPage({ params: paramsAsPromise }: { params: {
     setIsLoading(false);
   }, [id, currentUser]);
 
-  const handleFavoriteToggle = () => {
+  const handleFavoriteToggle = async () => {
     if (!currentUser) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
-    setIsFavorite(!isFavorite);
-    // Backend update would go here
-    toast({ title: isFavorite ? "Đã xóa khỏi Yêu thích" : "Đã thêm vào Yêu thích" });
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState); // Optimistic UI update
+
+    try {
+        await toggleModelFavorite(currentUser.uid, id, isFavorite);
+        toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
+    } catch (error) {
+        console.error("Failed to update favorite status:", error);
+        setIsFavorite(!newFavoriteState); // Revert on error
+        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+    }
   };
 
-  const handleRating = (rating: number) => {
-     if (!currentUser) {
+  const handleRating = async (rating: number) => {
+    if (!currentUser || !model) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá model.", variant: "destructive" });
       return;
     }
-    if (!model) return;
 
-    const key = `cleanAIModelRatings_${currentUser.uid}`;
+    const oldRating = currentRating;
+    setCurrentRating(rating); // Optimistic UI update
 
-    // Get old rating to see if user is re-rating or rating for the first time
-    const storedUserRatings = JSON.parse(localStorage.getItem(key) || "{}");
-    const oldRatingForModel = storedUserRatings[id] as number | undefined;
-
-    let newRatingCount = model.ratingCount || 0;
-    const currentTotalRatingPoints = (model.userRating || 0) * newRatingCount;
-    let newTotalRatingPoints;
-
-    if (oldRatingForModel !== undefined) {
-      // User is changing their rating
-      newTotalRatingPoints = currentTotalRatingPoints - oldRatingForModel + rating;
-    } else {
-      // User is rating for the first time
-      newTotalRatingPoints = currentTotalRatingPoints + rating;
-      newRatingCount += 1;
-    }
-    
-    const newAverageRating = newRatingCount > 0 ? newTotalRatingPoints / newRatingCount : 0;
-
-    setCurrentRating(rating);
-
-    // Update the local state of the model for immediate UI feedback.
-    // Note: This average rating will reset on page load as the data source is mock-data
-    const updatedModel: AIModel = {
-      ...model,
-      userRating: newAverageRating,
-      ratingCount: newRatingCount,
-    };
-    setModel(updatedModel);
-    
-    // Save/update the specific rating for this user in localStorage
     try {
-        storedUserRatings[id] = rating;
-        localStorage.setItem(key, JSON.stringify(storedUserRatings));
-    } catch (error) {
-        console.error("Failed to save rating to localStorage", error);
+      await setModelRating(currentUser.uid, model.id, rating);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
+    } catch(error) {
+        console.error("Failed to save rating:", error);
+        setCurrentRating(oldRating); // Revert on error
+        toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
-
-    toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model?.name} ${rating} sao.` });
   };
 
 
