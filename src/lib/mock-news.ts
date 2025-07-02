@@ -88,13 +88,41 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
   },
   {
     id: 'news2',
-    title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng (Community Notes)',
-    source: 'Tech Journal',
-    content: 'Các chuyên gia dự đoán AI sẽ cách mạng hóa chẩn đoán, y học cá nhân hóa và khám phá thuốc trong vài năm tới, dẫn đến việc chăm sóc sức khỏe hiệu quả hơn.',
-    publishedAt: '2025-06-07T14:30:00Z',
-    imageUrl: 'https://placehold.co/400x225.png',
-    link: '#',
-    dataAiHint: 'AI healthcare'
+    title: 'X thử nghiệm tính năng để chatbot AI viết ghi chú cộng đồng (Community Notes)',
+    source: 'techcrunch',
+    content: `<h1>X thử nghiệm tính năng để chatbot AI viết Ghi chú cộng đồng (Community Notes)</h1>
+
+  <p>Nền tảng mạng xã hội <strong>X</strong> (trước đây là Twitter) vừa bắt đầu <strong>thử nghiệm tính năng cho phép chatbot AI</strong> tham gia viết <strong>Ghi chú cộng đồng (Community Notes)</strong> – một sáng kiến kiểm chứng thông tin do người dùng đóng góp.</p>
+
+  <h2>Ghi chú cộng đồng là gì?</h2>
+  <p><strong>Community Notes</strong> là một tính năng ra đời từ thời Twitter, được Elon Musk mở rộng sau khi tiếp quản. Người dùng trong chương trình này có thể thêm ghi chú giải thích, bổ sung thông tin cho các bài viết có khả năng gây hiểu lầm.</p>
+  <p>Những ghi chú này sẽ chỉ hiển thị nếu đạt được <strong>sự đồng thuận giữa nhiều nhóm người dùng từng bất đồng</strong> trong các đánh giá trước đó.</p>
+
+  <h2>Vai trò của AI trong Community Notes</h2>
+  <p>X sẽ cho phép các chatbot AI như <strong>Grok</strong> hoặc các AI từ bên thứ ba thông qua API viết các ghi chú. Các ghi chú này sẽ được xử lý như ghi chú do người thật viết – tức là trải qua quy trình kiểm duyệt nghiêm ngặt.</p>
+
+  <p><strong>Tuy nhiên, việc dùng AI để kiểm chứng thông tin cũng gây tranh cãi</strong> do AI có thể tạo ra thông tin sai lệch (hallucination). Vì vậy, theo một nghiên cứu mới từ đội ngũ Community Notes, việc kết hợp giữa AI và con người là cần thiết.</p>
+
+  <blockquote>
+    <p>“Mục tiêu không phải là để AI nói người dùng phải nghĩ gì, mà là xây dựng một hệ sinh thái giúp con người tư duy phản biện và hiểu rõ thế giới hơn.”</p>
+  </blockquote>
+
+  <h2>Lợi ích và lo ngại khi dùng AI viết ghi chú</h2>
+  <ul>
+    <li><strong>Lợi ích:</strong> Tăng tốc độ viết ghi chú, xử lý lượng lớn bài đăng nhanh chóng.</li>
+    <li><strong>Rủi ro:</strong> AI có thể đưa ra ghi chú sai sự thật nếu đặt tính “hữu ích” cao hơn độ chính xác.</li>
+    <li><strong>Khả năng quá tải:</strong> Người kiểm duyệt là tình nguyện viên có thể bị quá tải bởi số lượng ghi chú AI tạo ra.</li>
+    <li><strong>Vấn đề chất lượng:</strong> Một số LLM như ChatGPT từng gặp lỗi “quá nịnh” thay vì đưa ra phản biện.</li>
+  </ul>
+
+  <h2>Chưa triển khai chính thức</h2>
+  <p>Hiện tại, người dùng vẫn chưa thể thấy các <strong>ghi chú AI tạo ra</strong> được hiển thị. X cho biết họ sẽ <strong>thử nghiệm trong vài tuần</strong> trước khi quyết định triển khai rộng rãi nếu kết quả tích cực.</p>
+
+  <p><em>Tính năng mới này đánh dấu một bước đi táo bạo trong việc kết hợp trí tuệ nhân tạo và cộng đồng người dùng nhằm nâng cao tính minh bạch và độ tin cậy của mạng xã hội.</em></p>`,
+    publishedAt: '2025-07-01T09:00:00Z',
+    imageUrl: 'https://placehold.co/800x450.png',
+    link: 'https://techcrunch.com/2025/07/01/x-is-piloting-a-program-that-lets-ai-chatbots-generate-community-notes',
+    dataAiHint: 'social media AI'
   },
   {
     id: 'news3',
