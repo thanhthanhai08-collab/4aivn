@@ -88,8 +88,8 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
   },
   {
     id: 'news2',
-    title: 'X thử nghiệm tính năng để chatbot AI viết ghi chú cộng đồng (Community Notes)',
-    source: 'techcrunch',
+    title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng (Community Notes)',
+    source: 'Nam',
     content: `<h1>X thử nghiệm tính năng để chatbot AI viết Ghi chú cộng đồng (Community Notes)</h1>
 
   <p>Nền tảng mạng xã hội <strong>X</strong> (trước đây là Twitter) vừa bắt đầu <strong>thử nghiệm tính năng cho phép chatbot AI</strong> tham gia viết <strong>Ghi chú cộng đồng (Community Notes)</strong> – một sáng kiến kiểm chứng thông tin do người dùng đóng góp.</p>
