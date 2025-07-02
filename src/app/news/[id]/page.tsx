@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare } from "lucide-react";
 import { mockNews } from "@/lib/mock-news";
-import type { NewsArticle } from "@/lib/types";
+import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +16,11 @@ import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
 import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
 import { NewsCard } from "@/components/news/news-card";
+import { useAuth } from "@/contexts/auth-context";
+import { getComments } from "@/lib/comments-service";
+import { CommentForm } from "@/components/news/comment-form";
+import { CommentList } from "@/components/news/comment-list";
+import { Separator } from "@/components/ui/separator";
 
 const renderContent = (content: string) => {
   const contentParts = content.split(/(\[IMAGE:.*?\])/g).filter(part => part.trim() !== '');
@@ -38,8 +43,6 @@ const renderContent = (content: string) => {
       );
     }
     
-    // If the part looks like HTML, render it directly.
-    // Otherwise, wrap it in a <p> tag for plain text.
     if (part.trim().startsWith('<')) {
       return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
     }
@@ -52,10 +55,12 @@ const renderContent = (content: string) => {
 export default function NewsDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
   const params = use(paramsAsPromise); 
   const { id } = params;
+  const { currentUser } = useAuth();
 
   const [article, setArticle] = useState<NewsArticle | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [summary, setSummary] = useState<string | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     const foundArticle = mockNews.find((a) => a.id === id);
@@ -68,6 +73,14 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
       }
     }
     setIsLoading(false);
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    const unsubscribe = getComments(id, (fetchedComments) => {
+      setComments(fetchedComments);
+    });
+    return () => unsubscribe();
   }, [id]);
 
   if (isLoading) {
@@ -161,15 +174,23 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
               </footer>
             </article>
 
-            {/* Comments Section Placeholder */}
-             <Card className="mt-12">
+            {/* Comments Section */}
+            <Card className="mt-12">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <MessageSquare className="mr-2 h-5 w-5" /> Thảo luận
+                <CardTitle className="flex items-center text-2xl font-headline">
+                  <MessageSquare className="mr-3 h-6 w-6" /> Thảo luận ({comments.length})
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Phần bình luận đang được xây dựng. Vui lòng quay lại sau.</p>
+              <CardContent className="space-y-6">
+                {currentUser ? (
+                  <CommentForm articleId={id} />
+                ) : (
+                  <div className="text-center text-sm text-muted-foreground bg-muted/50 p-4 rounded-md">
+                    <Link href="/login" className="font-semibold text-primary hover:underline">Đăng nhập</Link> để tham gia thảo luận.
+                  </div>
+                )}
+                <Separator />
+                <CommentList comments={comments} />
               </CardContent>
             </Card>
           </div>

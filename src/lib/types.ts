@@ -62,3 +62,13 @@ export interface AIModel {
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
 }
+
+export interface Comment {
+  id: string;
+  articleId: string;
+  userId: string;
+  userName: string | null;
+  userPhotoURL: string | null;
+  text: string;
+  createdAt: Date;
+}
