@@ -95,7 +95,7 @@ export function NewsCard({ article }: NewsCardProps) {
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
         <div className="text-xs text-muted-foreground">
-          <p>{article.author ? `${article.author} · ${article.source}` : article.source}</p>
+          <p>{article.author || article.source}</p>
           <div className="flex items-center">
             <CalendarDays className="h-3 w-3 mr-1" />
             {format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}
