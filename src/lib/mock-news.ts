@@ -25,7 +25,6 @@ Người dùng di động sẽ sớm có thể tận hưởng các tính năng n
 Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu trong mã nguồn ứng dụng cho thấy việc triển khai có thể diễn ra trong vài tuần tới.`,
     publishedAt: '2025-05-12T08:00:00Z',
     imageUrl: 'https://placehold.co/800x450.png',
-    link: '#',
     dataAiHint: 'phone chat'
   },
   {
@@ -35,7 +34,6 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     content: 'Trong một bước tiến đáng kinh ngạc, Claude 3 Opus của Anthropic đã chính thức vượt qua GPT-4 của OpenAI trong một loạt các bài kiểm tra benchmark, khẳng định vị thế dẫn đầu mới trong cuộc đua AI. Mô hình này thể hiện khả năng suy luận, hiểu ngữ cảnh và sáng tạo nội dung ở một tầm cao mới. Các chuyên gia nhận định đây là một cột mốc quan trọng, báo hiệu sự cạnh tranh ngày càng khốc liệt và những đột phá sắp tới trong lĩnh vực trí tuệ nhân tạo.',
     publishedAt: '2025-06-15T11:00:00Z',
     imageUrl: 'https://placehold.co/800x450.png',
-    link: '#',
     dataAiHint: 'AI competition abstract'
   },
   {
@@ -83,13 +81,13 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
   <p>Các tác nhân AI đang thay đổi doanh nghiệp trên nhiều ngành. Nhưng thành công của chúng phụ thuộc vào độ tin cậy, đầy đủ và tính kịp thời của dữ liệu. Nếu dữ liệu chưa sẵn sàng, tác nhân của bạn cũng sẽ không sẵn sàng.</p>`,
     publishedAt: '2025-06-25T10:00:00Z',
     imageUrl: '/image/news/Ảnh Tương lai của AI là Agentic.png',
-    link: '#',
     dataAiHint: 'AI agent data'
   },
   {
     id: 'news2',
-    title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng (Community Notes)',
-    source: 'Nam',
+    title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng',
+    author: 'Nam',
+    source: 'techcrunch',
     content: `<h1>X thử nghiệm tính năng để chatbot AI viết Ghi chú cộng đồng (Community Notes)</h1>
 
   <p>Nền tảng mạng xã hội <strong>X</strong> (trước đây là Twitter) vừa bắt đầu <strong>thử nghiệm tính năng cho phép chatbot AI</strong> tham gia viết <strong>Ghi chú cộng đồng (Community Notes)</strong> – một sáng kiến kiểm chứng thông tin do người dùng đóng góp.</p>
@@ -131,7 +129,6 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     content: 'Khi các hệ thống AI ngày càng được tích hợp vào xã hội, việc giải quyết các vấn đề về thiên vị, công bằng và minh bạch là rất quan trọng để phát triển và triển khai có trách nhiệm.',
     publishedAt: '2025-06-06T09:15:00Z',
     imageUrl: 'https://placehold.co/400x225.png',
-    link: '#',
     dataAiHint: 'AI ethics'
   },
 ];

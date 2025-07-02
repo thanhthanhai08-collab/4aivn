@@ -4,7 +4,7 @@
 import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CalendarDays, Globe, MessageSquare } from "lucide-react";
+import { ArrowLeft, CalendarDays, Globe, MessageSquare, User } from "lucide-react";
 import { mockNews } from "@/lib/mock-news";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -137,6 +137,12 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                    <Badge variant="secondary">{article.source}</Badge>
+                    {article.author && (
+                      <div className="flex items-center">
+                        <User className="mr-1.5 h-4 w-4" />
+                        <span>{article.author}</span>
+                      </div>
+                    )}
                    <div className="flex items-center">
                      <CalendarDays className="mr-2 h-4 w-4" />
                      <span>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
@@ -171,13 +177,17 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
                 {renderContent(article.content)}
               </div>
 
-              <footer className="mt-12 pt-6 border-t flex items-center space-x-1">
-                  <p className="text-sm text-muted-foreground">Nguồn</p>
-                  <Button asChild variant="link" className="p-0 h-auto text-base">
-                    <a href={article.link} target="_blank" rel="noopener noreferrer">
-                        {article.source} <Globe className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
+              <footer className="mt-12 pt-6 border-t">
+                  {article.link && (
+                    <div className="flex items-center space-x-1">
+                      <p className="text-sm text-muted-foreground">Nguồn:</p>
+                      <Button asChild variant="link" className="p-0 h-auto text-base">
+                        <a href={article.link} target="_blank" rel="noopener noreferrer">
+                            {article.source} <Globe className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  )}
               </footer>
             </article>
 

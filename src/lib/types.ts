@@ -19,10 +19,11 @@ export interface NewsArticle {
   id: string;
   title: string;
   source: string; // Publisher or source name
+  author?: string;
   content: string; // Full content or summary
   publishedAt: string; // ISO date string
   imageUrl: string;
-  link: string; // Link to the full article if 'content' is a summary
+  link?: string;
   dataAiHint?: string;
   isBookmarked?: boolean;
 }
