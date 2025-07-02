@@ -78,10 +78,17 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
   useEffect(() => {
     if (!id) return;
     const unsubscribe = getComments(id, (fetchedComments) => {
+      // When real-time data arrives, it becomes the source of truth,
+      // automatically replacing any optimistic updates.
       setComments(fetchedComments);
     });
     return () => unsubscribe();
   }, [id]);
+
+  const handleCommentAdded = (newComment: Comment) => {
+    // Optimistically add the new comment to the list for instant UI feedback.
+    setComments(prevComments => [newComment, ...prevComments]);
+  };
 
   if (isLoading) {
     return (
@@ -183,7 +190,7 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
               </CardHeader>
               <CardContent className="space-y-6">
                 {currentUser ? (
-                  <CommentForm articleId={id} />
+                  <CommentForm articleId={id} onCommentAdded={handleCommentAdded} />
                 ) : (
                   <div className="text-center text-sm text-muted-foreground bg-muted/50 p-4 rounded-md">
                     <Link href="/login" className="font-semibold text-primary hover:underline">Đăng nhập</Link> để tham gia thảo luận.

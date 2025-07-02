@@ -9,12 +9,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import type { Comment } from "@/lib/types";
 
 interface CommentFormProps {
   articleId: string;
+  onCommentAdded: (comment: Comment) => void;
 }
 
-export function CommentForm({ articleId }: CommentFormProps) {
+export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
   const { currentUser } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,13 +36,29 @@ export function CommentForm({ articleId }: CommentFormProps) {
     if (!currentUser || !commentText.trim()) return;
 
     setIsSubmitting(true);
+    const trimmedText = commentText.trim();
+
+    // Optimistic update: create a temporary comment to show in the UI immediately
+    const optimisticComment: Comment = {
+      id: `optimistic-${Date.now()}`, // Temporary ID
+      articleId,
+      userId: currentUser.uid,
+      userName: currentUser.displayName,
+      userPhotoURL: currentUser.photoURL,
+      text: trimmedText,
+      createdAt: new Date(), // Use client-side date for immediate display
+    };
+
+    // Update the parent component's state
+    onCommentAdded(optimisticComment);
+    
+    // Clear the textarea after adding the comment to the UI
+    setCommentText("");
+
     try {
-      await addComment(articleId, currentUser, commentText);
-      setCommentText(""); // Clear textarea on success
-      toast({
-        title: "Thành công",
-        description: "Bình luận của bạn đã được đăng.",
-      });
+      // Perform the actual server action in the background
+      await addComment(articleId, currentUser, trimmedText);
+      // Success is handled by the real-time listener updating the comment list.
     } catch (error) {
       console.error("Error adding comment:", error);
       toast({
@@ -48,6 +66,7 @@ export function CommentForm({ articleId }: CommentFormProps) {
         description: "Không thể đăng bình luận. Vui lòng thử lại.",
         variant: "destructive",
       });
+      // A more advanced implementation might remove the optimistic comment on error.
     } finally {
       setIsSubmitting(false);
     }
