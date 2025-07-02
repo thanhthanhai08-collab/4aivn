@@ -84,7 +84,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'AI agent data'
   },
   {
-    id: 'news2',
+    id: 'x-community-notes-ai-test',
     title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng',
     author: 'Nam',
     source: 'techcrunch',
@@ -118,7 +118,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
 
   <p><em>Tính năng mới này đánh dấu một bước đi táo bạo trong việc kết hợp trí tuệ nhân tạo và cộng đồng người dùng nhằm nâng cao tính minh bạch và độ tin cậy của mạng xã hội.</em></p>`,
     publishedAt: '2025-07-01T09:00:00Z',
-    imageUrl: 'https://placehold.co/800x450.png',
+    imageUrl: '/image/news/X thử nghiệm tính năng ghi chú cộng đồng.png',
     link: 'https://techcrunch.com/2025/07/01/x-is-piloting-a-program-that-lets-ai-chatbots-generate-community-notes',
     dataAiHint: 'social media AI'
   },
