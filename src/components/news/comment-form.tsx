@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/auth-context";
-import { addComment } from "@/lib/comments-service";
+import { addComment } from "@/lib/comments-actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";

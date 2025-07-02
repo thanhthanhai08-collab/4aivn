@@ -1,41 +1,18 @@
 // src/lib/comments-service.ts
-'use server';
 
 import { db } from "@/lib/firebase";
-import type { User } from "@/lib/types";
 import {
   collection,
-  addDoc,
   query,
   where,
   orderBy,
   onSnapshot,
-  serverTimestamp,
   type Unsubscribe,
   type DocumentData,
 } from "firebase/firestore";
 import type { Comment } from "./types";
 
 const COMMENTS_COLLECTION = "comments";
-
-// Add a new comment to an article
-export async function addComment(articleId: string, user: User, text: string): Promise<void> {
-  if (!user) {
-    throw new Error("User must be logged in to comment.");
-  }
-  if (!text.trim()) {
-    throw new Error("Comment cannot be empty.");
-  }
-
-  await addDoc(collection(db, COMMENTS_COLLECTION), {
-    articleId: articleId,
-    userId: user.uid,
-    userName: user.displayName,
-    userPhotoURL: user.photoURL,
-    text: text,
-    createdAt: serverTimestamp(),
-  });
-}
 
 // Get real-time comments for an article
 export function getComments(articleId: string, callback: (comments: Comment[]) => void): Unsubscribe {
