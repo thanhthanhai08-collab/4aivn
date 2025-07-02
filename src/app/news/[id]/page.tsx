@@ -136,7 +136,6 @@ export default function NewsDetailPage({ params: paramsAsPromise }: { params: { 
                 </Button>
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                   <Badge variant="secondary">{article.source}</Badge>
                     {article.author && (
                       <div className="flex items-center">
                         <User className="mr-1.5 h-4 w-4" />
