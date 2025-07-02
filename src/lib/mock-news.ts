@@ -88,7 +88,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
   },
   {
     id: 'news2',
-    title: 'Tương lai của AI trong Chăm sóc Sức khỏe: Dự đoán cho năm 2025',
+    title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các Ghi chú Cộng đồng (Community Notes)',
     source: 'Tech Journal',
     content: 'Các chuyên gia dự đoán AI sẽ cách mạng hóa chẩn đoán, y học cá nhân hóa và khám phá thuốc trong vài năm tới, dẫn đến việc chăm sóc sức khỏe hiệu quả hơn.',
     publishedAt: '2025-06-07T14:30:00Z',
