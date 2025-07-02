@@ -5,7 +5,6 @@ import {
   collection,
   query,
   where,
-  orderBy,
   onSnapshot,
   type Unsubscribe,
   type DocumentData,
@@ -18,8 +17,7 @@ const COMMENTS_COLLECTION = "comments";
 export function getComments(articleId: string, callback: (comments: Comment[]) => void): Unsubscribe {
   const q = query(
     collection(db, COMMENTS_COLLECTION),
-    where("articleId", "==", articleId),
-    orderBy("createdAt", "desc")
+    where("articleId", "==", articleId)
   );
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -36,7 +34,13 @@ export function getComments(articleId: string, callback: (comments: Comment[]) =
         createdAt: data.createdAt?.toDate() || new Date(), // Convert Firestore Timestamp to Date
       });
     });
-    callback(comments);
+    
+    // Sort comments by creation date on the client-side, newest first.
+    const sortedComments = comments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    
+    callback(sortedComments);
+  }, (error) => {
+    console.error("Error fetching comments: ", error);
   });
 
   return unsubscribe;
