@@ -5,6 +5,7 @@ export const mockNews: NewsArticle[] = [
     id: 'chatgpt-free-mobile',
     title: 'Tất cả các tính năng ChatGPT miễn phí có thể sẽ có trên điện thoại di động',
     source: 'Tinhte.vn',
+    author: undefined,
     content: `Theo các nguồn tin đáng tin cậy, OpenAI đang chuẩn bị đưa tất cả các tính năng miễn phí của ChatGPT lên các ứng dụng di động của mình. Điều này bao gồm khả năng truy cập vào mô hình GPT-4o, tải lên tệp và hình ảnh, sử dụng các công cụ tìm kiếm, phân tích dữ liệu và khám phá các GPT tùy chỉnh.
 
 Hiện tại, các tính năng này chỉ có sẵn cho người dùng trả phí trên di động hoặc người dùng miễn phí trên phiên bản web. Việc mở rộng này sẽ mang lại trải nghiệm nhất quán hơn cho tất cả người dùng, bất kể họ sử dụng ChatGPT trên nền tảng nào.
@@ -31,6 +32,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     id: 'claude-3-opus-tops-ai-arena',
     title: 'Claude 3 Opus Giành Vị trí Dẫn đầu trong Đấu trường AI, Vượt qua GPT-4',
     source: 'AI Insights',
+    author: undefined,
     content: 'Trong một bước tiến đáng kinh ngạc, Claude 3 Opus của Anthropic đã chính thức vượt qua GPT-4 của OpenAI trong một loạt các bài kiểm tra benchmark, khẳng định vị thế dẫn đầu mới trong cuộc đua AI. Mô hình này thể hiện khả năng suy luận, hiểu ngữ cảnh và sáng tạo nội dung ở một tầm cao mới. Các chuyên gia nhận định đây là một cột mốc quan trọng, báo hiệu sự cạnh tranh ngày càng khốc liệt và những đột phá sắp tới trong lĩnh vực trí tuệ nhân tạo.',
     publishedAt: '2025-06-15T11:00:00Z',
     imageUrl: 'https://placehold.co/800x450.png',
@@ -40,6 +42,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     id: 'tuong-lai-cua-ai-la-agentic-du-lieu-cua-ban-da-san-sang-chua',
     title: "Tương lai của AI là Agentic: Dữ liệu của bạn đã sẵn sàng chưa?",
     source: "Amperity",
+    author: undefined,
     content: `<h1>Tương lai của AI là Agentic: Dữ liệu của bạn đã sẵn sàng chưa?</h1>
   <p>Các tác nhân AI đang định hình để trở thành một trong những bước phát triển lớn tiếp theo trong công nghệ doanh nghiệp. Từ việc điều phối tiếp thị và tự động hóa trải nghiệm khách hàng đến trợ lý kỹ thuật số và các công cụ năng suất nội bộ, các tác nhân thông minh hứa hẹn sẽ hợp lý hóa việc ra quyết định, hoạt động theo thời gian thực và học hỏi một cách tự chủ khi chúng tương tác với dữ liệu, hệ thống và con người.</p>
   <p>Nhưng trước khi các hệ thống này có thể mang lại giá trị có ý nghĩa cho doanh nghiệp, một câu hỏi cơ bản cần phải được giải quyết: <strong>Dữ liệu của bạn đã sẵn sàng chưa?</strong></p>
@@ -91,6 +94,8 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     content: `<h1>X thử nghiệm tính năng để chatbot AI viết Ghi chú cộng đồng (Community Notes)</h1>
 
   <p>Nền tảng mạng xã hội <strong>X</strong> (trước đây là Twitter) vừa bắt đầu <strong>thử nghiệm tính năng cho phép chatbot AI</strong> tham gia viết <strong>Ghi chú cộng đồng (Community Notes)</strong> – một sáng kiến kiểm chứng thông tin do người dùng đóng góp.</p>
+  
+  [IMAGE:/image/news/Nền tảng xã hội X.png|Minh họa nền tảng xã hội X|social media X]
 
   <h2>Ghi chú cộng đồng là gì?</h2>
   <p><strong>Community Notes</strong> là một tính năng ra đời từ thời Twitter, được Elon Musk mở rộng sau khi tiếp quản. Người dùng trong chương trình này có thể thêm ghi chú giải thích, bổ sung thông tin cho các bài viết có khả năng gây hiểu lầm.</p>
@@ -126,6 +131,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     id: 'news3',
     title: 'AI Đạo đức: Điều hướng các Thách thức về Thiên vị và Minh bạch',
     source: 'AI Ethics Weekly',
+    author: undefined,
     content: 'Khi các hệ thống AI ngày càng được tích hợp vào xã hội, việc giải quyết các vấn đề về thiên vị, công bằng và minh bạch là rất quan trọng để phát triển và triển khai có trách nhiệm.',
     publishedAt: '2025-06-06T09:15:00Z',
     imageUrl: 'https://placehold.co/400x225.png',
