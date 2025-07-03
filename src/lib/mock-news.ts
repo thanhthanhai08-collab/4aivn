@@ -128,8 +128,8 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'social media AI'
   },
   {
-    id: 'ai-claudius-ceo',
-    title: 'AI Claudius: Từ model AI biến thành giám đốc doanh nghiệp nhỏ',
+    id: 'ai-claude-ceo',
+    title: 'AI Claude: Từ model AI biến thành giám đốc doanh nghiệp nhỏ',
     source: 'AI Ethics Weekly',
     author: undefined,
     content: 'Khi các hệ thống AI ngày càng được tích hợp vào xã hội, việc giải quyết các vấn đề về thiên vị, công bằng và minh bạch là rất quan trọng để phát triển và triển khai có trách nhiệm.',
