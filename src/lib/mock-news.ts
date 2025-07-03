@@ -181,7 +181,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     
     <p>Anthropic và Andon Labs đang tiếp tục thử nghiệm kinh doanh, nỗ lực cải thiện sự ổn định và hiệu suất của AI bằng các công cụ tiên tiến hơn. Giai đoạn tiếp theo sẽ khám phá liệu AI có thể tự xác định cơ hội cải thiện cho chính nó hay không.</p>`,
     publishedAt: '2025-06-06T09:15:00Z',
-    imageUrl: 'https://placehold.co/400x225.png',
+    imageUrl: '/image/news/Claude AI điều hành doanh nghiệp nhỏ.png',
     link: 'https://www.artificialintelligence-news.com/news/anthropic-tests-ai-running-a-real-business-with-bizarre-results/',
     dataAiHint: 'AI ethics'
   },
