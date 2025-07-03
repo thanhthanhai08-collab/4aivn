@@ -2,7 +2,7 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
-    id: 'chatgpt-free-mobile',
+    id: 'tat-ca-cac-tinh-nang-chatgpt-mien-phi-co-the-se-co-tren-dien-thoai-di-dong',
     title: 'Tất cả các tính năng ChatGPT miễn phí có thể sẽ có trên điện thoại di động',
     source: 'Tinhte.vn',
     author: undefined,
@@ -29,7 +29,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'phone chat'
   },
   {
-    id: 'claude-3-opus-tops-ai-arena',
+    id: 'claude-3-opus-gianh-vi-tri-dan-dau-trong-dau-truong-ai-vuot-qua-gpt-4',
     title: 'Claude 3 Opus Giành Vị trí Dẫn đầu trong Đấu trường AI, Vượt qua GPT-4',
     source: 'AI Insights',
     author: undefined,
@@ -87,12 +87,12 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'AI agent data'
   },
   {
-    id: 'x-community-notes-ai-test',
+    id: 'nen-tang-xa-hoi-x-se-thu-nghiem-tinh-nang-cho-phep-chatbot-ai-tao-ra-cac-ghi-chu-cong-dong',
     title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng',
     author: 'Nam',
     source: 'techcrunch',
     content: `<h1>X thử nghiệm tính năng để chatbot AI viết Ghi chú cộng đồng (Community Notes)</h1>
-
+  
   <p>Nền tảng mạng xã hội <strong>X</strong> (trước đây là Twitter) vừa bắt đầu <strong>thử nghiệm tính năng cho phép chatbot AI</strong> tham gia viết <strong>Ghi chú cộng đồng (Community Notes)</strong> – một sáng kiến kiểm chứng thông tin do người dùng đóng góp.</p>
   
   [IMAGE:/image/news/Nền tảng xã hội X.png|Minh họa nền tảng xã hội X|social media X]
@@ -128,7 +128,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'social media AI'
   },
   {
-    id: 'ai-claude-ceo',
+    id: 'ai-claude-tu-model-ai-bien-thanh-giam-doc-doanh-nghiep-nho',
     title: 'AI Claude: Từ model AI biến thành giám đốc doanh nghiệp nhỏ',
     source: 'AI Ethics Weekly',
     author: undefined,
