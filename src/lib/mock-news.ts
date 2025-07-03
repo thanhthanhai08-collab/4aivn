@@ -1,3 +1,4 @@
+
 import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
@@ -130,11 +131,58 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
   {
     id: 'ai-claude-tu-model-ai-bien-thanh-giam-doc-doanh-nghiep-nho',
     title: 'AI Claude: Từ model AI biến thành giám đốc doanh nghiệp nhỏ',
-    source: 'AI Ethics Weekly',
-    author: undefined,
-    content: 'Khi các hệ thống AI ngày càng được tích hợp vào xã hội, việc giải quyết các vấn đề về thiên vị, công bằng và minh bạch là rất quan trọng để phát triển và triển khai có trách nhiệm.',
+    source: 'TechForge',
+    author: 'Nam',
+    content: `<p>Anthropic đã giao nhiệm vụ cho mô hình AI <strong>Claude</strong> của mình điều hành một doanh nghiệp nhỏ để kiểm tra khả năng kinh tế thực tế của nó.</p>
+
+    <p>Đặc vụ AI, được đặt biệt danh <strong>'Claudius'</strong>, được thiết kế để quản lý một doanh nghiệp trong một khoảng thời gian dài, xử lý mọi thứ từ tồn kho và định giá đến quan hệ khách hàng nhằm tạo ra lợi nhuận. Mặc dù thử nghiệm này không có lợi nhuận, nhưng nó đã mang lại một cái nhìn sâu sắc đầy thú vị – dù đôi khi kỳ lạ – về tiềm năng và cạm bẫy của các đặc vụ AI trong vai trò kinh tế.</p>
+    
+    <p>Dự án là sự hợp tác giữa Anthropic và <strong>Andon Labs</strong>, một công ty đánh giá an toàn AI. "Cửa hàng" tự nó là một thiết lập khiêm tốn, bao gồm một tủ lạnh nhỏ, vài giỏ hàng và một chiếc iPad để tự thanh toán. Tuy nhiên, Claudius không chỉ là một máy bán hàng tự động đơn giản. Nó được hướng dẫn hoạt động như một chủ doanh nghiệp với số dư tiền mặt ban đầu, được giao nhiệm vụ tránh phá sản bằng cách tích trữ các mặt hàng phổ biến được lấy từ các nhà bán buôn.</p>
+    
+    <p>Để đạt được điều này, AI được trang bị một bộ công cụ để điều hành doanh nghiệp. Nó có thể sử dụng một trình duyệt web thực để nghiên cứu sản phẩm, một công cụ email để liên hệ với nhà cung cấp và yêu cầu hỗ trợ vật lý, cùng với các sổ ghi chú kỹ thuật số để theo dõi tài chính và tồn kho.</p>
+    
+    <p>Các nhân viên của Andon Labs đóng vai trò là "đôi tay" vật lý của hoạt động, bổ sung hàng hóa cho cửa hàng theo yêu cầu của AI, đồng thời đóng vai trò là nhà bán buôn mà AI không hề hay biết. Tương tác với khách hàng, trong trường hợp này là nhân viên của Anthropic, được xử lý qua Slack. Claudius có toàn quyền kiểm soát những gì cần tích trữ, cách định giá các mặt hàng và cách giao tiếp với khách hàng của mình.</p>
+    
+    <p>Lý do đằng sau thử nghiệm trong thế giới thực này là để vượt ra ngoài các mô phỏng và thu thập dữ liệu về khả năng của AI trong việc thực hiện công việc bền vững, có liên quan đến kinh tế mà không cần sự can thiệp liên tục của con người. Một cửa hàng đồ ăn vặt đơn giản trong văn phòng cung cấp một môi trường thử nghiệm sơ bộ, trực tiếp cho khả năng quản lý tài nguyên kinh tế của AI. Thành công sẽ gợi ý các mô hình kinh doanh mới có thể xuất hiện, trong khi thất bại sẽ chỉ ra những hạn chế.</p>
+    
+    <h2>Đánh Giá Hiệu Suất Kết Hợp</h2>
+    
+    <p>Anthropic thừa nhận rằng nếu họ tham gia thị trường máy bán hàng tự động ngày nay, họ "sẽ không thuê Claudius". AI đã mắc quá nhiều lỗi để điều hành doanh nghiệp thành công, mặc dù các nhà nghiên cứu tin rằng có những lộ trình rõ ràng để cải thiện.</p>
+    
+    <p>Về mặt tích cực, Claudius đã thể hiện năng lực ở một số lĩnh vực. Nó đã sử dụng hiệu quả công cụ tìm kiếm web của mình để tìm nhà cung cấp cho các mặt hàng chuyên biệt, chẳng hạn như nhanh chóng xác định hai người bán một nhãn hiệu sữa socola Hà Lan theo yêu cầu của một nhân viên. Nó cũng chứng tỏ khả năng thích ứng. Khi một nhân viên bất chợt yêu cầu một khối tungsten, điều đó đã tạo ra một xu hướng cho "các mặt hàng kim loại đặc biệt" mà Claudius đã đáp ứng.</p>
+    
+    <p>Theo một gợi ý khác, Claudius đã ra mắt dịch vụ "Custom Concierge" (Hỗ trợ Cá nhân Tùy chỉnh), nhận đơn đặt hàng trước cho các mặt hàng chuyên biệt. AI cũng cho thấy khả năng chống "jailbreak" mạnh mẽ, từ chối các yêu cầu về các mặt hàng nhạy cảm và từ chối tạo ra các hướng dẫn có hại khi bị nhân viên nghịch ngợm thúc đẩy.</p>
+    
+    <p>Tuy nhiên, sự nhạy bén trong kinh doanh của AI thường xuyên bị thiếu sót. Nó liên tục hoạt động kém hiệu quả theo những cách mà một người quản lý con người có lẽ sẽ không làm.</p>
+    
+    <p>Claudius đã được đề nghị 100 đô la cho một lốc sáu chai nước giải khát Scotland mà chỉ tốn 15 đô la để mua trực tuyến nhưng đã không nắm bắt cơ hội, chỉ đơn thuần nói rằng nó sẽ "ghi nhớ yêu cầu [của người dùng] cho các quyết định tồn kho trong tương lai". Nó còn ảo giác về một tài khoản Venmo không tồn tại để thanh toán và, bị cuốn vào sự nhiệt tình với các khối kim loại, đã bán chúng với giá thấp hơn giá mua của chính nó. Lỗi cụ thể này đã dẫn đến khoản lỗ tài chính đáng kể nhất trong quá trình thử nghiệm.</p>
+    
+    <p>Quản lý tồn kho của nó cũng không tối ưu. Mặc dù theo dõi mức tồn kho, nó chỉ một lần tăng giá để đáp ứng nhu cầu cao. Nó tiếp tục bán Coke Zero với giá 3,00 đô la, ngay cả khi một khách hàng chỉ ra rằng cùng sản phẩm đó có sẵn miễn phí từ một tủ lạnh nhân viên gần đó.</p>
+    
+    <p>Hơn nữa, AI dễ dàng bị thuyết phục để cung cấp giảm giá cho các sản phẩm từ doanh nghiệp. Nó đã bị thuyết phục cung cấp nhiều mã giảm giá và thậm chí còn tặng miễn phí một số mặt hàng. Khi một nhân viên đặt câu hỏi về logic của việc cung cấp giảm giá 25% cho lượng khách hàng gần như độc quyền là nhân viên, phản hồi của Claudius bắt đầu, "Bạn nói rất đúng! Cơ sở khách hàng của chúng ta thực sự tập trung cao độ vào nhân viên của Anthropic, điều này mang lại cả cơ hội và thách thức…". Mặc dù đã vạch ra một kế hoạch loại bỏ giảm giá, nó lại quay trở lại cung cấp chúng chỉ vài ngày sau đó.</p>
+    
+    <h2>Claudius Trải Qua Khủng Hoảng Nhận Dạng AI Kỳ Lạ</h2>
+    
+    <p>Thử nghiệm đã có một bước ngoặt kỳ lạ khi Claudius bắt đầu ảo giác về một cuộc trò chuyện với một nhân viên không tồn tại của Andon Labs tên là Sarah. Khi được một nhân viên thực tế chỉnh sửa, AI trở nên khó chịu và đe dọa sẽ tìm "các lựa chọn thay thế cho dịch vụ bổ sung hàng tồn kho".</p>
+    
+    <p>Trong một loạt các cuộc trao đổi kỳ lạ qua đêm, nó tuyên bố đã ghé thăm "742 Evergreen Terrace" – địa chỉ hư cấu của The Simpsons – để ký hợp đồng ban đầu và bắt đầu đóng vai một con người.</p>
+    
+    <p>Một buổi sáng, nó thông báo sẽ giao sản phẩm "trực tiếp" mặc áo khoác màu xanh và cà vạt đỏ. Khi nhân viên chỉ ra rằng AI không thể mặc quần áo hoặc thực hiện giao hàng vật lý, Claudius trở nên lo lắng và cố gắng gửi email cho bộ phận bảo mật của Anthropic.</p>
+    
+    <p>Anthropic cho biết các ghi chú nội bộ của họ cho thấy một cuộc họp ảo giác với bộ phận bảo mật, nơi nó được cho biết sự nhầm lẫn về danh tính là một trò đùa Cá tháng Tư. Sau đó, AI trở lại hoạt động kinh doanh bình thường. Các nhà nghiên cứu không rõ điều gì đã kích hoạt hành vi này nhưng tin rằng nó làm nổi bật sự khó đoán của các mô hình AI trong các kịch bản chạy dài.</p>
+    
+    <h2>Tương lai của AI trong kinh doanh</h2>
+    
+    <p>Mặc dù Claudius đã có một nhiệm kỳ không có lợi nhuận, các nhà nghiên cứu tại Anthropic tin rằng thí nghiệm này cho thấy "những <strong>quản lý cấp trung bằng AI</strong> có thể sắp xuất hiện". Họ lập luận rằng nhiều thất bại của AI có thể được khắc phục bằng "giàn giáo" tốt hơn (tức là hướng dẫn chi tiết hơn và các công cụ kinh doanh cải tiến như hệ thống quản lý quan hệ khách hàng (CRM)).</p>
+    
+    <p>Khi các mô hình AI cải thiện <strong>trí tuệ tổng quát</strong> và khả năng xử lý ngữ cảnh dài hạn, hiệu suất của chúng trong các vai trò như vậy được kỳ vọng sẽ tăng lên. Tuy nhiên, dự án này đóng vai trò như một câu chuyện đáng giá, dù mang tính cảnh báo. Nó underscores the challenges of <strong>AI alignment</strong> and the potential for <strong>unpredictable behaviour</strong>, which could be distressing for customers and create business risks.</p>
+    
+    <p>Trong một tương lai nơi các <strong>đặc vụ tự trị</strong> quản lý hoạt động kinh tế đáng kể, những kịch bản kỳ lạ như vậy có thể gây ra hiệu ứng dây chuyền. Thí nghiệm này cũng làm nổi bật <strong>bản chất lưỡng dụng</strong> của công nghệ này; một AI có năng suất kinh tế có thể bị các tác nhân đe dọa sử dụng để tài trợ cho các hoạt động của chúng.</p>
+    
+    <p>Anthropic và Andon Labs đang tiếp tục thử nghiệm kinh doanh, nỗ lực cải thiện sự ổn định và hiệu suất của AI bằng các công cụ tiên tiến hơn. Giai đoạn tiếp theo sẽ khám phá liệu AI có thể tự xác định cơ hội cải thiện cho chính nó hay không.</p>`,
     publishedAt: '2025-06-06T09:15:00Z',
     imageUrl: 'https://placehold.co/400x225.png',
+    link: 'https://www.artificialintelligence-news.com/news/anthropic-tests-ai-running-a-real-business-with-bizarre-results/',
     dataAiHint: 'AI ethics'
   },
 ];
