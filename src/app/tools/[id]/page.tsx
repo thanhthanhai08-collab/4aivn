@@ -23,9 +23,8 @@ import {
 } from "@/lib/user-data-service";
 
 
-export default function ToolDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
-  const params = use(paramsAsPromise); 
-  const { id } = params;
+export default function ToolDetailPage({ params }: { params: { id: string } }) {
+  const { id } = use(params);
 
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);

@@ -23,9 +23,8 @@ import {
 } from "@/lib/user-data-service";
 
 
-export default function ModelDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
-  const params = use(paramsAsPromise); 
-  const { id } = params;
+export default function ModelDetailPage({ params }: { params: { id: string } }) {
+  const { id } = use(params);
 
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);

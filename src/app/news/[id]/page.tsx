@@ -52,9 +52,8 @@ const renderContent = (content: string) => {
 };
 
 
-export default function NewsDetailPage({ params: paramsAsPromise }: { params: { id: string } }) {
-  const params = use(paramsAsPromise); 
-  const { id } = params;
+export default function NewsDetailPage({ params }: { params: { id: string } }) {
+  const { id } = use(params);
   const { currentUser } = useAuth();
 
   const [article, setArticle] = useState<NewsArticle | null>(null);
