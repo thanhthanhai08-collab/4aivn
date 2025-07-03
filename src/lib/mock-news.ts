@@ -85,7 +85,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     id: 'tuong-lai-cua-ai-la-agentic-du-lieu-cua-ban-da-san-sang-chua',
     title: "Tương lai của AI là Agentic: Dữ liệu của bạn đã sẵn sàng chưa?",
     source: "Amperity",
-    author: undefined,
+    author: 'Nam',
     content: `<h1>Tương lai của AI là Agentic: Dữ liệu của bạn đã sẵn sàng chưa?</h1>
   <p>Các tác nhân AI đang định hình để trở thành một trong những bước phát triển lớn tiếp theo trong công nghệ doanh nghiệp. Từ việc điều phối tiếp thị và tự động hóa trải nghiệm khách hàng đến trợ lý kỹ thuật số và các công cụ năng suất nội bộ, các tác nhân thông minh hứa hẹn sẽ hợp lý hóa việc ra quyết định, hoạt động theo thời gian thực và học hỏi một cách tự chủ khi chúng tương tác với dữ liệu, hệ thống và con người.</p>
   <p>Nhưng trước khi các hệ thống này có thể mang lại giá trị có ý nghĩa cho doanh nghiệp, một câu hỏi cơ bản cần phải được giải quyết: <strong>Dữ liệu của bạn đã sẵn sàng chưa?</strong></p>
@@ -130,7 +130,7 @@ Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu tro
     dataAiHint: 'AI agent data'
   },
   {
-    id: 'nen-tang-xa-hoi-x-se-thu-nghiem-tinh-nang-cho-phep-chatbot-ai-tao-ra-cac-ghi-chu-cong-dong',
+    id: 'nen-tang-xa-hoi-x-thu-nghiem-tinh-nang-cho-phep-chatbot-ai-tao-ra-cac-ghi-chu-cong-dong',
     title: 'Nền tảng xã hội X sẽ thử nghiệm tính năng cho phép chatbot AI tạo ra các ghi chú cộng đồng',
     author: 'Nam',
     source: 'techcrunch',
@@ -232,5 +232,3 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
 ];
 
     
-
-  
