@@ -3,8 +3,8 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
-    id: 'tat-ca-cac-tinh-nang-chatgpt-mien-phi-co-the-se-co-tren-dien-thoai-di-dong',
-    title: 'Tất cả các tính năng ChatGPT miễn phí có thể sẽ có trên điện thoại di động',
+    id: 'tra-cuu-thong-tin-don-vi-hanh-chinh-moi-da-co-tro-ly-ai-cua-viettel-giup-suc',
+    title: 'Tra cứu thông tin đơn vị hành chính mới đã có trợ lý AI của Viettel giúp sức',
     source: 'Tinhte.vn',
     author: undefined,
     content: `Theo các nguồn tin đáng tin cậy, OpenAI đang chuẩn bị đưa tất cả các tính năng miễn phí của ChatGPT lên các ứng dụng di động của mình. Điều này bao gồm khả năng truy cập vào mô hình GPT-4o, tải lên tệp và hình ảnh, sử dụng các công cụ tìm kiếm, phân tích dữ liệu và khám phá các GPT tùy chỉnh.
@@ -230,5 +230,7 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
+
+    
 
     
