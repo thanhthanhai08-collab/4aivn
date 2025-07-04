@@ -6,28 +6,33 @@ export const mockNews: NewsArticle[] = [
     id: 'tra-cuu-thong-tin-don-vi-hanh-chinh-moi-da-co-tro-ly-ai-cua-viettel-giup-suc',
     title: 'Tra cứu thông tin đơn vị hành chính mới đã có trợ lý AI của Viettel giúp sức',
     source: 'Tinhte.vn',
-    author: undefined,
-    content: `Theo các nguồn tin đáng tin cậy, OpenAI đang chuẩn bị đưa tất cả các tính năng miễn phí của ChatGPT lên các ứng dụng di động của mình. Điều này bao gồm khả năng truy cập vào mô hình GPT-4o, tải lên tệp và hình ảnh, sử dụng các công cụ tìm kiếm, phân tích dữ liệu và khám phá các GPT tùy chỉnh.
-
-Hiện tại, các tính năng này chỉ có sẵn cho người dùng trả phí trên di động hoặc người dùng miễn phí trên phiên bản web. Việc mở rộng này sẽ mang lại trải nghiệm nhất quán hơn cho tất cả người dùng, bất kể họ sử dụng ChatGPT trên nền tảng nào.
-
-[IMAGE:https://placehold.co/750x420.png|Một tòa nhà văn phòng hiện đại|office building]
-
-Động thái này diễn ra trong bối cảnh cạnh tranh ngày càng gay gắt trong lĩnh vực AI. Google gần đây đã công bố các tính năng AI mới trong tìm kiếm và Microsoft cũng đang tích hợp Copilot sâu hơn vào các sản phẩm của mình. Bằng cách cung cấp các tính năng mạnh mẽ miễn phí trên di động, OpenAI hy vọng sẽ thu hút thêm nhiều người dùng và củng cố vị trí dẫn đầu của mình trên thị trường.
-
-Việc này cũng được cho là một bước đi để chuẩn bị cho việc tích hợp ChatGPT vào các hệ điều hành di động trong tương lai, khi Apple được đồn đoán sẽ công bố quan hệ đối tác với OpenAI tại sự kiện WWDC sắp tới.
-
-[IMAGE:https://placehold.co/750x420.png|Một không gian làm việc văn phòng hợp tác|office interior]
-
-Người dùng di động sẽ sớm có thể tận hưởng các tính năng như:
-- **Phân tích biểu đồ và bảng biểu:** Tải lên và đặt câu hỏi về dữ liệu của bạn.
-- **Hỏi về hình ảnh:** Chụp ảnh và nhận câu trả lời liên quan.
-- **Tải lên tệp:** Nhận bản tóm tắt hoặc câu trả lời từ tài liệu PDF và các tệp khác.
-
-Mặc dù chưa có thông báo chính thức từ OpenAI, các dấu hiệu trong mã nguồn ứng dụng cho thấy việc triển khai có thể diễn ra trong vài tuần tới.`,
+    author: 'Nam',
+    content: `<p>Ngay sau khi cả nước chào đón thời khắc công bố thành lập các tỉnh/thành, phường/xã mới, <strong>Tập đoàn Công nghiệp - Viễn thông Quân đội (Viettel)</strong> đã ra mắt một <strong>trợ lý AI miễn phí</strong> cho toàn dân. Trợ lý này hoạt động qua web, giúp mọi người dễ dàng tra cứu mọi thông tin về các đơn vị hành chính mới. Đây là sản phẩm do chính Viettel nghiên cứu và phát triển, thể hiện cam kết đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
+        <h2><strong>Giải quyết khó khăn tra cứu thông tin hành chính</strong></h2>
+        <p>Việc sáp nhập, sắp xếp các đơn vị hành chính, dù đã được chuẩn bị kỹ lưỡng, vẫn gây không ít khó khăn cho người dân trong việc tra cứu thông tin. Để giải quyết vấn đề này, trợ lý AI mới của Viettel được xây dựng trên nền tảng <strong>mô hình ngôn ngữ lớn hoàn toàn bằng tiếng Việt</strong> do chính Viettel phát triển. Trợ lý này được thiết kế và huấn luyện từ các <strong>văn bản chính thống</strong>, đảm bảo độ chính xác cao khi tra cứu thông tin mới về tổ chức đơn vị hành chính.</p>
+        <p>Trước đó, Viettel đã có kinh nghiệm phát triển thành công <strong>Trợ lý ảo pháp luật</strong> và <strong>Trợ lý ảo công chức</strong>. Nhờ đó, Viettel đã có kinh nghiệm và am hiểu các câu hỏi của người Việt, giúp trợ lý AI mới đưa ra những câu trả lời sát với thực tế nhất.</p>
+        <h2><strong>Hướng dẫn tra cứu tỉnh, thành phố và phường, xã mới bằng Trợ lý AI của Viettel</strong></h2>
+        <p>Viettel đã ra mắt trợ lý AI giúp người dân dễ dàng tra cứu thông tin về các đơn vị hành chính mới. Chỉ với vài bước đơn giản, bạn có thể tìm kiếm mọi thông tin cần thiết về 34 tỉnh, thành phố và 3.321 xã, phường mới:</p>
+        <h3>Bước 1: Truy cập nền tảng web</h3>
+        <p>Mở trình duyệt web trên máy tính, điện thoại hoặc máy tính bảng của bạn và truy cập địa chỉ <a href="https://tracuuphuongxa.trolyao.org/" target="_blank"><strong>https://tracuuphuongxa.trolyao.org/</strong></a>.</p>
+        <h3>Bước 2: Đặt câu hỏi</h3>
+        <p>Tại ô hội thoại, hãy nhập câu hỏi bạn muốn tra cứu về đơn vị hành chính mới. Trợ lý AI được thiết kế để hiểu các câu hỏi tự nhiên dưới dạng hội thoại. Người dùng có thể đặt câu hỏi về đơn vị hành chính mới theo nhu cầu tìm hiểu.</p>
+        <p><strong>Một số ví dụ bạn có thể tham khảo:</strong></p>
+        <ul>
+            <li>"Hà Nội có bao nhiêu xã, phường?"</li>
+            <li>"Phường Nhân Chính - Thành phố Hà Nội bây giờ là phường nào?"</li>
+            <li>"Tỉnh Nam Định bây giờ là tỉnh nào?"</li>
+            <li>"Cả nước hiện có những tỉnh, thành phố nào?"</li>
+        </ul>
+        <h3>Bước 3: Xem kết quả và nguồn tham chiếu</h3>
+        [IMAGE:/image/news/Trợ lý AI Vietel.png|Trợ lý AI của Viettel|viettel ai assistant]
+        <p>Trợ lý AI sẽ cung cấp câu trả lời chi tiết cho câu hỏi của bạn cùng <strong>nguồn văn bản tương ứng</strong>được gọi là tri thức của trợ lý. Để đảm bảo độ tin cậy và chính xác, bạn có thể kiểm tra lại <strong>nguồn trích dẫn được đánh dấu màu đỏ</strong> trong câu trả lời. Trợ lý AI cũng cung cấp <strong>bộ cẩm nang toàn diện</strong> về đơn vị hành chính cấp tỉnh và cấp xã mới(nằm ở góc trên bên phải màn hình), bao gồm các Nghị quyết của Ủy ban Thường vụ Quốc hội về việc sắp xếp đơn vị hành chính mới.</p>
+        <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện <strong>cam kết mạnh mẽ của chính phủ</strong> trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
+        <p>Bạn đã trải nghiệm trợ lý AI này chưa? Hãy chia sẻ cảm nhận của bạn nhé!</p>`,
     publishedAt: '2025-05-12T08:00:00Z',
-    imageUrl: 'https://placehold.co/800x450.png',
-    dataAiHint: 'phone chat'
+    imageUrl: '/image/news/Trợ lý AI Vietel.png',
+    dataAiHint: 'trợ lý AI Vietel',
+    link: 'https://tracuuphuongxa.trolyao.org/'
   },
   {
     id: 'claude-4-da-den-luc-doi-cong-cu-ai-yeu-thich',
@@ -230,7 +235,5 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
-
-    
 
     
