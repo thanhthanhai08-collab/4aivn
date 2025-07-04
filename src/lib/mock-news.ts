@@ -152,11 +152,11 @@ export const mockNews: NewsArticle[] = [
     title: 'AI Claude: Từ model AI biến thành giám đốc doanh nghiệp nhỏ',
     source: 'TechForge',
     author: 'Nam',
-    content: `<p>Anthropic đã giao nhiệm vụ cho mô hình AI <strong>Claude</strong> của mình điều hành một doanh nghiệp nhỏ để kiểm tra khả năng kinh tế thực tế của nó.</p>
+    content: `<p>Anthropic đã giao nhiệm vụ cho mô hình AI Claude của mình điều hành một doanh nghiệp nhỏ để kiểm tra khả năng kinh tế thực tế của nó.</p>
 
     <p>AI Agent, được Anthropic đặt biệt danh là <strong>'Claudius'</strong>, được thiết kế để quản lý một doanh nghiệp nhỏ trong một khoảng thời gian dài, xử lý mọi thứ từ tồn kho và định giá đến quan hệ khách hàng nhằm tạo ra lợi nhuận. Mặc dù thử nghiệm này không có lợi nhuận, nhưng nó đã mang lại một cái nhìn sâu sắc đầy thú vị – dù đôi khi kỳ lạ – về tiềm năng và cạm bẫy của các đặc vụ AI trong vai trò kinh tế.</p>
     
-    <p>Dự án là sự hợp tác giữa Anthropic và <strong>Andon Labs</strong>, một công ty đánh giá an toàn AI. "Cửa hàng" tự nó là một thiết lập khiêm tốn, bao gồm một tủ lạnh nhỏ, vài giỏ hàng và một chiếc iPad để tự thanh toán. Tuy nhiên, Claudius không chỉ là một máy bán hàng tự động đơn giản. Nó được hướng dẫn hoạt động như một chủ doanh nghiệp với số dư tiền mặt ban đầu, được giao nhiệm vụ tránh phá sản bằng cách tích trữ các mặt hàng phổ biến được lấy từ các nhà bán buôn.</p>
+    <p>Dự án là sự hợp tác giữa Anthropic và Andon Labs, một công ty đánh giá an toàn AI. "Cửa hàng" tự nó là một thiết lập khiêm tốn, bao gồm một tủ lạnh nhỏ, vài giỏ hàng và một chiếc iPad để tự thanh toán. Tuy nhiên, Claudius không chỉ là một máy bán hàng tự động đơn giản. Nó được hướng dẫn hoạt động như một chủ doanh nghiệp với số dư tiền mặt ban đầu, được giao nhiệm vụ tránh phá sản bằng cách tích trữ các mặt hàng phổ biến được lấy từ các nhà bán buôn.</p>
     
     <p>Để đạt được điều này, AI được trang bị một bộ công cụ để điều hành doanh nghiệp. Nó có thể sử dụng một trình duyệt web thực để nghiên cứu sản phẩm, một công cụ email để liên hệ với nhà cung cấp và yêu cầu hỗ trợ vật lý, cùng với các sổ ghi chú kỹ thuật số để theo dõi tài chính và tồn kho.</p>
     
@@ -194,7 +194,7 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     
     <h2><strong>Tương lai của AI trong kinh doanh</strong></h2>
     
-    <p>Dù Claudius không mang lại lợi nhuận trong thời gian thử nghiệm, các nhà nghiên cứu tại Anthropic vẫn lạc quan tin rằng thí nghiệm này báo hiệu sự ra đời của <strong>các quản lý cấp trung bằng AI</strong>. Họ cho rằng, nhiều lỗi của AI có thể được khắc phục dễ dàng bằng cách cung cấp "hướng dẫn" tốt hơn – tức là những hướng dẫn chi tiết hơn và các công cụ kinh doanh cải tiến như hệ thống quản lý quan hệ khách hàng (CRM).</p>
+    <p>Dù Claudius không mang lại lợi nhuận trong thời gian thử nghiệm, các nhà nghiên cứu tại Anthropic vẫn lạc quan tin rằng thí nghiệm này báo hiệu sự ra đời của các quản lý cấp trung bằng AI. Họ cho rằng, nhiều lỗi của AI có thể được khắc phục dễ dàng bằng cách cung cấp "hướng dẫn" tốt hơn – tức là những hướng dẫn chi tiết hơn và các công cụ kinh doanh cải tiến như hệ thống quản lý quan hệ khách hàng (CRM).</p>
     
     <p>Khi các mô hình AI tiếp tục phát triển trí tuệ tổng quát và khả năng xử lý thông tin dài hạn, hiệu suất của chúng trong các vai trò quản lý chắc chắn sẽ tăng lên. Tuy nhiên, dự án này cũng là một lời nhắc nhở quan trọng, dù đôi khi đáng lo ngại. Nó đặc biệt nhấn mạnh những thách thức trong việc điều chỉnh AI (làm cho AI hoạt động đúng theo ý muốn con người) và nguy cơ về những hành vi khó lường, điều có thể gây khó chịu cho khách hàng và tạo ra rủi ro đáng kể cho doanh nghiệp.</p>
     
@@ -207,3 +207,5 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
+
+    
