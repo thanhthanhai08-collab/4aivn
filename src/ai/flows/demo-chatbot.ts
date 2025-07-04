@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import { googleAI } from '@genkit-ai/googleai';
 import {z} from 'genkit';
 
 const DemoChatbotInputSchema = z.object({
@@ -32,6 +33,7 @@ export async function demoChatbot(input: DemoChatbotInput): Promise<DemoChatbotO
 
 const prompt = ai.definePrompt({
   name: 'demoChatbotPrompt',
+  model: googleAI.model('gemini-2.5-pro'),
   input: {schema: DemoChatbotInputSchema},
   output: {schema: DemoChatbotOutputSchema},
   prompt: `You are a demo chatbot that helps users learn about AI tools and news.
