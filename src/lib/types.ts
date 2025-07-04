@@ -40,6 +40,7 @@ export interface User {
 export interface ChatMessage {
   id: string;
   text: string;
+  imageUrl?: string;
   sender: 'user' | 'ai';
   timestamp: number;
 }

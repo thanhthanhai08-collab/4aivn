@@ -9,6 +9,15 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { demoChatbot } from "@/ai/flows/demo-chatbot";
 import { useToast } from "@/hooks/use-toast";
 
+const fileToDataUri = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+};
+
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoadingAiResponse, setIsLoadingAiResponse] = useState(false);
@@ -19,30 +28,41 @@ export default function ChatPage() {
     setMessages([
       {
         id: "initial-ai-greeting",
-        text: "Xin chào! Tôi là chatbot demo của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ hoặc tin tức AI hôm nay?",
+        text: "Xin chào! Tôi là chatbot demo của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ hoặc tin tức AI hôm nay? Bạn cũng có thể gửi một hình ảnh.",
         sender: "ai",
         timestamp: Date.now(),
       },
     ]);
   }, []);
 
-  const handleSendMessage = async (text: string) => {
+  const handleSendMessage = async (text: string, image?: File) => {
+    const timestamp = Date.now();
+    const imageUrl = image ? URL.createObjectURL(image) : undefined;
+    
     const newUserMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
+      id: `user-${timestamp}`,
       text,
+      imageUrl,
       sender: "user",
-      timestamp: Date.now(),
+      timestamp: timestamp,
     };
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
     setIsLoadingAiResponse(true);
 
     try {
+      const imageDataUri = image ? await fileToDataUri(image) : undefined;
+      
       const chatHistoryForAI = messages.map(msg => ({
         role: msg.sender === 'user' ? 'user' : 'assistant',
+        // For simplicity, history sent to AI doesn't include past images
         content: msg.text
       }));
       
-      const aiResponse = await demoChatbot({ message: text, chatHistory: chatHistoryForAI });
+      const aiResponse = await demoChatbot({ 
+        message: text, 
+        image: imageDataUri, 
+        chatHistory: chatHistoryForAI 
+      });
       
       const newAiMessage: ChatMessage = {
         id: `ai-${Date.now()}`,
@@ -51,6 +71,7 @@ export default function ChatPage() {
         timestamp: Date.now(),
       };
       setMessages((prevMessages) => [...prevMessages, newAiMessage]);
+
     } catch (error) {
       console.error("Error getting AI response:", error);
       const errorAiMessage: ChatMessage = {
@@ -67,6 +88,10 @@ export default function ChatPage() {
       });
     } finally {
       setIsLoadingAiResponse(false);
+      // Revoke the object URL to avoid memory leaks
+      if(imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
     }
   };
 
