@@ -5,7 +5,7 @@ export const mockNews: NewsArticle[] = [
   {
     id: 'tra-cuu-thong-tin-don-vi-hanh-chinh-moi-da-co-tro-ly-ai-cua-viettel-giup-suc',
     title: 'Tra cứu thông tin đơn vị hành chính mới đã có trợ lý AI của Viettel giúp sức',
-    source: 'Tinhte.vn',
+    source: 'Viettel',
     author: 'Nam',
     content: `<p>Ngay sau khi cả nước chào đón thời khắc công bố thành lập các tỉnh/thành, phường/xã mới, <strong>Tập đoàn Công nghiệp - Viễn thông Quân đội (Viettel)</strong> đã ra mắt một <strong>trợ lý AI miễn phí</strong> cho toàn dân. Trợ lý này hoạt động qua web, giúp mọi người dễ dàng tra cứu mọi thông tin về các đơn vị hành chính mới. Đây là sản phẩm do chính Viettel nghiên cứu và phát triển, thể hiện cam kết đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <h2><strong>Giải quyết khó khăn tra cứu thông tin hành chính</strong></h2>
@@ -29,7 +29,7 @@ export const mockNews: NewsArticle[] = [
         <p>Trợ lý AI sẽ cung cấp câu trả lời chi tiết cho câu hỏi của bạn cùng nguồn văn bản tương ứng được gọi là tri thức của trợ lý. Để đảm bảo độ tin cậy và chính xác, bạn có thể kiểm tra lại <strong>nguồn trích dẫn được đánh dấu màu đỏ</strong> trong câu trả lời. Trợ lý AI cũng cung cấp bộ cẩm nang toàn diện về đơn vị hành chính cấp tỉnh và cấp xã mới (nằm ở góc trên bên phải màn hình), bao gồm các nghị quyết của Ủy ban Thường vụ Quốc hội về việc sắp xếp đơn vị hành chính mới.</p>
         <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện cam kết mạnh mẽ của chính phủ trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <p>Bạn đã trải nghiệm trợ lý AI này chưa? Hãy chia sẻ cảm nhận của bạn nhé!</p>`,
-    publishedAt: '2025-05-12T08:00:00Z',
+    publishedAt: new Date().toISOString(),
     imageUrl: '/image/news/Trợ lý AI tra cứu xã phường.png',
     dataAiHint: 'Viettel AI Assistant',
     link: 'https://tracuuphuongxa.trolyao.org/'
