@@ -9,9 +9,9 @@ export const mockNews: NewsArticle[] = [
     author: 'Nam',
     content: `<p>Ngay sau khi cả nước chào đón thời khắc công bố thành lập các tỉnh/thành, phường/xã mới, <strong>Tập đoàn Công nghiệp - Viễn thông Quân đội (Viettel)</strong> đã ra mắt một <strong>trợ lý AI miễn phí</strong> cho toàn dân. Trợ lý này hoạt động qua web, giúp mọi người dễ dàng tra cứu mọi thông tin về các đơn vị hành chính mới. Đây là sản phẩm do chính Viettel nghiên cứu và phát triển, thể hiện cam kết đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <h2><strong>Giải quyết khó khăn tra cứu thông tin hành chính</strong></h2>
-        <p>Việc sáp nhập, sắp xếp các đơn vị hành chính, dù đã được chuẩn bị kỹ lưỡng, vẫn gây không ít khó khăn cho người dân trong việc tra cứu thông tin. Để giải quyết vấn đề này, trợ lý AI mới của Viettel được xây dựng trên nền tảng <strong>mô hình ngôn ngữ lớn hoàn toàn bằng tiếng Việt</strong> do chính Viettel phát triển. Trợ lý này được thiết kế và huấn luyện từ các <strong>văn bản chính thống</strong>, đảm bảo độ chính xác cao khi tra cứu thông tin mới về tổ chức đơn vị hành chính.</p>
+        <p>Việc sáp nhập, sắp xếp các đơn vị hành chính, dù đã được chuẩn bị kỹ lưỡng, vẫn gây không ít khó khăn cho người dân trong việc tra cứu thông tin. Để giải quyết vấn đề này, trợ lý AI mới của Viettel được xây dựng trên nền tảng mô hình ngôn ngữ lớn hoàn toàn bằng <strong>tiếng Việt</strong> do chính Viettel phát triển. Trợ lý này được thiết kế và huấn luyện từ các văn bản chính thống, đảm bảo độ chính xác cao khi tra cứu thông tin mới về tổ chức đơn vị hành chính.</p>
         <p>Trước đó, Viettel đã có kinh nghiệm phát triển thành công <strong>Trợ lý ảo pháp luật</strong> và <strong>Trợ lý ảo công chức</strong>. Nhờ đó, Viettel đã có kinh nghiệm và am hiểu các câu hỏi của người Việt, giúp trợ lý AI mới đưa ra những câu trả lời sát với thực tế nhất.</p>
-        <h2><strong>Hướng dẫn tra cứu tỉnh, thành phố và phường, xã mới bằng Trợ lý AI của Viettel</strong></h2>
+        <h2><strong>Hướng dẫn tra cứu tỉnh, thành phố và xã, phường mới bằng trợ lý AI của Viettel</strong></h2>
         <p>Viettel đã ra mắt trợ lý AI giúp người dân dễ dàng tra cứu thông tin về các đơn vị hành chính mới. Chỉ với vài bước đơn giản, bạn có thể tìm kiếm mọi thông tin cần thiết về 34 tỉnh, thành phố và 3.321 xã, phường mới:</p>
         <h3>Bước 1: Truy cập nền tảng web</h3>
         <p>Mở trình duyệt web trên máy tính, điện thoại hoặc máy tính bảng của bạn và truy cập địa chỉ <a href="https://tracuuphuongxa.trolyao.org/" target="_blank"><strong>https://tracuuphuongxa.trolyao.org/</strong></a>.</p>
@@ -20,18 +20,18 @@ export const mockNews: NewsArticle[] = [
         <p><strong>Một số ví dụ bạn có thể tham khảo:</strong></p>
         <ul>
             <li>"Hà Nội có bao nhiêu xã, phường?"</li>
-            <li>"Phường Nhân Chính - Thành phố Hà Nội bây giờ là phường nào?"</li>
+            <li>"Xã Cổ Bi - Thành phố Hà Nội bây giờ là xã nào?"</li>
             <li>"Tỉnh Nam Định bây giờ là tỉnh nào?"</li>
             <li>"Cả nước hiện có những tỉnh, thành phố nào?"</li>
         </ul>
         <h3>Bước 3: Xem kết quả và nguồn tham chiếu</h3>
-        [IMAGE:/image/news/Trợ lý AI Vietel.png|Trợ lý AI của Viettel|viettel ai assistant]
-        <p>Trợ lý AI sẽ cung cấp câu trả lời chi tiết cho câu hỏi của bạn cùng <strong>nguồn văn bản tương ứng</strong>được gọi là tri thức của trợ lý. Để đảm bảo độ tin cậy và chính xác, bạn có thể kiểm tra lại <strong>nguồn trích dẫn được đánh dấu màu đỏ</strong> trong câu trả lời. Trợ lý AI cũng cung cấp <strong>bộ cẩm nang toàn diện</strong> về đơn vị hành chính cấp tỉnh và cấp xã mới(nằm ở góc trên bên phải màn hình), bao gồm các Nghị quyết của Ủy ban Thường vụ Quốc hội về việc sắp xếp đơn vị hành chính mới.</p>
-        <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện <strong>cam kết mạnh mẽ của chính phủ</strong> trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
+        [IMAGE:/image/news/Trợ lý AI tra cứu xã phường.png|Minh họa nền tảng trợ lý AI Viettel|Viettel AI Assistant]
+        <p>Trợ lý AI sẽ cung cấp câu trả lời chi tiết cho câu hỏi của bạn cùng nguồn văn bản tương ứng được gọi là tri thức của trợ lý. Để đảm bảo độ tin cậy và chính xác, bạn có thể kiểm tra lại <strong>nguồn trích dẫn được đánh dấu màu đỏ</strong> trong câu trả lời. Trợ lý AI cũng cung cấp bộ cẩm nang toàn diện về đơn vị hành chính cấp tỉnh và cấp xã mới (nằm ở góc trên bên phải màn hình), bao gồm các nghị quyết của Ủy ban Thường vụ Quốc hội về việc sắp xếp đơn vị hành chính mới.</p>
+        <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện cam kết mạnh mẽ của chính phủ trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <p>Bạn đã trải nghiệm trợ lý AI này chưa? Hãy chia sẻ cảm nhận của bạn nhé!</p>`,
     publishedAt: '2025-05-12T08:00:00Z',
-    imageUrl: '/image/news/Trợ lý AI Vietel.png',
-    dataAiHint: 'trợ lý AI Vietel',
+    imageUrl: '/image/news/Trợ lý AI tra cứu xã phường.png',
+    dataAiHint: 'Viettel AI Assistant',
     link: 'https://tracuuphuongxa.trolyao.org/'
   },
   {
@@ -39,48 +39,20 @@ export const mockNews: NewsArticle[] = [
     title: 'Claude 4: Đã đến lúc đổi công cụ AI yêu thích?',
     source: 'AI Insights',
     author: 'Nam',
-    content: `<p> ChatGPT có thể là chatbot AI nổi tiếng nhất hiện nay, nhưng điều đó không có nghĩa là nó tốt nhất. Google Gemini 2.5 pro và GPT o3 liên tục dẫn đầu các bảng xếp hạng tuy nhiên chúng ta cũng không thể bỏ qua Claude.</p>
-
-
+    content: `<p>ChatGPT có thể là chatbot AI nổi tiếng nhất hiện nay, nhưng điều đó không có nghĩa là nó tốt nhất. Google Gemini 2.5 pro và GPT o3 liên tục dẫn đầu các bảng xếp hạng tuy nhiên chúng ta cũng không thể bỏ qua Claude.</p>
     <p>Nếu bạn chưa biết, Claude là một dòng mô hình ngôn ngữ lớn (LLM) đến từ Anthropic. Gần đây, Claude vừa nhận được bản nâng cấp "khủng" mang tên <strong>Claude 4</strong>, mô hình AI mới nhất của hãng. Về mặt kỹ thuật, Claude 4 gồm hai phiên bản:<strong> Claude Opus 4</strong> và :<strong>Claude Sonnet 4</strong>. Có thể nhiều người dùng AI tinh ý sẽ thắc mắc về cách đặt tên này, bởi Anthropic đã chuyển từ “Claude 3.7 Sonnet” sang “Claude Sonnet 4”. Cá nhân tôi thích cách gọi mới hơn, dù sự thay đổi này ban đầu có thể hơi gây nhầm lẫn.</p>
-
-
     <h2><strong>Claude Opus 4 và Claude Sonnet 4: Khác biệt ở đâu?</strong></h2>
-
-
     <p>Vậy, điểm khác biệt giữa Claude Sonnet 4 và Claude Opus 4 là gì? Rất đơn giản, Claude Sonnet 4 được thiết kế cho các nhu cầu hàng ngày như giải đáp thắc mắc cơ bản hay tìm kiếm thông tin. Ngược lại, Claude Opus 4 lại là lựa chọn tối ưu cho những tác vụ lập trình phức tạp và chuyên sâu.</p>
-
-
     <p>Anthropic tự tin khẳng định rằng cả hai phiên bản Claude 4 đều là một bước tiến vượt trội so với những người tiền nhiệm. Điều đáng kinh ngạc đầu tiên là chúng<strong> giảm tới 65% nguy cơ "đi đường tắt"</strong> trong các quy trình tự động, vốn dễ bị lợi dụng sơ hở. Không chỉ vậy, Claude Opus 4 còn sở hữu khả năng ghi nhớ được<strong> cải thiện rất nhiều</strong> so với Claude 3.7 Sonnet, giúp nó lưu giữ thông tin tốt hơn hẳn trong các giai đoạn phát triển phức tạp. Tưởng tượng xem, giờ đây nó có thể tự tạo ra các tệp bộ nhớ để tra cứu, mà không cần phải "nhồi nhét" quá nhiều dữ liệu vào cửa sổ ngữ cảnh (lượng thông tin mà AI xử lý cùng lúc). Thật ấn tượng phải không?</p>
-
-
     <p>Tuy nhiên, Claude Opus 4 thông minh hơn cũng đi kèm với một sự đánh đổi. Vì là một mô hình lớn hơn nhiều, chi phí sử dụng của nó đắt hơn đáng kể và không miễn phí. Ngay cả những người đăng ký Claude Pro 20 đô/tháng cũng gặp giới hạn sử dụng với Claude Opus 4 điều rất hiếm gặp khi đăng ký gói 20 đô/tháng của Gemini và Open AI. Với những ai muốn hỏi đáp liên tục với Claude Opus 4 không phải đợi thì phải chi 100 đô la/tháng cho tài khoản Max sẽ nhận được giới hạn cao hơn rất nhiều.</p>
-
-
     <h2><strong>Vì sao tôi thích Claude</strong></h2>
-
-
     <p>Có một vài điều tôi thực sự yêu thích ở Claude, dù cần lưu ý rằng nó vẫn chưa có tất cả các tính năng như các dịch vụ AI khác. Điều tôi thích nhất ở Claude là nó mang lại cảm giác <strong>gần gũi với con người hơn một chút</strong> và đặc biệt là nó <strong>tương tác với tiếng Việt rất tốt</strong> rất ít khi lỗi điều mà không thể xảy với ChatGPT và Gemini nếu chạy workflow phức tạp và dài.</p>
-
-
     <p>Mọi thứ, từ thiết kế đến cách phản hồi, đều có vẻ cá nhân và tự nhiên hơn– điều này đúng với cả Claude Sonnet 4 và Claude Opus 4. Từ những chi tiết nhỏ như biểu tượng "đang suy nghĩ" cho đến sự khác biệt lớn hơn về kiểu văn bản nó tạo ra. Một phần là nhờ khả năng tùy chỉnh cuộc trò chuyện với Claude bằng các "kiểu" cài đặt sẵn hoặc tự tạo, giúp định hướng cách Claude phản hồi. Các tùy chọn có sẵn bao gồm "Súc tích" và "Giải thích", nhưng bạn cũng có thể tự tạo kiểu riêng cho mình.</p>
-
-
     <h2><strong>Claude so với các đối thủ</strong></h2>
-
-
     <p>Khi các dịch vụ AI không ngừng cải tiến với tốc độ chóng mặt, không phải tất cả đều cung cấp mọi tính năng. Điều này có nghĩa là tính năng của Claude vẫn đi sau ChatGPT và Gemini hoặc Grok rất nhiều.</p>
-
-
     <p>Ví dụ, Claude không thể tạo hình ảnh và Anthropic cũng chỉ mới bắt đầu triển khai dịch vụ trò chuyện bằng giọng nói. Tính năng trò chuyện bằng giọng nói của Claude, hiện vẫn đang trong giai đoạn thử nghiệm (beta), vẫn chưa tự nhiên bằng phiên bản văn bản, hoặc tính năng tìm kiếm cập nhật thông tin theo thời gian thực trên Grok cũng hoàn toàn không có. Đây có thể là những tính năng cơ bản bắt buộc đối với bạn – và nếu bạn thường xuyên sử dụng chúng, Claude có thể không phù hợp, hoặc bạn sẽ cần kết hợp với các dịch vụ AI khác.</p>
-
-
     <p>Tuy nhiên, Claude cũng có rất nhiều <strong>ưu điểm</strong>. Ví dụ, Claude có tính năng "Nghiên cứu Chuyên sâu" (được gọi đơn giản là Research), cho phép nó phân tích nhiều nguồn để tìm kiếm thông tin. Còn khi sử dụng tính năng "Tư duy Mở rộng" (Extended Thinking), bạn nên bật chúng cho những câu hỏi đòi hỏi suy luận một chút vì mặc dù thời gian đợi câu trả lời lâu hơn nhưng khả năng câu trả lời suy luận này sẽ không làm bạn thất vọng vì nó trả lời đúng trọng tâm hơn sau khi suy nghĩ.</p>
-
-
     <p>Dù Claude đã được cải thiện đáng kể trong các tác vụ nghiên cứu và sử dụng hàng ngày, nhưng sức mạnh thực sự của nó vẫn nằm ở khả năng lập trình. Cá nhân tôi không biết gì về lập trình và code, nhưng Claude thực sự nổi bật hơn bất kỳ dịch vụ nào khác về mảng này, nếu không hãy nhìn vào nền tảng lập trình thông minh nhất hỗ trợ lập trình là Cusor(theo ý kiến cá nhân) luôn ưu tiên tích hợp Claude vào ứng dụng thông minh mạnh mẽ nhất có lẽ là từ đời Claude 3.7 Sonnet, hoặc ai có dùng N8n hoặc Make nó viết mã Javascript hoặc Python hoàn toàn có thể sử dụng được trên N8n và Make.Thậm chí Anthropic còn phát triển một công cụ độc lập mang tên <strong> Claude Code</strong>, một trợ lý lập trình chuyên dụng được cung cấp bộ não bởi Claude Opus 4.</p>
-
-
     <p>Tin tốt là bạn không nhất thiết phải trả phí để dùng thử Claude, dù nếu không, bạn sẽ không thể sử dụng các tính năng cao cấp nhất của nó. Thay vào đó, tất cả những gì bạn cần làm là tạo một tài khoản và dùng thử và bạn hoàn toàn có thể dùng thử Claude Sonnet 4 miễn phí trong giới hạn và xem nó có phù hợp với mình không. Còn như tôi thì hay sử dụng Claude trong N8n và Make còn nếu trên nền tảng web thì ChatGPT hoặc Gemini luôn là lựa chọn vì sự tiện dụng cho các tính năng. </p>`,
     publishedAt: '2025-06-15T11:00:00Z',
     imageUrl:  '/image/news/AI Claude công cụ AI yêu thích.png',
@@ -235,5 +207,3 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
-
-    
