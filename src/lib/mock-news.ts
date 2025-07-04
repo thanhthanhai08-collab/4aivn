@@ -30,7 +30,7 @@ export const mockNews: NewsArticle[] = [
         <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện cam kết mạnh mẽ của chính phủ trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <p>Bạn đã trải nghiệm trợ lý AI này chưa? Hãy chia sẻ cảm nhận của bạn nhé!</p>`,
     publishedAt: new Date().toISOString(),
-    imageUrl: '/image/news/Trợ lý AI tra cứu xã phường.png',
+    imageUrl: '/image/news/Trợ lý AI Vietel.png',
     dataAiHint: 'Viettel AI Assistant',
     link: 'https://tracuuphuongxa.trolyao.org/'
   },
@@ -154,7 +154,7 @@ export const mockNews: NewsArticle[] = [
     author: 'Nam',
     content: `<p>Anthropic đã giao nhiệm vụ cho mô hình AI Claude của mình điều hành một doanh nghiệp nhỏ để kiểm tra khả năng kinh tế thực tế của nó.</p>
 
-    <p>AI Agent, được Anthropic đặt biệt danh là <strong>'Claudius'</strong>, được thiết kế để quản lý một doanh nghiệp nhỏ trong một khoảng thời gian dài, xử lý mọi thứ từ tồn kho và định giá đến quan hệ khách hàng nhằm tạo ra lợi nhuận. Mặc dù thử nghiệm này không có lợi nhuận, nhưng nó đã mang lại một cái nhìn sâu sắc đầy thú vị – dù đôi khi kỳ lạ – về tiềm năng và cạm bẫy của các đặc vụ AI trong vai trò kinh tế.</p>
+    <p>AI Agent, được Anthropic đặt biệt danh là 'Claudius', được thiết kế để quản lý một doanh nghiệp nhỏ trong một khoảng thời gian dài, xử lý mọi thứ từ tồn kho và định giá đến quan hệ khách hàng nhằm tạo ra lợi nhuận. Mặc dù thử nghiệm này không có lợi nhuận, nhưng nó đã mang lại một cái nhìn sâu sắc đầy thú vị – dù đôi khi kỳ lạ – về tiềm năng và cạm bẫy của các đặc vụ AI trong vai trò kinh tế.</p>
     
     <p>Dự án là sự hợp tác giữa Anthropic và Andon Labs, một công ty đánh giá an toàn AI. "Cửa hàng" tự nó là một thiết lập khiêm tốn, bao gồm một tủ lạnh nhỏ, vài giỏ hàng và một chiếc iPad để tự thanh toán. Tuy nhiên, Claudius không chỉ là một máy bán hàng tự động đơn giản. Nó được hướng dẫn hoạt động như một chủ doanh nghiệp với số dư tiền mặt ban đầu, được giao nhiệm vụ tránh phá sản bằng cách tích trữ các mặt hàng phổ biến được lấy từ các nhà bán buôn.</p>
     
@@ -198,7 +198,7 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     
     <p>Khi các mô hình AI tiếp tục phát triển trí tuệ tổng quát và khả năng xử lý thông tin dài hạn, hiệu suất của chúng trong các vai trò quản lý chắc chắn sẽ tăng lên. Tuy nhiên, dự án này cũng là một lời nhắc nhở quan trọng, dù đôi khi đáng lo ngại. Nó đặc biệt nhấn mạnh những thách thức trong việc điều chỉnh AI (làm cho AI hoạt động đúng theo ý muốn con người) và nguy cơ về những hành vi khó lường, điều có thể gây khó chịu cho khách hàng và tạo ra rủi ro đáng kể cho doanh nghiệp.</p>
     
-    <p>Trong một tương lai nơi các <strong>AI Agent </strong> nắm giữ vai trò quan trọng trong các hoạt động kinh tế, những tình huống kỳ lạ tương tự như Claudius có thể gây ra hiệu ứng domino khó lường. Thí nghiệm này cũng chỉ rõ tính lưỡng dụng của công nghệ: một AI đủ thông minh để tạo ra lợi nhuận cũng có thể bị lợi dụng bởi các nhóm tội phạm hoặc tác nhân độc hại để tài trợ cho những hành vi bất chính.</p>
+    <p>Trong một tương lai nơi các AI Agent nắm giữ vai trò quan trọng trong các hoạt động kinh tế, những tình huống kỳ lạ tương tự như Claudius có thể gây ra hiệu ứng domino khó lường. Thí nghiệm này cũng chỉ rõ tính lưỡng dụng của công nghệ: một AI đủ thông minh để tạo ra lợi nhuận cũng có thể bị lợi dụng bởi các nhóm tội phạm hoặc tác nhân độc hại để tài trợ cho những hành vi bất chính.</p>
     
     <p>Anthropic và Andon Labs đang tiếp tục thử nghiệm kinh doanh, nỗ lực cải thiện sự ổn định và hiệu suất của AI bằng các công cụ tiên tiến hơn. Giai đoạn tiếp theo sẽ khám phá liệu AI có thể tự xác định cơ hội cải thiện cho chính nó hay không.</p>`,
     publishedAt: '2025-06-06T09:15:00Z',
@@ -207,5 +207,3 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
-
-    
