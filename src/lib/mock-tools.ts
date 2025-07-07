@@ -13,8 +13,8 @@ export const mockTools: Tool[] = [
     link: 'https://www.midjourney.com',
     features: [
       "Là công cụ chuyên tạo hình ảnh nghệ thuật với rất nhiều phong cách nghệ thuật.",
-"Mỗi lần có thể tạo ra được 4 bức ảnh khác nhau dựa trên prompt văn bản tiếng Việt hoặc tiếng Anh .",
-"Độ phân giải mỗi bức ảnh rất cao và còn có thể prompt tăng độ phân giải nữa",
+      "Mỗi lần có thể tạo ra được 4 bức ảnh khác nhau dựa trên prompt văn bản tiếng Việt hoặc tiếng Anh.",
+      "Độ phân giải mỗi bức ảnh rất cao và còn có thể prompt tăng độ phân giải nữa",
       "Giao diện rất dễ tương tác tùy chỉnh",
       "Nguồn cảm hứng sáng tạo cho mọi người.",
       "Chi phí nhỏ nhất là 10 USD / 1 tháng.",
@@ -234,4 +234,5 @@ export const mockTools: Tool[] = [
   },
 ];
 
+    
     
