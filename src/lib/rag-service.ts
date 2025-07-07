@@ -44,8 +44,8 @@ Flowith là nền tảng AI Agent thế hệ mới với Agent Neo được thi�
 Gói Free có thể dùng miễn phí với 1000 credit / 1 tháng.
 Gói Professional (19.9 USD/ 1 tháng) có thể tạo video với 20000 credit /1 tháng.
 Gói Ultimate(49.9 USD/ 1 tháng) có thể tạo video với 50000 credit /1 tháng
-
-PASTE YOUR GOOGLE DOC CONTENT HERE.
+`;
+/*PASTE YOUR GOOGLE DOC CONTENT HERE.
 
 This content will be used as the knowledge base for the RAG chatbot.
 For example, if your document contains information about company policies,
@@ -61,7 +61,7 @@ Our mission is to provide the most accurate and up-to-date information about AI 
 **Contact Us**
 You can reach us at info@cleanai.vn.
 ---
-`;
+*/
 // =================================================================================
 
 // Simple chunking function
@@ -103,7 +103,7 @@ async function initializeDocumentStore() {
   const chunks = chunkText(documentContent);
   // Using the standard embedding model for reliability and performance.
   const { embeddings } = await ai.embed({
-    model: googleAI.model('embedding-004'),
+    model: googleAI.model('text-embedding-004'),
     content: chunks,
   });
 
@@ -125,7 +125,7 @@ export async function findRelevantContext(query: string, topK = 3): Promise<stri
   }
 
   const { embedding: queryEmbedding } = await ai.embed({
-    model: googleAI.model('embedding-004'),
+    model: googleAI.model('text-embedding-004'),
     content: query,
   });
 
