@@ -33,12 +33,11 @@ export const mockTools: Tool[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://chat.openai.com',
     features:  [
-      "Tích hợp sẵn vào Gpt 4o cực kì tiện lợi chỉ việc sử dụng không phải chuyển trang như Dall E.",
+      "Tích hợp sẵn vào Gpt 4o cực kì tiện lợi chỉ việc sử dụng không phải chuyển trang như Dall E và Sora.",
       "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh",
-      "• Tạo hình ảnh từ hình ảnh",
-      "• Tạo hình ảnh từ mô tả văn bản, giọng nói",
-      "• Chỉnh sửa hình ảnh từ hình ảnh mẫu",
-      "• Chỉnh sửa hình ảnh từ mô tả văn bản, giọng nói",
+      " GPT Image 1 hỗ trợ 3 loại kích thước ảnh là 1024x1024 và 1024x1536 và 1536x1024. ",
+      "Hỗ trợ tiếng Anh cực tốt cả tạo ảnh với chữ tiếng Anh trên ảnh còn tiếng Việt chỉ hỗ trợ prompt chưa tối ưu hiển thị trên ảnh",
+      "Có thể tạo nhân vật đồng nhất dựa trên mô tả prompt."
     ],
     userRating: 4.8,
     ratingCount: 150,
