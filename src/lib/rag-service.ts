@@ -100,20 +100,36 @@ let isStoreInitialized = false;
 async function initializeDocumentStore() {
   if (isStoreInitialized) return;
 
-  const chunks = chunkText(documentContent);
-  // Using the standard embedding model for reliability and performance.
-  const { embeddings } = await ai.embed({
-    model: googleAI.model('text-embedding-004'),
-    content: chunks,
-  });
+  try {
+    const chunks = chunkText(documentContent);
+    if (chunks.length === 0) {
+      isStoreInitialized = true;
+      return;
+    }
+    // Using the standard embedding model for reliability and performance.
+    const embedResult = await ai.embed({
+      model: googleAI.model('text-embedding-004'),
+      content: chunks,
+    });
 
-  documentStore = chunks.map((chunk, i) => ({
-    chunk,
-    embedding: embeddings[i],
-  }));
+    if (!embedResult || !embedResult.embeddings) {
+        throw new Error("Failed to generate embeddings. The result was empty.");
+    }
+    const { embeddings } = embedResult;
 
-  isStoreInitialized = true;
-  console.log('Document store initialized.');
+    documentStore = chunks.map((chunk, i) => ({
+      chunk,
+      embedding: embeddings[i],
+    }));
+
+  } catch (error) {
+    console.error("Error initializing document store. RAG will be disabled.", error);
+    // Keep the store empty to prevent further errors
+    documentStore = [];
+  } finally {
+    isStoreInitialized = true;
+    console.log('Document store initialized.');
+  }
 }
 
 // Find relevant context from the document
@@ -124,17 +140,27 @@ export async function findRelevantContext(query: string, topK = 3): Promise<stri
     return [];
   }
 
-  const { embedding: queryEmbedding } = await ai.embed({
-    model: googleAI.model('text-embedding-004'),
-    content: query,
-  });
-
-  const similarities = documentStore.map(item => ({
-    chunk: item.chunk,
-    similarity: cosineSimilarity(queryEmbedding, item.embedding),
-  }));
-
-  similarities.sort((a, b) => b.similarity - a.similarity);
-
-  return similarities.slice(0, topK).map(item => item.chunk);
+  try {
+    const embedResult = await ai.embed({
+      model: googleAI.model('text-embedding-004'),
+      content: query,
+    });
+  
+    if (!embedResult || !embedResult.embedding) {
+      throw new Error("Failed to generate query embedding. The result was empty.");
+    }
+    const { embedding: queryEmbedding } = embedResult;
+  
+    const similarities = documentStore.map(item => ({
+      chunk: item.chunk,
+      similarity: cosineSimilarity(queryEmbedding, item.embedding),
+    }));
+  
+    similarities.sort((a, b) => b.similarity - a.similarity);
+  
+    return similarities.slice(0, topK).map(item => item.chunk);
+  } catch (error) {
+    console.error("Error finding relevant context:", error);
+    return []; // Return empty context on error
+  }
 }
