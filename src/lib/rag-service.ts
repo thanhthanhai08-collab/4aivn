@@ -67,6 +67,7 @@ You can reach us at info@cleanai.vn.
 // Simple chunking function
 function chunkText(text: string, chunkSize = 500, overlap = 50): string[] {
   const chunks: string[] = [];
+  if (!text) return chunks;
   let i = 0;
   while (i < text.length) {
     const end = Math.min(i + chunkSize, text.length);
@@ -100,19 +101,27 @@ let isStoreInitialized = false;
 async function initializeDocumentStore() {
   if (isStoreInitialized) return;
 
+  // Ensure document content is not empty
+  if (!documentContent || documentContent.trim().length < 10) {
+    console.warn("documentContent is empty or too short. RAG functionality will be disabled.");
+    isStoreInitialized = true;
+    return;
+  }
+
   try {
     const chunks = chunkText(documentContent);
-    if (chunks.length === 0) {
-      isStoreInitialized = true;
-      return;
+    if (!chunks.length) {
+        console.warn("Chunking the document resulted in 0 chunks. RAG functionality will be disabled.");
+        isStoreInitialized = true;
+        return;
     }
-    // Using the standard embedding model for reliability and performance.
+    
     const embedResult = await ai.embed({
       model: googleAI.model('text-embedding-004'),
       content: chunks,
     });
 
-    if (!embedResult || !embedResult.embeddings) {
+    if (!embedResult || !embedResult.embeddings || embedResult.embeddings.length === 0) {
         throw new Error("Failed to generate embeddings. The result was empty.");
     }
     const { embeddings } = embedResult;
@@ -122,13 +131,13 @@ async function initializeDocumentStore() {
       embedding: embeddings[i],
     }));
 
+    console.log(`Document store initialized with ${documentStore.length} chunks.`);
+
   } catch (error) {
-    console.error("Error initializing document store. RAG will be disabled.", error);
-    // Keep the store empty to prevent further errors
-    documentStore = [];
+    console.error("CRITICAL: Error initializing document store. RAG will be disabled. This is likely due to an API key or configuration issue.", error);
+    documentStore = []; // Ensure store is empty on failure
   } finally {
     isStoreInitialized = true;
-    console.log('Document store initialized.');
   }
 }
 
@@ -137,6 +146,7 @@ export async function findRelevantContext(query: string, topK = 3): Promise<stri
   await initializeDocumentStore();
 
   if (!documentStore.length) {
+    console.warn("RAG document store is not initialized or empty. Returning no context.");
     return [];
   }
 
@@ -158,7 +168,10 @@ export async function findRelevantContext(query: string, topK = 3): Promise<stri
   
     similarities.sort((a, b) => b.similarity - a.similarity);
   
-    return similarities.slice(0, topK).map(item => item.chunk);
+    // Filter out results with low similarity to avoid irrelevant context
+    const relevantChunks = similarities.filter(item => item.similarity > 0.5);
+
+    return relevantChunks.slice(0, topK).map(item => item.chunk);
   } catch (error) {
     console.error("Error finding relevant context:", error);
     return []; // Return empty context on error
