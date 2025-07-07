@@ -1,7 +1,7 @@
 // src/ai/flows/demo-chatbot.ts
 'use server';
 /**
- * @fileOverview A demo chatbot AI agent.
+ * @fileOverview A demo chatbot AI agent with RAG capabilities.
  *
  * - demoChatbot - A function that handles the chatbot conversation.
  * - DemoChatbotInput - The input type for the demoChatbot function.
@@ -11,6 +11,7 @@
 import {ai} from '@/ai/genkit';
 import { googleAI } from '@genkit-ai/googleai';
 import {z} from 'genkit';
+import { findRelevantContext } from '@/lib/rag-service';
 
 const DemoChatbotInputSchema = z.object({
   message: z.string().describe('The user message to the chatbot.'),
@@ -34,16 +35,30 @@ export async function demoChatbot(input: DemoChatbotInput): Promise<DemoChatbotO
 const prompt = ai.definePrompt({
   name: 'demoChatbotPrompt',
   model: googleAI.model('gemini-2.5-pro'),
-  input: {schema: DemoChatbotInputSchema},
+  input: {schema: z.object({
+    message: DemoChatbotInputSchema.shape.message,
+    image: DemoChatbotInputSchema.shape.image,
+    chatHistory: DemoChatbotInputSchema.shape.chatHistory,
+    context: z.array(z.string()).optional().describe('Relevant information from the knowledge base.'),
+  })},
   output: {schema: DemoChatbotOutputSchema},
-  prompt: `You are a demo chatbot that helps users learn about AI tools and news.
-  If an image is provided, describe it or answer questions about it in the context of AI tools and news.
-  Your responses should be informative and engaging.
-  Use the chat history to maintain context and provide relevant answers.
+  prompt: `You are a demo chatbot that helps users by answering questions based on provided information.
+  Your primary source of information is the provided context from our knowledge base.
+  Base your answers strictly on this context. If the context doesn't contain the answer, say that you do not have that information in your knowledge base.
+  Do not use your general knowledge.
+
+  If an image is provided, you can also comment on it.
 
   Chat History:
   {{#each chatHistory}}
   {{role}}: {{content}}
+  {{/each}}
+
+  Context from knowledge base:
+  ---
+  {{#each context}}
+  {{this}}
+  ---
   {{/each}}
 
   User: {{message}}
@@ -61,7 +76,14 @@ const demoChatbotFlow = ai.defineFlow(
     outputSchema: DemoChatbotOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    // 1. Find relevant context using RAG
+    const context = await findRelevantContext(input.message);
+
+    // 2. Call the model with the user's message and the retrieved context
+    const {output} = await prompt({
+      ...input,
+      context,
+    });
     return output!;
   }
 );
