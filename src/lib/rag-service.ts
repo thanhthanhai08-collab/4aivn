@@ -1,3 +1,4 @@
+// src/lib/rag-service.ts
 'use server';
 
 import { ai } from '@/ai/genkit';
@@ -119,6 +120,7 @@ async function initializeDocumentStore() {
     const embedResult = await ai.embed({
       model: googleAI.model('text-embedding-004'),
       content: chunks,
+      taskType: 'RETRIEVAL_DOCUMENT',
     });
 
     if (!embedResult || !embedResult.embeddings || embedResult.embeddings.length === 0) {
@@ -154,6 +156,7 @@ export async function findRelevantContext(query: string, topK = 3): Promise<stri
     const embedResult = await ai.embed({
       model: googleAI.model('text-embedding-004'),
       content: query,
+      taskType: 'RETRIEVAL_QUERY',
     });
   
     if (!embedResult || !embedResult.embedding) {
