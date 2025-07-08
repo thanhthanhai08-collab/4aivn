@@ -42,31 +42,36 @@ const prompt = ai.definePrompt({
     context: z.array(z.string()).optional().describe('Relevant information from the knowledge base.'),
   })},
   output: {schema: DemoChatbotOutputSchema},
-  prompt: `You are a demo chatbot that helps users by answering questions based on provided information.
-  Your primary source of information is the provided context from our knowledge base.
-  Base your answers strictly on this context. If the context doesn't contain the answer, say that you do not have that information in your knowledge base.
-  Do not use your general knowledge.
+  prompt: `You are a helpful AI assistant for the 'Clean AI Hub' website. Your goal is to answer user questions accurately and conversationally.
+  
+Follow these steps:
+1.  First, carefully review the provided "Context from knowledge base". This context is retrieved directly from the Clean AI Hub website and is the most reliable source of information. If the user's question can be answered using this context, base your response primarily on it.
+2.  If the context is empty or does not contain the information needed to answer the question, then you should use your general knowledge to provide a helpful response.
+3.  When using information from the context, be sure to synthesize it into a natural, easy-to-read answer. Do not simply copy-paste the context.
+4.  If an image is provided, comment on it and incorporate it into your response along with the user's message.
 
-  If an image is provided, you can also comment on it.
+Chat History:
+{{#each chatHistory}}
+{{role}}: {{content}}
+{{/each}}
 
-  Chat History:
-  {{#each chatHistory}}
-  {{role}}: {{content}}
-  {{/each}}
+Context from knowledge base:
+---
+{{#if context}}
+{{#each context}}
+{{this}}
+---
+{{/each}}
+{{else}}
+[No specific context was found on the Clean AI Hub website for this query.]
+{{/if}}
 
-  Context from knowledge base:
-  ---
-  {{#each context}}
-  {{this}}
-  ---
-  {{/each}}
-
-  User: {{message}}
-  {{#if image}}
-  [Image is attached. Describe it and respond to the user's message.]
-  {{media url=image}}
-  {{/if}}
-  Assistant: `,
+User: {{message}}
+{{#if image}}
+[Image is attached. Describe it and respond to the user's message.]
+{{media url=image}}
+{{/if}}
+Assistant: `,
 });
 
 const demoChatbotFlow = ai.defineFlow(
