@@ -33,8 +33,7 @@ export async function demoChatbot(input: DemoChatbotInput): Promise<DemoChatbotO
 
 const prompt = ai.definePrompt({
   name: 'demoChatbotPrompt',
-  // Switched to a more stable model to avoid overload errors.
-  model: googleAI.model('gemini-1.5-pro-latest'),
+  model: googleAI.model('gemini-2.5-flash'),
   input: {schema: DemoChatbotInputSchema},
   output: {schema: DemoChatbotOutputSchema},
   prompt: `You are a helpful AI assistant for the 'Clean AI Hub' website. Your goal is to answer user questions accurately and conversationally.
