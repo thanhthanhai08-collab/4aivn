@@ -3,7 +3,7 @@
 
 // IMPORTANT: Replace with your actual deployed website domain if it's different.
 // For example: "my-clean-ai-hub.firebaseapp.com"
-const WEBSITE_DOMAIN = "clean-ai-hub.web.app"; 
+const WEBSITE_DOMAIN = "https://6000-firebase-studio-1749353897098.cluster-ubrd2huk7jh6otbgyei4h62ope.cloudworkstations.dev"; 
 
 // The Tavily API key should be set in your .env file.
 if (!process.env.TAVILY_API_KEY) {
