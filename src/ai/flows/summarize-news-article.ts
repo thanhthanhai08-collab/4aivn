@@ -34,7 +34,7 @@ const summarizeNewsArticlePrompt = ai.definePrompt({
   name: 'summarizeNewsArticlePrompt',
   input: {schema: SummarizeNewsArticleInputSchema},
   output: {schema: SummarizeNewsArticleOutputSchema},
-  prompt: `Summarize the following news article in a concise manner:
+  prompt: `Tóm tắt nhanh bài viết sau đây bằng tiếng Việt. Bản tóm tắt cần ngắn gọn, súc tích và dễ hiểu:
 
 {{{articleContent}}}`,
 });
