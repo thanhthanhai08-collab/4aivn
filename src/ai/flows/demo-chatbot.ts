@@ -56,15 +56,27 @@ const demoChatbotFlow = ai.defineFlow(
       }
 
       const responseData = await response.json();
+      console.log('Received from webhook:', JSON.stringify(responseData, null, 2));
       
-      // Validate the response from the webhook against our schema
-      const parsedOutput = DemoChatbotOutputSchema.parse(responseData);
+      // Validate the response from the webhook against our schema safely
+      const parsedOutput = DemoChatbotOutputSchema.safeParse(responseData);
       
-      return parsedOutput;
+      if (!parsedOutput.success) {
+        console.error('Webhook response does not match expected schema:', parsedOutput.error);
+        return {
+          response: `Xin lỗi, đã có lỗi định dạng dữ liệu từ webhook. Vui lòng kiểm tra lại kịch bản Make.com của bạn. Dữ liệu nhận được: ${JSON.stringify(responseData)}`
+        };
+      }
+
+      return parsedOutput.data;
 
     } catch (error) {
       console.error('Error calling webhook or parsing response:', error);
-      // Return a user-friendly error message that still fits the schema
+      if (error instanceof SyntaxError) { // JSON parsing error
+        return {
+          response: 'Xin lỗi, đã có lỗi khi đọc phản hồi từ webhook. Phản hồi không phải là JSON hợp lệ.'
+        };
+      }
       return {
         response: 'Xin lỗi, đã có sự cố khi kết nối đến dịch vụ chatbot. Vui lòng thử lại sau.'
       };
