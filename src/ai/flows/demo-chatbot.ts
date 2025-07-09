@@ -54,31 +54,36 @@ const demoChatbotFlow = ai.defineFlow(
         console.error('Error body:', errorBody);
         throw new Error(`Webhook request failed with status ${response.status}`);
       }
+      
+      const responseText = await response.text();
+      console.log('Received from webhook (raw text):', responseText);
 
-      const responseData = await response.json();
-      console.log('Received from webhook:', JSON.stringify(responseData, null, 2));
-      
-      // Validate the response from the webhook against our schema safely
-      const parsedOutput = DemoChatbotOutputSchema.safeParse(responseData);
-      
-      if (!parsedOutput.success) {
-        console.error('Webhook response does not match expected schema:', parsedOutput.error);
-        return {
-          response: `Xin lỗi, đã có lỗi định dạng dữ liệu từ webhook. Vui lòng kiểm tra lại kịch bản Make.com của bạn. Dữ liệu nhận được: ${JSON.stringify(responseData)}`
-        };
+      try {
+        // Attempt to parse the text as JSON
+        const responseData = JSON.parse(responseText);
+        
+        // Validate the parsed JSON against our schema
+        const parsedOutput = DemoChatbotOutputSchema.safeParse(responseData);
+        
+        if (!parsedOutput.success) {
+          console.error('Webhook JSON response does not match expected schema:', parsedOutput.error);
+          return {
+            response: `Xin lỗi, đã có lỗi định dạng dữ liệu từ webhook. Vui lòng kiểm tra lại kịch bản Make.com của bạn. Dữ liệu nhận được: ${responseText}`
+          };
+        }
+        
+        return parsedOutput.data;
+
+      } catch (jsonError) {
+        // If JSON parsing fails, assume the entire responseText is the intended message.
+        console.log('Webhook response is not valid JSON. Treating as plain text response.');
+        return { response: responseText };
       }
 
-      return parsedOutput.data;
-
-    } catch (error) {
-      console.error('Error calling webhook or parsing response:', error);
-      if (error instanceof SyntaxError) { // JSON parsing error
-        return {
-          response: 'Xin lỗi, đã có lỗi khi đọc phản hồi từ webhook. Phản hồi không phải là JSON hợp lệ.'
-        };
-      }
+    } catch (error: any) {
+      console.error('Error calling webhook or processing its response:', error);
       return {
-        response: 'Xin lỗi, đã có sự cố khi kết nối đến dịch vụ chatbot. Vui lòng thử lại sau.'
+        response: `Xin lỗi, đã có sự cố khi kết nối đến dịch vụ chatbot. Lỗi: ${error.message || 'Vui lòng thử lại sau.'}`
       };
     }
   }
