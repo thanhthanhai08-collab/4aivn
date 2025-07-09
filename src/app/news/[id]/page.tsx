@@ -1,7 +1,7 @@
 // src/app/news/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User } from "lucide-react";
@@ -53,7 +53,7 @@ const renderContent = (content: string) => {
 
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const { id } = use(params);
+  const { id } = params;
   const { currentUser } = useAuth();
 
   const [article, setArticle] = useState<NewsArticle | null>(null);

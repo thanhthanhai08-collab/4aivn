@@ -1,7 +1,7 @@
 // src/app/models/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
@@ -24,7 +24,7 @@ import {
 
 
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
-  const { id } = use(params);
+  const { id } = params;
 
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);

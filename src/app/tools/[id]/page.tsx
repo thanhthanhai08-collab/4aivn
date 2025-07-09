@@ -1,7 +1,7 @@
 // src/app/tools/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
@@ -24,7 +24,7 @@ import {
 
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  const { id } = use(params);
+  const { id } = params;
 
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
