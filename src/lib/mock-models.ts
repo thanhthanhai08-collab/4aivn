@@ -39,6 +39,42 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 36.13,
   },
   {
+    id: 'grok-4',
+    name: 'Grok 4',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'xAI',
+    description: `+ Grok 4 là mô hình AI ngôn ngữ lớn (Large Language Model - LLM) mới nhất do công ty xAI của tỷ phú Elon Musk phát triển, được ra mắt vào tháng 7 năm 2025. Grok 4 đang nhận được rất nhiều quan tâm trong lĩnh vực AI với sự thông minh và các bài benchmark của nó vượt qua Open AI-04, Claude 4 và Gemini 2.5 pro.
++ Grok 4 đã sử dụng hệ thống siêu máy tính gồm hơn 200.000 GPU Nvidia H100 để huấn luyện (gấp đôi so với Grok 3) tất nhiên Grok 4 vẫn giữ được các ưu điểm của Grok 3 với tính năng DeepSearch cho phép truy xuất dữ liệu thời gian thực từ internet và mạng xã hội X, giúp nó cập nhật thông tin nhanh chóng và bắt kịp xu hướng mạng xã hội và vẫn tiếp tục hỗ trợ đa phương thức hình ảnh và văn bản tuy nhiên Grok 4 vẫn chưa hỗ trợ video và giọng nói.
++ Grok 4 tất nhiên vẫn hỗ trợ năng lực suy luận với Grok 4 Thinking và Grok 4 Heavy.
++ Một số người dùng và chuyên gia cho rằng Grok 4 có thể được thiết kế để phản ánh quan điểm chính trị cá nhân của Elon Musk khi trả lời các câu hỏi nhạy cảm, do mô hình tham khảo các bài đăng trên tài khoản X của Musk.`,
+    logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
+    link: '#',
+    userRating: 4.8,
+    ratingCount: 190,
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý 1 lần là 256 nghìn token→ Tức là có thể xử lý khoảng 195 nghìn từ hoặc 800 trang văn bản trong 1 lần xử lý.",
+      "Chỉ số thông minh 573 →Dựa trên trung bình các điểm benmark là",
+      "• MMLU-Pro (Reasoning & Knowledge) 87%",
+      "• GPQA Diamond (Scientific Reasoning) 88%",
+      "• Humanity's Last Exam (Reasoning & Knowledge) 23.9%",
+      "• LiveCodeBench (Coding) 82%",
+      "• SciCode (Coding) 46%",
+      "• HumanEval (Coding) 98%",
+      "• MATH-500 (Quantitative reasoning) 99%",
+      "• AIME 2024 (Competition Math) 94%",
+      "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
+      "• Giá đầu vào 3 USD / 1 triệu token.",
+      "• Giá đầu ra 15 USD / 1 triệu token.",
+      "Tốc độ sinh token là 74.7 token /s.",
+      "Độ trễ 6.41s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+    ],
+    contextLengthToken: '256k',
+    intelligenceScore: 573,
+    pricePerMillionTokens: 6,
+    speedTokensPerSecond: 74.7,
+    latencyFirstChunkSeconds: 6.41,
+  },
+  {
     id: 'grok-3-mini-reasoning-high',
     name: 'Grok 3 mini Reasoning (high)',
     type: 'Mô hình ngôn ngữ lớn',
