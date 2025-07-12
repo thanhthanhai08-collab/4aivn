@@ -3,6 +3,63 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'grok-4-ra-mat-xai-khang-dinh-grok-4-la-mo-hinh-ai-thong-minh-nhat-the-gioi',
+    title: 'Grok 4 ra mắt: xAI khẳng định Grok 4 là mô hình AI “thông minh” nhất thế giới',
+    source: 'xAI',
+    author: 'Nam',
+    content: `<p>Ngày 09 tháng 7 năm 2025, xAI, công ty trí tuệ nhân tạo của tỷ phú Elon Musk, đã chính thức công bố sự ra đời của Grok 4, mô hình AI được mệnh danh là thông minh nhất thế giới. Grok 4 vẫn kế thừa những tính năng cốt lõi của Grok thế hệ trước và được nâng cấp vượt trội với khả năng suy luận mạnh mẽ của Grok 4 Heavy cùng khả năng cập nhật dữ liệu trong thời gian thực. Grok 4 và Grok 4 Heavy đang định hình lại cục diện cuộc đua AI toàn cầu.</p>
+        <p>Grok 4 hiện đã có sẵn cho những người đăng ký gói SuperGrok và Premium+, cũng như thông qua API của xAI. Cùng với đó, xAI cũng giới thiệu một tầng đăng ký mới mang tên SuperGrok Heavy, cung cấp quyền truy cập vào Grok 4 Heavy – phiên bản mạnh mẽ nhất, hoạt động theo cơ chế "multi-agent” độc đáo. Tuy nhiên, dự kiến giá sử dụng sẽ không hề dễ chịu chút nào, vào khoảng 300 đô la Mỹ mỗi tháng.</p>
+        <h2><strong>Công Nghệ Nền Tảng: Tăng Cường Học Tăng Cường với Siêu Cụm Colossus</strong></h2>
+        <p>Sự phát triển của Grok 4 là một bước tiến vượt bậc từ Grok 3 Reasoning, mô hình đã chứng minh khả năng tư duy sâu hơn và giải quyết vấn đề chính xác hơn nhờ học tăng cường. xAI đã nhận ra tiềm năng mở rộng đáng kể quá trình huấn luyện học tăng cường này.</p>
+        [IMAGE:/image/news/xAi ra mắt Grok 4.png|Minh họa Grok 4|xAi Grok 4]
+        <p>Để đạt được hiệu suất đột phá của Grok 4, xAI đã tận dụng <strong>Colossus</strong>, cụm <strong>200.000 GPU Nvidia H1000</strong> khổng lồ của mình, để huấn luyện cho mô hình. Theo xAI, quá trình này được hỗ trợ từ cơ sở hạ tầng đến các thuật toán mới, giúp hiệu quả tính toán của quá trình huấn luyện Grok 4 tăng lên gấp 6 lần. Đồng thời, xAI cũng thực hiện một nỗ lực thu thập dữ liệu lớn, mở rộng đáng kể dữ liệu huấn luyện có thể kiểm chứng từ chủ yếu là toán học và lập trình sang nhiều lĩnh vực khác, đặc biệt là dữ liệu từ nền tảng X là một công cụ huấn luyện tuyệt vời cho Grok 4.</p>
+        <h2><strong>Hiệu Suất Vượt Trội: Các Kỷ Lục Mới Trên Chuẩn Mực AI</strong></h2>
+        <p>Theo công bố từ xAI, các điểm benchmark của Grok 4 thực sự vượt trội so với những mô hình đối thủ. Cần lưu ý đây là dữ liệu từ xAI và sẽ có một dữ liệu độc lập khác trong bảng xếp hạng của Clean AI.</p>
+        <ul>
+            <li><strong>Humanity's Last Exam:</strong>
+                <ul>
+                    <li>Grok 4 Heavy (với Python + Internet): 44.4%</li>
+                    <li>Grok 4 (với Python + Internet): 38.6%</li>
+                    <li>Grok 4 (không công cụ): 25.4%</li>
+                    <li>Grok 4 Heavy là mô hình đầu tiên đạt 50.7% trên tập con chỉ văn bản của bài kiểm tra này.</li>
+                    <li><em>So với:</em> Gemini Deep Research (26.9%), Grok 4o3 (với Python + Internet): 24.9%, Gemini 2.5 Pro (21.6%), o3 (21%).</li>
+                </ul>
+            </li>
+            <li><strong>ARC-AGI v2 Semi Private (Nhận diện mẫu):</strong>
+                <ul>
+                    <li>Grok 4: 15.9%(gần gấp đôi Claude Opus 4)</li>
+                    <li><em>So với:</em> Claude Opus 4 (8.6%), o3 (6.5%), Gemini 2.5 Pro (4.9%).</li>
+                </ul>
+            </li>
+            <li><strong>Agentic Vending-Bench:</strong> Grok 4 thể hiện sự vượt trội trong mô phỏng kinh tế khi đạt giá trị  trung bình 4694.15 USD và bán được 4569 đơn vị (trung bình 5 lần chạy), vượt xa Claude Opus 4 (2077.41 USD, 1412 đơn vị) và Gemini(844.05 USD, 344 đơn vị).</li>
+        </ul>
+        <h2><strong>Tính Năng Độc Đáo: Sử Dụng Công Cụ Nguyên Bản và Khả Năng Đa Phương Thức</strong></h2>
+        <p>Grok 4 được huấn luyện để có thể kết hợp sử dụng tìm kiếm web (web search) với thông tin chuyên sâu từ nền tảng X:</p>
+        <ul>
+            <li><strong>Đối với web search:</strong> Grok 4 có khả năng tìm kiếm thông tin theo thời gian thực hoặc khi giải quyết các câu hỏi phức tạp. Grok 4 có thể tự chọn truy vấn tìm kiếm, khai thác kiến thức từ khắp web và đi sâu cần thiết để cung cấp phản hồi chất lượng hơn.</li>
+            <li><strong>Đối với nền tảng mạng xã hội X:</strong> Grok có thể tìm kiếm chuyên sâu trong X, bao gồm tìm kiếm từ khóa, tìm kiếm ngữ nghĩa, xem ảnh và video. Từ đó, nó kết hợp thông tin đã tìm thấy trên web để tiếp tục cải thiện chất lượng của câu trả lời.</li>
+        </ul>
+        <h2><strong>Chế Độ Giọng Nói Nâng Cấp và Khả Năng Thị Giác Trực Tiếp</strong></h2>
+        <p>Grok 4 giới thiệu chế độ Voice Mode (giọng nói) có vẻ như đã được nâng cấp đáng kể, với độ chân thực, phản hồi nhanh nhạy và thông minh vượt trội. xAI đã tích hợp một giọng nói mới, êm dịu, được thiết kế để các cuộc hội thoại trở nên tự nhiên giống con người hơn.</p>
+        <p>Đặc biệt, Grok đã sở hữu khả năng <strong>"nhìn thấy những gì bạn thấy!"</strong>. Người dùng có thể hướng camera, nói chuyện trực tiếp, và Grok sẽ phân tích khung cảnh theo thời gian thực, cung cấp thông tin chi tiết và phản hồi ngay trong trải nghiệm trò chuyện bằng giọng nói. Chế độ này hoàn toàn giống với Gemini Live của Google. Tuy nhiên, đối với người Việt, Gemini Live vẫn có ưu thế về khả năng hỗ trợ tiếng Việt tốt hơn so với Grok ở thời điểm hiện tại.</p>
+        <h2><strong>API Mạnh Mẽ và Tầm Nhìn Doanh Nghiệp</strong></h2>
+        <p>API Grok 4 cung cấp cửa sổ ngữ cảnh (context window) lên tới 256k token. Mặc dù đây là một con số khá lớn, nhưng vẫn còn kém xa so với các mô hình của Google có thể đạt tới 1 triệu token.</p>
+        <p>API của Grok 4 chắc chắn sẽ được tích hợp khả năng tìm kiếm dữ liệu thời gian thực trên X, web và các nguồn tin tức khác thông qua API tìm kiếm trực tiếp mới ra mắt. Với bảo mật và tuân thủ cấp doanh nghiệp (SOC 2 Type 2, GDPR, CCPA), API Grok 4 đảm bảo bảo vệ mạnh mẽ cho các ứng dụng nhạy cảm. xAI cũng thông báo Grok 4 sẽ sớm có mặt trên các nền tảng đối tác hyperscaler, giúp doanh nghiệp dễ dàng triển khai ở quy mô lớn.</p>
+        <h2><strong>Lộ Trình Phát Triển và Thách Thức</strong></h2>
+        <p>xAI đã công bố lộ trình phát triển sản phẩm đầy tham vọng trong những tháng tới, bao gồm:</p>
+        <ul>
+            <li>Mô hình AI viết code (coding model): Dự kiến ra mắt vào tháng 8.</li>
+            <li>Tác nhân AI đa phương thức (multi-modal agent): Dự kiến ra mắt vào tháng 9.</li>
+            <li>Mô hình tạo video: Dự kiến ra mắt vào tháng 10.</li>
+        </ul>
+        <p>Trong tương lai, xAI sẽ tiếp tục phát triển và mở rộng quy mô để theo kịp các ông lớn như OpenAI, Google. Điều này sẽ càng có lợi cho người dùng khi mà AI luôn luôn được cải tiến và đổi mới.</p>
+        <p>Mặc dù Grok 4 đạt được những thành tựu vượt trội, xAI vẫn đối mặt với thách thức trong việc vượt qua những sự cố gần đây liên quan đến hành vi của Grok và sự thay đổi lãnh đạo tại X. Tuy nhiên, xAI một lần nữa khẳng định mình là một trong những phòng thí nghiệm AI nổi bật, tiếp tục đẩy lùi ranh giới của trí tuệ nhân tạo và thách thức mọi đối thủ lớn trên thế giới.</p>
+        <p>Grok hiện có sẵn trên Web, iOS, Android và Grok trên X.</p>`,
+    publishedAt: '2025-07-09T09:00:00Z',
+    imageUrl: '/image/news/xAi ra mắt Grok 4.png',
+    dataAiHint: 'xAi ra mắt Grok 4'
+  },
+  {
     id: 'tra-cuu-thong-tin-don-vi-hanh-chinh-moi-da-co-tro-ly-ai-cua-viettel-giup-suc',
     title: 'Tra cứu thông tin đơn vị hành chính mới đã có trợ lý AI của Viettel giúp sức',
     source: 'Viettel',
