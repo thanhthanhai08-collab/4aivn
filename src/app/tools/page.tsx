@@ -1,4 +1,3 @@
-
 // src/app/tools/page.tsx
 "use client";
 
@@ -10,6 +9,8 @@ import { mockTools } from "@/lib/mock-tools";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function ToolsPage() {
   const searchParams = useSearchParams();
@@ -19,15 +20,36 @@ export default function ToolsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [allTools, setAllTools] = useState<Tool[]>(mockTools);
 
 
   useEffect(() => {
     setMounted(true);
-    // Simulate data fetching
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
+    
+    const fetchData = async () => {
+      try {
+        const toolsSnapshot = await getDocs(collection(db, "tools"));
+        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
+        toolsSnapshot.forEach(doc => {
+          const data = doc.data();
+          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
+        });
+        
+        setAllTools(mockTools.map(tool => ({
+          ...tool,
+          ...toolRatings[tool.id]
+        })));
+
+      } catch (error) {
+        console.error("Error fetching tool ratings:", error);
+        setAllTools(mockTools); // Fallback to mock data
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+
   }, []);
 
   // Update searchTerm if URL query changes
@@ -37,7 +59,7 @@ export default function ToolsPage() {
 
   const categories = useMemo(() => {
     // Get existing categories from tools
-    const existingCategoriesFromTools = new Set(mockTools.map(tool => tool.context));
+    const existingCategoriesFromTools = new Set(allTools.map(tool => tool.context));
 
     // Add "Model AI" to the set
     existingCategoriesFromTools.add("Model AI");
@@ -46,10 +68,10 @@ export default function ToolsPage() {
     const allCategories = Array.from(existingCategoriesFromTools).sort((a, b) => a.localeCompare(b));
     
     return allCategories;
-  }, []);
+  }, [allTools]);
 
   const sortedTools = useMemo(() => {
-    const filtered = mockTools.filter((tool) => {
+    const filtered = allTools.filter((tool) => {
       const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             tool.description.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
@@ -57,7 +79,7 @@ export default function ToolsPage() {
     });
     // Sort the filtered results by ranking
     return filtered.sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, allTools]);
 
   if (!mounted && !initialSearchQuery) { // Added !initialSearchQuery to prevent skeleton flash if search is active
      return (
