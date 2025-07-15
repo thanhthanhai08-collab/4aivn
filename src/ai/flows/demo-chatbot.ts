@@ -81,7 +81,7 @@ Here is the relevant context from the knowledge base:
 User's question: {{{message}}}
 `,
   },
-  { model: 'googleai/gemini-2.5-flash' } // Specify the model for answer synthesis
+  { model: 'googleai/gemini-pro' } // Specify the model for answer synthesis
 );
 
 const demoChatbotFlow = ai.defineFlow(
