@@ -12,6 +12,10 @@ interface ModelCardProps {
 }
 
 export function ModelCard({ model }: ModelCardProps) {
+  const averageRating = model.ratingCount && model.ratingCount > 0 
+    ? (model.totalStars || 0) / model.ratingCount 
+    : model.userRating || 0;
+
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
       <CardHeader className="p-4">
@@ -59,10 +63,10 @@ export function ModelCard({ model }: ModelCardProps) {
                 Đánh giá của bạn: {model.myRating} sao
               </p>
             </div>
-          ) : model.userRating ? (
+          ) : averageRating > 0 ? (
             <div className="flex items-center text-sm text-amber-500">
               <Star className="h-4 w-4 mr-1 fill-amber-400 text-amber-500" />
-              {model.userRating.toFixed(1)}
+              {averageRating.toFixed(1)}
             </div>
           ) : (
             <div className="h-5" /> // Placeholder to keep height consistent

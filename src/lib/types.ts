@@ -10,6 +10,7 @@ export interface Tool {
   link: string; // Official link to the tool
   features?: string[];
   userRating?: number; // Average user rating (1-5)
+  totalStars?: number; // Sum of all ratings
   isFavorite?: boolean;
   myRating?: number;
   ratingCount?: number;
@@ -54,6 +55,7 @@ export interface AIModel {
   logoUrl: string;
   link?: string; // Link to project page or paper
   userRating?: number;
+  totalStars?: number; // Sum of all ratings
   myRating?: number;
   features?: string[];
   isFavorite?: boolean; // Added for favorite functionality

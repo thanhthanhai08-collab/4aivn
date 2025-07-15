@@ -12,6 +12,10 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool }: ToolCardProps) {
+  const averageRating = tool.ratingCount && tool.ratingCount > 0 
+    ? (tool.totalStars || 0) / tool.ratingCount 
+    : tool.userRating || 0;
+
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
       <CardHeader className="p-4">
@@ -65,10 +69,10 @@ export function ToolCard({ tool }: ToolCardProps) {
                 Đánh giá của bạn: {tool.myRating} sao
               </p>
             </div>
-          ) : tool.userRating ? (
+          ) : averageRating > 0 ? (
             <div className="flex items-center text-sm">
                 <Star className="h-4 w-4 mr-1 fill-amber-400 text-amber-500" />
-                <span className="text-muted-foreground">{tool.userRating.toFixed(1)}</span>
+                <span className="text-muted-foreground">{averageRating.toFixed(1)}</span>
             </div>
           ) : (
             <div className="h-5" /> // Placeholder to keep height consistent

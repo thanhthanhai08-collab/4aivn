@@ -31,6 +31,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
 
   const sortedItems = [...items]
     .sort((a, b) => {
+      const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+      const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
       if (itemType === 'model') {
         const modelA = a as AIModel;
         const modelB = b as AIModel;
@@ -51,8 +54,6 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         if (priceA !== priceB) return priceA - priceB;
         
         // 4. Sort by userRating (descending)
-        const ratingA = a.userRating ?? -Infinity;
-        const ratingB = b.userRating ?? -Infinity;
         if (ratingB !== ratingA) return ratingB - ratingA;
         
         return modelA.name.localeCompare(modelB.name);
@@ -99,13 +100,17 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, index) => {
+            const averageRating = item.ratingCount && item.ratingCount > 0 
+              ? (item.totalStars || 0) / item.ratingCount 
+              : item.userRating || 0;
+
             if (itemType === 'model') {
               const modelItem = item as AIModel;
               const currentSignature = [
                 modelItem.intelligenceScore,
                 parseContextLength(modelItem.contextLengthToken),
                 modelItem.pricePerMillionTokens,
-                item.userRating,
+                averageRating,
               ].join('-');
 
               if (currentSignature !== lastSignature) {
@@ -113,8 +118,6 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               }
               lastSignature = currentSignature;
             }
-            
-            const averageRating = item.userRating ?? 0;
 
             return (
             <TableRow key={item.id}>
@@ -182,9 +185,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                       />
                     ))}
                   </div>
-                  {item.userRating && (
+                  {averageRating > 0 && (
                     <span className="text-muted-foreground">
-                      ({item.userRating.toFixed(1)})
+                      ({averageRating.toFixed(1)})
                     </span>
                   )}
                 </div>

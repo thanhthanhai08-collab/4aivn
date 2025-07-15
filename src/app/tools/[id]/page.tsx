@@ -20,7 +20,10 @@ import {
   setToolRating,
   toggleToolFavorite,
   getUserProfileData,
+  getAggregateRating,
 } from "@/lib/user-data-service";
+import { doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
@@ -30,6 +33,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   
   const { currentUser } = useAuth();
@@ -49,6 +53,10 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
           setCurrentRating(userData.ratedTools?.[id] || 0);
         });
       }
+
+      // Fetch aggregate rating data from Firestore
+      const toolDocRef = doc(db, "tools", id);
+      getAggregateRating(toolDocRef).then(setAggregateRating);
 
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
@@ -85,19 +93,28 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
     }
 
     const oldRating = currentRating;
-    setCurrentRating(rating); // Optimistic UI update
+    const oldAggregate = { ...aggregateRating };
+
+    // Optimistic UI update
+    setCurrentRating(rating);
+    setAggregateRating(prev => {
+        let newTotalStars = prev.totalStars - oldRating + rating;
+        let newRatingCount = prev.ratingCount;
+        if(oldRating === 0) { // It's a new rating
+            newRatingCount += 1;
+        }
+        return { totalStars: newTotalStars, ratingCount: newRatingCount };
+    });
 
     try {
       await setToolRating(currentUser.uid, tool.id, rating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${rating} sao.` });
 
-      // Note: We no longer update the average rating in the mock data.
-      // This would require a more complex backend setup (e.g., Cloud Functions)
-      // to calculate and store averages. The current scope is user-specific data.
-
     } catch(error) {
       console.error("Failed to save rating:", error);
-      setCurrentRating(oldRating); // Revert UI on error
+      // Revert UI on error
+      setCurrentRating(oldRating); 
+      setAggregateRating(oldAggregate);
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
@@ -138,6 +155,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   }
 
   const descriptionToDisplay = enhancedDescription || tool.description;
+  const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
 
   return (
     <AppLayout>
@@ -215,7 +233,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                {tool.userRating && <p className="text-sm text-muted-foreground mt-1">Trung bình: {tool.userRating.toFixed(1)} sao</p>}
+                {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
               </CardContent>
             </Card>
             

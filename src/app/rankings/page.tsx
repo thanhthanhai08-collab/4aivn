@@ -12,23 +12,60 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   
-  const allModels: AIModel[] = mockAIModels;
-  const allTools: Tool[] = mockTools;
-
+  const [allModels, setAllModels] = useState<AIModel[]>(mockAIModels);
+  const [allTools, setAllTools] = useState<Tool[]>(mockTools);
 
   useEffect(() => {
     setMounted(true);
-    // Simulate data fetching
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300); // Shorter delay for tabbed content
-    return () => clearTimeout(timer);
+
+    const fetchData = async () => {
+      try {
+        // Fetch aggregate ratings for models
+        const modelsSnapshot = await getDocs(collection(db, "models"));
+        const modelRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
+        modelsSnapshot.forEach(doc => {
+          const data = doc.data();
+          modelRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
+        });
+
+        // Fetch aggregate ratings for tools
+        const toolsSnapshot = await getDocs(collection(db, "tools"));
+        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
+        toolsSnapshot.forEach(doc => {
+          const data = doc.data();
+          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
+        });
+
+        // Merge ratings into mock data
+        setAllModels(mockAIModels.map(model => ({
+          ...model,
+          ...modelRatings[model.id]
+        })));
+        setAllTools(mockTools.map(tool => ({
+          ...tool,
+          ...toolRatings[tool.id]
+        })));
+
+      } catch (error) {
+        console.error("Error fetching ratings:", error);
+        // Fallback to mock data if Firestore fails
+        setAllModels(mockAIModels);
+        setAllTools(mockTools);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+
   }, []);
 
   const filteredModels = useMemo(() => {

@@ -20,7 +20,10 @@ import {
   setModelRating,
   toggleModelFavorite,
   getUserProfileData,
+  getAggregateRating
 } from "@/lib/user-data-service";
+import { doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
@@ -30,6 +33,7 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   
   const { currentUser } = useAuth();
@@ -49,6 +53,10 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
           setCurrentRating(userData.ratedModels?.[id] || 0);
         });
       }
+
+      // Fetch aggregate rating data from Firestore
+      const modelDocRef = doc(db, "models", id);
+      getAggregateRating(modelDocRef).then(setAggregateRating);
 
       if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
         generateAiModelDescription({ 
@@ -89,14 +97,27 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
     }
 
     const oldRating = currentRating;
-    setCurrentRating(rating); // Optimistic UI update
+    const oldAggregate = { ...aggregateRating };
+
+    // Optimistic UI update
+    setCurrentRating(rating);
+    setAggregateRating(prev => {
+        let newTotalStars = prev.totalStars - oldRating + rating;
+        let newRatingCount = prev.ratingCount;
+        if(oldRating === 0) { // It's a new rating
+            newRatingCount += 1;
+        }
+        return { totalStars: newTotalStars, ratingCount: newRatingCount };
+    });
 
     try {
       await setModelRating(currentUser.uid, model.id, rating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
     } catch(error) {
         console.error("Failed to save rating:", error);
-        setCurrentRating(oldRating); // Revert on error
+        // Revert UI on error
+        setCurrentRating(oldRating); 
+        setAggregateRating(oldAggregate);
         toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
@@ -137,6 +158,7 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
   }
 
   const descriptionToDisplay = enhancedDescription || model.description;
+  const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
 
   return (
     <AppLayout>
@@ -225,7 +247,7 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                {model.userRating && <p className="text-sm text-muted-foreground mt-1">Trung bình: {model.userRating.toFixed(1)} sao</p>}
+                {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
               </CardContent>
             </Card>
             
