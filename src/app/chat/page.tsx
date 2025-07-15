@@ -7,6 +7,7 @@ import { ChatInput } from "@/components/chat/chat-input";
 import type { ChatMessage } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { demoChatbot } from "@/ai/flows/demo-chatbot";
+import { processImageForChat } from "@/ai/flows/process-image-for-chat";
 import { useToast } from "@/hooks/use-toast";
 
 const fileToDataUri = (file: File): Promise<string> => {
@@ -50,7 +51,14 @@ export default function ChatPage() {
     setIsLoadingAiResponse(true);
 
     try {
-      const imageDataUri = image ? await fileToDataUri(image) : undefined;
+      let imageDataUri: string | undefined = undefined;
+      let imageDescription: string | undefined = undefined;
+
+      if (image) {
+          const processResult = await processImageForChat({ photoDataUri: await fileToDataUri(image) });
+          imageDataUri = processResult.imageUri;
+          imageDescription = processResult.description;
+      }
       
       const chatHistoryForAI = messages.map(msg => ({
         role: msg.sender === 'user' ? 'user' : 'assistant',
@@ -60,7 +68,8 @@ export default function ChatPage() {
       
       const aiResponse = await demoChatbot({ 
         message: text, 
-        image: imageDataUri, 
+        imageUri: imageDataUri, 
+        imageDescription: imageDescription,
         chatHistory: chatHistoryForAI 
       });
       

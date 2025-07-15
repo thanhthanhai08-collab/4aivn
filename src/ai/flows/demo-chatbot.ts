@@ -13,7 +13,8 @@ import {z} from 'genkit';
 
 const DemoChatbotInputSchema = z.object({
   message: z.string().describe('The user message to the chatbot.'),
-  image: z.string().optional().describe("An optional image provided by the user, as a data URI. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
+  imageUri: z.string().optional().describe("An optional image URI provided by the user, as a data URI. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
+  imageDescription: z.string().optional().describe('An AI-generated description of the image, if provided.'),
   chatHistory: z.array(z.object({
     role: z.enum(['user', 'assistant']),
     content: z.string(),
