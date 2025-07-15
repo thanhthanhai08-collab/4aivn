@@ -9,6 +9,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { demoChatbot } from "@/ai/flows/demo-chatbot";
 import { processImageForChat } from "@/ai/flows/process-image-for-chat";
 import { useToast } from "@/hooks/use-toast";
+import { removeMarkdown } from "@/lib/utils";
 
 const fileToDataUri = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -67,13 +68,12 @@ export default function ChatPage() {
       }));
       
       const aiResponse = await demoChatbot({ 
-        message: messageForAi, 
-        chatHistory: chatHistoryForAI 
+        message: messageForAi
       });
       
       const newAiMessage: ChatMessage = {
         id: `ai-${Date.now()}`,
-        text: aiResponse.response,
+        text: removeMarkdown(aiResponse.response),
         sender: "ai",
         timestamp: Date.now(),
       };
