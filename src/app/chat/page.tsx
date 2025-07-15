@@ -29,7 +29,7 @@ export default function ChatPage() {
     setMessages([
       {
         id: "initial-ai-greeting",
-        text: "Xin chào! Tôi là chatbot demo của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ hoặc tin tức AI hôm nay? Bạn cũng có thể gửi một hình ảnh.",
+        text: "Xin chào! Tôi là chatbot của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ, mô hình hoặc tin tức AI có trên trang web này?",
         sender: "ai",
         timestamp: Date.now(),
       },
@@ -51,13 +51,13 @@ export default function ChatPage() {
     setIsLoadingAiResponse(true);
 
     try {
-      let imageDataUri: string | undefined = undefined;
-      let imageDescription: string | undefined = undefined;
+      let messageForAi = text;
 
       if (image) {
           const processResult = await processImageForChat({ photoDataUri: await fileToDataUri(image) });
-          imageDataUri = processResult.imageUri;
-          imageDescription = processResult.description;
+          // Prepend the AI-generated description to the user's text message
+          // so the chatbot flow receives both pieces of information.
+          messageForAi = `${processResult.description}\n\n${text}`;
       }
       
       const chatHistoryForAI = messages.map(msg => ({
@@ -67,9 +67,7 @@ export default function ChatPage() {
       }));
       
       const aiResponse = await demoChatbot({ 
-        message: text, 
-        imageUri: imageDataUri, 
-        imageDescription: imageDescription,
+        message: messageForAi, 
         chatHistory: chatHistoryForAI 
       });
       

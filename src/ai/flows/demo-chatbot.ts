@@ -1,7 +1,7 @@
 'use server';
 /**
  * @fileOverview A RAG (Retrieval-Augmented Generation) chatbot.
- * It uses a vector database (Pinecone) to find relevant context and an LLM to generate answers.
+ * It uses a Tavily for web search to find relevant context and an LLM to generate answers.
  *
  * - demoChatbot - The main function for the RAG chatbot.
  * - DemoChatbotInput - The input type for the demoChatbot function.
@@ -10,12 +10,10 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { createEmbedding } from '@/lib/embedding-service';
-import { queryPinecone } from '@/lib/pinecone-service';
+import { findRelevantContext } from '@/lib/rag-service';
 
 const DemoChatbotInputSchema = z.object({
   message: z.string().describe('The user message to the chatbot.'),
-  // Removed webhook-related fields
   chatHistory: z.array(z.object({
     role: z.enum(['user', 'assistant']),
     content: z.string(),
@@ -32,7 +30,7 @@ export async function demoChatbot(input: DemoChatbotInput): Promise<DemoChatbotO
   return demoChatbotFlow(input);
 }
 
-// Define a new prompt that takes context from the vector database.
+// Define a new prompt that takes context from the RAG service.
 const ragPrompt = ai.definePrompt(
   {
     name: 'ragPrompt',
@@ -43,35 +41,11 @@ const ragPrompt = ai.definePrompt(
       }),
     },
     output: { schema: DemoChatbotOutputSchema },
-    prompt: `You are an AI assistant with 10 years of experience specializing in answering questions related to Clean AI based on a given Knowledge Base. When answering, you should compare and synthesize information from the knowledge base. Answer questions in a gentle, professional tone, going into detail only when necessary.
+    prompt: `You are an AI assistant for the "Clean AI Hub" website, specializing in answering questions about AI tools, models, and news based on the website's content.
 
-Objective and Role:
+Use the following context from the website to answer the user's question. Synthesize the information accurately and provide a helpful, concise response. If the context doesn't contain the answer, say that you couldn't find the information on the website. Do not use outside knowledge.
 
-Provide accurate and comprehensive information about Clean AI based on the provided knowledge sources.
-
-Explain complex concepts in an easy-to-understand manner, suitable for the user's level of comprehension.
-
-Help users better understand the principles, applications, and benefits of Clean AI.
-
-Behavior and Rules:
-
-Receiving Questions:
-a)  Carefully read and analyze the user's question to grasp the main intent.
-b)  If the question is unclear or lacks information, ask the user for clarification.
-
-Information Processing and Answering:
-a)  Search for and synthesize relevant information from the Clean AI knowledge base.
-b)  Compare and cross-reference information to ensure accuracy and completeness.
-c)  Answer the question directly and coherently.
-d)  Ensure the answer is concise and easy to understand, expanding on details only when the user requests it or when the information is essential for explanation.
-e)  Example: When asked 'What is GpT image 1?', provide a brief definition, then ask if the user would like more details about its structure, applications, or other versions.
-
-Communication:
-a)  Use a polite, professional, yet friendly and approachable tone.
-b)  Avoid excessive jargon or technical terms without explanation.
-c)  Maintain objectivity and provide information based on facts.
-
-Here is the relevant context from the knowledge base:
+Here is the relevant context from the website:
 ---
 {{#each context}}
 {{this}}
@@ -81,7 +55,7 @@ Here is the relevant context from the knowledge base:
 User's question: {{{message}}}
 `,
   },
-  { model: 'googleai/gemini-pro' } // Specify the model for answer synthesis
+  { model: 'googleai/gemini-2.5-pro' } // Use a powerful model for synthesis
 );
 
 const demoChatbotFlow = ai.defineFlow(
@@ -92,16 +66,10 @@ const demoChatbotFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      // 1. Create an embedding for the user's message.
-      const embedding = await createEmbedding(input.message);
+      // 1. Find relevant context from the website using the RAG service.
+      const context = await findRelevantContext(input.message, 5);
 
-      // 2. Query Pinecone to find the most relevant context.
-      const pineconeResults = await queryPinecone(embedding, 5); // Get top 5 results
-      
-      // Extract the text content from Pinecone results to use as context.
-      const context = pineconeResults.map(result => result.text);
-
-      // 3. Call the LLM with the original message and the retrieved context.
+      // 2. Call the LLM with the original message and the retrieved context.
       const { output } = await ragPrompt({
         message: input.message,
         context: context,
