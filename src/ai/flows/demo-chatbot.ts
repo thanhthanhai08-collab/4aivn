@@ -31,17 +31,16 @@ export async function demoChatbot(input: DemoChatbotInput): Promise<DemoChatbotO
 }
 
 // Define a new prompt that takes context from the RAG service.
-const ragPrompt = ai.definePrompt(
-  {
-    name: 'ragPrompt',
-    input: {
-      schema: z.object({
-        message: z.string(),
-        context: z.array(z.string()),
-      }),
-    },
-    output: { schema: DemoChatbotOutputSchema },
-    prompt: `You are an AI assistant for the "Clean AI Hub" website, specializing in answering questions about AI tools, models, and news based on the website's content.
+const ragPrompt = ai.definePrompt({
+  name: 'ragPrompt',
+  input: {
+    schema: z.object({
+      message: z.string(),
+      context: z.array(z.string()),
+    }),
+  },
+  output: { schema: DemoChatbotOutputSchema },
+  prompt: `You are an AI assistant for the "Clean AI Hub" website, specializing in answering questions about AI tools, models, and news based on the website's content.
 
 Use the following context from the website to answer the user's question. Synthesize the information accurately and provide a helpful, concise response. If the context doesn't contain the answer, say that you couldn't find the information on the website. Do not use outside knowledge.
 
@@ -54,9 +53,10 @@ Here is the relevant context from the website:
 
 User's question: {{{message}}}
 `,
+  config: {
+    model: 'googleai/gemini-2.5-pro', // Use a powerful model for synthesis
   },
-  { model: 'googleai/gemini-2.5-pro' } // Use a powerful model for synthesis
-);
+});
 
 const demoChatbotFlow = ai.defineFlow(
   {
