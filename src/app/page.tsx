@@ -10,12 +10,50 @@ import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
+import type { Tool } from "@/lib/types";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function HomePage() {
   const latestNews = mockNews.slice(0, 3);
-  const topTools = mockTools
-    .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
-    .slice(0, 4);
+  const [topTools, setTopTools] = useState<Tool[]>([]);
+  const [isLoadingTools, setIsLoadingTools] = useState(true);
+
+  useEffect(() => {
+    const fetchToolRatings = async () => {
+      try {
+        const toolsSnapshot = await getDocs(collection(db, "tools"));
+        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
+        toolsSnapshot.forEach(doc => {
+          const data = doc.data();
+          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
+        });
+
+        const initialTopTools = mockTools
+          .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
+          .slice(0, 4);
+
+        const toolsWithRatings = initialTopTools.map(tool => ({
+          ...tool,
+          ...toolRatings[tool.id]
+        }));
+        
+        setTopTools(toolsWithRatings);
+      } catch (error) {
+        console.error("Error fetching tool ratings for homepage:", error);
+        // Fallback to mock data without ratings if Firestore fails
+        setTopTools(mockTools
+          .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
+          .slice(0, 4));
+      } finally {
+        setIsLoadingTools(false);
+      }
+    };
+
+    fetchToolRatings();
+  }, []);
+
 
   return (
     <AppLayout>
@@ -60,12 +98,12 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Danh sách tuyển chọn các công cụ AI phổ biến và có ảnh hưởng nhất.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {topTools.length > 0 ? (
+            {isLoadingTools ? (
+                [...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-lg" />)
+            ) : (
                 topTools.map((tool) => (
                   <ToolCard key={tool.id} tool={tool} />
                 ))
-            ) : (
-                [...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-lg" />)
             )}
           </div>
           <div className="text-center mt-12">
