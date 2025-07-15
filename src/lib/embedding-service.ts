@@ -5,7 +5,7 @@ import { embed } from 'genkit';
 import { googleAI } from '@genkit-ai/googleai';
 
 // The specific embedding model requested by the user.
-const embeddingModel = googleAI.model('gemini-embedding-001');
+const embeddingModel = googleAI.model('text-embedding-004');
 
 /**
  * Creates an embedding for a given text using the specified Gemini model.
