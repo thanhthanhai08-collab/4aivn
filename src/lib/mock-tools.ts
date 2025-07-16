@@ -231,6 +231,24 @@ export const mockTools: Tool[] = [
     userRating: 4.0,
     ratingCount: 94,
   },
+  {
+    id: 'fire-crawl',
+    name: 'Firecrawl',
+    context: 'API tìm kiếm thu thập dữ liệu',
+    developer: 'Mendable',
+    ranking: 11,
+    description: 'Firecrawl công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như markdown, HTML, và dữ liệu có cấu trúc. Không những vậy Firecrawl còn có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về điểm khác biệt.\n+ Firecrawl có với đầu ra là json nhưng nó rất khác với Tavily và Crawl4AI. Đầu ra giống với Tavily nhưng đầu ra của Tavily chủ yếu là nguồn, links, tóm tắt chủ yếu phục vụ cho mục đích tìm kiếm, còn Firecrawl sẽ đầy đủ cấu trúc web với dữ liệu thô như tittle, content, heading phục vụ mục đích trích xuất nội dung của web, còn đối với Crawl4AI đầu ra chủ yếu là văn bản phù hợp hơn với việc làm tri thức (knowledge) cho AI.\n+ Firecrawl có đầy đủ các tính năng của API tìm kiếm và trích xuất dữ liệu web:\n• Trích xuất dữ liệu web toàn điện (Crawl website): Người dùng có thể đưa url bất kì web nào cho Firecrawl sẽ trích xuất toàn bộ nội dung kể cả các trang con thành định dạng sạch, chuẩn Markdown hoặc HTML, phù hợp để chuẩn bị dữ liệu cho các mô hình ngôn ngữ lớn (LLM).\n• Lấy dữ liệu cụ thể từ một url (Scrape pages): Lấy dữ liệu chi tiết từ một URL cụ thể với nhiều định dạng đầu ra đa dạng như markdown, HTML, dữ liệu có cấu trúc JSON, đặc biệt là đối với bản trả phí hoàn toàn có thể sử dụng đầu ra ảnh chụp màn hình (giống với Puppeteer) giúp AI, người dùng có thể phân tích thông tin chính xác trên từng trang.\n• Lập bản đồ trang web (Map website): Lấy toàn bộ URL liên quan trên một website, giúp hiểu cấu trúc site và hỗ trợ trong việc tổ chức dữ liệu.\n• Chuyển đổi dữ liệu không có cấu trúc thành dữ liệu có cấu trúc (Extract website): Sử dụng AI tự động để phân tích, tổ chức và chuyển dữ liệu web thô sau khi Scape hoặc Crawl  thành các định dạng có cấu trúc rõ ràng, giúp dễ dàng xử lý và phân tích, hoặc đơn giản có thể tóm tắt lại nội dung để dễ sử dụng hơn cho AI chức năng này giống với Tavily nhưng không mạnh như Tavily.\n• Hỗ trợ nội dung động và tương tác web: Khả năng xử lý các trang web có nội dung động chạy JavaScript, SPA, hoặc cũng thể tương tác với web như click, cuộn trang, nhập liệu tự động trước khi thu thập dữ liệu, giúp thu thập dữ liệu chính xác và theo thời gian thực hơn (chức năng này ai hay dùng Puppeteer chắc chắn sẽ rõ).\n• Tích hợp proxy, quản lý tốc độ và tự động vượt qua các nền tảng chặn : Firecrawl có thể tự động vượt qua các chướng ngại như giới hạn tốc độ, CAPTCHA, và anti-bot để đảm bảo trích xuất dữ liệu ổn định không bị gián đoạn.\n• API và SDK đa ngôn ngữ: Hỗ trợ SDK cho Python, Node.js, Go, Rust..., giúp tích hợp vào nhiều hệ thống và ứng dụng AI khác nhau.\n• Cách vận hành linh hoạt: Vì là mã nguồn mở nên có có thể tự lưu trữ (self-host) hoặc dùng dịch vụ cloud, giúp bảo mật và kiểm soát dữ liệu tốt hơn.\n• Giá cả: Hoàn toàn có gói miễn phí chỉ ở mức đủ dùng với 500 credit có thể crawl được 500 trang/1 tháng với hạn mức 10 lần scrape/phút và 1 lần crawl/phút.\nGói Hobby với 16-19 USD/1 tháng thì có 3000 credit có thể crawl được 3000 trang/1 tháng với hạn mức 20 scrape/phút, 3 crawl/phút.\nGói Standard với 83-99 USD/1 tháng thì có 100.000 credit có thể crawl được 100.000 trang/1 tháng với hạn mức 100 scrape/phút, 10 crawl/phút.\nGói Growth với 333-399 USD/1 tháng thì có 500.000 credit có thể crawl được 500.000 trang/1 tháng với hạn mức 1000 scrape/phút, 50 crawl/phút.\nĐấy là các gói với Crawl và Scrape còn đối với gói Extract thì được miễn phí 1 lần/1 tháng còn đối với trả phí thì khá đắt đối với người Việt chỉ nên dùng khi có điều kiện hoặc dùng cho công ty với gói rẻ nhất là 89-99 USD/1 tháng.\n',
+    logoUrl: '/image/Logo Firecrawl.png',
+    link: 'https://firecrawl.dev',
+    features: [
+      "Firecrawl hỗ trợ rất nhiều tính năng trích xuất dữ liệu từ page hoặc web như crawl, scrape, map, extract.",
+"Hỗ trợ web có nội dung động và có thể tương tác với web.",
+"Tích hợp proxy, quản lý tốc độ, có thể vượt qua CAPTCHA và Anti-bot.",
+      "API và SDK đa ngôn ngữ giúp tương thích dễ dàng với nhiều hệ thống và ứng dụng AI khác nhau.",
+      "Vì là mã nguồn mở nên có thể vận hành linh hoạt với self-host hoặc dùng cloud với gói miễn phí được 500 trang/1 tháng.",
+      "Có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung web gửi thông báo chi tiết cho người dùng.",
+    ]
+  },
 ];
 
     
