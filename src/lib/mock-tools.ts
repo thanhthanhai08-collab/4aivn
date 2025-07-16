@@ -132,7 +132,7 @@ export const mockTools: Tool[] = [
   {
     id: 'tavily-ai',
     name: 'Tavily AI',
-    context: 'API Tìm kiếm',
+    context: 'API tìm kiếm thu thập dữ liệu',
     developer: 'Tavily',
     ranking: 7,
     description: 'Tavily AI là công cụ tìm kiếm và nghiên cứu hỗ trợ trí tuệ nhân tạo, được thiết kế tối ưu cho các mô hình ngôn ngữ lớn (LLM) và các hệ thống tạo-tái-tìm kiếm (RAG). Tavily cung cấp kết quả tìm kiếm chính xác, cập nhật theo thời gian thực, kèm theo trích dẫn nguồn đáng tin cậy, giúp giảm thiểu sai sót do ảo giác thông tin hoặc dữ liệu lỗi thời.\n+ Tavily có 4 tính năng chính qua API là tìm kiếm (Tavily search) trích xuất (Tavily extract) cào dữ liệu web (Tavily crawl) sơ đồ thông tin (Tavily map) được tổng hợp lại các ưu điểm sau:\n• Tìm kiếm thời gian thực: Kết hợp tìm kiếm web trực tiếp từ nhiều nguồn (Google, Bing, DuckDuckGo, v.v.) để cung cấp dữ liệu mới nhất và nhanh nhất cho các LLM hoặc AI Agen hoặc hệ thống RAG và từ đó tổng hợp lại thông tin tất nhiên là có trích dẫn nguồn để đảm bảo tính minh bạch và chính xác.\n• API của Tavily cực kì thân thiện với LLM và RAG: API của Tavily cực kì thân thiện với LLM giúp Tavily có thể tham gia dễ dàng vào các workflow tự động hóa công việc không giống Perplexity tập trung vào trả lời hỏi đáp với AI dựa trên các dữ liệu tổng hợp và web search.\n• Hỗ trợ cả web crawl và web extract: Người dùng hoàn toàn có thể dựa trên AI để trích xuất nội dung văn bản đơn thuần của web thông qua Tavily crawl hoặc có thể chọn trích xuất nội dung đã được AI xử lý giúp phân biệt và chuẩn hóa tiêu đề, đoạn văn, metadata, bảng biểu, và các phần nội dung có ý nghĩa khác trên trang web thông qua Tavily extract với AI giúp giảm thiểu các công đoạn xử lý dữ liệu trong RAG.\n• Hỗ trợ tạo map cho web: Tavily sẽ trả về danh sách cả url được phát hiện trong website đó giúp người dùng có cái nhìn tổng quan về web đó, nếu ai đã dùng Webflow hoặc Relume hoặc làm SEO thì sẽ hiểu rõ về site map.\n• Hỗ trợ đa dạng nguồn dữ liệu: Ngoài dữ liệu web công khai, Tavily còn tích hợp các nguồn dữ liệu nội bộ riêng tư về tài chính, mã hóa, tin tức, v.v., giúp mở rộng phạm vi thông tin.\n• Chi phí: Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí là 1000 credit / 1 tháng khi hết thì mua thêm là 0.008 USD/1 credit \nGói Project là 30 USD / 1 tháng với  4000 credit / 1 tháng khá là dư dùng.\n',
@@ -247,7 +247,9 @@ export const mockTools: Tool[] = [
       "API và SDK đa ngôn ngữ giúp tương thích dễ dàng với nhiều hệ thống và ứng dụng AI khác nhau.",
       "Vì là mã nguồn mở nên có thể vận hành linh hoạt với self-host hoặc dùng cloud với gói miễn phí được 500 trang/1 tháng.",
       "Có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung web gửi thông báo chi tiết cho người dùng.",
-    ]
+    ],
+    userRating: 4.4,
+    ratingCount: 55,
   },
 ];
 
