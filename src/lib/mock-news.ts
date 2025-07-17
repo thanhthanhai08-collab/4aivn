@@ -3,6 +3,93 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'google-deepmind-va-buoc-dot-pha-ai-trong-du-bao-bao',
+    title: 'Google DeepMind và bước đột phá AI trong dự báo bão: Thay đổi ngành khí tượng toàn cầu',
+    source: 'Google DeepMind',
+    author: 'Nam',
+    content: `<p>
+    Google DeepMind vừa công bố một cột mốc quan trọng trong việc ứng dụng trí tuệ nhân tạo vào dự báo bão, khi hệ thống AI tiên tiến của họ đã được Trung tâm bão quốc gia Mỹ(NHC) chấp thuận để đánh giá trong thời gian thực. 
+    Sự hợp tác này mở ra một kỷ nguyên mới trong ngành khí tượng, nơi AI không chỉ hỗ trợ mà còn có thể nâng tầm độ chính xác và tốc độ dự báo các bão nhiệt đới, góp phần cứu người và giảm thiểu thiệt hại kinh tế do thời tiết cực đoan gây ra.
+  </p>
+
+  <h2><strong>Bài toán dự báo bão, áp thấp nhiệt đới: Bài toán nan giải suốt nhiều thập kỷ</strong></h2>
+  <p>
+    Đối với dự báo thời tiết thì Google DeepMind cũng đã có mô hình GraphCast với khả năng dự báo thời tiết trong 10 ngày với độ chính xác hơn HRES 
+    (hệ thống mô phỏng thời tiết tiêu chuẩn vàng của Châu Âu) trên 99.7% các biến thử nghiệm trong tầng đối lưu, và đã được ECMWF thử nghiệm trực tiếp trên trang web của họ.
+  </p>
+  <p>
+    Còn đối với các dự báo các loại bão, áp thấp nhiệt đới luôn là một trong những dự báo phức tạp mang lại thách thức lớn nhất của ngành khí tượng. 
+    Các mô hình dự báo truyền thống đều dựa trên phương trình vật lý và siêu máy tính, thậm chí những mô hình AI dự báo thời tiết vẫn gặp giới hạn rõ rệt.
+  </p>
+  <p>
+    Đặc biệt, khi gặp các hiện tượng thời tiết cực đoan và hiếm gặp hay còn gọi là các sự kiện “thiên nga xám” – hầu hết các mô hình hiện tại đều khó khăn trong việc nhận diện và dự đoán do thiếu dữ liệu huấn luyện lịch sử tương ứng. 
+    Trong vòng 50 năm qua, xoáy thuận nhiệt đới đã gây ra tổn thất kinh tế hơn 1.400 tỷ USD trên toàn cầu – một con số cho thấy nhu cầu cấp thiết của các công nghệ dự báo nhanh và chính xác hơn.
+  </p>
+
+  <h2><strong>GenCast và Weather Lab: Cặp bài trùng AI dự báo bão từ DeepMind</strong></h2>
+  <p>
+    Để đối mặt với thách thức đó, Google DeepMind đã ra mắt hệ thống AI mới có tên WeatherNext Gen (gọi tắt là GenCast), được triển khai thông qua nền tảng Weather Lab. 
+    Mô hình này không chỉ dự đoán đường đi mà còn mô phỏng được cường độ của các cơn bão lên tới 15 ngày, với độ phân giải và tốc độ tốt hơn mô hình vật lý truyền thống.
+  </p>
+[IMAGE:/image/news/Ảnh Weather Lab.png|Minh họa mô hình Gencast|Gencast dự báo bão]
+
+  <h3>Những điểm nổi bật của GenCast:</h3>
+  <ul>
+    <li>
+      <strong>Độ chính xác vượt trội:</strong> Trong thử nghiệm, GenCast đã dự đoán vị trí bão chính xác hơn tới 140 km so với ENS (mô hình tổng hợp hàng đầu châu Âu). 
+      Đáng chú ý hơn, nó còn vượt qua cả hệ thống HAFS của NOAA (Cục quản lý khí quyển và đại dương Mỹ) trong việc dự đoán cường độ – một điểm yếu cố hữu của các mô hình AI trước đây.
+    </li>
+    <li>
+      <strong>Tốc độ cực nhanh:</strong> Trong khi các mô hình truyền thống cần hàng giờ tính toán trên siêu máy tính, thì GenCast có thể đưa ra dự báo 15 ngày chỉ trong một phút trên chip TPU của Google Cloud. 
+      Nhờ đó, hệ thống hoàn toàn đáp ứng yêu cầu của NHC là phải có dự báo trong vòng 6,5 giờ kể từ thời điểm thu thập dữ liệu.
+    </li>
+    <li>
+      <strong>Phương pháp học sâu thông minh:</strong> GenCast được huấn luyện dựa trên:
+      <ul>
+        <li>Dữ liệu tái phân tích khí hậu toàn cầu, với hàng triệu quan sát trong hàng chục năm.</li>
+        <li>Kho dữ liệu chi tiết của gần 5.000 cơn bão trong 45 năm, bao gồm cả nguồn dữ liệu IBTrACS.</li>
+      </ul>
+      Đây là một mô hình AI khuếch tán có điều kiện (Conditional Diffusion Model), tích hợp Mạng lưới sinh thành chức năng (Functional Generative Network)  cho phép mô phỏng xác suất, học từ dữ liệu quá khứ và xử lý tính bất định trong dự báo.
+    </li>
+  </ul>
+  <h2><strong>Từ nghiên cứu đến vận hành: Bước chuyển mình của NHC</strong></h2>
+  <p>
+    Điều đặc biệt là Trung tâm bão quốc gia Mỹ (NHC) đã chính thức đưa mô hình AI này vào quy trình đánh giá vận hành, bắt đầu từ mùa bão đại tây dương 2025.
+  </p>
+
+  <h3>Hai bước tiến then chốt:</h3>
+  <ul>
+    <li>
+      <strong>Tích hợp thời gian thực:</strong> Các dự báo từ GenCast sẽ chạy song song với các mô hình vật lý truyền thống trong quy trình làm việc của các nhà dự báo tại NHC.
+    </li>
+    <li>
+      <strong>Minh chứng từ thực địa:</strong> Trong các sự kiện gần đây như bão Otis (2023) và Beryl (2024), hệ thống AI đã dự đoán chính xác sự tăng cường nhanh chóng của bão – điều mà nhiều mô hình truyền thống bỏ lỡ. 
+      Nếu được triển khai sớm hơn, các cảnh báo có thể đã được đưa ra trước vài giờ.
+    </li>
+  </ul>
+
+  <h2><strong>Tương lai: AI không thay thế, mà tăng cường khả năng dự báo</strong></h2>
+  <p>
+    Google DeepMind nhấn mạnh rằng GenCast vẫn là công cụ nghiên cứu và không thay thế các cơ quan khí tượng chính thức, vì vậy mọi thông tin trên Weather Lab theo Google vẫn chỉ mang tính chất tham khảo. 
+  </p>
+  <p>
+    Tuy nhiên, mục tiêu rõ ràng là AI sẽ bổ trợ và tăng cường độ chính xác của các hệ thống hiện hành, nhất là trong những tình huống mà thời gian phản ứng là yếu tố sống còn 
+    và hướng phát triển trong tương lai sẽ là mô hình lai giữa AI và vật lý để đảm bảo các kết quả dưới góc nhìn khoa học.
+  </p>
+
+  <h2><strong>Kết luận: AI – Đồng minh mới trong cuộc chiến chống biến đổi khí hậu và thiên tai</strong></h2>
+  <p>
+    Dự báo thời tiết chính xác hơn không chỉ là một vấn đề khoa học mà còn là vấn đề sinh tử đối với hàng triệu người. 
+    Bằng việc tích hợp AI vào khí tượng học, chúng ta đang chứng kiến một cuộc cách mạng hóa cách con người hiểu và phản ứng với thiên nhiên.
+  </p>
+  <p>
+    GenCast là một minh chứng cho tiềm năng của trí tuệ nhân tạo không chỉ trong việc dự đoán tương lai mà còn trong việc bảo vệ con người khỏi các tác động của bão.
+  </p>`,
+    publishedAt: '2025-07-10T09:00:00Z',
+    imageUrl: '/image/news/Mô hình Gencast.png',
+    dataAiHint: 'Gencast mô hình AI có thể dự báo bão'
+  },
+  {
     id: 'grok-4-ra-mat-xai-khang-dinh-grok-4-la-mo-hinh-ai-thong-minh-nhat-the-gioi',
     title: 'Grok 4 ra mắt: xAI khẳng định Grok 4 là mô hình AI “thông minh” nhất thế giới',
     source: 'xAI',
