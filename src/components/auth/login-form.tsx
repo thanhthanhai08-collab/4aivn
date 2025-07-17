@@ -77,7 +77,15 @@ export function LoginForm() {
       router.push("/profile");
     } catch (error) {
       console.error("Google login error:", error);
-      toast({ title: "Đăng nhập Google thất bại", description: (error as Error).message || "Không thể đăng nhập bằng Google.", variant: "destructive" });
+      // Don't show a toast if the user simply closed the popup.
+      if (error instanceof FirebaseError && error.code === 'auth/popup-closed-by-user') {
+          return;
+      }
+      toast({ 
+          title: "Đăng nhập Google thất bại", 
+          description: "Không thể đăng nhập bằng Google. Vui lòng thử lại.", 
+          variant: "destructive" 
+      });
     } finally {
       setIsGoogleLoading(false);
     }
