@@ -103,15 +103,15 @@ export function SiteFooter() {
             <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start">
                     <Mail className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Email: info@cleanai.vn</span>
+                    <span>Email: CleanAIhub@gmail.com</span>
                 </li>
                  <li className="flex items-start">
                     <Phone className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Điện thoại: (+84) 123 456 789</span>
+                    <span>Điện thoại: 0973.490.497</span>
                 </li>
                  <li className="flex items-start">
                     <MapPin className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Địa chỉ: 123 Đường AI, Quận Tech, TP. Sáng Tạo</span>
+                    <span>Địa chỉ: Làng Vàng Cổ Bi, Xã Gia Lâm, TP. Hà Nội</span>
                 </li>
             </ul>
           </div>
