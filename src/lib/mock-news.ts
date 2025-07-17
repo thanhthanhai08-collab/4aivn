@@ -87,7 +87,8 @@ export const mockNews: NewsArticle[] = [
   </p>`,
     publishedAt: '2025-07-10T09:00:00Z',
     imageUrl: '/image/news/Mô hình Gencast.png',
-    dataAiHint: 'Gencast mô hình AI có thể dự báo bão'
+    dataAiHint: 'Gencast mô hình AI có thể dự báo bão',
+    link: 'https://deepmind.google/discover/blog/gencast-predicts-weather-and-the-risks-of-extreme-conditions-with-sota-accuracy/'
   },
   {
     id: 'grok-4-ra-mat-xai-khang-dinh-grok-4-la-mo-hinh-ai-thong-minh-nhat-the-gioi',
