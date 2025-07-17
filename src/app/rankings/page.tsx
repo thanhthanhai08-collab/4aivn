@@ -102,7 +102,7 @@ export default function RankingsPage() {
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-headline font-bold text-foreground">Bảng xếp hạng AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Khám phá các Model AI và Công cụ AI hàng đầu dựa trên đánh giá của cộng đồng.
+            Khám phá các model AI và công cụ AI hàng đầu dựa trên đánh giá của cộng đồng.
           </p>
         </header>
 
