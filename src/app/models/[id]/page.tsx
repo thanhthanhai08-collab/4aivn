@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
 import { mockAIModels as initialMockModels } from "@/lib/mock-models";
-import type { AIModel } from "@/lib/types";
+import type { AIModel, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,12 +24,15 @@ import {
 } from "@/lib/user-data-service";
 import { doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { mockNews } from "@/lib/mock-news";
+import { NewsCard } from "@/components/news/news-card";
 
 
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const [model, setModel] = useState<AIModel | null>(null);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
@@ -45,6 +48,13 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
     
     if (foundModel) {
       setModel(foundModel);
+
+      // Find related news articles
+      const filteredNews = mockNews.filter(article => 
+        article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
+        article.content.toLowerCase().includes(foundModel.name.toLowerCase())
+      ).slice(0, 3); // Limit to 3 articles
+      setRelatedNews(filteredNews);
       
       if (currentUser) {
         // Load user-specific data from Firestore
@@ -280,6 +290,25 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
                     )}
                 </CardContent>
             </Card>
+
+            {relatedNews.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl font-headline">Bài viết liên quan</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {relatedNews.map((article) => (
+                    <Link key={article.id} href={`/news/${article.id}`} className="flex items-start space-x-3 group border-b pb-3 last:border-b-0 last:pb-0">
+                      <Image src={article.imageUrl} alt={article.title} width={64} height={64} className="rounded-md object-cover aspect-square" data-ai-hint={article.dataAiHint} />
+                      <div>
+                        <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
+                        <p className="text-xs text-muted-foreground mt-1">{new Date(article.publishedAt).toLocaleDateString('vi-VN')}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>
