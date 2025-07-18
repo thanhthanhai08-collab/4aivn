@@ -81,12 +81,12 @@ export function LoginForm() {
       await loginWithGoogle();
       // Successful login will trigger onAuthStateChanged, which will handle the redirect.
     } catch (error) {
-      console.error("Google login error:", error);
       if (error instanceof FirebaseError && error.code === 'auth/popup-closed-by-user') {
         // User closed the popup, so we don't show an error.
         // It's a user action, not a system error.
         console.log("Google sign-in popup closed by user.");
       } else {
+        console.error("Google login error:", error);
         toast({
           title: "Đăng nhập Google thất bại",
           description: "Không thể bắt đầu quá trình đăng nhập bằng Google. Vui lòng thử lại.",
