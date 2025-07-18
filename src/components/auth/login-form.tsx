@@ -1,7 +1,7 @@
 // src/components/auth/login-form.tsx
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,6 +43,13 @@ export function LoginForm() {
   const { loginWithEmail, loginWithGoogle, sendPasswordReset, currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Redirect if user is already logged in
+    if (currentUser) {
+      router.push("/profile");
+    }
+  }, [currentUser, router]);
 
   const handleEmailLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -116,10 +123,9 @@ export function LoginForm() {
     }
   };
 
-  // Redirect if user is already logged in
+  // While redirecting, or if already logged in, render nothing.
   if (currentUser) {
-    router.push("/profile");
-    return null; // Render nothing while redirecting
+    return null;
   }
 
   return (
