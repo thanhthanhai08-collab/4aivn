@@ -40,7 +40,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const { loginWithEmail, loginWithGoogle, sendPasswordReset } = useAuth();
+  const { loginWithEmail, loginWithGoogle, sendPasswordReset, currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -49,8 +49,7 @@ export function LoginForm() {
     setIsEmailLoading(true);
     try {
       await loginWithEmail(email, password);
-      toast({ title: "Đăng nhập thành công", description: "Chào mừng trở lại!" });
-      router.push("/profile");
+      // Successful login will trigger onAuthStateChanged, which will handle the redirect.
     } catch (error) {
       console.error("Email login error:", error);
       let description = "Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.";
@@ -72,25 +71,21 @@ export function LoginForm() {
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true);
     try {
+      // This will trigger a page redirect. The result is handled in AuthProvider.
       await loginWithGoogle();
-      toast({ title: "Đăng nhập thành công", description: "Chào mừng!" });
-      router.push("/profile");
     } catch (error) {
-      console.error("Google login error:", error);
-      // Don't show a toast if the user simply closed the popup.
-      if (error instanceof FirebaseError && error.code === 'auth/popup-closed-by-user') {
-          return;
-      }
-      toast({ 
-          title: "Đăng nhập Google thất bại", 
-          description: "Không thể đăng nhập bằng Google. Vui lòng thử lại.", 
-          variant: "destructive" 
+      // Errors during the redirect initiation can be caught here.
+      console.error("Google login redirect initiation error:", error);
+      toast({
+        title: "Đăng nhập Google thất bại",
+        description: "Không thể bắt đầu quá trình đăng nhập bằng Google. Vui lòng thử lại.",
+        variant: "destructive",
       });
-    } finally {
       setIsGoogleLoading(false);
     }
+    // No need to set loading to false here if successful, as the page will redirect.
   };
-  
+
   const handlePasswordReset = async () => {
     if (!email) {
       toast({
@@ -115,6 +110,12 @@ export function LoginForm() {
       });
     }
   };
+
+  // Redirect if user is already logged in
+  if (currentUser) {
+    router.push("/profile");
+    return null; // Render nothing while redirecting
+  }
 
   return (
     <div className="space-y-6">
