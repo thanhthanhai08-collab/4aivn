@@ -48,7 +48,7 @@ export const mockNews: NewsArticle[] = [
 
   <p>Vì ChatGPT agent sở hữu những năng lực mới có thể bị lạm dụng, OpenAI cho biết họ đặt yếu tố an toàn lên hàng đầu trong quá trình phát triển.</p>
 
-  <p>Trong báo cáo an toàn riêng dành cho ChatGPT agent, OpenAI xếp mô hình này vào nhóm “năng lực cao” trong lĩnh vực vũ khí sinh học và hóa học, theo <em>Preparedness Framework</em> của công ty. Nghĩa là, dù chưa có bằng chứng trực tiếp, mô hình này có tiềm năng khuếch đại các mối đe dọa nghiêm trọng hiện có. Vì vậy, OpenAI chủ động triển khai các biện pháp bảo vệ mới để giảm rủi ro.</p>
+  <p>Trong báo cáo an toàn riêng dành cho ChatGPT agent, OpenAI xếp mô hình này vào nhóm “năng lực cao” trong lĩnh vực vũ khí sinh học và hóa học (theo <em>Preparedness Framework</em>). Nghĩa là, dù chưa có bằng chứng trực tiếp, mô hình này có tiềm năng khuếch đại các mối đe dọa nghiêm trọng hiện có. Vì vậy, OpenAI chủ động triển khai các biện pháp bảo vệ mới để giảm rủi ro.</p>
 
   <p>Các biện pháp này bao gồm:</p>
   <ul>
