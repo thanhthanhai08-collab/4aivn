@@ -3,6 +3,69 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'openai-ra-mat-chatgpt-agent',
+    title: 'OpenAI ra mắt ChatGPT Agent – Tác nhân AI đa năng có thể tự động thực hiện tác vụ thay người dùng',
+    source: 'OpenAI',
+    author: 'Nam',
+    content: `<p>OpenAI vừa công bố một AI Agent đa năng mới tích hợp trực tiếp trong ChatGPT, cho phép AI thực hiện nhiều tác vụ trên máy tính thay cho người dùng, chứ không chỉ đơn thuần trả lời câu hỏi như trước. Theo OpenAI, ChatGPT agent có thể tự động truy cập và điều phối lịch làm việc, tạo bài thuyết trình có thể chỉnh sửa và viết code.</p>
+
+  <p>Công cụ này có tên là ChatGPT agent, được xây dựng bằng cách kết hợp nhiều năng lực từ các sản phẩm agent trước đây của OpenAI, bao gồm:</p>
+
+  <ul>
+    <li><strong>Operator:</strong> Có thể tự động điều hướng và thao tác trên các trang web khác nhau</li>
+    <li><strong>Deep Research:</strong> Có khả năng tổng hợp thông tin từ hàng chục trang web thành một bản báo cáo nghiên cứu với đầy đủ thông tin tổng hợp.</li>
+  </ul>
+
+  <p>Người dùng có thể tương tác với ChatGPT agent bằng ngôn ngữ tự nhiên, như cách đang sử dụng ChatGPT hiện tại. Agent này sẽ được bắt đầu triển khai trên nền tảng OpenAI từ <strong>18/7/2025</strong>, dành cho người dùng các gói <em>Pro, Plus</em> và <em>Team</em>. Để sử dụng, người dùng có thể bật chế độ "agent mode" từ menu công cụ trong ChatGPT.</p>
+
+  <h2><strong>Nỗ lực để biến ChatGPT agent thành trợ lý thực thụ</strong></h2>
+
+  <p>Việc ra mắt ChatGPT agent đánh dấu sự cạnh tranh khốc liệt trong việc tạo ra AI agent có thể tự hành động và giải quyết công việc cho người dùng. Trong vài năm qua, nhiều công ty công nghệ như OpenAI, Google và Perplexity đã giới thiệu nhiều mô hình agent, tuy nhiên các phiên bản đời đầu không được như kỳ vọng và cũng vấp phải sự cạnh tranh khốc liệt bởi các mô hình agent đến từ Trung Quốc như Flowith và Manus Genspark.</p>
+
+  <p>Dù vậy khả năng ChatGPT agent không được định vị với khả năng hoạt động như một workflow giống như Flowith và Manus, tuy nhiên OpenAI vẫn khẳng định ChatGPT agent lần này mạnh mẽ hơn nhiều so với bất kỳ phiên bản nào trước đó.</p>
+
+  <p>Agent mới có thể kết nối với các ứng dụng thông qua ChatGPT connectors, như Gmail, GitHub, từ đó giúp tìm kiếm thông tin liên quan đến yêu cầu người dùng. Nó cũng có quyền truy cập terminal để chạy mã, và có thể sử dụng API để truy cập các ứng dụng bên ngoài.</p>
+
+  <p>Ví dụ, người dùng có thể yêu cầu ChatGPT agent:</p>
+  <ul>
+    <li>“Lên kế hoạch và mua nguyên liệu để nấu bữa sáng kiểu Nhật cho 4 người”</li>
+    <li>“Phân tích 3 đối thủ cạnh tranh và tạo slide thuyết trình”</li>
+  </ul>
+
+  <p>Những tác vụ như vậy đòi hỏi Agent phải lên kế hoạch hành động, duyệt web, chọn công cụ phù hợp – tất cả sẽ được thực hiện trên một máy ảo (sandbox giống với Manus) rồi đưa ra kết quả, không sử dụng công cụ trực tiếp trên thiết bị của người dùng.</p>
+
+  <h2><strong>Hiệu suất vượt trội trong các bài kiểm tra đánh giá</strong></h2>
+
+  <p>OpenAI cho biết mô hình đứng sau ChatGPT agent đạt hiệu suất hàng đầu hiện nay trong nhiều bài đánh giá chuẩn.</p>
+
+  <p>Cụ thể:</p>
+  <ul>
+    <li>Trên bài kiểm tra <em>Humanity’s Last Exam</em> (bao gồm hàng nghìn câu hỏi thuộc hơn 100 lĩnh vực), ChatGPT agent đạt <strong>41,6% (pass@1)</strong> – gấp đôi kết quả của các mô hình o3 và o4-mini.</li>
+    <li>Ở bài đánh giá toán học khó nhất hiện tại – <em>FrontierMath</em>, ChatGPT agent đạt <strong>27,4%</strong> khi có quyền dùng công cụ (terminal, v.v.). Trước đó, mô hình tốt nhất là o4-mini chỉ đạt 6,3%.</li>
+  </ul>
+
+  <h2><strong>Các biện pháp an toàn nghiêm ngặt đi kèm</strong></h2>
+
+  <p>Vì ChatGPT agent sở hữu những năng lực mới có thể bị lạm dụng, OpenAI cho biết họ đặt yếu tố an toàn lên hàng đầu trong quá trình phát triển.</p>
+
+  <p>Trong báo cáo an toàn riêng dành cho ChatGPT agent, OpenAI xếp mô hình này vào nhóm “năng lực cao” trong lĩnh vực vũ khí sinh học và hóa học, theo <em>Preparedness Framework</em> của công ty. Nghĩa là, dù chưa có bằng chứng trực tiếp, mô hình này có tiềm năng khuếch đại các mối đe dọa nghiêm trọng hiện có. Vì vậy, OpenAI chủ động triển khai các biện pháp bảo vệ mới để giảm rủi ro.</p>
+
+  <p>Các biện pháp này bao gồm:</p>
+  <ul>
+    <li><strong>Bộ giám sát thời gian thực:</strong> Theo dõi mọi câu lệnh mà người dùng nhập vào. Nếu có dấu hiệu liên quan đến sinh học, phản hồi từ agent sẽ được chuyển qua một bộ kiểm duyệt thứ hai để đánh giá nguy cơ.</li>
+    <li><strong>Vô hiệu hóa tính năng bộ nhớ (memory):</strong> Trong các phiên bản khác của ChatGPT, hoặc Manus hay Flowith đều cho phép chatbot nhớ thông tin từ cuộc trò chuyện trước. Tuy nhiên, với ChatGPT agent, tính năng này bị tắt để tránh nguy cơ lộ dữ liệu do prompt injection. OpenAI cho biết họ có thể xem xét bật lại trong tương lai.</li>
+  </ul>
+
+  <h2><strong>Vẫn cần kiểm chứng thực tế</strong></h2>
+
+  <p>Dù ChatGPT agent được trang bị nhiều tính năng mạnh mẽ, khả năng hoạt động thực tế vẫn còn là dấu hỏi. Các công nghệ agent hiện nay vẫn dễ lỗi và kém ổn định khi tương tác với thế giới thật.</p>
+
+  <p>Tuy nhiên, OpenAI tin rằng họ vẫn đang đi đúng hướng trong việc phát triển mô hình agent có năng lực thật sự.</p>`,
+    publishedAt: '2025-07-20T09:00:00Z',
+    imageUrl: '/image/news/OpenAI ra mắt ChatGPT Agent.png',
+    dataAiHint: 'Chatgpt Agent ra mắt'
+  },
+  {
     id: 'google-deepmind-va-buoc-dot-pha-ai-trong-du-bao-bao',
     title: 'Google DeepMind và bước đột phá AI trong dự báo bão: Thay đổi ngành khí tượng toàn cầu',
     source: 'Google DeepMind',
@@ -352,3 +415,5 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
+
+    
