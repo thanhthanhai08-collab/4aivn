@@ -71,19 +71,24 @@ export function LoginForm() {
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true);
     try {
-      // This will trigger a page redirect. The result is handled in AuthProvider.
       await loginWithGoogle();
+      // Successful login will trigger onAuthStateChanged, which will handle the redirect.
     } catch (error) {
-      // Errors during the redirect initiation can be caught here.
-      console.error("Google login redirect initiation error:", error);
-      toast({
-        title: "Đăng nhập Google thất bại",
-        description: "Không thể bắt đầu quá trình đăng nhập bằng Google. Vui lòng thử lại.",
-        variant: "destructive",
-      });
+      console.error("Google login error:", error);
+      if (error instanceof FirebaseError && error.code === 'auth/popup-closed-by-user') {
+        // User closed the popup, so we don't show an error.
+        // It's a user action, not a system error.
+        console.log("Google sign-in popup closed by user.");
+      } else {
+        toast({
+          title: "Đăng nhập Google thất bại",
+          description: "Không thể bắt đầu quá trình đăng nhập bằng Google. Vui lòng thử lại.",
+          variant: "destructive",
+        });
+      }
+    } finally {
       setIsGoogleLoading(false);
     }
-    // No need to set loading to false here if successful, as the page will redirect.
   };
 
   const handlePasswordReset = async () => {

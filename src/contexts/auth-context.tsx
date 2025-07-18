@@ -12,8 +12,6 @@ import {
   sendEmailVerification,
   updateProfile,
   sendPasswordResetEmail,
-  signInWithRedirect,
-  getRedirectResult,
 } from "firebase/auth";
 import type { User } from "@/lib/types";
 import { auth } from "@/lib/firebase";
@@ -49,26 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         };
         setCurrentUser(formattedUser);
       } else {
-        // This handles the result of the redirect on page load
-        getRedirectResult(auth)
-          .then((result) => {
-            if (result && result.user) {
-              const formattedUser: User = {
-                uid: result.user.uid,
-                email: result.user.email,
-                displayName: result.user.displayName,
-                photoURL: result.user.photoURL,
-                emailVerified: result.user.emailVerified,
-              };
-              setCurrentUser(formattedUser);
-            }
-          })
-          .catch((error) => {
-            console.error("Google redirect result error:", error);
-          })
-          .finally(() => {
-            setCurrentUser(null);
-          });
+        setCurrentUser(null);
       }
       setIsLoading(false);
     });
@@ -78,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithRedirect(auth, provider);
+    await signInWithPopup(auth, provider);
   };
   
   const loginWithEmail = async (email: string, pass: string) => {
