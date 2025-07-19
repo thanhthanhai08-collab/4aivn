@@ -45,7 +45,10 @@ export function SignupForm() {
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/email-already-in-use') {
           description = "Email này đã được sử dụng. Vui lòng sử dụng một email khác.";
-        } else {
+        } else if (error.code === 'auth/weak-password') {
+          description = "Mật khẩu quá yếu. Vui lòng chọn mật khẩu khác mạnh hơn."
+        }
+        else {
           description = "Lỗi đăng ký. Vui lòng kiểm tra lại thông tin của bạn.";
         }
       } else if (error instanceof Error) {
