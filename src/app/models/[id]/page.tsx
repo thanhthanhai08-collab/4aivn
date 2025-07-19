@@ -27,10 +27,7 @@ import { db } from "@/lib/firebase";
 import { mockNews } from "@/lib/mock-news";
 import { NewsCard } from "@/components/news/news-card";
 
-
-export default function ModelDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-
+function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -314,4 +311,8 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
       </div>
     </AppLayout>
   );
+}
+
+export default function ModelDetailPage({ params }: { params: { id: string } }) {
+  return <ModelDetailContent id={params.id} />;
 }

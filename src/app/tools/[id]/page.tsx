@@ -27,9 +27,7 @@ import { db } from "@/lib/firebase";
 import { mockNews } from "@/lib/mock-news";
 
 
-export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-
+function ToolDetailContent({ id }: { id: string }) {
   const [tool, setTool] = useState<Tool | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -295,4 +293,9 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
       </div>
     </AppLayout>
   );
+}
+
+
+export default function ToolDetailPage({ params }: { params: { id: string } }) {
+  return <ToolDetailContent id={params.id} />;
 }
