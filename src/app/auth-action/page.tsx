@@ -1,4 +1,4 @@
-// src/app/reset-password/page.tsx
+// src/app/auth-action/page.tsx
 "use client";
 
 import { useState, useEffect, type FormEvent, Suspense } from "react";
@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
-function ResetPasswordContent() {
+function AuthActionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -27,6 +27,7 @@ function ResetPasswordContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
 
   useEffect(() => {
     const actionCode = searchParams.get("oobCode");
@@ -50,13 +51,15 @@ function ResetPasswordContent() {
                     break;
                 case 'verifyEmail':
                     await applyActionCode(auth, actionCode);
+                    setVerificationSuccess(true);
                     toast({
                         title: "Xác minh thành công",
-                        description: "Email của bạn đã được xác minh. Bây giờ bạn có thể đăng nhập.",
+                        description: "Email của bạn đã được xác minh. Đang chuyển hướng đến hồ sơ của bạn...",
                     });
-                    router.push('/login');
-                    // No need to set loading to false, as we are redirecting
-                    return; 
+                    setTimeout(() => {
+                        router.push('/profile');
+                    }, 3000);
+                    return;
                 default:
                     throw new Error("Hành động không được hỗ trợ.");
             }
@@ -124,6 +127,16 @@ function ResetPasswordContent() {
           <Button asChild variant="link" className="mt-4">
             <Link href="/login">Quay lại trang Đăng nhập</Link>
           </Button>
+        </div>
+      );
+    }
+    
+    if (verificationSuccess) {
+      return (
+        <div className="text-center space-y-2">
+            <p>Email của bạn đã được xác minh thành công!</p>
+            <p className="text-muted-foreground text-sm">Bạn sẽ được chuyển hướng đến trang hồ sơ của mình ngay bây giờ.</p>
+            <Loader2 className="mx-auto h-6 w-6 animate-spin text-primary mt-4" />
         </div>
       );
     }
@@ -195,10 +208,10 @@ function ResetPasswordContent() {
 }
 
 
-export default function ResetPasswordPage() {
+export default function AuthActionPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ResetPasswordContent />
+      <AuthActionContent />
     </Suspense>
   );
 }
