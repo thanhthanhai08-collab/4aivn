@@ -5,7 +5,7 @@ import { useState, useEffect, type FormEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";
-import { confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth";
+import { confirmPasswordReset, verifyPasswordResetCode, applyActionCode } from "firebase/auth";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +18,8 @@ function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
-
+  
+  const [mode, setMode] = useState<string | null>(null);
   const [oobCode, setOobCode] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState("");
@@ -28,26 +29,47 @@ function ResetPasswordContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const code = searchParams.get("oobCode");
-    if (!code) {
-      setError("Thiếu mã đặt lại mật khẩu. Vui lòng thử lại từ email của bạn.");
+    const actionCode = searchParams.get("oobCode");
+    const action = searchParams.get("mode");
+    
+    if (!actionCode || !action) {
+      setError("Liên kết không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.");
       setIsLoading(false);
       return;
     }
 
-    setOobCode(code);
+    setOobCode(actionCode);
+    setMode(action);
 
-    verifyPasswordResetCode(auth, code)
-      .then((userEmail) => {
-        setEmail(userEmail);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Invalid reset code:", err);
-        setError("Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu một liên kết mới.");
-        setIsLoading(false);
-      });
-  }, [searchParams]);
+    const handleAction = async () => {
+        try {
+            switch (action) {
+                case 'resetPassword':
+                    const userEmail = await verifyPasswordResetCode(auth, actionCode);
+                    setEmail(userEmail);
+                    break;
+                case 'verifyEmail':
+                    await applyActionCode(auth, actionCode);
+                    toast({
+                        title: "Xác minh thành công",
+                        description: "Email của bạn đã được xác minh. Bây giờ bạn có thể đăng nhập.",
+                    });
+                    router.push('/login');
+                    // No need to set loading to false, as we are redirecting
+                    return; 
+                default:
+                    throw new Error("Hành động không được hỗ trợ.");
+            }
+        } catch (err) {
+            console.error("Invalid action code:", err);
+            setError("Liên kết không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu một liên kết mới.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+    handleAction();
+  }, [searchParams, router, toast]);
 
   const handlePasswordReset = async (e: FormEvent) => {
     e.preventDefault();
@@ -106,47 +128,60 @@ function ResetPasswordContent() {
       );
     }
 
-    return (
-      <form onSubmit={handlePasswordReset} className="space-y-4">
-        <div>
-          <Label htmlFor="newPassword">Mật khẩu mới</Label>
-          <Input
-            id="newPassword"
-            type="password"
-            placeholder="••••••••"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-            disabled={isUpdating}
-          />
-        </div>
-        <div>
-          <Label htmlFor="confirmNewPassword">Xác nhận mật khẩu mới</Label>
-          <Input
-            id="confirmNewPassword"
-            type="password"
-            placeholder="••••••••"
-            value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
-            required
-            disabled={isUpdating}
-          />
-        </div>
-        <Button type="submit" className="w-full" disabled={isUpdating}>
-          {isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Lưu thay đổi
-        </Button>
-      </form>
-    );
+    if (mode === 'resetPassword') {
+        return (
+          <form onSubmit={handlePasswordReset} className="space-y-4">
+            <div>
+              <Label htmlFor="newPassword">Mật khẩu mới</Label>
+              <Input
+                id="newPassword"
+                type="password"
+                placeholder="••••••••"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                disabled={isUpdating}
+              />
+            </div>
+            <div>
+              <Label htmlFor="confirmNewPassword">Xác nhận mật khẩu mới</Label>
+              <Input
+                id="confirmNewPassword"
+                type="password"
+                placeholder="••••••••"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                required
+                disabled={isUpdating}
+              />
+            </div>
+            <Button type="submit" className="w-full" disabled={isUpdating}>
+              {isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Lưu thay đổi
+            </Button>
+          </form>
+        );
+    }
+
+    return null; // Should not be reached if logic is correct
   };
+
+  const getTitle = () => {
+    if (isLoading) return "Đang xử lý...";
+    if (error) return "Đã xảy ra lỗi";
+    if (mode === 'resetPassword') return "Đặt lại mật khẩu của bạn";
+    if (mode === 'verifyEmail') return "Đang xác minh Email...";
+    return "Hành động không xác định";
+  };
+
 
   return (
     <AppLayout>
       <div className="container flex min-h-[calc(100vh-var(--header-height)-var(--footer-height)-2rem)] items-center justify-center py-12">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-headline">Đặt lại mật khẩu của bạn</CardTitle>
-            {email && !error && (
+            <CardTitle className="text-2xl font-headline">{getTitle()}</CardTitle>
+            {email && !error && mode === 'resetPassword' && (
               <CardDescription>
                 Cho {email}
               </CardDescription>
