@@ -40,28 +40,24 @@ function ModelDetailContent({ id }: { id: string }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Find model directly from mock-data to ensure it's always up-to-date.
     const foundModel = initialMockModels.find((m) => m.id === id);
     
     if (foundModel) {
       setModel(foundModel);
 
-      // Find related news articles
       const filteredNews = mockNews.filter(article => 
         article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
         article.content.toLowerCase().includes(foundModel.name.toLowerCase())
-      ).slice(0, 3); // Limit to 3 articles
+      ).slice(0, 3);
       setRelatedNews(filteredNews);
       
       if (currentUser) {
-        // Load user-specific data from Firestore
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteModels?.includes(id) || false);
           setCurrentRating(userData.ratedModels?.[id] || 0);
         });
       }
 
-      // Fetch aggregate rating data from Firestore
       const modelDocRef = doc(db, "models", id);
       getAggregateRating(modelDocRef).then(setAggregateRating);
 
@@ -85,14 +81,14 @@ function ModelDetailContent({ id }: { id: string }) {
       return;
     }
     const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); // Optimistic UI update
+    setIsFavorite(newFavoriteState); 
 
     try {
         await toggleModelFavorite(currentUser.uid, id, isFavorite);
         toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
-        setIsFavorite(!newFavoriteState); // Revert on error
+        setIsFavorite(!newFavoriteState); 
         toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
     }
   };
@@ -106,12 +102,11 @@ function ModelDetailContent({ id }: { id: string }) {
     const oldRating = currentRating;
     const oldAggregate = { ...aggregateRating };
 
-    // Optimistic UI update
     setCurrentRating(rating);
     setAggregateRating(prev => {
         let newTotalStars = prev.totalStars - oldRating + rating;
         let newRatingCount = prev.ratingCount;
-        if(oldRating === 0) { // It's a new rating
+        if(oldRating === 0) {
             newRatingCount += 1;
         }
         return { totalStars: newTotalStars, ratingCount: newRatingCount };
@@ -122,7 +117,6 @@ function ModelDetailContent({ id }: { id: string }) {
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
     } catch(error) {
         console.error("Failed to save rating:", error);
-        // Revert UI on error
         setCurrentRating(oldRating); 
         setAggregateRating(oldAggregate);
         toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
@@ -175,7 +169,6 @@ function ModelDetailContent({ id }: { id: string }) {
         </Button>
 
         <div className="grid md:grid-cols-3 gap-8 items-start">
-          {/* Main Content */}
           <div className="md:col-span-2 space-y-6">
             <Card>
               <CardHeader>
@@ -221,8 +214,6 @@ function ModelDetailContent({ id }: { id: string }) {
                           {!isSubItem ? (
                             <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
                           ) : (
-                            // Spacer for sub-items to align their text content
-                            // Width of icon (w-5 is 1.25rem) + margin-right (mr-2 is 0.5rem) = 1.75rem
                             <div className="w-[1.75rem] shrink-0"></div>
                           )}
                           <span className="text-card-foreground">{feature}</span>
@@ -235,7 +226,6 @@ function ModelDetailContent({ id }: { id: string }) {
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6 md:sticky md:top-24">
             <Card>
               <CardHeader>
@@ -313,6 +303,9 @@ function ModelDetailContent({ id }: { id: string }) {
   );
 }
 
+// This is the Server Component that fetches the ID and passes it to the Client Component.
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
+  // The warning is about accessing params.id directly in a Server Component context.
+  // By passing it as a prop to a client component, we follow Next.js conventions.
   return <ModelDetailContent id={params.id} />;
 }
