@@ -22,8 +22,6 @@ import {
   getUserProfileData,
   getAggregateRating,
 } from "@/lib/user-data-service";
-import { doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { mockNews } from "@/lib/mock-news";
 
 
@@ -62,8 +60,7 @@ function ToolDetailContent({ id }: { id: string }) {
       }
 
       // Fetch aggregate rating data from Firestore
-      const toolDocRef = doc(db, "tools", id);
-      getAggregateRating(toolDocRef).then(setAggregateRating);
+      getAggregateRating("tools", id).then(setAggregateRating);
 
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })

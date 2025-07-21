@@ -22,8 +22,6 @@ import {
   getUserProfileData,
   getAggregateRating
 } from "@/lib/user-data-service";
-import { doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { mockNews } from "@/lib/mock-news";
 import { NewsCard } from "@/components/news/news-card";
 
@@ -58,8 +56,7 @@ function ModelDetailContent({ id }: { id: string }) {
         });
       }
 
-      const modelDocRef = doc(db, "models", id);
-      getAggregateRating(modelDocRef).then(setAggregateRating);
+      getAggregateRating("models", id).then(setAggregateRating);
 
       if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
         generateAiModelDescription({ 

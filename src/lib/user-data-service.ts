@@ -38,7 +38,8 @@ export async function getUserProfileData(uid: string): Promise<UserProfileData> 
 }
 
 // Get aggregate rating data for a specific item (tool or model)
-export async function getAggregateRating(docRef: DocumentReference<DocumentData>): Promise<AggregateRatingData> {
+export async function getAggregateRating(collectionName: string, docId: string): Promise<AggregateRatingData> {
+    const docRef = doc(db, collectionName, docId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         const data = docSnap.data();
