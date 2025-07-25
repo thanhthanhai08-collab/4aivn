@@ -173,20 +173,20 @@ function ToolDetailContent({ id }: { id: string }) {
           <div className="md:col-span-2 space-y-6">
             <Card>
               <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                  <div className="flex items-center space-x-4">
                     <Image src={tool.logoUrl} alt={`Logo ${tool.name}`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
                     <div>
                       <CardTitle className="text-3xl font-headline">{tool.name}</CardTitle>
                       <Badge variant="secondary" className="mt-1">{tool.context}</Badge>
                     </div>
                   </div>
-                  <div className="flex space-x-2">
-                     <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}>
+                  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                     <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"} className="flex-grow sm:flex-grow-0">
                        <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                        {isFavorite ? "Đã thích" : "Yêu thích"}
                      </Button>
-                     <Button asChild>
+                     <Button asChild className="flex-grow sm:flex-grow-0">
                         <a href={tool.link} target="_blank" rel="noopener noreferrer">
                           Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
                         </a>

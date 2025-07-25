@@ -81,17 +81,17 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
 
             {itemType === 'tool' ? (
               <>
-                <TableHead className="min-w-[150px] hidden sm:table-cell">Hạng mục</TableHead>
-                <TableHead className="min-w-[150px] hidden md:table-cell">Nhà phát triển</TableHead>
+                <TableHead className="min-w-[150px]">Hạng mục</TableHead>
+                <TableHead className="min-w-[150px]">Nhà phát triển</TableHead>
               </>
             ) : (
               <>
-                <TableHead className="min-w-[120px] hidden md:table-cell">Nhà phát triển</TableHead>
-                <TableHead className="text-center min-w-[120px] hidden lg:table-cell">Độ dài ngữ cảnh<br/>(token)</TableHead>
-                <TableHead className="text-center min-w-[100px] hidden sm:table-cell">Chỉ số<br/>thông minh</TableHead>
-                <TableHead className="text-center min-w-[140px] hidden lg:table-cell">Giá trung bình<br/>(USD/1M token)</TableHead>
-                <TableHead className="text-right min-w-[100px] hidden xl:table-cell">Tốc độ<br/>(tok/s)</TableHead>
-                <TableHead className="text-right min-w-[100px] hidden xl:table-cell">Độ trễ<br/>(s)</TableHead>
+                <TableHead className="min-w-[120px]">Nhà phát triển</TableHead>
+                <TableHead className="text-center min-w-[120px]">Độ dài ngữ cảnh<br/>(token)</TableHead>
+                <TableHead className="text-center min-w-[100px]">Chỉ số<br/>thông minh</TableHead>
+                <TableHead className="text-center min-w-[140px]">Giá trung bình<br/>(USD/1M token)</TableHead>
+                <TableHead className="text-right min-w-[100px]">Tốc độ<br/>(tok/s)</TableHead>
+                <TableHead className="text-right min-w-[100px]">Độ trễ<br/>(s)</TableHead>
               </>
             )}
 
@@ -145,27 +145,27 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               
               {itemType === 'tool' ? (
                 <>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell>
                     <Badge variant="outline">{(item as Tool).context}</Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <span className="text-sm">{(item as Tool).developer}</span>
                   </TableCell>
                 </>
               ) : (
                 <>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell>
                     <span className="text-sm">{(item as AIModel).developer}</span>
                   </TableCell>
-                  <TableCell className="text-center hidden lg:table-cell">{(item as AIModel).contextLengthToken || '-'}</TableCell>
-                  <TableCell className="text-center hidden sm:table-cell">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
-                  <TableCell className="text-center hidden lg:table-cell">
+                  <TableCell className="text-center">{(item as AIModel).contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
+                  <TableCell className="text-center">
                     {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
-                  <TableCell className="text-right hidden xl:table-cell">
+                  <TableCell className="text-right">
                     {(item as AIModel).speedTokensPerSecond !== undefined ? (item as AIModel).speedTokensPerSecond.toFixed(1) : '-'}
                   </TableCell>
-                  <TableCell className="text-right hidden xl:table-cell">
+                  <TableCell className="text-right">
                     {(item as AIModel).latencyFirstChunkSeconds !== undefined ? (item as AIModel).latencyFirstChunkSeconds.toFixed(2) : '-'}
                   </TableCell>
                 </>
