@@ -81,17 +81,17 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
 
             {itemType === 'tool' ? (
               <>
-                <TableHead className="min-w-[150px]">Hạng mục</TableHead>
-                <TableHead className="min-w-[150px]">Nhà phát triển</TableHead>
+                <TableHead className="min-w-[150px] hidden sm:table-cell">Hạng mục</TableHead>
+                <TableHead className="min-w-[150px] hidden md:table-cell">Nhà phát triển</TableHead>
               </>
             ) : (
               <>
-                <TableHead className="min-w-[120px]">Nhà phát triển</TableHead>
-                <TableHead className="text-center min-w-[120px]" dangerouslySetInnerHTML={{ __html: "Độ dài ngữ cảnh <br> (token)" }} />
-                <TableHead className="text-center min-w-[100px]">Chỉ số thông minh</TableHead>
-                <TableHead className="text-center min-w-[140px]" dangerouslySetInnerHTML={{ __html: "Giá trung bình<br>(USD/1M token)" }} />
-                <TableHead className="text-right min-w-[100px]">Tốc độ (tok/s)</TableHead>
-                <TableHead className="text-right min-w-[100px]">Độ trễ (s)</TableHead>
+                <TableHead className="min-w-[120px] hidden md:table-cell">Nhà phát triển</TableHead>
+                <TableHead className="text-center min-w-[120px] hidden lg:table-cell">Độ dài ngữ cảnh<br/>(token)</TableHead>
+                <TableHead className="text-center min-w-[100px] hidden sm:table-cell">Chỉ số<br/>thông minh</TableHead>
+                <TableHead className="text-center min-w-[140px] hidden lg:table-cell">Giá trung bình<br/>(USD/1M token)</TableHead>
+                <TableHead className="text-right min-w-[100px] hidden xl:table-cell">Tốc độ<br/>(tok/s)</TableHead>
+                <TableHead className="text-right min-w-[100px] hidden xl:table-cell">Độ trễ<br/>(s)</TableHead>
               </>
             )}
 
@@ -145,27 +145,27 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               
               {itemType === 'tool' ? (
                 <>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <Badge variant="outline">{(item as Tool).context}</Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <span className="text-sm">{(item as Tool).developer}</span>
                   </TableCell>
                 </>
               ) : (
                 <>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <span className="text-sm">{(item as AIModel).developer}</span>
                   </TableCell>
-                  <TableCell className="text-center">{(item as AIModel).contextLengthToken || '-'}</TableCell>
-                  <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center hidden lg:table-cell">{(item as AIModel).contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center hidden sm:table-cell">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
+                  <TableCell className="text-center hidden lg:table-cell">
                     {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right hidden xl:table-cell">
                     {(item as AIModel).speedTokensPerSecond !== undefined ? (item as AIModel).speedTokensPerSecond.toFixed(1) : '-'}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right hidden xl:table-cell">
                     {(item as AIModel).latencyFirstChunkSeconds !== undefined ? (item as AIModel).latencyFirstChunkSeconds.toFixed(2) : '-'}
                   </TableCell>
                 </>
@@ -186,7 +186,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     ))}
                   </div>
                   {averageRating > 0 && (
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground text-xs sm:text-sm">
                       ({averageRating.toFixed(1)})
                     </span>
                   )}
