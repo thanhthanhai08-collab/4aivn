@@ -17,7 +17,7 @@ export function ModelCard({ model }: ModelCardProps) {
     : model.userRating || 0;
 
   return (
-    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
+    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1">
       <CardHeader className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
@@ -82,3 +82,5 @@ export function ModelCard({ model }: ModelCardProps) {
     </Card>
   );
 }
+
+    

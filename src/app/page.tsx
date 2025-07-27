@@ -16,7 +16,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export default function HomePage() {
-  const latestNews = mockNews.slice(0, 3);
+  const latestNews = mockNews.slice(0, 6); // Fetch more for seamless scroll
   const [topTools, setTopTools] = useState<Tool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
 
@@ -61,21 +61,21 @@ export default function HomePage() {
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
             {/* Decorative background elements */}
-            <span className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-3xl animate-pulse"></span>
-            <span className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></span>
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
           <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-relaxed">
-            KHÁM PHÁ THỂ GIỚI TRÍ TUỆ NHÂN TẠO AI
+            KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
             Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. Clean AI Hub là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
           </p>
           <div className="mt-10 flex justify-center space-x-4">
-            <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-shadow">
+            <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
               <Link href="/tools">Khám phá Công cụ AI</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="shadow-lg hover:shadow-md transition-shadow">
+            <Button size="lg" variant="outline" asChild className="shadow-lg hover:shadow-md transition-all duration-300 hover:scale-105">
               <Link href="/news">Tin tức AI Mới nhất</Link>
             </Button>
           </div>
@@ -172,19 +172,20 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div className="relative w-full overflow-hidden">
+           <div className="relative w-full overflow-hidden group">
             <div 
-              className="flex animate-scroll-left"
+              className="flex animate-scroll-left group-hover:pause"
               style={{ 
                 '--items-per-screen-xs': 1,
-                '--items-per-screen-md': 3,
+                '--items-per-screen-md': 2,
+                '--items-per-screen-lg': 3,
               } as React.CSSProperties}
             >
               {/* Duplicated for seamless scroll */}
               {[...latestNews, ...latestNews].map((article, index) => (
                 <div 
                   key={`${article.id}-${index}-carousel`} 
-                  className="flex-none px-3 w-[calc(100%/var(--items-per-screen-xs,1))] md:w-[calc(100%/var(--items-per-screen-md,3))]"
+                  className="flex-none px-3 w-[calc(100%/var(--items-per-screen-xs,1))] md:w-[calc(100%/var(--items-per-screen-md,2))] lg:w-[calc(100%/var(--items-per-screen-lg,3))]"
                 >
                   <NewsCard article={article} />
                 </div>
@@ -202,3 +203,5 @@ export default function HomePage() {
     </AppLayout>
   );
 }
+
+    

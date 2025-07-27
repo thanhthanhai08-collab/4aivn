@@ -97,15 +97,34 @@ export default {
         },
         'scroll-left': {
           '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }, // For duplicated content, scrolls one full set
+          '100%': { transform: 'translateX(-50%)' },
         },
+        'pulse': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '.5' },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'scroll-left': 'scroll-left 40s linear infinite', // Adjust duration as needed
+        'scroll-left': 'scroll-left 60s linear infinite',
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    function({ addUtilities }: { addUtilities: any }) {
+      addUtilities({
+        '.animation-delay-2000': {
+          'animation-delay': '2s',
+        },
+        '.pause': {
+          'animation-play-state': 'paused',
+        },
+      });
+    },
+  ],
 } satisfies Config;
+
+    

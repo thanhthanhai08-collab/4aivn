@@ -68,16 +68,16 @@ export function NewsCard({ article }: NewsCardProps) {
     .trim();
 
   return (
-    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden group">
+    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden group hover:-translate-y-1">
       <Link href={`/news/${article.id}`} className="block">
         {article.imageUrl && (
           <div className="relative w-full h-48 overflow-hidden">
             <Image 
               src={article.imageUrl} 
               alt={article.title} 
-              layout="fill" 
-              objectFit="cover" 
-              className="rounded-t-lg transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               data-ai-hint={article.dataAiHint || "technology abstract"}
             />
           </div>
@@ -115,3 +115,5 @@ export function NewsCard({ article }: NewsCardProps) {
     </Card>
   );
 }
+
+    
