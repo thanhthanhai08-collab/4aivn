@@ -34,7 +34,7 @@ export default function HomePage() {
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
-    const typingSpeed = 500;
+    const typingSpeed = 5;
     const deletingSpeed = 50;
     const delay = 2000;
 
