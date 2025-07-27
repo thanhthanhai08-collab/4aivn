@@ -127,6 +127,16 @@ export default function NewsPage() {
             
             <Separator className="my-12" />
 
+             {secondaryArticles.length > 0 && (
+                <section className="mb-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {secondaryArticles.map(article => (
+                            <NewsCard key={article.id} article={article}/>
+                        ))}
+                    </div>
+                </section>
+            )}
+
             {/* Other Articles List */}
             {otherArticles.length > 0 && (
                 <section>
@@ -166,15 +176,6 @@ export default function NewsPage() {
                             </div>
                           </div>
                       ))}
-                    </div>
-                </section>
-            )}
-             {secondaryArticles.length > 0 && (
-                <section className="mt-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {secondaryArticles.map(article => (
-                            <NewsCard key={article.id} article={article}/>
-                        ))}
                     </div>
                 </section>
             )}
