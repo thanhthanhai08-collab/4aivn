@@ -110,26 +110,14 @@ export default function NewsPage() {
               </div>
 
               {/* Popular Sidebar */}
-              <aside className="lg:col-span-1 p-6 rounded-lg shadow-lg border">
-                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">XEM NHANH</h3>
+              <aside className="lg:col-span-1 p-6 rounded-lg shadow-lg bg-gray-900 text-white">
+                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">TIN MỚI NHẤT</h3>
                  <div className="space-y-5">
                     {popularArticles.map(article => (
-                      <Link key={article.id} href={`/news/${article.id}`} className="block group border-b border-border pb-5 last:border-b-0 last:pb-0">
-                        <div className="flex items-start space-x-4">
-                            <div className="relative w-20 h-20 shrink-0">
-                                <Image
-                                    src={article.imageUrl}
-                                    alt={article.title}
-                                    fill
-                                    className="object-cover rounded-md"
-                                    sizes="80px"
-                                    data-ai-hint={article.dataAiHint}
-                                />
-                            </div>
-                            <div>
-                                <p className="text-xs text-primary font-semibold mb-1 uppercase">{article.source}</p>
-                                <h4 className="font-semibold text-base leading-snug text-foreground group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
-                            </div>
+                      <Link key={article.id} href={`/news/${article.id}`} className="block group">
+                        <div className="border-b border-gray-700 pb-5 last:border-b-0 last:pb-0">
+                            <p className="text-xs text-primary font-semibold mb-1 uppercase">{article.source}</p>
+                            <h4 className="font-semibold text-base leading-snug group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
                         </div>
                       </Link>
                     ))}
