@@ -77,15 +77,12 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!id) return;
     const unsubscribe = getComments(id, (fetchedComments) => {
-      // When real-time data arrives, it becomes the source of truth,
-      // automatically replacing any optimistic updates.
       setComments(fetchedComments);
     });
     return () => unsubscribe();
   }, [id]);
 
   const handleCommentAdded = (newComment: Comment) => {
-    // Optimistically add the new comment to the list for instant UI feedback.
     setComments(prevComments => [newComment, ...prevComments]);
   };
 
@@ -133,6 +130,9 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
                 <Button variant="outline" size="sm" asChild className="mb-6">
                   <Link href="/news"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
                 </Button>
+                 <p className="text-sm text-primary font-semibold mb-2 uppercase">
+                  {article.source}
+                </p>
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                     {article.author && (
@@ -212,19 +212,19 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
 
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-24 h-fit">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl font-headline">Tin tức nổi bật</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                 {relatedNews.map(related => (
-                  <Link key={related.id} href={`/news/${related.id}`} className="flex items-center space-x-4 group border-b pb-4 last:border-b-0 last:pb-0">
-                    <Image src={related.imageUrl} alt={related.title} width={64} height={64} className="rounded-md object-cover aspect-square" data-ai-hint={related.dataAiHint} />
-                    <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors">{related.title}</h3>
-                  </Link>
-                ))}
-              </CardContent>
-            </Card>
+             <Card className="bg-gray-900 text-white p-6 rounded-lg shadow-xl">
+                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">TIN MỚI NHẤT</h3>
+                 <div className="space-y-5">
+                    {relatedNews.map(related => (
+                    <Link key={related.id} href={`/news/${related.id}`} className="block group">
+                        <div className="border-b border-gray-700 pb-5 last:border-b-0 last:pb-0">
+                            <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
+                            <h4 className="font-semibold text-base leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
+                        </div>
+                    </Link>
+                    ))}
+                 </div>
+              </Card>
              <Card className="p-4 text-center bg-muted/30">
                 <p className="text-sm text-muted-foreground">Không gian quảng cáo</p>
                 <div className="w-full h-64 bg-muted rounded-md mt-2 flex items-center justify-center">
