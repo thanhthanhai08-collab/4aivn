@@ -213,7 +213,7 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-24 h-fit">
              <Card className="bg-gray-900 text-white p-6 rounded-lg shadow-xl">
-                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">TIN MỚI NHẤT</h3>
+                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">Tin mới nhất</h3>
                  <div className="space-y-5">
                     {relatedNews.map(related => (
                     <Link key={related.id} href={`/news/${related.id}`} className="block group">

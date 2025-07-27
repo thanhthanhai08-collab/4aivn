@@ -108,7 +108,7 @@ export default function NewsPage() {
 
               {/* Popular Sidebar */}
               <aside className="lg:col-span-1 p-6 rounded-lg shadow-lg bg-gray-900 text-white">
-                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">TIN MỚI NHẤT</h3>
+                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">Tin mới nhất</h3>
                  <div className="space-y-5">
                     {popularArticles.map(article => (
                       <Link key={article.id} href={`/news/${article.id}`} className="block group">
@@ -159,15 +159,13 @@ export default function NewsPage() {
                                 <p className="text-muted-foreground line-clamp-2 mb-4">
                                     {descriptionText(article.content)}
                                 </p>
-                                {article.author && (
-                                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                                       <div className="flex items-center space-x-2">
-                                         <p className="font-medium text-foreground">{article.author}</p>
-                                         <span className="text-gray-400">•</span>
-                                         <span>{format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
-                                       </div>
-                                    </div>
-                                )}
+                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                   <div className="flex items-center space-x-2">
+                                     <p className="font-medium text-foreground">{article.author}</p>
+                                     <span className="text-gray-400">•</span>
+                                     <span>{format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                                   </div>
+                                </div>
                             </div>
                           </div>
                       ))}
