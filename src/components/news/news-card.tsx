@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, ArrowRight, Bookmark } from "lucide-react";
+import { CalendarDays, ArrowRight, Bookmark, User } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
@@ -14,10 +14,20 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface NewsCardProps {
   article: NewsArticle;
 }
+
+const getAuthorInitials = (name?: string) => {
+  if (!name) return "";
+  const names = name.split(' ');
+  if (names.length > 1) {
+    return names[0][0] + names[names.length - 1][0];
+  }
+  return name.substring(0, 2);
+};
 
 export function NewsCard({ article }: NewsCardProps) {
   const { currentUser } = useAuth();
@@ -92,14 +102,20 @@ export function NewsCard({ article }: NewsCardProps) {
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
         <CardDescription className="text-sm line-clamp-3">{descriptionText}</CardDescription>
+        {article.author && (
+          <div className="flex items-center space-x-2 pt-3 mt-3 border-t border-dashed">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="" alt={article.author} />
+              <AvatarFallback>{getAuthorInitials(article.author)}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-medium text-foreground">{article.author}</span>
+          </div>
+        )}
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
-        <div className="text-xs text-muted-foreground">
-          <p>{article.author || article.source}</p>
-          <div className="flex items-center">
+        <div className="text-xs text-muted-foreground flex items-center">
             <CalendarDays className="h-3 w-3 mr-1" />
             {format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}
-          </div>
         </div>
         <div className="flex items-center space-x-1">
           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label="Lưu tin tức">

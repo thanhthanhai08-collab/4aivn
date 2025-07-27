@@ -11,6 +11,17 @@ import { NewsCard } from "@/components/news/news-card";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+const getAuthorInitials = (name?: string) => {
+  if (!name) return "";
+  const names = name.split(' ');
+  if (names.length > 1) {
+    return names[0][0] + names[names.length - 1][0];
+  }
+  return name.substring(0, 2);
+};
+
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -127,9 +138,38 @@ export default function NewsPage() {
                 <section>
                     <h3 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">Tin tức khác</h3>
                     <div className="space-y-12 max-w-4xl mx-auto">
-                        {otherArticles.map((article) => (
-                           <NewsCard key={article.id} article={article} />
-                        ))}
+                      {otherArticles.map((article) => (
+                          <Link key={article.id} href={`/news/${article.id}`} className="group grid md:grid-cols-3 gap-6 items-center">
+                              <div className="md:col-span-1 w-full h-48 relative overflow-hidden rounded-lg shadow-md">
+                                  <Image
+                                      src={article.imageUrl}
+                                      alt={article.title}
+                                      fill
+                                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                      sizes="(max-width: 768px) 100vw, 33vw"
+                                      data-ai-hint={article.dataAiHint}
+                                  />
+                              </div>
+                              <div className="md:col-span-2 space-y-2">
+                                  <h4 className="text-xl font-bold font-headline group-hover:text-primary transition-colors line-clamp-2">
+                                      {article.title}
+                                  </h4>
+                                  <p className="text-sm text-muted-foreground line-clamp-2">
+                                      {descriptionText(article.content)}
+                                  </p>
+                                   {article.author && (
+                                    <div className="flex items-center space-x-2 pt-2">
+                                      <Avatar className="h-8 w-8">
+                                        {/* Assuming author might have a photoURL in the future */}
+                                        <AvatarImage src="" alt={article.author} />
+                                        <AvatarFallback>{getAuthorInitials(article.author)}</AvatarFallback>
+                                      </Avatar>
+                                      <span className="text-sm font-medium text-foreground">{article.author}</span>
+                                    </div>
+                                  )}
+                              </div>
+                          </Link>
+                      ))}
                     </div>
                 </section>
             )}
