@@ -57,13 +57,30 @@ export default function ChatPage() {
     setIsLoadingAiResponse(true);
 
     try {
-      let messageForAi = text;
+      let imageUrlForWebhook: string | undefined = dataUri;
+
+      // If there's an image, process it first to get a "Gemini-processed" URI
+      if (dataUri) {
+          try {
+              const processedImage = await processImageForChat({ photoDataUri: dataUri });
+              // The `processImageForChat` flow returns the original URI, but this step ensures it has been processed by Gemini
+              imageUrlForWebhook = processedImage.imageUri; 
+          } catch (processError) {
+              console.error("Error processing image:", processError);
+              toast({
+                  title: "Lỗi xử lý ảnh",
+                  description: "Không thể xử lý hình ảnh của bạn qua AI. Vui lòng thử lại.",
+                  variant: "destructive",
+              });
+              setIsLoadingAiResponse(false);
+              return; // Stop if image processing fails
+          }
+      }
       
       // The `demoChatbot` flow now accepts an optional imageUrl.
-      // We no longer need to process the image on the client-side first.
       const aiResponse = await demoChatbot({ 
-        message: messageForAi,
-        imageUrl: dataUri,
+        message: text,
+        imageUrl: imageUrlForWebhook,
       });
       
       const newAiMessage: ChatMessage = {
