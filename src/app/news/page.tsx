@@ -2,17 +2,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format } from "date-fns";
-import { vi } from "date-fns/locale";
-import { Separator } from "@/components/ui/separator";
 import { NewsCard } from "@/components/news/news-card";
-import { User } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,35 +19,20 @@ export default function NewsPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const descriptionText = (content: string) => content
-    .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
-    .replace(/&nbsp;/g, " ")
-    .trim();
-
   if (!mounted) {
     return (
       <AppLayout>
         <div className="container py-8">
           <Skeleton className="h-12 w-1/2 mb-12 mx-auto" />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <Skeleton className="h-[400px] w-full" />
-            </div>
-            <div className="lg:col-span-1 space-y-4">
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-24 w-full" />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             {[...Array(6)].map((_, i) => (
+                <Skeleton key={i} className="h-80 w-full rounded-lg" />
+              ))}
           </div>
         </div>
       </AppLayout>
     );
   }
-
-  const featuredArticle = mockNews.length > 0 ? mockNews[0] : null;
-  const secondaryArticles = mockNews.slice(1, 3);
-  const popularArticles = mockNews.slice(3, 7);
-  const otherArticles = mockNews.slice(7);
 
   return (
     <AppLayout>
@@ -67,131 +45,16 @@ export default function NewsPage() {
         </header>
 
         {isLoading ? (
-          <div>
-            <Skeleton className="h-[500px] w-full rounded-lg mb-12" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[...Array(6)].map((_, i) => (
-                <Skeleton key={i} className="h-80 w-full rounded-lg" />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(9)].map((_, i) => (
+              <Skeleton key={i} className="h-96 w-full rounded-lg" />
+            ))}
           </div>
         ) : mockNews.length > 0 ? (
-          <div>
-            {/* Top section with Featured and Popular */}
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-              {/* Main Content Area */}
-              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Featured Article */}
-                {featuredArticle && (
-                  <div className="md:col-span-2">
-                    <Link href={`/news/${featuredArticle.id}`} className="group block">
-                      <div className="relative w-full aspect-[16/9] mb-4 overflow-hidden rounded-lg shadow-lg">
-                        <Image
-                          src={featuredArticle.imageUrl}
-                          alt={featuredArticle.title}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, 66vw"
-                          priority
-                          data-ai-hint={featuredArticle.dataAiHint}
-                        />
-                      </div>
-                      <h2 className="text-2xl md:text-3xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
-                        {featuredArticle.title}
-                      </h2>
-                       <p className="text-sm text-muted-foreground">
-                        {format(new Date(featuredArticle.publishedAt), "d MMMM, yyyy", { locale: vi })}
-                      </p>
-                    </Link>
-                  </div>
-                )}
-                
-              </div>
-
-              {/* Popular Sidebar */}
-               <aside className="lg:col-span-1">
-                 <Card>
-                    <CardHeader>
-                       <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-5">
-                       {popularArticles.map(article => (
-                         <Link key={article.id} href={`/news/${article.id}`} className="block group">
-                           <div className="flex items-start space-x-4 border-b pb-4 last:border-b-0 last:pb-0">
-                                <div className="relative w-20 h-20 shrink-0">
-                                   <Image
-                                       src={article.imageUrl}
-                                       alt={article.title}
-                                       fill
-                                       className="object-cover rounded-md"
-                                       sizes="80px"
-                                       data-ai-hint={article.dataAiHint}
-                                   />
-                               </div>
-                               <div>
-                                   <p className="text-xs text-primary font-semibold mb-1 uppercase">{article.source}</p>
-                                   <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
-                               </div>
-                           </div>
-                         </Link>
-                       ))}
-                    </CardContent>
-                 </Card>
-              </aside>
-            </section>
-            
-            <Separator className="my-12" />
-
-             {secondaryArticles.length > 0 && (
-                <section className="mb-16">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {secondaryArticles.map(article => (
-                            <NewsCard key={article.id} article={article}/>
-                        ))}
-                    </div>
-                </section>
-            )}
-
-            {/* Other Articles List */}
-            {otherArticles.length > 0 && (
-                <section>
-                    <h3 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">Tin tức khác</h3>
-                    <div className="space-y-8">
-                      {otherArticles.map((article) => (
-                          <div key={article.id} className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                            <Link href={`/news/${article.id}`} className="block md:col-span-1">
-                                <div className="relative w-full aspect-[16/10] overflow-hidden rounded-lg shadow-md">
-                                    <Image
-                                        src={article.imageUrl}
-                                        alt={article.title}
-                                        fill
-                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                        sizes="(max-width: 768px) 100vw, 33vw"
-                                        data-ai-hint={article.dataAiHint}
-                                    />
-                                </div>
-                            </Link>
-                            <div className="md:col-span-2">
-                                <h4 className="text-xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
-                                    <Link href={`/news/${article.id}`}>{article.title}</Link>
-                                </h4>
-                                <p className="text-muted-foreground line-clamp-2 mb-4">
-                                    {descriptionText(article.content)}
-                                </p>
-                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                                   <div className="flex items-center space-x-2">
-                                     <User className="h-4 w-4" />
-                                     <p className="font-medium text-foreground">{article.author}</p>
-                                     <span className="text-gray-400">•</span>
-                                     <span>{format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
-                                   </div>
-                                </div>
-                            </div>
-                          </div>
-                      ))}
-                    </div>
-                </section>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {mockNews.map((article) => (
+              <NewsCard key={article.id} article={article} />
+            ))}
           </div>
         ) : (
           <div className="text-center py-16">

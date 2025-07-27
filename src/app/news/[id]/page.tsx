@@ -115,16 +115,15 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
     );
   }
   
-  const relatedNews = mockNews.filter(a => a.id !== article.id).slice(0, 5);
   const latestNews = mockNews.filter(a => a.id !== article.id).slice(0, 3);
 
 
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-8">
             <article>
               <header className="mb-8">
                 <Button variant="outline" size="sm" asChild className="mb-6">
@@ -211,47 +210,41 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-24 h-fit">
+          <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit">
              <Card>
-                 <CardHeader>
-                    <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
-                 </CardHeader>
-                 <CardContent className="space-y-5">
-                    {relatedNews.map(related => (
-                      <Link key={related.id} href={`/news/${related.id}`} className="block group">
-                        <div className="flex items-start space-x-4 border-b pb-4 last:border-b-0 last:pb-0">
-                            <div className="relative w-20 h-20 shrink-0">
-                                <Image
-                                    src={related.imageUrl}
-                                    alt={related.title}
-                                    fill
-                                    className="object-cover rounded-md"
-                                    sizes="80px"
-                                    data-ai-hint={related.dataAiHint}
-                                />
-                            </div>
-                            <div>
-                                <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
-                                <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
-                            </div>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {latestNews.map(related => (
+                    <Link key={related.id} href={`/news/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                      <div className="flex items-start space-x-4">
+                        <div className="relative w-24 h-24 shrink-0">
+                          <Image
+                            src={related.imageUrl}
+                            alt={related.title}
+                            fill
+                            className="object-cover rounded-md transition-transform group-hover:scale-105"
+                            sizes="96px"
+                            data-ai-hint={related.dataAiHint}
+                          />
                         </div>
-                      </Link>
-                    ))}
-                 </CardContent>
+                        <div>
+                          <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
+                          <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </CardContent>
               </Card>
-             <Card className="p-4 text-center bg-muted/30">
-                <p className="text-sm text-muted-foreground">Không gian quảng cáo</p>
-                <div className="w-full h-64 bg-muted rounded-md mt-2 flex items-center justify-center">
-                    <span className="text-muted-foreground/50">300x250</span>
-                </div>
-            </Card>
           </aside>
         </div>
 
         {/* Latest Articles */}
         <section className="mt-16 pt-12 border-t">
            <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
-            Các bài viết mới nhất
+            Các bài viết liên quan
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {latestNews.map((article) => (
