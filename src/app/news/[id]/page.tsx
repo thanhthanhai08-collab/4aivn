@@ -212,18 +212,32 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
 
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-24 h-fit">
-             <Card className="bg-gray-900 text-white p-6 rounded-lg shadow-xl">
-                 <h3 className="text-2xl font-headline font-bold text-primary mb-6">Tin mới nhất</h3>
-                 <div className="space-y-5">
+             <Card>
+                 <CardHeader>
+                    <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                 </CardHeader>
+                 <CardContent className="space-y-5">
                     {relatedNews.map(related => (
-                    <Link key={related.id} href={`/news/${related.id}`} className="block group">
-                        <div className="border-b border-gray-700 pb-5 last:border-b-0 last:pb-0">
-                            <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
-                            <h4 className="font-semibold text-base leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
+                      <Link key={related.id} href={`/news/${related.id}`} className="block group">
+                        <div className="flex items-start space-x-4 border-b pb-4 last:border-b-0 last:pb-0">
+                            <div className="relative w-20 h-20 shrink-0">
+                                <Image
+                                    src={related.imageUrl}
+                                    alt={related.title}
+                                    fill
+                                    className="object-cover rounded-md"
+                                    sizes="80px"
+                                    data-ai-hint={related.dataAiHint}
+                                />
+                            </div>
+                            <div>
+                                <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
+                                <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
+                            </div>
                         </div>
-                    </Link>
+                      </Link>
                     ))}
-                 </div>
+                 </CardContent>
               </Card>
              <Card className="p-4 text-center bg-muted/30">
                 <p className="text-sm text-muted-foreground">Không gian quảng cáo</p>
