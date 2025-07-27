@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
+import { NewsCard } from "@/components/news/news-card";
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +78,7 @@ export default function NewsPage() {
             {/* Top section with Featured and Popular */}
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
               {/* Main Content Area */}
-              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="lg:col-span-2 grid grid-cols-1 gap-8">
                 {/* Featured Article */}
                 {featuredArticle && (
                   <div className="md:col-span-2">
@@ -108,38 +109,15 @@ export default function NewsPage() {
                     </Link>
                   </div>
                 )}
-                {/* Secondary Articles */}
-                {secondaryArticles.map(article => (
-                    <div key={article.id}>
-                        <Link href={`/news/${article.id}`} className="group block">
-                             <div className="relative w-full aspect-[16/9] mb-4 overflow-hidden rounded-lg shadow-md">
-                                <Image
-                                src={article.imageUrl}
-                                alt={article.title}
-                                fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                                data-ai-hint={article.dataAiHint}
-                                />
-                            </div>
-                            <p className="text-sm text-primary font-semibold mb-1 uppercase">{article.source}</p>
-                             <h3 className="text-lg font-bold font-headline mb-2 group-hover:text-primary transition-colors line-clamp-3">
-                                {article.title}
-                            </h3>
-                             <p className="text-xs text-muted-foreground">
-                                {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}
-                            </p>
-                        </Link>
-                    </div>
-                ))}
+                
               </div>
 
               {/* Popular Sidebar */}
-              <aside className="lg:col-span-1 bg-gray-900 text-white p-6 rounded-lg shadow-xl">
+              <aside className="lg:col-span-1 p-6 rounded-lg shadow-lg border">
                  <h3 className="text-2xl font-headline font-bold text-primary mb-6">XEM NHANH</h3>
                  <div className="space-y-5">
                     {popularArticles.map(article => (
-                      <Link key={article.id} href={`/news/${article.id}`} className="block group border-b border-gray-700 pb-5 last:border-b-0 last:pb-0">
+                      <Link key={article.id} href={`/news/${article.id}`} className="block group border-b border-border pb-5 last:border-b-0 last:pb-0">
                         <div className="flex items-start space-x-4">
                             <div className="relative w-20 h-20 shrink-0">
                                 <Image
@@ -153,7 +131,7 @@ export default function NewsPage() {
                             </div>
                             <div>
                                 <p className="text-xs text-primary font-semibold mb-1 uppercase">{article.source}</p>
-                                <h4 className="font-semibold text-base leading-snug group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
+                                <h4 className="font-semibold text-base leading-snug text-foreground group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
                             </div>
                         </div>
                       </Link>
@@ -168,36 +146,53 @@ export default function NewsPage() {
             {otherArticles.length > 0 && (
                 <section>
                     <h3 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">Tin tức khác</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="space-y-8">
                       {otherArticles.map((article) => (
-                          <div key={article.id} className="bg-card rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-xl">
-                            <Link href={`/news/${article.id}`} className="group block">
-                                <div className="relative w-full h-48">
+                          <div key={article.id} className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                            <Link href={`/news/${article.id}`} className="block md:col-span-1">
+                                <div className="relative w-full aspect-[16/10] overflow-hidden rounded-lg shadow-md">
                                     <Image
                                         src={article.imageUrl}
                                         alt={article.title}
                                         fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                         data-ai-hint={article.dataAiHint}
                                     />
                                 </div>
-                                <div className="p-4">
-                                     <p className="text-xs text-primary font-semibold mb-2 uppercase">{article.source}</p>
-                                     <h4 className="text-lg font-bold font-headline mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                                        {article.title}
-                                    </h4>
-                                    <p className="text-sm text-muted-foreground line-clamp-3">
-                                        {descriptionText(article.content)}
-                                    </p>
-                                </div>
                             </Link>
+                            <div className="md:col-span-2">
+                                <p className="text-sm text-primary font-semibold mb-2 uppercase">{article.source}</p>
+                                <h4 className="text-xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
+                                    <Link href={`/news/${article.id}`}>{article.title}</Link>
+                                </h4>
+                                <p className="text-muted-foreground line-clamp-2 mb-4">
+                                    {descriptionText(article.content)}
+                                </p>
+                                {article.author && (
+                                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                       <div className="flex items-center space-x-2">
+                                         <p className="font-medium text-foreground">{article.author}</p>
+                                         <span className="text-gray-400">•</span>
+                                         <span>{format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                                       </div>
+                                    </div>
+                                )}
+                            </div>
                           </div>
                       ))}
                     </div>
                 </section>
             )}
-
+             {secondaryArticles.length > 0 && (
+                <section className="mt-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {secondaryArticles.map(article => (
+                            <NewsCard key={article.id} article={article}/>
+                        ))}
+                    </div>
+                </section>
+            )}
           </div>
         ) : (
           <div className="text-center py-16">
