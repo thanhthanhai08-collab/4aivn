@@ -39,12 +39,17 @@ export default function ChatPage() {
 
   const handleSendMessage = async (text: string, image?: File) => {
     const timestamp = Date.now();
-    const imageUrl = image ? URL.createObjectURL(image) : undefined;
+    let dataUri: string | undefined;
+
+    if (image) {
+      dataUri = await fileToDataUri(image);
+    }
     
     const newUserMessage: ChatMessage = {
       id: `user-${timestamp}`,
       text,
-      imageUrl,
+      // Use the data URI directly for the preview to avoid creating object URLs
+      imageUrl: dataUri,
       sender: "user",
       timestamp: timestamp,
     };
@@ -53,22 +58,12 @@ export default function ChatPage() {
 
     try {
       let messageForAi = text;
-
-      if (image) {
-          const processResult = await processImageForChat({ photoDataUri: await fileToDataUri(image) });
-          // Prepend the AI-generated description to the user's text message
-          // so the chatbot flow receives both pieces of information.
-          messageForAi = `${processResult.description}\n\n${text}`;
-      }
       
-      const chatHistoryForAI = messages.map(msg => ({
-        role: msg.sender === 'user' ? 'user' : 'assistant',
-        // For simplicity, history sent to AI doesn't include past images
-        content: msg.text
-      }));
-      
+      // The `demoChatbot` flow now accepts an optional imageUrl.
+      // We no longer need to process the image on the client-side first.
       const aiResponse = await demoChatbot({ 
-        message: messageForAi
+        message: messageForAi,
+        imageUrl: dataUri,
       });
       
       const newAiMessage: ChatMessage = {
@@ -95,10 +90,6 @@ export default function ChatPage() {
       });
     } finally {
       setIsLoadingAiResponse(false);
-      // Revoke the object URL to avoid memory leaks
-      if(imageUrl) {
-        URL.revokeObjectURL(imageUrl);
-      }
     }
   };
 

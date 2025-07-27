@@ -12,6 +12,7 @@ import { z } from 'genkit';
 
 const DemoChatbotInputSchema = z.object({
   message: z.string().describe('The user message to the chatbot.'),
+  imageUrl: z.string().optional().describe('The data URI of the image sent by the user.'),
 });
 export type DemoChatbotInput = z.infer<typeof DemoChatbotInputSchema>;
 
@@ -34,14 +35,21 @@ const demoChatbotFlow = ai.defineFlow(
     const webhookUrl = 'https://hook.eu2.make.com/8k75c3njhovava1pnna4ubukxi6bqtil';
 
     try {
+      // Construct the payload to send to the webhook
+      const payload: { message: string; imageUrl?: string } = {
+        message: input.message,
+      };
+      
+      if (input.imageUrl) {
+        payload.imageUrl = input.imageUrl;
+      }
+
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          message: input.message
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
