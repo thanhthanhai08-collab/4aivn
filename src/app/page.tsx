@@ -14,11 +14,53 @@ import { useEffect, useState } from "react";
 import type { Tool } from "@/lib/types";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { cn } from "@/lib/utils";
+
+const TYPING_TEXTS = [
+  "KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI",
+  "CẬP NHẬT TIN TỨC VỀ TRÍ TUỆ NHÂN TẠO AI",
+  "KHÁM PHÁ BẢNG XẾP HẠNG CÁC CÔNG CỤ AI",
+  "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
+];
 
 export default function HomePage() {
   const latestNews = mockNews.slice(0, 6); // Fetch more for seamless scroll
   const [topTools, setTopTools] = useState<Tool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
+
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    const typingSpeed = 100;
+    const deletingSpeed = 50;
+    const delay = 2000;
+
+    const handleTyping = () => {
+      const currentText = TYPING_TEXTS[textIndex];
+      if (isDeleting) {
+        if (charIndex > 0) {
+          setDisplayedText(currentText.substring(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        } else {
+          setIsDeleting(false);
+          setTextIndex((prevIndex) => (prevIndex + 1) % TYPING_TEXTS.length);
+        }
+      } else {
+        if (charIndex < currentText.length) {
+          setDisplayedText(currentText.substring(0, charIndex + 1));
+          setCharIndex(charIndex + 1);
+        } else {
+          setTimeout(() => setIsDeleting(true), delay);
+        }
+      }
+    };
+
+    const timeoutId = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    return () => clearTimeout(timeoutId);
+  }, [charIndex, isDeleting, textIndex]);
 
   useEffect(() => {
     const fetchToolRatings = async () => {
@@ -65,8 +107,9 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-          <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-relaxed">
-            KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI
+          <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-foreground leading-relaxed h-32 md:h-48 lg:h-56">
+            <span className="break-words">{displayedText}</span>
+            <span className="animate-blink text-primary">|</span>
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
             Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. Clean AI Hub là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
@@ -203,5 +246,3 @@ export default function HomePage() {
     </AppLayout>
   );
 }
-
-    
