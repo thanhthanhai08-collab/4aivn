@@ -30,37 +30,38 @@ export default function HomePage() {
 
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const typingSpeed = 5;
-    const deletingSpeed = 50;
     const delay = 2000;
+
+    if (isPaused) {
+        const timeoutId = setTimeout(() => {
+            // After pause, reset for the next sentence
+            setTextIndex((prevIndex) => (prevIndex + 1) % TYPING_TEXTS.length);
+            setCharIndex(0);
+            setDisplayedText("");
+            setIsPaused(false);
+        }, delay);
+        return () => clearTimeout(timeoutId);
+    }
 
     const handleTyping = () => {
       const currentText = TYPING_TEXTS[textIndex];
-      if (isDeleting) {
-        if (charIndex > 0) {
-          setDisplayedText(currentText.substring(0, charIndex - 1));
-          setCharIndex(charIndex - 1);
-        } else {
-          setIsDeleting(false);
-          setTextIndex((prevIndex) => (prevIndex + 1) % TYPING_TEXTS.length);
-        }
+      if (charIndex < currentText.length) {
+        setDisplayedText(currentText.substring(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
       } else {
-        if (charIndex < currentText.length) {
-          setDisplayedText(currentText.substring(0, charIndex + 1));
-          setCharIndex(charIndex + 1);
-        } else {
-          setTimeout(() => setIsDeleting(true), delay);
-        }
+        // Finished typing, start the pause
+        setIsPaused(true);
       }
     };
 
-    const timeoutId = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    const timeoutId = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timeoutId);
-  }, [charIndex, isDeleting, textIndex]);
+  }, [charIndex, textIndex, isPaused]);
 
   useEffect(() => {
     const fetchToolRatings = async () => {
