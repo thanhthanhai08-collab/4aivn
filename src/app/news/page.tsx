@@ -7,10 +7,10 @@ import Link from "next/link";
 import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
 import { NewsCard } from "@/components/news/news-card";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { Separator } from "@/components/ui/separator";
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +35,15 @@ export default function NewsPage() {
       <AppLayout>
         <div className="container py-8">
           <Skeleton className="h-12 w-1/2 mb-12 mx-auto" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-80 w-full rounded-lg" />
-            ))}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Skeleton className="h-[400px] w-full" />
+            </div>
+            <div className="lg:col-span-1 space-y-4">
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+            </div>
           </div>
         </div>
       </AppLayout>
@@ -46,7 +51,8 @@ export default function NewsPage() {
   }
 
   const featuredArticle = mockNews.length > 0 ? mockNews[0] : null;
-  const otherArticles = mockNews.slice(1);
+  const quickViewArticles = mockNews.slice(1, 4); // Next 3 articles for quick view
+  const otherArticles = mockNews.slice(4); // The rest of the articles
 
   return (
     <AppLayout>
@@ -67,44 +73,67 @@ export default function NewsPage() {
               ))}
             </div>
           </div>
-        ) : mockNews.length > 0 && featuredArticle ? (
+        ) : mockNews.length > 0 ? (
           <div>
-            {/* Featured Article Section */}
-            <section className="mb-16">
-              <Link href={`/news/${featuredArticle.id}`} className="group block">
-                <div className="relative w-full aspect-[16/8] mb-6 overflow-hidden rounded-xl shadow-2xl">
-                  <Image
-                    src={featuredArticle.imageUrl}
-                    alt={featuredArticle.title}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 80vw"
-                    priority
-                    data-ai-hint={featuredArticle.dataAiHint}
-                  />
-                </div>
-                <div className="max-w-4xl mx-auto text-center">
+            {/* Top section with Featured and Quick View */}
+            <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+              {/* Featured Article */}
+              <div className="lg:col-span-2">
+                {featuredArticle && (
+                  <Link href={`/news/${featuredArticle.id}`} className="group block">
+                    <div className="relative w-full aspect-[16/9] mb-4 overflow-hidden rounded-xl shadow-lg">
+                      <Image
+                        src={featuredArticle.imageUrl}
+                        alt={featuredArticle.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        priority
+                        data-ai-hint={featuredArticle.dataAiHint}
+                      />
+                    </div>
                     <p className="text-sm text-primary font-semibold mb-2">
                         {featuredArticle.source} • {format(new Date(featuredArticle.publishedAt), "d MMMM, yyyy", { locale: vi })}
                     </p>
-                    <h2 className="text-3xl md:text-4xl font-bold font-headline mb-4 group-hover:text-primary transition-colors">
+                    <h2 className="text-2xl md:text-3xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
                       {featuredArticle.title}
                     </h2>
-                    <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto line-clamp-3">
+                    <p className="text-base text-muted-foreground line-clamp-3">
                        {descriptionText(featuredArticle.content)}
                     </p>
-                </div>
-              </Link>
+                  </Link>
+                )}
+              </div>
+              
+              {/* Quick View Sidebar */}
+              <aside className="lg:col-span-1 space-y-4">
+                 <h3 className="text-xl font-headline font-bold text-foreground">Xem nhanh</h3>
+                 {quickViewArticles.map(article => (
+                   <Link key={article.id} href={`/news/${article.id}`} className="flex items-start space-x-4 group border-b pb-4 last:border-b-0 last:pb-0">
+                      <Image src={article.imageUrl} alt={article.title} width={80} height={80} className="rounded-md object-cover aspect-square" data-ai-hint={article.dataAiHint} />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
+                        <p className="text-xs text-muted-foreground mt-1">{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</p>
+                      </div>
+                    </Link>
+                 ))}
+              </aside>
             </section>
+            
+            <Separator className="my-12" />
 
-            {/* Other Articles Grid */}
+            {/* Other Articles List */}
             {otherArticles.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {otherArticles.map((article) => (
-                        <NewsCard key={article.id} article={article} />
-                    ))}
-                </div>
+                <section>
+                    <h3 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">Tin tức khác</h3>
+                    <div className="space-y-12 max-w-4xl mx-auto">
+                        {otherArticles.map((article) => (
+                           <NewsCard key={article.id} article={article} />
+                        ))}
+                    </div>
+                </section>
             )}
+
           </div>
         ) : (
           <div className="text-center py-16">
