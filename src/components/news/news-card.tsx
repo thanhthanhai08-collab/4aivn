@@ -102,20 +102,20 @@ export function NewsCard({ article }: NewsCardProps) {
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
         <CardDescription className="text-sm line-clamp-3">{descriptionText}</CardDescription>
-        {article.author && (
-          <div className="flex items-center space-x-2 pt-3 mt-3 border-t border-dashed">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="" alt={article.author} />
-              <AvatarFallback>{getAuthorInitials(article.author)}</AvatarFallback>
-            </Avatar>
-            <span className="text-sm font-medium text-foreground">{article.author}</span>
-          </div>
-        )}
       </CardContent>
       <CardFooter className="p-4 flex justify-between items-center border-t">
-        <div className="text-xs text-muted-foreground flex items-center">
-            <CalendarDays className="h-3 w-3 mr-1" />
-            {format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}
+        <div className="text-xs text-muted-foreground flex items-center space-x-2">
+            {article.author && (
+                <div className="flex items-center space-x-1">
+                    <User className="h-3 w-3" />
+                    <span className="font-medium">{article.author}</span>
+                    <span className="text-gray-400">•</span>
+                </div>
+            )}
+            <div className="flex items-center space-x-1">
+                <CalendarDays className="h-3 w-3" />
+                <span>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</span>
+            </div>
         </div>
         <div className="flex items-center space-x-1">
           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label="Lưu tin tức">
@@ -131,5 +131,3 @@ export function NewsCard({ article }: NewsCardProps) {
     </Card>
   );
 }
-
-    

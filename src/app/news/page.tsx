@@ -94,9 +94,6 @@ export default function NewsPage() {
                           data-ai-hint={featuredArticle.dataAiHint}
                         />
                       </div>
-                      <p className="text-sm text-primary font-semibold mb-2 uppercase">
-                        {featuredArticle.source}
-                      </p>
                       <h2 className="text-2xl md:text-3xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
                         {featuredArticle.title}
                       </h2>
@@ -116,7 +113,6 @@ export default function NewsPage() {
                     {popularArticles.map(article => (
                       <Link key={article.id} href={`/news/${article.id}`} className="block group">
                         <div className="border-b border-gray-700 pb-5 last:border-b-0 last:pb-0">
-                            <p className="text-xs text-primary font-semibold mb-1 uppercase">{article.source}</p>
                             <h4 className="font-semibold text-base leading-snug group-hover:text-primary transition-colors line-clamp-3">{article.title}</h4>
                         </div>
                       </Link>
@@ -157,7 +153,6 @@ export default function NewsPage() {
                                 </div>
                             </Link>
                             <div className="md:col-span-2">
-                                <p className="text-sm text-primary font-semibold mb-2 uppercase">{article.source}</p>
                                 <h4 className="text-xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
                                     <Link href={`/news/${article.id}`}>{article.title}</Link>
                                 </h4>
