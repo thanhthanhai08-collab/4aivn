@@ -78,7 +78,7 @@ export default function NewsPage() {
             {/* Top section with Featured and Popular */}
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
               {/* Main Content Area */}
-              <div className="lg:col-span-2 grid grid-cols-1 gap-8">
+              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Featured Article */}
                 {featuredArticle && (
                   <div className="md:col-span-2">
@@ -93,9 +93,6 @@ export default function NewsPage() {
                           priority
                           data-ai-hint={featuredArticle.dataAiHint}
                         />
-                        <div className="absolute top-4 left-4 bg-primary/80 text-primary-foreground py-2 px-4 rounded-md font-bold text-lg tracking-wider">
-                          FEATURED
-                        </div>
                       </div>
                       <p className="text-sm text-primary font-semibold mb-2 uppercase">
                         {featuredArticle.source}
