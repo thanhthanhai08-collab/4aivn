@@ -24,14 +24,14 @@ import { Separator } from "@/components/ui/separator";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
-    <Link href="#" target="_blank" rel="noopener noreferrer">
+    <Link href="/chat">
       <Image
-        src="/image/Banner quảng cáo chatbot.png"
-        alt="Quảng cáo"
+        src="/image/Khám phá chatbot.gif"
+        alt="Khám phá chatbot demo"
         width={400}
         height={250}
         className="mx-auto rounded-md shadow-md"
-        data-ai-hint="advertisement banner"
+        data-ai-hint="chatbot advertisement"
       />
     </Link>
   </div>
