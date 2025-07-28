@@ -23,13 +23,13 @@ import { CommentList } from "@/components/news/comment-list";
 import { Separator } from "@/components/ui/separator";
 
 const AdBanner = () => (
-  <div className="my-8 text-center">
+  <div className="mt-8 text-center">
     <Link href="#" target="_blank" rel="noopener noreferrer">
       <Image
-        src="https://placehold.co/800x200.png"
+        src="https://placehold.co/300x250.png"
         alt="Quảng cáo"
-        width={800}
-        height={200}
+        width={300}
+        height={250}
         className="mx-auto rounded-md shadow-md"
         data-ai-hint="advertisement banner"
       />
@@ -39,44 +39,29 @@ const AdBanner = () => (
 
 
 const renderContent = (content: string) => {
-  const contentParts = content.split(/(<p>.*?<\/p>|<ul>.*?<\/ul>|<h2>.*?<\/h2>|<h3>.*?<\/h3>|<blockquote>.*?<\/blockquote>)/g).filter(part => part.trim() !== '');
-
-  const adInsertionIndex = Math.floor(contentParts.length / 2);
-
   const imageRegex = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g;
 
-  return contentParts.flatMap((part, index) => {
-    const elements = [];
-    const subParts = part.split(/(\[IMAGE:.*?\])/g).filter(p => p.trim() !== '');
-
-    subParts.forEach((subPart, subIndex) => {
-        const imageMatch = subPart.match(/\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/);
-        if (imageMatch) {
-            const [, src, alt, hint] = imageMatch;
-            elements.push(
-                <div key={`${index}-img-${subIndex}`} className="my-6 lg:my-8">
-                <Image
-                    src={src}
-                    alt={alt}
-                    width={750}
-                    height={420}
-                    className="rounded-lg shadow-lg w-full h-auto object-cover"
-                    data-ai-hint={hint}
-                />
-                </div>
-            );
-        } else if (subPart.trim().startsWith('<')) {
-            elements.push(<div key={`${index}-html-${subIndex}`} dangerouslySetInnerHTML={{ __html: subPart }} />);
-        } else {
-            elements.push(<p key={`${index}-p-${subIndex}`}>{subPart}</p>);
-        }
-    });
-
-    if (index === adInsertionIndex) {
-        elements.push(<AdBanner key={`ad-${index}`} />);
+  return content.split(/(\[IMAGE:.*?\])/g).filter(p => p.trim() !== '').map((part, index) => {
+    const imageMatch = part.match(imageRegex);
+    if (imageMatch) {
+      const [, src, alt, hint] = imageMatch[0].replace('[IMAGE:', '').replace(']', '').split('|');
+      return (
+        <div key={`${index}-img`} className="my-6 lg:my-8">
+          <Image
+            src={src}
+            alt={alt}
+            width={750}
+            height={420}
+            className="rounded-lg shadow-lg w-full h-auto object-cover"
+            data-ai-hint={hint}
+          />
+        </div>
+      );
+    } else if (part.trim().startsWith('<')) {
+      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: part }} />;
+    } else {
+      return <p key={`${index}-p`}>{part}</p>;
     }
-
-    return elements;
   });
 };
 
@@ -267,6 +252,7 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
                   ))}
                 </CardContent>
               </Card>
+              <AdBanner />
           </aside>
         </div>
 
