@@ -44,9 +44,9 @@ const renderContent = (content: string) => {
   return content.split(/(\[IMAGE:.*?\])/g).filter(p => p.trim() !== '').map((part, index) => {
     const imageMatch = part.match(imageRegex);
     if (imageMatch) {
-      // Use the capturing groups from the regex match directly
-      const matchGroups = imageRegex.exec(part);
-      if (!matchGroups) return null; // Should not happen if imageMatch is truthy
+      // Create a new regex exec array for each match to reset its internal state
+      const matchGroups = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g.exec(part);
+      if (!matchGroups) return null;
       
       const [, src, alt, hint] = matchGroups;
       return (
@@ -69,9 +69,7 @@ const renderContent = (content: string) => {
   });
 };
 
-
-export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
 
   const [article, setArticle] = useState<NewsArticle | null>(null);
@@ -274,4 +272,8 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
       </div>
     </AppLayout>
   );
+}
+
+export default function NewsDetailPage({ params }: { params: { id: string } }) {
+  return <NewsDetailContent id={params.id} />;
 }
