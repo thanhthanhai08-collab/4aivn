@@ -26,9 +26,9 @@ const AdBanner = () => (
   <div className="mt-8 text-center">
     <Link href="#" target="_blank" rel="noopener noreferrer">
       <Image
-        src="https://placehold.co/300x250.png"
+        src="https://placehold.co/400x250.png"
         alt="Quảng cáo"
-        width={300}
+        width={400}
         height={250}
         className="mx-auto rounded-md shadow-md"
         data-ai-hint="advertisement banner"
