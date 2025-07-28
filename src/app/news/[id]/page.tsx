@@ -26,7 +26,7 @@ const AdBanner = () => (
   <div className="mt-8 text-center">
     <Link href="#" target="_blank" rel="noopener noreferrer">
       <Image
-        src="https://placehold.co/400x250.png"
+        src="/image/Banner quảng cáo chatbot.png"
         alt="Quảng cáo"
         width={400}
         height={250}
