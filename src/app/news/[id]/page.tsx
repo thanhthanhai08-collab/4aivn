@@ -44,7 +44,11 @@ const renderContent = (content: string) => {
   return content.split(/(\[IMAGE:.*?\])/g).filter(p => p.trim() !== '').map((part, index) => {
     const imageMatch = part.match(imageRegex);
     if (imageMatch) {
-      const [, src, alt, hint] = imageMatch[0].replace('[IMAGE:', '').replace(']', '').split('|');
+      // Use the capturing groups from the regex match directly
+      const matchGroups = imageRegex.exec(part);
+      if (!matchGroups) return null; // Should not happen if imageMatch is truthy
+      
+      const [, src, alt, hint] = matchGroups;
       return (
         <div key={`${index}-img`} className="my-6 lg:my-8">
           <Image
