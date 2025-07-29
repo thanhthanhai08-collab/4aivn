@@ -72,9 +72,9 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
   let lastSignature = "";
 
   return (
-    <div className="overflow-x-auto rounded-lg border shadow-sm h-[calc(100vh-320px)] relative">
+    <div className="overflow-x-auto rounded-lg border shadow-sm">
       <Table>
-        <TableHeader className="sticky top-0 z-10">
+        <TableHeader>
           <TableRow className="bg-muted/50 hover:bg-muted/50">
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
             <TableHead className="min-w-[200px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
