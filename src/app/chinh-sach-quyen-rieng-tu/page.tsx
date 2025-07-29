@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
 
              <h2>5. Liên hệ với chúng tôi</h2>
             <p>
-              Nếu bạn có bất kỳ câu hỏi nào về Chính sách Quyền riêng tư này, vui lòng liên hệ với chúng tôi tại: info@cleanai.vn.
+              Nếu bạn có bất kỳ câu hỏi nào về Chính sách quyền riêng tư này, vui lòng liên hệ với chúng tôi tại: CleanAIhub@gmail.com.
             </p>
           </CardContent>
         </Card>
