@@ -110,14 +110,14 @@ export default function RankingsPage() {
               </TabsList>
               <TabsContent value="models" className="mt-6">
                 {isLoading ? (
-                  <Skeleton className="h-96 w-full rounded-lg" />
+                  <Skeleton className="h-[calc(100vh-320px)] w-full rounded-lg" />
                 ) : (
                   <RankingsTable items={filteredModels} itemType="model" />
                 )}
               </TabsContent>
               <TabsContent value="tools" className="mt-6">
                  {isLoading ? (
-                  <Skeleton className="h-96 w-full rounded-lg" />
+                  <Skeleton className="h-[calc(100vh-320px)] w-full rounded-lg" />
                 ) : (
                   <RankingsTable items={filteredTools} itemType="tool" />
                 )}
