@@ -75,7 +75,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
     <div className="overflow-x-auto rounded-lg border shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="bg-muted/50 hover:bg-muted/50">
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
             <TableHead className="min-w-[200px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
 
