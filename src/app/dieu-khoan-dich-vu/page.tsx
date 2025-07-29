@@ -19,12 +19,12 @@ export default function TermsOfServicePage() {
 
             <h2>1. Giới thiệu</h2>
             <p>
-              Các Điều khoản Dịch vụ này chi phối việc bạn sử dụng trang web của chúng tôi, Clean AI Hub. Bằng cách truy cập hoặc sử dụng Dịch vụ, bạn đồng ý bị ràng buộc bởi các Điều khoản này.
+              Các Điều khoản dịch vụ này chi phối việc bạn sử dụng trang web của chúng tôi, Clean AI Hub. Bằng cách truy cập hoặc sử dụng dịch vụ, bạn đồng ý bị ràng buộc bởi các Điều khoản này.
             </p>
 
-            <h2>2. Sử dụng Dịch vụ</h2>
+            <h2>2. Sử dụng dịch vụ</h2>
             <p>
-              Bạn đồng ý sử dụng Dịch vụ của chúng tôi chỉ cho các mục đích hợp pháp và theo cách không vi phạm quyền của, hạn chế hoặc ức chế việc sử dụng và hưởng thụ Dịch vụ của bất kỳ ai khác. Hành vi bị cấm bao gồm quấy rối hoặc gây phiền toái hoặc bất tiện cho bất kỳ người dùng nào khác, truyền tải nội dung tục tĩu hoặc xúc phạm hoặc làm gián đoạn luồng đối thoại thông thường trong Dịch vụ.
+              Bạn đồng ý sử dụng dịch vụ của chúng tôi chỉ cho các mục đích hợp pháp và theo cách không vi phạm quyền của, hạn chế hoặc ức chế việc sử dụng và hưởng thụ dịch vụ của bất kỳ ai khác. Hành vi bị cấm bao gồm quấy rối hoặc gây phiền toái hoặc bất tiện cho bất kỳ người dùng nào khác, truyền tải nội dung tục tĩu hoặc xúc phạm hoặc làm gián đoạn luồng đối thoại thông thường trong dịch vụ.
             </p>
 
             <h2>3. Tài khoản Người dùng</h2>
@@ -34,7 +34,7 @@ export default function TermsOfServicePage() {
 
             <h2>4. Chấm dứt</h2>
             <p>
-              Chúng tôi có thể chấm dứt hoặc đình chỉ quyền truy cập của bạn vào Dịch vụ của chúng tôi ngay lập tức, không cần thông báo trước hoặc chịu trách nhiệm pháp lý, vì bất kỳ lý do gì, bao gồm nhưng không giới hạn nếu bạn vi phạm các Điều khoản.
+              Chúng tôi có thể chấm dứt hoặc đình chỉ quyền truy cập của bạn vào dịch vụ của chúng tôi ngay lập tức, không cần thông báo trước hoặc chịu trách nhiệm pháp lý, vì bất kỳ lý do gì, bao gồm nhưng không giới hạn nếu bạn vi phạm các Điều khoản.
             </p>
 
             <h2>5. Giới hạn Trách nhiệm</h2>
