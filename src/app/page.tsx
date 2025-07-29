@@ -34,7 +34,7 @@ export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const typingSpeed = 5;
+    const typingSpeed = 4;
     const delay = 2000;
 
     if (isPaused) {
