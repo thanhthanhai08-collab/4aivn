@@ -11,6 +11,7 @@ import { mockTools } from "@/lib/mock-tools";
 import { mockAIModels } from "@/lib/mock-models";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { cn } from "@/lib/utils";
 
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,17 +67,17 @@ export default function RankingsPage() {
 
         <Tabs defaultValue="models" className="w-full">
           <TabsList className="grid w-full grid-cols-2 md:w-1/2 mx-auto">
-            <TabsTrigger value="models">Model AI</TabsTrigger>
-            <TabsTrigger value="tools">Công cụ AI</TabsTrigger>
+            <TabsTrigger value="models" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Model AI</TabsTrigger>
+            <TabsTrigger value="tools" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Công cụ AI</TabsTrigger>
           </TabsList>
-          <TabsContent value="models">
+          <TabsContent value="models" className="mt-6">
             {isLoading ? (
               <Skeleton className="h-96 w-full rounded-lg" />
             ) : (
               <RankingsTable items={allModels} itemType="model" />
             )}
           </TabsContent>
-          <TabsContent value="tools">
+          <TabsContent value="tools" className="mt-6">
              {isLoading ? (
               <Skeleton className="h-96 w-full rounded-lg" />
             ) : (
