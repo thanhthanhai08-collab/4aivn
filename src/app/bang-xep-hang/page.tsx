@@ -81,37 +81,49 @@ export default function RankingsPage() {
           </p>
         </header>
 
-        <div className="mb-8 max-w-lg mx-auto relative">
-            <Input 
-                type="search"
-                placeholder="Tìm kiếm model hoặc công cụ..."
-                className="pl-10 h-11"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        </div>
+        <div className="flex flex-col items-center space-y-8">
+            <div className="w-full max-w-lg relative">
+                <Input 
+                    type="search"
+                    placeholder="Tìm kiếm model hoặc công cụ..."
+                    className="pl-10 h-11"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            </div>
 
-        <Tabs defaultValue="models" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:w-1/2 mx-auto">
-            <TabsTrigger value="models" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Model AI</TabsTrigger>
-            <TabsTrigger value="tools" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Công cụ AI</TabsTrigger>
-          </TabsList>
-          <TabsContent value="models" className="mt-6">
-            {isLoading ? (
-              <Skeleton className="h-96 w-full rounded-lg" />
-            ) : (
-              <RankingsTable items={filteredModels} itemType="model" />
-            )}
-          </TabsContent>
-          <TabsContent value="tools" className="mt-6">
-             {isLoading ? (
-              <Skeleton className="h-96 w-full rounded-lg" />
-            ) : (
-              <RankingsTable items={filteredTools} itemType="tool" />
-            )}
-          </TabsContent>
-        </Tabs>
+            <Tabs defaultValue="models" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 md:w-1/2 mx-auto">
+                <TabsTrigger 
+                    value="models" 
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=inactive]:border data-[state=inactive]:border-border data-[state=active]:border data-[state=active]:border-primary"
+                >
+                    Model AI
+                </TabsTrigger>
+                <TabsTrigger 
+                    value="tools" 
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=inactive]:border data-[state=inactive]:border-border data-[state=active]:border data-[state=active]:border-primary"
+                >
+                    Công cụ AI
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="models" className="mt-6">
+                {isLoading ? (
+                  <Skeleton className="h-96 w-full rounded-lg" />
+                ) : (
+                  <RankingsTable items={filteredModels} itemType="model" />
+                )}
+              </TabsContent>
+              <TabsContent value="tools" className="mt-6">
+                 {isLoading ? (
+                  <Skeleton className="h-96 w-full rounded-lg" />
+                ) : (
+                  <RankingsTable items={filteredTools} itemType="tool" />
+                )}
+              </TabsContent>
+            </Tabs>
+        </div>
       </div>
     </AppLayout>
   );
