@@ -1,7 +1,7 @@
 // src/app/rankings/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AppLayout } from "@/components/layout/app-layout";
 import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,12 +11,14 @@ import { mockTools } from "@/lib/mock-tools";
 import { mockAIModels } from "@/lib/mock-models";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [allTools, setAllTools] = useState<Tool[]>(mockTools);
   const [allModels, setAllModels] = useState<AIModel[]>(mockAIModels);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,10 +55,24 @@ export default function RankingsPage() {
     fetchData();
   }, []);
 
+  const filteredModels = useMemo(() => {
+    return allModels.filter(model => 
+      model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      model.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [allModels, searchTerm]);
+
+  const filteredTools = useMemo(() => {
+    return allTools.filter(tool => 
+      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [allTools, searchTerm]);
+
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <header className="mb-12 text-center">
+        <header className="mb-8 text-center">
           <h1 className="text-4xl font-headline font-bold text-foreground">
             Bảng xếp hạng AI
           </h1>
@@ -64,6 +80,17 @@ export default function RankingsPage() {
             So sánh các công cụ và mô hình AI hàng đầu dựa trên hiệu suất và đánh giá của cộng đồng.
           </p>
         </header>
+
+        <div className="mb-8 max-w-lg mx-auto relative">
+            <Input 
+                type="search"
+                placeholder="Tìm kiếm model hoặc công cụ..."
+                className="pl-10 h-11"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        </div>
 
         <Tabs defaultValue="models" className="w-full">
           <TabsList className="grid w-full grid-cols-2 md:w-1/2 mx-auto">
@@ -74,14 +101,14 @@ export default function RankingsPage() {
             {isLoading ? (
               <Skeleton className="h-96 w-full rounded-lg" />
             ) : (
-              <RankingsTable items={allModels} itemType="model" />
+              <RankingsTable items={filteredModels} itemType="model" />
             )}
           </TabsContent>
           <TabsContent value="tools" className="mt-6">
              {isLoading ? (
               <Skeleton className="h-96 w-full rounded-lg" />
             ) : (
-              <RankingsTable items={allTools} itemType="tool" />
+              <RankingsTable items={filteredTools} itemType="tool" />
             )}
           </TabsContent>
         </Tabs>
