@@ -1,4 +1,3 @@
-
 // src/components/rankings/rankings-table.tsx
 "use client";
 
@@ -8,6 +7,7 @@ import type { Tool, AIModel } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Helper function to parse context length strings (e.g., "1m", "200k") into numbers
 const parseContextLength = (tokenStr?: string): number => {
@@ -120,7 +120,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             }
 
             return (
-            <TableRow key={item.id}>
+            <TableRow key={item.id} className={cn(index % 2 === 0 ? "bg-accent/50" : "")}>
               <TableCell className="text-center font-medium">
                 {itemType === 'model' ? denseRank : (item as Tool).ranking || '-'}
               </TableCell>
