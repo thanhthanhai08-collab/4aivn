@@ -120,7 +120,15 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             }
 
             return (
-            <TableRow key={item.id} className={cn(index % 2 === 0 ? "bg-accent/50" : "")}>
+            <TableRow 
+                key={item.id} 
+                className={cn(
+                    "border-b transition-colors data-[state=selected]:bg-muted",
+                    "hover:bg-primary hover:text-primary-foreground",
+                    "[&>td>a]:hover:text-primary-foreground",
+                    index % 2 === 0 ? "bg-accent/50" : ""
+                )}
+            >
               <TableCell className="text-center font-medium">
                 {itemType === 'model' ? denseRank : (item as Tool).ranking || '-'}
               </TableCell>
@@ -135,7 +143,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     data-ai-hint="logo company"
                   />
                   <div className="flex flex-col">
-                    <Link href={`/${itemType === 'tool' ? 'cong-cu' : 'mo-hinh'}/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
+                    <Link href={`/${itemType === 'tool' ? 'cong-cu' : 'mo-hinh'}/${item.id}`} className="font-medium hover:underline transition-colors">
                         {item.name}
                     </Link>
                     <span className="text-xs text-muted-foreground truncate max-w-[200px] hidden sm:block">{item.description.substring(0,50)}{item.description.length > 50 ? '...' : ''}</span>
