@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
         <Card className="max-w-4xl mx-auto">
           <CardHeader>
             <CardTitle className="text-3xl md:text-4xl font-headline text-center">
-              Chính sách Quyền riêng tư
+              Chính sách quyền riêng tư
             </CardTitle>
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-foreground leading-relaxed">
