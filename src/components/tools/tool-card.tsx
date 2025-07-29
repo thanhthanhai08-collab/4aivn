@@ -31,7 +31,7 @@ export function ToolCard({ tool }: ToolCardProps) {
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">
-                <Link href={`/tools/${tool.id}`} className="hover:underline">
+                <Link href={`/cong-cu/${tool.id}`} className="hover:underline">
                   {tool.name}
                 </Link>
               </CardTitle>
@@ -79,7 +79,7 @@ export function ToolCard({ tool }: ToolCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/tools/${tool.id}`}>
+          <Link href={`/cong-cu/${tool.id}`}>
             Xem chi tiết
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
@@ -88,5 +88,3 @@ export function ToolCard({ tool }: ToolCardProps) {
     </Card>
   );
 }
-
-    

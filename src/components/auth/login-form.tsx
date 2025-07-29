@@ -47,7 +47,7 @@ export function LoginForm() {
   useEffect(() => {
     // Redirect if user is already logged in
     if (currentUser) {
-      router.push("/profile");
+      router.push("/ho-so");
     }
   }, [currentUser, router]);
 

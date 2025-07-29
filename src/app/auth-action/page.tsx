@@ -57,7 +57,7 @@ function AuthActionContent() {
                         description: "Email của bạn đã được xác minh. Đang chuyển hướng đến hồ sơ của bạn...",
                     });
                     setTimeout(() => {
-                        router.push('/profile');
+                        router.push('/ho-so');
                     }, 3000);
                     return;
                 default:
@@ -102,7 +102,7 @@ function AuthActionContent() {
         title: "Thành công",
         description: "Mật khẩu của bạn đã được đặt lại. Vui lòng đăng nhập.",
       });
-      router.push("/login");
+      router.push("/dang-nhap");
     } catch (err) {
       console.error("Password reset failed:", err);
       toast({
@@ -125,7 +125,7 @@ function AuthActionContent() {
         <div className="text-center">
           <p className="text-destructive">{error}</p>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/login">Quay lại trang Đăng nhập</Link>
+            <Link href="/dang-nhap">Quay lại trang Đăng nhập</Link>
           </Button>
         </div>
       );

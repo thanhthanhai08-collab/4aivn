@@ -43,7 +43,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
-      router.push("/login");
+      router.push("/dang-nhap");
     } else if (currentUser) {
         getUserProfileData(currentUser.uid).then(data => {
             // Load rated models

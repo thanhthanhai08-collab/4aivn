@@ -38,7 +38,7 @@ export function SignupForm() {
         description: "Vui lòng kiểm tra email của bạn để hoàn tất quá trình xác minh.",
         duration: 7000,
       });
-      router.push("/login"); 
+      router.push("/dang-nhap"); 
     } catch (error) {
       console.error("Email signup error:", error);
       let description = "Đã có lỗi xảy ra. Vui lòng thử lại.";

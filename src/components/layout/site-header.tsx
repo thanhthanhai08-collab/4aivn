@@ -14,10 +14,10 @@ import { useEffect, useState, type FormEvent } from "react";
 
 const navItems = [
   { href: "/", label: "Trang chủ", icon: Home },
-  { href: "/tools", label: "Công cụ AI", icon: LayoutGrid },
-  { href: "/rankings", label: "Bảng xếp hạng", icon: TrendingUp },
-  { href: "/news", label: "Tin tức AI", icon: Newspaper },
-  { href: "/chat", label: "Chat Demo", icon: MessageSquare },
+  { href: "/cong-cu", label: "Công cụ AI", icon: LayoutGrid },
+  { href: "/bang-xep-hang", label: "Bảng xếp hạng", icon: TrendingUp },
+  { href: "/tin-tuc", label: "Tin tức AI", icon: Newspaper },
+  { href: "/tro-chuyen", label: "Chat Demo", icon: MessageSquare },
 ];
 
 export function SiteHeader() {
@@ -35,7 +35,7 @@ export function SiteHeader() {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      router.push(`/tim-kiem?q=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm(""); // Clear search term after navigation
       if (isSheetOpen) setIsSheetOpen(false); // Close sheet on mobile after search
     }
@@ -86,7 +86,7 @@ export function SiteHeader() {
             <UserNav user={currentUser} />
           ) : (
             <Button asChild size="sm">
-              <Link href="/login">Đăng nhập</Link>
+              <Link href="/dang-nhap">Đăng nhập</Link>
             </Button>
           ))}
           {isClient && isLoading && (

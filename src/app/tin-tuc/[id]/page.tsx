@@ -24,7 +24,7 @@ import { Separator } from "@/components/ui/separator";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
-    <Link href="/chat">
+    <Link href="/tro-chuyen">
       <Image
         src="/image/Khám phá chatbot.gif"
         alt="Khám phá chatbot demo"
@@ -124,7 +124,7 @@ function NewsDetailContent({ id }: { id: string }) {
         <div className="container py-12 text-center">
           <h1 className="text-2xl font-bold">Không tìm thấy bài viết</h1>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/news">Quay lại trang Tin tức</Link>
+            <Link href="/tin-tuc">Quay lại trang Tin tức</Link>
           </Button>
         </div>
       </AppLayout>
@@ -143,7 +143,7 @@ function NewsDetailContent({ id }: { id: string }) {
             <article>
               <header className="mb-8">
                 <Button variant="outline" size="sm" asChild className="mb-6">
-                  <Link href="/news"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
+                  <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
                 </Button>
                  <p className="text-sm text-primary font-semibold mb-2 uppercase">
                   {article.source}
@@ -216,7 +216,7 @@ function NewsDetailContent({ id }: { id: string }) {
                   <CommentForm articleId={id} onCommentAdded={handleCommentAdded} />
                 ) : (
                   <div className="text-center text-sm text-muted-foreground bg-muted/50 p-4 rounded-md">
-                    <Link href="/login" className="font-semibold text-primary hover:underline">Đăng nhập</Link> để tham gia thảo luận.
+                    <Link href="/dang-nhap" className="font-semibold text-primary hover:underline">Đăng nhập</Link> để tham gia thảo luận.
                   </div>
                 )}
                 <Separator />
@@ -233,7 +233,7 @@ function NewsDetailContent({ id }: { id: string }) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {latestNews.map(related => (
-                    <Link key={related.id} href={`/news/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                    <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                       <div className="flex items-start space-x-4">
                         <div className="relative w-24 h-24 shrink-0">
                           <Image

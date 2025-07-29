@@ -68,7 +68,7 @@ export default function SearchResultsPage() {
               </CardContent>
               <CardFooter>
                  <Button asChild>
-                  <Link href={`/tools?search_query=${encodeURIComponent(query)}`}>
+                  <Link href={`/cong-cu?search_query=${encodeURIComponent(query)}`}>
                     Tìm kiếm "{query}" trong Công cụ AI
                   </Link>
                 </Button>
@@ -88,7 +88,7 @@ export default function SearchResultsPage() {
                     <p>Mô tả ngắn gọn về kết quả...</p>
                   </CardContent>
                   <CardFooter>
-                    <Button asChild size="sm"><Link href="/tools/chatgpt">Xem chi tiết</Link></Button>
+                    <Button asChild size="sm"><Link href="/cong-cu/chatgpt">Xem chi tiết</Link></Button>
                   </CardFooter>
                 </Card>
                 <Card>
@@ -100,7 +100,7 @@ export default function SearchResultsPage() {
                     <p>Mô tả ngắn gọn về bài viết...</p>
                   </CardContent>
                   <CardFooter>
-                     <Button asChild size="sm"><Link href="/news/news-id-123">Đọc thêm</Link></Button>
+                     <Button asChild size="sm"><Link href="/tin-tuc/news-id-123">Đọc thêm</Link></Button>
                   </CardFooter>
                 </Card>
               </div>

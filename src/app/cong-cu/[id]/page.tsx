@@ -1,32 +1,32 @@
-// src/app/models/[id]/page.tsx
+// src/app/tools/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
-import { mockAIModels as initialMockModels } from "@/lib/mock-models";
-import type { AIModel, NewsArticle } from "@/lib/types";
+import { mockTools as initialMockTools } from "@/lib/mock-tools";
+import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
-import { generateAiModelDescription } from "@/ai/flows/ai-model-description-generator";
+import { generateAiToolDescription } from "@/ai/flows/ai-tool-description-generator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
-  setModelRating,
-  toggleModelFavorite,
+  setToolRating,
+  toggleToolFavorite,
   getUserProfileData,
-  getAggregateRating
+  getAggregateRating,
 } from "@/lib/user-data-service";
 import { mockNews } from "@/lib/mock-news";
-import { NewsCard } from "@/components/news/news-card";
 
-function ModelDetailContent({ id }: { id: string }) {
-  const [model, setModel] = useState<AIModel | null>(null);
+
+function ToolDetailContent({ id }: { id: string }) {
+  const [tool, setTool] = useState<Tool | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -38,35 +38,34 @@ function ModelDetailContent({ id }: { id: string }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    const foundModel = initialMockModels.find((m) => m.id === id);
+    // Find tool directly from mock-data to ensure it's always up-to-date.
+    const foundTool = initialMockTools.find((t) => t.id === id);
     
-    if (foundModel) {
-      setModel(foundModel);
-
-      const filteredNews = mockNews.filter(article => 
-        article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
-        article.content.toLowerCase().includes(foundModel.name.toLowerCase())
-      ).slice(0, 3);
-      setRelatedNews(filteredNews);
+    if (foundTool) {
+      setTool(foundTool);
       
+      // Find related news articles
+      const filteredNews = mockNews.filter(article => 
+        article.title.toLowerCase().includes(foundTool.name.toLowerCase()) || 
+        article.content.toLowerCase().includes(foundTool.name.toLowerCase())
+      ).slice(0, 3); // Limit to 3 articles
+      setRelatedNews(filteredNews);
+
       if (currentUser) {
+        // Load user-specific data from Firestore
         getUserProfileData(currentUser.uid).then(userData => {
-          setIsFavorite(userData.favoriteModels?.includes(id) || false);
-          setCurrentRating(userData.ratedModels?.[id] || 0);
+          setIsFavorite(userData.favoriteTools?.includes(id) || false);
+          setCurrentRating(userData.ratedTools?.[id] || 0);
         });
       }
 
-      getAggregateRating("models", id).then(setAggregateRating);
+      // Fetch aggregate rating data from Firestore
+      getAggregateRating("tools", id).then(setAggregateRating);
 
-      if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
-        generateAiModelDescription({ 
-            name: foundModel.name, 
-            type: foundModel.type, 
-            developer: foundModel.developer,
-            link: foundModel.link 
-        })
+      if (foundTool.description.length < 100 && foundTool.description.length > 0) {
+        generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
           .then(output => setEnhancedDescription(output.description))
-          .catch(err => console.error("Failed to generate AI model description:", err));
+          .catch(err => console.error("Failed to generate AI description:", err));
       }
     }
     setIsLoading(false);
@@ -77,46 +76,50 @@ function ModelDetailContent({ id }: { id: string }) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
+    
     const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); 
+    setIsFavorite(newFavoriteState); // Optimistic UI update
 
     try {
-        await toggleModelFavorite(currentUser.uid, id, isFavorite);
+        await toggleToolFavorite(currentUser.uid, id, isFavorite);
         toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
-        setIsFavorite(!newFavoriteState); 
+        setIsFavorite(!newFavoriteState); // Revert on error
         toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
     }
   };
 
   const handleRating = async (rating: number) => {
-    if (!currentUser || !model) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá model.", variant: "destructive" });
+    if (!currentUser || !tool) {
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
       return;
     }
 
     const oldRating = currentRating;
     const oldAggregate = { ...aggregateRating };
 
+    // Optimistic UI update
     setCurrentRating(rating);
     setAggregateRating(prev => {
         let newTotalStars = prev.totalStars - oldRating + rating;
         let newRatingCount = prev.ratingCount;
-        if(oldRating === 0) {
+        if(oldRating === 0) { // It's a new rating
             newRatingCount += 1;
         }
         return { totalStars: newTotalStars, ratingCount: newRatingCount };
     });
 
     try {
-      await setModelRating(currentUser.uid, model.id, rating);
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
+      await setToolRating(currentUser.uid, tool.id, rating);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${rating} sao.` });
+
     } catch(error) {
-        console.error("Failed to save rating:", error);
-        setCurrentRating(oldRating); 
-        setAggregateRating(oldAggregate);
-        toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
+      console.error("Failed to save rating:", error);
+      // Revert UI on error
+      setCurrentRating(oldRating); 
+      setAggregateRating(oldAggregate);
+      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
 
@@ -142,39 +145,40 @@ function ModelDetailContent({ id }: { id: string }) {
     );
   }
 
-  if (!model) {
+  if (!tool) {
     return (
       <AppLayout>
         <div className="container py-12 text-center">
-          <h1 className="text-2xl font-bold">Không tìm thấy model AI</h1>
+          <h1 className="text-2xl font-bold">Không tìm thấy công cụ</h1>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/rankings">Quay lại Bảng xếp hạng</Link>
+            <Link href="/cong-cu">Quay lại trang Công cụ</Link>
           </Button>
         </div>
       </AppLayout>
     );
   }
 
-  const descriptionToDisplay = enhancedDescription || model.description;
+  const descriptionToDisplay = enhancedDescription || tool.description;
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
 
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
         <Button variant="outline" asChild className="mb-6">
-          <Link href="/rankings"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại Bảng xếp hạng</Link>
+          <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Công cụ</Link>
         </Button>
 
         <div className="grid md:grid-cols-3 gap-8 items-start">
+          {/* Main Content */}
           <div className="md:col-span-2 space-y-6">
             <Card>
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div className="flex items-center space-x-4">
-                    <Image src={model.logoUrl} alt={`Logo ${model.name}`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
+                    <Image src={tool.logoUrl} alt={`Logo ${tool.name}`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
                     <div>
-                      <CardTitle className="text-3xl font-headline">{model.name}</CardTitle>
-                      <Badge variant="secondary" className="mt-1">{model.type}</Badge>
+                      <CardTitle className="text-3xl font-headline">{tool.name}</CardTitle>
+                      <Badge variant="secondary" className="mt-1">{tool.context}</Badge>
                     </div>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -182,13 +186,11 @@ function ModelDetailContent({ id }: { id: string }) {
                        <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                        {isFavorite ? "Đã thích" : "Yêu thích"}
                      </Button>
-                     {model.link && (
-                        <Button asChild className="flex-grow sm:flex-grow-0">
-                            <a href={model.link} target="_blank" rel="noopener noreferrer">
-                            Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                        </Button>
-                     )}
+                     <Button asChild className="flex-grow sm:flex-grow-0">
+                        <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
                   </div>
                 </div>
               </CardHeader>
@@ -197,36 +199,30 @@ function ModelDetailContent({ id }: { id: string }) {
               </CardContent>
             </Card>
             
-            {model.features && model.features.length > 0 && (
+            {tool.features && tool.features.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle className="text-2xl font-headline">Tính năng chính</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {model.features.map((feature, index) => {
-                      const isSubItem = feature.startsWith("• ");
-                      return (
-                        <li key={index} className="flex items-start">
-                          {!isSubItem ? (
-                            <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
-                          ) : (
-                            <div className="w-[1.75rem] shrink-0"></div>
-                          )}
-                          <span className="text-card-foreground">{feature}</span>
-                        </li>
-                      );
-                    })}
+                    {tool.features.map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </CardContent>
               </Card>
             )}
           </div>
 
+          {/* Sidebar */}
           <div className="space-y-6 md:sticky md:top-24">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl font-headline">Đánh giá Model này</CardTitle>
+                <CardTitle className="text-xl font-headline">Đánh giá công cụ này</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center space-x-1 mb-2">
@@ -251,27 +247,23 @@ function ModelDetailContent({ id }: { id: string }) {
                 </CardHeader>
                 <CardContent className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Nhà phát triển:</span>
-                        <span>{model.developer}</span>
+                        <span className="text-muted-foreground">Xếp hạng:</span>
+                        <span>#{tool.ranking || 'Chưa có'}</span>
                     </div>
                      <Separator />
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Loại Model:</span>
-                        <Badge variant="outline">{model.type}</Badge>
+                        <span className="text-muted-foreground">Danh mục:</span>
+                        <Badge variant="outline">{tool.context}</Badge>
                     </div>
-                    {model.link && (
-                        <>
-                        <Separator />
-                        <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Trang web chính thức:</span>
-                            <Button variant="link" size="sm" asChild className="p-0 h-auto">
-                                <a href={model.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
-                                    {model.link.replace(/^https?:\/\//, '')}
-                                </a>
-                            </Button>
-                        </div>
-                        </>
-                    )}
+                    <Separator />
+                     <div className="flex justify-between items-center">
+                        <span className="text-muted-foreground">Trang web chính thức:</span>
+                        <Button variant="link" size="sm" asChild className="p-0 h-auto">
+                            <a href={tool.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
+                                {tool.link.replace(/^https?:\/\//, '')}
+                            </a>
+                        </Button>
+                    </div>
                 </CardContent>
             </Card>
 
@@ -282,7 +274,7 @@ function ModelDetailContent({ id }: { id: string }) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
-                    <Link key={article.id} href={`/news/${article.id}`} className="flex items-start space-x-3 group border-b pb-3 last:border-b-0 last:pb-0">
+                    <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-start space-x-3 group border-b pb-3 last:border-b-0 last:pb-0">
                       <Image src={article.imageUrl} alt={article.title} width={64} height={64} className="rounded-md object-cover aspect-square" data-ai-hint={article.dataAiHint} />
                       <div>
                         <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
@@ -300,9 +292,7 @@ function ModelDetailContent({ id }: { id: string }) {
   );
 }
 
-// This is the Server Component that fetches the ID and passes it to the Client Component.
-export default function ModelDetailPage({ params }: { params: { id: string } }) {
-  // The warning is about accessing params.id directly in a Server Component context.
-  // By passing it as a prop to a client component, we follow Next.js conventions.
-  return <ModelDetailContent id={params.id} />;
+
+export default function ToolDetailPage({ params }: { params: { id: string } }) {
+  return <ToolDetailContent id={params.id} />;
 }

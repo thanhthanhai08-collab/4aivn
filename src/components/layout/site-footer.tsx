@@ -5,17 +5,17 @@ import { ShieldCheck, Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin 
 
 const quickLinks = [
   { href: "/", label: "Trang chủ" },
-  { href: "/tools", label: "Công cụ AI" },
-  { href: "/rankings", label: "Bảng xếp hạng" },
-  { href: "/news", label: "Tin tức AI" },
-  { href: "/chat", label: "Chat Demo" },
+  { href: "/cong-cu", label: "Công cụ AI" },
+  { href: "/bang-xep-hang", label: "Bảng xếp hạng" },
+  { href: "/tin-tuc", label: "Tin tức AI" },
+  { href: "/tro-chuyen", label: "Chat Demo" },
 ];
 
 const featuredTopics = [
-  { href: "/privacy-policy", label: "Chính sách quyền riêng tư" },
-  { href: "/terms-of-service", label: "Điều khoản dịch vụ" },
-  { href: "/ai-terms-of-use", label: "Điều khoản sử dụng AI" },
-  { href: "/cookie-policy", label: "Chính sách Cookies" },
+  { href: "/chinh-sach-quyen-rieng-tu", label: "Chính sách quyền riêng tư" },
+  { href: "/dieu-khoan-dich-vu", label: "Điều khoản dịch vụ" },
+  { href: "/dieu-khoan-su-dung-ai", label: "Điều khoản sử dụng AI" },
+  { href: "/chinh-sach-cookie", label: "Chính sách Cookies" },
 ];
 
 const socialMediaLinks = [

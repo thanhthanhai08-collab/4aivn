@@ -135,7 +135,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     data-ai-hint="logo company"
                   />
                   <div className="flex flex-col">
-                    <Link href={`/${itemType}s/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
+                    <Link href={`/${itemType === 'tool' ? 'cong-cu' : 'mo-hinh'}/${item.id}`} className="font-medium hover:underline hover:text-primary transition-colors">
                         {item.name}
                     </Link>
                     <span className="text-xs text-muted-foreground truncate max-w-[200px] hidden sm:block">{item.description.substring(0,50)}{item.description.length > 50 ? '...' : ''}</span>
