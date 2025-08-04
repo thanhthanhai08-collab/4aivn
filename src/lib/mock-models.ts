@@ -29,15 +29,15 @@ export const mockAIModels: AIModel[] = [
       "Giá trung bình 3.44 USD/ 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 1.25 USD / 1 triệu token.",
       "• Giá đầu ra 10 USD / 1 triệu token.",
-      "Tốc độ sinh token khá nhanh là 143.9 token /s.",
-      "Độ trễ 36.13s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token khá nhanh là 147.3 token /s.",
+      "Độ trễ 38.01s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 70,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 143.9,
-    latencyFirstChunkSeconds: 36.13,
+    speedTokensPerSecond: 147.3,
+    latencyFirstChunkSeconds: 38.01,
   },
   {
     id: 'grok-4',
