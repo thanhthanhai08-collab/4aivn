@@ -65,8 +65,8 @@ export const mockAIModels: AIModel[] = [
       "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 3 USD / 1 triệu token.",
       "• Giá đầu ra 15 USD / 1 triệu token.",
-      "Tốc độ sinh token là 74.7 token /s.",
-      "Độ trễ 6.41s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token là 68.3 token /s.",
+      "Độ trễ 9.94s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '256k',
     intelligenceScore: 73,
