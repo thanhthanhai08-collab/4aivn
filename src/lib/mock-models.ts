@@ -692,15 +692,15 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
       "Giá trung bình 3.5 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 2.0 USD / 1 triệu token.",
       "• Giá đầu ra 8.0 USD / 1 triệu token.",
-      "Tốc độ sinh token là 110.4 token /s.",
-      "Độ trễ 22.23s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token là 195.2 token /s.",
+      "Độ trễ 13.58s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 70,
     pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 110.4,
-    latencyFirstChunkSeconds: 22.23,
+    speedTokensPerSecond: 195.2,
+    latencyFirstChunkSeconds: 13.58,
   },
   {
     id: 'llama-nemotron-ultra-reasoning',
