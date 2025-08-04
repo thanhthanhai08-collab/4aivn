@@ -71,8 +71,8 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '256k',
     intelligenceScore: 73,
     pricePerMillionTokens: 6,
-    speedTokensPerSecond: 74.7,
-    latencyFirstChunkSeconds: 6.41,
+    speedTokensPerSecond: 68.3,
+    latencyFirstChunkSeconds: 9.94,
   },
   {
     id: 'grok-3-mini-reasoning-high',
