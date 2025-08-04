@@ -1,3 +1,4 @@
+
 import type { AIModel } from '@/lib/types';
 
 export const mockAIModels: AIModel[] = [
@@ -138,15 +139,15 @@ export const mockAIModels: AIModel[] = [
       "Giá trung bình 35 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 20 USD / 1 triệu token.",
       "• Giá đầu ra 80 USD / 1 triệu token.",
-      "Tốc độ sinh token là 23.5 token /s.",
-      "Độ trễ 110.86s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+      "Tốc độ sinh token là 32.7 token /s.",
+      "Độ trễ 78.85s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 71,
     pricePerMillionTokens: 35,
-    speedTokensPerSecond: 23.5,
-    latencyFirstChunkSeconds: 110.86,
+    speedTokensPerSecond: 32.7,
+    latencyFirstChunkSeconds: 78.85,
   },
    {
     id: 'gemini-2.5-flash-reasoning',
@@ -445,7 +446,8 @@ export const mockAIModels: AIModel[] = [
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: `+ Claude 4 Sonnet Thinking là một trong hai phiên bản chủ lực của dòng mô hình Claude 4 do Anthropic ra mắt vào tháng 5 năm 2025, bên cạnh phiên bản Opus 4. Sonnet 4 được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.
-+ Claude 4 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 4 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 4 Opus
++ Claude 4 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 4 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa
+bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 4 Opus
 + Khi được cấp quyền truy cập file, Sonnet 4 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
