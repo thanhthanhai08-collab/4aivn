@@ -226,7 +226,7 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'qwen3-235b-reasoning',
-    name: 'Qwen3 235B (Reasoning)',
+    name: 'Qwen3 235B 2507 (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
     description: `+ Qwen3-235B-A22B, hay gọi tắt là Qwen 235B, là phiên bản flagship mới nhất trong dòng mô hình Qwen do Alibaba phát triển, ra mắt vào đầu năm 2025. Đây là một trong những mô hình Al tiên tiến nhất hiện nay, nổi bật với khả năng suy luận đa bước sâu sắc, hiệu suất cao trong toán học, lập trình và xử lý ngôn ngữ tự nhiên, đồng thời hỗ trợ đa ngôn ngữ lên đến 119 ngôn ngữ và phương ngữ.
