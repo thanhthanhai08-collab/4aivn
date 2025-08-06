@@ -216,7 +216,7 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div className="relative w-full overflow-hidden group">
+           <div className="relative w-full overflow-hidden group touch-pan-y">
             <div 
               className="flex animate-scroll-left group-hover:pause"
               style={{ 
