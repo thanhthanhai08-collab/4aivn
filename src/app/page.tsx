@@ -121,11 +121,11 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-           <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 md:h-44 flex items-center justify-center">
+           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 flex items-center justify-center">
             <span className="break-words">{displayedText}</span>
             <span className="animate-blink text-primary">|</span>
           </h1>
-          <p className="mt-4 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl md:text-2xl">
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl">
             Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. Clean AI Hub là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -238,7 +238,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-1`} 
-                    className="flex-none px-3 w-[90%] sm:w-1/2 md:w-2/5 lg:w-1/3"
+                    className="flex-none px-3 w-[90%] sm:w-1/2 md:w-2/5 lg:w-1/4"
                   >
                     <NewsCard article={article} />
                   </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-2`} 
-                    className="flex-none px-3 w-[90%] sm:w-1/2 md:w-2/5 lg:w-1/3"
+                    className="flex-none px-3 w-[90%] sm:w-1/2 md:w-2/5 lg:w-1/4"
                   >
                     <NewsCard article={article} />
                   </div>
