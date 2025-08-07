@@ -15,6 +15,7 @@ import type { Tool } from "@/lib/types";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const TYPING_TEXTS = [
   "KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI",
@@ -34,7 +35,6 @@ export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false);
   
   const carouselRef = useRef<HTMLDivElement>(null);
-  const scrollIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     const typingSpeed = 2;
@@ -100,38 +100,13 @@ export default function HomePage() {
     fetchToolRatings();
   }, []);
   
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!carouselRef.current) return;
-    
-    const { left, width } = carouselRef.current.getBoundingClientRect();
-    const mouseX = event.clientX - left;
-    const scrollSpeed = 2; // Adjust for faster/slower scroll
-
-    // Check if the carousel is scrollable
-    if (carouselRef.current.scrollWidth > carouselRef.current.clientWidth) {
-      if (mouseX < width / 2) {
-        // Scroll left
-        carouselRef.current.scrollLeft -= scrollSpeed;
-      } else {
-        // Scroll right
-        carouselRef.current.scrollLeft += scrollSpeed;
-      }
-    }
-  };
-
-  const startScrolling = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-    }
-    scrollIntervalRef.current = window.setInterval(() => {
-        handleMouseMove(event);
-    }, 16); // ~60fps
-  };
-  
-  const stopScrolling = () => {
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-      scrollIntervalRef.current = null;
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.clientWidth * 0.8; // Scroll 80% of the visible width
+      carouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -254,21 +229,52 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div 
+           <div className="relative group">
+            <div 
               ref={carouselRef}
-              className="relative w-full flex overflow-x-auto scrollbar-hide group touch-pan-y"
-              onMouseMove={handleMouseMove}
-              onMouseEnter={startScrolling}
-              onMouseLeave={stopScrolling}
-           >
-              {[...latestNews, ...latestNews].map((article, index) => (
-                <div 
-                  key={`${article.id}-${index}-carousel`} 
-                  className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                >
-                  <NewsCard article={article} />
-                </div>
-              ))}
+              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4"
+            >
+              <div className="flex animate-scroll-left group-hover:pause">
+                {[...latestNews, ...latestNews].map((article, index) => (
+                  <div 
+                    key={`${article.id}-${index}-carousel-1`} 
+                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                  >
+                    <NewsCard article={article} />
+                  </div>
+                ))}
+              </div>
+               <div className="flex animate-scroll-left group-hover:pause" aria-hidden="true">
+                {[...latestNews, ...latestNews].map((article, index) => (
+                  <div 
+                    key={`${article.id}-${index}-carousel-2`} 
+                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                  >
+                    <NewsCard article={article} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={() => scrollCarousel('left')}
+              aria-label="Cuộn sang trái"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={() => scrollCarousel('right')}
+              aria-label="Cuộn sang phải"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+
           </div>
 
           <div className="text-center mt-12">
