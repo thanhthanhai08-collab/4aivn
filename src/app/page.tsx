@@ -121,7 +121,7 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-           <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 md:h-44 flex items-center justify-center">
+           <h1 className="text-3xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 md:h-44 flex items-center justify-center">
             <span className="break-words">{displayedText}</span>
             <span className="animate-blink text-primary">|</span>
           </h1>
@@ -238,7 +238,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-1`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className="flex-none px-3 w-4/5 sm:w-1/2 md:w-1/3 lg:w-1/4"
                   >
                     <NewsCard article={article} />
                   </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-2`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className="flex-none px-3 w-4/5 sm:w-1/2 md:w-1/3 lg:w-1/4"
                   >
                     <NewsCard article={article} />
                   </div>
