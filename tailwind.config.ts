@@ -95,10 +95,6 @@ export default {
             height: '0',
           },
         },
-        'scroll-left': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
         'pulse': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '.5' },
@@ -111,7 +107,6 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'scroll-left': 'scroll-left 60s linear infinite',
         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'blink': 'blink 0.7s infinite',
       },
@@ -126,6 +121,14 @@ export default {
         },
         '.pause': {
           'animation-play-state': 'paused',
+        },
+         '.scrollbar-hide': {
+          /* Firefox */
+          'scrollbar-width': 'none',
+          /* Safari and Chrome */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
         },
       });
     },

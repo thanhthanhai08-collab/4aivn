@@ -10,7 +10,7 @@ import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type { Tool } from "@/lib/types";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -32,6 +32,9 @@ export default function HomePage() {
   const [charIndex, setCharIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isPaused, setIsPaused] = useState(false);
+  
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const scrollIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     const typingSpeed = 2;
@@ -96,19 +99,54 @@ export default function HomePage() {
 
     fetchToolRatings();
   }, []);
+  
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!carouselRef.current) return;
+    
+    const { left, width } = carouselRef.current.getBoundingClientRect();
+    const mouseX = event.clientX - left;
+    const scrollSpeed = 2; // Adjust for faster/slower scroll
+
+    // Check if the carousel is scrollable
+    if (carouselRef.current.scrollWidth > carouselRef.current.clientWidth) {
+      if (mouseX < width / 2) {
+        // Scroll left
+        carouselRef.current.scrollLeft -= scrollSpeed;
+      } else {
+        // Scroll right
+        carouselRef.current.scrollLeft += scrollSpeed;
+      }
+    }
+  };
+
+  const startScrolling = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+    }
+    scrollIntervalRef.current = window.setInterval(() => {
+        handleMouseMove(event);
+    }, 16); // ~60fps
+  };
+  
+  const stopScrolling = () => {
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+  };
 
 
   return (
     <AppLayout>
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
+       <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
             {/* Decorative background elements */}
             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-3xl animate-pulse"></div>
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-56 md:h-44 lg:h-48 flex items-center justify-center">
+           <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 md:h-44 flex items-center justify-center">
             <span className="break-words">{displayedText}</span>
             <span className="animate-blink text-primary">|</span>
           </h1>
@@ -216,25 +254,21 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div className="relative w-full overflow-hidden group touch-pan-y">
-            <div 
-              className="flex animate-scroll-left group-hover:pause"
-              style={{ 
-                '--items-per-screen-xs': 1,
-                '--items-per-screen-md': 2,
-                '--items-per-screen-lg': 3,
-              } as React.CSSProperties}
-            >
-              {/* Duplicated for seamless scroll */}
+           <div 
+              ref={carouselRef}
+              className="relative w-full flex overflow-x-auto scrollbar-hide group touch-pan-y"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={startScrolling}
+              onMouseLeave={stopScrolling}
+           >
               {[...latestNews, ...latestNews].map((article, index) => (
                 <div 
                   key={`${article.id}-${index}-carousel`} 
-                  className="flex-none px-3 w-[calc(100%/var(--items-per-screen-xs,1))] md:w-[calc(100%/var(--items-per-screen-md,2))] lg:w-[calc(100%/var(--items-per-screen-lg,3))]"
+                  className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                 >
                   <NewsCard article={article} />
                 </div>
               ))}
-            </div>
           </div>
 
           <div className="text-center mt-12">
