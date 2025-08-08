@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -34,6 +35,8 @@ export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false);
   
   const carouselRef = useRef<HTMLDivElement>(null);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isHoveringRef = useRef(false);
 
   useEffect(() => {
     const typingSpeed = 2;
@@ -41,7 +44,6 @@ export default function HomePage() {
 
     if (isPaused) {
         const timeoutId = setTimeout(() => {
-            // After pause, reset for the next sentence
             setTextIndex((prevIndex) => (prevIndex + 1) % TYPING_TEXTS.length);
             setCharIndex(0);
             setDisplayedText("");
@@ -56,7 +58,6 @@ export default function HomePage() {
         setDisplayedText(currentText.substring(0, charIndex + 1));
         setCharIndex(charIndex + 1);
       } else {
-        // Finished typing, start the pause
         setIsPaused(true);
       }
     };
@@ -64,6 +65,35 @@ export default function HomePage() {
     const timeoutId = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timeoutId);
   }, [charIndex, textIndex, isPaused]);
+  
+  const startScrolling = () => {
+    if (scrollIntervalRef.current) return;
+    scrollIntervalRef.current = setInterval(() => {
+      if (carouselRef.current && !isHoveringRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        const totalContentWidth = scrollWidth / 2;
+        
+        if (scrollLeft >= totalContentWidth) {
+            carouselRef.current.scrollLeft = scrollLeft - totalContentWidth;
+        } else {
+            carouselRef.current.scrollLeft += 1;
+        }
+      }
+    }, 25); 
+  };
+
+  const stopScrolling = () => {
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    startScrolling();
+    return () => stopScrolling();
+  }, []);
+
 
   useEffect(() => {
     const fetchToolRatings = async () => {
@@ -87,7 +117,6 @@ export default function HomePage() {
         setTopTools(toolsWithRatings);
       } catch (error) {
         console.error("Error fetching tool ratings for homepage:", error);
-        // Fallback to mock data without ratings if Firestore fails
         setTopTools(mockTools
           .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
           .slice(0, 4));
@@ -101,7 +130,7 @@ export default function HomePage() {
   
   const scrollCarousel = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
-      const scrollAmount = carouselRef.current.clientWidth; // Scroll 100% of the visible width
+      const scrollAmount = carouselRef.current.clientWidth * 0.8;
       carouselRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
@@ -120,7 +149,7 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-40 flex items-center justify-center">
+           <h1 className="text-3xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-48 sm:h-32 flex items-center justify-center">
             <span className="break-words">{displayedText}</span>
             <span className="animate-blink text-primary">|</span>
           </h1>
@@ -228,15 +257,19 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div className="relative group overflow-hidden">
+           <div 
+              className="relative group"
+              onMouseEnter={() => { isHoveringRef.current = true; }}
+              onMouseLeave={() => { isHoveringRef.current = false; }}
+            >
             <div 
               ref={carouselRef}
-              className="flex animate-scroll-left group-hover:pause py-4"
+              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-y"
             >
-              {[...latestNews, ...latestNews].map((article, index) => (
-                  <div
-                    key={`${article.id}-${index}`}
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/2 lg:w-1/3"
+                {[...latestNews, ...latestNews].map((article, index) => (
+                  <div 
+                    key={`${article.id}-${index}`} 
+                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3"
                   >
                     <NewsCard article={article} />
                   </div>
