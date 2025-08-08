@@ -79,7 +79,7 @@ export default function HomePage() {
             carouselRef.current.scrollLeft += 1;
         }
       }
-    }, 25); 
+    }, 15); 
   };
 
   const stopScrolling = () => {
