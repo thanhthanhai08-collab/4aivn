@@ -238,7 +238,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-1`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3"
                   >
                     <NewsCard article={article} />
                   </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}-carousel-2`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3"
                   >
                     <NewsCard article={article} />
                   </div>
