@@ -150,7 +150,7 @@ export default function HomePage() {
         </div>
         <div className="container relative text-center">
           <div className="flex flex-col justify-center items-center min-h-[280px] sm:min-h-[260px]">
-             <h1 className="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
+             <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
               <span className="break-words">{displayedText}</span>
               <span className="animate-blink text-primary">|</span>
             </h1>
@@ -271,7 +271,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}`} 
-                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3"
+                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/4"
                   >
                     <NewsCard article={article} />
                   </div>
@@ -309,5 +309,3 @@ export default function HomePage() {
     </AppLayout>
   );
 }
-
-    
