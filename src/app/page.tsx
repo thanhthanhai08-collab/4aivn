@@ -229,30 +229,18 @@ export default function HomePage() {
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
            <div className="relative group">
-            <div 
+            <div
               ref={carouselRef}
               className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-y"
             >
-              <div className="flex animate-scroll-left group-hover:pause">
-                {[...latestNews, ...latestNews].map((article, index) => (
-                  <div 
-                    key={`${article.id}-${index}-carousel-1`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                  >
-                    <NewsCard article={article} />
-                  </div>
-                ))}
-              </div>
-               <div className="flex animate-scroll-left group-hover:pause" aria-hidden="true">
-                {[...latestNews, ...latestNews].map((article, index) => (
-                  <div 
-                    key={`${article.id}-${index}-carousel-2`} 
-                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                  >
-                    <NewsCard article={article} />
-                  </div>
-                ))}
-              </div>
+              {latestNews.map((article, index) => (
+                <div
+                  key={`${article.id}-${index}`}
+                  className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                >
+                  <NewsCard article={article} />
+                </div>
+              ))}
             </div>
 
             <Button
