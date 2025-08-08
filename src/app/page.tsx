@@ -101,7 +101,7 @@ export default function HomePage() {
   
   const scrollCarousel = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
-      const scrollAmount = carouselRef.current.clientWidth * 0.8; // Scroll 80% of the visible width
+      const scrollAmount = carouselRef.current.clientWidth; // Scroll 100% of the visible width
       carouselRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
@@ -228,19 +228,19 @@ export default function HomePage() {
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
-           <div className="relative group">
-            <div
+           <div className="relative group overflow-hidden">
+            <div 
               ref={carouselRef}
-              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-y"
+              className="flex animate-scroll-left group-hover:pause py-4"
             >
-              {latestNews.map((article, index) => (
-                <div
-                  key={`${article.id}-${index}`}
-                  className="flex-none px-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                >
-                  <NewsCard article={article} />
-                </div>
-              ))}
+              {[...latestNews, ...latestNews].map((article, index) => (
+                  <div
+                    key={`${article.id}-${index}`}
+                    className="flex-none px-3 w-full sm:w-1/2 md:w-1/2 lg:w-1/3"
+                  >
+                    <NewsCard article={article} />
+                  </div>
+                ))}
             </div>
 
             <Button
@@ -274,3 +274,5 @@ export default function HomePage() {
     </AppLayout>
   );
 }
+
+    
