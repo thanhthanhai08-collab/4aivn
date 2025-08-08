@@ -150,7 +150,7 @@ export default function HomePage() {
         </div>
         <div className="container relative text-center">
           <div className="flex flex-col justify-center items-center min-h-[280px] sm:min-h-[260px]">
-             <h1 className="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed mb-4">
+             <h1 className="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
               <span className="break-words">{displayedText}</span>
               <span className="animate-blink text-primary">|</span>
             </h1>
