@@ -271,7 +271,7 @@ export default function HomePage() {
                 {[...latestNews, ...latestNews].map((article, index) => (
                   <div 
                     key={`${article.id}-${index}`} 
-                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3"
                   >
                     <NewsCard article={article} />
                   </div>
