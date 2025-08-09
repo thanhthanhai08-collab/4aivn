@@ -286,6 +286,34 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 46.17
   },
   {
+    id: 'gpt-5-mini',
+    name: 'GPT-5 mini',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-5 mini là phiên bản nhỏ gọn và hiệu quả của dòng GPT-5, được tối ưu hóa cho tốc độ và chi phí, mang lại hiệu suất mạnh mẽ cho các ứng dụng yêu cầu phản hồi nhanh.',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '400k',
+    intelligenceScore: 64,
+    pricePerMillionTokens: 0.69,
+    speedTokensPerSecond: 151.3,
+    latencyFirstChunkSeconds: 16.9
+  },
+  {
+    id: 'gpt-5-low',
+    name: 'GPT-5 (low)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-5 (low) là phiên bản giá rẻ của dòng GPT-5, được thiết kế cho các ứng dụng không yêu cầu hiệu suất cao nhất nhưng cần một giải pháp kinh tế và hiệu quả.',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '400k',
+    intelligenceScore: 63,
+    pricePerMillionTokens: 3.44,
+    speedTokensPerSecond: 146.1,
+    latencyFirstChunkSeconds: 18.19
+  },
+  {
     id: 'openai-o4-mini-high',
     name: 'Open AI o4-mini (high)',
     type: 'Mô hình ngôn ngữ lớn',
