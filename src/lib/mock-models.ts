@@ -546,8 +546,8 @@ hiệu quả trong công việc.`,
     latencyFirstChunkSeconds: 1.52,
   },
   {
-    id: 'gpt-4.5-preview',
-    name: 'GPT-4.5 (Preview)',
+    id: 'gpt-5-nano',
+    name: 'GPT-5 nano',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
     description: `+ GPT-4.5 là phiên bản nâng cấp của GPT-4 được OpenAl chính thức ra mắt vào cuối tháng 2 năm 2025 dưới dạng bản preview nghiên cứu dành cho người dùng ChatGPT Pro. Đây được xem là “mô hình giàu kiến thức nhất” của OpenAl tính đến thời điểm hiện tại, với nhiều cải tiến về khả năng hiểu ngữ cảnh, tạo sinh văn bản tự nhiên và giảm thiểu hiện tượng ảo giác (hallucination) so với các phiên bản trước.
