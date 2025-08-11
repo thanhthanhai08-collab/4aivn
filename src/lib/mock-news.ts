@@ -3,6 +3,63 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'openai-ra-mat-gpt-5',
+    title: 'OpenAI Ra Mắt GPT-5: Bạn Có Ngay "Chuyên Gia Trình Độ Tiến Sĩ" Trong Túi',
+    source: 'OpenAI',
+    author: 'Nam',
+    content: `<p><strong>GPT-5 chính thức ra mắt, đánh dấu bước tiến vượt bậc của trí tuệ nhân tạo. CEO OpenAI ví von GPT-5 như một chuyên gia trình độ tiến sĩ, sẵn sàng hỗ trợ người dùng ở mọi lĩnh vực. Cùng tìm hiểu những điểm nổi bật nhất của siêu AI này.</strong></p>
+    <p>Trong sự kiện ra mắt ngày 7/8/2025, CEO OpenAI đã mô tả về GPT-5 một cách đầy ấn tượng: "Nếu GPT-3 giống như một học sinh trung học và GPT-4 như một sinh viên đại học, thì GPT-5 là lần đầu tiên mang lại cảm giác như bạn đang có một chuyên gia trình độ tiến sĩ ngay trong túi."</p>
+    <p>Để chuẩn bị cho sự kiện này, OpenAI đã rút toàn bộ các mô hình cũ như GPT-4o và GPT-3 khỏi giao diện web, chỉ giữ lại các mục API và Playground, cho thấy sự tự tin tuyệt đối vào sức mạnh của GPT-5.</p>
+    
+    <h2><strong>Hệ Thống Thống Nhất & Trải Nghiệm Đơn Giản Hơn</strong></h2>
+    <p>Một trong những cải tiến cốt lõi của GPT-5 là hệ thống thống nhất mới. Giờ đây, người dùng không cần phải chọn thủ công giữa các mô hình khác nhau cho từng tác vụ. Hệ thống sẽ tự động chuyển đổi giữa chế độ tư duy nhanh (fast) và tư duy sâu (deep) tùy theo nhu cầu của bạn.</p>
+    <p>Công nghệ "bộ định tuyến thời gian thực" thông minh sẽ phân tích loại cuộc trò chuyện, độ phức tạp và ý định của người dùng để xác định chế độ phù hợp nhất. Với cách tiếp cận này, GPT-5 đảm bảo hiệu suất tối ưu cho mọi truy vấn, từ những câu hỏi đơn giản đến các yêu cầu phức tạp.</p>
+    <p>Để hỗ trợ hệ thống mới này, OpenAI đã giới thiệu một hệ thống phân cấp mô hình mới gồm:</p>
+    <ul>
+        <li><strong>ChatGPT 5 (Tiêu chuẩn):</strong> AI đa năng, tự động thích ứng với độ phức tạp của truy vấn.</li>
+        <li><strong>GPT-5 Thinking:</strong> Chế độ suy luận sâu, tự động kích hoạt cho các vấn đề phức tạp.</li>
+        <li><strong>GPT-5 Pro:</strong> Dành riêng cho người dùng gói Pro/Team, mang lại độ chính xác cao nhất cho các tác vụ khó.</li>
+        <li><strong>GPT-5 mini:</strong> Mô hình dự phòng nhẹ, cung cấp phản hồi nhanh khi đạt giới hạn sử dụng.</li>
+        <li><strong>GPT-5 nano:</strong> Tối ưu hóa cho độ trễ cực thấp và các ứng dụng khối lượng lớn (chỉ có qua API).</li>
+    </ul>
+    <p>Ngoài ra, các nhà phát triển có thể tinh chỉnh mức độ suy luận của mô hình GPT-5 thông qua API với ba mức: high, medium và low.</p>
+[IMAGE:/image/news/Sử dụng OpenAI GPT5.png|Minh họa mô hình GPT5|GPT5]
+    <h2><strong>Trợ Thủ Đắc Lực Trong Mọi Lĩnh Vực</strong></h2>
+    <p>GPT-5 tiếp tục càn quét các bảng xếp hạng trí tuệ nhân tạo với những con số ấn tượng. Cụ thể, GPT-5 đạt điểm cao vượt trội trên các tiêu chuẩn như GPQA (88.4%), AIME 2025 (100% khi sử dụng Python để giải toán), và HealthBench Hard (46.2%).</p>
+
+    <h3><strong>Lĩnh Vực Sức Khỏe</strong></h3>
+    <p>Mặc dù đạt điểm số cao trên HealthBench, OpenAI vẫn đưa ra một lời khuyên quan trọng: <strong>GPT-5 không thể thay thế một chuyên gia y tế.</strong> Hãy coi câu trả lời của GPT-5 như một trợ lý giúp bạn hiểu thêm về kết quả và cân nhắc các lựa chọn, không phải là lời khuyên y tế cuối cùng.</p>
+
+    <h3><strong>Lĩnh Vực Lập Trình</strong></h3>
+    <p>GPT-5 cho thấy những cải tiến vượt bậc trong khả năng viết code. Trên chuẩn SWE-bench Verified, GPT-5 đạt 74.9% độ chính xác khi có tư duy, so với 30.8% của GPT-4o.</p>
+    <p>Trong thực tế, GPT-5 có thể tạo ra các trang web, ứng dụng, trò chơi với giao diện phức tạp và thẩm mỹ tốt hơn. Tuy nhiên, theo một số thử nghiệm, khi tạo web game, GPT-5 vẫn còn mắc lỗi thường xuyên hơn một chút so với Claude 4.0 Opus, đặc biệt là với các prompt tiếng Việt.</p>
+
+    <h3><strong>Đa Phương Thức (Multimodal AI)</strong></h3>
+    <p>GPT-5 hỗ trợ đầy đủ các phương thức văn bản, hình ảnh, âm thanh, và giọng nói. Tuy nhiên, một điểm đáng chú ý là GPT-5 hiện tại mới chỉ tích hợp Dall-E 3 để tạo hình ảnh, thay vì mô hình GPT Image 1 tốt nhất của họ như trên GPT-4o. Điều này có thể khiến chất lượng và kích thước ảnh của GPT-5 chưa thực sự làm hài lòng người dùng đã quen với GPT-4o. OpenAI chưa đưa ra lý do cụ thể cho việc này.</p>
+
+    <h2><strong>Giảm Đáng Kể "Ảo Giác" & Tăng Tính Xác Thực</strong></h2>
+    <p>GPT-5 có những bước tiến lớn trong việc giảm tỷ lệ "ảo giác" (hallucinations) - những câu trả lời không chính xác hoặc bịa đặt. Kết quả cho thấy GPT-5 ít có khả năng mắc lỗi về thông tin thực tế hơn khoảng 45% so với GPT-4o.</p>
+    <p>Bên cạnh đó, GPT-5 cũng có những cải thiện quan trọng khác:</p>
+    <ul>
+        <li><strong>Trung thực về giới hạn:</strong> Khi gặp các nhiệm vụ bất khả thi, GPT-5 thừa nhận giới hạn thay vì bịa ra chi tiết.</li>
+        <li><strong>Giảm xu hướng nịnh hót:</strong> Các phản hồi của GPT-5 trở nên chuyên nghiệp và ít "nịnh hót" hơn, phù hợp hơn với công việc.</li>
+        <li><strong>Tính năng "hoàn thành an toàn" (safe completions):</strong> GPT-5 sẽ giải thích lý do không thể hỗ trợ trực tiếp và đề xuất các lựa chọn thay thế an toàn, đặc biệt với các chủ đề nhạy cảm.</li>
+    </ul>
+    
+    <h2><strong>Giá Cả & Cách Tiếp Cận</strong></h2>
+    <p>GPT-5 sẽ được cung cấp cho tất cả người dùng, từ các gói <strong>Free</strong> cho đến <strong>Plus, Pro, Team và Enterprise</strong>.</p>
+    <p>Đối với các nhà phát triển, mức giá API cho mỗi 1 triệu token cũng đã được công bố:</p>
+    <ul>
+        <li><strong>GPT-5:</strong> $1.25 input / $10.00 output</li>
+        <li><strong>GPT-5 mini:</strong> $0.25 input / $2.00 output</li>
+        <li><strong>GPT-5 nano:</strong> $0.05 input / $0.40 output</li>
+    </ul>
+    <p>Chỉ sau 18 tháng, OpenAI đã tạo ra một "trí tuệ cấp độ tiến sĩ" với GPT-5. Liệu với sự cạnh tranh khốc liệt từ Gemini, Grok và đặc biệt là Claude 4.1 Opus sắp tới, OpenAI có thể giữ vững vị thế dẫn đầu của mình? Chúng ta hãy cùng chờ xem.</p>`,
+    publishedAt: '2025-08-07T09:00:00Z',
+    imageUrl: '/image/news/Open AI ra mắt GPT5.png',
+    dataAiHint: 'GPT5 ra mắt'
+  },
+  {
     id: 'openai-ra-mat-chatgpt-agent',
     title: 'OpenAI ra mắt ChatGPT Agent – Tác nhân AI đa năng có thể tự động thực hiện tác vụ thay người dùng',
     source: 'OpenAI',
