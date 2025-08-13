@@ -392,6 +392,6 @@ function ModelDetailContent({ id }: { id: string }) {
 }
 
 // This is the Server Component that fetches the ID and passes it to the Client Component.
-export default function ModelDetailPage({ params: { id } }: { params: { id: string } }): ReactNode {
-  return <ModelDetailContent id={id} />;
+export default function ModelDetailPage({ params }: { params: { id: string } }): ReactNode {
+  return <ModelDetailContent id={params.id} />;
 }
