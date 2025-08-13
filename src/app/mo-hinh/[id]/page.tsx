@@ -157,15 +157,33 @@ function ModelDetailContent({ id }: { id: string }) {
       <AppLayout>
         <div className="container py-8 md:py-12">
           {/* Header */}
-          <header className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+           <header className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
             <div className="flex items-center space-x-4">
               <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
               <div>
                 <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
                 <p className="text-muted-foreground">{model.developer}</p>
+                {averageRating > 0 && (
+                   <div className="flex items-center mt-2">
+                      <Star className="h-5 w-5 text-amber-500 fill-amber-400 mr-1" />
+                      <span className="font-bold text-foreground mr-1">{averageRating.toFixed(1)}</span>
+                      <span className="text-sm text-muted-foreground">({aggregateRating.ratingCount} đánh giá)</span>
+                   </div>
+                )}
               </div>
             </div>
             <div className="flex items-center space-x-2">
+               <div className="flex items-center space-x-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
+                      <Star
+                        className={`h-6 w-6 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
+                          star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
               <Button variant="outline" onClick={handleFavoriteToggle}>
                 <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                 {isFavorite ? "Đã thích" : "Yêu thích"}
@@ -239,27 +257,7 @@ function ModelDetailContent({ id }: { id: string }) {
             </section>
           </div>
           
-           {/* Rating Section */}
-           <Card className="mt-12">
-            <CardHeader>
-              <CardTitle className="text-xl font-headline">Đánh giá Model này</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center space-x-1 mb-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`}>
-                    <Star
-                      className={`h-7 w-7 cursor-pointer transition-colors ${
-                        star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
-                      }`}
-                    />
-                  </button>
-                ))}
-              </div>
-              <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-              {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
-            </CardContent>
-          </Card>
+           {/* Rating Section - REMOVED FROM HERE */}
         </div>
       </AppLayout>
     );
@@ -392,6 +390,6 @@ function ModelDetailContent({ id }: { id: string }) {
 }
 
 // This is the Server Component that fetches the ID and passes it to the Client Component.
-export default function ModelDetailPage({ params }: { params: { id: string } }): ReactNode {
+export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
