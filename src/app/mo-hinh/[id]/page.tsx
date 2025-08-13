@@ -25,6 +25,8 @@ import {
 import { mockNews } from "@/lib/mock-news";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
+import { NewsCard } from "@/components/news/news-card";
+
 
 function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
@@ -33,6 +35,7 @@ function ModelDetailContent({ id }: { id: string }) {
   const [currentRating, setCurrentRating] = useState(0);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -42,6 +45,13 @@ function ModelDetailContent({ id }: { id: string }) {
     
     if (foundModel) {
       setModel(foundModel);
+
+      // Find related news articles
+      const filteredNews = mockNews.filter(article => 
+        article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
+        article.content.toLowerCase().includes(foundModel.name.toLowerCase())
+      ).slice(0, 3);
+      setRelatedNews(filteredNews);
 
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
@@ -205,7 +215,7 @@ function ModelDetailContent({ id }: { id: string }) {
                 </div>
             </div>
             
-            <div className="space-y-8">
+            <div className="space-y-12">
                  {/* Specifications */}
                 <Card>
                     <CardHeader>
@@ -252,19 +262,28 @@ function ModelDetailContent({ id }: { id: string }) {
                 </Card>
                 
                 {/* Performance Charts */}
-                <div className="space-y-12">
-                    <section>
-                    <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                    <p className="text-muted-foreground mb-6">Xem cách o3 thể hiện qua các bài kiểm tra chuẩn hóa khác nhau.</p>
-                    <O3PerformanceInsightsChart />
-                    </section>
-                    
-                    <section>
-                    <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
-                    <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                    <O3DetailedBenchmarkCharts />
-                    </section>
-                </div>
+                <section>
+                <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                <p className="text-muted-foreground mb-6">Xem cách o3 thể hiện qua các bài kiểm tra chuẩn hóa khác nhau.</p>
+                <O3PerformanceInsightsChart />
+                </section>
+                
+                <section>
+                <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
+                <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+                <O3DetailedBenchmarkCharts />
+                </section>
+
+                {relatedNews.length > 0 && (
+                  <section>
+                    <h2 className="text-2xl font-bold font-headline mb-6 text-center">Bài viết liên quan</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {relatedNews.map((article) => (
+                        <NewsCard key={article.id} article={article} />
+                      ))}
+                    </div>
+                  </section>
+                )}
             </div>
         </div>
       </AppLayout>
