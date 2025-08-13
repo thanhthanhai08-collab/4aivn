@@ -156,7 +156,7 @@ function ModelDetailContent({ id }: { id: string }) {
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
-            <div className="grid md:grid-cols-3 gap-8 items-start">
+            <div className="grid md:grid-cols-3 gap-8 items-start mb-8">
                 <div className="md:col-span-2 space-y-8">
                     {/* Header */}
                     <header className="flex flex-col sm:flex-row justify-between items-start gap-4">
@@ -180,68 +180,7 @@ function ModelDetailContent({ id }: { id: string }) {
 
                     {/* Description */}
                     <p className="text-lg text-muted-foreground max-w-4xl">{model.description}</p>
-                    
-                    {/* Specifications */}
-                    <Card>
-                        <CardHeader>
-                        <CardTitle>Thông số mô hình</CardTitle>
-                        <CardDescription>Thông tin kỹ thuật và phiên bản được phát hành.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm">
-                            <div className="flex items-start space-x-3">
-                                <User className="h-5 w-5 mt-1 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Được huấn luyện bởi</p>
-                                    <p className="text-muted-foreground">{model.developer}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-3">
-                                <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                                    <p className="text-muted-foreground">Có</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-3">
-                                <Code className="h-5 w-5 mt-1 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Sử dụng công cụ/Tác nhân</p>
-                                    <p className="text-muted-foreground">Có</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-3">
-                                <BookOpen className="h-5 w-5 mt-1 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Tinh chỉnh</p>
-                                    <p className="text-muted-foreground">Sắp có</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-3">
-                                <CalendarDays className="h-5 w-5 mt-1 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Ngày phát hành</p>
-                                    <p className="text-muted-foreground">2024</p>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    
-                    {/* Performance Charts */}
-                    <div className="space-y-12">
-                        <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                        <p className="text-muted-foreground mb-6">Xem cách o3 thể hiện qua các bài kiểm tra chuẩn hóa khác nhau.</p>
-                        <O3PerformanceInsightsChart />
-                        </section>
-                        
-                        <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
-                        <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                        <O3DetailedBenchmarkCharts />
-                        </section>
-                    </div>
                 </div>
-
                 <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
                     <Card>
                         <CardHeader>
@@ -263,6 +202,68 @@ function ModelDetailContent({ id }: { id: string }) {
                             {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1 text-center">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
                         </CardContent>
                     </Card>
+                </div>
+            </div>
+            
+            <div className="space-y-8">
+                 {/* Specifications */}
+                <Card>
+                    <CardHeader>
+                    <CardTitle>Thông số mô hình</CardTitle>
+                    <CardDescription>Thông tin kỹ thuật và phiên bản được phát hành.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm">
+                        <div className="flex items-start space-x-3">
+                            <User className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Được huấn luyện bởi</p>
+                                <p className="text-muted-foreground">{model.developer}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Hỗ trợ đa phương thức</p>
+                                <p className="text-muted-foreground">Có</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <Code className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Sử dụng công cụ/Tác nhân</p>
+                                <p className="text-muted-foreground">Có</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <BookOpen className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Tinh chỉnh</p>
+                                <p className="text-muted-foreground">Sắp có</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <CalendarDays className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Ngày phát hành</p>
+                                <p className="text-muted-foreground">2024</p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                
+                {/* Performance Charts */}
+                <div className="space-y-12">
+                    <section>
+                    <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                    <p className="text-muted-foreground mb-6">Xem cách o3 thể hiện qua các bài kiểm tra chuẩn hóa khác nhau.</p>
+                    <O3PerformanceInsightsChart />
+                    </section>
+                    
+                    <section>
+                    <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
+                    <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+                    <O3DetailedBenchmarkCharts />
+                    </section>
                 </div>
             </div>
         </div>
