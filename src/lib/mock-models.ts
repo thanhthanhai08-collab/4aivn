@@ -3,6 +3,20 @@ import type { AIModel } from '@/lib/types';
 
 export const mockAIModels: AIModel[] = [
   {
+    id: 'gpt-oss-120b-high',
+    name: 'GPT-oss-120B (high)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-oss-120B (high) là phiên bản hiệu suất cao của mô hình mã nguồn mở từ OpenAI, với 120 tỷ tham số. Nó được tối ưu hóa cho các tác vụ đòi hỏi sự chính xác cao và khả năng suy luận mạnh mẽ, trong khi vẫn duy trì các lợi ích của việc là một mô hình "open-weight".',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '131k',
+    intelligenceScore: 61,
+    pricePerMillionTokens: 0.26,
+    speedTokensPerSecond: 185.0,
+    latencyFirstChunkSeconds: 0.48,
+  },
+  {
     id: 'gemini-2.5-pro',
     name: 'Gemini 2.5 Pro',
     type: 'Mô hình ngôn ngữ lớn',
