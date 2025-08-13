@@ -3,6 +3,55 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews: NewsArticle[] = [
   {
+    id: 'openai-gpt-oss-ra-mat',
+    title: 'OpenAI "mở cửa" AI với GPT-OSS tham gia cuộc đua mã nguồn mở',
+    source: 'OpenAI',
+    author: 'Nam',
+    content: `<p>Có vẻ như đổ vỡ với Microsoft đã khiến OpenAI điều chỉnh đáng kể chiến lược tiếp cận rộng rãi tới người dùng AI khi họ đã công bố phát hành 2 model mã nguồn mở mới là gpt-oss-120b và gpt-oss-20b với kích thước lần lượt là 20 tỷ và 120 tỷ tham số (parameter chứ hoàn toàn không phải neuron).</p>
+<p>Đặc biệt là 2 mô hình này đều có mã nguồn mở với giấy phép Apache 2.0 rất tự do. Vậy thì giấy phép Apache 2.0 là gì? Có thể nhiều người vẫn chưa biết về giấy phép mở này thực sự rất dài nhưng tóm gọn lại là với giấy phép Apache 2.0 này người dùng hoàn toàn được tự do dùng và chỉnh sửa, phân phối lại cũng không cần mở mã nguồn, kể cả kiếm tiền với GPT-OSS cũng được thậm chí không cần trả khoản phí gì cho Open AI, chỉ cần giữ nguyên bản quyền tác giả là được.</p>
+<p>Như vậy với động thái này báo hiệu việc OpenAI tái gia nhập "cuộc đua mô hình mở" sau sáu năm gián đoạn, sánh vai cùng các đối thủ như Meta, Deepseek và Mistral.</p>
+<h2><strong>GPT-OSS là gì? Hiểu rõ về "Open-Weight"</strong></h2>
+<p>Thuật ngữ "GPT-OSS" dùng để chỉ hai mô hình ngôn ngữ mới này, với kích thước lần lượt là 20 tỷ và 120 tỷ tham số. Quan trọng là, OpenAI đã phát hành chúng dưới dạng các mô hình "open-weight", nghĩa là các trọng số đã được huấn luyện của mô hình AI được công khai cho phép tải về và sử dụng trực tiếp trên máy của người dùng. Điều này cho phép các nhà phát triển kiểm tra và tinh chỉnh cách các mô hình hoạt động.</p>
+<p>Tuy nhiên, đây không phải là một bản phát hành "mã nguồn mở" đầy đủ theo nghĩa truyền thống, vì OpenAI chưa công bố công khai mã code huấn luyện gốc hoặc các tập dữ liệu thô được sử dụng để huấn luyện các mô hình này. Ngược lại, một mô hình thực sự mã nguồn mở sẽ cung cấp toàn bộ mã nguồn, tài liệu huấn luyện, trọng số và đôi khi cả tập dữ liệu, cho phép cộng đồng xem, sửa đổi và thậm chí huấn luyện lại mô hình. Mặc dù sự khác biệt này còn gây tranh cãi trong cộng đồng mã nguồn mở, OpenAI nhấn mạnh rằng bản phát hành này là một bước đi tiếp theo sau sáu năm hướng tới việc làm cho lợi ích của AI trở nên dễ tiếp cận rộng rãi.</p>
+<h2><strong>Hiệu suất vượt trội và Khả năng nâng cao</strong></h2>
+<p>Bất chấp sự khác biệt, các mô hình GPT-OSS có thể so sánh với các mô hình mã nguồn đóng của Open AI với các điểm benmark chỉ ra rằng gpt-oss-120b đạt gần tương đương với mô hình o4-mini của họ trong các tác vụ suy luận cốt lõi. Mô hình nhỏ hơn gpt-oss-20b mang lại kết quả tương tự như OpenAI o3-mini và có thể chạy hiệu quả trên phần cứng cấp người tiêu dùng chỉ với 16 GB bộ nhớ. Mô hình 120B lớn hơn có thể chạy hiệu quả trên một GPU 80 GB duy nhất.</p>
+<p>Các điểm nổi bật về kiến trúc và khả năng chính bao gồm:</p>
+<ul>
+<li>Kiến trúc Mixture-of-Experts (MoE): Cả hai mô hình đều sử dụng thiết kế MoE, kích hoạt ít tham số hơn trên mỗi token (5,1 tỷ cho 120B và 3,6 tỷ cho 20B) để xử lý hiệu quả truy vấn.</li>
+<li>Suy luận Chain-of-Thought (CoT): GPT-OSS hỗ trợ khả năng suy luận nâng cao, cho phép các nhà phát triển cấu hình các mức độ nỗ lực suy luận khác nhau (thấp, trung bình hoặc cao) để cân bằng tốc độ và độ chính xác. Các mô hình có thể hiển thị toàn bộ chuỗi suy luận nội bộ của chúng, điều này có thể hỗ trợ gỡ lỗi logic của chúng.</li>
+<li>Sử dụng công cụ và đầu ra có cấu trúc: Các mô hình được thiết kế cho các trường hợp sử dụng nâng cao bao gồm sử dụng công cụ, chẳng hạn như công cụ duyệt web để tương tác web và công cụ Python để thực thi mã trong môi trường sổ ghi chép Jupyter.</li>
+<li>Huấn luyện chuyên sâu: Được huấn luyện trên hàng nghìn tỷ token chỉ bằng văn bản tập trung vào STEM, mã hóa và kiến thức tổng quát, sử dụng GPU NVIDIA H100 và PyTorch. Thời điểm cắt dữ liệu kiến thức của các mô hình là tháng 6 năm 2024.</li>
+<li>Định dạng OpenAI Harmony: Một dự án mã nguồn mở mới từ OpenAI, Harmony, cung cấp một định dạng phản hồi mới lạ cho các mẫu lời nhắc, giới thiệu các vai trò như system, developer, user, assistant, và tool, cùng với các kênh đầu ra riêng biệt cho final (hướng tới người dùng), analysis (chuỗi suy luận), và commentary (liên quan đến công cụ). Cấu trúc này nâng cao khả năng của mô hình trong việc quản lý các tương tác phức tạp.</li>
+</ul>
+<h2><strong>Ý nghĩa và lợi ích đối với hệ sinh thái AI</strong></h2>
+<p>Quyết định phát hành các mô hình GPT-OSS miễn phí được xem là một động thái chiến lược của OpenAI nhằm lấy lại vị thế trong bối cảnh AI đang ngày càng cạnh tranh. Bằng cách cung cấp các mô hình "open-weight" mạnh mẽ, OpenAI không chỉ thúc đẩy đổi mới mà còn trao quyền cho các nhà phát triển và doanh nghiệp.</p>
+<p>Điều này mang lại nhiều lợi ích đáng kể:</p>
+<ul>
+<li>Tăng cường quyền riêng tư: Các doanh nghiệp, đặc biệt trong các ngành yêu cầu bảo mật cao như y tế hay tài chính, có thể triển khai mô hình cục bộ (on-premise) để bảo vệ dữ liệu nhạy cảm.</li>
+<li>Tiết kiệm chi phí: Việc triển khai cục bộ giúp giảm độ trễ và chi phí sử dụng API thương mại.</li>
+<li>Thúc đẩy đổi mới: Cộng đồng có thể tự do tinh chỉnh và phát triển các giải pháp AI tiên tiến dựa trên các mô hình này.</li>
+</ul>
+<h2><strong>Có hỗ trợ tinh chỉnh (Fine-Tune) và gọi hàm (Function Calling)</strong></h2>
+<p>Các mô hình GPT-OSS được thiết kế hoàn toàn có thể tinh chỉnh (fine-tune), mặc dù không có mã code huấn luyện gốc. Chúng đã được tích hợp vào thư viện transformers của Hugging Face và hỗ trợ các kỹ thuật fine-tune tiết kiệm tài nguyên như LoRA, PEFT, và QLoRA.</p>
+<p>Tất nhiên là GPT-OSS có hỗ trợ function calling cho phép mô hình gọi và xử lý kết quả từ các hàm hoặc API bên ngoài trong quá trình hội thoại. Thật sự đây là thứ mà không thể thiếu đối với các mô hình hiện nay để tăng tính kết nối.</p>
+<p>Mặc dù việc sử dụng fine-tune mà không có script huấn luyện gốc có thể phức tạp hơn, hoàn toàn không dễ dàng với người thiếu kinh nghiệm nhưng các nhà phát triển nên thử các nền tảng như Unsloth đã phát triển các giải pháp tùy chỉnh và kỹ thuật offloading để làm cho mọi việc dễ dàng hơn đôi chút, cho phép huấn luyện LoRA GPT-OSS-20b trên VRAM 14GB và GPT-OSS-120b trên VRAM 65GB.</p>
+<h2><strong>Cách tiếp cận và triển khai:</strong></h2>
+<ul>
+<li>Hugging Face: Thông qua dịch vụ Inference Providers mà họ đã cung cấp bản demo chính thức của OpenAI.</li>
+<li>Triển khai trên chính máy của người dùng (Local Inference): Được hỗ trợ bởi các thư viện như transformers, vLLM, llama.cpp, và ollama. Ví dụ, mô hình 20B có thể chạy trên Macbook, Mac mini chỉ với RAM 32GB.</li>
+<li>Có thể chạy thông qua Docker.</li>
+<li>Nền tảng cloud : Có sẵn trên các nền tảng như Azure AI Model Catalog và Dell Enterprise Hub cho các triển khai doanh nghiệp an toàn.</li>
+</ul>
+<p>Các nhà phát triển có thể sử dụng nhiều tối ưu hóa khác nhau để tăng tốc độ suy luận, bao gồm lượng tử hóa MXFP4 cho GPU Hopper hoặc Blackwell, Flash Attention 3 và MegaBlocks MoE kernels.</p>
+<h2><strong>Cam kết mạnh mẽ và tranh cãi xoay quanh GPT-OSS</strong></h2>
+<p>Mặc dù mô hình được cộng đồng đón nhận tích cực, nhưng đã không còn tính wow khi nói về "tính mở" của nó. Sự khác biệt giữa "open-weight" và "open-source" vẫn là một điểm gây tranh cãi đối với một số người ủng hộ sự minh bạch hoàn toàn, mà còn ở những đối thủ của Open AI đã làm trước đây rất lâu rồi.</p>
+<p>Ngoài ra, trong quá trình thử nghiệm, một số trường hợp mô hình gpt-oss-20b "rò rỉ" thông tin chuỗi suy luận nội bộ đã được quan sát, mặc dù OpenAI đã chỉ ra rằng đây là một hành vi được mong đợi để cho phép giám sát và tránh các mô hình che giấu dấu vết của chúng.</p>
+<p>Tóm lại, các mô hình GPT-OSS của OpenAI với quá trình thể hiện chắc chắn vẫn chưa hoàn hảo mà chỉ để thể hiện cam kết mạnh mẽ đối với việc làm cho AI trở nên dễ tiếp cận hơn.</p>`,
+    publishedAt: '2025-08-10T09:00:00Z',
+    imageUrl: '/image/news/Open AI ra mắt GPT oss.png',
+    dataAiHint: 'GPT-oss ra mắt'
+  },
+  {
     id: 'openai-ra-mat-gpt-5',
     title: 'OpenAI Ra Mắt GPT-5: Bạn Có Ngay "Chuyên Gia Trình Độ Tiến Sĩ" Trong Túi',
     source: 'OpenAI',
@@ -472,5 +521,7 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     dataAiHint: 'AI tự kinh doanh'
   },
 ];
+
+    
 
     
