@@ -1,7 +1,7 @@
 // src/app/models/[id]/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User } from "lucide-react";
@@ -392,8 +392,6 @@ function ModelDetailContent({ id }: { id: string }) {
 }
 
 // This is the Server Component that fetches the ID and passes it to the Client Component.
-export default function ModelDetailPage({ params }: { params: { id: string } }) {
-  // The warning is about accessing params.id directly in a Server Component context.
-  // By passing it as a prop to a client component, we follow Next.js conventions.
-  return <ModelDetailContent id={params.id} />;
+export default function ModelDetailPage({ params: { id } }: { params: { id: string } }): ReactNode {
+  return <ModelDetailContent id={id} />;
 }
