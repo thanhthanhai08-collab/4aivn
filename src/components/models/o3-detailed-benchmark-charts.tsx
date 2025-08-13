@@ -59,7 +59,7 @@ const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
                                 <span className={cn("font-medium", isCurrent && "text-primary")}>{score}%</span>
                             </div>
                             <div className="relative h-2">
-                                 <Progress value={score} className="absolute h-full w-full bg-muted" indicatorClassName={cn(isCurrent ? "bg-primary" : "bg-muted-foreground/50")} />
+                                 <Progress value={score} className={cn("absolute h-full w-full bg-muted [&>div]:bg-muted-foreground/50", isCurrent && "[&>div]:bg-primary")} />
                                  <div className="absolute h-full w-px bg-amber-400" style={{ left: `87.8%` }}></div>
                             </div>
                         </div>
@@ -69,33 +69,6 @@ const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
         </div>
     )
 }
-
-// Add this to Progress component to allow custom indicator class
-declare module "@/components/ui/progress" {
-    interface ProgressProps {
-        indicatorClassName?: string;
-    }
-}
-const OriginalProgress = Progress;
-(OriginalProgress as any).render = React.forwardRef<
-  React.ElementRef<typeof Progress>,
-  React.ComponentPropsWithoutRef<typeof Progress> & { indicatorClassName?: string }
->(({ className, value, indicatorClassName, ...props }, ref) => (
-  <div
-    ref={ref as any}
-    className={cn(
-      "relative h-2 w-full overflow-hidden rounded-full bg-secondary",
-      className
-    )}
-    {...props}
-  >
-    <div
-      className={cn("h-full w-full flex-1 bg-primary transition-all", indicatorClassName)}
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-    />
-  </div>
-));
-
 
 export function O3DetailedBenchmarkCharts() {
     return (
