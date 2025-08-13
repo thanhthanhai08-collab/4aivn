@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User } from "lucide-react";
 import { mockAIModels as initialMockModels } from "@/lib/mock-models";
 import type { AIModel, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -23,11 +23,11 @@ import {
   getAggregateRating
 } from "@/lib/user-data-service";
 import { mockNews } from "@/lib/mock-news";
-import { NewsCard } from "@/components/news/news-card";
+import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
+import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 
 function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
-  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
@@ -43,12 +43,6 @@ function ModelDetailContent({ id }: { id: string }) {
     if (foundModel) {
       setModel(foundModel);
 
-      const filteredNews = mockNews.filter(article => 
-        article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
-        article.content.toLowerCase().includes(foundModel.name.toLowerCase())
-      ).slice(0, 3);
-      setRelatedNews(filteredNews);
-      
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteModels?.includes(id) || false);
@@ -154,9 +148,125 @@ function ModelDetailContent({ id }: { id: string }) {
       </AppLayout>
     );
   }
-
-  const descriptionToDisplay = enhancedDescription || model.description;
+  
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
+  
+  // Specific layout for o3 model
+  if (model.id === 'openai-o3') {
+    return (
+      <AppLayout>
+        <div className="container py-8 md:py-12">
+          {/* Header */}
+          <header className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+            <div className="flex items-center space-x-4">
+              <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
+              <div>
+                <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
+                <p className="text-muted-foreground">{model.developer}</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button variant="outline" onClick={handleFavoriteToggle}>
+                <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+                {isFavorite ? "Đã thích" : "Yêu thích"}
+              </Button>
+              <Button variant="outline">
+                <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+              </Button>
+            </div>
+          </header>
+
+          {/* Description */}
+          <p className="text-lg text-muted-foreground mb-10 max-w-4xl">{model.description}</p>
+          
+          {/* Specifications */}
+          <Card className="mb-12">
+            <CardHeader>
+              <CardTitle>Thông số mô hình</CardTitle>
+              <CardDescription>Thông tin kỹ thuật và phiên bản được phát hành.</CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm">
+                <div className="flex items-start space-x-3">
+                    <User className="h-5 w-5 mt-1 text-primary" />
+                    <div>
+                        <p className="font-semibold">Được huấn luyện bởi</p>
+                        <p className="text-muted-foreground">{model.developer}</p>
+                    </div>
+                </div>
+                 <div className="flex items-start space-x-3">
+                    <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
+                    <div>
+                        <p className="font-semibold">Hỗ trợ đa phương thức</p>
+                        <p className="text-muted-foreground">Có</p>
+                    </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                    <Code className="h-5 w-5 mt-1 text-primary" />
+                    <div>
+                        <p className="font-semibold">Sử dụng công cụ/Tác nhân</p>
+                        <p className="text-muted-foreground">Có</p>
+                    </div>
+                </div>
+                 <div className="flex items-start space-x-3">
+                    <BookOpen className="h-5 w-5 mt-1 text-primary" />
+                    <div>
+                        <p className="font-semibold">Tinh chỉnh</p>
+                        <p className="text-muted-foreground">Sắp có</p>
+                    </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                    <CalendarDays className="h-5 w-5 mt-1 text-primary" />
+                    <div>
+                        <p className="font-semibold">Ngày phát hành</p>
+                        <p className="text-muted-foreground">2024</p>
+                    </div>
+                </div>
+            </CardContent>
+          </Card>
+          
+          {/* Performance Charts */}
+          <div className="space-y-12">
+            <section>
+              <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+              <p className="text-muted-foreground mb-6">Xem cách o3 thể hiện qua các bài kiểm tra chuẩn hóa khác nhau.</p>
+              <O3PerformanceInsightsChart />
+            </section>
+            
+            <section>
+              <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
+              <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+              <O3DetailedBenchmarkCharts />
+            </section>
+          </div>
+          
+           {/* Rating Section */}
+           <Card className="mt-12">
+            <CardHeader>
+              <CardTitle className="text-xl font-headline">Đánh giá Model này</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center space-x-1 mb-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`}>
+                    <Star
+                      className={`h-7 w-7 cursor-pointer transition-colors ${
+                        star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
+              {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
+            </CardContent>
+          </Card>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  // Default layout for other models
+  const descriptionToDisplay = enhancedDescription || model.description;
 
   return (
     <AppLayout>
@@ -274,25 +384,6 @@ function ModelDetailContent({ id }: { id: string }) {
                     )}
                 </CardContent>
             </Card>
-
-            {relatedNews.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl font-headline">Bài viết liên quan</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {relatedNews.map((article) => (
-                    <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-start space-x-3 group border-b pb-3 last:border-b-0 last:pb-0">
-                      <Image src={article.imageUrl} alt={article.title} width={64} height={64} className="rounded-md object-cover aspect-square" data-ai-hint={article.dataAiHint} />
-                      <div>
-                        <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
-                        <p className="text-xs text-muted-foreground mt-1">{new Date(article.publishedAt).toLocaleDateString('vi-VN')}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
       </div>
