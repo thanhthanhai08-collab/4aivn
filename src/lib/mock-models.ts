@@ -739,36 +739,17 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     name: 'Open AI o3',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.
-+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.
-+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.
-+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground.`,
+    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.\n+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.\n+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.\n+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
     ratingCount: 350,
-    features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
-      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 85%",
-      "• GPQA Diamond (Scientific Reasoning) 83%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 20%",
-      "• LiveCodeBench (Coding) 78%",
-      "• SciCode (Coding) 41%",
-      "• HumanEval (Coding) 99%",
-      "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 90%",
-      "Giá trung bình 3.5 USD / 1 triệu token → Dựa trên các thông số giá",
-      "• Giá đầu vào 2.0 USD / 1 triệu token.",
-      "• Giá đầu ra 8.0 USD / 1 triệu token.",
-      "Tốc độ sinh token là 195.2 token /s.",
-      "Độ trễ 13.58s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
-    ],
+    features: [],
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 67,
     pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 229,
+    speedTokensPerSecond: 229.0,
     latencyFirstChunkSeconds: 13.36,
   },
   {
@@ -913,5 +894,3 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
-
-    
