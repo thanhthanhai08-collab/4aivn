@@ -226,7 +226,7 @@ function ModelDetailContent({ id }: { id: string }) {
                         <div className="flex items-start space-x-3">
                             <User className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <p className="font-semibold">Được huấn luyện bởi</p>
+                                <p className="font-semibold">Nhà phát triển</p>
                                 <p className="text-muted-foreground">{model.developer}</p>
                             </div>
                         </div>
@@ -240,15 +240,15 @@ function ModelDetailContent({ id }: { id: string }) {
                         <div className="flex items-start space-x-3">
                             <Code className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <p className="font-semibold">Sử dụng công cụ/Tác nhân</p>
-                                <p className="text-muted-foreground">Có</p>
+                                <p className="font-semibold">Chỉ số thông minh</p>
+                                <p className="text-muted-foreground">{model.intelligenceScore}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
                             <BookOpen className="h-5 w-5 mt-1 text-primary" />
                             <div>
-                                <p className="font-semibold">Tinh chỉnh</p>
-                                <p className="text-muted-foreground">Sắp có</p>
+                                <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
+                                <p className="text-muted-foreground">{model.contextLengthToken}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
