@@ -249,7 +249,7 @@ export const mockNews: NewsArticle[] = [
 
   <h2><strong>Kết luận: AI – Đồng minh mới trong cuộc chiến chống biến đổi khí hậu và thiên tai</strong></h2>
   <p>
-    Dự báo thời tiết chính xác hơn không chỉ là một vấn đề khoa học mà còn là vấn đề sinh tử đối với hàng triệu người. 
+    Dự báo thời tiết chính xác hơn không chỉ là một vấn đề khoa học mà còn là một vấn đề sinh tử đối với hàng triệu người. 
     Bằng việc tích hợp AI vào khí tượng học, chúng ta đang chứng kiến một cuộc cách mạng hóa cách con người hiểu và phản ứng với thiên nhiên.
   </p>
   <p>
@@ -526,3 +526,4 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
     
 
     
+
