@@ -189,7 +189,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     </header>
 
                     {/* Description */}
-                    <p className="text-lg text-muted-foreground max-w-4xl">{model.description}</p>
+                    <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
                 </div>
                 <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
                     <Card>
@@ -255,7 +255,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">2024</p>
+                                <p className="text-muted-foreground">20/12/2024</p>
                             </div>
                         </div>
                     </CardContent>
@@ -420,3 +420,5 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
+
+    

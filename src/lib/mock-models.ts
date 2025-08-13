@@ -516,7 +516,8 @@ export const mockAIModels: AIModel[] = [
     description: `+ Claude 4 Sonnet Thinking là một trong hai phiên bản chủ lực của dòng mô hình Claude 4 do Anthropic ra mắt vào tháng 5 năm 2025, bên cạnh phiên bản Opus 4. Sonnet 4 được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.
 + Claude 4 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 4 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa
 bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 4 Opus
-+ Khi được cấp quyền truy cập file, Sonnet 4 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và hiệu quả trong công việc.`,
++ Khi được cấp quyền truy cập file, Sonnet 4 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và
+hiệu quả trong công việc.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.9,
@@ -738,7 +739,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     name: 'Open AI o3',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.\n+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.\n+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.\n+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground`,
+    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.
++ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.
++ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.
++ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground.`,
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.9,
@@ -762,10 +766,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 70,
+    intelligenceScore: 67,
     pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 195.2,
-    latencyFirstChunkSeconds: 13.58,
+    speedTokensPerSecond: 229,
+    latencyFirstChunkSeconds: 13.36,
   },
   {
     id: 'llama-nemotron-ultra-reasoning',
@@ -909,3 +913,5 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
+
+    
