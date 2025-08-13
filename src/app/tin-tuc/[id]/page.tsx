@@ -21,6 +21,7 @@ import { getComments } from "@/lib/comments-service";
 import { CommentForm } from "@/components/news/comment-form";
 import { CommentList } from "@/components/news/comment-list";
 import { Separator } from "@/components/ui/separator";
+import { GptOssBenchmarkChart } from "@/components/news/gpt-oss-benchmark-chart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -38,13 +39,23 @@ const AdBanner = () => (
 );
 
 
-const renderContent = (content: string) => {
+const renderContent = (content: string, articleId: string) => {
   const imageRegex = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g;
+  const benchmarkChartTag = '[BENCHMARK_CHART]';
 
-  return content.split(/(\[IMAGE:.*?\])/g).filter(p => p.trim() !== '').map((part, index) => {
+  // Split by both image tags and the benchmark chart tag
+  const parts = content.split(new RegExp(`(\\[IMAGE:.*?\\]|${benchmarkChartTag})`, 'g')).filter(p => p.trim() !== '');
+
+  return parts.map((part, index) => {
+    if (part === benchmarkChartTag) {
+        if (articleId === 'openai-gpt-oss-ra-mat') {
+            return <GptOssBenchmarkChart key={`${index}-chart`} />;
+        }
+        return null;
+    }
+
     const imageMatch = part.match(imageRegex);
     if (imageMatch) {
-      // Create a new regex exec array for each match to reset its internal state
       const matchGroups = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g.exec(part);
       if (!matchGroups) return null;
       
@@ -187,7 +198,7 @@ function NewsDetailContent({ id }: { id: string }) {
               )}
 
               <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
-                {renderContent(article.content)}
+                {renderContent(article.content, article.id)}
               </div>
 
               <footer className="mt-12 pt-6 border-t">

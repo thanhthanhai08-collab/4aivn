@@ -15,6 +15,7 @@ export const mockNews: NewsArticle[] = [
 <p>Tuy nhiên, đây không phải là một bản phát hành "mã nguồn mở" đầy đủ theo nghĩa truyền thống, vì OpenAI chưa công bố công khai mã code huấn luyện gốc hoặc các tập dữ liệu thô được sử dụng để huấn luyện các mô hình này. Ngược lại, một mô hình thực sự mã nguồn mở sẽ cung cấp toàn bộ mã nguồn, tài liệu huấn luyện, trọng số và đôi khi cả tập dữ liệu, cho phép cộng đồng xem, sửa đổi và thậm chí huấn luyện lại mô hình. Mặc dù sự khác biệt này còn gây tranh cãi trong cộng đồng mã nguồn mở, OpenAI nhấn mạnh rằng bản phát hành này là một bước đi tiếp theo sau sáu năm hướng tới việc làm cho lợi ích của AI trở nên dễ tiếp cận rộng rãi.</p>
 <h2><strong>Hiệu suất vượt trội và Khả năng nâng cao</strong></h2>
 <p>Bất chấp sự khác biệt, các mô hình GPT-OSS có thể so sánh với các mô hình mã nguồn đóng của Open AI với các điểm benmark chỉ ra rằng gpt-oss-120b đạt gần tương đương với mô hình o4-mini của họ trong các tác vụ suy luận cốt lõi. Mô hình nhỏ hơn gpt-oss-20b mang lại kết quả tương tự như OpenAI o3-mini và có thể chạy hiệu quả trên phần cứng cấp người tiêu dùng chỉ với 16 GB bộ nhớ. Mô hình 120B lớn hơn có thể chạy hiệu quả trên một GPU 80 GB duy nhất.</p>
+[BENCHMARK_CHART]
 <p>Các điểm nổi bật về kiến trúc và khả năng chính bao gồm:</p>
 <ul>
 <li>Kiến trúc Mixture-of-Experts (MoE): Cả hai mô hình đều sử dụng thiết kế MoE, kích hoạt ít tham số hơn trên mỗi token (5,1 tỷ cho 120B và 3,6 tỷ cho 20B) để xử lý hiệu quả truy vấn.</li>
