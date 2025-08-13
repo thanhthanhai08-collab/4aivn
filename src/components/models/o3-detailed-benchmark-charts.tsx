@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
 import { mockAIModels } from "@/lib/mock-models"
