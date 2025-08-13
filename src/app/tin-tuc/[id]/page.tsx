@@ -1,7 +1,7 @@
 // src/app/news/[id]/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User } from "lucide-react";
@@ -38,28 +38,21 @@ const AdBanner = () => (
   </div>
 );
 
-
 const renderContent = (content: string, articleId: string) => {
-  const imageRegex = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g;
-  const benchmarkChartTag = '[BENCHMARK_CHART]';
-
-  // Split by both image tags and the benchmark chart tag
-  const parts = content.split(new RegExp(`(\\[IMAGE:.*?\\]|${benchmarkChartTag})`, 'g')).filter(p => p.trim() !== '');
+  const combinedRegex = /(\[IMAGE:(.*?)\]|\[BENCHMARK_CHART\])/g;
+  const parts = content.split(combinedRegex).filter(p => p);
 
   return parts.map((part, index) => {
-    if (part === benchmarkChartTag) {
-        if (articleId === 'openai-gpt-oss-ra-mat') {
-            return <GptOssBenchmarkChart key={`${index}-chart`} />;
-        }
-        return null;
+    if (part === '[BENCHMARK_CHART]') {
+      if (articleId === 'openai-gpt-oss-ra-mat') {
+        return <GptOssBenchmarkChart key={`${index}-chart`} />;
+      }
+      return null;
     }
 
-    const imageMatch = part.match(imageRegex);
+    const imageMatch = part.match(/\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/);
     if (imageMatch) {
-      const matchGroups = /\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/g.exec(part);
-      if (!matchGroups) return null;
-      
-      const [, src, alt, hint] = matchGroups;
+      const [, src, alt, hint] = imageMatch;
       return (
         <div key={`${index}-img`} className="my-6 lg:my-8">
           <Image
@@ -72,10 +65,22 @@ const renderContent = (content: string, articleId: string) => {
           />
         </div>
       );
-    } else if (part.trim().startsWith('<')) {
+    }
+    
+    // Check if the part is just the image tag itself (captured by splitting)
+    // and ignore it if so, to avoid rendering it as text.
+    if (part.startsWith('[IMAGE:')) {
+      return null;
+    }
+
+    // Render the remaining text content
+    if (part.trim().startsWith('<')) {
       return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: part }} />;
     } else {
-      return <p key={`${index}-p`}>{part}</p>;
+       // Split by newlines and wrap each line in a <p> tag
+       return part.split('\n').map((line, lineIndex) => (
+        line.trim() ? <p key={`${index}-p-${lineIndex}`}>{line}</p> : null
+      ));
     }
   });
 };
