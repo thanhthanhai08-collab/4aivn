@@ -63,7 +63,7 @@ const BenchmarkChart = ({ data, title, subtitle }: { data: any[], title: string,
 export function GptOssBenchmarkChart() {
   return (
     <div className="my-8">
-        <h2 className="text-2xl font-bold text-center mb-6">So sánh Hiệu suất GPT-OSS</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">So sánh hiệu suất GPT-OSS</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <BenchmarkChart data={gpqaData} title="GPQA diamond" subtitle="Câu hỏi khoa học cấp tiến sĩ (không dùng tools)" />
             <BenchmarkChart data={mmluData} title="MMLU" subtitle="Câu hỏi lĩnh vực học thuật" />
