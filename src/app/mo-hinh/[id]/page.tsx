@@ -4,7 +4,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer } from "lucide-react";
 import { mockAIModels as initialMockModels } from "@/lib/mock-models";
 import type { AIModel, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -249,6 +249,27 @@ function ModelDetailContent({ id }: { id: string }) {
                             <div>
                                 <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
                                 <p className="text-muted-foreground">{model.contextLengthToken}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <DollarSign className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Giá trung bình (USD/1M token)</p>
+                                <p className="text-muted-foreground">${model.pricePerMillionTokens?.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                            <Zap className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Tốc độ (token/s)</p>
+                                <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1)}</p>
+                            </div>
+                        </div>
+                         <div className="flex items-start space-x-3">
+                            <Timer className="h-5 w-5 mt-1 text-primary" />
+                            <div>
+                                <p className="font-semibold">Độ trễ (s)</p>
+                                <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2)}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
