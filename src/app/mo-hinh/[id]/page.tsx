@@ -168,29 +168,28 @@ function ModelDetailContent({ id }: { id: string }) {
         <div className="container py-8 md:py-12">
             <div className="grid md:grid-cols-3 gap-8 items-start mb-8">
                 <div className="md:col-span-2 space-y-8">
-                    {/* Header */}
-                    <header className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                        <div className="flex items-center space-x-4">
-                        <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
-                        <div>
-                            <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
-                            <p className="text-muted-foreground">{model.developer}</p>
-                        </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                        <Button variant="outline" onClick={handleFavoriteToggle}>
-                            <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                            {isFavorite ? "Đã thích" : "Yêu thích"}
-                        </Button>
-                        <Button variant="outline">
-                            <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
-                        </Button>
-                        </div>
-                    </header>
-
-                    {/* Description */}
-                     <Card className="border-2 border-black">
-                        <CardContent className="pt-6">
+                    <Card>
+                        <CardHeader>
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                <div className="flex items-center space-x-4">
+                                <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
+                                <div>
+                                    <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
+                                    <p className="text-muted-foreground">{model.developer}</p>
+                                </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                <Button variant="outline" onClick={handleFavoriteToggle}>
+                                    <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+                                    {isFavorite ? "Đã thích" : "Yêu thích"}
+                                </Button>
+                                <Button variant="outline">
+                                    <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+                                </Button>
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent>
                             <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
                         </CardContent>
                     </Card>
