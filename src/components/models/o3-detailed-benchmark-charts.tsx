@@ -5,15 +5,17 @@ import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
 import { mockAIModels } from "@/lib/mock-models"
 import { cn } from "@/lib/utils"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
 
 const mathBenchmarks = [
   { modelId: 'gpt-5-high', score: 99.0 },
   { modelId: 'openai-o4-mini-high', score: 94.0 },
   { modelId: 'grok-4', score: 93.0 },
   { modelId: 'openai-o3', score: 88.0, isCurrent: true },
+  { modelId: 'gemini-2.5-pro', score: 89.0 },
   { modelId: 'deepseek-r1-jan25', score: 89.0 },
   { modelId: 'qwen3-235b-reasoning', score: 91.0 },
-  { modelId: 'gemini-2.5-pro', score: 89.0 },
 ]
 
 const codingBenchmarks = [
@@ -21,15 +23,15 @@ const codingBenchmarks = [
   { modelId: 'openai-o3-pro', score: 81.0 },
   { modelId: 'openai-o4-mini-high', score: 80.0 },
   { modelId: 'openai-o3', score: 78.0, isCurrent: true },
+  { modelId: 'gemini-2.5-pro', score: 80.0 },
   { modelId: 'deepseek-r1-jan25', score: 77.0 },
   { modelId: 'qwen3-235b-reasoning', score: 79.0 },
-  { modelId: 'gemini-2.5-pro', score: 80.0 },
 ]
 
 const knowledgeBenchmarks = [
   { modelId: 'grok-4', score: 87.0 },
-  { modelId: 'gemini-2.5-pro', score: 86.0 },
   { modelId: 'claude-4-opus-thinking', score: 87.0 },
+  { modelId: 'gemini-2.5-pro', score: 86.0 },
   { modelId: 'openai-o3', score: 85.0, isCurrent: true },
   { modelId: 'deepseek-r1-jan25', score: 85.0 },
   { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
@@ -48,29 +50,33 @@ const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
     const sortedData = [...data].sort((a, b) => b.score - a.score);
 
     return (
-        <div>
-            <h3 className="text-lg font-semibold">{title}</h3>
-            <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
-            <div className="space-y-4">
-                {sortedData.map(({ modelId, score, isCurrent }) => {
-                    const model = mockAIModels.find(m => m.id === modelId) ?? { name: 'Unknown', logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png' };
-                    return (
-                        <div key={modelId} className="space-y-1">
-                            <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center space-x-2">
-                                    <Image src={model.logoUrl} alt={`${model.name} logo`} width={16} height={16} className="rounded-full" />
-                                    <span className={cn("truncate", isCurrent && "font-bold text-primary")}>{model.name}</span>
+        <Card>
+            <CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{subtitle}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                 <div className="space-y-4">
+                    {sortedData.map(({ modelId, score, isCurrent }) => {
+                        const model = mockAIModels.find(m => m.id === modelId) ?? { name: 'Unknown', logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png' };
+                        return (
+                            <div key={modelId} className="space-y-1">
+                                <div className="flex items-center justify-between text-sm">
+                                    <div className="flex items-center space-x-2">
+                                        <Image src={model.logoUrl} alt={`${model.name} logo`} width={16} height={16} className="rounded-full" />
+                                        <span className={cn("truncate", isCurrent && "font-bold text-primary")}>{model.name}</span>
+                                    </div>
+                                    <span className={cn("font-medium", isCurrent && "text-primary")}>{score.toFixed(1)}%</span>
                                 </div>
-                                <span className={cn("font-medium", isCurrent && "text-primary")}>{score.toFixed(1)}%</span>
+                                <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
+                                    <Progress value={score} className={cn("absolute h-full w-full", isCurrent ? "[&>div]:bg-primary" : "[&>div]:bg-muted-foreground/50")} />
+                                </div>
                             </div>
-                            <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
-                                 <Progress value={score} className={cn("absolute h-full w-full", isCurrent ? "[&>div]:bg-primary" : "[&>div]:bg-muted-foreground/50")} />
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
+                        )
+                    })}
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 
