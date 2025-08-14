@@ -192,11 +192,11 @@ function ModelDetailContent({ id }: { id: string }) {
                     <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
                 </div>
                 <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
-                    <Card>
-                        <CardHeader>
+                    <Card className="border-2 border-black">
+                        <CardHeader className="text-left">
                             <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="text-left">
                             <div className="flex items-center space-x-1 mb-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
