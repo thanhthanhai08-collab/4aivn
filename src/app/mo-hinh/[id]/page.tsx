@@ -238,7 +238,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
-                            <Code className="h-5 w-5 mt-1 text-primary" />
+                            <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Chỉ số thông minh</p>
                                 <p className="text-muted-foreground">{model.intelligenceScore}</p>
