@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const data = [
   { name: "MMLU-Pro", o3: 85 },
   { name: "GPQA Diamond", o3: 83 },
-  { name: "Humanity'S Exam", o3: 20 },
+  { name: "Humanity's Exam", o3: 20 },
   { name: "LiveCodeBench", o3: 78 },
   { name: "SciCode", o3: 41 },
   { name: "IFBench", o3: 71 },
