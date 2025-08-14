@@ -197,7 +197,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center justify-center space-x-1 mb-2">
+                            <div className="flex items-center space-x-1 mb-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
                                 <Star
@@ -208,8 +208,8 @@ function ModelDetailContent({ id }: { id: string }) {
                                 </button>
                             ))}
                             </div>
-                             <p className="text-sm text-muted-foreground text-center">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                            {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1 text-center">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
+                             <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
+                            {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
                         </CardContent>
                     </Card>
                 </div>
