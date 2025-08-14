@@ -4,11 +4,14 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContaine
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: "Humanities", o3: 79.5 },
-  { name: "MMLU", o3: 75.2 },
-  { name: "GPQA", o3: 79.1 },
-  { name: "Codebench", o3: 70.0 },
-  { name: "Creative Writing", o3: 70.2 },
+  { name: "MMLU-Pro", o3: 85 },
+  { name: "GPQA Diamond", o3: 83 },
+  { name: "Humanity's Last Exam", o3: 20 },
+  { name: "LiveCodeBench", o3: 78 },
+  { name: "SciCode", o3: 41 },
+  { name: "IFBench", o3: 71 },
+  { name: "AIME 2025", o3: 88 },
+  { name: "AA-LCR", o3: 69 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
