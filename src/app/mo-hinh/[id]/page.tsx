@@ -285,7 +285,7 @@ function ModelDetailContent({ id }: { id: string }) {
                 {/* Performance Charts */}
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của của điểm hiệu suất này</p>
+                <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
                 <O3PerformanceInsightsChart />
                 </section>
                 
