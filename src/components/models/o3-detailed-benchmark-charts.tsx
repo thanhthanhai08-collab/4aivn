@@ -39,13 +39,15 @@ const knowledgeBenchmarks = [
 
 interface BenchmarkChartProps {
     title: string;
+    subtitle: string;
     data: { modelId: string; score: number; isCurrent?: boolean }[];
 }
 
-const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
+const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
     return (
         <div>
-            <h3 className="text-lg font-semibold mb-4">{title}</h3>
+            <h3 className="text-lg font-semibold">{title}</h3>
+            <p className="text-sm text-muted-foreground mb-4">{subtitle}</p>
             <div className="space-y-4">
                 {data.map(({ modelId, score, isCurrent }) => {
                     const model = mockAIModels.find(m => m.id === modelId) ?? { name: 'Unknown', logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png' };
@@ -72,9 +74,9 @@ const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
 export function O3DetailedBenchmarkCharts() {
     return (
         <div className="grid md:grid-cols-3 gap-8">
-            <BenchmarkChart title="Toán học (AIME 2025)" data={mathBenchmarks} />
-            <BenchmarkChart title="Khả năng code (LiveCodeBench)" data={codingBenchmarks} />
-            <BenchmarkChart title="Kiến thức tổng hợp (MMLU-Pro)" data={knowledgeBenchmarks} />
+            <BenchmarkChart title="Toán học" subtitle="(AIME 2025)" data={mathBenchmarks} />
+            <BenchmarkChart title="Khả năng code" subtitle="(LiveCodeBench)" data={codingBenchmarks} />
+            <BenchmarkChart title="Kiến thức tổng hợp" subtitle="(MMLU-Pro)" data={knowledgeBenchmarks} />
         </div>
     )
 }
