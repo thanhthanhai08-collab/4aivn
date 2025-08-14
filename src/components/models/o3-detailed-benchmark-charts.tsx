@@ -72,9 +72,9 @@ const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
 export function O3DetailedBenchmarkCharts() {
     return (
         <div className="grid md:grid-cols-3 gap-8">
-            <BenchmarkChart title="Math" data={mathBenchmarks} />
-            <BenchmarkChart title="Coding" data={codingBenchmarks} />
-            <BenchmarkChart title="Knowledge" data={knowledgeBenchmarks} />
+            <BenchmarkChart title="Toán học (AIME 2025)" data={mathBenchmarks} />
+            <BenchmarkChart title="Khả năng code (LiveCodeBench)" data={codingBenchmarks} />
+            <BenchmarkChart title="Kiến thức tổng hợp (MMLU-Pro)" data={knowledgeBenchmarks} />
         </div>
     )
 }
