@@ -4,7 +4,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
 import { mockAIModels as initialMockModels } from "@/lib/mock-models";
 import type { AIModel, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -231,7 +231,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
-                            <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
+                            <Layers className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Hỗ trợ đa phương thức</p>
                                 <p className="text-muted-foreground">Có</p>
