@@ -189,10 +189,14 @@ function ModelDetailContent({ id }: { id: string }) {
                     </header>
 
                     {/* Description */}
-                    <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
+                     <Card className="border-2 border-black">
+                        <CardContent className="pt-6">
+                            <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
+                        </CardContent>
+                    </Card>
                 </div>
                 <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
-                    <Card className="border-2 border-black">
+                    <Card>
                         <CardHeader className="text-left">
                             <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                         </CardHeader>
