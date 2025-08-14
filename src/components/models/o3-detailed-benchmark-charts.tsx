@@ -1,3 +1,4 @@
+// src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
 import * as React from "react"
@@ -36,6 +37,26 @@ const knowledgeBenchmarks = [
   { modelId: 'deepseek-r1-jan25', score: 85.0 },
   { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
   { modelId: 'qwen3-235b-reasoning', score: 84.0 },
+]
+
+const ifBenchBenchmarks = [
+    { modelId: 'grok-4', score: 54.0 },
+    { modelId: 'qwen3-235b-reasoning', score: 51.0 },
+    { modelId: 'gpt-oss-120b-high', score: 71.0 },
+    { modelId: 'openai-o3', score: 71.0, isCurrent: true },
+    { modelId: 'gpt-5-high', score: 69.0 },
+    { modelId: 'gpt-5-medium', score: 68.0 },
+    { modelId: 'gpt-5-mini', score: 65.0 },
+]
+
+const gpqaBenchmarks = [
+    { modelId: 'grok-4', score: 88.0 },
+    { modelId: 'gemini-2.5-pro', score: 84.0 },
+    { modelId: 'openai-o3-pro', score: 84.0 },
+    { modelId: 'openai-o3', score: 83.0, isCurrent: true },
+    { modelId: 'deepseek-r1-jan25', score: 81.0 },
+    { modelId: 'claude-4-opus-thinking', score: 80.0 },
+    { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
 ]
 
 
@@ -86,6 +107,8 @@ export function O3DetailedBenchmarkCharts() {
             <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathBenchmarks} />
             <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingBenchmarks} />
             <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeBenchmarks} />
+            <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchBenchmarks} />
+            <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaBenchmarks} />
         </div>
     )
 }
