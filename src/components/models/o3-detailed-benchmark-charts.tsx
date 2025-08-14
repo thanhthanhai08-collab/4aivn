@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
 import { mockAIModels } from "@/lib/mock-models"
 import { cn } from "@/lib/utils"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 
 const mathBenchmarks = [
