@@ -60,7 +60,6 @@ const BenchmarkChart = ({ title, data }: BenchmarkChartProps) => {
                             </div>
                             <div className="relative h-3">
                                  <Progress value={score} className={cn("absolute h-full w-full bg-muted [&>div]:bg-muted-foreground/50", isCurrent && "[&>div]:bg-primary")} />
-                                 <div className="absolute h-full w-px bg-amber-400" style={{ left: `87.8%` }}></div>
                             </div>
                         </div>
                     )
