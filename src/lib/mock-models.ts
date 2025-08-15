@@ -282,8 +282,8 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '400k',
     intelligenceScore: 69,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 126.2,
-    latencyFirstChunkSeconds: 76.33
+    speedTokensPerSecond: 111.9,
+    latencyFirstChunkSeconds: 74.88
   },
   {
     id: 'gpt-5-medium',

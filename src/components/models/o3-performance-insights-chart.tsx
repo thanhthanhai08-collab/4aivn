@@ -44,6 +44,16 @@ const data = {
     { name: "AIME 2025", score: 91 },
     { name: "AA-LCR", score: 55 },
   ],
+  'gpt-5-high': [
+    { name: "MMLU-Pro", score: 87 },
+    { name: "GPQA Diamond", score: 85 },
+    { name: "Humanity's Exam", score: 26.5 },
+    { name: "LiveCodeBench", score: 67 },
+    { name: "SciCode", score: 43 },
+    { name: "IFBench", score: 73 },
+    { name: "AIME 2025", score: 94 },
+    { name: "AA-LCR", score: 76 },
+  ],
 };
 
 
