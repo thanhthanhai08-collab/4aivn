@@ -308,7 +308,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3PerformanceInsightsChart />
+                        <O3DetailedBenchmarkCharts modelId={model.id}/>
                     </section>
                  )}
                  {model.id === 'grok-4' && (
@@ -322,7 +322,15 @@ function ModelDetailContent({ id }: { id: string }) {
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <Gemini25ProPerformanceInsightsChart />
+                        <O3DetailedBenchmarkCharts modelId={model.id}/>
+                    </section>
+                 )}
+
+                 {model.id === 'openai-o3-pro' && (
+                    <section>
+                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                        <O3DetailedBenchmarkCharts modelId={model.id}/>
                     </section>
                  )}
                 
@@ -378,13 +386,6 @@ function ModelDetailContent({ id }: { id: string }) {
                      <Button variant="outline" onClick={handleShare} className="flex-grow sm:flex-grow-0">
                        <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
                      </Button>
-                     {model.link && (
-                        <Button asChild className="flex-grow sm:flex-grow-0">
-                            <a href={model.link} target="_blank" rel="noopener noreferrer">
-                            Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                        </Button>
-                     )}
                   </div>
                 </div>
               </CardHeader>
