@@ -125,6 +125,22 @@ function ModelDetailContent({ id }: { id: string }) {
         toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
+  
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast({
+        title: "Đã sao chép liên kết",
+        description: "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
+      });
+    }).catch(err => {
+      console.error('Failed to copy link: ', err);
+      toast({
+        title: "Lỗi",
+        description: "Không thể sao chép liên kết.",
+        variant: "destructive",
+      });
+    });
+  };
 
 
   if (isLoading) {
@@ -186,7 +202,7 @@ function ModelDetailContent({ id }: { id: string }) {
                                     <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                                     {isFavorite ? "Đã thích" : "Yêu thích"}
                                 </Button>
-                                <Button variant="outline">
+                                <Button variant="outline" onClick={handleShare}>
                                     <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
                                 </Button>
                                 </div>
@@ -288,19 +304,32 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4'].includes(model.id) && (
+                 {model.id === 'openai-o3' && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        {model.id === 'openai-o3' && <O3PerformanceInsightsChart />}
-                        {model.id === 'grok-4' && <O4PerformanceInsightsChart />}
+                        <O3PerformanceInsightsChart />
+                    </section>
+                 )}
+                 {model.id === 'grok-4' && (
+                    <section>
+                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                        <O4PerformanceInsightsChart />
+                    </section>
+                 )}
+                  {model.id === 'gemini-2.5-pro' && (
+                    <section>
+                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                        <Gemini25ProPerformanceInsightsChart />
                     </section>
                  )}
                 
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
                 <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                <O3DetailedBenchmarkCharts modelId={model.id}/>
+                 <O3DetailedBenchmarkCharts modelId={model.id}/>
                 </section>
 
                 {relatedNews.length > 0 && (
@@ -345,6 +374,9 @@ function ModelDetailContent({ id }: { id: string }) {
                      <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"} className="flex-grow sm:flex-grow-0">
                        <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                        {isFavorite ? "Đã thích" : "Yêu thích"}
+                     </Button>
+                     <Button variant="outline" onClick={handleShare} className="flex-grow sm:flex-grow-0">
+                       <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
                      </Button>
                      {model.link && (
                         <Button asChild className="flex-grow sm:flex-grow-0">
