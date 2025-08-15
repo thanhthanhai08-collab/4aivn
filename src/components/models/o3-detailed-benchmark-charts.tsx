@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
 import { mockAIModels } from "@/lib/mock-models"
 import { cn } from "@/lib/utils"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 
 
 const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
@@ -36,6 +36,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'deepseek-r1-jan25', score: 85.0 },
     { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
     { modelId: 'qwen3-235b-reasoning', score: 84.0 },
+    { modelId: 'openai-o4-mini-high', score: 83.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -56,6 +57,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'deepseek-r1-jan25', score: 81.0 },
       { modelId: 'claude-4-opus-thinking', score: 80.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
+      { modelId: 'openai-o4-mini-high', score: 78.0 },
   ]
 };
 
