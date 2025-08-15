@@ -266,10 +266,8 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 1.35s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '256k',
-    intelligenceScore: 69,
+    intelligenceScore: 64,
     pricePerMillionTokens: 2.63,
-    speedTokensPerSecond: 62.9,
-    latencyFirstChunkSeconds: 1.35,
   },
   {
     id: 'gpt-5-high',
@@ -894,3 +892,4 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
+

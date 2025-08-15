@@ -178,10 +178,11 @@ function ModelDetailContent({ id }: { id: string }) {
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
   // Specific layout for some models
-  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high'].includes(model.id)) {
+  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high', 'qwen3-235b-reasoning'].includes(model.id)) {
     const isO3 = model.id === 'openai-o3';
     const isGpt5High = model.id === 'gpt-5-high';
     const isO4MiniHigh = model.id === 'openai-o4-mini-high';
+    const isQwen3 = model.id === 'qwen3-235b-reasoning';
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -284,27 +285,27 @@ function ModelDetailContent({ id }: { id: string }) {
                             <Zap className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Tốc độ (token/s)</p>
-                                <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1)}</p>
+                                <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1) || 'N/A'}</p>
                             </div>
                         </div>
                          <div className="flex items-start space-x-3">
                             <Timer className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Độ trễ (s)</p>
-                                <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2)}</p>
+                                <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2) || 'N/A'}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : isGpt5High ? '07/08/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : isGpt5High ? '07/08/2025' : isQwen3 ? '07/08/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high'].includes(model.id) && (
+                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>

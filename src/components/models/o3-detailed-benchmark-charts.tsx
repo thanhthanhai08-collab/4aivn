@@ -61,6 +61,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
       { modelId: 'openai-o4-mini-high', score: 78.0 },
       { modelId: 'gpt-5-high', score: 85.0 },
+      { modelId: 'qwen3-235b-reasoning', score: 79.0 },
   ]
 };
 
