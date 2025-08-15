@@ -199,10 +199,10 @@ function ModelDetailContent({ id }: { id: string }) {
                 </div>
                 <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
                     <Card>
-                        <CardHeader className="text-left">
+                        <CardHeader>
                             <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                         </CardHeader>
-                        <CardContent className="text-left">
+                        <CardContent>
                             <div className="flex items-center space-x-1 mb-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
@@ -288,20 +288,20 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                {/* Performance Charts */}
-                <section>
-                <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                {model.id === 'openai-o3' && <O3PerformanceInsightsChart />}
-                {model.id === 'openai-o3-pro' && <O3PerformanceInsightsChart />}
-                {model.id === 'grok-4' && <O4PerformanceInsightsChart />}
-                {model.id === 'gemini-2.5-pro' && <Gemini25ProPerformanceInsightsChart />}
-                </section>
+                 {model.id !== 'gemini-2.5-pro' && (
+                    <section>
+                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                        {model.id === 'openai-o3' && <O3PerformanceInsightsChart />}
+                        {model.id === 'openai-o3-pro' && <O3PerformanceInsightsChart />}
+                        {model.id === 'grok-4' && <O4PerformanceInsightsChart />}
+                    </section>
+                 )}
                 
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
                 <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                <O3DetailedBenchmarkCharts />
+                <O3DetailedBenchmarkCharts modelId={model.id}/>
                 </section>
 
                 {relatedNews.length > 0 && (

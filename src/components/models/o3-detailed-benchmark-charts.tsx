@@ -9,55 +9,54 @@ import { cn } from "@/lib/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 
-const mathBenchmarks = [
-  { modelId: 'gpt-5-high', score: 99.0 },
-  { modelId: 'openai-o4-mini-high', score: 94.0 },
-  { modelId: 'grok-4', score: 93.0 },
-  { modelId: 'openai-o3', score: 88.0, isCurrent: true },
-  { modelId: 'gemini-2.5-pro', score: 89.0 },
-  { modelId: 'deepseek-r1-jan25', score: 89.0 },
-  { modelId: 'qwen3-235b-reasoning', score: 91.0 },
-]
-
-const codingBenchmarks = [
-  { modelId: 'grok-4', score: 82.0 },
-  { modelId: 'openai-o3-pro', score: 81.0 },
-  { modelId: 'openai-o4-mini-high', score: 80.0 },
-  { modelId: 'openai-o3', score: 78.0, isCurrent: true },
-  { modelId: 'gemini-2.5-pro', score: 80.0 },
-  { modelId: 'deepseek-r1-jan25', score: 77.0 },
-  { modelId: 'qwen3-235b-reasoning', score: 79.0 },
-]
-
-const knowledgeBenchmarks = [
-  { modelId: 'grok-4', score: 87.0 },
-  { modelId: 'claude-4-opus-thinking', score: 87.0 },
-  { modelId: 'gemini-2.5-pro', score: 86.0 },
-  { modelId: 'openai-o3', score: 85.0, isCurrent: true },
-  { modelId: 'deepseek-r1-jan25', score: 85.0 },
-  { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
-  { modelId: 'qwen3-235b-reasoning', score: 84.0 },
-]
-
-const ifBenchBenchmarks = [
-    { modelId: 'grok-4', score: 54.0 },
-    { modelId: 'qwen3-235b-reasoning', score: 51.0 },
-    { modelId: 'gpt-oss-120b-high', score: 71.0 },
-    { modelId: 'openai-o3', score: 71.0, isCurrent: true },
-    { modelId: 'gpt-5-high', score: 69.0 },
-    { modelId: 'gpt-5-medium', score: 68.0 },
-    { modelId: 'gpt-5-mini', score: 65.0 },
-]
-
-const gpqaBenchmarks = [
-    { modelId: 'grok-4', score: 88.0 },
-    { modelId: 'gemini-2.5-pro', score: 84.0 },
-    { modelId: 'openai-o3-pro', score: 84.0 },
-    { modelId: 'openai-o3', score: 83.0, isCurrent: true },
-    { modelId: 'deepseek-r1-jan25', score: 81.0 },
-    { modelId: 'claude-4-opus-thinking', score: 80.0 },
-    { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
-]
+const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
+  aime: [
+    { modelId: 'gpt-5-high', score: 99.0 },
+    { modelId: 'openai-o4-mini-high', score: 94.0 },
+    { modelId: 'grok-4', score: 93.0 },
+    { modelId: 'openai-o3', score: 88.0 },
+    { modelId: 'gemini-2.5-pro', score: 88.0 },
+    { modelId: 'deepseek-r1-jan25', score: 89.0 },
+    { modelId: 'qwen3-235b-reasoning', score: 91.0 },
+  ],
+  livecode: [
+    { modelId: 'grok-4', score: 82.0 },
+    { modelId: 'openai-o3-pro', score: 81.0 },
+    { modelId: 'openai-o4-mini-high', score: 80.0 },
+    { modelId: 'openai-o3', score: 78.0 },
+    { modelId: 'gemini-2.5-pro', score: 80.0 },
+    { modelId: 'deepseek-r1-jan25', score: 77.0 },
+    { modelId: 'qwen3-235b-reasoning', score: 79.0 },
+  ],
+  mmlu: [
+    { modelId: 'grok-4', score: 87.0 },
+    { modelId: 'claude-4-opus-thinking', score: 87.0 },
+    { modelId: 'gemini-2.5-pro', score: 86.0 },
+    { modelId: 'openai-o3', score: 85.0 },
+    { modelId: 'deepseek-r1-jan25', score: 85.0 },
+    { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
+    { modelId: 'qwen3-235b-reasoning', score: 84.0 },
+  ],
+  ifbench: [
+      { modelId: 'grok-4', score: 54.0 },
+      { modelId: 'qwen3-235b-reasoning', score: 51.0 },
+      { modelId: 'gpt-oss-120b-high', score: 71.0 },
+      { modelId: 'openai-o3', score: 71.0 },
+      { modelId: 'gpt-5-high', score: 69.0 },
+      { modelId: 'gpt-5-medium', score: 68.0 },
+      { modelId: 'gemini-2.5-pro', score: 49.0 },
+      { modelId: 'gpt-5-mini', score: 65.0 },
+  ],
+  gpqa: [
+      { modelId: 'grok-4', score: 88.0 },
+      { modelId: 'gemini-2.5-pro', score: 84.0 },
+      { modelId: 'openai-o3-pro', score: 84.0 },
+      { modelId: 'openai-o3', score: 83.0 },
+      { modelId: 'deepseek-r1-jan25', score: 81.0 },
+      { modelId: 'claude-4-opus-thinking', score: 80.0 },
+      { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
+  ]
+};
 
 
 interface BenchmarkChartProps {
@@ -101,14 +100,41 @@ const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
     )
 }
 
-export function O3DetailedBenchmarkCharts() {
+const getComparisonData = (benchmarkData: { modelId: string; score: number }[], currentModelId: string) => {
+    const currentModel = benchmarkData.find(m => m.modelId === currentModelId);
+    if (!currentModel) return [];
+
+    const higher = benchmarkData
+        .filter(m => m.score > currentModel.score && m.modelId !== currentModelId)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+    
+    const lower = benchmarkData
+        .filter(m => m.score <= currentModel.score && m.modelId !== currentModelId)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+    
+    const combined = [...higher, { ...currentModel, isCurrent: true }, ...lower];
+    
+    // Ensure we have the current model in the middle, even if we don't have 3 above/below
+    const sortedFinal = combined.sort((a,b) => b.score - a.score);
+    return sortedFinal.map(item => ({...item, isCurrent: item.modelId === currentModelId}));
+};
+
+export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
+    const mathData = getComparisonData(allBenchmarks.aime, modelId);
+    const codingData = getComparisonData(allBenchmarks.livecode, modelId);
+    const knowledgeData = getComparisonData(allBenchmarks.mmlu, modelId);
+    const ifBenchData = getComparisonData(allBenchmarks.ifbench, modelId);
+    const gpqaData = getComparisonData(allBenchmarks.gpqa, modelId);
+
     return (
-        <div className="grid md:grid-cols-3 gap-8">
-            <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathBenchmarks} />
-            <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingBenchmarks} />
-            <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeBenchmarks} />
-            <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchBenchmarks} />
-            <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaBenchmarks} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathData} />
+            <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingData} />
+            <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} />
+            <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} />
+            <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} />
         </div>
     )
 }
