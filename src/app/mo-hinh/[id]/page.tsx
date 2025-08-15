@@ -257,7 +257,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <Layers className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                                <p className="text-muted-foreground">Có</p>
+                                <p className="text-muted-foreground">{isQwen3 ? 'Không' : 'Có'}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
@@ -299,7 +299,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : isGpt5High ? '07/08/2025' : isQwen3 ? '07/08/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : isGpt5High ? '07/08/2025' : isQwen3 ? '25/07/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
@@ -440,11 +440,6 @@ function ModelDetailContent({ id }: { id: string }) {
                         <Separator />
                         <div className="flex justify-between items-center">
                             <span className="text-muted-foreground">Trang web chính thức:</span>
-                            <Button variant="link" size="sm" asChild className="p-0 h-auto">
-                                <a href={model.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
-                                    {model.link.replace(/^https?:\/\//, '')}
-                                </a>
-                            </Button>
                         </div>
                         </>
                     )}
