@@ -40,7 +40,7 @@ export const mockAIModels: AIModel[] = [
       "• HumanEval (Coding)",
       "• MATH-500 (quantitative reasoning) 97%",
       "• AIME 2024 (Competition Math) 89%",
-      "Giá trung bình 3.44 USD/ 1 triệu token → Dựa trên các thông số giá",
+      "Giá trung bình 3.44 USD / 1 triệu token → Dựa trên các thông số giá",
       "• Giá đầu vào 1.25 USD / 1 triệu token.",
       "• Giá đầu ra 10 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 147.3 token /s.",

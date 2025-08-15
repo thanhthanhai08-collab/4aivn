@@ -24,6 +24,7 @@ import {
 } from "@/lib/user-data-service";
 import { mockNews } from "@/lib/mock-news";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
+import { O4PerformanceInsightsChart } from "@/components/models/o4-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
 
@@ -161,8 +162,9 @@ function ModelDetailContent({ id }: { id: string }) {
   
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
-  // Specific layout for o3 model
-  if (model.id === 'openai-o3') {
+  // Specific layout for o3 and grok-4 models
+  if (model.id === 'openai-o3' || model.id === 'grok-4') {
+    const isO3 = model.id === 'openai-o3';
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -279,7 +281,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">20/12/2024</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
@@ -289,12 +291,12 @@ function ModelDetailContent({ id }: { id: string }) {
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                 <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                <O3PerformanceInsightsChart />
+                {isO3 ? <O3PerformanceInsightsChart /> : <O4PerformanceInsightsChart />}
                 </section>
                 
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
-                <p className="text-muted-foreground mb-6">So sánh o3 với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+                <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
                 <O3DetailedBenchmarkCharts />
                 </section>
 
