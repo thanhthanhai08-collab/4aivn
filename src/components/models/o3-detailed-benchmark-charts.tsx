@@ -27,6 +27,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gemini-2.5-pro', score: 80.0 },
     { modelId: 'deepseek-r1-jan25', score: 77.0 },
     { modelId: 'qwen3-235b-reasoning', score: 79.0 },
+    { modelId: 'gpt-5-high', score: 67.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -37,13 +38,14 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
     { modelId: 'qwen3-235b-reasoning', score: 84.0 },
     { modelId: 'openai-o4-mini-high', score: 83.0 },
+    { modelId: 'gpt-5-high', score: 87.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
       { modelId: 'qwen3-235b-reasoning', score: 51.0 },
       { modelId: 'gpt-oss-120b-high', score: 71.0 },
       { modelId: 'openai-o3', score: 71.0 },
-      { modelId: 'gpt-5-high', score: 69.0 },
+      { modelId: 'gpt-5-high', score: 73.0 },
       { modelId: 'openai-o4-mini-high', score: 69.0},
       { modelId: 'gpt-5-medium', score: 68.0 },
       { modelId: 'gemini-2.5-pro', score: 49.0 },
@@ -58,6 +60,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'claude-4-opus-thinking', score: 80.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
       { modelId: 'openai-o4-mini-high', score: 78.0 },
+      { modelId: 'gpt-5-high', score: 85.0 },
   ]
 };
 
