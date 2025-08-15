@@ -24,11 +24,8 @@ import {
 } from "@/lib/user-data-service";
 import { mockNews } from "@/lib/mock-news";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
-import { O4PerformanceInsightsChart } from "@/components/models/o4-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
-import { Gemini25ProPerformanceInsightsChart } from "@/components/models/gemini-2-5-pro-performance-insights-chart";
-import { O4MiniHighPerformanceInsightsChart } from "@/components/models/o4-mini-high-performance-insights-chart";
 
 
 function ModelDetailContent({ id }: { id: string }) {
@@ -306,41 +303,11 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {model.id === 'openai-o3' && (
+                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3PerformanceInsightsChart />
-                    </section>
-                 )}
-                 {model.id === 'grok-4' && (
-                    <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O4PerformanceInsightsChart />
-                    </section>
-                 )}
-                  {model.id === 'gemini-2.5-pro' && (
-                    <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3DetailedBenchmarkCharts modelId={model.id}/>
-                    </section>
-                 )}
-
-                 {model.id === 'openai-o3-pro' && (
-                    <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3DetailedBenchmarkCharts modelId={model.id}/>
-                    </section>
-                 )}
-
-                 {model.id === 'openai-o4-mini-high' && (
-                    <section>
-                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3DetailedBenchmarkCharts modelId={model.id}/>
+                        <O3PerformanceInsightsChart modelId={model.id as any} />
                     </section>
                  )}
                 
@@ -472,9 +439,7 @@ function ModelDetailContent({ id }: { id: string }) {
                         <div className="flex justify-between items-center">
                             <span className="text-muted-foreground">Trang web chính thức:</span>
                             <Button variant="link" size="sm" asChild className="p-0 h-auto">
-                                <a href={model.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
-                                    {model.link.replace(/^https?:\/\//, '')}
-                                </a>
+                                
                             </Button>
                         </div>
                         </>

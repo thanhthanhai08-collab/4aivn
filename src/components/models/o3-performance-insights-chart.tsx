@@ -3,16 +3,49 @@
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-const data = [
-  { name: "MMLU-Pro", o3: 85 },
-  { name: "GPQA Diamond", o3: 83 },
-  { name: "Humanity's Exam", o3: 20 },
-  { name: "LiveCodeBench", o3: 78 },
-  { name: "SciCode", o3: 41 },
-  { name: "IFBench", o3: 71 },
-  { name: "AIME 2025", o3: 88 },
-  { name: "AA-LCR", o3: 69 },
-];
+const data = {
+  'openai-o3': [
+    { name: "MMLU-Pro", score: 85 },
+    { name: "GPQA Diamond", score: 83 },
+    { name: "Humanity's Exam", score: 20 },
+    { name: "LiveCodeBench", score: 78 },
+    { name: "SciCode", score: 41 },
+    { name: "IFBench", score: 71 },
+    { name: "AIME 2025", score: 88 },
+    { name: "AA-LCR", score: 69 },
+  ],
+  'grok-4': [
+    { name: "MMLU-Pro", score: 87 },
+    { name: "GPQA Diamond", score: 88 },
+    { name: "Humanity's Exam", score: 23.9 },
+    { name: "LiveCodeBench", score: 82 },
+    { name: "SciCode", score: 46 },
+    { name: "IFBench", score: 54 },
+    { name: "AIME 2025", score: 93 },
+    { name: "AA-LCR", score: 68 },
+  ],
+  'gemini-2.5-pro': [
+    { name: "MMLU-Pro", score: 86 },
+    { name: "GPQA Diamond", score: 84 },
+    { name: "Humanity's Exam", score: 21.1 },
+    { name: "LiveCodeBench", score: 80 },
+    { name: "SciCode", score: 43 },
+    { name: "IFBench", score: 49 },
+    { name: "AIME 2025", score: 88 },
+    { name: "AA-LCR", score: 66 },
+  ],
+   'openai-o4-mini-high': [
+    { name: "MMLU-Pro", score: 83 },
+    { name: "GPQA Diamond", score: 78 },
+    { name: "Humanity's Exam", score: 17.5 },
+    { name: "LiveCodeBench", score: 80 },
+    { name: "SciCode", score: 47 },
+    { name: "IFBench", score: 69 },
+    { name: "AIME 2025", score: 91 },
+    { name: "AA-LCR", score: 55 },
+  ],
+};
+
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -26,17 +59,19 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export function O3PerformanceInsightsChart() {
+export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof data }) {
+  const chartData = data[modelId] || [];
+  
   return (
     <Card>
       <CardContent className="pt-6">
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data}>
+          <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="o3" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="score" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
