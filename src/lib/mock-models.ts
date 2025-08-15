@@ -48,10 +48,10 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: false,
     contextLengthToken: '1m',
-    intelligenceScore: 70,
+    intelligenceScore: 65,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 147.3,
-    latencyFirstChunkSeconds: 38.01,
+    speedTokensPerSecond: 147.9,
+    latencyFirstChunkSeconds: 37.29,
   },
   {
     id: 'grok-4',

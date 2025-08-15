@@ -27,6 +27,7 @@ import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-i
 import { O4PerformanceInsightsChart } from "@/components/models/o4-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
+import { Gemini25ProPerformanceInsightsChart } from "@/components/models/gemini-2-5-pro-performance-insights-chart";
 
 
 function ModelDetailContent({ id }: { id: string }) {
@@ -162,8 +163,8 @@ function ModelDetailContent({ id }: { id: string }) {
   
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
-  // Specific layout for o3 and grok-4 models
-  if (model.id === 'openai-o3' || model.id === 'grok-4' || model.id === 'openai-o3-pro') {
+  // Specific layout for some models
+  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro'].includes(model.id)) {
     const isO3 = model.id === 'openai-o3';
     return (
       <AppLayout>
@@ -291,7 +292,10 @@ function ModelDetailContent({ id }: { id: string }) {
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                 <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                {isO3 ? <O3PerformanceInsightsChart /> : <O4PerformanceInsightsChart />}
+                {model.id === 'openai-o3' && <O3PerformanceInsightsChart />}
+                {model.id === 'openai-o3-pro' && <O3PerformanceInsightsChart />}
+                {model.id === 'grok-4' && <O4PerformanceInsightsChart />}
+                {model.id === 'gemini-2.5-pro' && <Gemini25ProPerformanceInsightsChart />}
                 </section>
                 
                 <section>
