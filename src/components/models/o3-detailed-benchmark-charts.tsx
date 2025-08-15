@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
   aime: [
     { modelId: 'gpt-5-high', score: 99.0 },
-    { modelId: 'openai-o4-mini-high', score: 94.0 },
+    { modelId: 'openai-o4-mini-high', score: 91.0 },
     { modelId: 'grok-4', score: 93.0 },
     { modelId: 'openai-o3', score: 88.0 },
     { modelId: 'gemini-2.5-pro', score: 88.0 },
@@ -43,6 +43,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-oss-120b-high', score: 71.0 },
       { modelId: 'openai-o3', score: 71.0 },
       { modelId: 'gpt-5-high', score: 69.0 },
+      { modelId: 'openai-o4-mini-high', score: 69.0},
       { modelId: 'gpt-5-medium', score: 68.0 },
       { modelId: 'gemini-2.5-pro', score: 49.0 },
       { modelId: 'gpt-5-mini', score: 65.0 },

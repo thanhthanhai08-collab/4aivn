@@ -180,8 +180,9 @@ function ModelDetailContent({ id }: { id: string }) {
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
   // Specific layout for some models
-  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro'].includes(model.id)) {
+  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high'].includes(model.id)) {
     const isO3 = model.id === 'openai-o3';
+    const isO4MiniHigh = model.id === 'openai-o4-mini-high';
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -298,7 +299,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
@@ -327,6 +328,14 @@ function ModelDetailContent({ id }: { id: string }) {
                  )}
 
                  {model.id === 'openai-o3-pro' && (
+                    <section>
+                        <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
+                        <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                        <O3DetailedBenchmarkCharts modelId={model.id}/>
+                    </section>
+                 )}
+
+                 {model.id === 'openai-o4-mini-high' && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>

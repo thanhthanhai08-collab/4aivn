@@ -358,10 +358,10 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 70,
+    intelligenceScore: 65,
     pricePerMillionTokens: 1.93,
-    speedTokensPerSecond: 115.5,
-    latencyFirstChunkSeconds: 48.33,
+    speedTokensPerSecond: 135.1,
+    latencyFirstChunkSeconds: 41.45,
   },
   {
     id: 'qwen3-32b-reasoning',
