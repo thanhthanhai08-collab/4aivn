@@ -83,10 +83,10 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 10.26s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '256k',
-    intelligenceScore: 73,
+    intelligenceScore: 68,
     pricePerMillionTokens: 6,
-    speedTokensPerSecond: 62.3,
-    latencyFirstChunkSeconds: 10.26,
+    speedTokensPerSecond: 85.2,
+    latencyFirstChunkSeconds: 4.87,
   },
   {
     id: 'grok-3-mini-reasoning-high',
