@@ -157,10 +157,10 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 71,
+    intelligenceScore: 68,
     pricePerMillionTokens: 35,
-    speedTokensPerSecond: 32.7,
-    latencyFirstChunkSeconds: 78.85,
+    speedTokensPerSecond: 28.1,
+    latencyFirstChunkSeconds: 79.62,
   },
    {
     id: 'gemini-2.5-flash-reasoning',

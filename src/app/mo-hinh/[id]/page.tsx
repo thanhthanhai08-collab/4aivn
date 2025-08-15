@@ -163,7 +163,7 @@ function ModelDetailContent({ id }: { id: string }) {
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
   // Specific layout for o3 and grok-4 models
-  if (model.id === 'openai-o3' || model.id === 'grok-4') {
+  if (model.id === 'openai-o3' || model.id === 'grok-4' || model.id === 'openai-o3-pro') {
     const isO3 = model.id === 'openai-o3';
     return (
       <AppLayout>
