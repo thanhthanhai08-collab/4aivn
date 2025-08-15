@@ -28,6 +28,7 @@ import { O4PerformanceInsightsChart } from "@/components/models/o4-performance-i
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
 import { Gemini25ProPerformanceInsightsChart } from "@/components/models/gemini-2-5-pro-performance-insights-chart";
+import { O4MiniHighPerformanceInsightsChart } from "@/components/models/o4-mini-high-performance-insights-chart";
 
 
 function ModelDetailContent({ id }: { id: string }) {
@@ -309,7 +310,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3DetailedBenchmarkCharts modelId={model.id}/>
+                        <O3PerformanceInsightsChart />
                     </section>
                  )}
                  {model.id === 'grok-4' && (
@@ -339,7 +340,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3DetailedBenchmarkCharts modelId={model.id}/>
+                        <O4MiniHighPerformanceInsightsChart />
                     </section>
                  )}
                 
