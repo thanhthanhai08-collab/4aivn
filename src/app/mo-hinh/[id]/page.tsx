@@ -340,7 +340,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O4MiniHighPerformanceInsightsChart />
+                        <O3DetailedBenchmarkCharts modelId={model.id}/>
                     </section>
                  )}
                 
