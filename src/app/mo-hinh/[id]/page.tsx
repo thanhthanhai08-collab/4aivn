@@ -288,12 +288,11 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {model.id !== 'gemini-2.5-pro' && (
+                 {['openai-o3', 'grok-4'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
                         {model.id === 'openai-o3' && <O3PerformanceInsightsChart />}
-                        {model.id === 'openai-o3-pro' && <O3PerformanceInsightsChart />}
                         {model.id === 'grok-4' && <O4PerformanceInsightsChart />}
                     </section>
                  )}
