@@ -194,10 +194,10 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 13.24s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '1m',
-    intelligenceScore: 65,
-    pricePerMillionTokens: 0.99,
-    speedTokensPerSecond: 351.2,
-    latencyFirstChunkSeconds: 13.24,
+    intelligenceScore: 58,
+    pricePerMillionTokens: 0.85,
+    speedTokensPerSecond: 299.9,
+    latencyFirstChunkSeconds: 17.0,
   },
   {
     id: 'claude-4-opus-thinking',
