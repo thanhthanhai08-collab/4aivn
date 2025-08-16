@@ -24,6 +24,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-mini', score: 85.0 },
     { modelId: 'gpt-5-low', score: 83.0 },
     { modelId: 'gpt-5-nano', score: 78.0 },
+    { modelId: 'claude-4-opus-thinking', score: 73.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -40,6 +41,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-low', score: 75.0 },
     { modelId: 'gpt-oss-120b-high', score: 64.0 },
     { modelId: 'gpt-5-nano', score: 60.0 },
+    { modelId: 'claude-4-opus-thinking', score: 64.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -72,6 +74,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gemini-2.5-flash-reasoning', score: 50.0 },
       { modelId: 'gpt-5-low', score: 67.0 },
       { modelId: 'gpt-5-nano', score: 66.0 },
+      { modelId: 'claude-4-opus-thinking', score: 54.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },

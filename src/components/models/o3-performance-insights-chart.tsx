@@ -134,6 +134,16 @@ const data = {
     { name: "AIME 2025", score: 78 },
     { name: "AA-LCR", score: 40 },
   ],
+  'claude-4-opus-thinking': [
+    { name: "MMLU-Pro", score: 87 },
+    { name: "GPQA Diamond", score: 80 },
+    { name: "Humanity's Exam", score: 11.7 },
+    { name: "LiveCodeBench", score: 64 },
+    { name: "SciCode", score: 40 },
+    { name: "IFBench", score: 54 },
+    { name: "AIME 2025", score: 73 },
+    { name: "AA-LCR", score: 34 },
+  ],
 };
 
 

@@ -232,10 +232,10 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 64,
+    intelligenceScore: 55,
     pricePerMillionTokens: 30.00,
-    speedTokensPerSecond: 55.5,
-    latencyFirstChunkSeconds: 3.22,
+    speedTokensPerSecond: 19.3,
+    latencyFirstChunkSeconds: 1.42,
   },
   {
     id: 'qwen3-235b-reasoning',
