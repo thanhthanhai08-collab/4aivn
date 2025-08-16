@@ -544,10 +544,10 @@ hiệu quả trong công việc.`,
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 53,
+    intelligenceScore: 59,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 48.1,
-    latencyFirstChunkSeconds: 1.52,
+    speedTokensPerSecond: 57.6,
+    latencyFirstChunkSeconds: 0.92,
   },
   {
     id: 'gpt-5-nano',
@@ -854,5 +854,6 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 ];
 
     
+
 
 
