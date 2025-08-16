@@ -154,6 +154,16 @@ const data = {
     { name: "AIME 2025", score: 74 },
     { name: "AA-LCR", score: 65 },
   ],
+  'claude-4-sonnet-thinking': [
+    { name: "MMLU-Pro", score: 84 },
+    { name: "GPQA Diamond", score: 68 },
+    { name: "Humanity's Exam", score: 4 },
+    { name: "LiveCodeBench", score: 45 },
+    { name: "SciCode", score: 37 },
+    { name: "IFBench", score: 55 },
+    { name: "AIME 2025", score: 41 },
+    { name: "AA-LCR", score: 65 },
+  ],
 };
 
 

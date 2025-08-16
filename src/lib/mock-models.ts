@@ -507,8 +507,8 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.92,
   },
   {
-    id: 'claude-4-sonnet',
-    name: 'Claude 4 Sonnet',
+    id: 'claude-4-sonnet-thinking',
+    name: 'Claude 4 Sonnet Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: `+ Claude 4 Sonnet là một trong hai phiên bản chủ lực của dòng mô hình Claude 4 do Anthropic ra mắt
@@ -854,3 +854,4 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 ];
 
     
+
