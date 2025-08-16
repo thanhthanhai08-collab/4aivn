@@ -591,10 +591,7 @@ hiệu quả trong công việc.`,
     name: 'GPT-5 nano',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `+ GPT-4.5 là phiên bản nâng cấp của GPT-4 được OpenAl chính thức ra mắt vào cuối tháng 2 năm 2025 dưới dạng bản preview nghiên cứu dành cho người dùng ChatGPT Pro. Đây được xem là “mô hình giàu kiến thức nhất” của OpenAl tính đến thời điểm hiện tại, với nhiều cải tiến về khả năng hiểu ngữ cảnh, tạo sinh văn bản tự nhiên và giảm thiểu hiện tượng ảo giác (hallucination) so với các phiên bản trước.
-+ Một trong những vấn đề lớn của các mô hình Al trước đây là tạo ra thông tin sai lệch hoặc không chính xác. GPT-4.5 đã giảm tỷ lệ ảo giác xuống còn khoảng 37%, thấp hơn nhiều so với gần 60% của GPT-4o, giúp tăng độ tin cậy cho người dùng khi sử dụng trong các tác vụ viết lách, lập trình và giải quyết vấn đề thực tế.
-+ OpenAl cho biết GPT-4.5 sở hữu “cá tính tinh tế hơn” so với các phiên bản trước, giúp chatbot vận hành trên nền tảng này có cảm giác tự nhiên và dễ tiếp cận hơn, phù hợp với nhiều đối tượng người dùng và mục đích sử dụng khác nhau.
-+ Mặc dù có nhiều cải tiến, GPT-4.5 không phải là một bước đột phá về sức mạnh suy luận so với các mô hình nội bộ như o1 hay o3-mini. Thậm chí trong một số trường hợp, khả năng lý luận nhiều bước của GPT-4.5 còn kém hơn o3-mini, có lẽ Open Al vẫn còn đang trong quá trình phát triển GPT4.5`,
+    description: 'GPT-5 nano là phiên bản nhỏ gọn và hiệu quả nhất trong dòng sản phẩm GPT-5, được tối ưu hóa cho tốc độ và chi phí vận hành. Với kiến trúc nhẹ, mô hình này mang lại khả năng phản hồi tức thì với độ trễ cực thấp, phù hợp cho các ứng dụng đòi hỏi xử lý khối lượng lớn và tương tác theo thời gian thực như chatbot hỗ trợ khách hàng, phân tích dữ liệu nhanh và các tác vụ tự động hóa quy mô lớn. Dù nhỏ gọn, GPT-5 nano vẫn duy trì được hiệu suất đáng kể, là một giải pháp kinh tế nhưng mạnh mẽ.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
