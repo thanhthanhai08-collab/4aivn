@@ -471,8 +471,8 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 2.33,
   },
   {
-    id: 'claude-3.7-sonnet-thinking',
-    name: 'Claude 4 Sonnet Thinking',
+    id: 'claude-4.1-opus-thinking',
+    name: 'Claude 4.1 Opus Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
@@ -505,43 +505,6 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 6.00,
     speedTokensPerSecond: 57.6,
     latencyFirstChunkSeconds: 0.92,
-  },
-  {
-    id: 'claude-4-sonnet-thinking',
-    name: 'Claude 4 Sonnet Thinking',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'Anthropic',
-    description: `+ Claude 4 Sonnet Thinking là một trong hai phiên bản chủ lực của dòng mô hình Claude 4 do Anthropic ra mắt vào tháng 5 năm 2025, bên cạnh phiên bản Opus 4. Sonnet 4 được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.
-+ Claude 4 Sonnet Thinking là mô hình mạnh mẽ nhất của Claude 4 Sonnet với chức năng Thinking cho các nhiệm vụ phức tạp, giúp mô hình linh hoạt xử lý từ các câu hỏi nhanh đến các bài toán logic đa
-bước nhưng vẫn giữ được giá rẻ hơn 20% so với Claude 4 Opus
-+ Khi được cấp quyền truy cập file, Sonnet 4 có thể lưu trữ và trích xuất thông tin quan trọng để duy trì ngữ cảnh trong các dự án dài hạn như nghiên cứu hoặc phát triển phần mềm, giúp tăng tính liên tục và
-hiệu quả trong công việc.`,
-    logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
-    link: 'https://www.anthropic.com/news/claude-3-family',
-    userRating: 4.9,
-    ratingCount: 215,
-    features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token → Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý.",
-      "Chỉ số thông minh 61 →Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 85%",
-      "• GPQA Diamond (Scientific Reasoning) 72%",
-      "• Humanity's Last Exam (Reasoning & Knowledge) 8.5%",
-      "• LiveCodeBench (Coding) 58%",
-      "• SciCode (Coding) 40%",
-      "• HumanEval (Coding)",
-      "• MATH-500 (Quantitative reasoning) 98%",
-      "• AIME 2024 (Competition Math) 70%",
-      "Giá trung bình 6 USD / 1 triệu token → Dựa trên các thông số giá",
-      "• Giá đầu vào 3.0 USD / 1 triệu token.",
-      "• Giá đầu ra 15.0 USD / 1 triệu token.",
-      "Tốc độ sinh token là 87.1 token /s.",
-      "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
-    ],
-    contextLengthToken: '200k',
-    intelligenceScore: 61,
-    pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 87.1,
-    latencyFirstChunkSeconds: 1.32,
   },
   {
     id: 'claude-4-sonnet',

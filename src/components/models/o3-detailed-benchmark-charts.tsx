@@ -25,7 +25,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-low', score: 83.0 },
     { modelId: 'gpt-5-nano', score: 78.0 },
     { modelId: 'claude-4-opus-thinking', score: 73.0 },
-    { modelId: 'claude-3.7-sonnet-thinking', score: 74.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 74.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -43,7 +43,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-oss-120b-high', score: 64.0 },
     { modelId: 'gpt-5-nano', score: 60.0 },
     { modelId: 'claude-4-opus-thinking', score: 64.0 },
-    { modelId: 'claude-3.7-sonnet-thinking', score: 66.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 66.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -51,7 +51,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gemini-2.5-pro', score: 86.0 },
     { modelId: 'openai-o3', score: 85.0 },
     { modelId: 'deepseek-r1-jan25', score: 85.0 },
-    { modelId: 'claude-3.7-sonnet-thinking', score: 84.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
     { modelId: 'qwen3-235b-reasoning', score: 84.0 },
     { modelId: 'openai-o4-mini-high', score: 83.0 },
     { modelId: 'gpt-5-high', score: 87.0 },
@@ -77,7 +77,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-low', score: 67.0 },
       { modelId: 'gpt-5-nano', score: 66.0 },
       { modelId: 'claude-4-opus-thinking', score: 54.0 },
-      { modelId: 'claude-3.7-sonnet-thinking', score: 55.0 },
+      { modelId: 'claude-4.1-opus-thinking', score: 55.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -95,7 +95,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-low', score: 81.0 },
       { modelId: 'gpt-oss-120b-high', score: 78.0 },
       { modelId: 'gpt-5-nano', score: 67.0 },
-      { modelId: 'claude-3.7-sonnet-thinking', score: 78.0 },
+      { modelId: 'claude-4.1-opus-thinking', score: 78.0 },
   ]
 };
 
