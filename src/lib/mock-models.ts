@@ -322,8 +322,8 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '400k',
     intelligenceScore: 63,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 146.1,
-    latencyFirstChunkSeconds: 18.19
+    speedTokensPerSecond: 204.9,
+    latencyFirstChunkSeconds: 16.86
   },
   {
     id: 'openai-o4-mini-high',
@@ -892,3 +892,5 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
+
+    

@@ -21,6 +21,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'qwen3-235b-reasoning', score: 91.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 73.0 },
     { modelId: 'gpt-5-mini', score: 85.0 },
+    { modelId: 'gpt-5-low', score: 83.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -34,6 +35,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-medium', score: 70.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 70.0 },
     { modelId: 'gpt-5-mini', score: 69.0 },
+    { modelId: 'gpt-5-low', score: 75.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -48,6 +50,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-medium', score: 87.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 83.0 },
     { modelId: 'gpt-5-mini', score: 83.0 },
+    { modelId: 'gpt-5-low', score: 86.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -61,6 +64,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-mini', score: 71.0 },
       { modelId: 'deepseek-r1-jan25', score: 40.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 50.0 },
+      { modelId: 'gpt-5-low', score: 67.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -75,6 +79,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'qwen3-235b-reasoning', score: 79.0 },
       { modelId: 'gpt-5-medium', score: 84.0 },
       { modelId: 'gpt-5-mini', score: 80.0 },
+      { modelId: 'gpt-5-low', score: 81.0 },
   ]
 };
 
@@ -158,3 +163,5 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
         </div>
     )
 }
+
+    

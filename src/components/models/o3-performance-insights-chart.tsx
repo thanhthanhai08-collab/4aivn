@@ -104,6 +104,16 @@ const data = {
     { name: "AIME 2025", score: 85 },
     { name: "AA-LCR", score: 66 },
   ],
+  'gpt-5-low': [
+    { name: "MMLU-Pro", score: 86 },
+    { name: "GPQA Diamond", score: 81 },
+    { name: "Humanity's Exam", score: 18.4 },
+    { name: "LiveCodeBench", score: 75 },
+    { name: "SciCode", score: 39 },
+    { name: "IFBench", score: 67 },
+    { name: "AIME 2025", score: 83 },
+    { name: "AA-LCR", score: 59 },
+  ],
 };
 
 
@@ -138,3 +148,5 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    
