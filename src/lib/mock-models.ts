@@ -543,11 +543,11 @@ hiệu quả trong công việc.`,
         "Độ trễ 1.52s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
-    contextLengthToken: '200k',
+    contextLengthToken: '1m',
     intelligenceScore: 59,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 57.6,
-    latencyFirstChunkSeconds: 0.92,
+    speedTokensPerSecond: 58.2,
+    latencyFirstChunkSeconds: 0.95,
   },
   {
     id: 'gpt-5-nano',
@@ -854,6 +854,4 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 ];
 
     
-
-
 
