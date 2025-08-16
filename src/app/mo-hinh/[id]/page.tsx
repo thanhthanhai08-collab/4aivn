@@ -183,6 +183,7 @@ function ModelDetailContent({ id }: { id: string }) {
     const isGpt5High = model.id === 'gpt-5-high';
     const isO4MiniHigh = model.id === 'openai-o4-mini-high';
     const isQwen3 = model.id === 'qwen3-235b-reasoning';
+    const isGpt5Medium = model.id === 'gpt-5-medium';
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -299,7 +300,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : isGpt5High ? '07/08/2025' : isQwen3 ? '25/07/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : (isGpt5High || isGpt5Medium) ? '07/08/2025' : isQwen3 ? '25/07/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
