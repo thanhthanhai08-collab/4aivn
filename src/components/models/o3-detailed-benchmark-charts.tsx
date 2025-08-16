@@ -17,7 +17,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'grok-4', score: 93.0 },
     { modelId: 'openai-o3', score: 88.0 },
     { modelId: 'gemini-2.5-pro', score: 88.0 },
-    { modelId: 'deepseek-r1-jan25', score: 89.0 },
+    { modelId: 'deepseek-r1-jan25', score: 76.0 },
     { modelId: 'qwen3-235b-reasoning', score: 91.0 },
   ],
   livecode: [
@@ -53,6 +53,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-medium', score: 71.0 },
       { modelId: 'gemini-2.5-pro', score: 49.0 },
       { modelId: 'gpt-5-mini', score: 65.0 },
+      { modelId: 'deepseek-r1-jan25', score: 40.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },

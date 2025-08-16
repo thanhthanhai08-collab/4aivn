@@ -178,12 +178,13 @@ function ModelDetailContent({ id }: { id: string }) {
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
   // Specific layout for some models
-  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium'].includes(model.id)) {
+  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25'].includes(model.id)) {
     const isO3 = model.id === 'openai-o3';
     const isGpt5High = model.id === 'gpt-5-high';
     const isO4MiniHigh = model.id === 'openai-o4-mini-high';
     const isQwen3 = model.id === 'qwen3-235b-reasoning';
     const isGpt5Medium = model.id === 'gpt-5-medium';
+    const isDeepseekR1 = model.id === 'deepseek-r1-jan25';
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -258,7 +259,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <Layers className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                                <p className="text-muted-foreground">{isQwen3 ? 'Không' : 'Có'}</p>
+                                <p className="text-muted-foreground">{isQwen3 || isDeepseekR1 ? 'Không' : 'Có'}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
@@ -300,13 +301,13 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : (isGpt5High || isGpt5Medium) ? '07/08/2025' : isQwen3 ? '25/07/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{isO3 ? '20/12/2024' : isO4MiniHigh ? '16/04/2025' : (isGpt5High || isGpt5Medium) ? '07/08/2025' : isQwen3 ? '25/07/2025' : isDeepseekR1 ? '28/05/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium'].includes(model.id) && (
+                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
@@ -436,14 +437,6 @@ function ModelDetailContent({ id }: { id: string }) {
                         <span className="text-muted-foreground">Loại Model:</span>
                         <Badge variant="outline">{model.type}</Badge>
                     </div>
-                    {model.link && (
-                        <>
-                        <Separator />
-                        <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Trang web chính thức:</span>
-                        </div>
-                        </>
-                    )}
                 </CardContent>
             </Card>
           </div>
