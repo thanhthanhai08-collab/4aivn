@@ -23,6 +23,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gemini-2.5-flash-reasoning', score: 73.0 },
     { modelId: 'gpt-5-mini', score: 85.0 },
     { modelId: 'gpt-5-low', score: 83.0 },
+    { modelId: 'gpt-5-nano', score: 78.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -38,9 +39,9 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-mini', score: 69.0 },
     { modelId: 'gpt-5-low', score: 75.0 },
     { modelId: 'gpt-oss-120b-high', score: 64.0 },
+    { modelId: 'gpt-5-nano', score: 60.0 },
   ],
   mmlu: [
-    { modelId: 'gpt-oss-120b-high', score: 81.0 },
     { modelId: 'grok-4', score: 87.0 },
     { modelId: 'claude-4-opus-thinking', score: 87.0 },
     { modelId: 'gemini-2.5-pro', score: 86.0 },
@@ -54,6 +55,8 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gemini-2.5-flash-reasoning', score: 83.0 },
     { modelId: 'gpt-5-mini', score: 83.0 },
     { modelId: 'gpt-5-low', score: 86.0 },
+    { modelId: 'gpt-oss-120b-high', score: 81.0 },
+    { modelId: 'gpt-5-nano', score: 77.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -68,9 +71,9 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'deepseek-r1-jan25', score: 40.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 50.0 },
       { modelId: 'gpt-5-low', score: 67.0 },
+      { modelId: 'gpt-5-nano', score: 66.0 },
   ],
   gpqa: [
-      { modelId: 'gpt-oss-120b-high', score: 78.0 },
       { modelId: 'grok-4', score: 88.0 },
       { modelId: 'gemini-2.5-pro', score: 84.0 },
       { modelId: 'openai-o3-pro', score: 84.0 },
@@ -84,6 +87,8 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-medium', score: 84.0 },
       { modelId: 'gpt-5-mini', score: 80.0 },
       { modelId: 'gpt-5-low', score: 81.0 },
+      { modelId: 'gpt-oss-120b-high', score: 78.0 },
+      { modelId: 'gpt-5-nano', score: 67.0 },
   ]
 };
 

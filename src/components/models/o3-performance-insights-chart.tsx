@@ -124,6 +124,16 @@ const data = {
     { name: "AIME 2025", score: 93 },
     { name: "AA-LCR", score: 51 },
   ],
+  'gpt-5-nano': [
+    { name: "MMLU-Pro", score: 77 },
+    { name: "GPQA Diamond", score: 67 },
+    { name: "Humanity's Exam", score: 7.6 },
+    { name: "LiveCodeBench", score: 60 },
+    { name: "SciCode", score: 34 },
+    { name: "IFBench", score: 66 },
+    { name: "AIME 2025", score: 78 },
+    { name: "AA-LCR", score: 40 },
+  ],
 };
 
 
