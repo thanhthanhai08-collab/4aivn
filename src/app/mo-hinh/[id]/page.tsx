@@ -187,6 +187,7 @@ function ModelDetailContent({ id }: { id: string }) {
     const isDeepseekR1 = model.id === 'deepseek-r1-jan25';
     const isClaude4OpusThinking = model.id === 'claude-4-opus-thinking';
     const isClaude41OpusThinking = model.id === 'claude-4.1-opus-thinking';
+    const isClaude4SonnetThinking = model.id === 'claude-4-sonnet-thinking';
 
     return (
       <AppLayout>
@@ -262,7 +263,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <Layers className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                                <p className="text-muted-foreground">{isQwen3 || isDeepseekR1 || isClaude4OpusThinking || isClaude41OpusThinking ? 'Không' : 'Có'}</p>
+                                <p className="text-muted-foreground">{isQwen3 || isDeepseekR1 || isClaude4OpusThinking || isClaude41OpusThinking || isClaude4SonnetThinking ? 'Không' : 'Có'}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
