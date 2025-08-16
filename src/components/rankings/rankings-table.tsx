@@ -123,8 +123,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             <TableRow 
                 key={item.id} 
                 className={cn(
-                    "border-b transition-colors data-[state=selected]:bg-muted",
-                    item.id === 'claude-4.1-opus-thinking' ? 'bg-amber-100 hover:bg-amber-200' : 'hover:bg-primary hover:text-primary-foreground',
+                    "border-b transition-colors data-[state=selected]:bg-muted hover:bg-primary hover:text-primary-foreground",
                     "[&>td>a]:hover:text-primary-foreground",
                     index % 2 === 0 ? "bg-accent/50" : ""
                 )}
