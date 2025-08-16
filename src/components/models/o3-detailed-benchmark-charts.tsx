@@ -25,7 +25,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-low', score: 83.0 },
     { modelId: 'gpt-5-nano', score: 78.0 },
     { modelId: 'claude-4-opus-thinking', score: 73.0 },
-    { modelId: 'claude-4.1-opus-thinking', score: 74.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
     { modelId: 'claude-4-sonnet-thinking', score: 74.0 },
   ],
   livecode: [
@@ -99,7 +99,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gpt-5-low', score: 81.0 },
       { modelId: 'gpt-oss-120b-high', score: 78.0 },
       { modelId: 'gpt-5-nano', score: 67.0 },
-      { modelId: 'claude-4.1-opus-thinking', score: 78.0 },
+      { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
       { modelId: 'claude-4-sonnet-thinking', score: 78.0 },
   ]
 };
@@ -184,5 +184,7 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
         </div>
     )
 }
+
+    
 
     

@@ -475,10 +475,10 @@ export const mockAIModels: AIModel[] = [
     name: 'Claude 4.1 Opus Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
-+ Claude 3.7 Sonnet không phải là một mô hình riêng biệt cho suy luận mà là sự kết hợp giữa khả năng phản hồi nhanh và suy luận sâu, tương tự cách con người có thể trả lời ngay hoặc dành thời gian suy nghĩ kỹ càng.
-+ Khi bật suy luận (thinking), mô hình Claude 3.7 Sonnet Thinking sẽ tự phản tỉnh và thực hiện suy luận đa bước trước khi trả lời, giúp nâng cao hiệu quả trong các lĩnh vực như toán học, vật lý, lập trình, và các tác vụ hướng dẫn phức tạp.
-+ Mặc dù là không phải mô hình mới nhất nhưng nó vẫn nổi lên như là giải pháp nằm giữa Claude 4 Opus và Claude 4 Sonnet mà vẫn đảm bảo chi phí phù hợp cho nên nó vẫn hữu dụng trong một số trường hợp khi mà người dùng chắc chắn sẽ chuyển dần sang dòng Claude 4 mới hơn.`,
+    description: `+ Claude 4.1 Opus Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp đáng kể so với Claude 4 Opus, được Anthropic phát triển như một mô hình suy luận lai (hybrid reasoning model) hàng đầu trên thị trường.
++ Claude 4.1 Opus Thinking không phải là một mô hình riêng biệt cho suy luận mà là sự kết hợp giữa khả năng phản hồi nhanh và suy luận sâu, tương tự cách con người có thể trả lời ngay hoặc dành thời gian suy nghĩ kỹ càng.
++ Khi bật suy luận (thinking), mô hình Claude 4.1 Opus Thinking sẽ tự phản tỉnh và thực hiện suy luận đa bước trước khi trả lời, giúp nâng cao hiệu quả trong các lĩnh vực như toán học, vật lý, lập trình, và các tác vụ hướng dẫn phức tạp.
++ Mặc dù không phải là mô hình mới nhất, nó vẫn nổi lên như một giải pháp mạnh mẽ, cân bằng giữa hiệu suất và chi phí, phù hợp cho các doanh nghiệp cần khả năng suy luận cao cấp mà không muốn chi trả mức giá cao nhất của các mô hình chuyên dụng.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-5-sonnet',
     userRating: 4.9,
@@ -500,11 +500,11 @@ export const mockAIModels: AIModel[] = [
         "Tốc độ sinh token là 87.1 token /s.",
         "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    contextLengthToken: '1m',
-    intelligenceScore: 59,
-    pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 57.6,
-    latencyFirstChunkSeconds: 0.92,
+    contextLengthToken: '200k',
+    intelligenceScore: 61,
+    pricePerMillionTokens: 30.00,
+    speedTokensPerSecond: 30.5,
+    latencyFirstChunkSeconds: 1.62,
   },
   {
     id: 'claude-4-sonnet-thinking',
@@ -855,3 +855,6 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 
     
 
+
+
+    

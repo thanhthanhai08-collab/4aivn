@@ -146,13 +146,13 @@ const data = {
   ],
   'claude-4.1-opus-thinking': [
     { name: "MMLU-Pro", score: 84 },
-    { name: "GPQA Diamond", score: 77 },
-    { name: "Humanity's Last Exam", score: 10.3 },
-    { name: "LiveCodeBench", score: 47 },
+    { name: "GPQA Diamond", score: 80 },
+    { name: "Humanity's Last Exam", score: 11.6 },
+    { name: "LiveCodeBench", score: 66 },
     { name: "SciCode", score: 40 },
     { name: "IFBench", score: 55 },
-    { name: "AIME 2025", score: 49 },
-    { name: "AA-LCR", score: 65 },
+    { name: "AIME 2025", score: 84 },
+    { name: "AA-LCR", score: 70 },
   ],
   'claude-4-sonnet-thinking': [
     { name: "MMLU-Pro", score: 84 },
@@ -198,5 +198,7 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    
 
     
