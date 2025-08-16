@@ -13,8 +13,8 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '131k',
     intelligenceScore: 61,
     pricePerMillionTokens: 0.26,
-    speedTokensPerSecond: 185.0,
-    latencyFirstChunkSeconds: 0.48,
+    speedTokensPerSecond: 223.7,
+    latencyFirstChunkSeconds: 0.41,
   },
   {
     id: 'gemini-2.5-pro',

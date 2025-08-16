@@ -114,6 +114,16 @@ const data = {
     { name: "AIME 2025", score: 83 },
     { name: "AA-LCR", score: 59 },
   ],
+  'gpt-oss-120b-high': [
+    { name: "MMLU-Pro", score: 81 },
+    { name: "GPQA Diamond", score: 78 },
+    { name: "Humanity's Exam", score: 18.5 },
+    { name: "LiveCodeBench", score: 64 },
+    { name: "SciCode", score: 36 },
+    { name: "IFBench", score: 69 },
+    { name: "AIME 2025", score: 93 },
+    { name: "AA-LCR", score: 51 },
+  ],
 };
 
 

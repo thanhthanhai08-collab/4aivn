@@ -178,7 +178,7 @@ function ModelDetailContent({ id }: { id: string }) {
   const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   
   // Specific layout for some models
-  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low'].includes(model.id)) {
+  if (['openai-o3', 'grok-4', 'openai-o3-pro', 'gemini-2.5-pro', 'openai-o4-mini-high', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low', 'gpt-oss-120b-high'].includes(model.id)) {
     const isO3 = model.id === 'openai-o3';
     const isGpt5High = model.id === 'gpt-5-high';
     const isO4MiniHigh = model.id === 'openai-o4-mini-high';
@@ -301,13 +301,13 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{model.id === 'openai-o3' ? '20/12/2024' : model.id === 'openai-o4-mini-high' ? '16/04/2025' : (model.id === 'gpt-5-high' || model.id === 'gpt-5-medium' || model.id === 'gpt-5-mini' || model.id === 'gpt-5-low') ? '07/08/2025' : model.id === 'qwen3-235b-reasoning' ? '25/07/2025' : model.id === 'deepseek-r1-jan25' ? '28/05/2025' : model.id === 'gemini-2.5-flash-reasoning' ? '17/06/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{model.id === 'openai-o3' ? '20/12/2024' : model.id === 'openai-o4-mini-high' ? '16/04/2025' : (model.id === 'gpt-5-high' || model.id === 'gpt-5-medium' || model.id === 'gpt-5-mini' || model.id === 'gpt-5-low') ? '07/08/2025' : model.id === 'qwen3-235b-reasoning' ? '25/07/2025' : model.id === 'deepseek-r1-jan25' ? '28/05/2025' : model.id === 'gemini-2.5-flash-reasoning' ? '17/06/2025' : model.id === 'gpt-oss-120b-high' ? '05/08/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low'].includes(model.id) && (
+                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low', 'gpt-oss-120b-high'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
