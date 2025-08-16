@@ -472,7 +472,7 @@ export const mockAIModels: AIModel[] = [
   },
   {
     id: 'claude-3.7-sonnet-thinking',
-    name: 'Claude 3.7 Sonnet Thinking',
+    name: 'Claude 4 Sonnet Thinking',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
     description: `+ Claude 3.7 Sonnet Thinking ra mắt vào đầu năm 2025, là phiên bản nâng cấp đáng kể so với Claude 3.5 Sonnet, được Anthropic phát triển như một mô hình suy luận lai (hybrid reasoning model) đầu tiên trên thị trường.
@@ -500,11 +500,11 @@ export const mockAIModels: AIModel[] = [
         "Tốc độ sinh token là 87.1 token /s.",
         "Độ trễ 1.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    contextLengthToken: '200k',
-    intelligenceScore: 57,
+    contextLengthToken: '1m',
+    intelligenceScore: 59,
     pricePerMillionTokens: 6.00,
-    speedTokensPerSecond: 87.1,
-    latencyFirstChunkSeconds: 1.32,
+    speedTokensPerSecond: 57.6,
+    latencyFirstChunkSeconds: 0.92,
   },
   {
     id: 'claude-4-sonnet-thinking',
