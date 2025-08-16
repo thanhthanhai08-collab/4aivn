@@ -17,7 +17,7 @@ const data = {
   'grok-4': [
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 88 },
-    { name: "Humanity's Exam", score: 23.9 },
+    { name: "Humanity's Last Exam", score: 23.9 },
     { name: "LiveCodeBench", score: 82 },
     { name: "SciCode", score: 46 },
     { name: "IFBench", score: 54 },
@@ -27,7 +27,7 @@ const data = {
   'gemini-2.5-pro': [
     { name: "MMLU-Pro", score: 86 },
     { name: "GPQA Diamond", score: 84 },
-    { name: "Humanity's Exam", score: 21.1 },
+    { name: "Humanity's Last Exam", score: 21.1 },
     { name: "LiveCodeBench", score: 80 },
     { name: "SciCode", score: 43 },
     { name: "IFBench", score: 49 },
@@ -47,7 +47,7 @@ const data = {
   'gpt-5-high': [
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 85 },
-    { name: "Humanity's Exam", score: 26.5 },
+    { name: "Humanity's Last Exam", score: 26.5 },
     { name: "LiveCodeBench", score: 67 },
     { name: "SciCode", score: 43 },
     { name: "IFBench", score: 73 },
@@ -57,7 +57,7 @@ const data = {
   'gpt-5-medium': [
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 84 },
-    { name: "Humanity's Exam", score: 23.5 },
+    { name: "Humanity's Last Exam", score: 23.5 },
     { name: "LiveCodeBench", score: 70 },
     { name: "SciCode", score: 41 },
     { name: "IFBench", score: 71 },
@@ -77,7 +77,7 @@ const data = {
   'deepseek-r1-jan25': [
     { name: "MMLU-Pro", score: 85 },
     { name: "GPQA Diamond", score: 81 },
-    { name: "Humanity's Exam", score: 14.9 },
+    { name: "Humanity's Last Exam", score: 14.9 },
     { name: "LiveCodeBench", score: 77 },
     { name: "SciCode", score: 40 },
     { name: "IFBench", score: 40 },
@@ -87,7 +87,7 @@ const data = {
   'gemini-2.5-flash-reasoning': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 79 },
-    { name: "Humanity's Exam", score: 11.1 },
+    { name: "Humanity's Last Exam", score: 11.1 },
     { name: "LiveCodeBench", score: 70 },
     { name: "SciCode", score: 39 },
     { name: "IFBench", score: 50 },
@@ -97,7 +97,7 @@ const data = {
   'gpt-5-mini': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 80 },
-    { name: "Humanity's Exam", score: 14.6 },
+    { name: "Humanity's Last Exam", score: 14.6 },
     { name: "LiveCodeBench", score: 69 },
     { name: "SciCode", score: 41 },
     { name: "IFBench", score: 71 },
@@ -107,7 +107,7 @@ const data = {
   'gpt-5-low': [
     { name: "MMLU-Pro", score: 86 },
     { name: "GPQA Diamond", score: 81 },
-    { name: "Humanity's Exam", score: 18.4 },
+    { name: "Humanity's Last Exam", score: 18.4 },
     { name: "LiveCodeBench", score: 75 },
     { name: "SciCode", score: 39 },
     { name: "IFBench", score: 67 },
@@ -117,7 +117,7 @@ const data = {
   'gpt-oss-120b-high': [
     { name: "MMLU-Pro", score: 81 },
     { name: "GPQA Diamond", score: 78 },
-    { name: "Humanity's Exam", score: 18.5 },
+    { name: "Humanity's Last Exam", score: 18.5 },
     { name: "LiveCodeBench", score: 64 },
     { name: "SciCode", score: 36 },
     { name: "IFBench", score: 69 },
@@ -127,7 +127,7 @@ const data = {
   'gpt-5-nano': [
     { name: "MMLU-Pro", score: 77 },
     { name: "GPQA Diamond", score: 67 },
-    { name: "Humanity's Exam", score: 7.6 },
+    { name: "Humanity's Last Exam", score: 7.6 },
     { name: "LiveCodeBench", score: 60 },
     { name: "SciCode", score: 34 },
     { name: "IFBench", score: 66 },
@@ -137,7 +137,7 @@ const data = {
   'claude-4-opus-thinking': [
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 80 },
-    { name: "Humanity's Exam", score: 11.7 },
+    { name: "Humanity's Last Exam", score: 11.7 },
     { name: "LiveCodeBench", score: 64 },
     { name: "SciCode", score: 40 },
     { name: "IFBench", score: 54 },
@@ -146,22 +146,22 @@ const data = {
   ],
   'claude-4.1-opus-thinking': [
     { name: "MMLU-Pro", score: 84 },
-    { name: "GPQA Diamond", score: 78 },
-    { name: "Humanity's Exam", score: 9.6 },
-    { name: "LiveCodeBench", score: 66 },
+    { name: "GPQA Diamond", score: 77 },
+    { name: "Humanity's Last Exam", score: 10.3 },
+    { name: "LiveCodeBench", score: 47 },
     { name: "SciCode", score: 40 },
     { name: "IFBench", score: 55 },
-    { name: "AIME 2025", score: 74 },
+    { name: "AIME 2025", score: 49 },
     { name: "AA-LCR", score: 65 },
   ],
   'claude-4-sonnet-thinking': [
     { name: "MMLU-Pro", score: 84 },
-    { name: "GPQA Diamond", score: 68 },
-    { name: "Humanity's Exam", score: 4 },
-    { name: "LiveCodeBench", score: 45 },
-    { name: "SciCode", score: 37 },
+    { name: "GPQA Diamond", score: 78 },
+    { name: "Humanity's Last Exam", score: 9.6 },
+    { name: "LiveCodeBench", score: 66 },
+    { name: "SciCode", score: 40 },
     { name: "IFBench", score: 55 },
-    { name: "AIME 2025", score: 41 },
+    { name: "AIME 2025", score: 74 },
     { name: "AA-LCR", score: 65 },
   ],
 };
