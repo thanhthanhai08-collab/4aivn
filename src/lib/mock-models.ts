@@ -584,40 +584,28 @@ hiệu quả trong công việc.`,
     latencyFirstChunkSeconds: 35.77,
   },
   {
-    id: 'gpt-4.1-mini',
-    name: 'GPT-4.1 mini',
+    id: 'gpt-oss-20b-high',
+    name: 'GPT-oss-20B (high)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: `GPT-4.1 Mini là biến thể nhỏ gọn của mô hình GPT-4.1 do OpenAl phát triển, ra mắt vào tháng 4 năm 2025. Đây là phiên bản được thiết kế tối ưu cho các ứng dụng cần tốc độ phản hồi nhanh, chi phí thấp nhưng vẫn giữ được hiệu suất và chất lượng cao hơn một chút với GPT-4o.
-GPT-4.1 Mini được tối ưu để giảm độ trễ trong quá trình sinh câu trả lời, phù hợp với các ứng dụng tương tác thời gian thực như chatbot, trợ lý ảo, hay các hệ thống tự động hóa quy trình công việc.
-Mặc dù là phiên bản nhỏ hơn, GPT-4.1 Mini vẫn kế thừa khả năng xử lý ngữ cảnh dài lên đến 1 triệu token, giúp mô hình duy trì hiệu quả trong các tác vụ phân tích tài liệu lớn, lập trình phức tạp và các ứng dụng đòi hỏi lưu giữ thông tin dài hạn.`,
+    description: 'GPT-oss-20B (high) là phiên bản hiệu suất cao của mô hình mã nguồn mở 20 tỷ tham số từ OpenAI. Nó được tối ưu hóa cho các nhiệm vụ đòi hỏi độ chính xác cao và khả năng suy luận mạnh mẽ, trong khi vẫn duy trì các lợi ích của việc là một mô hình "open-weight", phù hợp cho việc triển khai trên phần cứng tiêu dùng.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     userRating: 4.5,
     ratingCount: 225,
     features: [
-        "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 1 triệu token→ Tức là có thể xử lý khoảng 1,5 triệu từ hoặc 5.000 trang văn bản trong 1 lần xử lý.",
-        "Chỉ số thông minh 53 → Dựa trên trung bình các điểm benmark là",
-        "• MMLU-Pro (Reasoning & Knowledge) 78%",
-        "• GPQA Diamond (Scientific Reasoning) 66%",
-        "• Humanity's Last Exam (Reasoning & Knowledge) 4.6%",
-        "• LiveCodeBench (Coding) 48%",
-        "• SciCode (Coding) 40%",
-        "• HumanEval (Coding) 95%",
-        "• MATH-500 (Quantitative reasoning) 93%",
-        "• AIME 2024 (Competition Math) 43%",
-        "Giá trung bình 0.7 USD / 1 triệu token → Dựa trên các thông số giá",
-        "• Giá đầu vào 0.4 USD / 1 triệu token.",
-        "• Giá đầu ra 1.6 USD / 1 triệu token.",
-        "Tốc độ sinh token là 66.8 token /s.",
-        "Độ trễ 0.5s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
+        "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 131 nghìn token.",
+        "Chỉ số thông minh 57",
+        "Giá trung bình 0.16 USD / 1 triệu token.",
+        "Tốc độ sinh token là 263.2 token /s.",
+        "Độ trễ 0.35s."
     ],
     isFavorite: false,
-    contextLengthToken: '1m',
-    intelligenceScore: 53,
-    pricePerMillionTokens: 0.7,
-    speedTokensPerSecond: 66.8,
-    latencyFirstChunkSeconds: 0.5,
+    contextLengthToken: '131k',
+    intelligenceScore: 57,
+    pricePerMillionTokens: 0.16,
+    speedTokensPerSecond: 263.2,
+    latencyFirstChunkSeconds: 0.35,
   },
   {
     id: 'gpt-4.1',
@@ -852,11 +840,3 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
-
-    
-
-
-
-    
-
-
