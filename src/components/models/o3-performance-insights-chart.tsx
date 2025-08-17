@@ -224,6 +224,13 @@ const data = {
     { name: "AIME 2025", score: 35 },
     { name: "AA-LCR", score: 61 },
   ],
+  'qwenq-32b': [
+    { name: "MMLU-Pro", score: 76 },
+    { name: "GPQA Diamond", score: 59 },
+    { name: "Humanity's Last Exam", score: 8.2 },
+    { name: "LiveCodeBench", score: 63 },
+    { name: "SciCode", score: 36 },
+  ],
 };
 
 
@@ -258,13 +265,3 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
-
-    
-
-    
-
-
-
-
-
-    

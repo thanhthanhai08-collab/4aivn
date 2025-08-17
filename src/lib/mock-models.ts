@@ -115,7 +115,6 @@ export const mockAIModels: AIModel[] = [
       "• MATH-500 (Quantitative reasoning) 99%",
       "• AIME 2024 (Competition Math) 93%",
       "Giá trung bình 0.35 USD / 1 triệu token",
-      "• Dựa trên các thông số giá",
       "• Giá đầu vào 0.3 USD / 1 triệu token.",
       "• Giá đầu ra 0.5 USD / 1 triệu token.",
       "Tốc độ sinh token khá nhanh là 209.2 token /s.",
@@ -427,10 +426,10 @@ export const mockAIModels: AIModel[] = [
         "Độ trễ 0.43s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '131k',
-    intelligenceScore: 58,
-    pricePerMillionTokens: 0.47,
-    speedTokensPerSecond: 99,
-    latencyFirstChunkSeconds: 0.43,
+    intelligenceScore: 48,
+    pricePerMillionTokens: 0.49,
+    speedTokensPerSecond: 54.4,
+    latencyFirstChunkSeconds: 0.55,
   },
   {
     id: 'claude-4.1-opus',
@@ -840,5 +839,3 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
-
-    
