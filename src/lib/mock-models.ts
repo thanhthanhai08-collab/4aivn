@@ -465,10 +465,10 @@ export const mockAIModels: AIModel[] = [
     ],
     isFavorite: false,
     contextLengthToken: '200k',
-    intelligenceScore: 58,
+    intelligenceScore: 49,
     pricePerMillionTokens: 30.00,
-    speedTokensPerSecond: 61.1,
-    latencyFirstChunkSeconds: 2.33,
+    speedTokensPerSecond: 36.5,
+    latencyFirstChunkSeconds: 1.53,
   },
   {
     id: 'claude-4.1-opus-thinking',
@@ -858,4 +858,5 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
 
 
     
+
 

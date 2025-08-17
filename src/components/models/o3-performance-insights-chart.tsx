@@ -194,6 +194,16 @@ const data = {
     { name: "AIME 2025", score: 19 },
     { name: "AA-LCR", score: 46 },
   ],
+  'claude-4.1-opus': [
+    { name: "MMLU-Pro", score: 81 },
+    { name: "GPQA Diamond", score: 70 },
+    { name: "Humanity's Last Exam", score: 4.8 },
+    { name: "LiveCodeBench", score: 69 },
+    { name: "SciCode", score: 33 },
+    { name: "IFBench", score: 43 },
+    { name: "AIME 2025", score: 50 },
+    { name: "AA-LCR", score: 40 },
+  ],
 };
 
 
@@ -232,3 +242,4 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     
 
     
+

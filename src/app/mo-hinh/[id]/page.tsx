@@ -311,7 +311,7 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low', 'gpt-oss-120b-high', 'gpt-5-nano', 'claude-4-opus-thinking', 'claude-4.1-opus-thinking', 'claude-4-sonnet-thinking', 'grok-3-mini-reasoning-high', 'llama-nemotron-ultra-reasoning', 'llama-4-maverick'].includes(model.id) && (
+                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'openai-o4-mini-high', 'openai-o3-pro', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'gemini-2.5-flash-reasoning', 'gpt-5-mini', 'gpt-5-low', 'gpt-oss-120b-high', 'gpt-5-nano', 'claude-4-opus-thinking', 'claude-4.1-opus-thinking', 'claude-4-sonnet-thinking', 'grok-3-mini-reasoning-high', 'llama-nemotron-ultra-reasoning', 'llama-4-maverick', 'claude-4.1-opus'].includes(model.id) && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
@@ -458,3 +458,4 @@ export default function ModelDetailPage({ params }: { params: { id: string } }) 
     
 
     
+
