@@ -58,6 +58,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'claude-4.1-opus', score: 69.0 },
     { modelId: 'gpt-oss-20b-high', score: 72.0 },
     { modelId: 'gpt-4.1', score: 46.0 },
+    { modelId: 'qwenq-32b', score: 63.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -82,6 +83,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'claude-4.1-opus', score: 81.0 },
     { modelId: 'gpt-oss-20b-high', score: 74.0 },
     { modelId: 'gpt-4.1', score: 81.0 },
+    { modelId: 'qwenq-32b', score: 76.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -131,6 +133,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'claude-4.1-opus', score: 70.0 },
       { modelId: 'gpt-oss-20b-high', score: 62.0 },
       { modelId: 'gpt-4.1', score: 67.0 },
+      { modelId: 'qwenq-32b', score: 59.0 },
   ]
 };
 
@@ -206,11 +209,11 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathData} />
-            <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingData} />
-            <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} />
-            <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} />
-            <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} />
+            {mathData.length > 0 && <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathData} />}
+            {codingData.length > 0 && <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingData} />}
+            {knowledgeData.length > 0 && <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} />}
+            {ifBenchData.length > 0 && <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} />}
+            {gpqaData.length > 0 && <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} />}
         </div>
     )
 }
