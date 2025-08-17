@@ -639,10 +639,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     ],
     isFavorite: false,
     contextLengthToken: '1m',
-    intelligenceScore: 53,
+    intelligenceScore: 47,
     pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 97.2,
-    latencyFirstChunkSeconds: 0.54,
+    speedTokensPerSecond: 124.2,
+    latencyFirstChunkSeconds: 0.51,
   },
   {
     id: 'deepseek-r1-jan25',
@@ -840,3 +840,5 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 1.05,
   },
 ];
+
+    
