@@ -28,6 +28,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
     { modelId: 'claude-4-sonnet-thinking', score: 74.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 85.0 },
+    { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -48,6 +49,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'claude-4.1-opus-thinking', score: 66.0 },
     { modelId: 'claude-4-sonnet-thinking', score: 66.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 70.0 },
+    { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -67,6 +69,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-nano', score: 77.0 },
     { modelId: 'claude-4-sonnet-thinking', score: 84.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 83.0 },
+    { modelId: 'llama-nemotron-ultra-reasoning', score: 83.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -86,6 +89,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'claude-4.1-opus-thinking', score: 55.0 },
       { modelId: 'claude-4-sonnet-thinking', score: 55.0 },
       { modelId: 'grok-3-mini-reasoning-high', score: 46.0 },
+      { modelId: 'llama-nemotron-ultra-reasoning', score: 38.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -106,6 +110,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
       { modelId: 'claude-4-sonnet-thinking', score: 78.0 },
       { modelId: 'grok-3-mini-reasoning-high', score: 79.0 },
+      { modelId: 'llama-nemotron-ultra-reasoning', score: 73.0 },
   ]
 };
 

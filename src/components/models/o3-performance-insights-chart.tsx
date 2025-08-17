@@ -174,6 +174,16 @@ const data = {
     { name: "AIME 2025", score: 85 },
     { name: "AA-LCR", score: 50 },
   ],
+  'llama-nemotron-ultra-reasoning': [
+    { name: "MMLU-Pro", score: 83 },
+    { name: "GPQA Diamond", score: 73 },
+    { name: "Humanity's Last Exam", score: 8.1 },
+    { name: "LiveCodeBench", score: 64 },
+    { name: "SciCode", score: 35 },
+    { name: "IFBench", score: 38 },
+    { name: "AIME 2025", score: 64 },
+    { name: "AA-LCR", score: 7 },
+  ],
 };
 
 

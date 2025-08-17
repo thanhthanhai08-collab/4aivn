@@ -740,10 +740,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
       "Độ trễ 0.66s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '128k',
-    intelligenceScore: 61,
-    pricePerMillionTokens: 0.90,
-    speedTokensPerSecond: 42.7,
-    latencyFirstChunkSeconds: 0.66,
+    intelligenceScore: 46,
+    pricePerMillionTokens: 0.9,
+    speedTokensPerSecond: 41.0,
+    latencyFirstChunkSeconds: 0.67,
   },
   {
     id: 'grok-3',
