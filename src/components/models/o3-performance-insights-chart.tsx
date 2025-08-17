@@ -164,6 +164,16 @@ const data = {
     { name: "AIME 2025", score: 74 },
     { name: "AA-LCR", score: 65 },
   ],
+  'grok-3-mini-reasoning-high': [
+    { name: "MMLU-Pro", score: 83 },
+    { name: "GPQA Diamond", score: 79 },
+    { name: "Humanity's Last Exam", score: 11.1 },
+    { name: "LiveCodeBench", score: 70 },
+    { name: "SciCode", score: 41 },
+    { name: "IFBench", score: 46 },
+    { name: "AIME 2025", score: 85 },
+    { name: "AA-LCR", score: 50 },
+  ],
 };
 
 

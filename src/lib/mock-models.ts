@@ -122,10 +122,10 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 0.32s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '1m',
-    intelligenceScore: 67,
+    intelligenceScore: 58,
     pricePerMillionTokens: 0.35,
-    speedTokensPerSecond: 209.2,
-    latencyFirstChunkSeconds: 0.32,
+    speedTokensPerSecond: 207.9,
+    latencyFirstChunkSeconds: 0.63,
   },
   {
     id: 'openai-o3-pro',
