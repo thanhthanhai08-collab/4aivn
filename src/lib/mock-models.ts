@@ -810,10 +810,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     ],
     isFavorite: false,
     contextLengthToken: '1m',
-    intelligenceScore: 51,
+    intelligenceScore: 42,
     pricePerMillionTokens: 0.39,
-    speedTokensPerSecond: 164.4,
-    latencyFirstChunkSeconds: 0.33,
+    speedTokensPerSecond: 167.8,
+    latencyFirstChunkSeconds: 0.32,
   },
   {
     id: 'qwen3-30b-a3b-reasoning',

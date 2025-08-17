@@ -184,6 +184,16 @@ const data = {
     { name: "AIME 2025", score: 64 },
     { name: "AA-LCR", score: 7 },
   ],
+  'llama-4-maverick': [
+    { name: "MMLU-Pro", score: 81 },
+    { name: "GPQA Diamond", score: 67 },
+    { name: "Humanity's Last Exam", score: 4.8 },
+    { name: "LiveCodeBench", score: 40 },
+    { name: "SciCode", score: 33 },
+    { name: "IFBench", score: 43 },
+    { name: "AIME 2025", score: 19 },
+    { name: "AA-LCR", score: 46 },
+  ],
 };
 
 
