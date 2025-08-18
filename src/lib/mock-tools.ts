@@ -114,18 +114,42 @@ export const mockTools: Tool[] = [
     name: 'n8n',
     context: 'Tự động hóa',
     developer: 'n8n',
+    videoUrl: 'https://www.youtube.com/embed/UEq_w_G_h_I?si=8YmXoP_Vz-5-Z1rG',
     ranking: 6,
-    description: 'n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau (đã tích hợp được hơn 400 ứng dụng , dịch vụ) để tự động hóa các tác vụ phức tạp thông qua giao diện kéo-thả trực quan, mà không cần hoặc ít cần viết code.\n+ n8n phù hợp cho cả người không chuyên và lập trình viên nhờ những ưu điểm sau :\n• Giao diện kéo thả cực kì trực quan: n8n hoạt động dựa trên kiến trúc node-based, trong đó mỗi node đại diện cho một hành động hoặc ứng dụng cụ thể (ví dụ: gửi email, gọi API, xử lý dữ liệu). Người dùng có thể tạo các workflow logic bằng cách kết nối các node này thành chuỗi quy trình tự động hóa từ đó tiết kiệm thời gian và giảm lỗi.\n• Hỗ trợ nhiều loại code và tùy chỉnh: Người dùng hoàn toàn có thể sử dụng JavaScript hoặc Python để xử lý logic phức tạp. \n• Tích hợp hơn 400 ứng dụng: Người dùng có thể sử dụng hơn 400 dịch vụ và ứng dụng được tích hợp sẵn trên n8n khá là khiêm tốn so với Make và Zapier nhưng đối với những ứng dụng chưa tích hợp chúng ta có thể kết nối bằng node http request và API nên đây không phải vấn đề lớn.\n• Có thể quản lý và kết hợp nhiều AI Agent: Người dùng có thể kết hợp nhiều AI Agent khác nhau trong cùng một workflow hoặc cùng một hệ thống để xử lý quy trình phức tạp. Với mỗi node AI Agent thì người dùng có thể lựa chọn kết nối tới mô hình LLM của OpenAI, Hugging Face, Anthropic Claude còn ở phần tool đặc biệt có thể cung cấp bộ nhớ cho mô hình LLM với kết nối tới nền tảng như MogoDB, Suparbase, Redis,.. đặc biệt là node Think do n8n tự phát triển giúp cung cấp nhiều tầng suy nghĩ cho mô hình LLM từ đó có thể giúp mô hình LLM thông minh hơn 40%. Tất nhiên node AI Agent cũng đã hỗ trợ chuẩn kết nối LLM mới nhất là MCP, A2A,...\n• Tùy chọn triển khai linh hoạt, làm việc nhóm: Người dùng có thể tự host trên máy chủ riêng có thể quản lý, tùy chỉnh toàn bộ dữ liệu của mình hoặc sử dụng phiên bản cloud (thường rất ít người sử dụng vì giá khá cao) và cả 2 cách sử dụng này đều hỗ trợ làm việc nhóm hiệu quả.\n• Quản lý phiên bản và bảo mật: Hỗ trợ Git control, phân quyền RBAC, mã hóa dữ liệu, audit logs, tích hợp SSO/SAML/LDAP.\n• Cộng đồng người dùng, tài nguyên cực lớn: Vì mã nguồn mở và tính tương thích cao cho nên cộng đồng người sử dụng, diễn đàn, tài nguyên trực tuyến cực kì khổng lồ tạo nên hệ sinh thái mạnh mẽ hỗ trợ người dùng.\n• Chi phí: Đối với n8n cloud thì có gói Starter (24 Euro/1 tháng) bao gồm 2.500 lần thực thi workflow và 5 workflow hoạt động cùng lúc và gói Pro (60 Euro/1 tháng) , bao gồm 10.000 lần thực thi workflow và 15 workflow hoạt động.\nĐối với n8n self host thì bạn được miễn phí phần mềm chỉ phải trả chi phí thuê VPS (4-15 USD/1 tháng) tên miền (3-10 USD/1 năm) chi phí vận hành, bảo trì đặc biệt là không bị giới hạn số lần thực thi và workflow hoạt động vì vậy ở Việt Nam có rất ít người sử dụng gói cloud chỉ có người sử dụng không muốn cài đặt gì thì mới sử dụng gói cloud của n8n.\n ',
+    description: 'n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau để tự động hóa các tác vụ phức tạp.',
+    longDescription: '<p>n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau (đã tích hợp được hơn 400 ứng dụng , dịch vụ) để tự động hóa các tác vụ phức tạp thông qua giao diện kéo-thả trực quan, mà không cần hoặc ít cần viết code.</p><p>n8n phù hợp cho cả người không chuyên và lập trình viên.</p>',
     logoUrl: '/image/Logo n8n.png',
     link: 'https://n8n.io/',
     features: [
-      "Giao diện kéo thả không hề phức tạp cực kì trực quan giúp tiết kiệm thời gian và giảm lỗi.",
-"Tích hợp hơn 400 ứng dụng khác nhau và có đầy đủ các mô hình LLM .",
-"Có thể quản lý và kết hợp nhiều AI Agent với nhiều tác vụ khác nhau.",
-      "Tùy chọn triển khai linh hoạt vì là mã nguồn mở.",
-      "Quản lý phiên bản và bảo mật dễ dàng.",
-      "Cộng đồng người dùng, tài nguyên khổng lồ.",
+      "Giao diện kéo thả trực quan",
+      "Hỗ trợ nhiều loại code và tùy chỉnh",
+      "Tích hợp hơn 400 ứng dụng",
+      "Quản lý và kết hợp nhiều AI Agent",
+      "Triển khai linh hoạt",
+      "Quản lý phiên bản và bảo mật",
+      "Cộng đồng người dùng lớn mạnh",
     ],
+    useCases: [
+        'Tự động hóa quy trình làm việc',
+        'Tích hợp các ứng dụng khác nhau',
+        'Xử lý dữ liệu và ETL',
+        'Tạo chatbot và trợ lý ảo',
+        'Quản lý và điều phối các AI Agent'
+    ],
+    whoIsItFor: [
+        'Developers',
+        'DevOps',
+        'Marketing',
+        'Sales',
+        'Operations'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Cloud Starter:</strong> €24/tháng - 2,500 lần thực thi, 5 workflow.</li>
+            <li><strong>Cloud Pro:</strong> €60/tháng - 10,000 lần thực thi, 15 workflow.</li>
+            <li><strong>Self-hosted:</strong> Miễn phí phần mềm, chỉ trả phí hạ tầng (VPS, tên miền).</li>
+        </ul>
+    `,
     userRating: 4.5,
     ratingCount: 80,
   },
@@ -271,8 +295,3 @@ export const mockTools: Tool[] = [
     ],
   },
 ];
-
-    
-    
-
-    

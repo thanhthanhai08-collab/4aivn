@@ -4,9 +4,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle } from "lucide-react";
 import { mockTools as initialMockTools } from "@/lib/mock-tools";
-import type { Tool, NewsArticle } from "@/lib/types";
+import type { Tool } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,12 +22,11 @@ import {
   getUserProfileData,
   getAggregateRating,
 } from "@/lib/user-data-service";
-import { mockNews } from "@/lib/mock-news";
-
+import { Textarea } from "@/components/ui/textarea";
+import { ToolCardSmall } from "@/components/tools/tool-card-small";
 
 function ToolDetailContent({ id }: { id: string }) {
   const [tool, setTool] = useState<Tool | null>(null);
-  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
@@ -36,30 +35,32 @@ function ToolDetailContent({ id }: { id: string }) {
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  
+  const topCategories = [
+    { name: 'AI Content Generation', icon: '✍️' },
+    { name: 'AI Image Generation', icon: '🎨' },
+    { name: 'AI Data analysis', icon: '📊' },
+    { name: 'AI Chatbuilder', icon: '💬' },
+    { name: 'AI Video Generation', icon: '🎬' },
+    { name: 'View all tools', icon: '➡️' },
+  ];
+
+  const featuredTools = initialMockTools.filter(t => ['midjourney', 'sora-ai', 'gpt-image-1'].includes(t.id));
+  const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
 
   useEffect(() => {
-    // Find tool directly from mock-data to ensure it's always up-to-date.
     const foundTool = initialMockTools.find((t) => t.id === id);
     
     if (foundTool) {
       setTool(foundTool);
       
-      // Find related news articles
-      const filteredNews = mockNews.filter(article => 
-        article.title.toLowerCase().includes(foundTool.name.toLowerCase()) || 
-        article.content.toLowerCase().includes(foundTool.name.toLowerCase())
-      ).slice(0, 3); // Limit to 3 articles
-      setRelatedNews(filteredNews);
-
       if (currentUser) {
-        // Load user-specific data from Firestore
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteTools?.includes(id) || false);
           setCurrentRating(userData.ratedTools?.[id] || 0);
         });
       }
 
-      // Fetch aggregate rating data from Firestore
       getAggregateRating("tools", id).then(setAggregateRating);
 
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
@@ -78,33 +79,32 @@ function ToolDetailContent({ id }: { id: string }) {
     }
     
     const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); // Optimistic UI update
+    setIsFavorite(newFavoriteState); 
 
     try {
         await toggleToolFavorite(currentUser.uid, id, isFavorite);
         toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
-        setIsFavorite(!newFavoriteState); // Revert on error
+        setIsFavorite(!newFavoriteState); 
         toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
     }
   };
 
   const handleRating = async (rating: number) => {
     if (!currentUser || !tool) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng giá công cụ.", variant: "destructive" });
       return;
     }
 
     const oldRating = currentRating;
     const oldAggregate = { ...aggregateRating };
 
-    // Optimistic UI update
     setCurrentRating(rating);
     setAggregateRating(prev => {
         let newTotalStars = prev.totalStars - oldRating + rating;
         let newRatingCount = prev.ratingCount;
-        if(oldRating === 0) { // It's a new rating
+        if(oldRating === 0) {
             newRatingCount += 1;
         }
         return { totalStars: newTotalStars, ratingCount: newRatingCount };
@@ -113,10 +113,8 @@ function ToolDetailContent({ id }: { id: string }) {
     try {
       await setToolRating(currentUser.uid, tool.id, rating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${rating} sao.` });
-
     } catch(error) {
       console.error("Failed to save rating:", error);
-      // Revert UI on error
       setCurrentRating(oldRating); 
       setAggregateRating(oldAggregate);
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
@@ -164,134 +162,216 @@ function ToolDetailContent({ id }: { id: string }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <Button variant="outline" asChild className="mb-6">
-          <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Công cụ</Link>
-        </Button>
-
-        <div className="grid md:grid-cols-3 gap-8 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Main Content */}
-          <div className="md:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                  <div className="flex items-center space-x-4">
-                    <Image src={tool.logoUrl} alt={`Logo ${tool.name}`} width={64} height={64} className="rounded-lg" data-ai-hint="logo company" />
+          <div className="lg:col-span-8 space-y-10">
+            {/* Header section */}
+            <section>
+                <div className="flex items-center space-x-4 mb-6">
+                    <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
                     <div>
-                      <CardTitle className="text-3xl font-headline">{tool.name}</CardTitle>
-                      <Badge variant="secondary" className="mt-1">{tool.context}</Badge>
+                        <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
+                        <p className="text-muted-foreground">bởi {tool.developer}</p>
                     </div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                     <Button variant="outline" onClick={handleFavoriteToggle} aria-label={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"} className="flex-grow sm:flex-grow-0">
-                       <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                       {isFavorite ? "Đã thích" : "Yêu thích"}
-                     </Button>
-                     <Button asChild className="flex-grow sm:flex-grow-0">
-                        <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                  </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed whitespace-pre-line">{descriptionToDisplay}</CardDescription>
-              </CardContent>
-            </Card>
+                <div className="space-y-4">
+                    <p className="text-lg text-foreground/80">{descriptionToDisplay}</p>
+                    <div className="flex flex-wrap gap-2">
+                        <Button onClick={handleFavoriteToggle}>
+                           <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+                           {isFavorite ? "Đã thích" : "Yêu thích"}
+                        </Button>
+                        <Button variant="outline" asChild>
+                           <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                            Truy cập {tool.name} <ExternalLink className="ml-2 h-4 w-4" />
+                           </a>
+                        </Button>
+                        <Badge variant="secondary" className="h-10">
+                           <CheckCircle className="mr-2 h-4 w-4 text-green-500"/> Verified
+                        </Badge>
+                        <Badge variant="secondary" className="h-10">Freemium</Badge>
+                    </div>
+                </div>
+            </section>
             
-            {tool.features && tool.features.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-headline">Tính năng chính</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {tool.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+            <Separator />
+            
+            {/* Video/Image Showcase */}
+            {tool.videoUrl && (
+                <section>
+                    <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
+                       <iframe
+                        width="100%"
+                        height="100%"
+                        src={tool.videoUrl}
+                        title={`Video giới thiệu ${tool.name}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                </section>
             )}
+            
+            {/* What is tool? */}
+             {tool.longDescription && (
+                <section>
+                    <h2 className="text-2xl font-bold font-headline mb-4">N8n là gì?</h2>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
+                </section>
+            )}
+
+            {/* Key Features */}
+            {tool.features && tool.features.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold font-headline mb-4 flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/>Tính năng chính</h2>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                  {tool.features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            
+            {/* Use Cases */}
+             {tool.useCases && (
+                <section>
+                    <h2 className="text-2xl font-bold font-headline mb-4">Trường hợp sử dụng</h2>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                      {tool.useCases.map((useCase, index) => (
+                        <li key={index} className="flex items-start">
+                          <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 shrink-0" />
+                          <span>{useCase}</span>
+                        </li>
+                      ))}
+                    </ul>
+                </section>
+            )}
+            
+            {/* Who is it for? */}
+             {tool.whoIsItFor && (
+                <section>
+                    <h2 className="text-2xl font-bold font-headline mb-4">Đối tượng phù hợp</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.whoIsItFor.map((target, index) => (
+                        <Badge key={index} variant="outline" className="text-base py-1">{target}</Badge>
+                      ))}
+                    </div>
+                </section>
+            )}
+            
+            {/* Pricing */}
+            {tool.pricingPlans && (
+                <section>
+                    <h2 className="text-2xl font-bold font-headline mb-4">Các gói giá</h2>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.pricingPlans }}/>
+                </section>
+            )}
+            
+            {/* Rating Form */}
+            <section>
+                 <Card className="bg-muted/30">
+                     <CardHeader>
+                         <CardTitle>Bạn đánh giá {tool.name} như thế nào?</CardTitle>
+                     </CardHeader>
+                     <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                           {['Dễ sử dụng', 'Hiệu suất', 'Tính năng', 'Chất lượng hỗ trợ'].map(criteria => (
+                               <div key={criteria} className="flex justify-between items-center">
+                                   <p>{criteria}</p>
+                                   <div className="flex items-center space-x-1">
+                                       {[1, 2, 3, 4, 5].map(star => (
+                                           <Star key={star} className="h-6 w-6 text-gray-300 hover:text-amber-400 cursor-pointer"/>
+                                       ))}
+                                   </div>
+                               </div>
+                           ))}
+                        </div>
+                        <Textarea placeholder="Viết đánh giá của bạn (tùy chọn)"/>
+                        <Button>Gửi đánh giá</Button>
+                     </CardContent>
+                 </Card>
+            </section>
+
+             {/* CTA */}
+            <section>
+                 <Card className="bg-primary text-primary-foreground text-center p-8">
+                    <h2 className="text-2xl font-bold mb-2">Tạo tài khoản MIỄN PHÍ của bạn ngay bây giờ</h2>
+                    <p className="mb-4 text-primary-foreground/80">Không cần thẻ tín dụng, nâng cấp bất cứ lúc nào.</p>
+                    <Button variant="secondary" size="lg" asChild>
+                       <a href={tool.link} target="_blank" rel="noopener noreferrer">Tạo tài khoản miễn phí</a>
+                    </Button>
+                 </Card>
+            </section>
+            
+            {/* Similar Tools */}
+            <section>
+              <h2 className="text-2xl font-bold font-headline mb-4">Công cụ tương tự {tool.name}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {similarTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
+              </div>
+            </section>
+            
+            {/* Complementary Tools */}
+            <section>
+              <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name} để tối ưu hóa quy trình làm việc của bạn</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {initialMockTools.slice(8, 11).map(t => <ToolCardSmall key={t.id} tool={t} />)}
+              </div>
+            </section>
+
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6 md:sticky md:top-24">
+          <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xl font-headline">Đánh giá công cụ này</CardTitle>
+                <CardTitle className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> Công cụ nổi bật</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-center space-x-1 mb-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`}>
-                      <Star
-                        className={`h-7 w-7 cursor-pointer transition-colors ${
-                          star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300 hover:text-amber-300"
-                        }`}
-                      />
-                    </button>
+              <CardContent className="space-y-4">
+                  {featuredTools.map(t => (
+                    <Link key={t.id} href={`/cong-cu/${t.id}`} className="flex items-center space-x-3 group">
+                       <Image src={t.logoUrl} alt={t.name} width={40} height={40} className="rounded-md"/>
+                       <div>
+                          <p className="font-semibold group-hover:text-primary">{t.name}</p>
+                          <p className="text-sm text-muted-foreground line-clamp-1">{t.description}</p>
+                       </div>
+                    </Link>
                   ))}
-                </div>
-                <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Danh mục công cụ AI hàng đầu</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                 {topCategories.map(cat => (
+                     <Button key={cat.name} variant="ghost" className="w-full justify-start text-base" asChild>
+                        <Link href="/cong-cu">
+                           <span className="mr-3 text-lg">{cat.icon}</span> {cat.name}
+                        </Link>
+                     </Button>
+                 ))}
               </CardContent>
             </Card>
             
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-xl font-headline">Chi tiết</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">Xếp hạng:</span>
-                        <span>#{tool.ranking || 'Chưa có'}</span>
-                    </div>
-                     <Separator />
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">Danh mục:</span>
-                        <Badge variant="outline">{tool.context}</Badge>
-                    </div>
-                    <Separator />
-                     <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Trang web chính thức:</span>
-                        <Button variant="link" size="sm" asChild className="p-0 h-auto">
-                            <a href={tool.link} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px]">
-                                {tool.link.replace(/^https?:\/\//, '')}
-                            </a>
-                        </Button>
-                    </div>
-                </CardContent>
+             <Card className="bg-accent/50 text-center p-6">
+                <CardTitle className="mb-2">Nâng cấp quy trình làm việc của bạn</CardTitle>
+                <CardDescription className="mb-4">Khám phá cách n8n có thể tự động hóa các tác vụ lặp đi lặp lại của bạn và tiết kiệm thời gian.</CardDescription>
+                <Button asChild>
+                    <a href={tool.link} target="_blank" rel="noopener noreferrer">Bắt đầu ngay</a>
+                </Button>
             </Card>
-
-            {relatedNews.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl font-headline">Bài viết liên quan</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {relatedNews.map((article) => (
-                    <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-start space-x-3 group border-b pb-3 last:border-b-0 last:pb-0">
-                      <Image src={article.imageUrl} alt={article.title} width={64} height={64} className="rounded-md object-cover aspect-square" data-ai-hint={article.dataAiHint} />
-                      <div>
-                        <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
-                        <p className="text-xs text-muted-foreground mt-1">{new Date(article.publishedAt).toLocaleDateString('vi-VN')}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
-          </div>
+          </aside>
         </div>
       </div>
     </AppLayout>
   );
 }
-
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent id={params.id} />;

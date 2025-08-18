@@ -6,9 +6,14 @@ export interface Tool {
   developer: string;
   ranking?: number; // Optional: current rank, might be dynamically calculated
   description: string;
+  longDescription?: string;
   logoUrl: string; // URL to the tool's logo
   link: string; // Official link to the tool
   features?: string[];
+  useCases?: string[];
+  whoIsItFor?: string[];
+  pricingPlans?: string;
+  videoUrl?: string;
   userRating?: number; // Average user rating (1-5)
   totalStars?: number; // Sum of all ratings
   isFavorite?: boolean;
@@ -76,5 +81,3 @@ export interface Comment {
   text: string;
   createdAt: Date;
 }
-
-    
