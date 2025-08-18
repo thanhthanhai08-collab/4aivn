@@ -171,7 +171,7 @@ function ToolDetailContent({ id }: { id: string }) {
                     <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
                     <div>
                         <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
-                        <p className="text-muted-foreground">bởi {tool.developer}</p>
+                        <p className="text-muted-foreground">{tool.context}</p>
                     </div>
                 </div>
                 <div className="space-y-4">
