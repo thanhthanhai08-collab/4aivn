@@ -454,9 +454,9 @@ function ToolDetailContent({ id }: { id: string }) {
             
              <Card className="bg-accent/50 text-center p-6">
                 <CardTitle className="mb-2">Nâng cấp quy trình làm việc của bạn</CardTitle>
-                <CardDescription className="mb-4">Khám phá cách n8n có thể tự động hóa các tác vụ lặp đi lặp lại của bạn và tiết kiệm thời gian.</CardDescription>
+                <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
                 <Button asChild>
-                    <a href={tool.link} target="_blank" rel="noopener noreferrer">Bắt đầu ngay</a>
+                    <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
                 </Button>
             </Card>
           </aside>
