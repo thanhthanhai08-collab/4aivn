@@ -408,7 +408,7 @@ function ToolDetailContent({ id }: { id: string }) {
              {/* CTA */}
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <h2 className="text-2xl font-bold mb-2">Tham gia Cộng đồng Clean AI Hub</h2>
+                    <h2 className="text-2xl font-bold mb-2">THAM GIA CỘNG ĐỒNG CLEAN AI HUB</h2>
                     <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
                     <Button variant="secondary" size="lg" asChild>
                        <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
