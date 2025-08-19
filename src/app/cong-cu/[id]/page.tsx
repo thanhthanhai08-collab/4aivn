@@ -292,17 +292,20 @@ function ToolDetailContent({ id }: { id: string }) {
                         <CardTitle>Bạn đánh giá {tool.name} như thế nào?</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="flex items-center space-x-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <button key={star} onClick={() => handleRating(star)} aria-label={`Rate ${star} stars`} className="group">
-                                    <Star
-                                        className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
-                                        star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
-                                        }`}
-                                    />
-                                </button>
-                            ))}
-                        </div>
+                       <div className="flex items-center justify-between">
+                            <span className="font-semibold text-lg">{tool.name}</span>
+                            <div className="flex items-center space-x-1">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <button key={star} onClick={() => handleRating(star)} aria-label={`Rate ${star} stars`} className="group">
+                                        <Star
+                                            className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
+                                            star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                                            }`}
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                       </div>
                         <Textarea placeholder="Viết đánh giá của bạn (tùy chọn)"/>
                         <Button onClick={() => toast({ title: "Đã gửi đánh giá", description: "Cảm ơn bạn đã đóng góp!" })}>
                             Gửi đánh giá
