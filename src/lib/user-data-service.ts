@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentReference, DocumentData } from "firebase/firestore";
+import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentReference, DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 
 const USER_DATA_COLLECTION = "user-data";
 const TOOLS_COLLECTION = "tools";
@@ -20,11 +20,18 @@ export interface UserProfileData {
     ratedTools?: Record<string, UserToolRating>; // Changed from number to UserToolRating
     ratedModels?: Record<string, number>;
     favoriteModels?: string[];
+    displayName?: string; // Add displayName to UserProfileData
 }
 
 export interface AggregateRatingData {
     ratingCount: number;
     totalStars: number;
+}
+
+// Interface for a single review to be displayed
+export interface ToolReview extends UserToolRating {
+    userId: string;
+    userName: string;
 }
 
 // Helper to get document references
@@ -41,6 +48,32 @@ export async function getUserProfileData(uid: string): Promise<UserProfileData> 
         return docSnap.data() as UserProfileData;
     }
     return {}; // Return empty object if no data exists
+}
+
+// Get all reviews for a specific tool from all users.
+export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
+    const reviews: ToolReview[] = [];
+    try {
+        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLLECTION));
+
+        usersSnapshot.forEach(docSnap => {
+            const userData = docSnap.data() as UserProfileData;
+            if (userData.ratedTools && userData.ratedTools[toolId]) {
+                const reviewData = userData.ratedTools[toolId];
+                if(reviewData.text && reviewData.text.trim() !== '') { // Only show reviews with text
+                    reviews.push({
+                        userId: docSnap.id,
+                        userName: userData.displayName || "Người dùng ẩn danh",
+                        rating: reviewData.rating,
+                        text: reviewData.text
+                    });
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching all tool reviews:", error);
+    }
+    return reviews;
 }
 
 // Get aggregate rating data for a specific item (tool or model)
@@ -83,7 +116,7 @@ export async function toggleNewsBookmark(uid: string, newsId: string, isCurrentl
 }
 
 // Set or update a rating for a tool, now includes review text
-export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string) {
+export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string, displayName: string | null) {
     const userDocRef = getUserDocRef(uid);
     const toolDocRef = getToolDocRef(toolId);
 
@@ -108,6 +141,7 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
 
         // Update user's rating record with both rating and text
         transaction.set(userDocRef, {
+            displayName: displayName || userData.displayName || 'Người dùng ẩn danh',
             ratedTools: { 
                 ...userData.ratedTools, 
                 [toolId]: { rating: newRating, text: reviewText } 

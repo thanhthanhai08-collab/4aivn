@@ -21,10 +21,53 @@ import {
   toggleToolFavorite,
   getUserProfileData,
   getAggregateRating,
-  type UserToolRating
+  getAllToolReviews,
+  type UserToolRating,
+  type ToolReview,
 } from "@/lib/user-data-service";
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
+
+const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
+    if (reviews.length === 0) {
+        return <p className="text-muted-foreground text-center py-4">Chưa có bài đánh giá nào có nội dung.</p>;
+    }
+
+    const getInitials = (name: string | null | undefined) => {
+        if (!name) return "ẨD";
+        const names = name.split(' ');
+        if (names.length > 1) {
+            return names[0][0] + names[names.length - 1][0];
+        }
+        return name.substring(0, 2);
+    };
+
+    return (
+        <div className="space-y-6">
+            {reviews.map(review => (
+                <div key={review.userId} className="flex items-start space-x-4">
+                     <Avatar className="h-10 w-10 border">
+                        <AvatarFallback>{getInitials(review.userName)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-1">
+                            <p className="font-semibold">{review.userName}</p>
+                            <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                    <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-500 fill-amber-400' : 'text-gray-300'}`} />
+                                ))}
+                            </div>
+                        </div>
+                        <p className="text-muted-foreground italic">"{review.text}"</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 
 function ToolDetailContent({ id }: { id: string }) {
   const [tool, setTool] = useState<Tool | null>(null);
@@ -33,6 +76,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const [currentRating, setCurrentRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [submittedReview, setSubmittedReview] = useState<UserToolRating | null>(null);
+  const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   
@@ -60,6 +104,9 @@ function ToolDetailContent({ id }: { id: string }) {
       // Fetch aggregate rating for all users
       getAggregateRating("tools", id).then(setAggregateRating);
 
+      // Fetch all user reviews for this tool
+      getAllToolReviews(id).then(setAllReviews);
+
       // Fetch user-specific data only if logged in
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
@@ -68,17 +115,11 @@ function ToolDetailContent({ id }: { id: string }) {
           if (userRatingData) {
             const userRating = userRatingData.rating || 0;
             const userReviewText = userRatingData.text || "";
-            // Don't set currentRating and reviewText here to allow user to edit
             if (userRating > 0) {
                setSubmittedReview({ rating: userRating, text: userReviewText });
             }
           }
         });
-      } else {
-        // If not logged in, show a sample review
-        if (id === 'n8n') {
-           setSubmittedReview({ rating: 4, text: "Phầm mềm cực kì hữu ích đối với anh em yêu thích ai" });
-        }
       }
 
       // Generate enhanced description if needed
@@ -120,31 +161,27 @@ function ToolDetailContent({ id }: { id: string }) {
       return;
     }
 
-    const oldUserReview = submittedReview;
-    const oldAggregate = { ...aggregateRating };
-
-    // Optimistic UI update
-    setSubmittedReview({ rating: currentRating, text: reviewText });
-    setAggregateRating(prev => {
-        let newTotalStars = prev.totalStars - (oldUserReview?.rating || 0) + currentRating;
-        let newRatingCount = prev.ratingCount;
-        if(!oldUserReview) { // This is the first time the user is rating
-            newRatingCount += 1;
-        }
-        return { totalStars: newTotalStars, ratingCount: newRatingCount };
-    });
+    const newReview = { rating: currentRating, text: reviewText };
 
     try {
-      await setToolRating(currentUser.uid, tool.id, currentRating, reviewText);
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
+      await setToolRating(currentUser.uid, tool.id, newReview.rating, newReview.text, currentUser.displayName);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${newReview.rating} sao.` });
+
+      // Update UI optimistically
+      setSubmittedReview(newReview);
+
+      // Refetch all reviews to include the new one
+      getAllToolReviews(id).then(setAllReviews);
+
+      // Refetch aggregate rating
+      getAggregateRating("tools", id).then(setAggregateRating);
+      
       // Reset form after successful submission
       setCurrentRating(0);
       setReviewText("");
+
     } catch(error) {
       console.error("Failed to save rating:", error);
-      // Revert optimistic updates
-      setSubmittedReview(oldUserReview);
-      setAggregateRating(oldAggregate);
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
@@ -313,54 +350,69 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
             
-            {/* Rating Form */}
+            {/* Rating & Reviews Section */}
             <section>
-                <Card className="bg-muted/30">
-                    <CardContent className="p-6">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-                            <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
-                            <div className="flex items-center space-x-1 shrink-0">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <button key={star} onClick={() => setCurrentRating(star)} aria-label={`Rate ${star} stars`} className="group">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="text-2xl font-bold font-headline">Đánh giá & Nhận xét</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-8">
+                        {/* Rating Form */}
+                        <div className="bg-muted/30 p-6 rounded-lg">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+                                <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
+                                <div className="flex items-center space-x-1 shrink-0">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <button key={star} onClick={() => setCurrentRating(star)} aria-label={`Rate ${star} stars`} className="group">
+                                            <Star
+                                                className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
+                                                star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                                                }`}
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <Textarea 
+                                placeholder="Viết đánh giá của bạn (tùy chọn)"
+                                value={reviewText}
+                                onChange={(e) => setReviewText(e.target.value)}
+                            />
+                            <div className="flex justify-end mt-4">
+                                <Button onClick={handleSubmitReview}>
+                                    Gửi đánh giá
+                                </Button>
+                            </div>
+
+                            {submittedReview && (
+                                <div className="mt-6 border-t pt-4">
+                                    <h4 className="font-semibold">Đánh giá của bạn{currentUser ? ` (${currentUser.displayName || 'Người dùng'})`: ''}:</h4>
+                                    <div className="flex items-center mt-2">
+                                    {[1, 2, 3, 4, 5].map((star) => (
                                         <Star
-                                            className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
-                                            star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                                            key={star}
+                                            className={`h-5 w-5 ${
+                                            star <= submittedReview.rating ? "fill-amber-400 text-amber-500" : "text-gray-300"
                                             }`}
                                         />
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                        <Textarea 
-                            placeholder="Viết đánh giá của bạn (tùy chọn)"
-                            value={reviewText}
-                            onChange={(e) => setReviewText(e.target.value)}
-                        />
-                        <div className="flex justify-end mt-4">
-                            <Button onClick={handleSubmitReview}>
-                                Gửi đánh giá
-                            </Button>
-                        </div>
-
-                        {submittedReview && (
-                            <div className="mt-6 border-t pt-4">
-                                <h4 className="font-semibold">Đánh giá của bạn{currentUser ? ` (${currentUser.displayName || 'Người dùng'})`: ''}:</h4>
-                                <div className="flex items-center mt-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <Star
-                                        key={star}
-                                        className={`h-5 w-5 ${
-                                        star <= submittedReview.rating ? "fill-amber-400 text-amber-500" : "text-gray-300"
-                                        }`}
-                                    />
-                                ))}
+                                    ))}
+                                    </div>
+                                    {submittedReview.text && <p className="mt-2 text-muted-foreground italic">"{submittedReview.text}"</p>}
                                 </div>
-                                {submittedReview.text && <p className="mt-2 text-muted-foreground italic">"{submittedReview.text}"</p>}
-                            </div>
-                        )}
+                            )}
+                        </div>
+                        
+                        <Separator />
+
+                        {/* All Reviews List */}
+                        <div>
+                             <h3 className="text-xl font-bold mb-4">Tất cả bài đánh giá</h3>
+                             <ReviewsList reviews={allReviews} />
+                        </div>
                     </CardContent>
                 </Card>
             </section>
+
 
              {/* CTA */}
             <section>
