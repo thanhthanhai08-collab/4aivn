@@ -391,23 +391,6 @@ function ToolDetailContent({ id }: { id: string }) {
                                     Gửi đánh giá
                                 </Button>
                             </div>
-
-                            {submittedReview && (
-                                <div className="mt-6 border-t pt-4">
-                                    <h4 className="font-semibold">Đánh giá của bạn{currentUser ? ` (${currentUser.displayName || 'Người dùng'})`: ''}:</h4>
-                                    <div className="flex items-center mt-2">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <Star
-                                            key={star}
-                                            className={`h-5 w-5 ${
-                                            star <= submittedReview.rating ? "fill-amber-400 text-amber-500" : "text-gray-300"
-                                            }`}
-                                        />
-                                    ))}
-                                    </div>
-                                    {submittedReview.text && <p className="mt-2 text-muted-foreground italic">"{submittedReview.text}"</p>}
-                                </div>
-                            )}
                         </div>
                         
                         <Separator />
