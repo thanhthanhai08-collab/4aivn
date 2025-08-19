@@ -130,6 +130,9 @@ function ToolDetailContent({ id }: { id: string }) {
     try {
       await setToolRating(currentUser.uid, tool.id, currentRating, reviewText);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
+      // Reset form after successful submission but keep the "submittedReview" state to display it
+      setCurrentRating(0);
+      setReviewText("");
     } catch(error) {
       console.error("Failed to save rating:", error);
       // Revert optimistic updates
@@ -334,7 +337,7 @@ function ToolDetailContent({ id }: { id: string }) {
 
                         {submittedReview && (
                             <div className="mt-6 border-t pt-4">
-                                <h4 className="font-semibold">Đánh giá của bạn:</h4>
+                                <h4 className="font-semibold">Đánh giá của bạn ({currentUser?.displayName || 'Người dùng'}):</h4>
                                 <div className="flex items-center mt-2">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <Star
