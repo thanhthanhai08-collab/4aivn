@@ -68,13 +68,17 @@ function ToolDetailContent({ id }: { id: string }) {
           if (userRatingData) {
             const userRating = userRatingData.rating || 0;
             const userReviewText = userRatingData.text || "";
-            setCurrentRating(userRating);
-            setReviewText(userReviewText);
+            // Don't set currentRating and reviewText here to allow user to edit
             if (userRating > 0) {
                setSubmittedReview({ rating: userRating, text: userReviewText });
             }
           }
         });
+      } else {
+        // If not logged in, show a sample review
+        if (id === 'n8n') {
+           setSubmittedReview({ rating: 4, text: "Phầm mềm cực kì hữu ích đối với anh em yêu thích ai" });
+        }
       }
 
       // Generate enhanced description if needed
@@ -133,7 +137,7 @@ function ToolDetailContent({ id }: { id: string }) {
     try {
       await setToolRating(currentUser.uid, tool.id, currentRating, reviewText);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
-      // Reset form after successful submission but keep the "submittedReview" state to display it
+      // Reset form after successful submission
       setCurrentRating(0);
       setReviewText("");
     } catch(error) {
@@ -340,7 +344,7 @@ function ToolDetailContent({ id }: { id: string }) {
 
                         {submittedReview && (
                             <div className="mt-6 border-t pt-4">
-                                <h4 className="font-semibold">Đánh giá của bạn ({currentUser?.displayName || 'Người dùng'}):</h4>
+                                <h4 className="font-semibold">Đánh giá của bạn{currentUser ? ` (${currentUser.displayName || 'Người dùng'})`: ''}:</h4>
                                 <div className="flex items-center mt-2">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <Star
