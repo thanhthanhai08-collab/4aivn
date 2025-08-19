@@ -8,10 +8,16 @@ const USER_DATA_COLLECTION = "user-data";
 const TOOLS_COLLECTION = "tools";
 const MODELS_COLLECTION = "models";
 
+// Updated to store both rating and review text for a tool
+export interface UserToolRating {
+    rating: number;
+    text: string;
+}
+
 export interface UserProfileData {
     favoriteTools?: string[];
     bookmarkedNews?: string[];
-    ratedTools?: Record<string, number>;
+    ratedTools?: Record<string, UserToolRating>; // Changed from number to UserToolRating
     ratedModels?: Record<string, number>;
     favoriteModels?: string[];
 }
@@ -76,8 +82,8 @@ export async function toggleNewsBookmark(uid: string, newsId: string, isCurrentl
     }, { merge: true });
 }
 
-// Set or update a rating for a tool
-export async function setToolRating(uid: string, toolId: string, newRating: number) {
+// Set or update a rating for a tool, now includes review text
+export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string) {
     const userDocRef = getUserDocRef(uid);
     const toolDocRef = getToolDocRef(toolId);
 
@@ -86,7 +92,8 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
         const toolDoc = await transaction.get(toolDocRef);
 
         const userData = userDoc.exists() ? userDoc.data() as UserProfileData : {};
-        const oldRating = userData.ratedTools?.[toolId] || 0;
+        const oldRatingData = userData.ratedTools?.[toolId];
+        const oldRating = oldRatingData?.rating || 0;
 
         const toolData = toolDoc.exists() ? toolDoc.data() : { ratingCount: 0, totalStars: 0 };
         let ratingCount = toolData.ratingCount || 0;
@@ -99,12 +106,15 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
             totalStars = totalStars - oldRating + newRating;
         }
 
-        // Update user's rating record
+        // Update user's rating record with both rating and text
         transaction.set(userDocRef, {
-            ratedTools: { ...userData.ratedTools, [toolId]: newRating }
+            ratedTools: { 
+                ...userData.ratedTools, 
+                [toolId]: { rating: newRating, text: reviewText } 
+            }
         }, { merge: true });
 
-        // Update aggregate tool rating
+        // Update aggregate tool rating (only stars and count)
         transaction.set(toolDocRef, { ratingCount, totalStars }, { merge: true });
     });
 }

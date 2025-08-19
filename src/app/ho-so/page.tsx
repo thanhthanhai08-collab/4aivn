@@ -57,7 +57,7 @@ export default function ProfilePage() {
             const ratedToolIds = Object.keys(data.ratedTools || {});
             const userRatedTools = mockTools
                 .filter(tool => ratedToolIds.includes(tool.id))
-                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id] }))
+                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id]?.rating }))
                 .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
             setRatedTools(userRatedTools);
 

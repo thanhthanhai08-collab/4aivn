@@ -21,6 +21,7 @@ import {
   toggleToolFavorite,
   getUserProfileData,
   getAggregateRating,
+  type UserToolRating
 } from "@/lib/user-data-service";
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
@@ -31,7 +32,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  const [submittedReview, setSubmittedReview] = useState<{ rating: number; text: string } | null>(null);
+  const [submittedReview, setSubmittedReview] = useState<UserToolRating | null>(null);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   
@@ -59,10 +60,15 @@ function ToolDetailContent({ id }: { id: string }) {
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteTools?.includes(id) || false);
-          const userRating = userData.ratedTools?.[id] || 0;
-          setCurrentRating(userRating);
-          if (userRating > 0) {
-             setSubmittedReview({ rating: userRating, text: "Bạn đã đánh giá công cụ này trước đây." });
+          const userRatingData = userData.ratedTools?.[id];
+          if (userRatingData) {
+            const userRating = userRatingData.rating || 0;
+            const userReviewText = userRatingData.text || "";
+            setCurrentRating(userRating);
+            setReviewText(userReviewText);
+            if (userRating > 0) {
+               setSubmittedReview({ rating: userRating, text: userReviewText });
+            }
           }
         });
       }
@@ -107,28 +113,27 @@ function ToolDetailContent({ id }: { id: string }) {
       return;
     }
 
-    const oldRating = currentRating;
+    const oldUserReview = submittedReview;
     const oldAggregate = { ...aggregateRating };
 
+    // Optimistic UI update
+    setSubmittedReview({ rating: currentRating, text: reviewText });
     setAggregateRating(prev => {
-        let newTotalStars = prev.totalStars - oldRating + currentRating;
+        let newTotalStars = prev.totalStars - (oldUserReview?.rating || 0) + currentRating;
         let newRatingCount = prev.ratingCount;
-        if(oldRating === 0) {
+        if(!oldUserReview) { // This is the first time the user is rating
             newRatingCount += 1;
         }
         return { totalStars: newTotalStars, ratingCount: newRatingCount };
     });
-    
-    setSubmittedReview({ rating: currentRating, text: reviewText });
 
     try {
-      await setToolRating(currentUser.uid, tool.id, currentRating);
+      await setToolRating(currentUser.uid, tool.id, currentRating, reviewText);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
-      setReviewText(""); // Clear textarea after submission
     } catch(error) {
       console.error("Failed to save rating:", error);
       // Revert optimistic updates
-      setSubmittedReview(null);
+      setSubmittedReview(oldUserReview);
       setAggregateRating(oldAggregate);
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
