@@ -57,6 +57,10 @@ function ToolDetailContent({ id }: { id: string }) {
     if (foundTool) {
       setTool(foundTool);
       
+      // Fetch aggregate rating for all users
+      getAggregateRating("tools", id).then(setAggregateRating);
+
+      // Fetch user-specific data only if logged in
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteTools?.includes(id) || false);
@@ -73,8 +77,7 @@ function ToolDetailContent({ id }: { id: string }) {
         });
       }
 
-      getAggregateRating("tools", id).then(setAggregateRating);
-
+      // Generate enhanced description if needed
       if (foundTool.description.length < 100 && foundTool.description.length > 0) {
         generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
           .then(output => setEnhancedDescription(output.description))
