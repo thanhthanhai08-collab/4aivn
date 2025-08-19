@@ -406,7 +406,7 @@ function ToolDetailContent({ id }: { id: string }) {
 
                         {/* All Reviews List */}
                         <div>
-                             <h3 className="text-xl font-bold mb-4">Tất cả bài đánh giá</h3>
+                             <h3 className="text-2xl font-bold font-headline mb-4">Tất cả bài đánh giá</h3>
                              <ReviewsList reviews={allReviews} />
                         </div>
                     </CardContent>
