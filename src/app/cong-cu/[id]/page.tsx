@@ -76,7 +76,6 @@ function ToolDetailContent({ id }: { id: string }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  const [submittedReview, setSubmittedReview] = useState<UserToolRating | null>(null);
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
@@ -84,14 +83,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   
-  const topCategories = [
-    { name: 'AI Content Generation', icon: '✍️' },
-    { name: 'AI Image Generation', icon: '🎨' },
-    { name: 'AI Data analysis', icon: '📊' },
-    { name: 'AI Chatbuilder', icon: '💬' },
-    { name: 'AI Video Generation', icon: '🎬' },
-    { name: 'View all tools', icon: '➡️' },
-  ];
+  const allCategories = Array.from(new Set(initialMockTools.map(t => t.context)));
 
   const featuredTools = initialMockTools.filter(t => ['midjourney', 'sora-ai', 'gpt-image-1'].includes(t.id));
   const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
@@ -112,14 +104,6 @@ function ToolDetailContent({ id }: { id: string }) {
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteTools?.includes(id) || false);
-          const userRatingData = userData.ratedTools?.[id];
-          if (userRatingData) {
-            const userRating = userRatingData.rating || 0;
-            const userReviewText = userRatingData.text || "";
-            if (userRating > 0) {
-               setSubmittedReview({ rating: userRating, text: userReviewText });
-            }
-          }
         });
       }
 
@@ -162,21 +146,16 @@ function ToolDetailContent({ id }: { id: string }) {
       return;
     }
 
-    const newReview = { rating: currentRating, text: reviewText };
-
     try {
       await setToolRating(
         currentUser.uid, 
         tool.id, 
-        newReview.rating, 
-        newReview.text, 
+        currentRating, 
+        reviewText, 
         currentUser.displayName, 
         currentUser.photoURL
       );
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${newReview.rating} sao.` });
-
-      // Update UI optimistically
-      setSubmittedReview(newReview);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
       // Refetch all reviews to include the new one
       getAllToolReviews(id).then(setAllReviews);
@@ -455,16 +434,21 @@ function ToolDetailContent({ id }: { id: string }) {
 
             <Card>
               <CardHeader>
-                <CardTitle>Danh mục công cụ AI hàng đầu</CardTitle>
+                <CardTitle>Danh mục công cụ AI</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                 {topCategories.map(cat => (
-                     <Button key={cat.name} variant="ghost" className="w-full justify-start text-base" asChild>
-                        <Link href="/cong-cu">
-                           <span className="mr-3 text-lg">{cat.icon}</span> {cat.name}
+                 {allCategories.map(cat => (
+                     <Button key={cat} variant="ghost" className="w-full justify-start text-base" asChild>
+                        <Link href={`/cong-cu?category=${encodeURIComponent(cat)}`}>
+                           <span className="mr-3 text-lg">#</span> {cat}
                         </Link>
                      </Button>
                  ))}
+                 <Button variant="ghost" className="w-full justify-start text-base" asChild>
+                    <Link href="/cong-cu">
+                       <span className="mr-3 text-lg">➡️</span> Xem tất cả công cụ
+                    </Link>
+                 </Button>
               </CardContent>
             </Card>
             
