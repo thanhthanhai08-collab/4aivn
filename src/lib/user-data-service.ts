@@ -21,6 +21,7 @@ export interface UserProfileData {
     ratedModels?: Record<string, number>;
     favoriteModels?: string[];
     displayName?: string; // Add displayName to UserProfileData
+    photoURL?: string; // Add photoURL to UserProfileData
 }
 
 export interface AggregateRatingData {
@@ -32,6 +33,7 @@ export interface AggregateRatingData {
 export interface ToolReview extends UserToolRating {
     userId: string;
     userName: string;
+    userPhotoURL: string | null;
 }
 
 // Helper to get document references
@@ -64,6 +66,7 @@ export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
                     reviews.push({
                         userId: docSnap.id,
                         userName: userData.displayName || "Người dùng ẩn danh",
+                        userPhotoURL: userData.photoURL || null,
                         rating: reviewData.rating,
                         text: reviewData.text
                     });
@@ -116,7 +119,7 @@ export async function toggleNewsBookmark(uid: string, newsId: string, isCurrentl
 }
 
 // Set or update a rating for a tool, now includes review text
-export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string, displayName: string | null) {
+export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string, displayName: string | null, photoURL: string | null) {
     const userDocRef = getUserDocRef(uid);
     const toolDocRef = getToolDocRef(toolId);
 
@@ -142,6 +145,7 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
         // Update user's rating record with both rating and text
         transaction.set(userDocRef, {
             displayName: displayName || userData.displayName || 'Người dùng ẩn danh',
+            photoURL: photoURL || userData.photoURL || null,
             ratedTools: { 
                 ...userData.ratedTools, 
                 [toolId]: { rating: newRating, text: reviewText } 

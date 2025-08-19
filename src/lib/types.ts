@@ -81,3 +81,11 @@ export interface Comment {
   text: string;
   createdAt: Date;
 }
+
+export interface ToolReview {
+    userId: string;
+    userName: string;
+    userPhotoURL: string | null;
+    rating: number;
+    text: string;
+}

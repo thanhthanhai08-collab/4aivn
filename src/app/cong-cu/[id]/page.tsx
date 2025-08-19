@@ -49,11 +49,12 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
             {reviews.map(review => (
                 <div key={review.userId} className="flex items-start space-x-4">
                      <Avatar className="h-10 w-10 border">
+                        <AvatarImage src={review.userPhotoURL || ""} alt={review.userName || ""} />
                         <AvatarFallback>{getInitials(review.userName)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
-                            <p className="font-semibold">{review.userName}</p>
+                            <p className="font-semibold">{review.userName || 'Người dùng ẩn danh'}</p>
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-500 fill-amber-400' : 'text-gray-300'}`} />
@@ -164,7 +165,7 @@ function ToolDetailContent({ id }: { id: string }) {
     const newReview = { rating: currentRating, text: reviewText };
 
     try {
-      await setToolRating(currentUser.uid, tool.id, newReview.rating, newReview.text, currentUser.displayName || "Người dùng ẩn danh");
+      await setToolRating(currentUser.uid, tool.id, newReview.rating, newReview.text, currentUser.displayName || "Người dùng ẩn danh", currentUser.photoURL);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${newReview.rating} sao.` });
 
       // Update UI optimistically
