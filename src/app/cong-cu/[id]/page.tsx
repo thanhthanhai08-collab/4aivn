@@ -173,9 +173,6 @@ function ToolDetailContent({ id }: { id: string }) {
                       <div>
                            <div className="flex items-center gap-3">
                             <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
-                            {tool.ranking && (
-                                <Badge variant="default" className="text-base">#{tool.ranking}</Badge>
-                            )}
                            </div>
                           <p className="text-muted-foreground">{tool.context}</p>
                       </div>
@@ -199,6 +196,11 @@ function ToolDetailContent({ id }: { id: string }) {
                   <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
                   <span>({aggregateRating.ratingCount} đánh giá)</span>
                 </div>
+                 {tool.ranking && (
+                    <div className="flex items-center gap-1">
+                        <span className="font-semibold text-foreground">Xếp hạng: #{tool.ranking}</span>
+                    </div>
+                )}
               </div>
 
               <div className="space-y-4">

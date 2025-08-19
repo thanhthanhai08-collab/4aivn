@@ -38,11 +38,6 @@ export function ToolCard({ tool }: ToolCardProps) {
               <Badge variant="outline" className="mt-1">{tool.context}</Badge>
             </div>
           </div>
-          {tool.ranking && (
-            <Badge variant="default">
-              #{tool.ranking}
-            </Badge>
-          )}
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
