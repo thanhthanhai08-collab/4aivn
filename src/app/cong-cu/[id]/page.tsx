@@ -30,6 +30,8 @@ function ToolDetailContent({ id }: { id: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [submittedReview, setSubmittedReview] = useState<{ rating: number; text: string } | null>(null);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   
@@ -57,7 +59,11 @@ function ToolDetailContent({ id }: { id: string }) {
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
           setIsFavorite(userData.favoriteTools?.includes(id) || false);
-          setCurrentRating(userData.ratedTools?.[id] || 0);
+          const userRating = userData.ratedTools?.[id] || 0;
+          setCurrentRating(userRating);
+          if (userRating > 0) {
+             setSubmittedReview({ rating: userRating, text: "Bạn đã đánh giá công cụ này trước đây." });
+          }
         });
       }
 
@@ -91,31 +97,38 @@ function ToolDetailContent({ id }: { id: string }) {
     }
   };
 
-  const handleRating = async (rating: number) => {
+  const handleSubmitReview = async () => {
     if (!currentUser || !tool) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng giá công cụ.", variant: "destructive" });
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
+      return;
+    }
+    if (currentRating === 0) {
+      toast({ title: "Thiếu đánh giá", description: "Vui lòng chọn số sao để đánh giá.", variant: "destructive" });
       return;
     }
 
     const oldRating = currentRating;
     const oldAggregate = { ...aggregateRating };
 
-    setCurrentRating(rating);
     setAggregateRating(prev => {
-        let newTotalStars = prev.totalStars - oldRating + rating;
+        let newTotalStars = prev.totalStars - oldRating + currentRating;
         let newRatingCount = prev.ratingCount;
         if(oldRating === 0) {
             newRatingCount += 1;
         }
         return { totalStars: newTotalStars, ratingCount: newRatingCount };
     });
+    
+    setSubmittedReview({ rating: currentRating, text: reviewText });
 
     try {
-      await setToolRating(currentUser.uid, tool.id, rating);
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${rating} sao.` });
+      await setToolRating(currentUser.uid, tool.id, currentRating);
+      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
+      setReviewText(""); // Clear textarea after submission
     } catch(error) {
       console.error("Failed to save rating:", error);
-      setCurrentRating(oldRating); 
+      // Revert optimistic updates
+      setSubmittedReview(null);
       setAggregateRating(oldAggregate);
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
@@ -288,15 +301,12 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Rating Form */}
             <section>
                 <Card className="bg-muted/30">
-                    <CardHeader>
-                        <CardTitle>Bạn đánh giá {tool.name} như thế nào?</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                       <div className="flex items-center justify-between">
-                            <span className="font-semibold text-lg">{tool.name}</span>
-                            <div className="flex items-center space-x-1">
+                    <CardContent className="p-6">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+                            <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
+                            <div className="flex items-center space-x-1 shrink-0">
                                 {[1, 2, 3, 4, 5].map((star) => (
-                                    <button key={star} onClick={() => handleRating(star)} aria-label={`Rate ${star} stars`} className="group">
+                                    <button key={star} onClick={() => setCurrentRating(star)} aria-label={`Rate ${star} stars`} className="group">
                                         <Star
                                             className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
                                             star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
@@ -305,11 +315,34 @@ function ToolDetailContent({ id }: { id: string }) {
                                     </button>
                                 ))}
                             </div>
-                       </div>
-                        <Textarea placeholder="Viết đánh giá của bạn (tùy chọn)"/>
-                        <Button onClick={() => toast({ title: "Đã gửi đánh giá", description: "Cảm ơn bạn đã đóng góp!" })}>
-                            Gửi đánh giá
-                        </Button>
+                        </div>
+                        <Textarea 
+                            placeholder="Viết đánh giá của bạn (tùy chọn)"
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                        />
+                        <div className="flex justify-end mt-4">
+                            <Button onClick={handleSubmitReview}>
+                                Gửi đánh giá
+                            </Button>
+                        </div>
+
+                        {submittedReview && (
+                            <div className="mt-6 border-t pt-4">
+                                <h4 className="font-semibold">Đánh giá của bạn:</h4>
+                                <div className="flex items-center mt-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <Star
+                                        key={star}
+                                        className={`h-5 w-5 ${
+                                        star <= submittedReview.rating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                                        }`}
+                                    />
+                                ))}
+                                </div>
+                                {submittedReview.text && <p className="mt-2 text-muted-foreground italic">"{submittedReview.text}"</p>}
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </section>
