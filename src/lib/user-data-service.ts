@@ -142,10 +142,10 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
             totalStars = totalStars - oldRating + newRating;
         }
 
-        // Update user's rating record with both rating and text
+        // Update user's rating record with both rating and text, AND their profile info
         transaction.set(userDocRef, {
-            displayName: displayName || userData.displayName || 'Người dùng ẩn danh',
-            photoURL: photoURL || userData.photoURL || null,
+            displayName: displayName, // Always update with the latest from auth
+            photoURL: photoURL, // Always update with the latest from auth
             ratedTools: { 
                 ...userData.ratedTools, 
                 [toolId]: { rating: newRating, text: reviewText } 
