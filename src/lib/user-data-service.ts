@@ -144,8 +144,8 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
 
         // Update user's rating record with both rating and text, AND their profile info
         transaction.set(userDocRef, {
-            displayName: displayName, // Always update with the latest from auth
-            photoURL: photoURL, // Always update with the latest from auth
+            displayName: displayName || "Người dùng ẩn danh", // Use passed name or a fallback
+            photoURL: photoURL, // Use passed photoURL
             ratedTools: { 
                 ...userData.ratedTools, 
                 [toolId]: { rating: newRating, text: reviewText } 

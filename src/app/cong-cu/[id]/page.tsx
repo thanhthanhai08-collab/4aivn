@@ -165,7 +165,14 @@ function ToolDetailContent({ id }: { id: string }) {
     const newReview = { rating: currentRating, text: reviewText };
 
     try {
-      await setToolRating(currentUser.uid, tool.id, newReview.rating, newReview.text, currentUser.displayName || "Người dùng ẩn danh", currentUser.photoURL);
+      await setToolRating(
+        currentUser.uid, 
+        tool.id, 
+        newReview.rating, 
+        newReview.text, 
+        currentUser.displayName, 
+        currentUser.photoURL
+      );
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${newReview.rating} sao.` });
 
       // Update UI optimistically
