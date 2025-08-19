@@ -167,31 +167,31 @@ function ToolDetailContent({ id }: { id: string }) {
           <div className="lg:col-span-8 space-y-10">
             {/* Header section */}
             <section>
-                <div className="flex items-center space-x-4 mb-6">
-                    <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
-                    <div>
-                        <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
-                        <p className="text-muted-foreground">{tool.context}</p>
-                    </div>
-                </div>
-                <div className="space-y-4">
-                    <p className="text-lg text-foreground/80">{descriptionToDisplay}</p>
-                    <div className="flex flex-wrap gap-2">
-                        <Button onClick={handleFavoriteToggle}>
-                           <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                           {isFavorite ? "Đã thích" : "Yêu thích"}
-                        </Button>
-                        <Button variant="outline" asChild>
-                           <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                            Truy cập {tool.name} <ExternalLink className="ml-2 h-4 w-4" />
-                           </a>
-                        </Button>
-                        <Badge variant="secondary" className="h-10">
-                           <CheckCircle className="mr-2 h-4 w-4 text-green-500"/> Verified
-                        </Badge>
-                        <Badge variant="secondary" className="h-10">Freemium</Badge>
-                    </div>
-                </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                  <div className="flex items-center space-x-4">
+                      <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
+                      <div>
+                          <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
+                          <p className="text-muted-foreground">{tool.context}</p>
+                      </div>
+                  </div>
+                  <div className="flex items-center space-x-2 shrink-0">
+                      <Button variant="outline" onClick={handleFavoriteToggle}>
+                         <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
+                         {isFavorite ? "Đã thích" : "Yêu thích"}
+                      </Button>
+                      <Button asChild>
+                         <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
+                         </a>
+                      </Button>
+                  </div>
+              </div>
+
+              <div className="space-y-4">
+                  <p className="text-lg text-foreground/80 whitespace-pre-line">{descriptionToDisplay}</p>
+                  {/* Removed badges from here to match the image */}
+              </div>
             </section>
             
             <Separator />
