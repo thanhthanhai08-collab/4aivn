@@ -167,7 +167,7 @@ function ToolDetailContent({ id }: { id: string }) {
           <div className="lg:col-span-8 space-y-10">
             {/* Header section */}
             <section>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                   <div className="flex items-center space-x-4">
                       <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
                       <div>
@@ -188,9 +188,23 @@ function ToolDetailContent({ id }: { id: string }) {
                   </div>
               </div>
 
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-6">
+                <div className="flex items-center gap-1">
+                  <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
+                  <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
+                  <span>({aggregateRating.ratingCount} đánh giá)</span>
+                </div>
+                <div className="flex items-center gap-1">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <span>Verified</span>
+                </div>
+                 <div className="flex items-center gap-1">
+                    <Badge variant="outline">Freemium</Badge>
+                </div>
+              </div>
+
               <div className="space-y-4">
                   <p className="text-lg text-foreground/80 whitespace-pre-line">{descriptionToDisplay}</p>
-                  {/* Removed badges from here to match the image */}
               </div>
             </section>
             
