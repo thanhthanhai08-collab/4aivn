@@ -453,7 +453,7 @@ function ToolDetailContent({ id }: { id: string }) {
             </Card>
             
              <Card className="bg-accent/50 text-center p-6">
-                <CardTitle className="mb-2">Nâng cấp quy trình làm việc của bạn</CardTitle>
+                <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
                 <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
                 <Button asChild>
                     <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
