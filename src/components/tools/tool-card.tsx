@@ -39,10 +39,9 @@ export function ToolCard({ tool }: ToolCardProps) {
             </div>
           </div>
           {tool.ranking && (
-            <div className="flex items-center text-sm text-primary bg-accent px-2 py-1 rounded-full">
-              <ThumbsUp className="h-4 w-4 mr-1" />
+            <Badge variant="default">
               #{tool.ranking}
-            </div>
+            </Badge>
           )}
         </div>
       </CardHeader>

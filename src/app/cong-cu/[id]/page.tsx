@@ -171,7 +171,12 @@ function ToolDetailContent({ id }: { id: string }) {
                   <div className="flex items-center space-x-4">
                       <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
                       <div>
-                          <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
+                           <div className="flex items-center gap-3">
+                            <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
+                            {tool.ranking && (
+                                <Badge variant="default" className="text-base">#{tool.ranking}</Badge>
+                            )}
+                           </div>
                           <p className="text-muted-foreground">{tool.context}</p>
                       </div>
                   </div>
@@ -193,13 +198,6 @@ function ToolDetailContent({ id }: { id: string }) {
                   <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
                   <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
                   <span>({aggregateRating.ratingCount} đánh giá)</span>
-                </div>
-                <div className="flex items-center gap-1">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                    <span>Verified</span>
-                </div>
-                 <div className="flex items-center gap-1">
-                    <Badge variant="outline">Freemium</Badge>
                 </div>
               </div>
 
