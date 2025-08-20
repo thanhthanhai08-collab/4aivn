@@ -147,8 +147,8 @@ export const mockTools: Tool[] = [
         <h3>Cloud</h3>
         <ul>
             <li><strong>Free Trial:</strong> Dùng thử miễn phí trong 14 ngày.</li>
-            <li><strong>Starter:</strong> €24/tháng - 2.500 lần thực thi, 5 workflow.</li>
-            <li><strong>Pro:</strong> €60/tháng - 10.000 lần thực thi, 15 workflow.</li>
+            <li><strong>Starter:</strong> €20-€24/tháng - 2.500 lần chạy workflow, giới hạn 5 workflow.</li>
+            <li><strong>Pro:</strong> €50-€60/tháng - 10.000 lần chạy workflow, giới hạn 20 workflow.</li>
         </ul>
         <h3>Self-hosted</h3>
         <ul>
