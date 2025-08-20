@@ -280,8 +280,8 @@ function ToolDetailContent({ id }: { id: string }) {
                            <Image 
                              src={tool.imageUrl}
                              alt={`Ảnh giới thiệu ${tool.name}`}
-                             width={1920}
-                             height={800}
+                             width={960}
+                             height={400}
                              className="w-full h-full object-cover"
                              data-ai-hint="tool interface"
                            />
