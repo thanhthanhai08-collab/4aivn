@@ -263,18 +263,29 @@ function ToolDetailContent({ id }: { id: string }) {
             <Separator />
             
             {/* Video/Image Showcase */}
-            {tool.videoUrl && (
+            {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="aspect-video bg-slate-800 rounded-lg overflow-hidden">
-                       <iframe
-                        width="100%"
-                        height="100%"
-                        src={tool.videoUrl}
-                        title={`Video giới thiệu ${tool.name}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                    <div className="aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
+                       {tool.videoUrl ? (
+                           <iframe
+                            width="100%"
+                            height="100%"
+                            src={tool.videoUrl}
+                            title={`Video giới thiệu ${tool.name}`}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                       ) : tool.imageUrl ? (
+                           <Image 
+                             src={tool.imageUrl}
+                             alt={`Ảnh giới thiệu ${tool.name}`}
+                             width={1280}
+                             height={720}
+                             className="w-full h-full object-contain"
+                             data-ai-hint="tool interface"
+                           />
+                       ) : null}
                     </div>
                 </section>
             )}
@@ -469,3 +480,5 @@ function ToolDetailContent({ id }: { id: string }) {
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent id={params.id} />;
 }
+
+    

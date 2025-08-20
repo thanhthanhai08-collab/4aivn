@@ -14,6 +14,7 @@ export interface Tool {
   whoIsItFor?: string[];
   pricingPlans?: string;
   videoUrl?: string;
+  imageUrl?: string;
   userRating?: number; // Average user rating (1-5)
   totalStars?: number; // Sum of all ratings
   isFavorite?: boolean;
@@ -89,3 +90,5 @@ export interface ToolReview {
     rating: number;
     text: string;
 }
+
+    
