@@ -137,11 +137,11 @@ export const mockTools: Tool[] = [
         'Quản lý và điều phối các AI Agent'
     ],
     whoIsItFor: [
-        'Developers',
+        'Nhà phát triển',
         'DevOps',
-        'Marketing',
-        'Sales',
-        'Operations'
+        'Tiếp thị',
+        'Bán hàng',
+        'Vận hành'
     ],
     pricingPlans: `
         <ul>
