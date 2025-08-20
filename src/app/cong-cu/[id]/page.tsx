@@ -1,4 +1,4 @@
-// src/app/tools/[id]/page.tsx
+// src/app/cong-cu/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -332,7 +332,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Pricing */}
             {tool.pricingPlans && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Các gói giá</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
                     <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.pricingPlans }}/>
                 </section>
             )}
