@@ -144,10 +144,15 @@ export const mockTools: Tool[] = [
         'Vận hành'
     ],
     pricingPlans: `
+        <h3>Cloud</h3>
         <ul>
-            <li><strong>Cloud Starter:</strong> €24/tháng - 2,500 lần thực thi, 5 workflow.</li>
-            <li><strong>Cloud Pro:</strong> €60/tháng - 10,000 lần thực thi, 15 workflow.</li>
-            <li><strong>Self-hosted:</strong> Miễn phí phần mềm, chỉ trả phí hạ tầng (VPS, tên miền).</li>
+            <li><strong>Free Trial:</strong> Dùng thử miễn phí trong 14 ngày.</li>
+            <li><strong>Starter:</strong> €24/tháng - 2.500 lần thực thi, 5 workflow.</li>
+            <li><strong>Pro:</strong> €60/tháng - 10.000 lần thực thi, 15 workflow.</li>
+        </ul>
+        <h3>Self-hosted</h3>
+        <ul>
+            <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
         </ul>
     `,
     userRating: 4.5,
