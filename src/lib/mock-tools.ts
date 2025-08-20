@@ -138,7 +138,7 @@ export const mockTools: Tool[] = [
     ],
     whoIsItFor: [
         'Nhà phát triển',
-        'DevOps',
+        'Học sinh, sinh viên',
         'Tiếp thị',
         'Bán hàng',
         'Vận hành'
