@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid } from "lucide-react";
 import { mockTools as initialMockTools } from "@/lib/mock-tools";
 import type { Tool } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -289,7 +289,7 @@ function ToolDetailContent({ id }: { id: string }) {
                             className="w-full h-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                          <div className="overflow-hidden rounded-lg">
+                          <div className="overflow-hidden rounded-lg shadow-2xl">
                              <Image 
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
@@ -459,7 +459,10 @@ function ToolDetailContent({ id }: { id: string }) {
 
             <Card>
               <CardHeader>
-                <CardTitle>Danh mục công cụ AI</CardTitle>
+                <CardTitle className="flex items-center">
+                  <LayoutGrid className="mr-2 h-5 w-5 text-primary" />
+                  Danh mục công cụ AI
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                  {allCategories.map(cat => (
