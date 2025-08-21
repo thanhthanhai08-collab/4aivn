@@ -265,7 +265,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
+                    <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center aspect-video">
                        {tool.videoUrl ? (
                            <iframe
                             width="100%"
@@ -283,7 +283,7 @@ function ToolDetailContent({ id }: { id: string }) {
                              alt={`Ảnh giới thiệu ${tool.name}`}
                              width={1280}
                              height={720}
-                             className="w-full h-full object-cover rounded-lg"
+                             className="w-full h-full object-cover rounded-lg shadow-2xl"
                              data-ai-hint="tool interface"
                            />
                        ) : null}
