@@ -265,7 +265,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center aspect-video">
+                    <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
                        {tool.videoUrl ? (
                            <iframe
                             width="100%"
@@ -275,7 +275,7 @@ function ToolDetailContent({ id }: { id: string }) {
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
-                            className="w-full h-full"
+                            className="w-full h-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
                            <Image 
@@ -283,7 +283,7 @@ function ToolDetailContent({ id }: { id: string }) {
                              alt={`Ảnh giới thiệu ${tool.name}`}
                              width={1280}
                              height={720}
-                             className="w-full h-full object-contain rounded-lg"
+                             className="w-full h-full object-cover rounded-lg"
                              data-ai-hint="tool interface"
                            />
                        ) : null}
