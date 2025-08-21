@@ -289,13 +289,13 @@ function ToolDetailContent({ id }: { id: string }) {
                             className="w-full h-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                          <div className="overflow-hidden rounded-lg shadow-2xl">
+                          <div className="overflow-hidden rounded-lg">
                              <Image 
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                width={1280}
                                height={720}
-                               className="w-full h-auto object-cover"
+                               className="w-full h-auto"
                                data-ai-hint="tool interface"
                              />
                            </div>
@@ -315,7 +315,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Key Features */}
             {tool.features && tool.features.length > 0 && (
               <section>
-                <h2 className="text-2xl font-bold font-headline mb-4 flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/>Tính năng chính</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">Tính năng chính</h2>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                   {tool.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
