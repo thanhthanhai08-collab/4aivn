@@ -105,20 +105,31 @@ export default function HomePage() {
           toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
 
-        const initialTopTools = mockTools
-          .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
-          .slice(0, 4);
-
-        const toolsWithRatings = initialTopTools.map(tool => ({
+        const toolsWithRatings = mockTools.map(tool => ({
           ...tool,
           ...toolRatings[tool.id]
         }));
         
-        setTopTools(toolsWithRatings);
+        const sortedTopTools = toolsWithRatings.sort((a, b) => {
+          const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+          const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
+          if (ratingB !== ratingA) return ratingB - ratingA;
+          
+          const countA = a.ratingCount ?? 0;
+          const countB = b.ratingCount ?? 0;
+          if (countB !== countA) return countB - countA;
+          
+          return a.name.localeCompare(b.name);
+        }).slice(0, 4);
+        
+        setTopTools(sortedTopTools);
+
       } catch (error) {
         console.error("Error fetching tool ratings for homepage:", error);
+        // Fallback to sorting mockTools without ratings
         setTopTools(mockTools
-          .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity))
+          .sort((a, b) => (b.userRating || 0) - (a.userRating || 0))
           .slice(0, 4));
       } finally {
         setIsLoadingTools(false);

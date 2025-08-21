@@ -28,45 +28,8 @@ interface RankingsTableProps<T extends Tool | AIModel> {
 }
 
 export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: RankingsTableProps<T>) {
-
-  const sortedItems = [...items]
-    .sort((a, b) => {
-      const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
-      const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
-
-      if (itemType === 'model') {
-        const modelA = a as AIModel;
-        const modelB = b as AIModel;
-
-        // 1. Sort by intelligenceScore (descending)
-        const intelA = modelA.intelligenceScore ?? -Infinity;
-        const intelB = modelB.intelligenceScore ?? -Infinity;
-        if (intelB !== intelA) return intelB - intelA;
-
-        // 2. Sort by contextLengthToken (descending)
-        const contextA = parseContextLength(modelA.contextLengthToken);
-        const contextB = parseContextLength(modelB.contextLengthToken);
-        if (contextB !== contextA) return contextB - contextA;
-
-        // 3. Sort by pricePerMillionTokens (ascending)
-        const priceA = modelA.pricePerMillionTokens ?? Infinity;
-        const priceB = modelB.pricePerMillionTokens ?? Infinity;
-        if (priceA !== priceB) return priceA - priceB;
-        
-        // 4. Sort by userRating (descending)
-        if (ratingB !== ratingA) return ratingB - ratingA;
-        
-        return modelA.name.localeCompare(modelB.name);
-
-      } else { // Tool sorting: by ranking property
-        const rankA = (a as Tool).ranking ?? Infinity;
-        const rankB = (b as Tool).ranking ?? Infinity;
-        if (rankA !== rankB) {
-            return rankA - rankB;
-        }
-        return a.name.localeCompare(b.name);
-      }
-    });
+  // Items are pre-sorted by the parent component
+  const sortedItems = items;
   
   let denseRank = 0;
   let lastSignature = "";
@@ -103,7 +66,8 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
             const averageRating = item.ratingCount && item.ratingCount > 0 
               ? (item.totalStars || 0) / item.ratingCount 
               : item.userRating || 0;
-
+            
+            let rankToShow;
             if (itemType === 'model') {
               const modelItem = item as AIModel;
               const currentSignature = [
@@ -117,6 +81,18 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 denseRank = index + 1;
               }
               lastSignature = currentSignature;
+              rankToShow = denseRank;
+            } else {
+                 const currentSignature = [
+                    averageRating,
+                    item.ratingCount || 0
+                 ].join('-');
+
+                 if(currentSignature !== lastSignature) {
+                    denseRank = index + 1;
+                 }
+                 lastSignature = currentSignature;
+                 rankToShow = denseRank;
             }
 
             return (
@@ -129,7 +105,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 )}
             >
               <TableCell className="text-center font-medium">
-                {itemType === 'model' ? denseRank : (item as Tool).ranking || '-'}
+                {rankToShow}
               </TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">

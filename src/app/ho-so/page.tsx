@@ -29,6 +29,20 @@ import {
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
 
+const sortToolsByRating = (tools: Tool[]) => {
+    return tools.sort((a, b) => {
+        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
+        if (ratingB !== ratingA) return ratingB - ratingA;
+
+        const countA = a.ratingCount ?? 0;
+        const countB = b.ratingCount ?? 0;
+        if (countB !== countA) return countB - countA;
+
+        return a.name.localeCompare(b.name);
+    });
+};
 
 export default function ProfilePage() {
   const { currentUser, isLoading, logout } = useAuth();
@@ -57,9 +71,8 @@ export default function ProfilePage() {
             const ratedToolIds = Object.keys(data.ratedTools || {});
             const userRatedTools = mockTools
                 .filter(tool => ratedToolIds.includes(tool.id))
-                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id]?.rating }))
-                .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
-            setRatedTools(userRatedTools);
+                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id]?.rating }));
+            setRatedTools(sortToolsByRating(userRatedTools));
 
             // Load favorite models
             const userFavoriteModels = mockAIModels
@@ -68,9 +81,8 @@ export default function ProfilePage() {
 
             // Load favorite tools
             const userFavoriteTools = mockTools
-                .filter(tool => (data.favoriteTools || []).includes(tool.id))
-                .sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
-            setFavoriteTools(userFavoriteTools);
+                .filter(tool => (data.favoriteTools || []).includes(tool.id));
+            setFavoriteTools(sortToolsByRating(userFavoriteTools));
             
             // Load bookmarked news
             const userBookmarkedNews = mockNews.filter(article => (data.bookmarkedNews || []).includes(article.id));

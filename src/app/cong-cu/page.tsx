@@ -77,8 +77,19 @@ export default function ToolsPage() {
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-    // Sort the filtered results by ranking
-    return filtered.sort((a, b) => (a.ranking ?? Infinity) - (b.ranking ?? Infinity));
+    // Sort by average rating (desc), then by rating count (desc), then by name (asc)
+    return filtered.sort((a, b) => {
+        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        
+        const countA = a.ratingCount ?? 0;
+        const countB = b.ratingCount ?? 0;
+        if (countB !== countA) return countB - countA;
+        
+        return a.name.localeCompare(b.name);
+    });
   }, [searchTerm, selectedCategory, allTools]);
 
   if (!mounted && !initialSearchQuery) { // Added !initialSearchQuery to prevent skeleton flash if search is active

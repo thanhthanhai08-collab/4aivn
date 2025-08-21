@@ -14,6 +14,20 @@ import { collection, getDocs } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
+// Helper function to parse context length strings (e.g., "1m", "200k") into numbers
+const parseContextLength = (tokenStr?: string): number => {
+  if (!tokenStr) return -Infinity;
+  const lower = tokenStr.toLowerCase();
+  if (lower.endsWith('m')) {
+    return parseFloat(lower.replace('m', '')) * 1000000;
+  }
+  if (lower.endsWith('k')) {
+    return parseFloat(lower.replace('k', '')) * 1000;
+  }
+  return parseFloat(lower) || -Infinity;
+};
+
+
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [allTools, setAllTools] = useState<Tool[]>(mockTools);
@@ -56,17 +70,49 @@ export default function RankingsPage() {
   }, []);
 
   const filteredModels = useMemo(() => {
-    return allModels.filter(model => 
+    const filtered = allModels.filter(model => 
       model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       model.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
+     return filtered.sort((a, b) => {
+        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
+        const intelA = a.intelligenceScore ?? -Infinity;
+        const intelB = b.intelligenceScore ?? -Infinity;
+        if (intelB !== intelA) return intelB - intelA;
+
+        const contextA = parseContextLength(a.contextLengthToken);
+        const contextB = parseContextLength(b.contextLengthToken);
+        if (contextB !== contextA) return contextB - contextA;
+
+        const priceA = a.pricePerMillionTokens ?? Infinity;
+        const priceB = b.pricePerMillionTokens ?? Infinity;
+        if (priceA !== priceB) return priceA - priceB;
+        
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        
+        return a.name.localeCompare(b.name);
+    });
   }, [allModels, searchTerm]);
 
   const filteredTools = useMemo(() => {
-    return allTools.filter(tool => 
+    const filtered = allTools.filter(tool => 
       tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tool.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    return filtered.sort((a, b) => {
+        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        
+        const countA = a.ratingCount ?? 0;
+        const countB = b.ratingCount ?? 0;
+        if (countB !== countA) return countB - countA;
+        
+        return a.name.localeCompare(b.name);
+    });
   }, [allTools, searchTerm]);
 
   return (
