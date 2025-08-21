@@ -265,7 +265,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center aspect-video">
+                    <div className="bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                        {tool.videoUrl ? (
                            <iframe
                             width="100%"
@@ -278,14 +278,16 @@ function ToolDetailContent({ id }: { id: string }) {
                             className="w-full h-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                           <Image 
-                             src={tool.imageUrl}
-                             alt={`Ảnh giới thiệu ${tool.name}`}
-                             width={1280}
-                             height={720}
-                             className="w-full h-full object-cover rounded-lg shadow-2xl"
-                             data-ai-hint="tool interface"
-                           />
+                          <div className="overflow-hidden rounded-lg shadow-2xl">
+                             <Image 
+                               src={tool.imageUrl}
+                               alt={`Ảnh giới thiệu ${tool.name}`}
+                               width={1280}
+                               height={720}
+                               className="w-full h-auto object-cover"
+                               data-ai-hint="tool interface"
+                             />
+                           </div>
                        ) : null}
                     </div>
                 </section>
