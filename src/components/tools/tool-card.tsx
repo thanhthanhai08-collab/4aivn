@@ -1,11 +1,18 @@
 // src/components/tools/tool-card.tsx
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, ThumbsUp } from "lucide-react";
+import { ExternalLink, Star, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Tool } from "@/lib/types";
+import { useState, useEffect, type MouseEvent } from "react";
+import { useAuth } from "@/contexts/auth-context";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { toggleToolFavorite, getUserProfileData } from "@/lib/user-data-service";
 
 interface ToolCardProps {
   tool: Tool;
@@ -13,24 +20,75 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool, rank }: ToolCardProps) {
+  const { currentUser } = useAuth();
+  const { toast } = useToast();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      getUserProfileData(currentUser.uid).then(userData => {
+        setIsFavorite(userData.favoriteTools?.includes(tool.id) || false);
+      });
+    } else {
+      setIsFavorite(false);
+    }
+  }, [tool.id, currentUser]);
+  
+  const handleFavoriteToggle = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!currentUser) {
+      toast({
+        title: "Yêu cầu đăng nhập",
+        description: "Vui lòng đăng nhập để lưu mục yêu thích.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+
+    try {
+      await toggleToolFavorite(currentUser.uid, tool.id, isFavorite);
+      toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
+    } catch (error) {
+      console.error("Failed to update favorite status:", error);
+      setIsFavorite(!newFavoriteState);
+      toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+    }
+  };
+
   const averageRating = tool.ratingCount && tool.ratingCount > 0 
     ? (tool.totalStars || 0) / tool.ratingCount 
     : tool.userRating || 0;
 
   return (
-    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1 relative">
-       {rank !== undefined && (
-          <Badge 
-            variant="default"
-            className="absolute top-2 right-2 z-10 !rounded-full !px-2.5 !py-1 text-sm font-bold"
-            style={{
-                backgroundColor: 'rgba(11, 105, 255, 0.9)', 
-                backdropFilter: 'blur(4px)',
-            }}
-           >
-            #{rank}
-          </Badge>
-        )}
+    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1 relative group/card">
+       <div className="absolute top-2 right-2 z-10 flex flex-col items-end gap-2">
+            {rank !== undefined && (
+              <Badge 
+                variant="default"
+                className="!rounded-full !px-2.5 !py-1 text-sm font-bold"
+                style={{
+                    backgroundColor: 'rgba(11, 105, 255, 0.9)', 
+                    backdropFilter: 'blur(4px)',
+                }}
+              >
+                #{rank}
+              </Badge>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleFavoriteToggle}
+              className="h-8 w-8 rounded-full bg-background/60 backdrop-blur-sm opacity-0 group-hover/card:opacity-100 transition-opacity"
+              aria-label="Yêu thích"
+            >
+              <Heart className={cn("h-5 w-5", isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground")} />
+            </Button>
+        </div>
       <CardHeader className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
