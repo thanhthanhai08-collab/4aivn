@@ -283,7 +283,7 @@ function ToolDetailContent({ id }: { id: string }) {
                              alt={`Ảnh giới thiệu ${tool.name}`}
                              width={1280}
                              height={720}
-                             className="w-full h-full object-cover rounded-lg"
+                             className="w-full h-full object-contain rounded-lg"
                              data-ai-hint="tool interface"
                            />
                        ) : null}
@@ -399,7 +399,7 @@ function ToolDetailContent({ id }: { id: string }) {
              {/* CTA */}
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <h2 className="text-2xl font-bold mb-2">THAM GIA CỘNG ĐỒNG CLEAN AI HUB</h2>
+                    <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
                     <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
                     <Button variant="secondary" size="lg" asChild>
                        <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
