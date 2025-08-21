@@ -273,17 +273,51 @@ export const mockTools: Tool[] = [
     name: 'Firebase Studio',
     context: 'Code cho Web app',
     developer: 'Google',
-    description: 'Firebase Studio là một môi trường phát triển web app dựa trên Google Cloud được ra mắt tháng 4-2025, nhằm mục tiêu tăng tốc toàn bộ vòng đời phát triển ứng dụng AI web app AI một cách nhanh chóng và hiệu quả ngay trên trình duyệt.\n+ Firebase Studio kết hợp sức mạnh của mô hình Gemini của Google, các dịch vụ Firebase truyền thống, framework AI Genkit và công cụ lập trình AI trên đám mây Project IDX, tạo ra một nền tảng tích hợp, cho phép từ giai đoạn tạo mẫu ứng dụng ban đầu, viết mã, triển khai đến quản lý ứng dụng web app một cách liền mạch.\n+ Nhờ tích hợp Gemini, Firebase Studio cho phép người dùng tạo mẫu ứng dụng qua các tương tác bằng ngôn ngữ tự nhiên (hỗ trợ cả những hình vẽ, bảng vẽ tay,..) và các prompt đơn giản, hỗ trợ cả lập trình viên hoặc cả những người không biết code giúp xây dựng ứng dụng AI toàn diện mà không cần nhiều công đoạn thủ công hoặc hạ tầng máy chủ phức tạp vì đã có Google Cloud lo hết từ A-Z.\n+ Các tính năng nổi bật khi ra mắt của Firebase Studio:\n• Môi trường phát triển toàn diện trên Cloud: Firebase mang đến khả năng phát triển, thử nghiệm, triển khai ứng dụng từ backend, frontend, API đến di động, ngay trong trình duyệt, có khả năng tùy chỉnh cao dựa trên nền tảng Google Cloud nên tính di động cực cao người dùng có thể chỉnh sửa ở bất cứ đâu như công ty, nhà, quán cà phê.\n• Tự động tạo mẫu web app nhanh qua công cụ App Prototyping (no-code): Phát triển ứng dụng web full-stack AI bằng nhiều loại prompt đầu vào (ngôn ngữ tự nhiên, hình ảnh, bản vẽ), Gemini sẽ tạo ra bản thiết kế, mã nguồn và bản xem trước ứng dụng. Đặc biệt những người không biết code hoàn toàn có thể sử dụng một cách dễ dàng.\n• Hỗ trợ lập trình AI từ Gemini: Đối với dân nocode thì trợ lý AI khá thông minh có thể hỗ trợ viết mã, sửa lỗi, viết và chạy test, quản lý dependencies cung cấp đề xuất mã trực tiếp và hỗ trợ tài liệu dựa trên những yêu cầu đơn giản nhưng cũng vì thế mà thời gian chỉnh sửa sẽ rất lâu hoặc có thể dẫn đến không hiểu ý người dùng (vẫn có chế độ chỉnh sửa code thủ công nhưng dành cho người biết về code).\nCòn đối với dân lập trình thì có thêm chế độ chỉnh sửa code thủ công đi kèm với chế độ chỉnh sửa bằng AI tất nhiên là trợ lý AI có hỗ trợ trong cả 2 chế độ này từ đó giúp người lập trình có thể prompt chính xác cần chỉnh sửa ở chỗ nào trong file nào thì trình chỉnh sửa của AI sẽ cực nhanh và đúng ý tưởng.\n• Hỗ trợ nhập dự án đa nguồn, đa ngôn ngữ: Có thể nhập dự án từ thiết kế Figma thông qua plugin Builder hoặc từ kho mã nguồn công khai/riêng tư với nhiều ngôn ngữ và framework phổ biến như Go, Java, Node.js, Python Flask, Next.js, React, Angular, Flutter, Android,...\n• Bộ công cụ kiểm thử và triển khai tích hợp sâu với Firebase và Google Cloud: Tích hợp Firebase Local Emulator Suite và các dịch vụ như Authentication, Cloud functions, Firestore, Storage, Hosting để test hoặc triển khai dễ dàng hơn.\n• Xuất bản và quản lý theo dõi hiệu suất ứng dụng ngay trên nền tảng: Có thể xuất bản trực tiếp ngay trên nền tảng thông qua App hosting hoặc Hosting đối với Web và đặc biệt có thể tích hợp Google Analytics ngay trên nền tảng Firebase Console để theo dõi hiệu suất của ứng dụng. \n• Giá cả: Gói Spark miễn phí hoàn toàn khá đủ dùng đối với ứng dụng nhỏ tuy nhiên có giới hạn với 10GB hosting và 1 GB cloud firestore, 50k người dùng hoạt động hàng tháng\nGói Blaze thu phí dựa trên dữ liệu người dùng nếu dùng quá giới hạn gói Spark, và được dùng thêm dịch vụ App Hosting, Function, Storage.\n',
+    imageUrl: '/image/Ảnh công cụ AI Firebase Studio.png',
+    description: 'Firebase Studio là một môi trường phát triển web app dựa trên Google Cloud, nhằm mục tiêu tăng tốc toàn bộ vòng đời phát triển ứng dụng AI một cách nhanh chóng và hiệu quả ngay trên trình duyệt.',
+    longDescription: '<p>Firebase Studio kết hợp sức mạnh của mô hình Gemini của Google, các dịch vụ Firebase truyền thống, framework AI Genkit và công cụ lập trình AI trên đám mây Project IDX, tạo ra một nền tảng tích hợp, cho phép từ giai đoạn tạo mẫu ứng dụng ban đầu, viết mã, triển khai đến quản lý ứng dụng web app một cách liền mạch.</p><p>Nhờ tích hợp Gemini, Firebase Studio cho phép người dùng tạo mẫu ứng dụng qua các tương tác bằng ngôn ngữ tự nhiên (hỗ trợ cả những hình vẽ, bảng vẽ tay,..) và các prompt đơn giản, hỗ trợ cả lập trình viên hoặc cả những người không biết code giúp xây dựng ứng dụng AI toàn diện mà không cần nhiều công đoạn thủ công hoặc hạ tầng máy chủ phức tạp vì đã có Google Cloud lo hết từ A-Z.</p>',
     logoUrl: '/image/Logo Firebase Studio.png',
-    link: 'https://firebase.google.com',
+    link: 'https://firebase.google.com/studio',
     features: [
-      "Môi trường phát triển toàn diện trên Cloud.",
-"Tự tạo mẫu web app nhanh thông qua App Prototyping (ngôn ngữ tự nhiên, hình ảnh, bản vẽ).",
-"Hỗ trợ lập trình code với sức mạnh AI từ Gemini với 2 chế độ code thủ công và code dựa vào trợ lý AI.",
-      "Hỗ trợ nhập dự án đa nguồn, đa ngôn ngữ.",
-      "Bộ công cụ tích hợp sâu với Firebase và Google Cloud.",
-      "Xuất bản và quản lý theo dõi hiệu suất ngay trên nền tảng với Google Analytics.",
-"Có gói sử dụng miễn phí và thu phí theo mức sử dụng.",
+      "Môi trường phát triển toàn diện trên Cloud, có tính di động cao.",
+      "Tự động tạo mẫu web app nhanh qua công cụ App Prototyping (no-code).",
+      "Hỗ trợ lập trình code với sức mạnh AI từ Gemini với cả chế độ thủ công và AI.",
+      "Hỗ trợ nhập dự án đa nguồn, đa ngôn ngữ (Figma, Git, nhiều framework).",
+      "Bộ công cụ kiểm thử và triển khai tích hợp sâu với Firebase và Google Cloud.",
+      "Xuất bản và quản lý theo dõi hiệu suất ngay trên nền tảng.",
     ],
+    useCases: [
+        'Phát triển ứng dụng Web AI',
+        'Tạo mẫu ứng dụng nhanh (Prototyping)',
+        'Xây dựng Backend với Genkit và Firebase',
+        'Tích hợp các dịch vụ Firebase',
+        'Lập trình cộng tác trên nền tảng đám mây'
+    ],
+    whoIsItFor: [
+        'Nhà phát triển Full-stack',
+        'Nhà phát triển Frontend',
+        'Kỹ sư AI/ML',
+        'Người dùng không chuyên về code',
+        'Nhóm phát triển sản phẩm'
+    ],
+    pricingPlans: `
+        <h3>Gói Spark (Miễn phí)</h3>
+        <ul>
+            <li><strong>Lưu trữ (Hosting):</strong> 10 GB</li>
+            <li><strong>Cloud Firestore:</strong> 1 GB dung lượng lưu trữ</li>
+            <li><strong>Cloud Functions:</strong> Giới hạn số lần gọi</li>
+            <li><strong>Xác thực (Authentication):</strong> 10.000 người dùng/tháng</li>
+            <li>Phù hợp cho các dự án cá nhân và ứng dụng nhỏ.</li>
+        </ul>
+        <h3>Gói Blaze (Pay-as-you-go)</h3>
+        <ul>
+            <li><strong>Linh hoạt:</strong> Trả phí dựa trên mức độ sử dụng thực tế.</li>
+            <li><strong>Không giới hạn:</strong> Mở khóa các giới hạn của gói Spark.</li>
+            <li><strong>Dịch vụ cao cấp:</strong> Hỗ trợ App Hosting, Cloud Functions for Firebase thế hệ thứ 2, và nhiều tính năng mở rộng khác.</li>
+            <li>Phù hợp cho các ứng dụng có quy mô lớn và doanh nghiệp.</li>
+        </ul>
+    `,
+    userRating: 4.8,
+    ratingCount: 180,
   },
 ];
