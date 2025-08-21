@@ -199,8 +199,8 @@ export default function HomePage() {
             {isLoadingTools ? (
                 [...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-lg" />)
             ) : (
-                topTools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
+                topTools.map((tool, index) => (
+                  <ToolCard key={tool.id} tool={tool} rank={index + 1} />
                 ))
             )}
           </div>

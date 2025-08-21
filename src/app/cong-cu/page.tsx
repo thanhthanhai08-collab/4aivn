@@ -133,8 +133,8 @@ export default function ToolsPage() {
           </div>
         ) : sortedTools.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sortedTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+            {sortedTools.map((tool, index) => (
+              <ToolCard key={tool.id} tool={tool} rank={index + 1} />
             ))}
           </div>
         ) : (

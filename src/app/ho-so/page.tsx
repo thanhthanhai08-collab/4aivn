@@ -177,8 +177,8 @@ export default function ProfilePage() {
               <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ yêu thích</h2>
               {favoriteTools.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {favoriteTools.map((tool) => (
-                    <ToolCard key={tool.id} tool={tool} />
+                  {favoriteTools.map((tool, index) => (
+                    <ToolCard key={tool.id} tool={tool} rank={index + 1} />
                   ))}
                 </div>
               ) : (
@@ -203,8 +203,8 @@ export default function ProfilePage() {
               <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI đã đánh giá</h2>
               {ratedTools.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {ratedTools.map((tool) => (
-                    <ToolCard key={tool.id} tool={tool} />
+                  {ratedTools.map((tool, index) => (
+                    <ToolCard key={tool.id} tool={tool} rank={index + 1}/>
                   ))}
                 </div>
               ) : (

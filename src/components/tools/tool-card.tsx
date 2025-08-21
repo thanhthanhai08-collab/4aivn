@@ -9,15 +9,28 @@ import type { Tool } from "@/lib/types";
 
 interface ToolCardProps {
   tool: Tool;
+  rank?: number;
 }
 
-export function ToolCard({ tool }: ToolCardProps) {
+export function ToolCard({ tool, rank }: ToolCardProps) {
   const averageRating = tool.ratingCount && tool.ratingCount > 0 
     ? (tool.totalStars || 0) / tool.ratingCount 
     : tool.userRating || 0;
 
   return (
-    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1">
+    <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1 relative">
+       {rank !== undefined && (
+          <Badge 
+            variant="default"
+            className="absolute top-2 right-2 z-10 !rounded-full !px-2.5 !py-1 text-sm font-bold"
+            style={{
+                backgroundColor: 'rgba(11, 105, 255, 0.9)', 
+                backdropFilter: 'blur(4px)',
+            }}
+           >
+            #{rank}
+          </Badge>
+        )}
       <CardHeader className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
