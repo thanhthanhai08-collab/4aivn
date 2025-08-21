@@ -283,7 +283,7 @@ function ToolDetailContent({ id }: { id: string }) {
                              alt={`Ảnh giới thiệu ${tool.name}`}
                              width={1280}
                              height={720}
-                             className="w-full h-full object-cover rounded-lg shadow-2xl"
+                             className="w-full h-full object-cover rounded-lg"
                              data-ai-hint="tool interface"
                            />
                        ) : null}
