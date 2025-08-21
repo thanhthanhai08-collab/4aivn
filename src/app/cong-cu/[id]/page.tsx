@@ -28,6 +28,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
@@ -79,6 +81,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
+  const [ranking, setRanking] = useState<number | null>(null);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -100,32 +103,86 @@ function ToolDetailContent({ id }: { id: string }) {
   const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
 
   useEffect(() => {
-    const foundTool = initialMockTools.find((t) => t.id === id);
-    
-    if (foundTool) {
-      setTool(foundTool);
+    const fetchData = async () => {
+      setIsLoading(true);
+      const foundTool = initialMockTools.find((t) => t.id === id);
       
-      // Fetch aggregate rating for all users
-      getAggregateRating("tools", id).then(setAggregateRating);
-
-      // Fetch all user reviews for this tool
-      getAllToolReviews(id).then(setAllReviews);
-
-      // Fetch user-specific data only if logged in
-      if (currentUser) {
-        getUserProfileData(currentUser.uid).then(userData => {
-          setIsFavorite(userData.favoriteTools?.includes(id) || false);
+      if (foundTool) {
+        setTool(foundTool);
+        
+        // Fetch all tool ratings to calculate rank
+        const toolsSnapshot = await getDocs(collection(db, "tools"));
+        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
+        toolsSnapshot.forEach(doc => {
+            const data = doc.data();
+            toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
-      }
 
-      // Generate enhanced description if needed
-      if (foundTool.description.length < 100 && foundTool.description.length > 0) {
-        generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
-          .then(output => setEnhancedDescription(output.description))
-          .catch(err => console.error("Failed to generate AI description:", err));
+        const allToolsWithRatings = initialMockTools.map(tool => ({
+            ...tool,
+            ...toolRatings[tool.id]
+        }));
+        
+        // Sort tools to find rank
+        let denseRank = 0;
+        let lastSignature = "";
+        const sortedTools = allToolsWithRatings.sort((a, b) => {
+            const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
+            const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+            if (ratingB !== ratingA) return ratingB - ratingA;
+            const countA = a.ratingCount ?? 0;
+            const countB = b.ratingCount ?? 0;
+            if (countB !== countA) return countB - countA;
+            return a.name.localeCompare(b.name);
+        });
+
+        // Calculate dense rank
+        const rank = sortedTools.findIndex(t => t.id === id);
+        if (rank !== -1) {
+            let denseRank = 0;
+            let lastSignature = "";
+            for (let i = 0; i <= rank; i++) {
+                const item = sortedTools[i];
+                const averageRating = item.ratingCount && item.ratingCount > 0 ? (item.totalStars || 0) / item.ratingCount : item.userRating || -Infinity;
+                const currentSignature = [averageRating, item.ratingCount || 0].join('-');
+                if(currentSignature !== lastSignature) {
+                    denseRank = i + 1;
+                }
+                lastSignature = currentSignature;
+                if (item.id === id) {
+                    setRanking(denseRank);
+                    break;
+                }
+            }
+        } else {
+            setRanking(null);
+        }
+
+        // Fetch aggregate rating for the current tool
+        const aggregateData = toolRatings[id] || { totalStars: 0, ratingCount: 0 };
+        setAggregateRating(aggregateData);
+
+        // Fetch all user reviews for this tool
+        getAllToolReviews(id).then(setAllReviews);
+
+        // Fetch user-specific data only if logged in
+        if (currentUser) {
+          getUserProfileData(currentUser.uid).then(userData => {
+            setIsFavorite(userData.favoriteTools?.includes(id) || false);
+          });
+        }
+
+        // Generate enhanced description if needed
+        if (foundTool.description.length < 100 && foundTool.description.length > 0) {
+          generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
+            .then(output => setEnhancedDescription(output.description))
+            .catch(err => console.error("Failed to generate AI description:", err));
+        }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, [id, currentUser]);
 
   const handleFavoriteToggle = async () => {
@@ -259,9 +316,9 @@ function ToolDetailContent({ id }: { id: string }) {
                   <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
                   <span>({aggregateRating.ratingCount} đánh giá)</span>
                 </div>
-                 {tool.ranking && (
+                 {ranking && (
                     <div className="flex items-center gap-1">
-                        <span className="font-semibold text-foreground">Xếp hạng: #{tool.ranking}</span>
+                        <span className="font-semibold text-foreground">Xếp hạng: #{ranking}</span>
                     </div>
                 )}
               </div>
@@ -295,7 +352,7 @@ function ToolDetailContent({ id }: { id: string }) {
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                width={1280}
                                height={720}
-                               className="w-full h-auto"
+                               className="w-full h-auto object-contain"
                                data-ai-hint="tool interface"
                              />
                            </div>
