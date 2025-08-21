@@ -85,6 +85,17 @@ function ToolDetailContent({ id }: { id: string }) {
   
   const allCategories = Array.from(new Set(initialMockTools.map(t => t.context)));
 
+  const categoryIcons: { [key: string]: string } = {
+    'Tạo hình ảnh': '🎨',
+    'AI Agent': '🤖',
+    'Tự động hóa': '⚙️',
+    'API truy xuất dữ liệu web': '🌐',
+    'Hỗ trợ viết': '✍️',
+    'Tạo video': '🎬',
+    'Code cho Web app': '💻',
+    'Model AI': '🧠'
+  };
+
   const featuredTools = initialMockTools.filter(t => ['midjourney', 'sora-ai', 'gpt-image-1'].includes(t.id));
   const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
 
@@ -454,15 +465,10 @@ function ToolDetailContent({ id }: { id: string }) {
                  {allCategories.map(cat => (
                      <Button key={cat} variant="ghost" className="w-full justify-start text-base" asChild>
                         <Link href={`/cong-cu?category=${encodeURIComponent(cat)}`}>
-                           <span className="mr-3 text-lg">#</span> {cat}
+                           <span className="mr-3 text-lg">{categoryIcons[cat] || '✨'}</span> {cat}
                         </Link>
                      </Button>
                  ))}
-                 <Button variant="ghost" className="w-full justify-start text-base" asChild>
-                    <Link href="/cong-cu">
-                       <span className="mr-3 text-lg">➡️</span> Xem tất cả công cụ
-                    </Link>
-                 </Button>
               </CardContent>
             </Card>
             
