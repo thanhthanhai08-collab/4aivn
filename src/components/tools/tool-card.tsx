@@ -67,6 +67,15 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1 relative group/card">
        <div className="absolute top-2 right-2 z-10 flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleFavoriteToggle}
+              className="h-8 w-8 rounded-full bg-background/60 backdrop-blur-sm transition-opacity"
+              aria-label="Yêu thích"
+            >
+              <Heart className={cn("h-5 w-5", isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground")} />
+            </Button>
             {rank !== undefined && (
               <Badge 
                 variant="default"
@@ -79,15 +88,6 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
                 #{rank}
               </Badge>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleFavoriteToggle}
-              className="h-8 w-8 rounded-full bg-background/60 backdrop-blur-sm transition-opacity"
-              aria-label="Yêu thích"
-            >
-              <Heart className={cn("h-5 w-5", isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground")} />
-            </Button>
         </div>
       <CardHeader className="p-4">
         <div className="flex items-start justify-between">
