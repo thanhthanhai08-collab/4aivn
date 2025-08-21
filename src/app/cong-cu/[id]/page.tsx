@@ -283,7 +283,7 @@ function ToolDetailContent({ id }: { id: string }) {
                              alt={`Ảnh giới thiệu ${tool.name}`}
                              width={1280}
                              height={720}
-                             className="w-full h-full object-cover rounded-lg"
+                             className="w-full h-full object-cover rounded-lg shadow-lg"
                              data-ai-hint="tool interface"
                            />
                        ) : null}
@@ -481,5 +481,4 @@ function ToolDetailContent({ id }: { id: string }) {
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent id={params.id} />;
 }
-
     
