@@ -346,7 +346,7 @@ function ToolDetailContent({ id }: { id: string }) {
                             className="w-full h-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                          <div className="overflow-hidden rounded-lg shadow-2xl">
+                          <div className="overflow-hidden rounded-lg">
                              <Image 
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
