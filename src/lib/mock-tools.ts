@@ -114,7 +114,7 @@ export const mockTools: Tool[] = [
     name: 'n8n',
     context: 'Tự động hóa',
     developer: 'n8n',
-    imageUrl: '/image/Ảnh công cụ AI n8n.png',
+    imageUrl: '/image/Ảnh công cụ n8n.png',
     description: 'n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau để tự động hóa các tác vụ phức tạp.',
     longDescription: '<p>n8n là một nền tảng tự động hóa quy trình làm việc (workflow automation) mã nguồn mở, cho phép người dùng kết nối và tích hợp nhiều ứng dụng, dịch vụ khác nhau (đã tích hợp được hơn 400 ứng dụng , dịch vụ) để tự động hóa các tác vụ phức tạp thông qua giao diện kéo-thả trực quan, mà không cần hoặc ít cần viết code.</p><p>n8n phù hợp cho cả người không chuyên và lập trình viên.</p>',
     logoUrl: '/image/Logo n8n.png',
