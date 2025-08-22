@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid } from "lucide-react";
 import { mockTools as initialMockTools } from "@/lib/mock-tools";
-import type { Tool } from "@/lib/types";
+import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +30,8 @@ import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { mockNews } from "@/lib/mock-news";
+import { NewsCard } from "@/components/news/news-card";
 
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
@@ -79,6 +81,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const [currentRating, setCurrentRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [ranking, setRanking] = useState<number | null>(null);
@@ -171,6 +174,13 @@ function ToolDetailContent({ id }: { id: string }) {
             setIsFavorite(userData.favoriteTools?.includes(id) || false);
           });
         }
+        
+        // Fetch related news
+        const filteredNews = mockNews.filter(article => 
+            article.title.toLowerCase().includes(foundTool.name.toLowerCase()) || 
+            article.content.toLowerCase().includes(foundTool.name.toLowerCase())
+        ).slice(0, 3);
+        setRelatedNews(filteredNews);
 
         // Generate enhanced description if needed
         if (foundTool.description.length < 100 && foundTool.description.length > 0) {
@@ -461,6 +471,18 @@ function ToolDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
             </section>
+            
+            {/* Related Articles Section */}
+            {relatedNews.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold font-headline mb-6 text-center">Bài viết liên quan</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {relatedNews.map((article) => (
+                    <NewsCard key={article.id} article={article} />
+                  ))}
+                </div>
+              </section>
+            )}
 
 
              {/* CTA */}
