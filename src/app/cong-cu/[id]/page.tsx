@@ -349,7 +349,7 @@ function ToolDetailContent({ id }: { id: string }) {
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                layout="fill"
-                               className="object-cover"
+                               className="object-cover rounded-lg shadow-lg"
                                data-ai-hint="tool interface"
                              />
                            </div>
