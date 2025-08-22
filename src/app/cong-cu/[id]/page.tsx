@@ -333,7 +333,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+                    <div className="overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800 shadow-lg">
                        {tool.videoUrl ? (
                            <iframe
                             src={tool.videoUrl}
@@ -349,7 +349,7 @@ function ToolDetailContent({ id }: { id: string }) {
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                layout="fill"
-                               className="object-cover rounded-lg shadow-lg"
+                               className="object-cover rounded-lg"
                                data-ai-hint="tool interface"
                              />
                            </div>
