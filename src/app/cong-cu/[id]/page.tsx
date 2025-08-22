@@ -352,7 +352,7 @@ function ToolDetailContent({ id }: { id: string }) {
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                width={1280}
                                height={720}
-                               className="w-full h-auto object-contain"
+                               className="w-full h-auto object-cover"
                                data-ai-hint="tool interface"
                              />
                            </div>
