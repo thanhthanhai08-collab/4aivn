@@ -333,26 +333,23 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
                 <section>
-                    <div className="bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                    <div className="overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
                        {tool.videoUrl ? (
                            <iframe
-                            width="100%"
-                            height="100%"
                             src={tool.videoUrl}
                             title={`Video giới thiệu ${tool.name}`}
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
-                            className="w-full h-full aspect-video"
+                            className="w-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                          <div className="overflow-hidden rounded-lg">
+                          <div className="relative w-full aspect-video">
                              <Image 
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
-                               width={1280}
-                               height={720}
-                               className="w-full h-auto object-cover"
+                               layout="fill"
+                               className="object-cover"
                                data-ai-hint="tool interface"
                              />
                            </div>
