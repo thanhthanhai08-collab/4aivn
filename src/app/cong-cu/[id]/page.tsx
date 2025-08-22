@@ -344,12 +344,12 @@ function ToolDetailContent({ id }: { id: string }) {
                             className="w-full aspect-video"
                           ></iframe>
                        ) : tool.imageUrl ? (
-                          <div className="relative w-full aspect-video">
+                           <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
                              <Image 
                                src={tool.imageUrl}
                                alt={`Ảnh giới thiệu ${tool.name}`}
                                layout="fill"
-                               className="object-cover rounded-lg"
+                               className="object-cover"
                                data-ai-hint="tool interface"
                              />
                            </div>
@@ -361,7 +361,7 @@ function ToolDetailContent({ id }: { id: string }) {
             {/* What is tool? */}
              {tool.longDescription && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">N8n là gì?</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{tool.name} là gì?</h2>
                     <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
                 </section>
             )}
