@@ -19,6 +19,7 @@ export const mockTools: Tool[] = [
       "Chi phí nhỏ nhất là 10 USD / 1 tháng.",
     ],
     userRating: 4.9,
+    totalStars: 980,
     ratingCount: 200,
     isFavorite: true,
   },
@@ -38,6 +39,7 @@ export const mockTools: Tool[] = [
       "Có thể tạo nhân vật đồng nhất dựa trên mô tả prompt."
     ],
     userRating: 4.8,
+    totalStars: 720,
     ratingCount: 150,
     isFavorite: false,
   },
@@ -59,6 +61,7 @@ export const mockTools: Tool[] = [
       "• Chỉnh sửa hình ảnh từ mô tả văn bản, giọng nói",
     ],
     userRating: 4.7,
+    totalStars: 634.5,
     ratingCount: 135,
     isFavorite: true,
   },
@@ -79,6 +82,7 @@ export const mockTools: Tool[] = [
       "Kết nối miễn phí qua API của Hugging Face.",
     ],
     userRating: 4.6,
+    totalStars: 644,
     ratingCount: 140,
     isFavorite: false,
   },
@@ -101,6 +105,7 @@ export const mockTools: Tool[] = [
       " Quản lý tác vụ linh hoạt hoàn toàn theo điều chỉnh của người dùng.",
     ],
     userRating: 4.6,
+    totalStars: 506,
     ratingCount: 110,
     isFavorite: false,
   },
@@ -150,7 +155,45 @@ export const mockTools: Tool[] = [
         </ul>
     `,
     userRating: 4.5,
+    totalStars: 360,
     ratingCount: 80,
+  },
+   {
+    id: 'firebase-studio',
+    name: 'Firebase Studio',
+    context: 'Code cho Web app',
+    developer: 'Google',
+    imageUrl: '/image/Ảnh công cụ Firebase Studio.png',
+    description: 'Firebase Studio là một môi trường phát triển tích hợp (IDE) dựa trên web, được thiết kế để đơn giản hóa và tăng tốc quá trình xây dựng, quản lý các ứng dụng web hiện đại. Công cụ này kết hợp sức mạnh của Firebase với các công nghệ web hàng đầu như Next.js, React, và Genkit, đồng thời được hỗ trợ bởi AI, giúp các nhà phát triển từ người mới bắt đầu đến chuyên gia có thể dễ dàng tạo ra các sản phẩm chất lượng cao.',
+    longDescription: `<p>Firebase Studio cung cấp một bộ công cụ toàn diện, cho phép bạn tập trung vào việc xây dựng các tính năng độc đáo thay vì phải lo lắng về cơ sở hạ tầng. Với khả năng chỉnh sửa code theo thời gian thực và sự trợ giúp của AI, bạn có thể nhanh chóng biến ý tưởng thành hiện thực, từ việc thiết kế giao diện người dùng đến triển khai các tính năng AI phức tạp.</p>`,
+    logoUrl: '/image/Logo Firebase Studio.png',
+    link: 'https://firebase.google.com/studio',
+    features: [
+      "Chỉnh sửa code trực tiếp trong trình duyệt",
+      "Tích hợp sẵn các công nghệ web hiện đại (Next.js, React)",
+      "Hỗ trợ bởi AI để tăng tốc độ phát triển",
+      "Tích hợp sâu với các dịch vụ Firebase",
+      "Triển khai ứng dụng dễ dàng với Firebase Hosting",
+      "Môi trường phát triển cộng tác",
+    ],
+    useCases: [
+        'Xây dựng ứng dụng web',
+        'Tạo mẫu (prototyping) nhanh',
+        'Tích hợp các tính năng AI vào ứng dụng',
+        'Phát triển các ứng dụng có backend Firebase'
+    ],
+    whoIsItFor: [
+        'Nhà phát triển Web',
+        'Người mới bắt đầu học lập trình',
+        'Nhóm phát triển phần mềm',
+        'Startup công nghệ'
+    ],
+    pricingPlans: `
+        <p>Firebase Studio hiện đang trong giai đoạn thử nghiệm và có thể được sử dụng miễn phí trong giới hạn của gói Firebase Spark. Chi phí sẽ được tính dựa trên việc sử dụng các dịch vụ Firebase khác (như Firestore, Authentication, Hosting) theo mô hình "pay-as-you-go".</p>
+    `,
+    userRating: 4.8,
+    totalStars: 480,
+    ratingCount: 100,
   },
   {
     id: 'tavily-ai',
@@ -169,6 +212,7 @@ export const mockTools: Tool[] = [
       "Gói miễn phí hoàn toàn có thể dùng cho nghiên cứu sinh, sinh viên.",
     ],
     userRating: 4.4,
+    totalStars: 264,
     ratingCount: 60,
   },
   {
@@ -188,6 +232,7 @@ export const mockTools: Tool[] = [
       "Cộng đồng người dùng, tài nguyên rất lớn.",
     ],
     userRating: 4.3,
+    totalStars: 322.5,
     ratingCount: 75,
   },
   {
@@ -207,6 +252,7 @@ export const mockTools: Tool[] = [
       "Tìm kiếm và tương tác với người dùng dựa trên dữ liệu của Notion.",
     ],
     userRating: 4.2,
+    totalStars: 399,
     ratingCount: 95,
   },
   {
@@ -226,6 +272,7 @@ export const mockTools: Tool[] = [
       "Có khả năng mở rộng video hoặc tạo nhiều cảnh trong một video.",
     ],
     userRating: 4.1,
+    totalStars: 385.4,
     ratingCount: 94,
   },
   {
@@ -233,7 +280,7 @@ export const mockTools: Tool[] = [
     name: 'Veo 3',
     context: 'Tạo video',
     developer: 'Google',
-    description: 'Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao đặc biệt là Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video giúp tạo ra các video chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.\n+ Video của Google Veo 3 phù hợp cho nhiều mục đích như marketing, quảng cáo sản phẩm, nội dung truyền thông xã hội, giảng dạy, và sáng tạo nội dung đa dạng nhờ những đặc tính sau: \n• Hỗ trợ cả tạo video từ văn bản (Text-to-video) và tạo video từ ảnh (Frame-to-video): Người dùng có thể chuyển đổi mô tả bằng văn bản thành video chất lượng cao, phù hợp cho quảng cáo, mạng xã hội, giáo dục, kể chuyện hoặc có thể tải lên hình ảnh có sẵn để Veo 3 phân tích và tạo video nhưng có một nhược điểm của Veo 3 là mỗi lần chỉ có thể tải lên một hình ảnh cho nên muốn tạo nhiều frame đúng ý nhất trong video của Google Veo 3 thì phải dùng mô tả văn bản  mà hoàn toàn không phải hậu kì phức tạp.\n• Tự động tạo âm thanh đi kèm với video để tăng tính đồng nhất : Veo 3 có khả năng tạo video với âm thanh đồng bộ hoàn chỉnh, bao gồm giọng nói, lời thoại có sắc thái cảm xúc, hiệu ứng âm thanh môi trường (mưa, gió, tiếng động vật, tiếng xe cộ), và nhạc nền phù hợp,.\n• Đồng bộ chuyển động môi và mô phỏng vật lý chân thực: Công nghệ lip-sync chính xác giúp nhân vật trong video chuyển động môi khớp với lời thoại, đồng thời mô phỏng các yếu tố vật lý như gió, nước, chuyển động nhân vật mượt mà, tạo cảm giác như phim quay thực tế. Mà tất cả những chân thực này Veo 2 đã làm rất tốt rồi chứ đừng nói đến bản nâng cấp là Veo 3.\n• Hỗ trợ prompt chỉnh sửa chi tiết và tùy chỉnh sáng tạo: Người dùng hoàn toàn có thể chỉnh sửa video đã tạo bằng prompt văn bản trực tiếp với Veo 3, hoặc có khả năng chỉnh sửa các yếu tố như góc quay, hiệu ứng zoom, dolly shot, giúp sản phẩm cuối cùng mang phong cách điện ảnh hơn.\n• Chất lượng video cao, độ phân giải có thể lên đến 4K: Veo 3 tạo ra video có độ phân giải cao có thể lên đến 4K nếu người dùng dùng gói trả phí.\n• Khả năng kéo dài video: Veo 3 cho phép kéo dài video bằng cách thêm các phân cảnh mới hoặc kéo dài đoạn video hiện tại .\n• Tính nhất quán nhân vật có thể được duy trì và đảm bảo: Veo 3 có thể duy trì ngoại hình và đặc điểm của nhân vật qua nhiều cảnh quay, cho phép tạo nhiều cảnh quay nhất quán trong video bằng cách duy trì prompt hoặc bấm nút “thêm vào cảnh”.\n• Kết hợp với AI Flow tạo video dài cực kì hiệu quả: Google Veo 3 không trực tiếp hỗ trợ kết hợp nhiều video 8 giây đã tạo thành một video dài trong chính công cụ tạo video của nó, Tuy nhiên, Veo 3 được tích hợp với nền tảng làm phim AI Flow của Google, nơi người dùng có thể ghép nối, chỉnh sửa và sắp xếp các đoạn video ngắn (8 giây) thành một video dài, liền mạch và chuyên nghiệp hơn. Flow cung cấp các công cụ xây dựng cảnh, chỉnh sửa dòng thời gian, giúp tạo ra sản phẩm cuối cùng hoàn chỉnh theo kịch bản mong muốn.\n• GIá cả: Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam, mà hiện chỉ một số thị trường trong đó có Mỹ vì vậy muốn trải nghiệm nên đổi IP sang Mỹ và bên đó thì phải đăng ký gói AI Pro (20 USD/1 tháng) với 1000 token thì tạo được khoảng trên dưới 10 video /1 tháng còn gói AI Ultra (250 USD/1 tháng) 12.500 token thì tạo được khoảng trên dưới 300 video/1 tháng.\n',
+    description: 'Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao đặc biệt là Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video giúp tạo ra các video chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.\n+ Video của Google Veo 3 phù hợp cho nhiều mục đích như marketing, quảng cáo sản phẩm, nội dung truyền thông xã hội, giảng dạy, và sáng tạo nội dung đa dạng nhờ những đặc tính sau: \n• Hỗ trợ cả tạo video từ văn bản (Text-to-video) và tạo video từ ảnh (Frame-to-video): Người dùng có thể chuyển đổi mô tả bằng văn bản thành video chất lượng cao, phù hợp cho quảng cáo, mạng xã hội, giáo dục, kể chuyện hoặc có thể tải lên hình ảnh có sẵn để Veo 3 phân tích và tạo video nhưng có một nhược điểm của Veo 3 là mỗi lần chỉ có thể tải lên một hình ảnh cho nên muốn tạo nhiều frame đúng ý nhất trong video của Google Veo 3 thì phải dùng mô tả văn bản  mà hoàn toàn không phải hậu kì phức tạp.\n• Tự động tạo âm thanh đi kèm với video để tăng tính đồng nhất : Veo 3 có khả năng tạo video với âm thanh đồng bộ hoàn chỉnh, bao gồm giọng nói, lời thoại có sắc thái cảm xúc, hiệu ứng âm thanh môi trường (mưa, gió, tiếng động vật, tiếng xe cộ), và nhạc nền phù hợp,.\n• Đồng bộ chuyển động môi và mô phỏng vật lý chân thực: Công nghệ lip-sync chính xác giúp nhân vật trong video chuyển động môi khớp với lời thoại, đồng thời mô phỏng các yếu tố vật lý như gió, nước, chuyển động nhân vật mượt mà, tạo cảm giác như phim quay thực tế. Mà tất cả những chân thực này Veo 2 đã làm rất tốt rồi chứ đừng nói đến bản nâng cấp là Veo 3.\n• Hỗ trợ prompt chỉnh sửa chi tiết và tùy chỉnh sáng tạo: Người dùng hoàn toàn có thể chỉnh sửa video đã tạo bằng prompt văn bản trực tiếp với Veo 3, hoặc có khả năng chỉnh sửa các yếu tố như góc quay, hiệu ứng zoom, dolly shot, giúp sản phẩm cuối cùng mang phong cách điện ảnh hơn.\n• Chất lượng video cao, độ phân giải có thể lên đến 4K: Veo 3 tạo ra video có độ phân giải cao có thể lên đến 4K nếu người dùng dùng gói trả phí.\n• Khả năng kéo dài video: Veo 3 cho phép kéo dài video bằng cách thêm các phân cảnh mới hoặc kéo dài đoạn video hiện tại .\n• Tính nhất quán nhân vật có thể được duy trì và đảm bảo: Veo 3 có thể duy trì ngoại hình và đặc điểm của nhân vật qua nhiều cảnh quay, cho phép tạo nhiều cảnh quay nhất quán trong video bằng cách duy trì prompt hoặc bấm nút “thêm vào cảnh”.\n• Kết hợp với AI Flow tạo video dài cực kì hiệu quả: Google Veo 3 không trực tiếp hỗ trợ kết hợp nhiều video 8 giây đã tạo thành một video dài trong chính công cụ tạo video của nó, Tuy nhiên, Veo 3 được tích hợp với nền tảng làm phim AI Flow của Google, nơi người dùng có thể ghép nối, chỉnh sửa và sắp xếp các đoạn video ngắn (8 giây) thành một video dài, liền mạch và chuyên nghiệp hơn. Flow cung cấp các công cụ xây dựng cảnh, chỉnh sửa dòng thời gian, giúp tạo ra sản phẩm cuối cùng hoàn chỉnh theo kịch bản mong muốn.\n• GIá cả: Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam, mà hiện chỉ một số thị trường trong đó có Mỹ vì vậy muốn trải nghiệm nên đổi IP sang Mỹ và bên đó thì phải đăng ký gói AI Pro (20 USD/1 tháng) với 1000 token thì tạo được khoảng trên dưới 10 video / 1 tháng còn gói AI Ultra (250 USD/1 tháng) 12.500 token thì tạo được khoảng trên dưới 300 video/1 tháng.\n',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/models/veo/',
     features: [
@@ -247,6 +294,7 @@ export const mockTools: Tool[] = [
 "Đồng bộ với Google AI Flow tạo video dài hơn 8s hiệu quả.",
     ],
     userRating: 4.0,
+    totalStars: 376,
     ratingCount: 94,
   },
   {
@@ -254,70 +302,23 @@ export const mockTools: Tool[] = [
     name: 'Firecrawl',
     context: 'API truy xuất dữ liệu web',
     developer: 'Mendable',
-    description: 'Firecrawl công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như markdown, HTML, và dữ liệu có cấu trúc. Không những vậy Firecrawl còn có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về điểm khác biệt.\n+ Firecrawl có với đầu ra là json nhưng nó rất khác với Tavily và Crawl4AI. Đầu ra giống với Tavily nhưng đầu ra của Tavily chủ yếu là nguồn, links, tóm tắt chủ yếu phục vụ cho mục đích tìm kiếm, còn Firecrawl sẽ đầy đủ cấu trúc web với dữ liệu thô như tittle, content, heading phục vụ mục đích trích xuất nội dung của web, còn đối với Crawl4AI đầu ra chủ yếu là văn bản phù hợp hơn với việc làm tri thức (knowledge) cho AI.\n+ Firecrawl có đầy đủ các tính năng của API tìm kiếm và trích xuất dữ liệu web:\n• Trích xuất dữ liệu web toàn điện (Crawl website): Người dùng có thể đưa url bất kì web nào cho Firecrawl sẽ trích xuất toàn bộ nội dung kể cả các trang con thành định dạng sạch, chuẩn Markdown hoặc HTML, phù hợp để chuẩn bị dữ liệu cho các mô hình ngôn ngữ lớn (LLM).\n• Lấy dữ liệu cụ thể từ một url (Scrape pages): Lấy dữ liệu chi tiết từ một URL cụ thể với nhiều định dạng đầu ra đa dạng như markdown, HTML, dữ liệu có cấu trúc JSON, đặc biệt là đối với bản trả phí hoàn toàn có thể sử dụng đầu ra ảnh chụp màn hình (giống với Puppeteer) giúp AI, người dùng có thể phân tích thông tin chính xác trên từng trang.\n• Lập bản đồ trang web (Map website): Lấy toàn bộ URL liên quan trên một website, giúp hiểu cấu trúc site và hỗ trợ trong việc tổ chức dữ liệu.\n• Chuyển đổi dữ liệu không có cấu trúc thành dữ liệu có cấu trúc (Extract website): Sử dụng AI tự động để phân tích, tổ chức và chuyển dữ liệu web thô sau khi Scape hoặc Crawl  thành các định dạng có cấu trúc rõ ràng, giúp dễ dàng xử lý và phân tích, hoặc đơn giản có thể tóm tắt lại nội dung để dễ sử dụng hơn cho AI chức năng này giống với Tavily nhưng không mạnh như Tavily.\n• Hỗ trợ nội dung động và tương tác web: Khả năng xử lý các trang web có nội dung động chạy JavaScript, SPA, hoặc cũng thể tương tác với web như click, cuộn trang, nhập liệu tự động trước khi thu thập dữ liệu, giúp thu thập dữ liệu chính xác và theo thời gian thực hơn (chức năng này ai hay dùng Puppeteer chắc chắn sẽ rõ).\n• Tích hợp proxy, quản lý tốc độ và tự động vượt qua các nền tảng chặn : Firecrawl có thể tự động vượt qua các chướng ngại như giới hạn tốc độ, CAPTCHA, và anti-bot để đảm bảo trích xuất dữ liệu ổn định không bị gián đoạn.\n• API và SDK đa ngôn ngữ: Hỗ trợ SDK cho Python, Node.js, Go, Rust..., giúp tích hợp vào nhiều hệ thống và ứng dụng AI khác nhau.\n• Cách vận hành linh hoạt: Vì là mã nguồn mở nên có có thể tự lưu trữ (self-host) hoặc dùng dịch vụ cloud, giúp bảo mật và kiểm soát dữ liệu tốt hơn.\n• Giá cả: Hoàn toàn có gói miễn phí chỉ ở mức đủ dùng với 500 credit có thể crawl được 500 trang/1 tháng với hạn mức 10 lần scrape/phút và 1 lần crawl/phút.\nGói Hobby với 16-19 USD/1 tháng thì có 3000 credit có thể crawl được 3000 trang/1 tháng với hạn mức 20 scrape/phút, 3 crawl/phút.\nGói Standard với 83-99 USD/1 tháng thì có 100.000 credit có thể crawl được 100.000 trang/1 tháng với hạn mức 100 scrape/phút, 10 crawl/phút.\nGói Growth với 333-399 USD/1 tháng thì có 500.000 credit có thể crawl được 500.000 trang/1 tháng với hạn mức 1000 scrape/phút, 50 crawl/phút.\nĐấy là các gói với Crawl và Scrape còn đối với gói Extract thì được miễn phí 1 lần/1 tháng còn đối với trả phí thì khá đắt đối với người Việt chỉ nên dùng khi có điều kiện hoặc dùng cho công ty với gói rẻ nhất là 89-99 USD/1 tháng.\n',
+    description: 'Firecrawl công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như markdown, HTML, và dữ liệu có cấu trúc. Không những vậy Firecrawl còn có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về điểm khác biệt.\n+ Firecrawl có với đầu ra là json nhưng nó rất khác với Tavily và Crawl4AI. Đầu ra giống với Tavily nhưng đầu ra của Tavily chủ yếu là nguồn, links, tóm tắt chủ yếu phục vụ cho mục đích tìm kiếm, còn Firecrawl sẽ đầy đủ cấu trúc web với dữ liệu thô như tittle, content, heading phục vụ mục đích trích xuất nội dung của web, còn đối với Crawl4AI đầu ra chủ yếu là văn bản phù hợp hơn với việc làm tri thức (knowledge) cho AI.\n+ Firecrawl có đầy đủ các tính năng của API tìm kiếm và trích xuất dữ liệu web:\n• Trích xuất dữ liệu web toàn điện (Crawl website): Người dùng có thể đưa url bất kì web nào cho Firecrawl sẽ trích xuất toàn bộ nội dung kể cả các trang con thành định dạng sạch, chuẩn Markdown hoặc HTML, phù hợp để chuẩn bị dữ liệu cho các mô hình ngôn ngữ lớn (LLM).\n• Lấy dữ liệu cụ thể từ một url (Scrape pages): Lấy dữ liệu chi tiết từ một URL cụ thể với nhiều định dạng đầu ra đa dạng như markdown, HTML, dữ liệu có cấu trúc JSON, đặc biệt là đối với bản trả phí hoàn toàn có thể sử dụng đầu ra ảnh chụp màn hình (giống với Puppeteer) giúp AI, người dùng có thể phân tích thông tin chính xác trên từng trang.\n• Lập bản đồ trang web (Map website): Lấy toàn bộ URL liên quan trên một website, giúp hiểu cấu trúc site và hỗ trợ trong việc tổ chức dữ liệu.\n• Chuyển đổi dữ liệu không có cấu trúc thành dữ liệu có cấu trúc (Extract website): Sử dụng AI tự động để phân tích, tổ chức và chuyển dữ liệu web thô sau khi Scape hoặc Crawl  thành các định dạng có cấu trúc rõ ràng, giúp dễ dàng xử lý và phân tích, hoặc đơn giản có thể tóm tắt lại nội dung để dễ sử dụng hơn cho AI chức năng này giống với Tavily nhưng không mạnh như Tavily.\n• Hỗ trợ nội dung động và tương tác web: Khả năng xử lý các trang web có nội dung động chạy JavaScript, SPA, hoặc cũng thể tương tác với web như click, cuộn trang, nhập liệu tự động trước khi thu thập dữ liệu, giúp thu thập dữ liệu chính xác và theo thời gian thực hơn (chức năng này ai hay dùng Puppeteer chắc chắn sẽ rõ).\n• Tích hợp proxy, quản lý tốc độ và tự động vượt qua các nền tảng chặn : Firecrawl có thể tự động vượt qua các chướng ngại như giới hạn tốc độ, CAPTCHA, và anti-bot để đảm bảo trích xuất dữ liệu ổn định không bị gián đoạn.\n• API và SDK đa ngôn ngữ: Hỗ trợ SDK cho Python, Node.js, Go, Rust..., giúp tích hợp vào nhiều hệ thống và ứng dụng AI khác nhau.',
     logoUrl: '/image/Logo Firecrawl.png',
-    link: 'https://firecrawl.dev',
+    link: 'https://firecrawl.dev/',
     features: [
-      "Firecrawl hỗ trợ rất nhiều tính năng trích xuất dữ liệu từ page hoặc web như crawl, scrape, map, extract.",
-"Hỗ trợ web có nội dung động và có thể tương tác với web.",
-"Tích hợp proxy, quản lý tốc độ, có thể vượt qua CAPTCHA và Anti-bot.",
-      "API và SDK đa ngôn ngữ giúp tương thích dễ dàng với nhiều hệ thống và ứng dụng AI khác nhau.",
-      "Vì là mã nguồn mở nên có thể vận hành linh hoạt với self-host hoặc dùng cloud với gói miễn phí được 500 trang/1 tháng.",
-      "Có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung web gửi thông báo chi tiết cho người dùng.",
+      "Trích xuất dữ liệu web toàn diện và hỗ trợ nhiều định dạng",
+      "Lấy dữ liệu cụ thể từ từng URL với đầu ra đa dạng (bao gồm ảnh chụp màn hình).",
+      "Lập bản đồ trang web (sitemap) tự động.",
+      "Chuyển đổi dữ liệu không có cấu trúc thành có cấu trúc.",
+      "Hỗ trợ nội dung động (JavaScript, SPA) và tương tác web.",
+      "Tự động quản lý proxy, tốc độ và vượt qua anti-bot.",
+      "API và SDK đa ngôn ngữ (Python, Node.js, Go, Rust...).",
+      "Theo dõi sự thay đổi nội dung trên trang web (Change Tracking)."
     ],
     userRating: 4.4,
-    ratingCount: 55,
-  },
-  {
-    id: 'firebase-studio',
-    name: 'Firebase Studio',
-    context: 'Code cho Web app',
-    developer: 'Google',
-    imageUrl: '/image/Ảnh công cụ AI Firebase Studio.png',
-    description: 'Firebase Studio là một môi trường phát triển web app dựa trên Google Cloud, nhằm mục tiêu tăng tốc toàn bộ vòng đời phát triển ứng dụng AI một cách nhanh chóng và hiệu quả ngay trên trình duyệt.',
-    longDescription: '<p>Firebase Studio kết hợp sức mạnh của mô hình Gemini của Google, các dịch vụ Firebase truyền thống, framework AI Genkit và công cụ lập trình AI trên đám mây Project IDX, tạo ra một nền tảng tích hợp, cho phép từ giai đoạn tạo mẫu ứng dụng ban đầu, viết mã, triển khai đến quản lý ứng dụng web app một cách liền mạch.</p><p>Nhờ tích hợp Gemini, Firebase Studio cho phép người dùng tạo mẫu ứng dụng qua các tương tác bằng ngôn ngữ tự nhiên (hỗ trợ cả những hình vẽ, bảng vẽ tay,..) và các prompt đơn giản, hỗ trợ cả lập trình viên hoặc cả những người không biết code giúp xây dựng ứng dụng AI toàn diện mà không cần nhiều công đoạn thủ công hoặc hạ tầng máy chủ phức tạp vì đã có Google Cloud lo hết từ A-Z.</p>',
-    logoUrl: '/image/Logo Firebase Studio.png',
-    link: 'https://firebase.google.com/studio',
-    features: [
-      "Môi trường phát triển toàn diện trên Cloud, có tính di động cao.",
-      "Tự động tạo mẫu web app nhanh qua công cụ App Prototyping (no-code).",
-      "Hỗ trợ lập trình code với sức mạnh AI từ Gemini với cả chế độ thủ công và AI.",
-      "Hỗ trợ nhập dự án đa nguồn, đa ngôn ngữ (Figma, Git, nhiều framework).",
-      "Bộ công cụ kiểm thử và triển khai tích hợp sâu với Firebase và Google Cloud.",
-      "Xuất bản và quản lý theo dõi hiệu suất ngay trên nền tảng.",
-    ],
-    useCases: [
-        'Phát triển ứng dụng Web AI',
-        'Tạo mẫu ứng dụng nhanh (Prototyping)',
-        'Xây dựng Backend với Genkit và Firebase',
-        'Tích hợp các dịch vụ Firebase',
-        'Lập trình cộng tác trên nền tảng đám mây'
-    ],
-    whoIsItFor: [
-        'Nhà phát triển Full-stack',
-        'Nhà phát triển Frontend',
-        'Kỹ sư AI/ML',
-        'Người dùng không chuyên về code',
-        'Nhóm phát triển sản phẩm'
-    ],
-    pricingPlans: `
-        <h3>Gói Spark (Miễn phí)</h3>
-        <ul>
-            <li><strong>Lưu trữ (Hosting):</strong> 10 GB</li>
-            <li><strong>Cloud Firestore:</strong> 1 GB dung lượng lưu trữ</li>
-            <li><strong>Cloud Functions:</strong> Giới hạn số lần gọi</li>
-            <li><strong>Xác thực (Authentication):</strong> 10.000 người dùng/tháng</li>
-            <li>Phù hợp cho các dự án cá nhân và ứng dụng nhỏ.</li>
-        </ul>
-        <h3>Gói Blaze (Pay-as-you-go)</h3>
-        <ul>
-            <li><strong>Linh hoạt:</strong> Trả phí dựa trên mức độ sử dụng thực tế.</li>
-            <li><strong>Không giới hạn:</strong> Mở khóa các giới hạn của gói Spark.</li>
-            <li><strong>Dịch vụ cao cấp:</strong> Hỗ trợ App Hosting, Cloud Functions for Firebase thế hệ thứ 2, và nhiều tính năng mở rộng khác.</li>
-            <li>Phù hợp cho các ứng dụng có quy mô lớn và doanh nghiệp.</li>
-        </ul>
-    `,
-    userRating: 4.8,
-    ratingCount: 180,
+    totalStars: 220,
+    ratingCount: 50,
   },
 ];
+    
+    
