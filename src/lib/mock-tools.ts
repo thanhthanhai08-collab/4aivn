@@ -83,8 +83,8 @@ export const mockTools: Tool[] = [
     isFavorite: true,
   },
   {
-    id: 'stable-diffusion-3-tool',
-    name: 'Stable Diffusion 3',
+    id: 'stable-diffusion-tool',
+    name: 'Stable Diffusion',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
     description: 'Stable Diffusion 3 là phiên bản mới nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, nổi bật với khả năng xử lý prompt phức tạp, chất lượng hình ảnh cao và khả năng hiển thị văn bản chính xác. Là một mô hình mã nguồn mở, nó cho phép người dùng tùy chỉnh sâu và chạy offline trên máy chủ riêng.',
@@ -423,4 +423,5 @@ export const mockTools: Tool[] = [
     
 
     
+
 
