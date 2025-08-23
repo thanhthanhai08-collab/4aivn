@@ -87,7 +87,7 @@ export const mockTools: Tool[] = [
     name: 'Stable Diffusion 3',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
-    description: 'Stable Diffusion 3 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh.\n+ Stable Diffusion 3 là mã nguồn mở, cho phép tự do tải về, chạy offline và tùy chỉnh ngay trên máy chủ của người dùng luôn.\n+ Stable Diffusion 3 không giống với Midjourney hay Leonardo nó có những đặc điểm đặc biệt dưới đây vì vậy để khai thác tối đa mô hình hoặc tinh chỉnh chi tiết thì người dùng cần biết nhiều kĩ thuật prompt:\n• Stable Diffusion 3 sử dụng kiến trúc Multimodal Diffusion Transformer (MMDiT) với MMDiT là sự kết hợp biểu diễn riêng biệt cho ngôn ngữ và hình ảnh, sử dụng attention và MLP để xử lý tuần tự, giúp mô hình hiểu sâu hơn về nội dung prompt.\n• Tùy chọn kích thước mô hình đa dạng: Từ 800 triệu đến 8 tỷ tham số, phù hợp với nhiều loại phần cứng từ máy tính cá nhân đến GPU doanh nghiệp.\n• Khả năng tùy chỉnh và fine-tuning dễ dàng: Dễ dàng điều chỉnh mô hình với bộ dữ liệu nhỏ để tạo ra các phiên bản chuyên biệt theo nhu cầu.\n• Cải thiện xử lý đa đối tượng (multi-subject prompts): Mô hình hiểu và tái tạo chính xác nhiều đối tượng cùng lúc trong một prompt, giúp tạo ra hình ảnh phức tạp và chi tiết hơn.\n• Cam kết an toàn và trách nhiệm: Stability AI tích hợp nhiều biện pháp bảo vệ để hạn chế việc sử dụng mô hình vào các mục đích xấu, đồng thời hợp tác với cộng đồng và chuyên gia để phát triển bền vững.\n• Có phiên bản miễn phí trên Hugging Face: Chúng ta có thể hoàn toàn kết nối với Stable Diffusion 3 thông qua API của Hugging Face mà không cần cài thêm bất cứ phần mềm nào, cực kì tiện lợi.\n  ',
+    description: 'Stable Diffusion 3 là phiên bản mới nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, nổi bật với khả năng xử lý prompt phức tạp, chất lượng hình ảnh cao và khả năng hiển thị văn bản chính xác. Là một mô hình mã nguồn mở, nó cho phép người dùng tùy chỉnh sâu và chạy offline trên máy chủ riêng.',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stablediffusion3',
     imageUrl: '/image/Ảnh công cụ AI Stable Diffusion 3.png',
@@ -403,7 +403,7 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Enterprise:</strong> thì tùy chỉnh theo yêu cầu của người dùng.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ miễn phí 1 lần, nếu hết 1 lần thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -423,3 +423,4 @@ export const mockTools: Tool[] = [
     
 
     
+
