@@ -306,7 +306,7 @@ export const mockTools: Tool[] = [
     longDescription: '<p>Firecrawl là một công cụ AI mạnh mẽ, được thiết kế để tìm kiếm và thu thập dữ liệu từ các trang web một cách hiệu quả. Nó giúp chuyển đổi nội dung web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như Markdown, HTML, và dữ liệu có cấu trúc. Hơn nữa, Firecrawl còn có chế độ Change Tracking, cho phép theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về những điểm khác biệt.</p><p>Với khả năng xử lý nội dung động và vượt qua các biện pháp chặn, Firecrawl là một giải pháp toàn diện cho việc thu thập và chuẩn bị dữ liệu web cho các ứng dụng AI.</p>',
     logoUrl: '/image/Logo Firecrawl.png',
     link: 'https://firecrawl.dev/',
-    imageUrl: '/image/Ảnh công cụ firecrawl.png',
+    imageUrl: '/image/Ảnh công cụ AI Firecrawl.png',
     features: [
       "Trích xuất dữ liệu web toàn diện và hỗ trợ nhiều định dạng",
       "Lấy dữ liệu cụ thể từ từng URL với đầu ra đa dạng (bao gồm ảnh chụp màn hình).",
