@@ -297,7 +297,7 @@ export const mockTools: Tool[] = [
     name: 'Veo 3',
     context: 'Tạo video',
     developer: 'Google',
-    description: 'Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.',
+    description: 'Veo 3 là mô hình AI tạo video thế hệ mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/models/veo/',
     imageUrl: '/image/Ảnh công cụ Veo 3.png',
@@ -327,8 +327,8 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
         <ul>
-            <li><strong>AI Pro:</strong> $20/tháng - 1000 token, tạo được khoảng 10 video/tháng.</li>
-            <li><strong>AI Ultra:</strong> $250/tháng - 12.500 token, tạo được khoảng trên dưới 300 video/tháng.</li>
+            <li><strong>Google AI Pro:</strong> 20 đô/1 tháng (miễn phí tháng đầu). Hạn chế dùng Veo 3, Flow với 1000 credit/tháng (khoảng 10 video). Gói này cũng mở rộng sử dụng cho Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
+            <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng. Hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/tháng (khoảng 300 video). Gói này cũng được mở rộng sử dụng cho các dịch vụ tương tự gói Pro.</li>
         </ul>
     `,
     userRating: 4.0,
@@ -371,14 +371,14 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Gói Crawl và Scrape</h3>
         <ul>
-            <li><strong>Gói Free:</strong> Miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng. Khi hết, mua thêm 1000 credit với giá $9/tháng. (Hạn mức: 10 lần scrape/phút, 1 lần crawl/phút, 2 yêu cầu đồng thời).</li>
+            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Khi hết, mua thêm 1000 credit với giá $9/tháng. (Hạn mức: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời).</li>
             <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Hạn mức 5 yêu cầu đồng thời.</li>
             <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Hạn mức 50 yêu cầu đồng thời.</li>
             <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Hạn mức 100 yêu cầu đồng thời.</li>
             <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ được miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ được miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -391,4 +391,5 @@ export const mockTools: Tool[] = [
 
 
     
+
 
