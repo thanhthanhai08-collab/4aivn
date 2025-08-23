@@ -300,7 +300,7 @@ export const mockTools: Tool[] = [
     description: 'Veo 3 là mô hình AI tạo video thế hệ mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/models/veo/',
-    imageUrl: '/image/Ảnh công cụ Veo 3.png',
+    imageUrl: '/image/Ảnh công cụ AI Google Veo 3.png',
     longDescription: '<p>Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.</p><p>Video của Google Veo 3 phù hợp cho nhiều mục đích như marketing, quảng cáo sản phẩm, nội dung truyền thông xã hội, giảng dạy và sáng tạo nội dung đa dạng.</p>',
     features: [
       "Veo 3 hỗ trợ tạo cả tạo video từ văn bản và tạo video từ ảnh nhưng 1 lần tạo chỉ được tải lên 1 ảnh duy nhất.",
@@ -393,3 +393,6 @@ export const mockTools: Tool[] = [
     
 
 
+
+
+    
