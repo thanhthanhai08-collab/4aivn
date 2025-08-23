@@ -331,23 +331,16 @@ export const mockTools: Tool[] = [
         'Nhà nghiên cứu'
     ],
     pricingPlans: `
-        <h3>Gói miễn phí (Free)</h3>
+        <h3>Gói Crawl và Scrape</h3>
         <ul>
-            <li>1000 lượt crawl miễn phí mỗi tháng.</li>
-            <li>Hỗ trợ cộng đồng.</li>
+            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Hết credit, mua thêm 1000 credit với giá $9/tháng. Giới hạn: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời.</li>
+            <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Giới hạn: 5 yêu cầu đồng thời.</li>
+            <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Giới hạn: 50 yêu cầu đồng thời.</li>
+            <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Giới hạn: 100 yêu cầu đồng thời.</li>
+            <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
-        <h3>Gói dành cho nhà phát triển (Developer)</h3>
-        <ul>
-            <li><strong>$20/tháng:</strong> 5,000 lượt crawl, hỗ trợ qua email.</li>
-        </ul>
-        <h3>Gói dành cho startup (Startup)</h3>
-        <ul>
-            <li><strong>$100/tháng:</strong> 30,000 lượt crawl, ưu tiên hỗ trợ qua email.</li>
-        </ul>
-        <h3>Gói doanh nghiệp (Enterprise)</h3>
-        <ul>
-            <li><strong>Tùy chỉnh:</strong> Liên hệ để có giá và các tính năng nâng cao như hỗ trợ chuyên sâu và SLA.</li>
-        </ul>
+        <h3>Gói Extract</h3>
+        <p>Gói này miễn phí 1 lần/tháng. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -356,3 +349,4 @@ export const mockTools: Tool[] = [
 ];
     
     
+
