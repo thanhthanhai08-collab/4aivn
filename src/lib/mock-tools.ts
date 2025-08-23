@@ -302,7 +302,7 @@ export const mockTools: Tool[] = [
     name: 'Firecrawl',
     context: 'API truy xuất dữ liệu web',
     developer: 'Mendable',
-    description: 'Firecrawl là công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM).',
+    description: 'Firecrawl là một công cụ AI mạnh mẽ, được thiết kế để tìm kiếm và thu thập dữ liệu từ các trang web một cách hiệu quả.',
     longDescription: '<p>Firecrawl là một công cụ AI mạnh mẽ, được thiết kế để tìm kiếm và thu thập dữ liệu từ các trang web một cách hiệu quả. Nó giúp chuyển đổi nội dung web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như Markdown, HTML, và dữ liệu có cấu trúc. Hơn nữa, Firecrawl còn có chế độ Change Tracking, cho phép theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về những điểm khác biệt.</p><p>Với khả năng xử lý nội dung động và vượt qua các biện pháp chặn, Firecrawl là một giải pháp toàn diện cho việc thu thập và chuẩn bị dữ liệu web cho các ứng dụng AI.</p>',
     logoUrl: '/image/Logo Firecrawl.png',
     link: 'https://firecrawl.dev/',
@@ -340,7 +340,7 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này miễn phí 1 lần/tháng. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ được miễn phí 1 lần. Nếu hết lượt miễn phí, bạn sẽ phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -349,4 +349,5 @@ export const mockTools: Tool[] = [
 ];
     
     
+
 
