@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid, Newspaper } from "lucide-react";
 import { mockTools as initialMockTools } from "@/lib/mock-tools";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -342,30 +342,30 @@ function ToolDetailContent({ id }: { id: string }) {
             
             {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
-                <section>
-                    <div className="overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800 shadow-lg">
-                       {tool.videoUrl ? (
-                           <iframe
-                            src={tool.videoUrl}
-                            title={`Video giới thiệu ${tool.name}`}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            className="w-full aspect-video"
-                          ></iframe>
-                       ) : tool.imageUrl ? (
-                           <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
-                             <Image 
-                               src={tool.imageUrl}
-                               alt={`Ảnh giới thiệu ${tool.name}`}
-                               layout="fill"
-                               className="object-cover"
-                               data-ai-hint="tool interface"
-                             />
-                           </div>
-                       ) : null}
-                    </div>
-                </section>
+              <section>
+                  <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
+                      {tool.videoUrl ? (
+                          <iframe
+                           src={tool.videoUrl}
+                           title={`Video giới thiệu ${tool.name}`}
+                           frameBorder="0"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                           allowFullScreen
+                           className="w-full aspect-video"
+                         ></iframe>
+                      ) : tool.imageUrl ? (
+                        <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
+                          <Image
+                            src={tool.imageUrl}
+                            alt={`Ảnh giới thiệu ${tool.name}`}
+                            layout="fill"
+                            className="object-cover"
+                            data-ai-hint="tool interface"
+                          />
+                        </div>
+                      ) : null}
+                  </div>
+              </section>
             )}
             
             {/* What is tool? */}
@@ -471,19 +471,6 @@ function ToolDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
             </section>
-            
-            {/* Related Articles Section */}
-            {relatedNews.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold font-headline mb-6 text-center">Bài viết liên quan</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {relatedNews.map((article) => (
-                    <NewsCard key={article.id} article={article} />
-                  ))}
-                </div>
-              </section>
-            )}
-
 
              {/* CTA */}
             <section>
@@ -532,6 +519,26 @@ function ToolDetailContent({ id }: { id: string }) {
                   ))}
               </CardContent>
             </Card>
+
+            {relatedNews.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> Tin tức liên quan</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {relatedNews.map((article) => (
+                      <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-center space-x-3 group">
+                         <div className="relative w-16 h-16 shrink-0">
+                            <Image src={article.imageUrl} alt={article.title} fill className="rounded-md object-cover"/>
+                         </div>
+                         <div>
+                            <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>
+                         </div>
+                      </Link>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardHeader>
