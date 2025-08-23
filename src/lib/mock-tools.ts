@@ -165,7 +165,7 @@ export const mockTools: Tool[] = [
     developer: 'Google',
     imageUrl: '/image/Ảnh công cụ Firebase Studio.png',
     description: 'Firebase Studio là một môi trường phát triển tích hợp (IDE) dựa trên web, được thiết kế để đơn giản hóa và tăng tốc quá trình xây dựng, quản lý các ứng dụng web hiện đại. Công cụ này kết hợp sức mạnh của Firebase với các công nghệ web hàng đầu như Next.js, React, và Genkit, đồng thời được hỗ trợ bởi AI, giúp các nhà phát triển từ người mới bắt đầu đến chuyên gia có thể dễ dàng tạo ra các sản phẩm chất lượng cao.',
-    longDescription: `<p>Firebase Studio cung cấp một bộ công cụ toàn diện, cho phép bạn tập trung vào việc xây dựng các tính năng độc đáo thay vì phải lo lắng về cơ sở hạ tầng. Với khả năng chỉnh sửa code theo thời gian thực và sự trợ giúp của AI, bạn có thể nhanh chóng biến ý tưởng thành hiện thực, từ việc thiết kế giao diện người dùng đến triển khai các tính năng AI phức tạp.</p>`,
+    longDescription: `<p>Firebase Studio là một môi trường phát triển tích hợp (IDE) dựa trên web, được thiết kế để đơn giản hóa và tăng tốc quá trình xây dựng, quản lý các ứng dụng web hiện đại. Công cụ này kết hợp sức mạnh của Firebase với các công nghệ web hàng đầu như Next.js, React, và Genkit, đồng thời được hỗ trợ bởi AI, giúp các nhà phát triển từ người mới bắt đầu đến chuyên gia có thể dễ dàng tạo ra các sản phẩm chất lượng cao.</p><p>Firebase Studio cung cấp một bộ công cụ toàn diện, cho phép bạn tập trung vào việc xây dựng các tính năng độc đáo thay vì phải lo lắng về cơ sở hạ tầng. Với khả năng chỉnh sửa code theo thời gian thực và sự trợ giúp của AI, bạn có thể nhanh chóng biến ý tưởng thành hiện thực, từ việc thiết kế giao diện người dùng đến triển khai các tính năng AI phức tạp.</p>`,
     logoUrl: '/image/Logo Firebase Studio.png',
     link: 'https://firebase.google.com/studio',
     features: [
@@ -302,9 +302,11 @@ export const mockTools: Tool[] = [
     name: 'Firecrawl',
     context: 'API truy xuất dữ liệu web',
     developer: 'Mendable',
-    description: 'Firecrawl công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như markdown, HTML, và dữ liệu có cấu trúc. Không những vậy Firecrawl còn có chế độ Change Tracking giúp theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về điểm khác biệt.\n+ Firecrawl có với đầu ra là json nhưng nó rất khác với Tavily và Crawl4AI. Đầu ra giống với Tavily nhưng đầu ra của Tavily chủ yếu là nguồn, links, tóm tắt chủ yếu phục vụ cho mục đích tìm kiếm, còn Firecrawl sẽ đầy đủ cấu trúc web với dữ liệu thô như tittle, content, heading phục vụ mục đích trích xuất nội dung của web, còn đối với Crawl4AI đầu ra chủ yếu là văn bản phù hợp hơn với việc làm tri thức (knowledge) cho AI.\n+ Firecrawl có đầy đủ các tính năng của API tìm kiếm và trích xuất dữ liệu web:\n• Trích xuất dữ liệu web toàn điện (Crawl website): Người dùng có thể đưa url bất kì web nào cho Firecrawl sẽ trích xuất toàn bộ nội dung kể cả các trang con thành định dạng sạch, chuẩn Markdown hoặc HTML, phù hợp để chuẩn bị dữ liệu cho các mô hình ngôn ngữ lớn (LLM).\n• Lấy dữ liệu cụ thể từ một url (Scrape pages): Lấy dữ liệu chi tiết từ một URL cụ thể với nhiều định dạng đầu ra đa dạng như markdown, HTML, dữ liệu có cấu trúc JSON, đặc biệt là đối với bản trả phí hoàn toàn có thể sử dụng đầu ra ảnh chụp màn hình (giống với Puppeteer) giúp AI, người dùng có thể phân tích thông tin chính xác trên từng trang.\n• Lập bản đồ trang web (Map website): Lấy toàn bộ URL liên quan trên một website, giúp hiểu cấu trúc site và hỗ trợ trong việc tổ chức dữ liệu.\n• Chuyển đổi dữ liệu không có cấu trúc thành dữ liệu có cấu trúc (Extract website): Sử dụng AI tự động để phân tích, tổ chức và chuyển dữ liệu web thô sau khi Scape hoặc Crawl  thành các định dạng có cấu trúc rõ ràng, giúp dễ dàng xử lý và phân tích, hoặc đơn giản có thể tóm tắt lại nội dung để dễ sử dụng hơn cho AI chức năng này giống với Tavily nhưng không mạnh như Tavily.\n• Hỗ trợ nội dung động và tương tác web: Khả năng xử lý các trang web có nội dung động chạy JavaScript, SPA, hoặc cũng thể tương tác với web như click, cuộn trang, nhập liệu tự động trước khi thu thập dữ liệu, giúp thu thập dữ liệu chính xác và theo thời gian thực hơn (chức năng này ai hay dùng Puppeteer chắc chắn sẽ rõ).\n• Tích hợp proxy, quản lý tốc độ và tự động vượt qua các nền tảng chặn : Firecrawl có thể tự động vượt qua các chướng ngại như giới hạn tốc độ, CAPTCHA, và anti-bot để đảm bảo trích xuất dữ liệu ổn định không bị gián đoạn.\n• API và SDK đa ngôn ngữ: Hỗ trợ SDK cho Python, Node.js, Go, Rust..., giúp tích hợp vào nhiều hệ thống và ứng dụng AI khác nhau.',
+    description: 'Firecrawl là công cụ AI tìm kiếm và thu thập dữ liệu, giúp chuyển đổi nội dung các trang web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM).',
+    longDescription: '<p>Firecrawl là một công cụ AI mạnh mẽ, được thiết kế để tìm kiếm và thu thập dữ liệu từ các trang web một cách hiệu quả. Nó giúp chuyển đổi nội dung web thành các định dạng thân thiện cho xử lý bằng mô hình ngôn ngữ lớn (LLM), như Markdown, HTML, và dữ liệu có cấu trúc. Hơn nữa, Firecrawl còn có chế độ Change Tracking, cho phép theo dõi và phát hiện sự thay đổi nội dung trên website theo thời gian thực, cung cấp báo cáo chi tiết về những điểm khác biệt.</p><p>Với khả năng xử lý nội dung động và vượt qua các biện pháp chặn, Firecrawl là một giải pháp toàn diện cho việc thu thập và chuẩn bị dữ liệu web cho các ứng dụng AI.</p>',
     logoUrl: '/image/Logo Firecrawl.png',
     link: 'https://firecrawl.dev/',
+    imageUrl: '/image/Ảnh công cụ firecrawl.png',
     features: [
       "Trích xuất dữ liệu web toàn diện và hỗ trợ nhiều định dạng",
       "Lấy dữ liệu cụ thể từ từng URL với đầu ra đa dạng (bao gồm ảnh chụp màn hình).",
@@ -315,6 +317,38 @@ export const mockTools: Tool[] = [
       "API và SDK đa ngôn ngữ (Python, Node.js, Go, Rust...).",
       "Theo dõi sự thay đổi nội dung trên trang web (Change Tracking)."
     ],
+    useCases: [
+        'Xây dựng hệ thống RAG',
+        'Chuẩn bị dữ liệu cho LLM',
+        'Theo dõi và phân tích đối thủ cạnh tranh',
+        'Tự động hóa thu thập dữ liệu',
+        'Nghiên cứu và phân tích thị trường'
+    ],
+    whoIsItFor: [
+        'Nhà phát triển AI/ML',
+        'Kỹ sư dữ liệu',
+        'Nhà phân tích kinh doanh',
+        'Nhà nghiên cứu'
+    ],
+    pricingPlans: `
+        <h3>Gói miễn phí (Free)</h3>
+        <ul>
+            <li>1000 lượt crawl miễn phí mỗi tháng.</li>
+            <li>Hỗ trợ cộng đồng.</li>
+        </ul>
+        <h3>Gói dành cho nhà phát triển (Developer)</h3>
+        <ul>
+            <li><strong>$20/tháng:</strong> 5,000 lượt crawl, hỗ trợ qua email.</li>
+        </ul>
+        <h3>Gói dành cho startup (Startup)</h3>
+        <ul>
+            <li><strong>$100/tháng:</strong> 30,000 lượt crawl, ưu tiên hỗ trợ qua email.</li>
+        </ul>
+        <h3>Gói doanh nghiệp (Enterprise)</h3>
+        <ul>
+            <li><strong>Tùy chỉnh:</strong> Liên hệ để có giá và các tính năng nâng cao như hỗ trợ chuyên sâu và SLA.</li>
+        </ul>
+    `,
     userRating: 4.4,
     totalStars: 220,
     ratingCount: 50,
