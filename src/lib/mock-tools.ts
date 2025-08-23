@@ -31,6 +31,8 @@ export const mockTools: Tool[] = [
     description: 'GPT Image 1 là mô hình tạo, chỉnh sửa hình ảnh do OpenAI phát triển nội bộ, chính thức được ra mắt vào tháng 5 năm 2024 được tích hợp sẵn vào model GPT-4o không giống như DALL·E là một model riêng, GPT Image 1 được xây dựng hoàn toàn mới, với mục tiêu tạo ra hình ảnh thực tế, logic và mạch lạc với văn bản đầu vào(prompt).\n+ Vì được tích hợp sâu với GPT 4o cho nên GPT Image 1 hoàn toàn có thể hiểu ngữ cảnh hội thoại đưa ra hình ảnh phù hợp với yêu cầu chi tiết. Hoặc mọi người có thể sử dụng tùy chỉnh GPT Image 1 thông qua API.\n+ Hỗ trợ tất cả các kiểu tạo hình ảnh đó là tạo hình ảnh từ hình ảnh, tạo hình ảnh từ mô tả, chỉnh sửa hình ảnh từ hình ảnh, chỉnh sửa hình ảnh từ mô tả\n+ Đặc biệt là có thể tạo nhân vật và hành động nhất quán với mô tả và một điểm cộng nữa là chữ trên hình ảnh tiếng Anh thì cực kì chính xác còn tiếng Việt thì độ chuẩn xác chỉ tầm 50%.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://chat.openai.com',
+    imageUrl: '/image/Ảnh công cụ GPT-Image-1.png',
+    longDescription: '<p>GPT Image 1 là mô hình tạo và chỉnh sửa hình ảnh do OpenAI phát triển, được tích hợp sâu vào GPT-4o. Không giống như DALL·E, GPT Image 1 được xây dựng để tạo ra các hình ảnh thực tế, logic và mạch lạc hơn với văn bản đầu vào. Với khả năng hiểu ngữ cảnh hội thoại, nó có thể tạo ra hình ảnh phù hợp với các yêu cầu chi tiết và phức tạp.</p><p>Mô hình này hỗ trợ nhiều kiểu tạo hình ảnh, bao gồm cả việc tạo từ văn bản và từ hình ảnh khác, cũng như chỉnh sửa ảnh hiện có. Một trong những điểm mạnh của GPT Image 1 là khả năng tạo ra các nhân vật và hành động nhất quán qua nhiều lần tạo, cùng với khả năng hiển thị văn bản tiếng Anh chính xác trên ảnh.</p>',
     features: [
       "Tích hợp sẵn vào Gpt 4o cực kì tiện lợi chỉ việc sử dụng không phải chuyển trang như Dall E và Sora.",
       "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh",
@@ -38,6 +40,21 @@ export const mockTools: Tool[] = [
       "Hỗ trợ tiếng Anh cực tốt cả tạo ảnh với chữ tiếng Anh trên ảnh còn tiếng Việt chỉ hỗ trợ prompt chưa tối ưu hiển thị trên ảnh",
       "Có thể tạo nhân vật đồng nhất dựa trên mô tả prompt."
     ],
+    useCases: [
+        'Tạo hình ảnh minh họa cho bài viết, blog',
+        'Thiết kế ý tưởng cho sản phẩm, quảng cáo',
+        'Tạo nhân vật và cảnh quan cho game, truyện',
+        'Chỉnh sửa và cải thiện ảnh hiện có'
+    ],
+    whoIsItFor: [
+        'Nhà văn, blogger',
+        'Nhà thiết kế đồ họa',
+        'Nhà phát triển game',
+        'Người làm marketing'
+    ],
+    pricingPlans: `
+        <p>GPT Image 1 được tích hợp trong các gói ChatGPT Plus, Team và Enterprise. Người dùng các gói này có thể sử dụng tính năng tạo ảnh theo giới hạn của gói đăng ký mà không phải trả thêm phí cho mỗi hình ảnh.</p>
+    `,
     userRating: 4.8,
     totalStars: 720,
     ratingCount: 150,
@@ -340,7 +357,7 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ được miễn phí 1 lần. Nếu hết lượt miễn phí, bạn sẽ phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ miễn phí 1 lần. Nếu hết 1 lần thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -351,3 +368,6 @@ export const mockTools: Tool[] = [
     
 
 
+
+
+    
