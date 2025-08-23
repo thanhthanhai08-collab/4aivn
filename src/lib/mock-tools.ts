@@ -31,7 +31,7 @@ export const mockTools: Tool[] = [
     description: 'GPT Image 1 là mô hình tạo, chỉnh sửa hình ảnh do OpenAI phát triển nội bộ, chính thức được ra mắt vào tháng 5 năm 2024 được tích hợp sẵn vào model GPT-4o không giống như DALL·E là một model riêng, GPT Image 1 được xây dựng hoàn toàn mới, với mục tiêu tạo ra hình ảnh thực tế, logic và mạch lạc với văn bản đầu vào(prompt).\n+ Vì được tích hợp sâu với GPT 4o cho nên GPT Image 1 hoàn toàn có thể hiểu ngữ cảnh hội thoại đưa ra hình ảnh phù hợp với yêu cầu chi tiết. Hoặc mọi người có thể sử dụng tùy chỉnh GPT Image 1 thông qua API.\n+ Hỗ trợ tất cả các kiểu tạo hình ảnh đó là tạo hình ảnh từ hình ảnh, tạo hình ảnh từ mô tả, chỉnh sửa hình ảnh từ hình ảnh, chỉnh sửa hình ảnh từ mô tả\n+ Đặc biệt là có thể tạo nhân vật và hành động nhất quán với mô tả và một điểm cộng nữa là chữ trên hình ảnh tiếng Anh thì cực kì chính xác còn tiếng Việt thì độ chuẩn xác chỉ tầm 50%.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://chat.openai.com',
-    imageUrl: '/image/Ảnh công cụ GPT-Image-1.png',
+    imageUrl: '/image/Ảnh công cụ AI GPT Image 1.png',
     longDescription: '<p>GPT Image 1 là mô hình tạo và chỉnh sửa hình ảnh do OpenAI phát triển, được tích hợp sâu vào GPT-4o. Không giống như DALL·E, GPT Image 1 được xây dựng để tạo ra các hình ảnh thực tế, logic và mạch lạc hơn với văn bản đầu vào. Với khả năng hiểu ngữ cảnh hội thoại, nó có thể tạo ra hình ảnh phù hợp với các yêu cầu chi tiết và phức tạp.</p><p>Mô hình này hỗ trợ nhiều kiểu tạo hình ảnh, bao gồm cả việc tạo từ văn bản và từ hình ảnh khác, cũng như chỉnh sửa ảnh hiện có. Một trong những điểm mạnh của GPT Image 1 là khả năng tạo ra các nhân vật và hành động nhất quán qua nhiều lần tạo, cùng với khả năng hiển thị văn bản tiếng Anh chính xác trên ảnh.</p>',
     features: [
       "Tích hợp sẵn vào Gpt 4o cực kì tiện lợi chỉ việc sử dụng không phải chuyển trang như Dall E và Sora.",
@@ -327,8 +327,8 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
         <ul>
-            <li><strong>Google AI Pro:</strong> 20 đô/1 tháng (miễn phí tháng đầu). Hạn chế dùng Veo 3, Flow với 1000 credit/tháng (khoảng 10 video). Gói này cũng mở rộng sử dụng cho Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
-            <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng. Hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/tháng (khoảng 300 video). Gói này cũng được mở rộng sử dụng cho các dịch vụ tương tự gói Pro.</li>
+            <li><strong>Google AI Pro:</strong> 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
+            <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng và hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/1 tháng (tức là khoảng 300 video/1 tháng)gói này cũng được.</li>
         </ul>
     `,
     userRating: 4.0,
@@ -371,14 +371,14 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Gói Crawl và Scrape</h3>
         <ul>
-            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Khi hết, mua thêm 1000 credit với giá $9/tháng. (Hạn mức: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời).</li>
+            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Khi hết 1 lần thì phải mua thêm credit với giá 1000 credit với giá 9$/1 tháng. (Hạn mức: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời).</li>
             <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Hạn mức 5 yêu cầu đồng thời.</li>
             <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Hạn mức 50 yêu cầu đồng thời.</li>
             <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Hạn mức 100 yêu cầu đồng thời.</li>
             <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ được miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -394,5 +394,7 @@ export const mockTools: Tool[] = [
 
 
 
+
+    
 
     
