@@ -300,6 +300,8 @@ export const mockTools: Tool[] = [
     description: 'Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao đặc biệt là Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video giúp tạo ra các video chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.\n+ Video của Google Veo 3 phù hợp cho nhiều mục đích như marketing, quảng cáo sản phẩm, nội dung truyền thông xã hội, giảng dạy, và sáng tạo nội dung đa dạng nhờ những đặc tính sau: \n• Hỗ trợ cả tạo video từ văn bản (Text-to-video) và tạo video từ ảnh (Frame-to-video): Người dùng có thể chuyển đổi mô tả bằng văn bản thành video chất lượng cao, phù hợp cho quảng cáo, mạng xã hội, giáo dục, kể chuyện hoặc có thể tải lên hình ảnh có sẵn để Veo 3 phân tích và tạo video nhưng có một nhược điểm của Veo 3 là mỗi lần chỉ có thể tải lên một hình ảnh cho nên muốn tạo nhiều frame đúng ý nhất trong video của Google Veo 3 thì phải dùng mô tả văn bản  mà hoàn toàn không phải hậu kì phức tạp.\n• Tự động tạo âm thanh đi kèm với video để tăng tính đồng nhất : Veo 3 có khả năng tạo video với âm thanh đồng bộ hoàn chỉnh, bao gồm giọng nói, lời thoại có sắc thái cảm xúc, hiệu ứng âm thanh môi trường (mưa, gió, tiếng động vật, tiếng xe cộ), và nhạc nền phù hợp,.\n• Đồng bộ chuyển động môi và mô phỏng vật lý chân thực: Công nghệ lip-sync chính xác giúp nhân vật trong video chuyển động môi khớp với lời thoại, đồng thời mô phỏng các yếu tố vật lý như gió, nước, chuyển động nhân vật mượt mà, tạo cảm giác như phim quay thực tế. Mà tất cả những chân thực này Veo 2 đã làm rất tốt rồi chứ đừng nói đến bản nâng cấp là Veo 3.\n• Hỗ trợ prompt chỉnh sửa chi tiết và tùy chỉnh sáng tạo: Người dùng hoàn toàn có thể chỉnh sửa video đã tạo bằng prompt văn bản trực tiếp với Veo 3, hoặc có khả năng chỉnh sửa các yếu tố như góc quay, hiệu ứng zoom, dolly shot, giúp sản phẩm cuối cùng mang phong cách điện ảnh hơn.\n• Chất lượng video cao, độ phân giải có thể lên đến 4K: Veo 3 tạo ra video có độ phân giải cao có thể lên đến 4K nếu người dùng dùng gói trả phí.\n• Khả năng kéo dài video: Veo 3 cho phép kéo dài video bằng cách thêm các phân cảnh mới hoặc kéo dài đoạn video hiện tại .\n• Tính nhất quán nhân vật có thể được duy trì và đảm bảo: Veo 3 có thể duy trì ngoại hình và đặc điểm của nhân vật qua nhiều cảnh quay, cho phép tạo nhiều cảnh quay nhất quán trong video bằng cách duy trì prompt hoặc bấm nút “thêm vào cảnh”.\n• Kết hợp với AI Flow tạo video dài cực kì hiệu quả: Google Veo 3 không trực tiếp hỗ trợ kết hợp nhiều video 8 giây đã tạo thành một video dài trong chính công cụ tạo video của nó, Tuy nhiên, Veo 3 được tích hợp với nền tảng làm phim AI Flow của Google, nơi người dùng có thể ghép nối, chỉnh sửa và sắp xếp các đoạn video ngắn (8 giây) thành một video dài, liền mạch và chuyên nghiệp hơn. Flow cung cấp các công cụ xây dựng cảnh, chỉnh sửa dòng thời gian, giúp tạo ra sản phẩm cuối cùng hoàn chỉnh theo kịch bản mong muốn.\n• GIá cả: Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam, mà hiện chỉ một số thị trường trong đó có Mỹ vì vậy muốn trải nghiệm nên đổi IP sang Mỹ và bên đó thì phải đăng ký gói AI Pro (20 USD/1 tháng) với 1000 token thì tạo được khoảng trên dưới 10 video / 1 tháng còn gói AI Ultra (250 USD/1 tháng) 12.500 token thì tạo được khoảng trên dưới 300 video/1 tháng.\n',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/models/veo/',
+    imageUrl: '/image/Ảnh công cụ Veo 3.png',
+    longDescription: '<p>Google Veo 3 là mô hình AI tạo video mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.</p><p>Video của Google Veo 3 phù hợp cho nhiều mục đích như marketing, quảng cáo sản phẩm, nội dung truyền thông xã hội, giảng dạy và sáng tạo nội dung đa dạng.</p>',
     features: [
       "Veo 3 hỗ trợ tạo cả tạo video từ văn bản và tạo video từ ảnh nhưng 1 lần tạo chỉ được tải lên 1 ảnh duy nhất.",
 "Tự động tạo âm thanh kèm với video để tăng tính đồng nhất .",
@@ -310,6 +312,25 @@ export const mockTools: Tool[] = [
 "Tính nhất quán của nhân vật có thể duy trì và đảm bảo.",
 "Đồng bộ với Google AI Flow tạo video dài hơn 8s hiệu quả.",
     ],
+    useCases: [
+        'Tạo video quảng cáo, marketing',
+        'Sản xuất nội dung cho mạng xã hội',
+        'Tạo video giáo dục, hướng dẫn',
+        'Sáng tạo phim ngắn và video nghệ thuật'
+    ],
+    whoIsItFor: [
+        'Nhà làm phim, đạo diễn',
+        'Người làm marketing, quảng cáo',
+        'Nhà sáng tạo nội dung',
+        'Giáo viên, nhà giáo dục'
+    ],
+    pricingPlans: `
+        <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
+        <ul>
+            <li><strong>AI Pro:</strong> $20/tháng - 1000 token, tạo được khoảng 10 video/tháng.</li>
+            <li><strong>AI Ultra:</strong> $250/tháng - 12.500 token, tạo được khoảng 300 video/tháng.</li>
+        </ul>
+    `,
     userRating: 4.0,
     totalStars: 376,
     ratingCount: 94,
@@ -350,21 +371,20 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Gói Crawl và Scrape</h3>
         <ul>
-            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Hết credit, mua thêm 1000 credit với giá $9/tháng. Giới hạn: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời.</li>
-            <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Giới hạn: 5 yêu cầu đồng thời.</li>
-            <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Giới hạn: 50 yêu cầu đồng thời.</li>
-            <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Giới hạn: 100 yêu cầu đồng thời.</li>
+            <li><strong>Gói Free:</strong> Miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng. Khi hết, mua thêm 1000 credit với giá $9/tháng. (Hạn mức: 10 lần scrape/phút, 1 lần crawl/phút, 2 yêu cầu đồng thời).</li>
+            <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Hạn mức 5 yêu cầu đồng thời.</li>
+            <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Hạn mức 50 yêu cầu đồng thời.</li>
+            <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Hạn mức 100 yêu cầu đồng thời.</li>
             <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ miễn phí 1 lần. Nếu hết 1 lần thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ được miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp hoặc người dùng có điều kiện, với gói rẻ nhất từ $89-$99/tháng.</p>
     `,
     userRating: 4.4,
     totalStars: 220,
     ratingCount: 50,
   },
 ];
-    
     
 
 
