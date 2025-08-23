@@ -90,6 +90,8 @@ export const mockTools: Tool[] = [
     description: 'Stable Diffusion 3 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh.\n+ Stable Diffusion 3 là mã nguồn mở, cho phép tự do tải về, chạy offline và tùy chỉnh ngay trên máy chủ của người dùng luôn.\n+ Stable Diffusion 3 không giống với Midjourney hay Leonardo nó có những đặc điểm đặc biệt dưới đây vì vậy để khai thác tối đa mô hình hoặc tinh chỉnh chi tiết thì người dùng cần biết nhiều kĩ thuật prompt:\n• Stable Diffusion 3 sử dụng kiến trúc Multimodal Diffusion Transformer (MMDiT) với MMDiT là sự kết hợp biểu diễn riêng biệt cho ngôn ngữ và hình ảnh, sử dụng attention và MLP để xử lý tuần tự, giúp mô hình hiểu sâu hơn về nội dung prompt.\n• Tùy chọn kích thước mô hình đa dạng: Từ 800 triệu đến 8 tỷ tham số, phù hợp với nhiều loại phần cứng từ máy tính cá nhân đến GPU doanh nghiệp.\n• Khả năng tùy chỉnh và fine-tuning dễ dàng: Dễ dàng điều chỉnh mô hình với bộ dữ liệu nhỏ để tạo ra các phiên bản chuyên biệt theo nhu cầu.\n• Cải thiện xử lý đa đối tượng (multi-subject prompts): Mô hình hiểu và tái tạo chính xác nhiều đối tượng cùng lúc trong một prompt, giúp tạo ra hình ảnh phức tạp và chi tiết hơn.\n• Cam kết an toàn và trách nhiệm: Stability AI tích hợp nhiều biện pháp bảo vệ để hạn chế việc sử dụng mô hình vào các mục đích xấu, đồng thời hợp tác với cộng đồng và chuyên gia để phát triển bền vững.\n• Có phiên bản miễn phí trên Hugging Face: Chúng ta có thể hoàn toàn kết nối với Stable Diffusion 3 thông qua API của Hugging Face mà không cần cài thêm bất cứ phần mềm nào, cực kì tiện lợi.\n  ',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stablediffusion3',
+    imageUrl: '/image/Ảnh công cụ AI Stable Diffusion 3.png',
+    longDescription: '<p>Stable Diffusion 3 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh. Là một mô hình mã nguồn mở, nó cho phép người dùng toàn quyền kiểm soát, từ việc chạy offline trên máy chủ riêng đến việc tùy chỉnh sâu theo nhu cầu cụ thể.</p><p>Điểm khác biệt lớn của Stable Diffusion 3 nằm ở kiến trúc Multimodal Diffusion Transformer (MMDiT), giúp mô hình hiểu sâu hơn về mối quan hệ giữa văn bản và hình ảnh. Điều này, kết hợp với khả năng fine-tuning mạnh mẽ, làm cho nó trở thành một công cụ cực kỳ linh hoạt cho các nhà phát triển và nghệ sĩ AI chuyên nghiệp.</p>',
     features: [
       "Stable Diffusion 3 là mã nguồn mở nền hoàn toàn có thể tải về chạy offline ngay trên máy chủ của người sử dụng.",
 "Sử dụng kiến trúc MMDiT biểu diễn riêng biệt ngôn ngữ và hình ảnh xử lý tuần tự giúp nền tảng hiểu prompt hơn .",
@@ -98,6 +100,29 @@ export const mockTools: Tool[] = [
       "Cải thiện xử lý đa đối tượng trong một prompt.",
       "Kết nối miễn phí qua API của Hugging Face.",
     ],
+    useCases: [
+      'Tạo hình ảnh nghệ thuật và thương mại',
+      'Phát triển ứng dụng AI tạo sinh',
+      'Nghiên cứu và thử nghiệm mô hình AI',
+      'Tạo nội dung cho game và phim ảnh',
+      'Tinh chỉnh mô hình cho các phong cách độc quyền',
+    ],
+    whoIsItFor: [
+      'Nhà phát triển AI/ML',
+      'Nghệ sĩ kỹ thuật số',
+      'Nhà nghiên cứu AI',
+      'Người dùng chuyên nghiệp muốn kiểm soát tối đa',
+      'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
+    ],
+    pricingPlans: `
+      <p>Stable Diffusion 3 có thể được sử dụng miễn phí thông qua việc tải về và chạy trên phần cứng cá nhân hoặc qua các nền tảng như Hugging Face. Đối với việc sử dụng thương mại hoặc truy cập các tính năng nâng cao thông qua API, Stability AI cung cấp các gói dịch vụ trả phí:</p>
+      <ul>
+        <li><strong>Free:</strong> Chạy trên máy cá nhân hoặc các nền tảng cộng đồng.</li>
+        <li><strong>Creator:</strong> $20/tháng - Dành cho cá nhân và nhà sáng tạo, cung cấp quyền truy cập vào các mô hình mới nhất và công cụ nâng cao.</li>
+        <li><strong>Enterprise:</strong> Giá tùy chỉnh - Dành cho các doanh nghiệp lớn cần giải pháp tùy chỉnh, hỗ trợ chuyên sâu và cấp phép thương mại quy mô lớn.</li>
+      </ul>
+      <p>Ngoài ra, người dùng có thể trả tiền cho mỗi lần sử dụng (pay-as-you-go) qua các nền tảng API của Stability AI hoặc các nhà cung cấp cloud khác.</p>
+    `,
     userRating: 4.6,
     totalStars: 644,
     ratingCount: 140,
@@ -371,11 +396,11 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Gói Crawl và Scrape</h3>
         <ul>
-            <li><strong>Gói Free:</strong> Miễn phí với 500 credit (scrape 500 trang/lần). Khi hết 1 lần thì phải mua thêm credit với giá 1000 credit với giá 9$/1 tháng. (Hạn mức: 10 scrape/phút, 1 crawl/phút, 2 yêu cầu đồng thời).</li>
-            <li><strong>Gói Hobby:</strong> $16-$19/tháng với 3000 credit (scrape 3000 trang/tháng). Hạn mức 5 yêu cầu đồng thời.</li>
-            <li><strong>Gói Standard:</strong> $83-$99/tháng với 100.000 credit (crawl 100.000 trang/tháng). Hạn mức 50 yêu cầu đồng thời.</li>
-            <li><strong>Gói Growth:</strong> $333-$399/tháng với 500.000 credit (crawl 500.000 trang/tháng). Hạn mức 100 yêu cầu đồng thời.</li>
-            <li><strong>Gói Enterprise:</strong> Tùy chỉnh theo yêu cầu.</li>
+            <li><strong>Gói Free:</strong> miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng khi hết 500 credit thì phải mua thêm với giá 1000 credit với giá 9$/1 tháng (hạn mức 10 lần scrape/phút và 1 lần crawl/phút.chỉ thực hiện 2 yêu cầu trong cùng 1 lúc)</li>
+            <li><strong>Gói Hobby:</strong> với 16-19 $/1 tháng thì có 3000 credit có thể scrape được 3000 trang/1 tháng với hạn mức 5 yêu cầu trong cùng 1 lần thực hiện.</li>
+            <li><strong>Gói Standard:</strong> với 83-99 $/1 tháng thì có 100.000 credit có thể crawl được 100.000 trang/1 tháng với hạn mức 50 yêu cầu trong cùng 1 lần thực hiện.</li>
+            <li><strong>Gói Growth:</strong> với 333-399 $/1 tháng thì có 500.000 credit có thể crawl được 500.000 trang/1 tháng với hạn mức 100 yêu cầu trong cùng 1 lần thực hiện.</li>
+            <li><strong>Gói Enterprise:</strong> thì tùy chỉnh theo yêu cầu của người dùng.</li>
         </ul>
         <h3>Gói Extract</h3>
         <p>Gói này chỉ miễn phí 1 lần, nếu hết thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
