@@ -115,13 +115,15 @@ export const mockTools: Tool[] = [
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
     pricingPlans: `
-      <p>Stable Diffusion 3 có thể được sử dụng miễn phí thông qua việc tải về và chạy trên phần cứng cá nhân hoặc qua các nền tảng như Hugging Face. Đối với việc sử dụng thương mại hoặc truy cập các tính năng nâng cao thông qua API, Stability AI cung cấp các gói dịch vụ trả phí:</p>
-      <ul>
-        <li><strong>Free:</strong> Chạy trên máy cá nhân hoặc các nền tảng cộng đồng.</li>
-        <li><strong>Creator:</strong> $20/tháng - Dành cho cá nhân và nhà sáng tạo, cung cấp quyền truy cập vào các mô hình mới nhất và công cụ nâng cao.</li>
-        <li><strong>Enterprise:</strong> Giá tùy chỉnh - Dành cho các doanh nghiệp lớn cần giải pháp tùy chỉnh, hỗ trợ chuyên sâu và cấp phép thương mại quy mô lớn.</li>
-      </ul>
-      <p>Ngoài ra, người dùng có thể trả tiền cho mỗi lần sử dụng (pay-as-you-go) qua các nền tảng API của Stability AI hoặc các nhà cung cấp cloud khác.</p>
+      <p>Stable Diffusion có thể được sử dụng miễn phí thông qua việc tải về và chạy trên máy tính cá nhân của người dùng hoặc qua các nền tảng như Hugging Face.</p>
+      <p>Đối với việc sử dụng API, Stability AI đang cung cấp theo dạng credit với 1 credit = $0.01.</p>
+      <p>Còn trong trường hợp mọi người muốn sử dụng qua web thì Stability AI có tích hợp sẵn Stable Diffusion trong Stable Assistant với các gói sử dụng</p>
+        <ul>
+            <li><strong>Gói Standard:</strong> $9/tháng thì được sử dụng Stable Assistant với 900 credit/1 tháng với 3 ngày free trial.</li>
+            <li><strong>Gói Pro:</strong> $19/tháng thì được sử dụng Stable Assistant với 1900 credit/1 tháng với 3 ngày free trial.</li>
+            <li><strong>Gói Plus:</strong> $49/tháng thì được sử dụng Stable Assistant với 5500 credit/1 tháng với 3 ngày free trial.</li>
+            <li><strong>Gói Premium:</strong> $99/tháng thì được sử dụng Stable Assistant với 12000 credit/1 tháng với 3 ngày free trial.</li>
+        </ul>
     `,
     userRating: 4.6,
     totalStars: 644,
@@ -394,7 +396,7 @@ export const mockTools: Tool[] = [
         'Nhà nghiên cứu'
     ],
     pricingPlans: `
-        <h3>Gói Crawl và Scrape</h3>
+      <h3>Gói Crawl và Scrape</h3>
         <ul>
             <li><strong>Gói Free:</strong> miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng khi hết 500 credit thì phải mua thêm với giá 1000 credit với giá 9$/1 tháng (hạn mức 10 lần scrape/phút và 1 lần crawl/phút.chỉ thực hiện 2 yêu cầu trong cùng 1 lúc)</li>
             <li><strong>Gói Hobby:</strong> với 16-19 $/1 tháng thì có 3000 credit có thể scrape được 3000 trang/1 tháng với hạn mức 5 yêu cầu trong cùng 1 lần thực hiện.</li>
