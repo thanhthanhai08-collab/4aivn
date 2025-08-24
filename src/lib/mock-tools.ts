@@ -90,7 +90,7 @@ export const mockTools: Tool[] = [
     description: 'Stable Diffusion là công cụ tạo ảnh mã nguồn mở hàng đầu, và phiên bản mới nhất Stable Diffusion 3.5 tiếp tục nâng cao vị thế này. Nó mang đến chất lượng hình ảnh vượt trội, khả năng hiểu ngôn ngữ tự nhiên tốt hơn, và hiển thị văn bản trong ảnh chính xác hơn. Các tính năng mới giúp người dùng dễ dàng tạo ra những tác phẩm ấn tượng, từ ảnh quang học đến các phong cách nghệ thuật đa dạng.',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stable-assistant',
-    imageUrl: '/image/Ảnh công cụ AI Stable Diffusion 3.png',
+    imageUrl: '/image/Ảnh công cụ Stable Diffusion.png',
     longDescription: '<p>Stable Diffusion 3.5 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh. Là một mô hình mã nguồn mở, nó cho phép người dùng toàn quyền kiểm soát, từ việc chạy offline trên máy chủ riêng đến việc tùy chỉnh sâu theo nhu cầu cụ thể.</p><p>Điểm khác biệt lớn của Stable Diffusion 3.5 nằm ở kiến trúc Multimodal Diffusion Transformer (MMDiT), giúp mô hình hiểu sâu hơn về mối quan hệ giữa văn bản và hình ảnh. Điều này, kết hợp với khả năng fine-tuning mạnh mẽ, làm cho nó trở thành một công cụ cực kỳ linh hoạt cho các nhà phát triển và nghệ sĩ AI chuyên nghiệp.</p>',
     features: [
       "Là mô hình mã nguồn mở, cho phép chạy offline và tùy chỉnh sâu.",
@@ -405,7 +405,7 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Enterprise:</strong> thì tùy chỉnh theo yêu cầu của người dùng.</li>
         </ul>
         <h3>Gói Extract</h3>
-        <p>Gói này chỉ miễn phí 1 lần, nếu hết 1 lần thì phải mua thêm credit. Các gói trả phí khá đắt, phù hợp cho doanh nghiệp, với gói rẻ nhất từ $89-$99/tháng.</p>
+        <p>Gói này chỉ miễn phi 1 lần nếu hết 1 lần thì phải mua thêm credit</p>
     `,
     userRating: 4.4,
     totalStars: 220,
@@ -425,6 +425,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
