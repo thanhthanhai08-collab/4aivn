@@ -83,11 +83,11 @@ export const mockTools: Tool[] = [
     isFavorite: true,
   },
   {
-    id: 'stable-diffusion-tool',
+    id: 'stable-diffusion',
     name: 'Stable Diffusion',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
-    description: 'Stable Diffusion 3 là phiên bản mới nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, nổi bật với khả năng xử lý prompt phức tạp, chất lượng hình ảnh cao và khả năng hiển thị văn bản chính xác. Là một mô hình mã nguồn mở, nó cho phép người dùng tùy chỉnh sâu và chạy offline trên máy chủ riêng.',
+    description: 'Stable Diffusion là công cụ tạo ảnh mã nguồn mở hàng đầu, và phiên bản mới nhất Stable Diffusion 3.5 tiếp tục nâng cao vị thế này. Nó mang đến chất lượng hình ảnh vượt trội, khả năng hiểu ngôn ngữ tự nhiên tốt hơn, và hiển thị văn bản trong ảnh chính xác hơn. Các tính năng mới giúp người dùng dễ dàng tạo ra những tác phẩm ấn tượng, từ ảnh quang học đến các phong cách nghệ thuật đa dạng.',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stablediffusion3',
     imageUrl: '/image/Ảnh công cụ AI Stable Diffusion 3.png',
@@ -322,7 +322,7 @@ export const mockTools: Tool[] = [
     name: 'Veo 3',
     context: 'Tạo video',
     developer: 'Google',
-    description: 'Veo 3 là mô hình AI tạo video thế hệ mới nhất của Google, được phát triển bởi DeepMind và ra mắt vào năm 2025. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao. Đặc biệt, Veo 3 có thể tích hợp âm thanh gốc và hiệu ứng âm thanh đồng bộ vào video, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.',
+    description: 'Veo 3 là mô hình AI tạo video thế hệ mới nhất của Google. Công cụ này cho phép chuyển đổi văn bản hoặc hình ảnh thành video chất lượng cao, đặc biệt có thể tích hợp âm thanh gốc và hiệu ứng đồng bộ, giúp tạo ra các sản phẩm chân thực, sống động mà không cần xử lý hậu kỳ phức tạp.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/models/veo/',
     imageUrl: '/image/Ảnh công cụ AI Google Veo 3.png',
@@ -423,5 +423,6 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
