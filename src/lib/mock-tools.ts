@@ -298,11 +298,11 @@ export const mockTools: Tool[] = [
         'Startup công nghệ'
     ],
     pricingPlans: `
-        <p>Firebase Studio sử dụng mô hình định giá của Firebase với hai gói chính:</p>
-        <ul>
-            <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase như Authentication, Firestore, Cloud Functions và Hosting. Rất phù hợp để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
-            <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng có quy mô lớn hơn, bạn chỉ trả tiền cho những tài nguyên bạn sử dụng vượt quá hạn mức miễn phí. Đây là một giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
-        </ul>
+      <p>Firebase Studio sử dụng mô hình định giá của Firebase với hai gói chính:</p>
+      <ul>
+        <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase. Rất phù hợp để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
+        <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng có quy mô lớn hơn, bạn chỉ trả tiền cho những tài nguyên bạn sử dụng vượt quá hạn mức miễn phí. Đây là một giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
+      </ul>
     `,
     userRating: 4.8,
     totalStars: 480,
@@ -438,9 +438,9 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
         <ul>
-            <li><strong>Gói Add-on Notion AI:</strong> $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</li>
-            <li><strong>Người dùng gói Free, Plus ($10-$12/tháng):</strong> Được dùng thử giới hạn 30 ngày (Lưu ý: Ngay cả khi người dùng mua gói Plus, họ vẫn chỉ được dùng thử Notion AI giới hạn như gói Free và phải mua gói Add-on để sử dụng đầy đủ).</li>
-            <li><strong>Người dùng gói Business ($20-$24/tháng) hoặc Enterprise:</strong> Có thể sử dụng Notion AI không giới hạn.</li>
+          <li><strong>Gói Add-on Notion AI:</strong> $10/thành viên/tháng khi thanh toán hàng năm. Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</li>
+          <li><strong>Người dùng gói Free:</strong> Có thể dùng thử Notion AI với số lượt phản hồi giới hạn.</li>
+          <li><strong>Người dùng gói Plus, Business, Enterprise:</strong> Có thể mua gói Notion AI add-on để sử dụng không giới hạn.</li>
         </ul>
     `,
     userRating: 4.2,
@@ -607,6 +607,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
