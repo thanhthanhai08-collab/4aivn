@@ -298,7 +298,11 @@ export const mockTools: Tool[] = [
         'Startup công nghệ'
     ],
     pricingPlans: `
-        <p>Firebase Studio hiện đang trong giai đoạn thử nghiệm và có thể được sử dụng miễn phí trong giới hạn của gói Firebase Spark. Chi phí sẽ được tính dựa trên việc sử dụng các dịch vụ Firebase khác (như Firestore, Authentication, Hosting) theo mô hình "pay-as-you-go".</p>
+        <p>Firebase Studio sử dụng mô hình định giá của Firebase với hai gói chính:</p>
+        <ul>
+            <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase như Authentication, Firestore, Cloud Functions và Hosting. Rất phù hợp để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
+            <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng có quy mô lớn hơn, bạn chỉ trả tiền cho những tài nguyên bạn sử dụng vượt quá hạn mức miễn phí. Đây là một giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
+        </ul>
     `,
     userRating: 4.8,
     totalStars: 480,
@@ -603,6 +607,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
