@@ -36,13 +36,13 @@ export const mockLovableTool: Tool[] = [
         'Bất kỳ ai muốn biến ý tưởng thành ứng dụng'
     ],
     pricingPlans: `
-        <ul>
-            <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
-            <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
-            <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
-            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
-        </ul>
-    `,
+      <ul>
+          <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
+          <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
+          <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
+          <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
+      </ul>
+  `,
   },
   {
     id: 'elevenlabs',
@@ -121,11 +121,11 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
         <h3>Gói Studio</h3>
         <ul>
-            <li><strong>Miễn phí:</strong> 0đ, dùng thử các tính năng cơ bản.</li>
-            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng cho 200.000 ký tự.</li>
-            <li><strong>Đặc biệt:</strong> 34.000đ/tháng cho 2.000.000 ký tự.</li>
-            <li><strong>VIP:</strong> 75.000đ/tháng cho 2.000.000 ký tự.</li>
-            <li><strong>Tùy chỉnh:</strong> Từ 175.000đ, tùy theo nhu cầu sử dụng.</li>
+            <li><strong>Trải nghiệm:</strong> 49.000đ/tháng (hoặc 499.000đ/năm) cho 100.000 ký tự.</li>
+            <li><strong>Nâng cao:</strong> 999.000đ/tháng (hoặc 9.999.000đ/năm) cho 2.500.000 ký tự.</li>
+            <li><strong>Cao cấp:</strong> 4.899.000đ/tháng (hoặc 48.999.000đ/năm) cho 10.000.000 ký tự.</li>
+            <li><strong>Chuyên nghiệp:</strong> 9.899.000đ/tháng (hoặc 98.999.000đ/năm) cho 21.250.000 ký tự.</li>
+            <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
         </ul>
         <h3>Gói API</h3>
         <p>Dành cho doanh nghiệp có nhu cầu tích hợp sâu. Vui lòng liên hệ để được tư vấn và báo giá chi tiết.</p>
