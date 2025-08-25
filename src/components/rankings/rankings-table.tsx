@@ -83,16 +83,8 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               lastSignature = currentSignature;
               rankToShow = denseRank;
             } else {
-                 const currentSignature = [
-                    averageRating,
-                    item.ratingCount || 0
-                 ].join('-');
-
-                 if(currentSignature !== lastSignature) {
-                    denseRank = index + 1;
-                 }
-                 lastSignature = currentSignature;
-                 rankToShow = denseRank;
+                // For tools, we use simple index-based ranking to avoid ties.
+                rankToShow = index + 1;
             }
 
             return (

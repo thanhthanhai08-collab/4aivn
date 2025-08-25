@@ -129,36 +129,21 @@ function ToolDetailContent({ id }: { id: string }) {
         }));
         
         // Sort tools to find rank
-        let denseRank = 0;
-        let lastSignature = "";
         const sortedTools = allToolsWithRatings.sort((a, b) => {
             const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
             const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
             if (ratingB !== ratingA) return ratingB - ratingA;
+            
             const countA = a.ratingCount ?? 0;
             const countB = b.ratingCount ?? 0;
             if (countB !== countA) return countB - countA;
+            
             return a.name.localeCompare(b.name);
         });
 
-        // Calculate dense rank
         const rank = sortedTools.findIndex(t => t.id === id);
         if (rank !== -1) {
-            let denseRank = 0;
-            let lastSignature = "";
-            for (let i = 0; i <= rank; i++) {
-                const item = sortedTools[i];
-                const averageRating = item.ratingCount && item.ratingCount > 0 ? (item.totalStars || 0) / item.ratingCount : -1;
-                const currentSignature = [averageRating, item.ratingCount || 0].join('-');
-                if(currentSignature !== lastSignature) {
-                    denseRank = i + 1;
-                }
-                lastSignature = currentSignature;
-                if (item.id === id) {
-                    setRanking(denseRank);
-                    break;
-                }
-            }
+            setRanking(rank + 1);
         } else {
             setRanking(null);
         }

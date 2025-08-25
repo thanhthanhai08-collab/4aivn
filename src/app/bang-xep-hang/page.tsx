@@ -106,7 +106,6 @@ export default function RankingsPage() {
     return filtered.sort((a, b) => {
         const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
         const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-
         if (ratingB !== ratingA) return ratingB - ratingA;
         
         const countA = a.ratingCount ?? 0;
