@@ -121,11 +121,11 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
         <h3>Gói Studio</h3>
         <ul>
-            <li><strong>Trải nghiệm:</strong> 49.000đ/tháng (hoặc 499.000đ/năm) cho 100.000 ký tự.</li>
-            <li><strong>Nâng cao:</strong> 999.000đ/tháng (hoặc 9.999.000đ/năm) cho 2.500.000 ký tự.</li>
-            <li><strong>Cao cấp:</strong> 4.899.000đ/tháng (hoặc 48.999.000đ/năm) cho 10.000.000 ký tự.</li>
-            <li><strong>Chuyên nghiệp:</strong> 9.899.000đ/tháng (hoặc 98.999.000đ/năm) cho 21.250.000 ký tự.</li>
-            <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
+            <li><strong>Miễn phí:</strong> 4.000 ký tự/tháng, 1 giờ tải xuống.</li>
+            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng cho 300.000 ký tự.</li>
+            <li><strong>Đặc biệt:</strong> 34.000đ/tháng cho 200.000 ký tự (Gói phổ biến nhất).</li>
+            <li><strong>VIP:</strong> 75.000đ/tháng cho 200.000 ký tự.</li>
+            <li><strong>Tùy chỉnh:</strong> 175.000đ/tháng cho 2.000.000 ký tự.</li>
         </ul>
         <h3>Gói API</h3>
         <ul>
