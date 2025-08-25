@@ -43,5 +43,47 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
         </ul>
     `,
+  },
+  {
+    id: 'elevenlabs',
+    name: 'ElevenLabs',
+    context: 'Tạo giọng nói',
+    developer: 'ElevenLabs',
+    imageUrl: '/image/Ảnh công cụ ElevenLabs.png',
+    description: 'ElevenLabs là nền tảng AI tạo giọng nói hàng đầu, cho phép tạo ra các giọng đọc tự nhiên, biểu cảm và chân thực từ văn bản với nhiều ngôn ngữ khác nhau.',
+    longDescription: '<p>ElevenLabs là một công ty công nghệ chuyên về phát triển phần mềm tổng hợp giọng nói và chuyển văn bản thành giọng nói (text-to-speech) bằng trí tuệ nhân tạo. Nền tảng của họ nổi tiếng với khả năng tạo ra các giọng đọc có chất lượng cao, tự nhiên và biểu cảm, hỗ trợ nhiều ngôn ngữ và cho phép người dùng nhân bản giọng nói (voice cloning) một cách dễ dàng.</p><p>Công cụ này được sử dụng rộng rãi bởi các nhà sáng tạo nội dung, nhà phát triển game, và các doanh nghiệp muốn tạo ra các sản phẩm âm thanh chuyên nghiệp như sách nói, podcast, lồng tiếng cho video, và các ứng dụng tương tác bằng giọng nói.</p>',
+    logoUrl: '/image/Logo ElevenLabs.png',
+    link: 'https://elevenlabs.io/',
+    features: [
+      "Tạo giọng nói tự nhiên và biểu cảm từ văn bản.",
+      "Nhân bản giọng nói (Voice Cloning) từ một đoạn âm thanh ngắn.",
+      "Hỗ trợ đa ngôn ngữ, bao gồm cả tiếng Việt.",
+      "Thư viện giọng nói đa dạng có sẵn.",
+      "API mạnh mẽ để tích hợp vào các ứng dụng khác.",
+      "Tùy chỉnh cao độ, tốc độ và cảm xúc của giọng nói."
+    ],
+    useCases: [
+        'Sản xuất sách nói và podcast.',
+        'Lồng tiếng cho video, phim và game.',
+        'Tạo trợ lý ảo với giọng nói tùy chỉnh.',
+        'Phát triển các ứng dụng học ngoại ngữ.',
+        'Tạo thông báo bằng giọng nói cho hệ thống công cộng.'
+    ],
+    whoIsItFor: [
+        'Nhà sáng tạo nội dung',
+        'Nhà phát triển game',
+        'Tác giả và nhà xuất bản',
+        'Doanh nghiệp',
+        'Nhà phát triển ứng dụng'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Free:</strong> 10.000 ký tự/tháng, tạo được 3 giọng nói tùy chỉnh.</li>
+            <li><strong>Gói Starter ($5/tháng):</strong> 30.000 ký tự/tháng, tạo được 10 giọng nói tùy chỉnh.</li>
+            <li><strong>Gói Creator ($22/tháng):</strong> 100.000 ký tự/tháng, tạo được 30 giọng nói tùy chỉnh.</li>
+            <li><strong>Gói Pro ($99/tháng):</strong> 500.000 ký tự/tháng, tạo được 160 giọng nói tùy chỉnh.</li>
+            <li><strong>Gói Enterprise:</strong> Gói tùy chỉnh theo nhu cầu của doanh nghiệp lớn.</li>
+        </ul>
+    `,
   }
 ];
