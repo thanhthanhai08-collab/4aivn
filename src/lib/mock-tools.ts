@@ -164,10 +164,11 @@ export const mockTools: Tool[] = [
         'Nhà phát triển muốn tự động hóa tác vụ'
     ],
     pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
         <ul>
-            <li><strong>Gói Free:</strong> 1,000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.</li>
-            <li><strong>Gói Professional:</strong> $19.9/tháng với 20,000 credit, hỗ trợ các tính năng nâng cao và tạo video.</li>
-            <li><strong>Gói Ultimate:</strong> $49.9/tháng với 50,000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn.</li>
+            <li><strong>Gói Free:</strong> Được 1.000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.</li>
+            <li><strong>Gói Professional:</strong> $16-$19.9/tháng với 20.000 credit, hỗ trợ các tính năng nâng cao và tạo video.</li>
+            <li><strong>Gói Ultimate:</strong> $36-$49.9/tháng với 50.000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn.</li>
         </ul>
     `,
     userRating: 4.6,
@@ -447,6 +448,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
