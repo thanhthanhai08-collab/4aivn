@@ -158,17 +158,14 @@ export const mockTools: Tool[] = [
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
     pricingPlans: `
+        <h3>Gói API Credit</h3>
+        <p>Stability AI cung cấp quyền truy cập API thông qua hệ thống tín dụng (credit), với 1 credit tương đương $0.01.</p>
+        <h3>Gói Stable Assistant (Sử dụng qua Web)</h3>
         <ul>
-            <li>Stable Diffusion có thể được sử dụng miễn phí thông qua việc tải về và chạy trên máy tính cá nhân của người dùng hoặc qua các nền tảng như Hugging Face.</li>
-            <li>Đối với việc sử dụng API, Stability AI đang cung cấp theo dạng credit với 1 credit = $0.01.</li>
-            <li>Còn trong trường hợp mọi người muốn sử dụng qua web thì Stability AI có tích hợp sẵn Stable Diffusion trong Stable Assistant với các gói sử dụng
-                <ul>
-                    <li>Gói Standard : $9/tháng thì được sử dụng Stable Assistant với 900 credit/1 tháng với 3 ngày free trial.</li>
-                    <li>Gói Pro : $19/tháng thì được sử dụng Stable Assistant với 1900 credit/1 tháng với 3 ngày free trial.</li>
-                    <li>Gói Plus : $49/tháng thì được sử dụng Stable Assistant với 5500 credit/1 tháng với 3 ngày free trial.</li>
-                    <li>Gói Premium : $99/tháng thì được sử dụng Stable Assistant với 12000 credit/1 tháng với 3 ngày free trial.</li>
-                </ul>
-            </li>
+            <li><strong>Gói Standard:</strong> $9/tháng, cung cấp 900 credit/tháng.</li>
+            <li><strong>Gói Pro:</strong> $19/tháng, cung cấp 1900 credit/tháng.</li>
+            <li><strong>Gói Plus:</strong> $49/tháng, cung cấp 5500 credit/tháng.</li>
+            <li><strong>Gói Premium:</strong> $99/tháng, cung cấp 12000 credit/tháng.</li>
         </ul>
     `,
     userRating: 4.6,
@@ -182,7 +179,7 @@ export const mockTools: Tool[] = [
     context: 'AI Agent',
     developer: 'Flowith',
     imageUrl: '/image/Ảnh công cụ AI Flowith.png',
-    description: 'Flowith là một nền tảng AI Agent thế hệ mới, nổi bật với Agent Neo hoạt động trên giao diện canvas trực quan. Công cụ này cho phép người dùng quản lý và thực thi các tác vụ phức tạp theo từng bước, vượt trội hơn so với các nền tảng AI truyền thống. Với khả năng xử lý hàng nghìn bước liên tục, Flowith là giải pháp mạnh mẽ cho việc tự động hóa nghiên cứu, phân tích dữ liệu và quản lý dự án.',
+    description: 'Flowith là một nền tảng AI Agent thế hệ mới, hoạt động trên giao diện canvas trực quan, cho phép người dùng quản lý và thực thi các tác vụ phức tạp theo từng bước, vượt trội hơn so với các nền tảng AI truyền thống. Với khả năng xử lý hàng nghìn bước liên tục, Flowith là giải pháp mạnh mẽ cho việc tự động hóa nghiên cứu, phân tích dữ liệu và quản lý dự án.',
     longDescription: '<p>Flowith là một nền tảng AI Agent thế hệ mới, hoạt động trên giao diện canvas trực quan, cho phép người dùng xây dựng và quản lý các quy trình làm việc phức tạp bằng cách kết nối các khối chức năng. Khác với các chatbot truyền thống, Flowith tạo ra một không gian làm việc mở, nơi bạn có thể theo dõi trực tiếp quá trình AI thực thi từng bước dựa trên ý tưởng của bạn.</p><p>Với Agent Neo và AI Oracle tích hợp, Flowith có khả năng thực hiện hàng nghìn bước một cách liên tục, tự động lập kế hoạch, và phối hợp nhiều AI Agent chuyên biệt. Đây là một công cụ mạnh mẽ để tự động hóa nghiên cứu, phân tích dữ liệu, và quản lý dự án.</p>',
     logoUrl: '/image/Logo flowith.png',
     link: 'https://www.try.flowith.io',
@@ -435,7 +432,12 @@ export const mockTools: Tool[] = [
         'Bất kỳ ai sử dụng Notion để làm việc và học tập'
     ],
     pricingPlans: `
-        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn. Gói Add-on Notion AI: $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI. Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày: (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on. Người dùng gói Business ($20-$24/tháng) hoặc Enterprise: Có thể sử dụng Notion AI không giới hạn.</p>
+        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
+        <ul>
+            <li><strong>Gói Add-on Notion AI:</strong> $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</li>
+            <li><strong>Người dùng gói Free, Plus ($10-$12/tháng):</strong> Được dùng thử giới hạn 30 ngày (Lưu ý: Ngay cả khi người dùng mua gói Plus, họ vẫn chỉ được dùng thử Notion AI giới hạn như gói Free và phải mua gói Add-on để sử dụng đầy đủ).</li>
+            <li><strong>Người dùng gói Business ($20-$24/tháng) hoặc Enterprise:</strong> Có thể sử dụng Notion AI không giới hạn.</li>
+        </ul>
     `,
     userRating: 4.2,
     totalStars: 399,
@@ -601,6 +603,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
