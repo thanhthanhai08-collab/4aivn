@@ -85,5 +85,46 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Enterprise:</strong> Gói tùy chỉnh theo nhu cầu của doanh nghiệp lớn.</li>
         </ul>
     `,
+  },
+  {
+    id: 'vbee-ai',
+    name: 'Vbee AI',
+    context: 'Tạo giọng nói',
+    developer: 'Vbee',
+    description: 'Vbee AI là nền tảng chuyển đổi văn bản thành giọng nói (Text-to-Speech) hàng đầu tại Việt Nam, cung cấp các giải pháp giọng nói AI tự nhiên, đa dạng và có cảm xúc, được ứng dụng rộng rãi trong nhiều lĩnh vực.',
+    logoUrl: '/image/Logo Vbee AI.png',
+    link: 'https://vbee.vn/',
+    imageUrl: '/image/Ảnh công cụ AI Vbee.png',
+    longDescription: '<p>Vbee là một công ty công nghệ tiên phong tại Việt Nam, chuyên sâu về các giải pháp xử lý giọng nói và ngôn ngữ tự nhiên bằng trí tuệ nhân tạo. Nền tảng Text-to-Speech của Vbee nổi bật với khả năng tạo ra giọng đọc có ngữ điệu tự nhiên, chân thực như người thật, hỗ trợ đa dạng giọng đọc theo vùng miền (Bắc, Trung, Nam) và giới tính.</p><p>Công nghệ của Vbee được ứng dụng rộng rãi để tạo ra các sản phẩm âm thanh chất lượng cao như sách nói, báo nói, lồng tiếng cho video, hệ thống tổng đài tự động và các giải pháp cho nhà thông minh. Với khả năng tùy chỉnh linh hoạt, Vbee giúp các doanh nghiệp và nhà sáng tạo nội dung tiết kiệm chi phí và thời gian sản xuất, đồng thời nâng cao trải nghiệm của người dùng cuối.</p>',
+    features: [
+        "Chuyển đổi văn bản thành giọng nói tiếng Việt tự nhiên, có cảm xúc.",
+        "Hỗ trợ đa dạng giọng đọc theo vùng miền và giới tính.",
+        "Giao diện trực quan, dễ dàng sử dụng.",
+        "API mạnh mẽ cho phép tích hợp vào các hệ thống khác nhau.",
+        "Tùy chỉnh tốc độ, cao độ và ngữ điệu của giọng đọc.",
+        "Ứng dụng trong báo nói, sách nói, tổng đài tự động."
+    ],
+    useCases: [
+        'Tự động hóa sản xuất báo nói và sách nói.',
+        'Xây dựng hệ thống tổng đài trả lời tự động (IVR).',
+        'Lồng tiếng cho video quảng cáo, E-learning.',
+        'Tạo thông báo bằng giọng nói cho các thiết bị thông minh.',
+        'Phát triển ứng dụng cho người khiếm thị.'
+    ],
+    whoIsItFor: [
+        'Đài truyền hình, báo chí',
+        'Nhà xuất bản sách',
+        'Doanh nghiệp',
+        'Nhà phát triển phần mềm',
+        'Nhà sáng tạo nội dung'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Miễn phí:</strong> Cung cấp một lượng ký tự giới hạn để dùng thử.</li>
+            <li><strong>Gói Cá nhân:</strong> Phù hợp cho các cá nhân, freelancer với nhu cầu sử dụng vừa phải.</li>
+            <li><strong>Gói Doanh nghiệp:</strong> Cung cấp các tính năng nâng cao, không giới hạn ký tự và hỗ trợ chuyên sâu.</li>
+            <li><strong>Gói API:</strong> Dành cho các nhà phát triển muốn tích hợp giọng nói của Vbee vào ứng dụng của mình.</li>
+        </ul>
+    `,
   }
 ];
