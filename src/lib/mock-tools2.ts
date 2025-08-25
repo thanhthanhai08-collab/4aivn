@@ -127,8 +127,13 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Chuyên nghiệp:</strong> 9.899.000đ/tháng (hoặc 98.999.000đ/năm) cho 21.250.000 ký tự.</li>
             <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
         </ul>
-        <h3>Doanh nghiệp và kết nối API</h3>
-        <p>Tích hợp API giọng nói cho mọi sản phẩm của bạn với các gói cước linh hoạt hoặc tùy chỉnh phù hợp nhất cho doanh nghiệp của bạn. Vui lòng liên hệ để được tư vấn và nhận báo giá.</p>
+        <h3>Gói API</h3>
+        <ul>
+            <li><strong>Trải nghiệm:</strong> 250.000đ cho 1.000.000 ký tự, thời gian sử dụng 1 tháng.</li>
+            <li><strong>Nâng cao:</strong> 2.000.000đ cho 10.000.000 ký tự, thời gian sử dụng 6 tháng.</li>
+            <li><strong>Cao cấp:</strong> 4.000.000đ cho 25.000.000 ký tự, thời gian sử dụng 12 tháng.</li>
+            <li><strong>Doanh nghiệp và kết nối API:</strong> Tích hợp API giọng nói cho mọi sản phẩm của bạn với các gói cước linh hoạt hoặc tùy chỉnh phù hợp nhất cho doanh nghiệp của bạn. Vui lòng liên hệ để được tư vấn và nhận báo giá.</li>
+        </ul>
     `,
   }
 ];
