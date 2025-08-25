@@ -306,17 +306,43 @@ export const mockTools: Tool[] = [
     name: 'Make',
     context: 'Tự động hóa',
     developer: 'Celonis',
-    description: 'Make.com là nền tảng tự động hóa quy trình làm việc (workflow automation) không cần mã (no-code/low-code), giúp người dùng kết nối và tự động hóa các ứng dụng quen thuộc như CRM, nền tảng lưu trữ đám mây, công cụ marketing, bán hàng… thông qua giao diện kéo-thả trực quan mà không cần kỹ năng lập trình.\n+ Make.com cho phép người dùng xây dựng các kịch bản tự động hóa (scenario) bằng cách kết nối các module đại diện cho từng hành động cụ thể trong quy trình làm việc. Make có những đặc điểm như sau:\n• Giao diện kéo thả trực quan : Giao diện kéo thả kết nối khá trực quan nhưng khó tùy chỉnh sâu như n8n, và đặc biệt có thể nhìn tổng quát không bị như zapier rất khó nhìn tổng quát.\n• Tích hợp hơn 1500 ứng dụng: Tuy vẫn chưa nhiều và phổ biến bằng Zapier nhưng đây vẫn đủ với hầu hết các công cụ hiện nay email, cloud, crm, thương mại điện tử, đầy đủ các dịch vụ AI của OpenAI, Claude AI, Google AI, Microsoft Azure AI. Còn các ứng dụng chưa kết nối trực tiếp thì đã có API và Http Request nên đây không phải vấn đề lớn.\n• Chỉ hỗ trợ JavaScript: Make hiện nay chỉ hỗ trợ code JavaScript để xử lý các logic phức tạp.\n• Có thể thêm AI để xử lý các quy trình làm việc: Hiện nay Make đã hỗ trợ các node AI để gửi và nhận dữ liệu thông qua API đến các nền tảng LLM của Google, Open AI, Claude,... còn về Make AI Agent thì nền tảng này mới triển khai tháng 4-2025 những AI Agent này được xây dựng dựa trên các mô hình ngôn ngữ lớn (LLM) hàng đầu như OpenAI, Claude AI, Google AI và Microsoft Azure AI, cho phép xử lý ngôn ngữ tự nhiên chính xác và linh hoạt. AI Agent trong Make có khả năng phối hợp với các module khác trong workflow để tự động hóa, thực thi các yêu cầu của người dùng.\n• Xử lý lỗi và gỡ lỗi hoặc có thể tạo scenario nhanh chóng với AI Assistant: Make cung cấp lịch sử chạy chi tiết, dữ liệu vào/ra từng module từ đó có thể cung cấp nhanh chóng cách sửa lỗi hoặc tạo mới scenario để xử lý vấn đề từ AI Assistant của Make nằm ở góc phải màn hình. Tuy người dùng vẫn phải sửa lỗi hoặc tạo scenario thủ công nhưng nên sử dụng AI Assistant của Make vì thực sự rất tốt nhưng mới triển khai ở dạng Beta thôi trong khi n8n và Zapier chưa triển khai.\n• Cộng đồng người dùng, tài nguyên cực lớn: Cộng đồng người dùng cũng rất lớn nhưng ý kiến cá nhân so với Zapier, n8n có thể chưa lớn bằng.\n• Chi phí: \nGói Free được dùng miễn phí với giới hạn 1000 lượt chạy / 1 tháng sau 1 tháng reset lại và 2 kịch bản chạy liên tục (active) 5 Mb file size (tức là gửi khoảng 4 bức ảnh lúc trở lên cùng lúc đến server thì make không thể xử lý được)\nGói Core với giá 9 - 11 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 100 Mb file size và không giới hạn kịch bản chạy active đó cũng là lý do người sử dụng n8n cloud có rất ít vì đối với người không biết nhiều về kĩ thuật thì hay dùng make vì có giá rẻ hơn.\nGói Pro với giá 16 - 19 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 250 Mb file size (hoàn toàn có thể xử lý nhiều video ở gói này ) và không giới hạn kịch bản chạy active đặc biệt hỗ trợ biến tùy chỉnh, đầu vào kịch bản, tìm kiếm nhật ký thực thi toàn văn bản.\nGói Teams với giá 29 - 34.12 USD/1 tháng với giới hạn 10.000 lượt chạy / 1 tháng sau 1 tháng reset lại , 500 Mb file size (hoàn toàn có thể xử lý nhiều video hơn ở gói này ) và không giới hạn kịch bản chạy active gói này có hỗ trợ thêm nhiều nhóm và phân quyền người dùng.\n.\n ',
+    description: 'Make (trước đây là Integromat) là nền tảng tự động hóa quy trình làm việc trực quan, cho phép người dùng kết nối các ứng dụng và tự động hóa các tác vụ lặp đi lặp lại mà không cần kỹ năng lập trình.',
     logoUrl: '/image/Logo Make.com.png',
     link: 'https://www.make.com/',
+    imageUrl: '/image/Ảnh công cụ AI Make.png',
+    longDescription: '<p>Make (trước đây là Integromat) là một nền tảng tự động hóa quy trình làm việc mạnh mẽ, cho phép bạn kết nối các ứng dụng yêu thích và tự động hóa các tác vụ lặp đi lặp lại mà không cần viết một dòng code nào. Với giao diện kéo-thả trực quan, bạn có thể xây dựng các "kịch bản" (scenarios) để di chuyển dữ liệu giữa các ứng dụng, xử lý thông tin và thực hiện các hành động phức tạp.</p><p>Nền tảng này hỗ trợ hơn 1500 ứng dụng, từ các công cụ marketing, CRM, đến các dịch vụ lưu trữ và mô hình AI. Make nổi bật với khả năng xử lý logic phức tạp, cho phép tạo ra các luồng công việc đa bước, phân nhánh và xử lý lỗi một cách linh hoạt, khiến nó trở thành một công cụ mạnh mẽ cho cả người dùng cá nhân và doanh nghiệp.</p>',
     features: [
-      "Giao diện kéo thả trực quan.",
-"Tích hợp hơn 1500 ứng dụng khác nhau và có đầy đủ các mô hình LLM .",
-"AI Agent đã có thể phối hợp với module trong scenario để tự động hóa yêu cầu của người dùng rất tốt nhưng vẫn chưa so sánh được với Agent của n8n.",
-      "Có thể gỡ lỗi sửa lỗi hoặc hướng dẫn tạo scenario với AI Assistant.",
-      "Có gói miễn phí hoàn toàn có thể sử dụng được.",
-      "Cộng đồng người dùng, tài nguyên rất lớn.",
+      "Giao diện kéo-thả trực quan, dễ sử dụng.",
+      "Tích hợp hơn 1500 ứng dụng và dịch vụ.",
+      "Hỗ trợ logic phức tạp, điều kiện và phân nhánh.",
+      "Khả năng xử lý lỗi và gỡ lỗi chi tiết.",
+      "Tích hợp các mô hình AI của OpenAI, Google, Claude.",
+      "Có AI Assistant hỗ trợ xây dựng và sửa lỗi kịch bản.",
+      "Cung cấp gói miễn phí cho người mới bắt đầu.",
     ],
+    useCases: [
+        'Tự động hóa marketing qua email và mạng xã hội.',
+        'Đồng bộ hóa dữ liệu giữa CRM và các công cụ khác.',
+        'Xử lý đơn hàng và thông báo cho khách hàng.',
+        'Tạo báo cáo tự động từ nhiều nguồn dữ liệu.',
+        'Tích hợp AI vào các quy trình kinh doanh.',
+    ],
+    whoIsItFor: [
+        'Người làm marketing',
+        'Chủ doanh nghiệp nhỏ và vừa',
+        'Nhà phát triển muốn tự động hóa nhanh',
+        'Người làm việc tự do (freelancer)',
+        'Bất kỳ ai muốn tiết kiệm thời gian cho các tác vụ lặp lại'
+    ],
+    pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
+        <ul>
+            <li><strong>Gói Free:</strong> 1.000 lượt chạy/tháng, 2 kịch bản hoạt động. Phù hợp để bắt đầu và thử nghiệm.</li>
+            <li><strong>Gói Core:</strong> Từ $9/tháng, 10.000 lượt chạy/tháng, không giới hạn kịch bản. Lý tưởng cho cá nhân và freelancer.</li>
+            <li><strong>Gói Pro:</strong> Từ $16/tháng, 10.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao như biến tùy chỉnh.</li>
+            <li><strong>Gói Teams:</strong> Từ $29/tháng, 10.000 lượt chạy/tháng, thêm các tính năng làm việc nhóm và phân quyền.</li>
+        </ul>
+    `,
     userRating: 4.3,
     totalStars: 322.5,
     ratingCount: 75,
@@ -394,6 +420,7 @@ export const mockTools: Tool[] = [
         'Giáo viên, nhà giáo dục'
     ],
     pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
         <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
         <ul>
             <li><strong>Google AI Pro:</strong> 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
@@ -467,6 +494,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
