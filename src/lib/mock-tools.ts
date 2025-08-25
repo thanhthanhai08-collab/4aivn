@@ -407,17 +407,43 @@ export const mockTools: Tool[] = [
     name: 'Notion AI',
     context: 'Hỗ trợ viết',
     developer: 'Notion',
-    description: 'Notion AI không phải là ứng dụng độc lập mà nó hoạt động như trợ lý ảo thông minh được tích hợp ngay trên nền tảng Notion. Nó có khả năng hỗ trợ người dùng trong việc soạn thảo văn bản, tóm tắt nội dung, dịch thuật, tạo dàn ý, và đề xuất ý tưởng sáng tạo. \nNotion AI giúp tối ưu hóa quy trình làm việc cá nhân và nhóm bằng cách tự động hóa các tác vụ lặp đi lặp lại, đồng thời nâng cao chất lượng và tốc độ sản xuất nội dung ngay trên Notion. Với khả năng hiểu ngữ cảnh và cá nhân hóa theo thói quen làm việc, từ đó giúp người dùng làm việc thông minh và hiệu quả hơn.\n• Lên kế hoạch nội dung và tạo nội dung tự động: Người dùng có thể soạn thảo nhanh các văn bản như mô tả sản phẩm, email, bài thuyết trình với yêu cầu đơn giản hoặc chỉ đơn giản viết ra một ý chính rồi Notion AI tự động đưa ra ý tưởng và dàn ý.\n• Tóm tắt và giải thích văn bản: Tính năng này cực kì phù hợp với các bạn học sinh, sinh viên hoặc người làm marketing, vì Notion AI giúp rút gọn tài liệu dài thành các điểm chính hoặc đoạn văn ngắn dễ hiểu, giải thích các khái niệm phức tạp.\n• Dịch thuật đa ngôn ngữ: Hỗ trợ dịch nội dung sang hơn 10 ngôn ngữ phổ biến như tiếng Anh, Trung, Tây Ban Nha, Hàn, Việt, và Notion AI hoàn toàn có thể viết lại nội dung đó sang tiếng mà người dùng yêu cầu.\n• Tổ chức tài liệu và ghi chú khoa học: Tự động tạo ghi chú, sắp xếp tài liệu theo chủ đề, giúp quản lý kiến ​​thức mạch lạc và dễ truy xuất.\n• Dashboard AI được cá nhân hóa: Theo dõi tiến độ công việc, ưu tiên nhiệm vụ hoặc đồng bộ dữ liệu với các workflow tự động khác để đưa nhắc nhở thông minh cho từng cá nhân dựa trên thói quen và hiệu suất làm việc thực tế.\n• Hỗ trợ làm việc nhóm thông qua AI: Cho phép tự động chia sẻ, bình luận, chỉnh sửa đồng thời trên tài liệu, nâng cao hiệu quả làm việc nhóm.\n• Tìm kiếm và trả lời với AI dựa ngay trên dữ liệu người dùng trực tiếp: Chỉ cần gõ “/**” hoặc nhấn vào nút “Ask AI”, người dùng có thể bắt đầu trò chuyện hoặc yêu cầu hỗ trợ từ AI ngay trong trang làm việc.\n• GIá cả: Notion AI có thể dùng miễn phí với Limited Trial tức là khoảng 20-40 lần sử dụng sau đó phải mua thêm gói Add on Notion AI, nhưng hãy chú ý với đối với những người dùng gói Plus của Notion (10 - 12 USD/1 tháng) thì vẫn chỉ được dùng Limited Trial, người dùng phải nâng cấp lên gói Business (20 -24 USD/1 tháng) hoặc gói Enterprise thì mới được sử dụng Notion AI không giới hạn.\n',
+    description: 'Notion AI là một trợ lý ảo thông minh được tích hợp trực tiếp vào không gian làm việc của Notion, giúp bạn soạn thảo, tóm tắt, dịch thuật và lên ý tưởng nhanh hơn, từ đó tối ưu hóa quy trình làm việc cá nhân và đội nhóm.',
     logoUrl: '/image/Logo Notion AI.png',
     link: 'https://www.notion.so/product/ai',
+    imageUrl: '/image/Ảnh công cụ AI Notion.png',
+    longDescription: '<p>Notion AI hoạt động như một trợ lý thông minh được tích hợp liền mạch vào nền tảng Notion, giúp người dùng nâng cao hiệu suất làm việc. Thay vì là một ứng dụng riêng biệt, Notion AI cung cấp các công cụ mạnh mẽ ngay trong không gian làm việc của bạn, từ việc tự động hóa các tác vụ soạn thảo đến việc đưa ra các đề xuất sáng tạo.</p><p>Công cụ này có khả năng hiểu ngữ cảnh của trang bạn đang làm việc, giúp tạo ra nội dung phù hợp, tóm tắt các ghi chú dài, dịch thuật văn bản, hoặc thậm chí là tạo ra các bảng và cơ sở dữ liệu từ những yêu cầu đơn giản. Với Notion AI, bạn có thể biến Notion từ một công cụ ghi chú và quản lý dự án thành một không gian làm việc thực sự thông minh và hiệu quả.</p>',
     features: [
-      "Notion AI có thể lên kế hoạch và tạo nội dung tự động.",
-"Tóm tắt và giải thích văn bản tự động .",
-"Tổ chức tài liệu ghi chú khoa học.",
-      "Dashboard AI được cá nhân hóa tự động",
-      "Hỗ trợ làm việc nhóm thông qua AI.",
-      "Tìm kiếm và tương tác với người dùng dựa trên dữ liệu của Notion.",
+      "Tự động soạn thảo và hoàn thành văn bản (email, blog, báo cáo).",
+      "Tóm tắt nội dung từ các trang dài hoặc cơ sở dữ liệu phức tạp.",
+      "Dịch thuật trực tiếp sang nhiều ngôn ngữ.",
+      "Tạo dàn ý, lên ý tưởng và brainstorm ngay trong Notion.",
+      "Cải thiện văn phong, sửa lỗi ngữ pháp và chính tả.",
+      "Tự động điền và tạo bảng từ dữ liệu có sẵn.",
+      "Hỏi đáp về nội dung trong không gian làm việc của bạn (Q&A)."
     ],
+    useCases: [
+        'Soạn thảo tài liệu và email marketing nhanh chóng.',
+        'Tóm tắt các cuộc họp và tài liệu nghiên cứu.',
+        'Lên kế hoạch nội dung cho blog và mạng xã hội.',
+        'Tổ chức và phân loại ghi chú cá nhân.',
+        'Quản lý dự án với các bảng công việc được tạo tự động.'
+    ],
+    whoIsItFor: [
+        'Người sáng tạo nội dung',
+        'Học sinh, sinh viên',
+        'Quản lý dự án',
+        'Đội nhóm làm việc cộng tác',
+        'Bất kỳ ai sử dụng Notion để làm việc và học tập'
+    ],
+    pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
+        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
+        <ul>
+            <li><strong>Add-on Notion AI:</strong> $8/thành viên/tháng (thanh toán theo năm) hoặc $10/thành viên/tháng (thanh toán theo tháng). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</li>
+            <li><strong>Người dùng gói Free:</strong> Được dùng thử giới hạn.</li>
+            <li><strong>Người dùng gói Plus, Business, Enterprise:</strong> Có thể mua gói add-on AI để sử dụng không giới hạn.</li>
+        </ul>
+    `,
     userRating: 4.2,
     totalStars: 399,
     ratingCount: 95,
