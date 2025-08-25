@@ -160,7 +160,7 @@ export const mockTools: Tool[] = [
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
     pricingPlans: `
-      <h3>Các gói dịch vụ</h3>
+        <h3>Các gói dịch vụ</h3>
         <ul>
             <li><strong>Sử dụng miễn phí:</strong> Tải về và chạy trên máy tính cá nhân hoặc qua các nền tảng như Hugging Face.</li>
             <li><strong>Sử dụng API:</strong> Tính phí theo credit, với 1 credit = $0.01.</li>
@@ -184,11 +184,11 @@ export const mockTools: Tool[] = [
     name: 'Flowith',
     context: 'AI Agent',
     developer: 'Flowith',
+    imageUrl: '/image/Ảnh công cụ AI Flowith.png',
     description: 'Flowith là một nền tảng AI Agent thế hệ mới, nổi bật với Agent Neo hoạt động trên giao diện canvas trực quan. Công cụ này cho phép người dùng quản lý và thực thi các tác vụ phức tạp theo từng bước, vượt trội hơn so với các nền tảng AI truyền thống. Với khả năng xử lý hàng nghìn bước liên tục, Flowith là giải pháp mạnh mẽ cho việc tự động hóa nghiên cứu, phân tích dữ liệu và quản lý dự án.',
+    longDescription: '<p>Flowith là một nền tảng AI Agent thế hệ mới, hoạt động trên giao diện canvas trực quan, cho phép người dùng xây dựng và quản lý các quy trình làm việc phức tạp bằng cách kết nối các khối chức năng. Khác với các chatbot truyền thống, Flowith tạo ra một không gian làm việc mở, nơi bạn có thể theo dõi trực tiếp quá trình AI thực thi từng bước dựa trên ý tưởng của bạn.</p><p>Với Agent Neo và AI Oracle tích hợp, Flowith có khả năng thực hiện hàng nghìn bước một cách liên tục, tự động lập kế hoạch, và phối hợp nhiều AI Agent chuyên biệt. Đây là một công cụ mạnh mẽ để tự động hóa nghiên cứu, phân tích dữ liệu, và quản lý dự án.</p>',
     logoUrl: '/image/Logo flowith.png',
     link: 'https://www.try.flowith.io',
-    imageUrl: '/image/Ảnh công cụ AI Flowith.png',
-    longDescription: '<p>Flowith là một nền tảng AI Agent thế hệ mới, hoạt động trên giao diện canvas trực quan, cho phép người dùng xây dựng và quản lý các quy trình làm việc phức tạp bằng cách kết nối các khối chức năng. Khác với các chatbot truyền thống, Flowith tạo ra một không gian làm việc mở, nơi bạn có thể theo dõi trực tiếp quá trình AI thực thi từng bước dựa trên ý tưởng của bạn.</p><p>Với Agent Neo và AI Oracle tích hợp, Flowith có khả năng thực hiện hàng nghìn bước một cách liên tục, tự động lập kế hoạch, và phối hợp nhiều AI Agent chuyên biệt. Đây là một công cụ mạnh mẽ để tự động hóa nghiên cứu, phân tích dữ liệu, và quản lý dự án.</p>',
     features: [
       "Thực hiện và lập kế hoạch lên tới hơn 1000 bước.",
       "Tự động lập kế hoạch và điều phối AI Agent.",
@@ -345,12 +345,11 @@ export const mockTools: Tool[] = [
     ],
     pricingPlans: `
         <h3>Các gói dịch vụ</h3>
-        <p>Tavily tính phí dựa trên số lượt sử dụng API (credit). Gói miễn phí cung cấp 1000 credit mỗi tháng, phù hợp cho các dự án cá nhân và thử nghiệm.</p>
+        <p>Tavily tính phí dựa trên số lần sử dụng API (credit). Gói miễn phí phù hợp cho các dự án cá nhân và thử nghiệm.</p>
         <ul>
-            <li><strong>Gói Free:</strong> 1.000 credit/tháng.</li>
-            <li><strong>Gói Starter:</strong> $10/tháng cho 10.000 credit.</li>
-            <li><strong>Gói Growth:</strong> $49/tháng cho 100.000 credit.</li>
-            <li><strong>Doanh nghiệp (Enterprise):</strong> Liên hệ để có gói tùy chỉnh.</li>
+            <li><strong>Gói Researcher:</strong> Miễn phí 1000 credit/tháng. Khi hết, có thể mua thêm với giá $0.008/credit.</li>
+            <li><strong>Gói Project:</strong> $30/tháng cho 4.000 credit (tương đương khoảng 2500 trang/tháng).</li>
+            <li><strong>Gói Enterprise:</strong> Liên hệ để có gói tùy chỉnh theo nhu cầu.</li>
         </ul>
     `,
     userRating: 4.4,
