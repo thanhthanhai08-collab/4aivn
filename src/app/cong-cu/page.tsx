@@ -6,11 +6,14 @@ import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
 import { mockTools } from "@/lib/mock-tools";
+import { mockLovableTool } from "@/lib/mock-tools2";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+
+const combinedMockTools = [...mockTools, ...mockLovableTool];
 
 export default function ToolsPage() {
   const searchParams = useSearchParams();
@@ -20,7 +23,7 @@ export default function ToolsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const [allTools, setAllTools] = useState<Tool[]>(mockTools);
+  const [allTools, setAllTools] = useState<Tool[]>(combinedMockTools);
 
 
   useEffect(() => {
@@ -35,14 +38,14 @@ export default function ToolsPage() {
           toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
         
-        setAllTools(mockTools.map(tool => ({
+        setAllTools(combinedMockTools.map(tool => ({
           ...tool,
           ...toolRatings[tool.id]
         })));
 
       } catch (error) {
         console.error("Error fetching tool ratings:", error);
-        setAllTools(mockTools); // Fallback to mock data
+        setAllTools(combinedMockTools); // Fallback to mock data
       } finally {
         setIsLoading(false);
       }

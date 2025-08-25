@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
+import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockNews } from "@/lib/mock-news";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
@@ -23,6 +24,8 @@ const TYPING_TEXTS = [
   "KHÁM PHÁ BẢNG XẾP HẠNG CÁC CÔNG CỤ AI",
   "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
 ];
+
+const combinedMockTools = [...mockTools, ...mockLovableTool];
 
 export default function HomePage() {
   const latestNews = mockNews.slice(0, 6); // Fetch more for seamless scroll
@@ -105,7 +108,7 @@ export default function HomePage() {
           toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
 
-        const toolsWithRatings = mockTools.map(tool => ({
+        const toolsWithRatings = combinedMockTools.map(tool => ({
           ...tool,
           ...toolRatings[tool.id]
         }));
@@ -128,7 +131,7 @@ export default function HomePage() {
       } catch (error) {
         console.error("Error fetching tool ratings for homepage:", error);
         // Fallback to sorting mockTools without ratings
-        setTopTools(mockTools
+        setTopTools(combinedMockTools
           .sort((a, b) => (b.userRating || 0) - (a.userRating || 0))
           .slice(0, 4));
       } finally {

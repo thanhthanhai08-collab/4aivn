@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
+import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockNews } from "@/lib/mock-news";
 import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
@@ -28,6 +29,8 @@ import {
 } from "@/components/ui/dialog";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
+
+const combinedMockTools = [...mockTools, ...mockLovableTool];
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
@@ -69,7 +72,7 @@ export default function ProfilePage() {
 
             // Load rated tools
             const ratedToolIds = Object.keys(data.ratedTools || {});
-            const userRatedTools = mockTools
+            const userRatedTools = combinedMockTools
                 .filter(tool => ratedToolIds.includes(tool.id))
                 .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id]?.rating }));
             setRatedTools(sortToolsByRating(userRatedTools));
@@ -80,7 +83,7 @@ export default function ProfilePage() {
             setFavoriteModels(userFavoriteModels);
 
             // Load favorite tools
-            const userFavoriteTools = mockTools
+            const userFavoriteTools = combinedMockTools
                 .filter(tool => (data.favoriteTools || []).includes(tool.id));
             setFavoriteTools(sortToolsByRating(userFavoriteTools));
             

@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Tool, AIModel } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockTools } from "@/lib/mock-tools";
+import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockAIModels } from "@/lib/mock-models";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -27,10 +28,11 @@ const parseContextLength = (tokenStr?: string): number => {
   return parseFloat(lower) || -Infinity;
 };
 
+const combinedMockTools = [...mockTools, ...mockLovableTool];
 
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [allTools, setAllTools] = useState<Tool[]>(mockTools);
+  const [allTools, setAllTools] = useState<Tool[]>(combinedMockTools);
   const [allModels, setAllModels] = useState<AIModel[]>(mockAIModels);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -54,12 +56,12 @@ export default function RankingsPage() {
             modelRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
         
-        setAllTools(mockTools.map(tool => ({ ...tool, ...toolRatings[tool.id] })));
+        setAllTools(combinedMockTools.map(tool => ({ ...tool, ...toolRatings[tool.id] })));
         setAllModels(mockAIModels.map(model => ({ ...model, ...modelRatings[model.id] })));
 
       } catch (error) {
         console.error("Error fetching ratings:", error);
-        setAllTools(mockTools); // Fallback to mock data
+        setAllTools(combinedMockTools); // Fallback to mock data
         setAllModels(mockAIModels);
       } finally {
         setIsLoading(false);
