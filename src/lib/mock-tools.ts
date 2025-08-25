@@ -316,17 +316,43 @@ export const mockTools: Tool[] = [
     name: 'Tavily AI',
     context: 'API truy xuất dữ liệu web',
     developer: 'Tavily',
-    description: 'Tavily AI là công cụ tìm kiếm và nghiên cứu hỗ trợ trí tuệ nhân tạo, được thiết kế tối ưu cho các mô hình ngôn ngữ lớn (LLM) và các hệ thống tạo-tái-tìm kiếm (RAG). Tavily cung cấp kết quả tìm kiếm chính xác, cập nhật theo thời gian thực, kèm theo trích dẫn nguồn đáng tin cậy, giúp giảm thiểu sai sót do ảo giác thông tin hoặc dữ liệu lỗi thời.\n+ Tavily có 4 tính năng chính qua API là tìm kiếm (Tavily search) trích xuất (Tavily extract) cào dữ liệu web (Tavily crawl) sơ đồ thông tin (Tavily map) được tổng hợp lại các ưu điểm sau:\n• Tìm kiếm thời gian thực: Kết hợp tìm kiếm web trực tiếp từ nhiều nguồn (Google, Bing, DuckDuckGo, v.v.) để cung cấp dữ liệu mới nhất và nhanh nhất cho các LLM hoặc AI Agen hoặc hệ thống RAG và từ đó tổng hợp lại thông tin tất nhiên là có trích dẫn nguồn để đảm bảo tính minh bạch và chính xác.\n• API của Tavily cực kì thân thiện với LLM và RAG: API của Tavily cực kì thân thiện với LLM giúp Tavily có thể tham gia dễ dàng vào các workflow tự động hóa công việc không giống Perplexity tập trung vào trả lời hỏi đáp với AI dựa trên các dữ liệu tổng hợp và web search.\n• Hỗ trợ cả web crawl và web extract: Người dùng hoàn toàn có thể dựa trên AI để trích xuất nội dung văn bản đơn thuần của web thông qua Tavily crawl hoặc có thể chọn trích xuất nội dung đã được AI xử lý giúp phân biệt và chuẩn hóa tiêu đề, đoạn văn, metadata, bảng biểu, và các phần nội dung có ý nghĩa khác trên trang web thông qua Tavily extract với AI giúp giảm thiểu các công đoạn xử lý dữ liệu trong RAG.\n• Hỗ trợ tạo map cho web: Tavily sẽ trả về danh sách cả url được phát hiện trong website đó giúp người dùng có cái nhìn tổng quan về web đó, nếu ai đã dùng Webflow hoặc Relume hoặc làm SEO thì sẽ hiểu rõ về site map.\n• Hỗ trợ đa dạng nguồn dữ liệu: Ngoài dữ liệu web công khai, Tavily còn tích hợp các nguồn dữ liệu nội bộ riêng tư về tài chính, mã hóa, tin tức, v.v., giúp mở rộng phạm vi thông tin.\n• Chi phí: Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí là 1000 credit / 1 tháng khi hết thì mua thêm là 0.008 USD/1 credit \nGói Project là 30 USD / 1 tháng với  4000 credit / 1 tháng khá là dư dùng.\n',
+    description: 'Tavily AI là một API tìm kiếm được tối ưu hóa cho các mô hình ngôn ngữ lớn (LLM), cung cấp kết quả nghiên cứu chính xác, đáng tin cậy và theo thời gian thực để xây dựng các ứng dụng AI mạnh mẽ.',
     logoUrl: '/image/Logo Tavily.png',
     link: 'https://tavily.com/',
+    imageUrl: '/image/Ảnh công cụ AI Tavily.png',
+    longDescription: '<p>Tavily AI là một công cụ tìm kiếm và nghiên cứu được hỗ trợ bởi trí tuệ nhân tạo, được thiết kế đặc biệt cho các mô hình ngôn ngữ lớn (LLM) và các hệ thống tạo-tái-tìm kiếm (RAG). Thay vì chỉ trả về một danh sách các liên kết, Tavily cung cấp các kết quả tìm kiếm đã được tối ưu hóa, chính xác, và cập nhật theo thời gian thực, kèm theo trích dẫn nguồn đáng tin cậy để giảm thiểu sai sót do ảo giác thông tin hoặc dữ liệu lỗi thời.</p><p>Với các tính năng như tìm kiếm, trích xuất, thu thập dữ liệu web và lập bản đồ thông tin, Tavily giúp các nhà phát triển dễ dàng tích hợp khả năng nghiên cứu mạnh mẽ vào các ứng dụng AI của họ, biến mọi LLM thành một chuyên gia nghiên cứu tự động.</p>',
     features: [
-      "Tìm kiếm theo thời gian thực từ đó tổng hợp lại thông tin dựa trên AI có trích dẫn nguồn.",
-"API cực kì thân thiện với LLM và RAG giúp Tavily dễ dàng tham gia vào các workflow .",
-"Hỗ trợ cả web crawl và web extract và đều dựa trên AI.",
-      "Hỗ trợ tạo map cho web",
-      "Hỗ trợ đa dạng nguồn dữ liệu.",
-      "Gói miễn phí hoàn toàn có thể dùng cho nghiên cứu sinh, sinh viên.",
+      "Tìm kiếm thời gian thực và tổng hợp thông tin với trích dẫn nguồn.",
+      "API được thiết kế thân thiện cho LLM và hệ thống RAG.",
+      "Hỗ trợ thu thập dữ liệu web (web crawl) và trích xuất thông tin có cấu trúc (web extract).",
+      "Khả năng tạo bản đồ trang web (sitemap) tự động.",
+      "Hỗ trợ đa dạng nguồn dữ liệu, bao gồm cả dữ liệu riêng tư.",
+      "Cung cấp gói miễn phí với 1000 credit/tháng."
     ],
+    useCases: [
+      "Xây dựng các hệ thống Hỏi-Đáp (Q&A) dựa trên RAG.",
+      "Tạo các AI Agent có khả năng tự nghiên cứu.",
+      "Tự động hóa việc thu thập và phân tích dữ liệu thị trường.",
+      "Nâng cao khả năng trả lời của chatbot với thông tin cập nhật.",
+      "Xây dựng các công cụ phân tích cạnh tranh tự động."
+    ],
+    whoIsItFor: [
+      "Nhà phát triển AI/ML",
+      "Kỹ sư dữ liệu",
+      "Startup công nghệ",
+      "Nhà nghiên cứu",
+      "Bất kỳ ai xây dựng ứng dụng dựa trên LLM"
+    ],
+    pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
+        <p>Tavily tính phí dựa trên số lượt sử dụng API (credit). Gói miễn phí cung cấp 1000 credit mỗi tháng, phù hợp cho các dự án cá nhân và thử nghiệm.</p>
+        <ul>
+            <li><strong>Gói Free:</strong> 1.000 credit/tháng.</li>
+            <li><strong>Gói Starter:</strong> $10/tháng cho 10.000 credit.</li>
+            <li><strong>Gói Growth:</strong> $49/tháng cho 100.000 credit.</li>
+            <li><strong>Doanh nghiệp (Enterprise):</strong> Liên hệ để có gói tùy chỉnh.</li>
+        </ul>
+    `,
     userRating: 4.4,
     totalStars: 264,
     ratingCount: 60,
