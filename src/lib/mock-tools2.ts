@@ -119,12 +119,16 @@ export const mockLovableTool: Tool[] = [
         'Nhà sáng tạo nội dung'
     ],
     pricingPlans: `
+        <h3>Gói Studio</h3>
         <ul>
-            <li><strong>Gói Miễn phí:</strong> Cung cấp một lượng ký tự giới hạn để dùng thử.</li>
-            <li><strong>Gói Cá nhân:</strong> Phù hợp cho các cá nhân, freelancer với nhu cầu sử dụng vừa phải.</li>
-            <li><strong>Gói Doanh nghiệp:</strong> Cung cấp các tính năng nâng cao, không giới hạn ký tự và hỗ trợ chuyên sâu.</li>
-            <li><strong>Gói API:</strong> Dành cho các nhà phát triển muốn tích hợp giọng nói của Vbee vào ứng dụng của mình.</li>
+            <li><strong>Miễn phí:</strong> 0đ, dùng thử các tính năng cơ bản.</li>
+            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng cho 200.000 ký tự.</li>
+            <li><strong>Đặc biệt:</strong> 34.000đ/tháng cho 2.000.000 ký tự.</li>
+            <li><strong>VIP:</strong> 75.000đ/tháng cho 2.000.000 ký tự.</li>
+            <li><strong>Tùy chỉnh:</strong> Từ 175.000đ, tùy theo nhu cầu sử dụng.</li>
         </ul>
+        <h3>Gói API</h3>
+        <p>Dành cho doanh nghiệp có nhu cầu tích hợp sâu. Vui lòng liên hệ để được tư vấn và báo giá chi tiết.</p>
     `,
   }
 ];
