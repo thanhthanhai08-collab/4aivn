@@ -135,7 +135,7 @@ export const mockTools: Tool[] = [
     name: 'Flowith',
     context: 'AI Agent',
     developer: 'Flowith',
-    description: 'Flowith là nền tảng AI Agent thế hệ mới với Agent Neo được thiết kế làm việc thông qua giao diện canvas cho phép người dùng quản lý thực hiện các tác vụ phức tạp qua các bước.\n+ Flowith không giống với các nền tảng AI truyền thống như Gemini, Chagpt, Claude dựa trên chat mà nó tạo ra một không gian làm việc khác người dùng có thể xem trực tiếp nó làm việc theo các bước dựa trên ý tưởng đưa vào canvas.\n+ Nền tảng này tích hợp AI Oracle có thể là Gemini hoàn toàn có thể thực hiện liên tục trên 1000 bước hoặc có thể cài đặt thời gian thực hiện các bước chỉ qua câu prompt yêu cầu thực sự vượt trội so với Manus và Genspark chỉ thực hiện được vài chục bước\n+ Flowith tất nhiên vẫn có đầy đủ các ứng dụng thông minh của Manus hay Genspark như:\n• Tự động lập kế hoạch: Tự động lập kế hoạch làm việc trên không gian ảo canvas khi người dùng không cần prompt chi tiết đặc biệt người dùng có thể can thiệp prompt ngay cả khi Agent Neo đang hoạt động.\n• Hệ thống tự phối hợp các AI Agent: Có thể tạo ra một đội AI Agent tự phối hợp với nhau làm việc như một Agent để viêt, Agent để tạo ảnh, Agent để review,.. \n• Hỗ trợ làm việc nhóm: Tất nhiên cái này là cần thiết cho một dự án có nhiều người tham gia, họ có thể chỉnh sửa trực tiếp thông qua phân quyền nhưng có lẽ tính năng chỉ có ở bản trả phí.\n• Tìm kiếm và phản hồi trực tiếp: Có thể tìm kiếm thông tin theo thời gian thực và trả lời trực tiếp thông qua Agent Neo.\n• Tạo tri thức tự động thông qua Knowledge Garden: Agent Neo tự động phân tích thông tin và kết nối tài liệu tải lên thành tri thức có thể sử dụng.\n• Quản lý tác vụ linh hoạt: Người dùng có thể điều chỉnh lập kế hoạch theo thời gian thực thậm chỉ có thể can thiệp khi thấy Agent Neo đang thực hiện các bước không theo ý người dùng. \n• Chi phí với các gói \nGói Free có thể dùng miễn phí với 1000 credit / 1 tháng.\nGói Professional (19.9 USD/ 1 tháng) có thể tạo video với 20000 credit /1 tháng.\nGói Ultimate(49.9 USD/ 1 tháng) có thể tạo video với 50000 credit /1 tháng\n ',
+    description: 'Flowith là một nền tảng AI Agent thế hệ mới, nổi bật với Agent Neo hoạt động trên giao diện canvas trực quan. Công cụ này cho phép người dùng quản lý và thực thi các tác vụ phức tạp theo từng bước, vượt trội hơn so với các nền tảng AI truyền thống. Với khả năng xử lý hàng nghìn bước liên tục, Flowith là giải pháp mạnh mẽ cho việc tự động hóa nghiên cứu, phân tích dữ liệu và quản lý dự án.',
     logoUrl: '/image/Logo flowith.png',
     link: 'https://www.try.flowith.io',
     imageUrl: '/image/Ảnh công cụ AI Flowith.png',
@@ -448,6 +448,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
