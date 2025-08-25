@@ -106,7 +106,7 @@ export const mockTools: Tool[] = [
     name: 'Stable Diffusion',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
-    description: 'Stable Diffusion là công cụ tạo ảnh mã nguồn mở hàng đầu, và phiên bản mới nhất Stable Diffusion 3.5 tiếp tục nâng cao vị thế này. Nó mang đến chất lượng hình ảnh vượt trội, khả năng hiểu ngôn ngữ tự nhiên tốt hơn, và hiển thị văn bản trong ảnh chính xác hơn. Các tính năng mới giúp người dùng dễ dàng tạo ra những tác phẩm ấn tượng, từ ảnh quang học đến các phong cách nghệ thuật đa dạng.',
+    description: 'Stable Diffusion 3.5 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh. Là một mô hình mã nguồn mở, nó cho phép người dùng toàn quyền kiểm soát, từ việc chạy offline trên máy chủ riêng đến việc tùy chỉnh sâu theo nhu cầu cụ thể.',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stable-assistant',
     imageUrl: '/image/Ảnh công cụ Stable Diffusion.png',
@@ -134,14 +134,18 @@ export const mockTools: Tool[] = [
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
     pricingPlans: `
-      <p>Stable Diffusion có thể được sử dụng miễn phí thông qua việc tải về và chạy trên máy tính cá nhân của người dùng hoặc qua các nền tảng như Hugging Face.</p>
-      <p>Đối với việc sử dụng API, Stability AI đang cung cấp theo dạng credit với 1 credit = $0.01.</p>
-      <p>Còn trong trường hợp mọi người muốn sử dụng qua web thì Stability AI có tích hợp sẵn Stable Diffusion trong Stable Assistant với các gói sử dụng</p>
+      <h3>Các gói dịch vụ</h3>
         <ul>
-            <li><strong>Gói Standard:</strong> $9/tháng thì được sử dụng Stable Assistant với 900 credit/1 tháng với 3 ngày free trial.</li>
-            <li><strong>Gói Pro:</strong> $19/tháng thì được sử dụng Stable Assistant với 1900 credit/1 tháng với 3 ngày free trial.</li>
-            <li><strong>Gói Plus:</strong> $49/tháng thì được sử dụng Stable Assistant với 5500 credit/1 tháng với 3 ngày free trial.</li>
-            <li><strong>Gói Premium:</strong> $99/tháng thì được sử dụng Stable Assistant với 12000 credit/1 tháng với 3 ngày free trial.</li>
+            <li><strong>Sử dụng miễn phí:</strong> Tải về và chạy trên máy tính cá nhân hoặc qua các nền tảng như Hugging Face.</li>
+            <li><strong>Sử dụng API:</strong> Tính phí theo credit, với 1 credit = $0.01.</li>
+            <li><strong>Stable Assistant (Web):</strong>
+                <ul>
+                    <li><strong>Gói Standard:</strong> $9/tháng (900 credit/tháng)</li>
+                    <li><strong>Gói Pro:</strong> $19/tháng (1900 credit/tháng)</li>
+                    <li><strong>Gói Plus:</strong> $49/tháng (5500 credit/tháng)</li>
+                    <li><strong>Gói Premium:</strong> $99/tháng (12000 credit/tháng)</li>
+                </ul>
+            </li>
         </ul>
     `,
     userRating: 4.6,
@@ -306,11 +310,11 @@ export const mockTools: Tool[] = [
     name: 'Make',
     context: 'Tự động hóa',
     developer: 'Celonis',
+    imageUrl: '/image/Ảnh công cụ AI Make.png',
     description: 'Make (trước đây là Integromat) là nền tảng tự động hóa quy trình làm việc trực quan, cho phép người dùng kết nối các ứng dụng và tự động hóa các tác vụ lặp đi lặp lại mà không cần kỹ năng lập trình.',
+    longDescription: '<p>Make (trước đây là Integromat) là một nền tảng tự động hóa quy trình làm việc mạnh mẽ, cho phép bạn kết nối các ứng dụng yêu thích và tự động hóa các tác vụ lặp đi lặp lại mà không cần viết một dòng code nào. Với giao diện kéo-thả trực quan, bạn có thể xây dựng các "kịch bản" (scenarios) để di chuyển dữ liệu giữa các ứng dụng, xử lý thông tin và thực hiện các hành động phức tạp.</p><p>Nền tảng này hỗ trợ hơn 1500 ứng dụng, từ các công cụ marketing, CRM, đến các dịch vụ lưu trữ và mô hình AI. Make nổi bật với khả năng xử lý logic phức tạp, cho phép tạo ra các luồng công việc đa bước, phân nhánh và xử lý lỗi một cách linh hoạt, khiến nó trở thành một công cụ mạnh mẽ cho cả người dùng cá nhân và doanh nghiệp.</p>',
     logoUrl: '/image/Logo Make.com.png',
     link: 'https://www.make.com/',
-    imageUrl: '/image/Ảnh công cụ AI Make.png',
-    longDescription: '<p>Make (trước đây là Integromat) là một nền tảng tự động hóa quy trình làm việc mạnh mẽ, cho phép bạn kết nối các ứng dụng yêu thích và tự động hóa các tác vụ lặp đi lặp lại mà không cần viết một dòng code nào. Với giao diện kéo-thả trực quan, bạn có thể xây dựng các "kịch bản" (scenarios) để di chuyển dữ liệu giữa các ứng dụng, xử lý thông tin và thực hiện các hành động phức tạp.</p><p>Nền tảng này hỗ trợ hơn 1500 ứng dụng, từ các công cụ marketing, CRM, đến các dịch vụ lưu trữ và mô hình AI. Make nổi bật với khả năng xử lý logic phức tạp, cho phép tạo ra các luồng công việc đa bước, phân nhánh và xử lý lỗi một cách linh hoạt, khiến nó trở thành một công cụ mạnh mẽ cho cả người dùng cá nhân và doanh nghiệp.</p>',
     features: [
       "Giao diện kéo-thả trực quan, dễ sử dụng.",
       "Tích hợp hơn 1500 ứng dụng và dịch vụ.",
@@ -372,17 +376,39 @@ export const mockTools: Tool[] = [
     name: 'Sora',
     context: 'Tạo video',
     developer: 'OpenAI',
-    description: 'Sora là mô hình trí tuệ nhân tạo tiên tiến của OpenAI, với khả năng tạo ra các đoạn video ngắn lên đến 1 phút, giữ chất lượng hình ảnh cao và bám sát nội dung mô tả trong prompt.\n+ Sora được phát triển riêng biệt không tích hợp vào mô hình đa năng nào cả giống như Dall E có đường dẫn riêng.\n+ Sora hoàn toàn có chế độ tạo ảnh từ mô tả văn bản (prompt) nhưng tính năng này không phải là chính mặc dù ảnh chất lượng rất tốt nhưng chúng ta không thể chỉnh sửa trực tiếp ảnh tạo ra từ Sora mà chỉ còn cách prompt lại từ đầu.\n+ Các tính năng chính của Sora :\n• Hỗ trợ cả tạo video từ văn bản (Text-to-video) và tạo video từ ảnh (Image-to-video): Người dùng có thể chuyển đổi mô tả bằng chữ thành video chất lượng cao, phù hợp cho quảng cáo, mạng xã hội, giáo dục, kể chuyện hoặc có thể tải lên những hình ảnh nhất quán đã có sẵn để tạo thành những video theo phong cách riêng, phù hợp với thương hiệu và nhân vật.\n• Chỉnh sửa video trực tiếp bằng mô tả prompt: Tình năng tạo video là tính năng chính mà Sora tập trung nên hoàn toàn có thể chỉnh sửa trực tiếp video dựa trên hướng dẫn bằng văn bản hoặc thay đổi phong cách, môi trường và kết hợp các đoạn video một cách mượt mà.\n• Chuyển động camera động và nhất quán 3D: Mô phỏng chuyển động camera thực tế và duy trì sự ổn định, nhất quán trong không gian ba chiều. Vấn đề này bản phải đọc kĩ document của Sora để xem cách di chuyển camera nếu không video sẽ cực kì lộn xộn.\n• Tương tác với thế giới thực và nhất quán thời gian: Mô hình hóa các hành vi logic của các thành phần trong video, đảm bảo tính liên tục ngay cả khi đối tượng di chuyển hoặc bị che khuất tạm thời. \n• Tạo hình ảnh độ phân giải cao: Hỗ trợ tạo hình ảnh chi tiết lên đến 2048×2048 pixel, với các tỉ lệ khung hình 2:3, 3:2, 1:1 và tất nhiên phù hợp cho cả nội dung tĩnh và động..\n• Khả năng mở rộng video: Sora cho phép kéo dài video hiện có hoặc bổ sung khung hình bị thiếu để tạo ra đoạn phim liền mạch.\n• Tạo nhiều cảnh quay trong một video: Hỗ trợ tạo các cảnh quay khác nhau trong cùng một video với sự nhất quán về nhân vật và phong cách hình ảnh. Người dùng hoàn toàn có thể tải ảnh nhân vật lên để Sora lấy tham khảo tạo ra nhân vật\n• GIá cả: Tài khoản Free cho phép tạo 3 hình ảnh/1 ngày. Ngoài ra không tạo được video chỉ khi nâng cấp lên Plus (20 USD/1 tháng) cho phép tạo cả hình ảnh và video với video độ phân giải tối đa 720p, dài tối đa 10 giây hoặc nâng cấp lên gói ChatGPT Pro (200 USD/tháng) được tạo ảnh và video chất lượng cao hơn 1080p, thời lượng tối đa 20 giây, với giới hạn khoảng 500 video mỗi tháng, có thể tải xuống video không có watermark và tạo đồng thời 5 video cùng lúc.\n',
+    description: 'Sora là mô hình AI tạo video tiên tiến của OpenAI, có khả năng chuyển đổi văn bản thành các đoạn video ngắn, chất lượng cao, và bám sát nội dung mô tả trong prompt.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://sora.chatgpt.com',
+    imageUrl: '/image/Ảnh công cụ AI Sora.png',
+    longDescription: '<p>Sora là mô hình AI tạo video tiên tiến của OpenAI, có khả năng chuyển đổi văn bản hoặc hình ảnh thành các đoạn video ngắn (lên đến 1 phút) với chất lượng hình ảnh cao và bám sát nội dung mô tả trong prompt. Mô hình này được phát triển riêng biệt, không tích hợp vào các nền tảng khác, và tập trung vào việc tạo ra các video chân thực với chuyển động camera động và nhất quán.</p><p>Sora có thể mô phỏng các hành vi logic của các thành phần trong video, đảm bảo tính liên tục ngay cả khi đối tượng di chuyển hoặc bị che khuất. Nó cũng hỗ trợ nhiều tùy chọn sáng tạo như kéo dài video hiện có, tạo nhiều cảnh quay trong một video, và duy trì sự nhất quán về nhân vật và phong cách hình ảnh.</p>',
     features: [
-      "Sora hỗ trợ tạo cả tạo video từ văn bản và tạo video từ ảnh.",
-"Chỉnh sửa video trực tiếp từ mô tả prompt .",
-"Chuyển động camera động và nhất quán.",
-      "Tương tác với thế giới thực và nhất quán về thời gian",
-      "Tạo hình ảnh độ phân giải cao có thể lên tới 2048x2048 pixel.",
-      "Có khả năng mở rộng video hoặc tạo nhiều cảnh trong một video.",
+      "Hỗ trợ tạo video từ văn bản (Text-to-video) và từ ảnh (Image-to-video).",
+      "Chỉnh sửa video trực tiếp bằng mô tả prompt.",
+      "Chuyển động camera động và nhất quán 3D.",
+      "Tương tác với thế giới thực và nhất quán về thời gian.",
+      "Tạo hình ảnh độ phân giải cao lên đến 2048x2048 pixel.",
+      "Khả năng mở rộng video hoặc tạo nhiều cảnh trong một video."
     ],
+    useCases: [
+        'Tạo video quảng cáo và marketing',
+        'Sản xuất phim ngắn và video nghệ thuật',
+        'Tạo nội dung cho mạng xã hội',
+        'Minh họa các khái niệm phức tạp'
+    ],
+    whoIsItFor: [
+        'Nhà làm phim',
+        'Người làm marketing',
+        'Nhà sáng tạo nội dung',
+        'Nghệ sĩ kỹ thuật số'
+    ],
+    pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
+        <ul>
+            <li><strong>Tài khoản Free:</strong> Tạo 3 hình ảnh/ngày (không tạo được video).</li>
+            <li><strong>Gói Plus ($20/tháng):</strong> Tạo ảnh và video lên đến 720p, dài tối đa 10 giây.</li>
+            <li><strong>Gói Pro ($200/tháng):</strong> Tạo ảnh và video chất lượng cao hơn (1080p), thời lượng tối đa 20 giây, giới hạn khoảng 500 video/tháng, không có watermark, và tạo đồng thời 5 video.</li>
+        </ul>
+    `,
     userRating: 4.1,
     totalStars: 385.4,
     ratingCount: 94,
@@ -494,6 +520,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
