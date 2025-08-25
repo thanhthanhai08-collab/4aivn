@@ -345,11 +345,11 @@ export const mockTools: Tool[] = [
     ],
     pricingPlans: `
         <h3>Các gói dịch vụ</h3>
-        <p>Tavily tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí phù hợp dự án cá nhân và các nhà nghiên cứu:</p>
+        <p>Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí phù hợp dự án cá nhân và các nhà nghiên cứu:</p>
         <ul>
-            <li><strong>Gói Researcher:</strong> Miễn phí 1000 credit/tháng. Khi hết, có thể mua thêm với giá $0.008/credit.</li>
-            <li><strong>Gói Project:</strong> $30/tháng cho 4.000 credit (tức có thể lấy thông tin khoảng 2500 trang/tháng).</li>
-            <li><strong>Gói Enterprise:</strong> Dành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu.</li>
+            <li><strong>Gói Researcher:</strong> miễn phí với 1000 credit / 1 tháng khi hết thì mua thêm credit  là $0.008 /1 credit.</li>
+            <li><strong>Gói Project:</strong> là $30 / 1 tháng với  4000 credit / 1 tháng (tức có thể lấy thông tin khoảng 2500 trang/1 tháng).</li>
+            <li><strong>Gói Enterprise:</strong> giành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu.</li>
         </ul>
     `,
     userRating: 4.4,
@@ -439,7 +439,7 @@ export const mockTools: Tool[] = [
         <h3>Các gói dịch vụ</h3>
         <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
         <p><strong>Gói Add-on Notion AI:</strong> $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</p>
-        <p><strong>Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày:</strong> (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on).</p>
+        <p><strong>Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày:</strong> (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on.</p>
         <p><strong>Người dùng gói Business ($20-$24/tháng) hoặc Enterprise:</strong> Có thể sử dụng Notion AI không giới hạn.</p>
     `,
     userRating: 4.2,
@@ -521,7 +521,6 @@ export const mockTools: Tool[] = [
         'Giáo viên, nhà giáo dục'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
         <ul>
             <li><strong>Google AI Pro:</strong> 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
@@ -609,6 +608,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
