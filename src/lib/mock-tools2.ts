@@ -36,7 +36,12 @@ export const mockLovableTool: Tool[] = [
         'Bất kỳ ai muốn biến ý tưởng thành ứng dụng'
     ],
     pricingPlans: `
-        <p>Lovable cung cấp các gói dịch vụ linh hoạt dựa trên nhu cầu sử dụng, phù hợp cho cả cá nhân và doanh nghiệp. Vui lòng truy cập trang web chính thức để biết thông tin giá chi tiết và các gói hiện có.</p>
+        <ul>
+            <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
+            <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
+            <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
+            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
+        </ul>
     `,
     userRating: 4.5,
     totalStars: 360,
