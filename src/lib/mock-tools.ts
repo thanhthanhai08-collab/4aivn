@@ -35,7 +35,6 @@ export const mockTools: Tool[] = [
       'Người sáng tạo nội dung'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <p>Midjourney cung cấp các gói đăng ký theo tháng với các giới hạn sử dụng GPU nhanh khác nhau. Chế độ "Relax Mode" cho phép tạo ảnh không giới hạn nhưng với thời gian chờ đợi lâu hơn.</p>
         <ul>
             <li><strong>Gói Basic:</strong> $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.</li>
@@ -116,7 +115,6 @@ export const mockTools: Tool[] = [
         'Nghệ sĩ kỹ thuật số'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <ul>
             <li><strong>Imagen 4 (Tiêu chuẩn):</strong> $0.04/ảnh, phù hợp cho hầu hết các tác vụ tạo ảnh thông thường.</li>
             <li><strong>Imagen 4 Ultra:</strong> $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội.</li>
@@ -160,7 +158,6 @@ export const mockTools: Tool[] = [
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <ul>
             <li>Stable Diffusion có thể được sử dụng miễn phí thông qua việc tải về và chạy trên máy tính cá nhân của người dùng hoặc qua các nền tảng như Hugging Face.</li>
             <li>Đối với việc sử dụng API, Stability AI đang cung cấp theo dạng credit với 1 credit = $0.01.</li>
@@ -213,7 +210,6 @@ export const mockTools: Tool[] = [
         'Nhà phát triển muốn tự động hóa tác vụ'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <ul>
             <li><strong>Gói Free:</strong> Được 1.000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.</li>
             <li><strong>Gói Professional:</strong> $16-$19.9/tháng với 20.000 credit, hỗ trợ các tính năng nâng cao và tạo video.</li>
@@ -344,7 +340,6 @@ export const mockTools: Tool[] = [
       "Bất kỳ ai xây dựng ứng dụng dựa trên LLM"
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <p>Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí phù hợp dự án cá nhân và các nhà nghiên cứu:</p>
         <ul>
             <li><strong>Gói Researcher:</strong> miễn phí với 1000 credit / 1 tháng khi hết thì mua thêm credit  là $0.008 /1 credit.</li>
@@ -390,12 +385,16 @@ export const mockTools: Tool[] = [
         'Bất kỳ ai muốn tiết kiệm thời gian cho các tác vụ lặp lại'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
+        <h3>Cloud</h3>
         <ul>
             <li><strong>Gói Free:</strong> 1.000 lượt chạy/tháng, 2 kịch bản hoạt động. Phù hợp để bắt đầu và thử nghiệm.</li>
             <li><strong>Gói Core:</strong> Từ $9/tháng, 10.000 lượt chạy/tháng, không giới hạn kịch bản. Lý tưởng cho cá nhân và freelancer.</li>
             <li><strong>Gói Pro:</strong> Từ $16/tháng, 10.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao như biến tùy chỉnh.</li>
             <li><strong>Gói Teams:</strong> Từ $29/tháng, 10.000 lượt chạy/tháng, thêm các tính năng làm việc nhóm và phân quyền.</li>
+        </ul>
+        <h3>Self-hosted</h3>
+        <ul>
+            <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
         </ul>
     `,
     userRating: 4.3,
@@ -436,11 +435,7 @@ export const mockTools: Tool[] = [
         'Bất kỳ ai sử dụng Notion để làm việc và học tập'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
-        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
-        <p><strong>Gói Add-on Notion AI:</strong> $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</p>
-        <p><strong>Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày:</strong> (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on.</p>
-        <p><strong>Người dùng gói Business ($20-$24/tháng) hoặc Enterprise:</strong> Có thể sử dụng Notion AI không giới hạn.</p>
+        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn. Gói Add-on Notion AI: $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI. Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày: (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on. Người dùng gói Business ($20-$24/tháng) hoặc Enterprise: Có thể sử dụng Notion AI không giới hạn.</p>
     `,
     userRating: 4.2,
     totalStars: 399,
@@ -477,7 +472,6 @@ export const mockTools: Tool[] = [
         'Nghệ sĩ kỹ thuật số'
     ],
     pricingPlans: `
-        <h3>Các gói dịch vụ</h3>
         <ul>
             <li><strong>Tài khoản Free:</strong> Tạo 3 hình ảnh/ngày (không tạo được video).</li>
             <li><strong>Gói Plus ($20/tháng):</strong> Tạo ảnh và video lên đến 720p, dài tối đa 10 giây.</li>
@@ -521,7 +515,6 @@ export const mockTools: Tool[] = [
         'Giáo viên, nhà giáo dục'
     ],
     pricingPlans: `
-        <p>Google hiện chưa cho sử dụng Veo 3 tại thị trường Việt Nam mà chỉ có ở một số thị trường nhất định (trong đó có Mỹ). Để trải nghiệm, người dùng cần đổi IP và đăng ký các gói dịch vụ:</p>
         <ul>
             <li><strong>Google AI Pro:</strong> 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
             <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng và hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/1 tháng (tức là khoảng 300 video/1 tháng)gói này cũng được.</li>
@@ -608,6 +601,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
