@@ -138,16 +138,38 @@ export const mockTools: Tool[] = [
     description: 'Flowith là nền tảng AI Agent thế hệ mới với Agent Neo được thiết kế làm việc thông qua giao diện canvas cho phép người dùng quản lý thực hiện các tác vụ phức tạp qua các bước.\n+ Flowith không giống với các nền tảng AI truyền thống như Gemini, Chagpt, Claude dựa trên chat mà nó tạo ra một không gian làm việc khác người dùng có thể xem trực tiếp nó làm việc theo các bước dựa trên ý tưởng đưa vào canvas.\n+ Nền tảng này tích hợp AI Oracle có thể là Gemini hoàn toàn có thể thực hiện liên tục trên 1000 bước hoặc có thể cài đặt thời gian thực hiện các bước chỉ qua câu prompt yêu cầu thực sự vượt trội so với Manus và Genspark chỉ thực hiện được vài chục bước\n+ Flowith tất nhiên vẫn có đầy đủ các ứng dụng thông minh của Manus hay Genspark như:\n• Tự động lập kế hoạch: Tự động lập kế hoạch làm việc trên không gian ảo canvas khi người dùng không cần prompt chi tiết đặc biệt người dùng có thể can thiệp prompt ngay cả khi Agent Neo đang hoạt động.\n• Hệ thống tự phối hợp các AI Agent: Có thể tạo ra một đội AI Agent tự phối hợp với nhau làm việc như một Agent để viêt, Agent để tạo ảnh, Agent để review,.. \n• Hỗ trợ làm việc nhóm: Tất nhiên cái này là cần thiết cho một dự án có nhiều người tham gia, họ có thể chỉnh sửa trực tiếp thông qua phân quyền nhưng có lẽ tính năng chỉ có ở bản trả phí.\n• Tìm kiếm và phản hồi trực tiếp: Có thể tìm kiếm thông tin theo thời gian thực và trả lời trực tiếp thông qua Agent Neo.\n• Tạo tri thức tự động thông qua Knowledge Garden: Agent Neo tự động phân tích thông tin và kết nối tài liệu tải lên thành tri thức có thể sử dụng.\n• Quản lý tác vụ linh hoạt: Người dùng có thể điều chỉnh lập kế hoạch theo thời gian thực thậm chỉ có thể can thiệp khi thấy Agent Neo đang thực hiện các bước không theo ý người dùng. \n• Chi phí với các gói \nGói Free có thể dùng miễn phí với 1000 credit / 1 tháng.\nGói Professional (19.9 USD/ 1 tháng) có thể tạo video với 20000 credit /1 tháng.\nGói Ultimate(49.9 USD/ 1 tháng) có thể tạo video với 50000 credit /1 tháng\n ',
     logoUrl: '/image/Logo flowith.png',
     link: 'https://www.try.flowith.io',
+    imageUrl: '/image/Ảnh công cụ AI Flowith.png',
+    longDescription: '<p>Flowith là một nền tảng AI Agent thế hệ mới, hoạt động trên giao diện canvas trực quan, cho phép người dùng xây dựng và quản lý các quy trình làm việc phức tạp bằng cách kết nối các khối chức năng. Khác với các chatbot truyền thống, Flowith tạo ra một không gian làm việc mở, nơi bạn có thể theo dõi trực tiếp quá trình AI thực thi từng bước dựa trên ý tưởng của bạn.</p><p>Với Agent Neo và AI Oracle tích hợp, Flowith có khả năng thực hiện hàng nghìn bước một cách liên tục, tự động lập kế hoạch, và phối hợp nhiều AI Agent chuyên biệt. Đây là một công cụ mạnh mẽ để tự động hóa nghiên cứu, phân tích dữ liệu, và quản lý dự án.</p>',
     features: [
-      "Làm việc trên không gian ảo mà vẫn thực hiện đầy đủ các bước.",
-      "Có thể thực hiện và lập kế hoạch thực hiện lên tới hơn 1000 bước .",
-      "Flowith có thể tự động lập kế hoạch thực hiện.",
-      "Nền tảng sẽ tự động phối hợp các AI Agent làm việc, mỗi AI Agent sẽ đảm nhiệm một công việc.",
-      " Hỗ trợ làm việc nhóm.",
-      " Tìm kiếm và phản hồi theo thời gian thực.",
-      " Tạo tri thức tự động qua Knowledge Garden.",
-      " Quản lý tác vụ linh hoạt hoàn toàn theo điều chỉnh của người dùng.",
+      "Thực hiện và lập kế hoạch lên tới hơn 1000 bước.",
+      "Tự động lập kế hoạch và điều phối AI Agent.",
+      "Hỗ trợ làm việc nhóm trên cùng một không gian làm việc.",
+      "Tìm kiếm và phản hồi theo thời gian thực.",
+      "Tạo tri thức tự động từ tài liệu tải lên.",
+      "Giao diện Canvas trực quan và linh hoạt.",
+      "Can thiệp và điều chỉnh quy trình theo thời gian thực."
     ],
+    useCases: [
+        'Tự động hóa quy trình nghiên cứu thị trường',
+        'Phân tích và tổng hợp dữ liệu phức tạp',
+        'Quản lý dự án và phân công nhiệm vụ tự động',
+        'Tạo báo cáo và nội dung chi tiết',
+        'Xây dựng các hệ thống AI Agent tùy chỉnh'
+    ],
+    whoIsItFor: [
+        'Nhà phân tích dữ liệu',
+        'Quản lý dự án',
+        'Nhà nghiên cứu',
+        'Người làm marketing',
+        'Nhà phát triển muốn tự động hóa tác vụ'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Free:</strong> 1,000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.</li>
+            <li><strong>Gói Professional:</strong> $19.9/tháng với 20,000 credit, hỗ trợ các tính năng nâng cao và tạo video.</li>
+            <li><strong>Gói Ultimate:</strong> $49.9/tháng với 50,000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn.</li>
+        </ul>
+    `,
     userRating: 4.6,
     totalStars: 506,
     ratingCount: 110,
@@ -425,6 +447,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
