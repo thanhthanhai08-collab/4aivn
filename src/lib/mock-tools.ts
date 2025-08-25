@@ -7,17 +7,43 @@ export const mockTools: Tool[] = [
     name: 'Midjourney',
     context: 'Tạo hình ảnh',
     developer: 'Midjourney',
-    description: 'Midjourney là công cụ chuyên tạo hình ảnh nghệ thuật từ văn bản ra mắt năm 2022 chủ yếu hoạt động trên Discord. Nếu ai là dân chuyên sáng tạo, concept art, quảng cáo không lạ gì nền tảng này nữa vì công cụ này khá được ưa chuộng đối với người làm trong lĩnh vực này với những tác phẩm đa phong cách, chi tiết, sắc nét.\n+ Midjourney sử dụng mô hình ngôn ngữ lớn (LLM) phát triển riêng để phân tích tổng hợp tạo ra những bức ảnh giống như tác phẩm sống động với bố cục nghệ thuật.\n+ Midjourney có các lợi thế mà rất nhiều ông lớn trong ngành AI muốn có\n• Tạo ảnh từ mô tả văn bản: Có thể tạo ảnh từ prompt tiếng Việt lẫn tiếng Anh đều có độ chính xác, sáng tạo cao. Tất nhiên là vẫn ưu tiên tiếng Anh hơn.\n• Đa phong cách nghệ thuật: Có thể coi mỗi bức hình tạo ra là một tác phẩm nghệ thuật luôn vì Midjourney hỗ trợ vô vàn phong cách nghệ thuật từ siêu thực đến trừu tượng từ màu sắc đến bố cục.\n• Giao diện dễ sử dụng tương tác tùy chỉnh: Discord là nền tảng lớn thế nào chắc ai cũng biết rồi, chỉ cần hiểu giao diện chat đơn giản là sử dụng được. Cũng giống như nền tảng khác là hoàn toàn có thể nâng cấp, tùy chỉnh bức ảnh thông qua prompt văn bản. \n• Nguồn cảm hứng sáng tạo: Hoạt động từ năm 2022 đến nay thì Midjourney chắc chắn có kho dữ liệu sáng tạo khổng lồ hoàn toàn đủ sức cung cấp ý tưởng độc đáo cho người dùng.\n• Chi phí: Với các gói \nGói Basic là 10 USD / 1 tháng phù hợp với người thử nghiệm nhu cầu cơ bản giới hạn GPU nhanh 3.3 giờ/ tháng còn bình thường thì chúng ta phải đợi tính từ 10 đến 20 phút.\nGói Standard (30 USD /1 tháng) lựa chọn phổ biến với 15 giờ GPU nhanh mỗi tháng và chế độ Relax cho phép tạo ảnh không giới hạn.\nGói Pro (60 USD/1 tháng) và Mega (120 USD/1 tháng) dùng cho người dùng chuyên nghiệp doanh nghiệp cần nhiều tài nguyên với 30 giờ và 60 giờ GPU nhanh tất nhiên là tạo ảnh không giới hạn.\n',
+    description: 'Midjourney là một trong những công cụ AI tạo ảnh từ văn bản (text-to-image) hàng đầu, nổi tiếng với khả năng tạo ra các tác phẩm nghệ thuật độc đáo, chi tiết và có phong cách riêng biệt. Hoạt động chủ yếu trên nền tảng Discord, Midjourney được cộng đồng sáng tạo và thiết kế ưa chuộng nhờ chất lượng hình ảnh vượt trội.',
     logoUrl: '/image/Logo Midjourney.png',
     link: 'https://www.midjourney.com',
+    imageUrl: '/image/Ảnh công cụ Midjourney.png',
+    longDescription: '<p>Midjourney là một phòng thí nghiệm nghiên cứu độc lập và cũng là tên của công cụ AI tạo ảnh nghệ thuật từ văn bản. Ra mắt vào năm 2022, Midjourney nhanh chóng trở thành một trong những nền tảng AI tạo sinh phổ biến nhất nhờ khả năng tạo ra các hình ảnh phức tạp, chất lượng cao và có tính thẩm mỹ độc đáo.</p><p>Hoạt động hoàn toàn trên nền tảng Discord, người dùng tương tác với Midjourney thông qua các câu lệnh (prompt). Mô hình AI của Midjourney có khả năng diễn giải các mô tả tự nhiên để tạo ra bốn biến thể hình ảnh cho mỗi yêu cầu, cho phép người dùng nâng cấp (upscale) hoặc tạo thêm các biến thể từ kết quả ưng ý nhất. Với một cộng đồng sôi động và liên tục được cập nhật, Midjourney là công cụ không thể thiếu cho các nghệ sĩ, nhà thiết kế và bất kỳ ai muốn biến ý tưởng thành hình ảnh ấn tượng.</p>',
     features: [
-      "Là công cụ chuyên tạo hình ảnh nghệ thuật với rất nhiều phong cách nghệ thuật.",
-      "Mỗi lần có thể tạo ra được 4 bức ảnh khác nhau dựa trên prompt văn bản tiếng Việt hoặc tiếng Anh.",
-      "Độ phân giải mỗi bức ảnh rất cao và còn có thể prompt tăng độ phân giải nữa",
-      "Giao diện rất dễ tương tác tùy chỉnh",
-      "Nguồn cảm hứng sáng tạo cho mọi người.",
-      "Chi phí nhỏ nhất là 10 USD / 1 tháng.",
+      "Tạo ảnh nghệ thuật chất lượng cao từ mô tả văn bản.",
+      "Hỗ trợ đa dạng phong cách, từ siêu thực đến tả thực.",
+      "Giao diện tương tác độc đáo qua Discord.",
+      "Khả năng kết hợp hình ảnh (image blending) và tinh chỉnh prompt.",
+      "Tạo ra các biến thể và nâng cấp độ phân giải hình ảnh.",
+      "Cộng đồng người dùng lớn và năng động."
     ],
+    useCases: [
+      'Sáng tạo nghệ thuật kỹ thuật số và tranh minh họa.',
+      'Thiết kế concept art cho game và phim ảnh.',
+      'Tạo hình ảnh cho các chiến dịch marketing và quảng cáo.',
+      'Tạo nguồn cảm hứng và ý tưởng cho các dự án sáng tạo.',
+      'Thiết kế bìa sách, poster, và các ấn phẩm đồ họa.'
+    ],
+    whoIsItFor: [
+      'Nghệ sĩ kỹ thuật số',
+      'Nhà thiết kế đồ họa',
+      'Người làm quảng cáo & marketing',
+      'Nhà phát triển game',
+      'Người sáng tạo nội dung'
+    ],
+    pricingPlans: `
+        <h3>Các gói dịch vụ</h3>
+        <p>Midjourney cung cấp các gói đăng ký theo tháng với các giới hạn sử dụng GPU nhanh khác nhau. Chế độ "Relax Mode" cho phép tạo ảnh không giới hạn nhưng với thời gian chờ đợi lâu hơn.</p>
+        <ul>
+            <li><strong>Gói Basic:</strong> $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.</li>
+            <li><strong>Gói Standard:</strong> $30/tháng, cung cấp 15 giờ GPU nhanh, lựa chọn phổ biến nhất.</li>
+            <li><strong>Gói Pro:</strong> $60/tháng, cung cấp 30 giờ GPU nhanh, dành cho người dùng chuyên nghiệp.</li>
+            <li><strong>Gói Mega:</strong> $120/tháng, cung cấp 60 giờ GPU nhanh, dành cho doanh nghiệp và người dùng có nhu cầu rất cao.</li>
+        </ul>
+    `,
     userRating: 4.9,
     totalStars: 980,
     ratingCount: 200,
@@ -106,11 +132,11 @@ export const mockTools: Tool[] = [
     name: 'Stable Diffusion',
     context: 'Tạo hình ảnh',
     developer: 'Stability AI',
-    description: 'Stable Diffusion 3.5 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh. Là một mô hình mã nguồn mở, nó cho phép người dùng toàn quyền kiểm soát, từ việc chạy offline trên máy chủ riêng đến việc tùy chỉnh sâu theo nhu cầu cụ thể.',
+    description: 'Stable Diffusion là một mô hình tạo ảnh từ văn bản mã nguồn mở, nổi bật với khả năng tùy chỉnh sâu và cộng đồng người dùng lớn mạnh. Phiên bản mới nhất, Stable Diffusion 3.5, cải thiện đáng kể chất lượng hình ảnh và khả năng hiểu các prompt phức tạp.',
     logoUrl: '/image/Logo Stability AI.png',
     link: 'https://stability.ai/stable-assistant',
     imageUrl: '/image/Ảnh công cụ Stable Diffusion.png',
-    longDescription: '<p>Stable Diffusion 3.5 là phiên bản mới nhất và tiên tiến nhất của mô hình tạo ảnh từ văn bản do Stability AI phát triển, mang đến nhiều cải tiến vượt trội về chất lượng hình ảnh, khả năng xử lý nhiều đối tượng trong cùng một prompt, và khả năng hiển thị văn bản chính xác hơn trong ảnh. Là một mô hình mã nguồn mở, nó cho phép người dùng toàn quyền kiểm soát, từ việc chạy offline trên máy chủ riêng đến việc tùy chỉnh sâu theo nhu cầu cụ thể.</p><p>Điểm khác biệt lớn của Stable Diffusion 3.5 nằm ở kiến trúc Multimodal Diffusion Transformer (MMDiT), giúp mô hình hiểu sâu hơn về mối quan hệ giữa văn bản và hình ảnh. Điều này, kết hợp với khả năng fine-tuning mạnh mẽ, làm cho nó trở thành một công cụ cực kỳ linh hoạt cho các nhà phát triển và nghệ sĩ AI chuyên nghiệp.</p>',
+    longDescription: '<p>Stable Diffusion là một mô hình AI tạo ảnh từ văn bản (text-to-image) mã nguồn mở, cho phép người dùng toàn quyền kiểm soát quá trình sáng tạo. Không giống các công cụ độc quyền, Stable Diffusion có thể được chạy trên máy tính cá nhân, mang lại sự linh hoạt và bảo mật tối đa. Phiên bản mới nhất, Stable Diffusion 3.5, đã có những bước tiến lớn về chất lượng hình ảnh và khả năng diễn giải các prompt phức tạp chứa nhiều đối tượng.</p><p>Với kiến trúc Multimodal Diffusion Transformer (MMDiT), Stable Diffusion 3.5 hiểu sâu hơn về mối quan hệ giữa văn bản và hình ảnh. Điều này, kết hợp với khả năng fine-tuning mạnh mẽ và một cộng đồng người dùng đông đảo, làm cho nó trở thành một công cụ cực kỳ linh hoạt cho các nhà phát triển và nghệ sĩ AI chuyên nghiệp muốn tạo ra các phong cách độc đáo.</p>',
     features: [
       "Là mô hình mã nguồn mở, cho phép chạy offline và tùy chỉnh sâu.",
       "Sử dụng kiến trúc MMDiT để cải thiện khả năng hiểu prompt và tạo ảnh.",
@@ -311,7 +337,7 @@ export const mockTools: Tool[] = [
     context: 'Tự động hóa',
     developer: 'Celonis',
     imageUrl: '/image/Ảnh công cụ AI Make.png',
-    description: 'Make (trước đây là Integromat) là nền tảng tự động hóa quy trình làm việc trực quan, cho phép người dùng kết nối các ứng dụng và tự động hóa các tác vụ lặp đi lặp lại mà không cần kỹ năng lập trình.',
+    description: 'Make (trước đây là Integromat) là một nền tảng tự động hóa mạnh mẽ, cho phép bạn kết nối hàng nghìn ứng dụng và tự động hóa các quy trình công việc phức tạp mà không cần viết code, thông qua một giao diện trực quan và linh hoạt.',
     longDescription: '<p>Make (trước đây là Integromat) là một nền tảng tự động hóa quy trình làm việc mạnh mẽ, cho phép bạn kết nối các ứng dụng yêu thích và tự động hóa các tác vụ lặp đi lặp lại mà không cần viết một dòng code nào. Với giao diện kéo-thả trực quan, bạn có thể xây dựng các "kịch bản" (scenarios) để di chuyển dữ liệu giữa các ứng dụng, xử lý thông tin và thực hiện các hành động phức tạp.</p><p>Nền tảng này hỗ trợ hơn 1500 ứng dụng, từ các công cụ marketing, CRM, đến các dịch vụ lưu trữ và mô hình AI. Make nổi bật với khả năng xử lý logic phức tạp, cho phép tạo ra các luồng công việc đa bước, phân nhánh và xử lý lỗi một cách linh hoạt, khiến nó trở thành một công cụ mạnh mẽ cho cả người dùng cá nhân và doanh nghiệp.</p>',
     logoUrl: '/image/Logo Make.com.png',
     link: 'https://www.make.com/',
@@ -376,7 +402,7 @@ export const mockTools: Tool[] = [
     name: 'Sora',
     context: 'Tạo video',
     developer: 'OpenAI',
-    description: 'Sora là mô hình AI tạo video tiên tiến của OpenAI, có khả năng chuyển đổi văn bản thành các đoạn video ngắn, chất lượng cao, và bám sát nội dung mô tả trong prompt.',
+    description: 'Sora là mô hình AI tạo video tiên tiến của OpenAI, có khả năng chuyển đổi văn bản hoặc hình ảnh thành các đoạn video ngắn, chất lượng cao, và bám sát nội dung mô tả trong prompt.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://sora.chatgpt.com',
     imageUrl: '/image/Ảnh công cụ AI Sora.png',
@@ -520,6 +546,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
