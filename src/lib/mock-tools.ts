@@ -65,18 +65,37 @@ export const mockTools: Tool[] = [
     name: 'Imagen 4',
     context: 'Tạo hình ảnh',
     developer: 'Google',
-    description: 'Mô hình tạo hình ảnh từ văn bản thế hệ mới nhất của Google, nổi tiếng với khả năng tạo ra hình ảnh quang học giống y như thật mà lại còn có tùy chọn 2k tất cả từ kết cấu vải, giọt nước, lông thú,.. đều đủ chi tiết và chiều sâu. Imagen 4 còn có tùy chọn tốc độ nhanh hơn 10 lần Imagen 3 thật là khủng khiếp.\n+ Đặc biệt Imagen 4 có khả năng hiển thị chữ viết trên ảnh cực kì chính xác, rõ ràng hoàn toàn có thể so với GPT Image 1 tốt hơn hẳn Imagen 3 với tiếng Anh còn tiếng Việt theo như mình đánh giá mới chỉ mức 60%\n+ Hỗ trợ tất cả các kiểu tạo hình ảnh đó là tạo hình ảnh từ hình ảnh, tạo hình ảnh từ mô tả, chỉnh sửa hình ảnh từ hình ảnh, chỉnh sửa hình ảnh từ mô tả.\n+ Người dùng có thể tạo ảnh với nhiều khung hình khác nhau như 16:9 hoặc 9:16 hoặc 1:1 hoặc 2:3 và nhiều phong cách khác nhau từ siêu thực đến trừu tượng.\n+ Giá thì hiện tại có 2 phiên bản của Imagen 4 là \n• Imagen 4: Phiên bản tiêu chuẩn phù hợp hầu hết các tác vụ tạo ảnh thông thường(0.04 USD/1 ảnh)nhưng ở phiên bản này độ chính xác giống prompt mô tả ở mức thấp.\n• Imagen 4 Ultra: Phiên bản cao cấp tập trung trung vào độ chính xác so với prompt mô tả và tạo ảnh chất lượng vượt trội hơn so với Imagen 4 có giá 0.06 USD/1 ảnh.',
+    description: 'Imagen 4 là mô hình tạo ảnh từ văn bản thế hệ mới nhất của Google, nổi tiếng với khả năng tạo ra các hình ảnh quang học chân thực với độ chi tiết và chiều sâu đáng kinh ngạc, có tùy chọn độ phân giải lên đến 2K. Mô hình này còn vượt trội trong việc hiển thị chữ viết trên ảnh một cách chính xác.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/imagen/',
+    imageUrl: '/image/Ảnh công cụ AI Imagen 4.png',
+    longDescription: '<p>Imagen 4 là mô hình tạo ảnh từ văn bản thế hệ mới nhất của Google, nổi tiếng với khả năng tạo ra các hình ảnh quang học giống y như thật. Với tùy chọn độ phân giải lên đến 2K, mọi chi tiết từ kết cấu vải, giọt nước, đến lông thú đều được tái hiện một cách sống động. Imagen 4 còn có tùy chọn tốc độ nhanh hơn 10 lần so với Imagen 3, là một bước tiến vượt bậc về hiệu suất.</p><p>Điểm mạnh đặc biệt của Imagen 4 là khả năng hiển thị chữ viết trên ảnh một cách cực kỳ chính xác và rõ ràng, đặc biệt với tiếng Anh. Nó cũng hỗ trợ đa dạng các kiểu tạo và chỉnh sửa ảnh, cùng nhiều tỷ lệ khung hình khác nhau, giúp người dùng dễ dàng sáng tạo theo ý muốn.</p>',
     features: [
-      "Tạo ảnh siêu chân thực và có chiều sâu có tùy chọn ảnh lên tới 2K.",
-"Hỗ trợ nhiều loại kích thước ảnh 16:9 hoặc 9:16 hoặc 2:3 hoặc 1:1.",
-      "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh",
-      "• Tạo hình ảnh từ hình ảnh",
-      "• Tạo hình ảnh từ mô tả văn bản, giọng nói",
-      "• Chỉnh sửa hình ảnh từ hình ảnh mẫu",
-      "• Chỉnh sửa hình ảnh từ mô tả văn bản, giọng nói",
+      "Tạo ảnh siêu chân thực và có chiều sâu với tùy chọn ảnh lên tới 2K.",
+      "Hỗ trợ nhiều loại kích thước ảnh 16:9, 9:16, 2:3, 1:1.",
+      "Hỗ trợ tất cả các kiểu tạo và chỉnh sửa ảnh (text-to-image, image-to-image).",
+      "Hiển thị chữ viết trên ảnh chính xác, đặc biệt là tiếng Anh.",
+      "Tùy chọn tốc độ nhanh hơn 10 lần so với Imagen 3."
     ],
+    useCases: [
+        'Tạo hình ảnh quảng cáo sản phẩm chân thực.',
+        'Thiết kế bìa sách, poster với văn bản tích hợp.',
+        'Sáng tạo nghệ thuật số với độ chi tiết cao.',
+        'Tạo hình ảnh minh họa cho các bài viết chuyên sâu.'
+    ],
+    whoIsItFor: [
+        'Nhà thiết kế đồ họa chuyên nghiệp',
+        'Nhiếp ảnh gia',
+        'Người làm marketing và quảng cáo',
+        'Nghệ sĩ kỹ thuật số'
+    ],
+    pricingPlans: `
+        <p>Imagen 4 có hai phiên bản chính với mức giá khác nhau:</p>
+        <ul>
+            <li><strong>Imagen 4 (Tiêu chuẩn):</strong> $0.04/ảnh, phù hợp cho hầu hết các tác vụ tạo ảnh thông thường.</li>
+            <li><strong>Imagen 4 Ultra:</strong> $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội.</li>
+        </ul>
+    `,
     userRating: 4.7,
     totalStars: 634.5,
     ratingCount: 135,
@@ -448,6 +467,7 @@ export const mockTools: Tool[] = [
     
 
     
+
 
 
 
