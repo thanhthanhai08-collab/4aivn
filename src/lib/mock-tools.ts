@@ -438,9 +438,8 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
         <ul>
-          <li><strong>Gói Add-on Notion AI:</strong> $10/thành viên/tháng khi thanh toán hàng năm. Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI.</li>
-          <li><strong>Người dùng gói Free:</strong> Có thể dùng thử Notion AI với số lượt phản hồi giới hạn.</li>
-          <li><strong>Người dùng gói Plus, Business, Enterprise:</strong> Có thể mua gói Notion AI add-on để sử dụng không giới hạn.</li>
+            <li><strong>Gói Add-on Notion AI:</strong> $8/thành viên/tháng khi thanh toán hàng năm, hoặc $10/thành viên/tháng khi thanh toán hàng tháng. Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI cho các không gian làm việc đã mua gói Plus, Business, hoặc Enterprise.</li>
+            <li><strong>Người dùng gói Free:</strong> Có thể dùng thử Notion AI với số lượt phản hồi giới hạn. Để sử dụng không giới hạn, họ cần nâng cấp lên gói trả phí và mua thêm add-on AI.</li>
         </ul>
     `,
     userRating: 4.2,
@@ -607,6 +606,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
