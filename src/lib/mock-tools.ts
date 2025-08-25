@@ -10,7 +10,7 @@ export const mockTools: Tool[] = [
     description: 'Midjourney là một trong những công cụ AI tạo ảnh từ văn bản (text-to-image) hàng đầu, nổi tiếng với khả năng tạo ra các tác phẩm nghệ thuật độc đáo, chi tiết và có phong cách riêng biệt. Hoạt động chủ yếu trên nền tảng Discord, Midjourney được cộng đồng sáng tạo và thiết kế ưa chuộng nhờ chất lượng hình ảnh vượt trội.',
     logoUrl: '/image/Logo Midjourney.png',
     link: 'https://www.midjourney.com',
-    imageUrl: '/image/Ảnh công cụ Midjourney.png',
+    imageUrl: '/image/Ảnh công cụ AI Midjourney.png',
     longDescription: '<p>Midjourney là một phòng thí nghiệm nghiên cứu độc lập và cũng là tên của công cụ AI tạo ảnh nghệ thuật từ văn bản. Ra mắt vào năm 2022, Midjourney nhanh chóng trở thành một trong những nền tảng AI tạo sinh phổ biến nhất nhờ khả năng tạo ra các hình ảnh phức tạp, chất lượng cao và có tính thẩm mỹ độc đáo.</p><p>Hoạt động hoàn toàn trên nền tảng Discord, người dùng tương tác với Midjourney thông qua các câu lệnh (prompt). Mô hình AI của Midjourney có khả năng diễn giải các mô tả tự nhiên để tạo ra bốn biến thể hình ảnh cho mỗi yêu cầu, cho phép người dùng nâng cấp (upscale) hoặc tạo thêm các biến thể từ kết quả ưng ý nhất. Với một cộng đồng sôi động và liên tục được cập nhật, Midjourney là công cụ không thể thiếu cho các nghệ sĩ, nhà thiết kế và bất kỳ ai muốn biến ý tưởng thành hình ảnh ấn tượng.</p>',
     features: [
       "Tạo ảnh nghệ thuật chất lượng cao từ mô tả văn bản.",
@@ -116,7 +116,7 @@ export const mockTools: Tool[] = [
         'Nghệ sĩ kỹ thuật số'
     ],
     pricingPlans: `
-        <p>Imagen 4 có hai phiên bản chính với mức giá khác nhau:</p>
+        <h3>Các gói dịch vụ</h3>
         <ul>
             <li><strong>Imagen 4 (Tiêu chuẩn):</strong> $0.04/ảnh, phù hợp cho hầu hết các tác vụ tạo ảnh thông thường.</li>
             <li><strong>Imagen 4 Ultra:</strong> $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội.</li>
@@ -557,3 +557,6 @@ export const mockTools: Tool[] = [
 
 
 
+
+
+    
