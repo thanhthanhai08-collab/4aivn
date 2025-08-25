@@ -162,14 +162,14 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Các gói dịch vụ</h3>
         <ul>
-            <li><strong>Sử dụng miễn phí:</strong> Tải về và chạy trên máy tính cá nhân hoặc qua các nền tảng như Hugging Face.</li>
-            <li><strong>Sử dụng API:</strong> Tính phí theo credit, với 1 credit = $0.01.</li>
-            <li><strong>Stable Assistant (Web):</strong>
+            <li>Stable Diffusion có thể được sử dụng miễn phí thông qua việc tải về và chạy trên máy tính cá nhân của người dùng hoặc qua các nền tảng như Hugging Face.</li>
+            <li>Đối với việc sử dụng API, Stability AI đang cung cấp theo dạng credit với 1 credit = $0.01.</li>
+            <li>Còn trong trường hợp mọi người muốn sử dụng qua web thì Stability AI có tích hợp sẵn Stable Diffusion trong Stable Assistant với các gói sử dụng
                 <ul>
-                    <li><strong>Gói Standard:</strong> $9/tháng (900 credit/tháng)</li>
-                    <li><strong>Gói Pro:</strong> $19/tháng (1900 credit/tháng)</li>
-                    <li><strong>Gói Plus:</strong> $49/tháng (5500 credit/tháng)</li>
-                    <li><strong>Gói Premium:</strong> $99/tháng (12000 credit/tháng)</li>
+                    <li>Gói Standard : $9/tháng thì được sử dụng Stable Assistant với 900 credit/1 tháng với 3 ngày free trial.</li>
+                    <li>Gói Pro : $19/tháng thì được sử dụng Stable Assistant với 1900 credit/1 tháng với 3 ngày free trial.</li>
+                    <li>Gói Plus : $49/tháng thì được sử dụng Stable Assistant với 5500 credit/1 tháng với 3 ngày free trial.</li>
+                    <li>Gói Premium : $99/tháng thì được sử dụng Stable Assistant với 12000 credit/1 tháng với 3 ngày free trial.</li>
                 </ul>
             </li>
         </ul>
@@ -345,11 +345,11 @@ export const mockTools: Tool[] = [
     ],
     pricingPlans: `
         <h3>Các gói dịch vụ</h3>
-        <p>Tavily tính phí dựa trên số lần sử dụng API (credit). Gói miễn phí phù hợp cho các dự án cá nhân và thử nghiệm.</p>
+        <p>Tavily tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí phù hợp dự án cá nhân và các nhà nghiên cứu:</p>
         <ul>
             <li><strong>Gói Researcher:</strong> Miễn phí 1000 credit/tháng. Khi hết, có thể mua thêm với giá $0.008/credit.</li>
-            <li><strong>Gói Project:</strong> $30/tháng cho 4.000 credit (tương đương khoảng 2500 trang/tháng).</li>
-            <li><strong>Gói Enterprise:</strong> Liên hệ để có gói tùy chỉnh theo nhu cầu.</li>
+            <li><strong>Gói Project:</strong> $30/tháng cho 4.000 credit (tức có thể lấy thông tin khoảng 2500 trang/tháng).</li>
+            <li><strong>Gói Enterprise:</strong> Dành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu.</li>
         </ul>
     `,
     userRating: 4.4,
@@ -437,12 +437,7 @@ export const mockTools: Tool[] = [
     ],
     pricingPlans: `
         <h3>Các gói dịch vụ</h3>
-        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
-        <ul>
-            <li><strong>Gói Add-on Notion AI:</strong> Có giá $8/thành viên/tháng khi thanh toán theo năm, hoặc $10/thành viên/tháng khi thanh toán hàng tháng. Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI và có thể được thêm vào bất kỳ gói nào (bao gồm cả gói Free).</li>
-            <li><strong>Người dùng gói Free:</strong> Được dùng thử Notion AI với số lượt giới hạn.</li>
-            <li><strong>Người dùng các gói trả phí (Plus, Business, Enterprise):</strong> Có thể mua gói add-on AI để sử dụng không giới hạn.</li>
-        </ul>
+        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn. Gói Add-on Notion AI: $10-$12/thành viên/tháng (gói Plus) hoặc $20-$24/thành viên/tháng (gói Business). Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI. Người dùng gói Free, Plus ($10-$12/tháng) được dùng thử giới hạn 30 ngày: (Lưu ý ngay cả khi người dùng mua gói Plus vẫn chỉ được dùng Notion AI vẫn chỉ được dùng giới hạn như gói Free vẫn phải mua gói Add-on. Người dùng gói Business ($20-$24/tháng) hoặc Enterprise: Có thể sử dụng Notion AI không giới hạn.</p>
     `,
     userRating: 4.2,
     totalStars: 399,
@@ -611,4 +606,5 @@ export const mockTools: Tool[] = [
 
 
     
+
 
