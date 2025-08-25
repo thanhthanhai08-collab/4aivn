@@ -35,7 +35,6 @@ export const mockTools: Tool[] = [
       'Người sáng tạo nội dung'
     ],
     pricingPlans: `
-        <p>Midjourney cung cấp các gói đăng ký theo tháng với các giới hạn sử dụng GPU nhanh khác nhau. Chế độ "Relax Mode" cho phép tạo ảnh không giới hạn nhưng với thời gian chờ đợi lâu hơn.</p>
         <ul>
             <li><strong>Gói Basic:</strong> $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.</li>
             <li><strong>Gói Standard:</strong> $30/tháng, cung cấp 15 giờ GPU nhanh, lựa chọn phổ biến nhất.</li>
@@ -43,9 +42,6 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Mega:</strong> $120/tháng, cung cấp 60 giờ GPU nhanh, dành cho doanh nghiệp và người dùng có nhu cầu rất cao.</li>
         </ul>
     `,
-    userRating: 4.9,
-    totalStars: 980,
-    ratingCount: 200,
     isFavorite: true,
   },
   {
@@ -80,9 +76,6 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <p>GPT Image 1 được tích hợp trong các gói ChatGPT Plus, Team và Enterprise. Người dùng các gói này có thể sử dụng tính năng tạo ảnh theo giới hạn của gói đăng ký mà không phải trả thêm phí cho mỗi hình ảnh.</p>
     `,
-    userRating: 4.8,
-    totalStars: 720,
-    ratingCount: 150,
     isFavorite: false,
   },
   {
@@ -120,9 +113,6 @@ export const mockTools: Tool[] = [
             <li><strong>Imagen 4 Ultra:</strong> $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội.</li>
         </ul>
     `,
-    userRating: 4.7,
-    totalStars: 634.5,
-    ratingCount: 135,
     isFavorite: true,
   },
   {
@@ -168,9 +158,6 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Premium:</strong> $99/tháng, cung cấp 12000 credit/tháng.</li>
         </ul>
     `,
-    userRating: 4.6,
-    totalStars: 644,
-    ratingCount: 140,
     isFavorite: false,
   },
   {
@@ -213,9 +200,6 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Ultimate:</strong> $36-$49.9/tháng với 50.000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn.</li>
         </ul>
     `,
-    userRating: 4.6,
-    totalStars: 506,
-    ratingCount: 110,
     isFavorite: false,
   },
   {
@@ -263,9 +247,6 @@ export const mockTools: Tool[] = [
             <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
         </ul>
     `,
-    userRating: 4.5,
-    totalStars: 360,
-    ratingCount: 80,
   },
    {
     id: 'firebase-studio',
@@ -300,13 +281,10 @@ export const mockTools: Tool[] = [
     pricingPlans: `
       <p>Firebase Studio sử dụng mô hình định giá của Firebase với hai gói chính:</p>
       <ul>
-        <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase. Rất phù hợp để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
-        <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng có quy mô lớn hơn, bạn chỉ trả tiền cho những tài nguyên bạn sử dụng vượt quá hạn mức miễn phí. Đây là một giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
+        <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase, đủ để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
+        <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng quy mô lớn, bạn chỉ trả tiền cho những tài nguyên vượt quá hạn mức miễn phí. Đây là giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
       </ul>
     `,
-    userRating: 4.8,
-    totalStars: 480,
-    ratingCount: 100,
   },
   {
     id: 'tavily-ai',
@@ -341,16 +319,12 @@ export const mockTools: Tool[] = [
       "Bất kỳ ai xây dựng ứng dụng dựa trên LLM"
     ],
     pricingPlans: `
-        <p>Tavly tính phí dựa trên số lần gửi và nhận thông tin qua API thông qua credit với gói miễn phí phù hợp dự án cá nhân và các nhà nghiên cứu:</p>
         <ul>
             <li><strong>Gói Researcher:</strong> miễn phí với 1000 credit / 1 tháng khi hết thì mua thêm credit  là $0.008 /1 credit.</li>
             <li><strong>Gói Project:</strong> là $30 / 1 tháng với  4000 credit / 1 tháng (tức có thể lấy thông tin khoảng 2500 trang/1 tháng).</li>
             <li><strong>Gói Enterprise:</strong> giành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu.</li>
         </ul>
     `,
-    userRating: 4.4,
-    totalStars: 264,
-    ratingCount: 60,
   },
   {
     id: 'make',
@@ -398,9 +372,6 @@ export const mockTools: Tool[] = [
             <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
         </ul>
     `,
-    userRating: 4.3,
-    totalStars: 322.5,
-    ratingCount: 75,
   },
   {
     id: 'notion-ai',
@@ -436,15 +407,12 @@ export const mockTools: Tool[] = [
         'Bất kỳ ai sử dụng Notion để làm việc và học tập'
     ],
     pricingPlans: `
-        <p>Notion AI là một gói tiện ích bổ sung (add-on) cho các tài khoản Notion. Người dùng có thể trải nghiệm miễn phí với một số lượt sử dụng giới hạn.</p>
         <ul>
-            <li><strong>Gói Add-on Notion AI:</strong> $8/thành viên/tháng khi thanh toán hàng năm, hoặc $10/thành viên/tháng khi thanh toán hàng tháng. Gói này cung cấp quyền truy cập không giới hạn vào tất cả các tính năng của Notion AI cho các không gian làm việc đã mua gói Plus, Business, hoặc Enterprise.</li>
-            <li><strong>Người dùng gói Free:</strong> Có thể dùng thử Notion AI với số lượt phản hồi giới hạn. Để sử dụng không giới hạn, họ cần nâng cấp lên gói trả phí và mua thêm add-on AI.</li>
+          <li><strong>Notion AI Add-on:</strong> Là một tiện ích bổ sung cho các tài khoản Notion, có giá $8/thành viên/tháng (thanh toán hàng năm) hoặc $10/thành viên/tháng (thanh toán hàng tháng).</li>
+          <li><strong>Trải nghiệm miễn phí:</strong> Người dùng có thể dùng thử Notion AI với số lượt sử dụng giới hạn.</li>
+          <li><strong>Truy cập không giới hạn:</strong> Để sử dụng không giới hạn, người dùng cần mua gói add-on AI. Điều này áp dụng cho cả người dùng gói Free và Plus.</li>
         </ul>
     `,
-    userRating: 4.2,
-    totalStars: 399,
-    ratingCount: 95,
   },
   {
     id: 'sora-ai',
@@ -483,9 +451,6 @@ export const mockTools: Tool[] = [
             <li><strong>Gói Pro ($200/tháng):</strong> Tạo ảnh và video chất lượng cao hơn (1080p), thời lượng tối đa 20 giây, giới hạn khoảng 500 video/tháng, không có watermark, và tạo đồng thời 5 video.</li>
         </ul>
     `,
-    userRating: 4.1,
-    totalStars: 385.4,
-    ratingCount: 94,
   },
   {
     id: 'veo-3',
@@ -525,9 +490,6 @@ export const mockTools: Tool[] = [
             <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng và hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/1 tháng (tức là khoảng 300 video/1 tháng)gói này cũng được.</li>
         </ul>
     `,
-    userRating: 4.0,
-    totalStars: 376,
-    ratingCount: 94,
   },
   {
     id: 'fire-crawl',
@@ -574,9 +536,6 @@ export const mockTools: Tool[] = [
         <h3>Gói Extract</h3>
         <p>Gói này chỉ miễn phi 1 lần nếu hết 1 lần thì phải mua thêm credit</p>
     `,
-    userRating: 4.4,
-    totalStars: 220,
-    ratingCount: 50,
   },
 ];
     
@@ -606,6 +565,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 

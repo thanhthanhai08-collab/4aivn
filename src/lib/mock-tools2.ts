@@ -43,8 +43,5 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
         </ul>
     `,
-    userRating: 4.5,
-    totalStars: 360,
-    ratingCount: 80,
   }
 ];

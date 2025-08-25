@@ -34,8 +34,8 @@ const combinedMockTools = [...mockTools, ...mockLovableTool];
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
-        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
-        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
+        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
 
         if (ratingB !== ratingA) return ratingB - ratingA;
 

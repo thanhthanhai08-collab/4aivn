@@ -65,7 +65,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
           {sortedItems.map((item, index) => {
             const averageRating = item.ratingCount && item.ratingCount > 0 
               ? (item.totalStars || 0) / item.ratingCount 
-              : item.userRating || 0;
+              : 0;
             
             let rankToShow;
             if (itemType === 'model') {

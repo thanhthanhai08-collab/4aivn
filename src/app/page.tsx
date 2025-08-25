@@ -114,8 +114,8 @@ export default function HomePage() {
         }));
         
         const sortedTopTools = toolsWithRatings.sort((a, b) => {
-          const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : a.userRating || -Infinity;
-          const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : b.userRating || -Infinity;
+          const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
+          const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
 
           if (ratingB !== ratingA) return ratingB - ratingA;
           
@@ -130,10 +130,8 @@ export default function HomePage() {
 
       } catch (error) {
         console.error("Error fetching tool ratings for homepage:", error);
-        // Fallback to sorting mockTools without ratings
-        setTopTools(combinedMockTools
-          .sort((a, b) => (b.userRating || 0) - (a.userRating || 0))
-          .slice(0, 4));
+        // Fallback to initial mockTools order if Firestore fails
+        setTopTools(combinedMockTools.slice(0, 4));
       } finally {
         setIsLoadingTools(false);
       }

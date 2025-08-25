@@ -62,7 +62,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
 
   const averageRating = tool.ratingCount && tool.ratingCount > 0 
     ? (tool.totalStars || 0) / tool.ratingCount 
-    : tool.userRating || 0;
+    : 0;
 
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden hover:-translate-y-1 relative group/card">

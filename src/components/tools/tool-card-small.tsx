@@ -13,7 +13,7 @@ interface ToolCardSmallProps {
 export function ToolCardSmall({ tool }: ToolCardSmallProps) {
   const averageRating = tool.ratingCount && tool.ratingCount > 0 
     ? (tool.totalStars || 0) / tool.ratingCount 
-    : tool.userRating || 0;
+    : 0;
 
   return (
     <Card className="shadow-none border-0 hover:bg-accent transition-colors">
