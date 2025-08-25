@@ -93,7 +93,7 @@ export const mockLovableTool: Tool[] = [
     developer: 'Vbee',
     description: 'Vbee AI là nền tảng chuyển đổi văn bản thành giọng nói (Text-to-Speech) hàng đầu tại Việt Nam, cung cấp các giải pháp giọng nói AI tự nhiên, đa dạng và có cảm xúc, được ứng dụng rộng rãi trong nhiều lĩnh vực.',
     logoUrl: '/image/Logo Vbee AI.png',
-    link: 'https://vbee.vn/',
+    link: 'https://vbee.vn/?aff=clean-ai-hub',
     imageUrl: '/image/Ảnh công cụ AI Vbee.png',
     longDescription: '<p>Vbee là một công ty công nghệ tiên phong tại Việt Nam, chuyên sâu về các giải pháp xử lý giọng nói và ngôn ngữ tự nhiên bằng trí tuệ nhân tạo. Nền tảng Text-to-Speech của Vbee nổi bật với khả năng tạo ra giọng đọc có ngữ điệu tự nhiên, chân thực như người thật, hỗ trợ đa dạng giọng đọc theo vùng miền (Bắc, Trung, Nam) và giới tính.</p><p>Công nghệ của Vbee được ứng dụng rộng rãi để tạo ra các sản phẩm âm thanh chất lượng cao như sách nói, báo nói, lồng tiếng cho video, hệ thống tổng đài tự động và các giải pháp cho nhà thông minh. Với khả năng tùy chỉnh linh hoạt, Vbee giúp các doanh nghiệp và nhà sáng tạo nội dung tiết kiệm chi phí và thời gian sản xuất, đồng thời nâng cao trải nghiệm của người dùng cuối.</p>',
     features: [
@@ -122,10 +122,10 @@ export const mockLovableTool: Tool[] = [
         <h3>Gói Studio</h3>
         <ul>
             <li><strong>Miễn phí:</strong> 4.000 ký tự/tháng, 1 giờ tải xuống.</li>
-            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng cho 300.000 ký tự.</li>
-            <li><strong>Đặc biệt:</strong> 34.000đ/tháng cho 200.000 ký tự (Gói phổ biến nhất).</li>
-            <li><strong>VIP:</strong> 75.000đ/tháng cho 200.000 ký tự.</li>
-            <li><strong>Tùy chỉnh:</strong> 175.000đ/tháng cho 2.000.000 ký tự.</li>
+            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng (290.000đ/năm) cho 300.000 ký tự.</li>
+            <li><strong>Đặc biệt:</strong> 34.000đ/tháng (340.000đ/năm) cho 200.000 ký tự (Gói phổ biến nhất).</li>
+            <li><strong>VIP:</strong> 75.000đ/tháng (750.000đ/năm) cho 200.000 ký tự.</li>
+            <li><strong>Tùy chỉnh:</strong> 175.000đ/tháng (1.750.000đ/năm) cho 2.000.000 ký tự.</li>
         </ul>
         <h3>Gói API</h3>
         <ul>
