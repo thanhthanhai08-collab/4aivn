@@ -40,8 +40,8 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:(.*?)\]|\[BENCHMARK_CHART\])/g;
-  const parts = content.split(combinedRegex).filter(p => p);
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\])/;
+  const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
     if (part === '[BENCHMARK_CHART]') {
@@ -51,7 +51,7 @@ const renderContent = (content: string, articleId: string) => {
       return null;
     }
 
-    const imageMatch = part.match(/\[IMAGE:(.*?)\|(.*?)\|(.*?)\]/);
+    const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
     if (imageMatch) {
       const [, src, alt, hint] = imageMatch;
       return (
@@ -67,13 +67,11 @@ const renderContent = (content: string, articleId: string) => {
         </div>
       );
     }
-    
-    // Check if the part is just the image tag itself (captured by splitting)
-    // and ignore it if so, to avoid rendering it as text.
-    if (part.startsWith('[IMAGE:')) {
-      return null;
-    }
 
+    if (part.startsWith('[IMAGE:') || part === '[BENCHMARK_CHART]') {
+        return null;
+    }
+    
     // Render the remaining text content
     if (part.trim().startsWith('<')) {
       return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: part }} />;
