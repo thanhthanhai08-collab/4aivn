@@ -144,7 +144,7 @@ export const mockLovableTool: Tool[] = [
     imageUrl: '/image/Ảnh công cụ AI Preny.png',
     description: 'Preny là một nền tảng no-code cho phép bạn xây dựng và triển khai các trợ lý AI tùy chỉnh cho trang web của mình, giúp tự động hóa việc hỗ trợ khách hàng, tạo khách hàng tiềm năng và tăng cường tương tác của người dùng.',
     longDescription: '<p>Preny là một nền tảng no-code mạnh mẽ cho phép bất kỳ ai, từ cá nhân đến doanh nghiệp, có thể dễ dàng xây dựng và triển khai các trợ lý AI tùy chỉnh cho trang web của mình. Bằng cách kết nối các nguồn dữ liệu của bạn như trang web, tài liệu, hoặc các cơ sở kiến thức, Preny giúp tạo ra các chatbot thông minh có khả năng trả lời câu hỏi, hỗ trợ khách hàng, và thu thập thông tin một cách tự động.</p><p>Nền tảng này được thiết kế để đơn giản hóa quá trình tạo ra các AI Agent mà không yêu cầu kiến thức lập trình. Với giao diện trực quan, bạn có thể tùy chỉnh giao diện, hành vi và tích hợp trợ lý ảo vào trang web của mình chỉ trong vài phút, giúp cải thiện trải nghiệm người dùng và tối ưu hóa quy trình kinh doanh.</p>',
-    logoUrl: '/image/Logo Preny AI.png',
+    logoUrl: '/image/Logo Preny.png',
     link: 'https://preny.ai/affiliates?referralCode=zqmo0pa',
     features: [
       "Xây dựng trợ lý AI tùy chỉnh không cần code.",
