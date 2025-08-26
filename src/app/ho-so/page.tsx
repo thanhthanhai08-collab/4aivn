@@ -13,6 +13,7 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockNews } from "@/lib/mock-news";
+import { mockNews2 } from "@/lib/mock-news2";
 import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,6 +32,8 @@ import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
 
 const combinedMockTools = [...mockTools, ...mockLovableTool];
+const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
@@ -88,7 +91,7 @@ export default function ProfilePage() {
             setFavoriteTools(sortToolsByRating(userFavoriteTools));
             
             // Load bookmarked news
-            const userBookmarkedNews = mockNews.filter(article => (data.bookmarkedNews || []).includes(article.id));
+            const userBookmarkedNews = allMockNews.filter(article => (data.bookmarkedNews || []).includes(article.id));
             setBookmarkedNews(userBookmarkedNews);
         }).catch(error => {
             console.error("Failed to fetch user profile data:", error);
@@ -246,5 +249,3 @@ export default function ProfilePage() {
     </AppLayout>
   );
 }
-
-    

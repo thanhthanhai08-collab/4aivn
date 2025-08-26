@@ -8,11 +8,12 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockNews } from "@/lib/mock-news";
+import { mockNews2 } from "@/lib/mock-news2";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef } from "react";
-import type { Tool } from "@/lib/types";
+import type { Tool, NewsArticle } from "@/lib/types";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
@@ -26,9 +27,11 @@ const TYPING_TEXTS = [
 ];
 
 const combinedMockTools = [...mockTools, ...mockLovableTool];
+const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
 
 export default function HomePage() {
-  const latestNews = mockNews.slice(0, 6); // Fetch more for seamless scroll
+  const latestNews = allMockNews.slice(0, 6); // Fetch more for seamless scroll
   const [topTools, setTopTools] = useState<Tool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
 

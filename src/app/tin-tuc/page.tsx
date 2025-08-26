@@ -3,9 +3,12 @@
 
 import { useState, useEffect } from "react";
 import { mockNews } from "@/lib/mock-news";
+import { mockNews2 } from "@/lib/mock-news2";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsCard } from "@/components/news/news-card";
+
+const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -50,9 +53,9 @@ export default function NewsPage() {
               <Skeleton key={i} className="h-96 w-full rounded-lg" />
             ))}
           </div>
-        ) : mockNews.length > 0 ? (
+        ) : allMockNews.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockNews.map((article) => (
+            {allMockNews.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}
           </div>

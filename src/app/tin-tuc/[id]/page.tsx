@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User } from "lucide-react";
 import { mockNews } from "@/lib/mock-news";
+import { mockNews2 } from "@/lib/mock-news2";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -85,6 +86,8 @@ const renderContent = (content: string, articleId: string) => {
   });
 };
 
+const allMockNews = [...mockNews, ...mockNews2];
+
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
 
@@ -94,7 +97,7 @@ function NewsDetailContent({ id }: { id: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
-    const foundArticle = mockNews.find((a) => a.id === id);
+    const foundArticle = allMockNews.find((a) => a.id === id);
     if (foundArticle) {
       setArticle(foundArticle);
       if (foundArticle.content.length > 200) {
@@ -147,7 +150,7 @@ function NewsDetailContent({ id }: { id: string }) {
     );
   }
   
-  const latestNews = mockNews.filter(a => a.id !== article.id).slice(0, 3);
+  const latestNews = allMockNews.filter(a => a.id !== article.id).sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()).slice(0, 3);
 
 
   return (
