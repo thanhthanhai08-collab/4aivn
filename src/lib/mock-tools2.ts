@@ -121,18 +121,19 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
         <h3>Gói Studio</h3>
         <ul>
-            <li><strong>Miễn phí:</strong> 4.000 ký tự/tháng, 1 giờ tải xuống.</li>
-            <li><strong>Tiêu chuẩn:</strong> 29.000đ/tháng (290.000đ/năm) cho 300.000 ký tự.</li>
-            <li><strong>Đặc biệt:</strong> 34.000đ/tháng (340.000đ/năm) cho 200.000 ký tự (Gói phổ biến nhất).</li>
-            <li><strong>VIP:</strong> 75.000đ/tháng (750.000đ/năm) cho 200.000 ký tự.</li>
-            <li><strong>Tùy chỉnh:</strong> 175.000đ/tháng (1.750.000đ/năm) cho 2.000.000 ký tự.</li>
+            <li><strong>Miễn phí:</strong> 3.000 ký tự/ngày, 1 thiết bị, 3 giọng nhân bản nhanh.</li>
+            <li><strong>Tiêu chuẩn:</strong> 149.000 đ/tháng (339.000 đ/năm) cho 125k ký tự, 2 thiết bị, 5 giọng nhân bản nhanh. Khi hết, mua thêm 12.000 đ/50k kí tự.</li>
+            <li><strong>Đặc biệt:</strong> 199.000 đ/tháng (399.000 đ/năm) cho 250k ký tự, 5 thiết bị, 3 giọng chuyên nghiệp, 10 giọng nhân bản nhanh. Khi hết, mua thêm 10.000 đ/50k kí tự.</li>
+            <li><strong>VIP:</strong> 299.000 đ/tháng (899.000 đ/năm) cho 500k ký tự, 5 thiết bị, 6 giọng chuyên nghiệp, 15 giọng nhân bản nhanh. Khi hết, mua thêm 10.000 đ/50k kí tự.</li>
+            <li><strong>Tùy chỉnh:</strong> Tùy chỉnh linh hoạt tối ưu theo nhu cầu sử dụng.</li>
         </ul>
         <h3>Gói API</h3>
         <ul>
-            <li><strong>Trải nghiệm:</strong> 250.000đ cho 1.000.000 ký tự, thời gian sử dụng 1 tháng.</li>
-            <li><strong>Nâng cao:</strong> 2.000.000đ cho 10.000.000 ký tự, thời gian sử dụng 6 tháng.</li>
-            <li><strong>Cao cấp:</strong> 4.000.000đ cho 25.000.000 ký tự, thời gian sử dụng 12 tháng.</li>
-            <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
+            <li><strong>Trải nghiệm:</strong> 49.000 đ cho 120k ký tự, sử dụng trong 1 tháng, 5 luồng đồng thời.</li>
+            <li><strong>Nâng cao:</strong> 999.000 đ cho 2.7 triệu ký tự, sử dụng trong 6 tháng, 20 luồng đồng thời.</li>
+            <li><strong>Cao cấp:</strong> 4.899.000 đ cho 14 triệu ký tự, sử dụng trong 9 tháng, 50 luồng đồng thời.</li>
+            <li><strong>Chuyên nghiệp:</strong> 9.899.000 đ cho 32 triệu ký tự, sử dụng trong 12 tháng, 100 luồng đồng thời.</li>
+            <li><strong>Doanh nghiệp:</strong> Tùy theo nhu cầu của doanh nghiệp.</li>
         </ul>
     `,
   },
