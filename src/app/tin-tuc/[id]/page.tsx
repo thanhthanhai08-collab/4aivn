@@ -4,7 +4,7 @@
 import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CalendarDays, Globe, MessageSquare, User } from "lucide-react";
+import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
 import type { NewsArticle, Comment } from "@/lib/types";
@@ -23,6 +23,9 @@ import { CommentForm } from "@/components/news/comment-form";
 import { CommentList } from "@/components/news/comment-list";
 import { Separator } from "@/components/ui/separator";
 import { GptOssBenchmarkChart } from "@/components/news/gpt-oss-benchmark-chart";
+import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -84,16 +87,23 @@ const allMockNews = [...mockNews, ...mockNews2];
 
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
+  const { toast } = useToast();
 
   const [article, setArticle] = useState<NewsArticle | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [summary, setSummary] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     const foundArticle = allMockNews.find((a) => a.id === id);
     if (foundArticle) {
       setArticle(foundArticle);
+      if (currentUser) {
+        getUserProfileData(currentUser.uid).then(userData => {
+          setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
+        });
+      }
       if (foundArticle.content.length > 200) {
         summarizeNewsArticle({ articleContent: foundArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
           .then(output => setSummary(output.summary))
@@ -101,7 +111,7 @@ function NewsDetailContent({ id }: { id: string }) {
       }
     }
     setIsLoading(false);
-  }, [id]);
+  }, [id, currentUser]);
 
   useEffect(() => {
     if (!id) return;
@@ -110,6 +120,41 @@ function NewsDetailContent({ id }: { id: string }) {
     });
     return () => unsubscribe();
   }, [id]);
+  
+  const handleBookmarkToggle = async () => {
+    if (!currentUser) {
+      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu tin tức.", variant: "destructive" });
+      return;
+    }
+    
+    const newBookmarkState = !isBookmarked;
+    setIsBookmarked(newBookmarkState); // Optimistic UI update
+
+    try {
+      await toggleNewsBookmark(currentUser.uid, id, isBookmarked);
+      toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
+    } catch (error) {
+      console.error("Failed to update bookmark:", error);
+      setIsBookmarked(!newBookmarkState); // Revert on error
+      toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
+    }
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast({
+        title: "Đã sao chép liên kết",
+        description: "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
+      });
+    }).catch(err => {
+      console.error('Failed to copy link: ', err);
+      toast({
+        title: "Lỗi",
+        description: "Không thể sao chép liên kết.",
+        variant: "destructive",
+      });
+    });
+  };
 
   const handleCommentAdded = (newComment: Comment) => {
     setComments(prevComments => [newComment, ...prevComments]);
@@ -155,9 +200,20 @@ function NewsDetailContent({ id }: { id: string }) {
           <div className="lg:col-span-8">
             <article>
               <header className="mb-8">
-                <Button variant="outline" size="sm" asChild className="mb-6">
-                  <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
-                </Button>
+                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                    <Button variant="outline" size="sm" asChild>
+                        <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
+                    </Button>
+                    <div className="flex items-center space-x-2">
+                        <Button variant="outline" onClick={handleBookmarkToggle}>
+                            <Bookmark className={cn("mr-2 h-4 w-4", isBookmarked && "fill-primary text-primary")} />
+                            {isBookmarked ? "Đã lưu" : "Lưu tin tức"}
+                        </Button>
+                        <Button variant="outline" onClick={handleShare}>
+                            <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+                        </Button>
+                    </div>
+                 </div>
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                     {article.author && (
