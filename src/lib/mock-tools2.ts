@@ -171,10 +171,10 @@ export const mockLovableTool: Tool[] = [
     ],
     pricingPlans: `
       <ul>
-          <li><strong>Gói Free:</strong> $0/tháng, bao gồm 1 chatbot, 50 tin nhắn/tháng, và 100.000 ký tự huấn luyện.</li>
-          <li><strong>Gói Basic:</strong> $19/tháng, bao gồm 2 chatbot, 2.000 tin nhắn/tháng, và nhiều tính năng nâng cao hơn.</li>
-          <li><strong>Gói Pro:</strong> $49/tháng, cung cấp 5 chatbot, 10.000 tin nhắn/tháng và các tính năng chuyên nghiệp.</li>
-          <li><strong>Gói Business:</strong> $99/tháng, cung cấp 10 chatbot, 30.000 tin nhắn/tháng và hỗ trợ cao cấp.</li>
+          <li><strong>Gói dùng thử:</strong> Miễn phí trong 7 ngày, giới hạn 1 page, 1 web, 2.000 tin nhắn, 20 nội dung training, và 1 thành viên.</li>
+          <li><strong>Gói cơ bản:</strong> 499.000₫/tháng, giới hạn 5 page, 5 website, 5.000 tin nhắn, 100 tài liệu training, và 5 thành viên.</li>
+          <li><strong>Gói nâng cao:</strong> 999.000₫/tháng, giới hạn 20 page, 20 website, 15.000 tin nhắn, không giới hạn tài liệu training, và không giới hạn thành viên.</li>
+          <li><strong>Gói doanh nghiệp:</strong> 1.999.000₫/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất.</li>
       </ul>
     `,
   }
