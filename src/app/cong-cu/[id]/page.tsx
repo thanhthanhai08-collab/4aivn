@@ -103,7 +103,7 @@ function ToolDetailContent({ id }: { id: string }) {
     'Code cho Web app': '💻',
     'Model AI': '🧠',
     'Tạo giọng nói': '🗣️',
-    'Công cụ tìm kiếm & Nghiên cứu': '🔍',
+    'AI tìm kiếm': '🔍',
   };
 
   const featuredTools = initialMockTools.filter(t => ['midjourney', 'sora-ai', 'gpt-image-1'].includes(t.id));
