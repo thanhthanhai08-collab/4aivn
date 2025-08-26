@@ -121,18 +121,18 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
         <h3>Gói Studio</h3>
         <ul>
-            <li><strong>Miễn phí:</strong> 3.000 ký tự/ngày, 1 thiết bị, 3 giọng nhân bản nhanh.</li>
-            <li><strong>Tiêu chuẩn:</strong> 149.000 đ/tháng (339.000 đ/năm) cho 125k ký tự, 2 thiết bị, 5 giọng nhân bản nhanh. Khi hết, mua thêm 12.000 đ/50k kí tự.</li>
-            <li><strong>Đặc biệt:</strong> 199.000 đ/tháng (399.000 đ/năm) cho 250k ký tự, 5 thiết bị, 3 giọng chuyên nghiệp, 10 giọng nhân bản nhanh. Khi hết, mua thêm 10.000 đ/50k kí tự.</li>
-            <li><strong>VIP:</strong> 299.000 đ/tháng (899.000 đ/năm) cho 500k ký tự, 5 thiết bị, 6 giọng chuyên nghiệp, 15 giọng nhân bản nhanh. Khi hết, mua thêm 10.000 đ/50k kí tự.</li>
+            <li><strong>Miễn phí:</strong> 3.000 ký tự/ngày, chỉ sử dụng được 1 thiết bị cho 1 tài khoản, 3 giọng nhân bản nhanh.</li>
+            <li><strong>Tiêu chuẩn:</strong> 149.000đ/tháng (nếu mua theo năm thì 339.000đ/năm) cho 125k ký tự, sử dụng được 2 thiết bị cho 1 tài khoản, 5 giọng nhân bản nhanh, khi hết phải mua thêm 12.000đ/50k kí tự.</li>
+            <li><strong>Đặc biệt:</strong> 199.000đ/tháng (nếu mua theo năm thì 399.000đ/năm) cho 250k ký tự, sử dụng được 5 thiết bị cho 1 tài khoản, 3 giọng nhân bản chuyên nghiệp, 10 giọng nhân bản nhanh, khi hết kí tự phải mua thêm 10.000đ/50k kí tự.</li>
+            <li><strong>VIP:</strong> 299.000đ/tháng (nếu mua theo năm thì 899.000đ/năm) cho 500k ký tự, sử dụng được 5 thiết bị cho 1 tài khoản, 6 giọng nhân bản chuyên nghiệp, 15 giọng nhân bản nhanh, khi hết ký tự phải mua thêm 10.000đ/50k kí tự.</li>
             <li><strong>Tùy chỉnh:</strong> Tùy chỉnh linh hoạt tối ưu theo nhu cầu sử dụng.</li>
         </ul>
         <h3>Gói API</h3>
         <ul>
-            <li><strong>Trải nghiệm:</strong> 49.000 đ cho 120k ký tự, sử dụng trong 1 tháng, 5 luồng đồng thời.</li>
-            <li><strong>Nâng cao:</strong> 999.000 đ cho 2.7 triệu ký tự, sử dụng trong 6 tháng, 20 luồng đồng thời.</li>
-            <li><strong>Cao cấp:</strong> 4.899.000 đ cho 14 triệu ký tự, sử dụng trong 9 tháng, 50 luồng đồng thời.</li>
-            <li><strong>Chuyên nghiệp:</strong> 9.899.000 đ cho 32 triệu ký tự, sử dụng trong 12 tháng, 100 luồng đồng thời.</li>
+            <li><strong>Trải nghiệm:</strong> 49.000đ cho 120k ký tự, thời gian sử dụng 1 tháng với 5 luồng xử lý đồng thời.</li>
+            <li><strong>Nâng cao:</strong> 999.000đ cho 2.7 triệu ký tự, thời gian sử dụng 6 tháng với 20 luồng xử lý đồng thời.</li>
+            <li><strong>Cao cấp:</strong> 4.899.000đ cho 14 triệu ký tự, thời gian sử dụng 9 tháng với 50 luồng xử lý đồng thời.</li>
+            <li><strong>Chuyên nghiệp:</strong> 9.899.000đ cho 32 triệu ký tự, thời gian sử dụng 12 tháng với 100 luồng xử lý đồng thời.</li>
             <li><strong>Doanh nghiệp:</strong> Tùy theo nhu cầu của doanh nghiệp.</li>
         </ul>
     `,
@@ -173,9 +173,9 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
       <ul>
           <li><strong>Gói dùng thử:</strong> Miễn phí trong 7 ngày, giới hạn 1 page, 1 web, 2.000 tin nhắn, 20 nội dung training, và 1 thành viên.</li>
-          <li><strong>Gói cơ bản:</strong> 499.000₫/tháng, giới hạn 5 page, 5 website, 5.000 tin nhắn, 100 tài liệu training, và 5 thành viên.</li>
-          <li><strong>Gói nâng cao:</strong> 999.000₫/tháng, giới hạn 20 page, 20 website, 15.000 tin nhắn, không giới hạn tài liệu training, và không giới hạn thành viên.</li>
-          <li><strong>Gói doanh nghiệp:</strong> 1.999.000₫/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất.</li>
+          <li><strong>Gói cơ bản:</strong> 499.000đ/tháng, giới hạn 5 page, 5 website, 5.000 tin nhắn, 100 tài liệu training, và 5 thành viên.</li>
+          <li><strong>Gói nâng cao:</strong> 999.000đ/tháng, giới hạn 20 page, 20 website, 15.000 tin nhắn, không giới hạn tài liệu training, và không giới hạn thành viên.</li>
+          <li><strong>Gói doanh nghiệp:</strong> 1.999.000đ/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất.</li>
       </ul>
     `,
   }
