@@ -133,7 +133,7 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Nâng cao:</strong> 999.000đ cho 2.7 triệu ký tự, thời gian sử dụng 6 tháng với 20 luồng xử lý đồng thời.</li>
             <li><strong>Cao cấp:</strong> 4.899.000đ cho 14 triệu ký tự, thời gian sử dụng 9 tháng với 50 luồng xử lý đồng thời.</li>
             <li><strong>Chuyên nghiệp:</strong> 9.899.000đ cho 32 triệu ký tự, thời gian sử dụng 12 tháng với 100 luồng xử lý đồng thời.</li>
-            <li><strong>Doanh nghiệp:</strong> Tùy theo nhu cầu của doanh nghiệp.</li>
+            <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
         </ul>
     `,
   },
@@ -178,5 +178,48 @@ export const mockLovableTool: Tool[] = [
           <li><strong>Gói doanh nghiệp:</strong> 1.999.000đ/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất.</li>
       </ul>
     `,
+  },
+  {
+    id: 'perplexity',
+    name: 'Perplexity AI',
+    context: 'Công cụ tìm kiếm & Nghiên cứu',
+    developer: 'Perplexity',
+    imageUrl: '/image/Ảnh công cụ AI Perplexity.png',
+    description: 'Perplexity AI là một công cụ tìm kiếm và nghiên cứu đối thoại, cung cấp câu trả lời trực tiếp, chính xác và có trích dẫn nguồn từ web, giúp người dùng tìm kiếm thông tin nhanh chóng và đáng tin cậy.',
+    longDescription: '<p>Perplexity AI hoạt động như một công cụ tìm kiếm đối thoại, kết hợp sức mạnh của các mô hình ngôn ngữ lớn (LLM) với khả năng truy cập thông tin thời gian thực từ web. Thay vì chỉ trả về một danh sách các liên kết, Perplexity tổng hợp thông tin từ nhiều nguồn để cung cấp một câu trả lời trực tiếp, súc tích và luôn kèm theo trích dẫn nguồn, giúp người dùng dễ dàng xác minh thông tin.</p><p>Công cụ này hỗ trợ nhiều chế độ tìm kiếm, từ "Focus" để tìm kiếm chuyên sâu trong các lĩnh vực cụ thể như học thuật, lập trình, đến "Pro Search" để thực hiện các nghiên cứu phức tạp hơn. Với khả năng tải lên tệp và tương tác một cách tự nhiên, Perplexity là một trợ lý nghiên cứu mạnh mẽ cho cả người dùng cá nhân và chuyên gia.</p>',
+    logoUrl: '/image/Logo Perplexity.png',
+    link: 'https://www.perplexity.ai/',
+    features: [
+      "Trả lời trực tiếp với trích dẫn nguồn đáng tin cậy.",
+      "Hỗ trợ tìm kiếm chuyên sâu trong các lĩnh vực cụ thể.",
+      "Tải lên tệp (PDF, TXT, Code) để phân tích và hỏi đáp.",
+      "Tạo 'Collections' để tổ chức các luồng nghiên cứu.",
+      "Chế độ 'Pro Search' cho các truy vấn phức tạp.",
+      "Tích hợp các mô hình AI hàng đầu như GPT-4, Claude 3, và Llama 3.",
+      "Giao diện thân thiện và dễ sử dụng."
+    ],
+    useCases: [
+        'Nghiên cứu học thuật và khoa học.',
+        'Tìm kiếm thông tin nhanh chóng và đáng tin cậy.',
+        'Hỗ trợ viết lách và tạo nội dung.',
+        'Giải đáp các câu hỏi về lập trình và kỹ thuật.',
+        'Phân tích và tóm tắt tài liệu.'
+    ],
+    whoIsItFor: [
+        'Nhà nghiên cứu, học thuật',
+        'Học sinh, sinh viên',
+        'Người viết nội dung, nhà báo',
+        'Lập trình viên, kỹ sư',
+        'Bất kỳ ai cần một công cụ tìm kiếm thông minh'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Free:</strong> Cung cấp các tìm kiếm nhanh cơ bản, 5 lượt Pro Search mỗi 4 giờ.</li>
+            <li><strong>Gói Pro ($20/tháng):</strong> Cung cấp hơn 300 lượt Pro Search mỗi ngày, lựa chọn mô hình AI, tải tệp không giới hạn, và nhiều tính năng nâng cao khác.</li>
+            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho doanh nghiệp với các tính năng bảo mật và quản lý nâng cao.</li>
+        </ul>
+    `,
   }
 ];
+
+    
