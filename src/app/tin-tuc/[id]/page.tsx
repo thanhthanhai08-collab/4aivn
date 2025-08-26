@@ -67,10 +67,6 @@ const renderContent = (content: string, articleId: string) => {
         </div>
       );
     }
-
-    if (part.startsWith('[IMAGE:') || part === '[BENCHMARK_CHART]') {
-        return null;
-    }
     
     // Render the remaining text content
     if (part.trim().startsWith('<')) {
@@ -162,9 +158,6 @@ function NewsDetailContent({ id }: { id: string }) {
                 <Button variant="outline" size="sm" asChild className="mb-6">
                   <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
                 </Button>
-                 <p className="text-sm text-primary font-semibold mb-2 uppercase">
-                  {article.source}
-                </p>
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                     {article.author && (
