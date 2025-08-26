@@ -27,14 +27,19 @@ export const mockNews2: NewsArticle[] = [
 </ul>
 <p>👉 Hãy thử ngay để biến những câu chuyện và ý tưởng của bạn thành những cuốn sách minh họa độc đáo và đầy mê hoặc!</p>
 <h2><strong>Ví dụ thực tế với prompt</strong></h2>
-<p>Dưới đây là một prompt mà chúng tôi đã thử nghiệm và các bạn có thể tham khảo kết quả:</p>
+<p>
+    Dưới đây là một prompt mà chúng tôi đã thử nghiệm và các bạn có thể tham khảo kết quả:
+</p>
 <blockquote>Prompt “Vẽ truyện tranh cho bé 3 tuổi nói về các phương tiện giao thông như máy bay, máy bay trực thăng, ô tô, xe máy, cần cẩu, xe xúc,...”</blockquote>
 [IMAGE:/image/news2/Bìa Sách Gemini.png|Kết quả minh họa sách Gemini|Gemini storybook cover]
-[IMAGE:/image/news2/Sách cho bé Gemini.png|Kết quả minh họa sách Gemini|Gemini storybook page 1]
+<p><em>Kết quả minh họa sách Gemini</em></p>
+[IMAGE:/image/news2/Sách cho bé Gemini.png|Kết quả minh họa sách Gemini|Gemini storybook page]
+<p><em>Kết quả minh họa sách Gemini</em></p>
 [IMAGE:/image/news2/Sách cho bé tạo bởi Gemini.png|Kết quả minh họa sách Gemini|Gemini storybook page 2]
-`,
+<p><em>Kết quả minh họa sách Gemini</em></p>`,
     publishedAt: '2025-08-10T09:00:00Z',
     imageUrl: '/image/news2/Gemini ra mắt tính năng tạo sách truyện cá nhân hóa cực kì sáng tạo.png',
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
