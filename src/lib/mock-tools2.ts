@@ -36,13 +36,13 @@ export const mockLovableTool: Tool[] = [
         'Bất kỳ ai muốn biến ý tưởng thành ứng dụng'
     ],
     pricingPlans: `
-      <ul>
-          <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
-          <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
-          <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
-          <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
-      </ul>
-  `,
+        <ul>
+            <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
+            <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
+            <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
+            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
+        </ul>
+    `,
   },
   {
     id: 'elevenlabs',
@@ -134,6 +134,48 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Cao cấp:</strong> 4.000.000đ cho 25.000.000 ký tự, thời gian sử dụng 12 tháng.</li>
             <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
         </ul>
+    `,
+  },
+  {
+    id: 'preny',
+    name: 'Preny',
+    context: 'AI Agent',
+    developer: 'Preny',
+    imageUrl: '/image/Ảnh công cụ AI Preny.png',
+    description: 'Preny là một nền tảng no-code cho phép bạn xây dựng và triển khai các trợ lý AI tùy chỉnh cho trang web của mình, giúp tự động hóa việc hỗ trợ khách hàng, tạo khách hàng tiềm năng và tăng cường tương tác của người dùng.',
+    longDescription: '<p>Preny là một nền tảng no-code mạnh mẽ cho phép bất kỳ ai, từ cá nhân đến doanh nghiệp, có thể dễ dàng xây dựng và triển khai các trợ lý AI tùy chỉnh cho trang web của mình. Bằng cách kết nối các nguồn dữ liệu của bạn như trang web, tài liệu, hoặc các cơ sở kiến thức, Preny giúp tạo ra các chatbot thông minh có khả năng trả lời câu hỏi, hỗ trợ khách hàng, và thu thập thông tin một cách tự động.</p><p>Nền tảng này được thiết kế để đơn giản hóa quá trình tạo ra các AI Agent mà không yêu cầu kiến thức lập trình. Với giao diện trực quan, bạn có thể tùy chỉnh giao diện, hành vi và tích hợp trợ lý ảo vào trang web của mình chỉ trong vài phút, giúp cải thiện trải nghiệm người dùng và tối ưu hóa quy trình kinh doanh.</p>',
+    logoUrl: '/image/Logo Preny AI.png',
+    link: 'https://preny.ai/affiliates?referralCode=zqmo0pa',
+    features: [
+      "Xây dựng trợ lý AI tùy chỉnh không cần code.",
+      "Huấn luyện AI từ nhiều nguồn dữ liệu (website, tài liệu).",
+      "Giao diện chatbot có thể tùy chỉnh để phù hợp với thương hiệu.",
+      "Phân tích và báo cáo chi tiết về tương tác của người dùng.",
+      "Tích hợp dễ dàng vào bất kỳ trang web nào.",
+      "Hỗ trợ đa ngôn ngữ.",
+      "Thu thập thông tin khách hàng tiềm năng."
+    ],
+    useCases: [
+        'Tự động hóa hỗ trợ khách hàng 24/7.',
+        'Tạo khách hàng tiềm năng (lead generation).',
+        'Cung cấp thông tin và trả lời câu hỏi thường gặp (FAQ).',
+        'Tăng cường tương tác và giữ chân người dùng trên web.',
+        'Đào tạo và giới thiệu sản phẩm cho người dùng mới.'
+    ],
+    whoIsItFor: [
+        'Chủ doanh nghiệp nhỏ và vừa',
+        'Đội ngũ marketing và bán hàng',
+        'Nhà phát triển web',
+        'Người làm giáo dục và đào tạo',
+        'Bất kỳ ai muốn có một trợ lý ảo trên trang web'
+    ],
+    pricingPlans: `
+      <ul>
+          <li><strong>Gói Free:</strong> $0/tháng, bao gồm 1 chatbot, 50 tin nhắn/tháng, và 100.000 ký tự huấn luyện.</li>
+          <li><strong>Gói Basic:</strong> $19/tháng, bao gồm 2 chatbot, 2.000 tin nhắn/tháng, và nhiều tính năng nâng cao hơn.</li>
+          <li><strong>Gói Pro:</strong> $49/tháng, cung cấp 5 chatbot, 10.000 tin nhắn/tháng và các tính năng chuyên nghiệp.</li>
+          <li><strong>Gói Business:</strong> $99/tháng, cung cấp 10 chatbot, 30.000 tin nhắn/tháng và hỗ trợ cao cấp.</li>
+      </ul>
     `,
   }
 ];
