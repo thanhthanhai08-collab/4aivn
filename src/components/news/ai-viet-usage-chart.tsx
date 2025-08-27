@@ -1,7 +1,7 @@
 // src/components/news/ai-viet-usage-chart.tsx
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LabelList } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LabelList, Cell } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const chartData = [
@@ -67,10 +67,9 @@ export function AiVietUsageChart() {
             />
             <Bar dataKey="value" background={{ fill: 'hsl(var(--muted))' }} radius={[0, 4, 4, 0]}>
                {chartData.map((entry, index) => (
-                <Bar
-                  key={`cell-${index}`}
-                  dataKey="value"
-                  fill={entry.type === 'local' ? 'hsl(var(--chart-2))' : 'hsl(var(--primary))'}
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.type === 'local' ? 'hsl(var(--chart-2))' : 'hsl(var(--primary))'} 
                 />
               ))}
               <LabelList dataKey="value" position="right" offset={8} className="fill-foreground" fontSize={12} formatter={(value: number) => `${value}%`} />
