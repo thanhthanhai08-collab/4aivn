@@ -26,11 +26,23 @@ export const mockNews2: NewsArticle[] = [
     id: 'nvidia-gb200-profit',
     title: 'Siêu lợi nhuận cho Nvidia với máy chủ AI Nvidia GB200 NVL72 lên tới 77.6%',
     source: 'Digitimes',
-    author: 'Admin',
-    content: '<p>Các máy chủ trang bị siêu chip AI Nvidia GB200 NVL72 đang mang lại tỷ suất lợi nhuận gộp lên tới 77.6% cho các nhà sản xuất, cho thấy nhu cầu khổng lồ và vị thế độc tôn của Nvidia trong thị trường AI.</p>',
+    author: 'Mai',
+    content: `<p>Hiện nay, khi nền kinh tế GPU đang gây ra nhiều lo lắng trong giới tài chính, Morgan Stanley đã đưa ra một phân tích khá thuyết phục về lợi thế hiệu quả vượt trội khi sử dụng GPU NVIDIA GB200 NVL72 cho các trung tâm dữ liệu AI quy mô lớn.</p>
+  <p>Để những ai chưa biết, mỗi máy chủ AI NVL72 chứa 72 GPU NVIDIA B200 cùng với 36 CPU Grace, tất cả được kết nối qua công nghệ liên kết băng thông cao, độ trễ thấp NVLink 5. Cần lưu ý rằng mỗi máy chủ NVL72 này hiện có giá khoảng 3,1 triệu đô la gấp hơn 16 lần so với 190.000 đô la cho một máy chủ H100.</p>
+  <p>Morgan Stanley tin rằng việc sử dụng giải pháp mới nhất của NVIDIA có ý nghĩa kinh tế.</p>
+  <br>
+  <h2><strong>Hiệu quả kinh tế của các hệ thống AI</strong></h2>
+  <p>Theo tính toán của Morgan Stanley, các hệ thống NVIDIA GB200 NVL72 hiện đang dẫn đầu về khả năng tạo ra doanh thu và lợi nhuận, theo sau là Google TPU v6e.</p>
+  <p>Cụ thể, một trung tâm dữ liệu AI với công suất 100MW có thể đạt tỷ suất lợi nhuận 77,6% với các máy chủ NVIDIA GB200 NVL72, trong khi Google TPU v6e đứng thứ hai với tỷ suất lợi nhuận 74,9%. Điều này mang lại lợi nhuận khổng lồ và khẳng định vị thế dẫn đầu của Nvidia và Google.</p>
+  <p>Tuy nhiên, giá thuê các pod (cụm máy chủ AI) Google TPU v6e không được công bố, nhưng trung bình, chi phí thuê một pod thấp hơn khoảng 40-50% so với máy chủ NVL72.</p>
+  <p>Điều đáng chú ý là theo tính toán của Morgan Stanley, các trung tâm dữ liệu AI sử dụng nền tảng AMD MI300 và MI355 có tỷ suất lợi nhuận âm, lần lượt là -28,2% và -64%. Điều đó cho thấy AMD đang hoàn toàn tụt lại trong cuộc đua máy chủ AI.</p>
+  <br>
+  <h2><strong>Chi phí sở hữu tổng thể (TCO)</strong></h2>
+  <p>Theo Morgan Stanley giả định một trung tâm dữ liệu AI 100MW sẽ có chi phí cơ sở hạ tầng là 660 triệu đô la, khấu hao trong 10 năm còn chi phí GPU có thể dao động từ 367 triệu đô la đến 2,273 tỷ đô la, khấu hao trong 4 năm. Cuối cùng, chi phí vận hành được tính dựa trên hiệu suất năng lượng của các hệ thống làm mát khác nhau và giá điện trung bình toàn cầu.</p>
+  <p>Theo đó, các hệ thống NVIDIA GB200 NVL72 có tổng chi phí sở hữu (TCO) cao nhất là 806,58 triệu đô la, tiếp theo là nền tảng MI355X với 774,11 triệu đô la.</p>`,
     publishedAt: '2025-09-05T10:00:00Z',
-    imageUrl: '/image/news2/nvidia_gb200.jpg',
-    dataAiHint: 'Nvidia chip server',
+    imageUrl: '/image/news2/Máy chủ AI Nvidia GB200 NVL72.png',
+    dataAiHint: 'Siêu lợi nhuận với máy chủ AI Nvidia GB200 NVL72',
   },
   {
     id: 'ai-viet-2025-bao-cao',
