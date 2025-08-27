@@ -1,35 +1,52 @@
 // src/components/news/AiSatisfactionChart.tsx
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend } from "recharts"
+import Image from "next/image"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend, Cell, Layer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: 'ChatGPT', score: 49 },
-  { name: 'AI Hay', score: 53 },
-  { name: 'Gemini', score: 64 },
-  { name: 'Meta AI', score: 73 },
-  { name: 'Copilot', score: 74 },
-  { name: 'Deepseek', score: 74 }
+  { name: 'ChatGPT', score: 51, logo: '/image/Logo Open AI cho bảng xếp hạng.png' },
+  { name: 'AI Hay', score: 47, logo: 'https://placehold.co/24x24/1E90FF/FFFFFF/PNG?text=H' },
+  { name: 'Gemini', score: 36, logo: '/image/Logo Gemini cho bảng xếp hạng.png' },
+  { name: 'Meta AI', score: 27, logo: 'https://placehold.co/24x24/8A2BE2/FFFFFF/PNG?text=O' },
+  { name: 'Copilot', score: 26, logo: 'https://placehold.co/24x24/FF4500/FFFFFF/PNG?text=C' },
+  { name: 'Deepseek', score: 26, logo: '/image/Logo Deepseek cho bảng xếp hạng.png' }
 ];
 
-
-const CustomXAxisTick = (props: any) => {
-    const { x, y, payload } = props;
-    const item = data.find(d => d.name === payload.value);
-
-    if (!item) return null;
-
+// Custom Legend
+const renderLegend = () => {
     return (
-        <g transform={`translate(${x},${y})`}>
-            <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" fontSize={12} fontWeight={500}>
-                {item.name}
-            </text>
-        </g>
+        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 mb-6">
+            {data.map((entry) => (
+                <div key={entry.name} className="flex items-center gap-2 text-sm font-medium text-foreground">
+                    <Image src={entry.logo} alt={`${entry.name} logo`} width={18} height={18} className="rounded-full" />
+                    <span>{entry.name}</span>
+                </div>
+            ))}
+        </div>
     );
 };
 
+// Custom Label inside the bar
+const CustomizedLabel = (props: any) => {
+    const { x, y, width, height, value } = props;
+    if (height < 20) return null; // Don't render label if bar is too small
+    return (
+        <text x={x + width / 2} y={y + height / 2} fill="#fff" textAnchor="middle" dy=".3em" className="font-semibold text-sm">
+            {`${value}%`}
+        </text>
+    );
+};
+
+
 export function AiSatisfactionChart() {
+  const chartData = data.map(item => ({
+    name: item.name,
+    csat: item.score,
+    remaining: 100 - item.score
+  }));
+
   return (
     <Card className="my-8">
       <CardHeader className="items-center">
@@ -37,43 +54,25 @@ export function AiSatisfactionChart() {
         <CardDescription>(Cơ sở: Khách hàng hiện tại của từng nền tảng)</CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={250}>
+        {renderLegend()}
+        <ResponsiveContainer width="100%" height={300}>
           <BarChart 
-            data={data}
-            margin={{
-              top: 20,
-              right: 20,
-              left: 20,
-              bottom: 20,
-            }}
-            barCategoryGap="40%"
+            data={chartData}
+            layout="vertical"
+            margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
+            barCategoryGap="55%"
           >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
-            <XAxis 
-              dataKey="name" 
-              tickLine={false} 
-              axisLine={false}
-              tick={<CustomXAxisTick />}
-              interval={0}
-              tickMargin={10}
-            />
-            <YAxis hide={true} domain={[0, 100]} />
-            <Tooltip
-                cursor={{ fill: 'hsl(var(--accent))' }}
-                contentStyle={{ display: 'none' }}
-            />
-            <Bar dataKey="score" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]}>
-                 <LabelList 
-                    dataKey="score" 
-                    position="top" 
-                    offset={8}
-                    className="fill-foreground font-semibold"
-                    formatter={(value: number) => `${value}%`}
-                 />
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} vertical={false} />
+            <XAxis type="number" hide domain={[0, 100]} />
+            <YAxis type="category" dataKey="name" hide />
+            <Tooltip cursor={{fill: 'transparent'}} />
+            <Bar dataKey="csat" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
+                <LabelList dataKey="csat" content={<CustomizedLabel />} />
             </Bar>
+            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
-         <div className="flex justify-center items-center gap-4 mt-4 text-sm text-muted-foreground">
+        <div className="flex justify-center items-center gap-4 mt-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(var(--primary))' }} />
                 <span>Điểm CSAT*</span>
