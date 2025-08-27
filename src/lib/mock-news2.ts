@@ -17,7 +17,7 @@ export const mockNews2: NewsArticle[] = [
   <p>Nhưng theo báo cáo của Decision Lab thật bất ngờ khi người dùng lại dùng AI để tra cứu thuốc và sức khỏe cho thấy sự tin tưởng của người Việt vào các công cụ AI cho các vấn đề cần sự chính xác cao.</p>[ACTIVITIES_CHART]
   <h2><strong>Cơ hội cho các nhà phát triển AI tại Việt Nam</strong></h2>
   <p>Báo cáo của Decision Lab cho thấy thị trường AI tiêu dùng Việt Nam vẫn còn nhiều tiềm năng cho các nhà phát triển trong nước. Bằng chứng là hai nền tảng nội là Kiki và AI Hay, đã lọt vào top 10 công cụ AI được sử dụng nhiều nhất, cạnh tranh trực tiếp với các ông lớn quốc tế.</p>
-  <p><strong>AI Hay:</strong> Nền tảng hỏi đáp AI thuần Việt này đã rất nổi tiếng, có lẽ đây là mạng xã hội hỏi đáp AI thuần Việt lớn nhất tại Việt Nam, thu hút hơn 15 triệu lượt tải từ khi ra mắt vào năm 2023. Thậm chí trong báo cáo về sự hài lòng người dùng thì AI Hay cũng đạt 47%, bám sát ChatGPT và vượt qua nhiều ông lớn như Gemini, Meta, Copilot...</p>[SATISFACTION_CHART]
+  <p><strong>AI Hay:</strong> Nền tảng hỏi đáp AI thuần Việt này đã rất nổi tiếng, có lẽ đây là mạng xã hội hỏi đáp AI thuần Việt lớn nhất tại Việt Nam, thu hút hơn 15 triệu lượt tải từ khi ra mắt vào năm 2023. Thậm chí trong báo cáo về sự hài lòng người dùng thì AI Hay cũng đạt 47%, bám sát ChatGPT (51%) và vượt qua nhiều ông lớn như Gemini (36%), Meta (27%), Copilot(26%)...</p>[SATISFACTION_CHART]
   <p><strong>Kiki:</strong> Được phát triển bởi 100% kỹ sư người Việt và đứng sau nó là gã khổng lồ VNG, Kiki đã được tích hợp sâu với Zalo với Kiki Info, giúp tiếp cận gần 80 triệu người dùng của Zalo một cách thuận lợi. Nền tảng này cũng đã ra mắt Kiki Auto, trợ lý lái xe thuần Việt đầu tiên đạt 1 triệu lượt cài đặt, cung cấp các tính năng thông minh như chỉ đường, nghe nhạc, cảnh báo giao thông và báo cáo phạt nguội chỉ bằng giọng.</p>
   <h2><strong>Yếu tố quyết định lựa chọn AI của người Việt</strong></h2>
   <p>Báo cáo của Decision Lab cũng chỉ ra ba yếu tố chính mà người dùng Việt Nam ưu tiên khi lựa chọn một nền tảng AI:</p>
@@ -98,6 +98,7 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
 
 
 
