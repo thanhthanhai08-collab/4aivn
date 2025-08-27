@@ -2,7 +2,7 @@
 "use client"
 
 import Image from "next/image"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend, Cell, Layer } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
@@ -28,25 +28,7 @@ const renderLegend = () => {
     );
 };
 
-// Custom Label inside the bar
-const CustomizedLabel = (props: any) => {
-    const { x, y, width, height, value } = props;
-    if (height < 20) return null; // Don't render label if bar is too small
-    return (
-        <text x={x + width / 2} y={y + height / 2} fill="#fff" textAnchor="middle" dy=".3em" className="font-semibold text-sm">
-            {`${value}%`}
-        </text>
-    );
-};
-
-
 export function AiSatisfactionChart() {
-  const chartData = data.map(item => ({
-    name: item.name,
-    csat: item.score,
-    remaining: 100 - item.score
-  }));
-
   return (
     <Card className="my-8">
       <CardHeader className="items-center">
@@ -56,29 +38,20 @@ export function AiSatisfactionChart() {
       <CardContent>
         {renderLegend()}
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart 
-            data={chartData}
+          <BarChart
+            data={data}
             layout="vertical"
             margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
+            barSize={16} // Make bars thicker
             barCategoryGap="55%"
           >
             <CartesianGrid strokeDasharray="3 3" horizontal={false} vertical={false} />
             <XAxis type="number" hide domain={[0, 100]} />
             <YAxis type="category" dataKey="name" hide />
-            <Tooltip cursor={{fill: 'transparent'}} />
-            <Bar dataKey="csat" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
-                <LabelList dataKey="csat" content={<CustomizedLabel />} />
-            </Bar>
-            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
+            <Tooltip cursor={{fill: 'transparent'}} content={() => null} />
+            <Bar dataKey="score" fill="hsl(var(--primary))" radius={[4, 4, 4, 4]} />
           </BarChart>
         </ResponsiveContainer>
-        <div className="flex justify-center items-center gap-4 mt-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(var(--primary))' }} />
-                <span>Điểm CSAT*</span>
-            </div>
-        </div>
-        <p className="text-center text-xs text-muted-foreground mt-2">*Điểm hài lòng của khách hàng</p>
       </CardContent>
     </Card>
   )
