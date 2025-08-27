@@ -24,7 +24,7 @@ export const mockNews2: NewsArticle[] = [
   },
   {
     id: 'nvidia-gb200-profit',
-    title: 'Siêu lợi nhuận: Máy chủ AI Nvidia GB200 NVL72 tạo ra lợi nhuận 77.6%',
+    title: 'Siêu lợi nhuận cho Nvidia với máy chủ AI Nvidia GB200 NVL72 lên tới 77.6%',
     source: 'Digitimes',
     author: 'Admin',
     content: '<p>Các máy chủ trang bị siêu chip AI Nvidia GB200 NVL72 đang mang lại tỷ suất lợi nhuận gộp lên tới 77.6% cho các nhà sản xuất, cho thấy nhu cầu khổng lồ và vị thế độc tôn của Nvidia trong thị trường AI.</p>',
