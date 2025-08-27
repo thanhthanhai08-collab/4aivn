@@ -29,6 +29,7 @@ import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service"
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { AiSatisfactionChart } from "@/components/news/AiSatisfactionChart";
+import { ProfitabilityChart } from "@/components/news/ProfitabilityChart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -46,7 +47,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -74,6 +75,12 @@ const renderContent = (content: string, articleId: string) => {
         return null;
     }
 
+    if (part === '[PROFITABILITY_CHART]') {
+        if (articleId === 'nvidia-gb200-profit') {
+            return <ProfitabilityChart key={`${index}-profit-chart`} />;
+        }
+        return null;
+    }
 
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
     if (imageMatch) {

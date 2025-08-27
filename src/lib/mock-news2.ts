@@ -33,7 +33,7 @@ export const mockNews2: NewsArticle[] = [
   <br>
   <h2><strong>Hiệu quả kinh tế của các hệ thống AI</strong></h2>
   <p>Theo tính toán của Morgan Stanley, các hệ thống NVIDIA GB200 NVL72 hiện đang dẫn đầu về khả năng tạo ra doanh thu và lợi nhuận, theo sau là Google TPU v6e.</p>
-  <p>Cụ thể, một trung tâm dữ liệu AI với công suất 100MW có thể đạt tỷ suất lợi nhuận 77,6% với các máy chủ NVIDIA GB200 NVL72, trong khi Google TPU v6e đứng thứ hai với tỷ suất lợi nhuận 74,9%. Điều này mang lại lợi nhuận khổng lồ và khẳng định vị thế dẫn đầu của Nvidia và Google.</p>
+  <p>Cụ thể, một trung tâm dữ liệu AI với công suất 100MW có thể đạt tỷ suất lợi nhuận 77,6% với các máy chủ NVIDIA GB200 NVL72, trong khi Google TPU v6e đứng thứ hai với tỷ suất lợi nhuận 74,9%. Điều này mang lại lợi nhuận khổng lồ và khẳng định vị thế dẫn đầu của Nvidia và Google.</p>[PROFITABILITY_CHART]
   <p>Tuy nhiên, giá thuê các pod (cụm máy chủ AI) Google TPU v6e không được công bố, nhưng trung bình, chi phí thuê một pod thấp hơn khoảng 40-50% so với máy chủ NVL72.</p>
   <p>Điều đáng chú ý là theo tính toán của Morgan Stanley, các trung tâm dữ liệu AI sử dụng nền tảng AMD MI300 và MI355 có tỷ suất lợi nhuận âm, lần lượt là -28,2% và -64%. Điều đó cho thấy AMD đang hoàn toàn tụt lại trong cuộc đua máy chủ AI.</p>
   <br>
