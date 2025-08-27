@@ -56,8 +56,8 @@ export function ProfitabilityChart() {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" angle={-15} textAnchor="end" height={50} interval={0} fontSize={12} />
-            <YAxis yAxisId="left" unit="M" label={{ value: '(Million USD)', angle: -90, position: 'insideLeft' }} />
-            <YAxis yAxisId="right" orientation="right" unit="%" label={{ value: 'Profit Margin (%)', angle: -90, position: 'insideRight' }} />
+            <YAxis yAxisId="left" unit="M" label={{ value: '(Million USD)', position: 'top', dy: -20, dx: 40 }} />
+            <YAxis yAxisId="right" orientation="right" unit="%" label={{ value: 'Profit Margin (%)', position: 'top', dy: -20, dx: -40 }} />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar yAxisId="left" dataKey="tco" name="TCO" stackId="a" fill="hsl(var(--chart-1))" />
