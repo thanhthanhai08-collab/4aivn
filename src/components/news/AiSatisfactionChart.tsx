@@ -14,16 +14,23 @@ const data = [
   { name: 'Deepseek', score: 26, remaining: 74, logo: '/image/Logo Deepseek cho bảng xếp hạng.png' }
 ];
 
-const CustomLegend = () => (
-    <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 mb-6">
-        {data.map((entry) => (
-            <div key={entry.name} className="flex items-center gap-2 text-sm font-medium text-foreground">
-                <Image src={entry.logo} alt={`${entry.name} logo`} width={18} height={18} className="rounded-full" />
-                <span>{entry.name}</span>
-            </div>
-        ))}
-    </div>
-);
+const CustomizedAxisTick = (props: any) => {
+    const { x, y, payload } = props;
+    const item = data.find(d => d.name === payload.value);
+
+    if (!item) return null;
+
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <foreignObject x={-40} y={10} width={80} height={40}>
+                <div className="flex flex-col items-center justify-center gap-1.5 text-center">
+                    <Image src={item.logo} alt={`${item.name} logo`} width={18} height={18} className="rounded-full" />
+                    <div className="text-xs font-medium text-foreground">{item.name}</div>
+                </div>
+            </foreignObject>
+        </g>
+    );
+};
 
 const CustomLabel = (props: any) => {
     const { x, y, width, height, value } = props;
@@ -45,15 +52,14 @@ export function AiSatisfactionChart() {
         <CardDescription>(Cơ sở: Khách hàng hiện tại của từng nền tảng)</CardDescription>
       </CardHeader>
       <CardContent>
-        <CustomLegend />
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={data}
-            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
             barSize={60}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={false} />
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={<CustomizedAxisTick />} height={50}/>
             <YAxis hide domain={[0, 100]} />
             <Tooltip cursor={false} content={() => null} />
             <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
