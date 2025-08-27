@@ -84,6 +84,16 @@ const data = {
     { name: "AIME 2025", score: 76 },
     { name: "AA-LCR", score: 56 },
   ],
+  'deepseek-v3.1-reasoning': [
+    { name: "MMLU-Pro", score: 85 },
+    { name: "GPQA Diamond", score: 78 },
+    { name: "Humanity's Exam", score: 13 },
+    { name: "LiveCodeBench", score: 78 },
+    { name: "SciCode", score: 39 },
+    { name: "IFBench", score: 42 },
+    { name: "AIME 2025", score: 90 },
+    { name: "AA-LCR", score: 53 },
+  ],
   'gemini-2.5-flash-reasoning': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 79 },

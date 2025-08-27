@@ -19,6 +19,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'openai-o3', score: 88.0 },
     { modelId: 'gemini-2.5-pro', score: 88.0 },
     { modelId: 'deepseek-r1-jan25', score: 76.0 },
+    { modelId: 'deepseek-v3.1-reasoning', score: 90.0 },
     { modelId: 'qwen3-235b-reasoning', score: 91.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 73.0 },
     { modelId: 'gpt-5-mini', score: 85.0 },
@@ -41,6 +42,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'openai-o3', score: 78.0 },
     { modelId: 'gemini-2.5-pro', score: 80.0 },
     { modelId: 'deepseek-r1-jan25', score: 77.0 },
+    { modelId: 'deepseek-v3.1-reasoning', score: 78.0 },
     { modelId: 'qwen3-235b-reasoning', score: 79.0 },
     { modelId: 'gpt-5-high', score: 67.0 },
     { modelId: 'gpt-5-medium', score: 70.0 },
@@ -66,6 +68,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gemini-2.5-pro', score: 86.0 },
     { modelId: 'openai-o3', score: 85.0 },
     { modelId: 'deepseek-r1-jan25', score: 85.0 },
+    { modelId: 'deepseek-v3.1-reasoning', score: 85.0 },
     { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
     { modelId: 'qwen3-235b-reasoning', score: 84.0 },
     { modelId: 'openai-o4-mini-high', score: 83.0 },
@@ -96,6 +99,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'gemini-2.5-pro', score: 49.0 },
       { modelId: 'gpt-5-mini', score: 71.0 },
       { modelId: 'deepseek-r1-jan25', score: 40.0 },
+      { modelId: 'deepseek-v3.1-reasoning', score: 42.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 50.0 },
       { modelId: 'gpt-5-low', score: 67.0 },
       { modelId: 'gpt-5-nano', score: 66.0 },
@@ -115,6 +119,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'openai-o3-pro', score: 84.0 },
       { modelId: 'openai-o3', score: 83.0 },
       { modelId: 'deepseek-r1-jan25', score: 81.0 },
+      { modelId: 'deepseek-v3.1-reasoning', score: 78.0 },
       { modelId: 'claude-4-opus-thinking', score: 80.0 },
       { modelId: 'gemini-2.5-flash-reasoning', score: 79.0 },
       { modelId: 'openai-o4-mini-high', score: 78.0 },
@@ -224,3 +229,4 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
     
+
