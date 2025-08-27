@@ -22,12 +22,9 @@ const CustomizedAxisTick = (props: any) => {
 
     return (
         <g transform={`translate(${x},${y})`}>
-            <foreignObject x={-40} y={10} width={80} height={40}>
-                <div className="flex flex-col items-center justify-center gap-1.5 text-center">
-                    <Image src={item.logo} alt={`${item.name} logo`} width={18} height={18} className="rounded-full" />
-                    <div className="text-xs font-medium text-foreground">{item.name}</div>
-                </div>
-            </foreignObject>
+            <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" className="text-sm font-medium">
+                {item.name}
+            </text>
         </g>
     );
 };
@@ -55,17 +52,17 @@ export function AiSatisfactionChart() {
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={data}
-            margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
+            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
             barSize={60}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={<CustomizedAxisTick />} height={50}/>
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={<CustomizedAxisTick />} height={30}/>
             <YAxis hide domain={[0, 100]} />
             <Tooltip cursor={false} content={() => null} />
             <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="score" content={<CustomLabel />} />
             </Bar>
-            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--border))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
         <div className="flex justify-center items-center gap-2 text-sm text-muted-foreground mt-4">
