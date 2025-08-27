@@ -28,6 +28,7 @@ import { AiActivitiesChart } from "@/components/news/AiActivitiesChart";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { AiSatisfactionChart } from "@/components/news/AiSatisfactionChart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -45,7 +46,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -65,6 +66,14 @@ const renderContent = (content: string, articleId: string) => {
         }
         return null;
     }
+    
+    if (part === '[SATISFACTION_CHART]') {
+        if (articleId === 'ai-viet-2025-bao-cao') {
+            return <AiSatisfactionChart key={`${index}-satisfaction-chart`} />;
+        }
+        return null;
+    }
+
 
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
     if (imageMatch) {
