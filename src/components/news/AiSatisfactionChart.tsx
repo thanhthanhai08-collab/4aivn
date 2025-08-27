@@ -14,17 +14,6 @@ const data = [
   { name: 'Deepseek', score: 26, logo: '/image/Logo Deepseek cho bảng xếp hạng.png' }
 ];
 
-const CustomLegend = () => {
-    return (
-        <div className="flex justify-center items-center gap-4 mt-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-primary" />
-                <span>Điểm CSAT*</span>
-            </div>
-        </div>
-    );
-};
-
 
 const CustomXAxisTick = (props: any) => {
     const { x, y, payload } = props;
@@ -32,14 +21,12 @@ const CustomXAxisTick = (props: any) => {
 
     if (!item) return null;
 
+    // Render only the text name for the label
     return (
         <g transform={`translate(${x},${y})`}>
-            <foreignObject x={-40} y={10} width={80} height={50}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-                    <Image src={item.logo} alt={item.name} width={24} height={24} className="object-contain"/>
-                    <div className="text-xs font-medium text-center">{item.name}</div>
-                </div>
-            </foreignObject>
+            <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" fontSize={12} fontWeight={500}>
+                {item.name}
+            </text>
         </g>
     );
 };
@@ -56,10 +43,10 @@ export function AiSatisfactionChart() {
           <BarChart 
             data={data}
             margin={{
-              top: 5,
+              top: 20, // Add margin top for labels
               right: 20,
               left: 20,
-              bottom: 60, // Increased bottom margin for custom ticks
+              bottom: 20,
             }}
             barGap={20}
           >
@@ -70,6 +57,7 @@ export function AiSatisfactionChart() {
               axisLine={false}
               tick={<CustomXAxisTick />}
               interval={0}
+              tickMargin={10}
             />
             <YAxis hide={true} domain={[0, 100]} />
             <Tooltip
