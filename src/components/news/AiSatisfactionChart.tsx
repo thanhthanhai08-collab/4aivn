@@ -58,7 +58,7 @@ export function AiSatisfactionChart() {
             <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="score" content={<CustomLabel />} />
             </Bar>
-            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--border))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
          <div className="flex justify-center mt-4">
