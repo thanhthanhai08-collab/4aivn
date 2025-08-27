@@ -1,9 +1,8 @@
 // src/components/news/AiSatisfactionChart.tsx
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Legend, Cell, Layer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Image from "next/image"
 
 const data = [
   { name: 'ChatGPT', score: 51, logo: '/image/Logo Open AI cho bảng xếp hạng.png' },
@@ -21,7 +20,6 @@ const CustomXAxisTick = (props: any) => {
 
     if (!item) return null;
 
-    // Render only the text name for the label
     return (
         <g transform={`translate(${x},${y})`}>
             <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" fontSize={12} fontWeight={500}>
@@ -43,12 +41,13 @@ export function AiSatisfactionChart() {
           <BarChart 
             data={data}
             margin={{
-              top: 20, // Add margin top for labels
+              top: 30, // Increase top margin for the top label
               right: 20,
               left: 20,
               bottom: 20,
             }}
             barGap={20}
+            stackOffset="expand" // This helps in creating the 100% stacked bar effect
           >
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis 
@@ -64,7 +63,11 @@ export function AiSatisfactionChart() {
                 cursor={{ fill: 'transparent' }}
                 contentStyle={{ display: 'none' }}
             />
-            <Bar dataKey="score" radius={[4, 4, 0, 0]}>
+            {/* Background bar for the "not satisfied" part */}
+            <Bar dataKey={(payload) => 100 - payload.score} stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
+            
+            {/* Foreground bar for the "satisfied" part */}
+            <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                  <LabelList 
                     dataKey="score" 
                     position="insideTop" 
@@ -72,12 +75,12 @@ export function AiSatisfactionChart() {
                     className="fill-primary-foreground font-semibold"
                     formatter={(value: number) => `${value}%`}
                  />
-                 <LabelList 
-                    dataKey="score" 
+                 <LabelList
+                    dataKey={(payload) => 100 - payload.score}
                     position="top"
-                    offset={10}
+                    offset={-20} // Adjust offset to be above the bar
                     className="fill-muted-foreground font-semibold"
-                    formatter={(value: number) => `${100 - value}%`}
+                    formatter={(value: number) => `${value}%`}
                  />
             </Bar>
           </BarChart>
@@ -92,6 +95,7 @@ export function AiSatisfactionChart() {
                 <span>Chưa hài lòng</span>
             </div>
         </div>
+        <p className="text-center text-xs text-muted-foreground mt-2">*Điểm hài lòng của khách hàng</p>
       </CardContent>
     </Card>
   )
