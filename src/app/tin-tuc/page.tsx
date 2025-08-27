@@ -8,9 +8,8 @@ import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { NewsCard } from "@/components/news/news-card";
-import { Button } from "@/components/ui/button";
 import { NewsListItem } from "@/components/news/news-list-item";
+import { Button } from "@/components/ui/button";
 
 const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
@@ -137,7 +136,7 @@ export default function NewsPage() {
                 
                 {/* Remaining articles list */}
                 <div className="space-y-8 pt-8 border-t">
-                    {remainingArticles.slice(0, 6).map((article) => (
+                    {remainingArticles.map((article) => (
                         <NewsListItem key={article.id} article={article} />
                     ))}
                 </div>
@@ -147,9 +146,6 @@ export default function NewsPage() {
                 <div className="p-6 rounded-lg bg-card border sticky top-24">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-xl font-bold font-headline">Xem nhanh</h3>
-                        <Button variant="link" asChild className="p-0 h-auto">
-                            <Link href="#">Xem tất cả</Link>
-                        </Button>
                     </div>
                     <div className="space-y-5">
                         {quickViewArticles.map((article) => (
