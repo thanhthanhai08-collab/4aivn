@@ -17,7 +17,7 @@ const CustomizedAxisTick = (props: any) => {
     const { x, y, payload } = props;
     return (
         <g transform={`translate(${x},${y})`}>
-            <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" className="text-sm font-medium">
+            <text x={0} y={0} dy={16} textAnchor="middle" fill="hsl(var(--foreground))" className="text-xs font-medium">
                 {payload.value}
             </text>
         </g>
