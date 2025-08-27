@@ -27,14 +27,19 @@ const data = [
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
+    const dataPoint = payload[0].payload;
     return (
       <div className="bg-background border border-border p-3 rounded-lg shadow-lg">
         <p className="font-bold text-base mb-2">{label}</p>
-        {payload.map((pld: any, index: number) => (
-          <p key={index} style={{ color: pld.color }}>
-            {`${pld.name}: ${pld.name === 'Profit Margin' ? `${pld.value}%` : `${pld.value.toLocaleString()}M USD`}`}
-          </p>
-        ))}
+        <p style={{ color: 'hsl(var(--chart-1))' }}>
+          TCO: {dataPoint.tco.toLocaleString()}M USD
+        </p>
+        <p style={{ color: 'hsl(var(--chart-2))' }}>
+          Profit: {dataPoint.profit.toLocaleString()}M USD
+        </p>
+        <p style={{ color: 'hsl(var(--chart-4))' }}>
+          Profit Margin: {dataPoint.profitMargin.toFixed(1)}%
+        </p>
       </div>
     );
   }
@@ -56,8 +61,8 @@ export function ProfitabilityChart() {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" angle={-15} textAnchor="end" height={50} interval={0} fontSize={12} />
-            <YAxis yAxisId="left" unit="M" label={{ value: '(Million USD)', position: 'top', dy: -20, dx: 40 }} />
-            <YAxis yAxisId="right" orientation="right" unit="%" label={{ value: 'Profit Margin (%)', position: 'top', dy: -20, dx: -40 }} />
+            <YAxis yAxisId="left" unit="M" label={{ value: '(Million USD)', position: 'insideTopLeft', dy: -20, dx: 0 }} />
+            <YAxis yAxisId="right" orientation="right" unit="%" label={{ value: 'Profit Margin (%)', position: 'insideTopRight', dy: -20, dx: 0 }} />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar yAxisId="left" dataKey="tco" name="TCO (chi phí tổng thể)" stackId="a" fill="hsl(var(--chart-1))" />
