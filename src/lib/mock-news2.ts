@@ -9,7 +9,7 @@ export const mockNews2: NewsArticle[] = [
     author: 'Anh Tú',
     content: '<p>Apple đang đẩy mạnh chiến lược AI của mình bằng cách thảo luận với các startup hàng đầu như Mistral AI và Perplexity. Các cuộc đàm phán này cho thấy tham vọng của Apple trong việc tích hợp các công nghệ AI tiên tiến vào hệ sinh thái sản phẩm của mình, từ iPhone đến các dịch vụ đám mây, nhằm cạnh tranh trực tiếp với các đối thủ như Google và Microsoft.</p>',
     publishedAt: '2025-09-09T09:00:00Z',
-    imageUrl: '/image/news2/apple_mistral_perplexity.jpg',
+    imageUrl: '/image/news2/Apple làm việc với Mistra và Perplexity.png',
     dataAiHint: 'Apple iPhone AI',
   },
   {
@@ -178,6 +178,7 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
 
 
 
