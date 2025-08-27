@@ -14,7 +14,7 @@ export const mockNews2: NewsArticle[] = [
   <p>Thậm chí, không chỉ người dùng mà chính phủ cũng tham gia vào cuộc đua AI với những chính sách nhằm thúc đẩy chuyển đổi số quốc gia như Nghị quyết 57-NQ/TW, Chiến lược quốc gia về AI theo Quyết định 127/QĐ-TTg, hay phong trào “Bình dân học vụ số”.</p>
   <h2><strong>Người Việt dùng AI để làm gì?</strong></h2>
   <p>Tất nhiên nhu cầu tâm sự và trò chuyện là chuyện rất bình thường đối với người Việt chúng ta, nhưng bây giờ chúng ta lại chuyển vai trò đó sang AI với 40% tỉ lệ áp dụng AI. Còn các hoạt động cập nhật thông tin, học kĩ năng kiến thức mới và luyện tập giao tiếp là những thứ cơ bản mà khi người dùng AI hướng tới.</p>
-  <p>Nhưng theo báo cáo của Decision Lab thật bất ngờ khi người dùng lại dùng AI để tra cứu thuốc và sức khỏe cho thấy sự tin tưởng của người Việt vào các công cụ AI cho các vấn đề cần sự chính xác cao.</p>
+  <p>Nhưng theo báo cáo của Decision Lab thật bất ngờ khi người dùng lại dùng AI để tra cứu thuốc và sức khỏe cho thấy sự tin tưởng của người Việt vào các công cụ AI cho các vấn đề cần sự chính xác cao.</p>[ACTIVITIES_CHART]
   <h2><strong>Cơ hội cho các nhà phát triển AI tại Việt Nam</strong></h2>
   <p>Báo cáo của Decision Lab cho thấy thị trường AI tiêu dùng Việt Nam vẫn còn nhiều tiềm năng cho các nhà phát triển trong nước. Bằng chứng là hai nền tảng nội là Kiki và AI Hay, đã lọt vào top 10 công cụ AI được sử dụng nhiều nhất, cạnh tranh trực tiếp với các ông lớn quốc tế.</p>
   <p><strong>AI Hay:</strong> Nền tảng hỏi đáp AI thuần Việt này đã rất nổi tiếng, có lẽ đây là mạng xã hội hỏi đáp AI thuần Việt lớn nhất tại Việt Nam, thu hút hơn 15 triệu lượt tải từ khi ra mắt vào năm 2023. Thậm chí trong báo cáo về sự hài lòng người dùng thì AI Hay cũng đạt 47%, bám sát ChatGPT và vượt qua nhiều ông lớn như Gemini, Meta, Copilot...</p>
@@ -82,6 +82,7 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
 
 
 

@@ -24,6 +24,7 @@ import { CommentList } from "@/components/news/comment-list";
 import { Separator } from "@/components/ui/separator";
 import { GptOssBenchmarkChart } from "@/components/news/gpt-oss-benchmark-chart";
 import { AiVietUsageChart } from "@/components/news/ai-viet-usage-chart";
+import { AiActivitiesChart } from "@/components/news/AiActivitiesChart";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -56,6 +57,13 @@ const renderContent = (content: string, articleId: string) => {
         return <AiVietUsageChart key={`${index}-chart`} />;
       }
       return null;
+    }
+    
+    if (part === '[ACTIVITIES_CHART]') {
+        if (articleId === 'ai-viet-2025-bao-cao') {
+            return <AiActivitiesChart key={`${index}-activities-chart`} />;
+        }
+        return null;
     }
 
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
