@@ -60,12 +60,12 @@ export function ProfitabilityChart() {
             <YAxis yAxisId="right" orientation="right" unit="%" label={{ value: 'Profit Margin (%)', position: 'top', dy: -20, dx: -40 }} />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar yAxisId="left" dataKey="tco" name="TCO" stackId="a" fill="hsl(var(--chart-1))" />
-            <Bar yAxisId="left" dataKey="profit" name="Profit" stackId="a" fill="hsl(var(--chart-2))" />
-            <Line yAxisId="right" type="monotone" dataKey="profitMargin" name="Profit Margin" stroke="hsl(var(--chart-4))" strokeWidth={2} dot={{ r: 4 }} />
+            <Bar yAxisId="left" dataKey="tco" name="TCO (chi phí tổng thể)" stackId="a" fill="hsl(var(--chart-1))" />
+            <Bar yAxisId="left" dataKey="profit" name="Profit (lợi nhuận)" stackId="a" fill="hsl(var(--chart-2))" />
+            <Line yAxisId="right" type="monotone" dataKey="profitMargin" name="Profit Margin (tỉ suất lợi nhuận)" stroke="hsl(var(--chart-4))" strokeWidth={2} dot={{ r: 4 }} />
           </ComposedChart>
         </ResponsiveContainer>
-        <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Dữ liệu công ty, Nghiên cứu của Morgan Stanley</p>
+        <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Nghiên cứu của Morgan Stanley</p>
       </CardContent>
     </Card>
   )
