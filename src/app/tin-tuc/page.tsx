@@ -98,22 +98,21 @@ export default function NewsPage() {
             <div className="lg:col-span-2 space-y-8">
                 {featuredArticle && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="group relative rounded-lg overflow-hidden shadow-lg">
-                           <Link href={`/tin-tuc/${featuredArticle.id}`}>
+                        <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col">
+                           <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[4/3] relative">
                                 <Image
                                     src={featuredArticle.imageUrl}
                                     alt={featuredArticle.title}
-                                    width={550}
-                                    height={360}
+                                    fill
                                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                     priority
                                 />
                            </Link>
-                           <div className="absolute bottom-0 left-0 p-4 bg-gradient-to-t from-black/70 to-transparent w-full">
-                                <h2 className="text-2xl font-bold font-headline text-white leading-tight">
+                           <div className="p-4 bg-card flex-grow flex flex-col">
+                                <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
                                      <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:underline">{featuredArticle.title}</Link>
                                 </h2>
-                                <p className="text-sm text-white/80 mt-1">Bởi {featuredArticle.author}</p>
+                                <p className="text-sm text-muted-foreground mt-2">Bởi {featuredArticle.author}</p>
                            </div>
                         </div>
                         
