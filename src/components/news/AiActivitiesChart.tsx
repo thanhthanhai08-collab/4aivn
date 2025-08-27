@@ -27,18 +27,17 @@ const legendData = [
 
 const CustomLabel = ({ viewBox, value, name }: any) => {
     const { cx, cy } = viewBox;
-    const lines = name.split('\n');
-    const lineHeight = 16;
-    const totalHeight = lines.length * lineHeight;
-    const startY = cy - totalHeight / 2 + lineHeight / 2;
+    const lines = name.replace(/\//g, '/\n').replace(/ và /g, ' và\n').replace(/ với /g, ' với\n').split('\n');
+    const lineHeight = 14; 
+    const startY = cy - (lines.length - 1) * lineHeight / 2;
 
     return (
         <g>
-            <text x={cx} y={cy - totalHeight / 2 - 5} textAnchor="middle" dominantBaseline="central" className="fill-foreground font-bold text-2xl">
+            <text x={cx} y={cy - 12} textAnchor="middle" dominantBaseline="central" className="fill-foreground font-bold text-xl" style={{fill: 'currentColor'}}>
                 {`${value}%`}
             </text>
             {lines.map((line:string, index:number) => (
-                <text key={index} x={cx} y={startY + index * lineHeight + 5} textAnchor="middle" dominantBaseline="central" className="fill-muted-foreground text-xs">
+                <text key={index} x={cx} y={startY + index * lineHeight + 12} textAnchor="middle" dominantBaseline="central" className="fill-muted-foreground text-xs" style={{fill: 'hsl(var(--muted-foreground))'}}>
                     {line}
                 </text>
             ))}
@@ -55,31 +54,34 @@ export function AiActivitiesChart() {
       <CardContent>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {data.map((entry, index) => (
-                <div key={index} className="flex flex-col items-center">
-                    <ResponsiveContainer width="100%" height={150}>
-                        <PieChart>
-                            <Pie
-                                data={[{value: entry.value}, {value: 100 - entry.value}]}
-                                dataKey="value"
-                                nameKey="name"
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={50}
-                                outerRadius={60}
-                                startAngle={90}
-                                endAngle={450}
-                                paddingAngle={0}
-                                stroke="none"
-                            >
-                                <Cell fill={entry.color} />
-                                <Cell fill="hsl(var(--muted))" />
-                                <Label 
-                                  content={<CustomLabel value={entry.value} name={entry.name.replace(/\//g, '/\n').replace(/ và /g, ' và\n').replace(/ với /g, ' với\n')} />} 
-                                  position="center" 
-                                />
-                            </Pie>
-                        </PieChart>
-                    </ResponsiveContainer>
+                <div key={index} className="flex flex-col items-center text-center">
+                    <div style={{ width: '100%', height: 150 }}>
+                        <ResponsiveContainer>
+                            <PieChart>
+                                <Pie
+                                    data={[{value: entry.value}, {value: 100 - entry.value}]}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius="75%"
+                                    outerRadius="90%"
+                                    startAngle={90}
+                                    endAngle={450}
+                                    paddingAngle={0}
+                                    stroke="none"
+                                >
+                                    <Cell fill={entry.color} />
+                                    <Cell fill="hsl(var(--muted))" />
+                                    <Label 
+                                      content={<CustomLabel value={entry.value} name={entry.name} />} 
+                                      position="center"
+                                      style={{ fill: entry.color, fontSize: '16px' }}
+                                    />
+                                </Pie>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             ))}
         </div>
