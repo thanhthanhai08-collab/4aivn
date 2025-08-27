@@ -76,6 +76,7 @@ export function AiVietUsageChart() {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Decision Lab</p>
       </CardContent>
     </Card>
   )

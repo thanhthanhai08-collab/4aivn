@@ -93,6 +93,7 @@ export function AiActivitiesChart() {
                 </div>
             ))}
         </div>
+        <p className="text-xs text-muted-foreground mt-4 text-center">Nguồn: Decision Lab</p>
       </CardContent>
     </Card>
   )
