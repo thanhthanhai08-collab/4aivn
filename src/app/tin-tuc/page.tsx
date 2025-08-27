@@ -10,6 +10,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsCard } from "@/components/news/news-card";
 import { Button } from "@/components/ui/button";
+import { NewsListItem } from "@/components/news/news-list-item";
 
 const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
@@ -64,7 +65,7 @@ export default function NewsPage() {
   const featuredArticle = allMockNews.find(a => a.id === 'apple-mistral-perplexity-talks');
   const secondaryArticle = allMockNews.find(a => a.id === 'hackers-circle-to-search-exploit');
   const quickViewArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id].includes(a.id)).slice(0, 6);
-  const remainingArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id, ...quickViewArticles.map(qv => qv.id)].includes(a.id));
+  const remainingArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id].includes(a.id));
 
 
   return (
@@ -134,10 +135,10 @@ export default function NewsPage() {
                     </div>
                 )}
                 
-                {/* Remaining articles grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8 border-t">
-                    {remainingArticles.slice(0,6).map((article) => (
-                        <NewsCard key={article.id} article={article} />
+                {/* Remaining articles list */}
+                <div className="space-y-8 pt-8 border-t">
+                    {remainingArticles.slice(0, 6).map((article) => (
+                        <NewsListItem key={article.id} article={article} />
                     ))}
                 </div>
             </div>
