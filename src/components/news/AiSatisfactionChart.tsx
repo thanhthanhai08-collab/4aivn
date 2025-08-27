@@ -49,7 +49,8 @@ export function AiSatisfactionChart() {
           <BarChart
             data={data}
             margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
-            barSize={80}
+            barGap={20} // Add gap between bars
+            barSize={60} // Reduce bar size
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={<CustomizedAxisTick />} height={30}/>
@@ -58,7 +59,7 @@ export function AiSatisfactionChart() {
             <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="score" content={<CustomLabel />} />
             </Bar>
-            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--border))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
          <div className="flex justify-center mt-4">
