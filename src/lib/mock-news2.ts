@@ -10,7 +10,7 @@ export const mockNews2: NewsArticle[] = [
     content: `<p>Báo cáo mới nhất từ Decision Lab đã vẽ nên một bức tranh sống động và đầy tiềm năng về thị trường trí tuệ nhân tạo (AI) tại Việt Nam. Theo dữ liệu được công bố tháng 7/2025, gần 80% người dùng trực tuyến tại Việt Nam đã sử dụng AI trong vòng 3 tháng qua, cho thấy tốc độ thích nghi nhanh chóng với AI của người Việt. </p>
   <h2><strong>Mức độ thâm nhập và bức tranh thị trường AI tại Việt Nam</strong></h2>
   <p>Thị trường AI tiêu dùng Việt Nam đang chứng kiến mức độ thâm nhập rất cao. Khảo sát trực tuyến của Decision Lab, thực hiện từ ngày 20-28/07 với 600 người tham gia, cho thấy gần 80% người dùng trực tuyến đã tiếp cận các công cụ AI trong 3 tháng gần nhất, và 33% trong số đó đã tích hợp AI vào các hoạt động thường nhật và 55% trong số đó trả phí dịch vụ. Điều này cho thấy AI không chỉ là một công cụ tiện ích mà còn đang dần trở thành một phần không thể thiếu trong đời sống của người Việt.</p>
-  <p>Về thị phần, ChatGPT đang chiếm ưu thế vượt trội với 81% người dùng lựa chọn. Theo sau là các sự cạnh tranh đến từ Gemini (51%) và Meta AI (36%). Đáng chú ý, có hai nền tảng của Việt Nam đã lọt vào top 10 về mức độ sử dụng là AI Hay (9%) và Kiki (3%). Người dùng Việt có xu hướng sử dụng song song nhiều công cụ, với trung bình mỗi người dùng khoảng 2 nền tảng AI khác nhau cho các mục đích đa dạng từ học tập, nghiên cứu, dịch thuật cho đến giải trí và sáng tạo nội dung.</p>
+  <p>Về thị phần, ChatGPT đang chiếm ưu thế vượt trội với 81% người dùng lựa chọn. Theo sau là các sự cạnh tranh đến từ Gemini (51%) và Meta AI (36%). Đáng chú ý, có hai nền tảng của Việt Nam đã lọt vào top 10 về mức độ sử dụng là AI Hay (9%) và Kiki (3%). Người dùng Việt có xu hướng sử dụng song song nhiều công cụ, với trung bình mỗi người dùng khoảng 2 nền tảng AI khác nhau cho các mục đích đa dạng từ học tập, nghiên cứu, dịch thuật cho đến giải trí và sáng tạo nội dung.</p>[BENCHMARK_CHART]
   <p>Thậm chí, không chỉ người dùng mà chính phủ cũng tham gia vào cuộc đua AI với những chính sách nhằm thúc đẩy chuyển đổi số quốc gia như Nghị quyết 57-NQ/TW, Chiến lược quốc gia về AI theo Quyết định 127/QĐ-TTg, hay phong trào “Bình dân học vụ số”.</p>
   <h2><strong>Người Việt dùng AI để làm gì?</strong></h2>
   <p>Tất nhiên nhu cầu tâm sự và trò chuyện là chuyện rất bình thường đối với người Việt chúng ta, nhưng bây giờ chúng ta lại chuyển vai trò đó sang AI với 40% tỉ lệ áp dụng AI. Còn các hoạt động cập nhật thông tin, học kĩ năng kiến thức mới và luyện tập giao tiếp là những thứ cơ bản mà khi người dùng AI hướng tới.</p>
@@ -82,5 +82,6 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
 
 

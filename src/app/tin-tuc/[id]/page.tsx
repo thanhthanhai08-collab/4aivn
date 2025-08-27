@@ -23,6 +23,7 @@ import { CommentForm } from "@/components/news/comment-form";
 import { CommentList } from "@/components/news/comment-list";
 import { Separator } from "@/components/ui/separator";
 import { GptOssBenchmarkChart } from "@/components/news/gpt-oss-benchmark-chart";
+import { AiVietUsageChart } from "@/components/news/ai-viet-usage-chart";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -50,6 +51,9 @@ const renderContent = (content: string, articleId: string) => {
     if (part === '[BENCHMARK_CHART]') {
       if (articleId === 'openai-gpt-oss-ra-mat') {
         return <GptOssBenchmarkChart key={`${index}-chart`} />;
+      }
+      if (articleId === 'ai-viet-2025-bao-cao') {
+        return <AiVietUsageChart key={`${index}-chart`} />;
       }
       return null;
     }
