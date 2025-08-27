@@ -390,10 +390,10 @@ export const mockAIModels: AIModel[] = [
         "Độ trễ 1.18s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '128k',
-    intelligenceScore: 59,
+    intelligenceScore: 56,
     pricePerMillionTokens: 2.63,
-    speedTokensPerSecond: 60.2,
-    latencyFirstChunkSeconds: 1.18,
+    speedTokensPerSecond: 91.7,
+    latencyFirstChunkSeconds: 1.05,
   },
   {
     id: 'qwenq-32b',
@@ -733,15 +733,16 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     latencyFirstChunkSeconds: 0.67,
   },
   {
-    id: 'grok-3',
-    name: 'Grok 3',
+    id: 'deepseek-v3.1-reasoning',
+    name: 'DeepSeek V3.1 (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
-    developer: 'xAI',
-    description: `+ Grok 3 là phiên bản mô hình AI mới nhất do xAI, công ty của Elon Musk, phát triển và ra mắt chính thức vào tháng 2 năm 2025. Được huấn luyện trên siêu máy tính Colossus với hơn 100.000 GPU Nvidia H100, Grok 3 sở hữu sức mạnh tính toán gấp 10 lần so với các mô hình trước đó của xAI.
-+ Grok 3 chính là nền tảng để xAI phát triển Grok 3 Mini Reasoning và hãy nhìn vào sự thể hiện của Grok 3 Mini Reasoning thì thấy Grok 3 thật sự là nền tảng thật sự tuyệt vời.
-+ Grok 3 có khả năng truy cập internet và mạng xã hội X (Twitter) để tìm kiếm, xác minh nguồn thông tin và tổng hợp dữ liệu mới nhất trước khi trả lời. Tính năng này giúp mô hình cung cấp các câu trả lời cập nhật, chính xác và phù hợp với bối cảnh thực tế, đây tính năng quan trọng nhất đối với những dự án cần cập nhật tin tức liên tục giúp giữ được độ chính xác.`,
-    logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
-    link: 'https://x.ai/grok',
+    developer: 'Deepseek',
+    description: `+ DeepSeek R1-0528 là phiên bản nâng cấp mới nhất DeepSeek, được công bố vào tháng 5 năm 2025 và cũng là mô hình mã nguồn mở nên người dùng có thể triển khai cục bộ trên chính máy chủ của các bạn.
++ Phiên bản này đánh dấu bước tiến quan trọng trong khả năng suy luận sâu sắc, hiệu suất xử lý và tối ưu tài nguyên, giúp DeepSeek R1 có thể cạnh tranh trực tiếp cả về chất lượng và giá cả với các mô hình của Google và Open Al.
++ Không giống các mô hình "open-weight" nhưng hạn chế giấy phép (như LLaMA), DeepSeek R1 cho phép sử dụng thương mại, tùy chỉnh và triển khai tự do, khiến nó trở thành “trụ cột" mới cho các startup, nhà nghiên cứu, và ứng dụng Al độc lập.
++ Đổi lại là tốc độ sinh token khá chậm 28.6 token/s cho nên người dùng sẽ chờ đợi hơi lâu nhưng đó không là gì so với tiềm năng nó mang lại.`,
+    logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
+    link: 'https://www.deepseek.com/',
     userRating: 4.4,
     ratingCount: 177,
     features: [
