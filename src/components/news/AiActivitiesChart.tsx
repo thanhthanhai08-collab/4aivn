@@ -6,15 +6,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const data = [
   { name: "Trò chuyện với AI", value: 40, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
-  { name: "Cập nhật thông tin/tin tức", value: 37, category: "Thói quen hàng ngày", color: "hsl(var(--chart-4))" },
-  { name: "Học mới kỹ năng/kiến thức", value: 34, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
-  { name: "Luyện tập giao tiếp với AI", value: 33, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
-  { name: "Dịch", value: 33, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
-  { name: "Sáng tạo hình ảnh/video", value: 31, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
+  { name: "Cập nhật tin tức", value: 37, category: "Thói quen hàng ngày", color: "hsl(var(--chart-4))" },
+  { name: "Học kỹ năng mới", value: 34, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
+  { name: "Luyện tập giao tiếp", value: 33, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
+  { name: "Dịch thuật", value: 33, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
+  { name: "Sáng tạo ảnh/video", value: 31, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
   { name: "Phát triển nội dung", value: 29, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
-  { name: "Tra cứu thuốc và sản phẩm chăm sóc sức khỏe", value: 29, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
-  { name: "Nhận thông tin cập nhật về xu hướng/mạng xã hội/sự kiện", value: 28, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
-  { name: "Tra cứu các vấn đề sức khỏe", value: 27, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
+  { name: "Tra cứu thuốc & sức khỏe", value: 29, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
+  { name: "Cập nhật xu hướng", value: 28, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
+  { name: "Tra cứu vấn đề sức khỏe", value: 27, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
 ];
 
 const legendData = [
@@ -27,7 +27,7 @@ const legendData = [
 
 const CustomLabel = ({ viewBox, value, name }: any) => {
     const { cx, cy } = viewBox;
-    const lines = name.replace(/\//g, '/\n').replace(/ và /g, ' và\n').replace(/ với /g, ' với\n').split('\n');
+    const lines = name.replace(/\//g, '/\n').replace(/ & /g, ' & \n').split('\n');
     const lineHeight = 14; 
     const startY = cy - (lines.length - 1) * lineHeight / 2;
 
@@ -37,7 +37,7 @@ const CustomLabel = ({ viewBox, value, name }: any) => {
                 {`${value}%`}
             </text>
             {lines.map((line:string, index:number) => (
-                <text key={index} x={cx} y={startY + index * lineHeight + 12} textAnchor="middle" dominantBaseline="central" className="fill-muted-foreground text-xs" style={{fill: 'hsl(var(--muted-foreground))'}}>
+                <text key={index} x={cx} y={startY + index * lineHeight + 12} textAnchor="middle" dominantBaseline="central" className="text-xs" style={{fill: 'hsl(var(--muted-foreground))'}}>
                     {line}
                 </text>
             ))}
