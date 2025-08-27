@@ -90,5 +90,3 @@ export interface ToolReview {
     rating: number;
     text: string;
 }
-
-    
