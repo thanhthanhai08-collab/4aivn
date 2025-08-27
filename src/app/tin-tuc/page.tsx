@@ -2,13 +2,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsCard } from "@/components/news/news-card";
+import { Button } from "@/components/ui/button";
 
 const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+const QuickViewItem = ({ article }: { article: any }) => (
+    <div className="flex items-center space-x-4 group">
+        <span className="flex-shrink-0 w-2 h-2 bg-primary rounded-full"></span>
+        <div className="flex-grow">
+            <Link href={`/tin-tuc/${article.id}`} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{article.title}</Link>
+        </div>
+        <Link href={`/tin-tuc/${article.id}`} className="flex-shrink-0">
+            <div className="relative w-16 h-16 rounded-md overflow-hidden">
+                <Image
+                    src={article.imageUrl}
+                    alt={article.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    sizes="64px"
+                    data-ai-hint={article.dataAiHint || "news thumbnail"}
+                />
+            </div>
+        </Link>
+    </div>
+);
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,10 +61,16 @@ export default function NewsPage() {
     );
   }
 
+  const featuredArticle = allMockNews.find(a => a.id === 'apple-mistral-perplexity-talks');
+  const secondaryArticle = allMockNews.find(a => a.id === 'hackers-circle-to-search-exploit');
+  const quickViewArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id].includes(a.id)).slice(0, 6);
+  const remainingArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id, ...quickViewArticles.map(qv => qv.id)].includes(a.id));
+
+
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <header className="mb-12 text-center">
+        <header className="mb-8 md:mb-12 text-center">
           <h1 className="text-4xl font-headline font-bold text-foreground">Tin tức & Cập nhật AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
             Luôn cập nhật những diễn biến mới nhất trong thế giới Trí tuệ Nhân tạo.
@@ -48,20 +78,85 @@ export default function NewsPage() {
         </header>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(9)].map((_, i) => (
-              <Skeleton key={i} className="h-96 w-full rounded-lg" />
-            ))}
-          </div>
-        ) : allMockNews.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allMockNews.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <Skeleton className="lg:col-span-2 h-[400px] w-full rounded-lg" />
+            <div className="space-y-4">
+                 {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex items-center space-x-4">
+                        <Skeleton className="h-16 w-16 rounded-md" />
+                        <div className="flex-grow space-y-2">
+                             <Skeleton className="h-4 w-full" />
+                             <Skeleton className="h-4 w-2/3" />
+                        </div>
+                    </div>
+                 ))}
+            </div>
           </div>
         ) : (
-          <div className="text-center py-16">
-            <p className="text-xl text-muted-foreground">Hiện tại không có tin tức nào.</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main content */}
+            <div className="lg:col-span-2 space-y-8">
+                {featuredArticle && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="group relative rounded-lg overflow-hidden shadow-lg">
+                           <Link href={`/tin-tuc/${featuredArticle.id}`}>
+                                <Image
+                                    src={featuredArticle.imageUrl}
+                                    alt={featuredArticle.title}
+                                    width={550}
+                                    height={360}
+                                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                                    priority
+                                />
+                           </Link>
+                           <div className="absolute bottom-0 left-0 p-4 bg-gradient-to-t from-black/70 to-transparent w-full">
+                                <h2 className="text-2xl font-bold font-headline text-white leading-tight">
+                                     <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:underline">{featuredArticle.title}</Link>
+                                </h2>
+                                <p className="text-sm text-white/80 mt-1">Bởi {featuredArticle.author}</p>
+                           </div>
+                        </div>
+                        
+                        {secondaryArticle && (
+                            <div className="p-4 rounded-lg bg-card border flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-xl font-bold font-headline mb-2">
+                                        <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
+                                    </h2>
+                                    <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
+                                    <p className="text-sm text-foreground/80 line-clamp-4">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
+                                </div>
+                                <Button asChild variant="link" className="p-0 self-start mt-4">
+                                    <Link href={`/tin-tuc/${secondaryArticle.id}`}>Đọc thêm &rarr;</Link>
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                )}
+                
+                {/* Remaining articles grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8 border-t">
+                    {remainingArticles.slice(0,6).map((article) => (
+                        <NewsCard key={article.id} article={article} />
+                    ))}
+                </div>
+            </div>
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+                <div className="p-6 rounded-lg bg-card border sticky top-24">
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-xl font-bold font-headline">Xem nhanh</h3>
+                        <Button variant="link" asChild className="p-0 h-auto">
+                            <Link href="#">Xem tất cả</Link>
+                        </Button>
+                    </div>
+                    <div className="space-y-5">
+                        {quickViewArticles.map((article) => (
+                            <QuickViewItem key={article.id} article={article} />
+                        ))}
+                    </div>
+                </div>
+            </div>
           </div>
         )}
       </div>

@@ -3,6 +3,86 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews2: NewsArticle[] = [
   {
+    id: 'apple-mistral-perplexity-talks',
+    title: 'Apple được cho là đã thảo luận về việc mua lại các startup AI Mistral và Perplexity',
+    source: 'Bloomberg',
+    author: 'Anh Tú',
+    content: '<p>Apple đang đẩy mạnh chiến lược AI của mình bằng cách thảo luận với các startup hàng đầu như Mistral AI và Perplexity. Các cuộc đàm phán này cho thấy tham vọng của Apple trong việc tích hợp các công nghệ AI tiên tiến vào hệ sinh thái sản phẩm của mình, từ iPhone đến các dịch vụ đám mây, nhằm cạnh tranh trực tiếp với các đối thủ như Google và Microsoft.</p>',
+    publishedAt: '2025-09-09T09:00:00Z',
+    imageUrl: '/image/news2/apple_mistral_perplexity.jpg',
+    dataAiHint: 'Apple iPhone AI',
+  },
+  {
+    id: 'hackers-circle-to-search-exploit',
+    title: 'Hackers có thể cài mã độc vào hình ảnh, đánh lừa cơ chế circle to search',
+    source: 'TechCrunch',
+    author: 'Elair Maika',
+    content: '<p>Một nhóm nghiên cứu mới đã phát hiện ra phương pháp ẩn các cuộc tấn công prompt injection trong hình ảnh để thực hiện ý đồ xấu. Prompt injection là cách giấu các lệnh cho một hệ thống AI như LLM, thường ở vị trí không ngờ tới. Kỹ thuật này có thể được sử dụng để đánh lừa các mô hình AI đa phương thức, như Google Lens, bằng cách nhúng các prompt độc hại vào pixel của hình ảnh, gây ra các hành vi không mong muốn.</p>',
+    publishedAt: '2025-09-08T14:00:00Z',
+    imageUrl: '/image/news2/hackers_circle_to_search.jpg',
+    dataAiHint: 'hacker glasses code',
+  },
+  {
+    id: 'quantum-computer-japan',
+    title: 'Nhật Bản ra mắt máy tính lượng tử đầu tiên sản xuất hoàn toàn trong nước',
+    source: 'Reuters',
+    author: 'Admin',
+    content: '<p>Các nhà nghiên cứu Nhật Bản đã ra mắt máy tính lượng tử đầu tiên được sản xuất hoàn toàn trong nước, một bước tiến quan trọng trong cuộc đua toàn cầu nhằm phát triển công nghệ tính toán thế hệ mới.</p>',
+    publishedAt: '2025-09-07T11:00:00Z',
+    imageUrl: '/image/news2/quantum_computer_japan.jpg',
+    dataAiHint: 'quantum computer',
+  },
+  {
+    id: 'nissan-gtr-r35-final',
+    title: 'Sau 18 năm, chiếc Nissan GT-R R35 cuối cùng đã xuất xưởng',
+    source: 'Motor1',
+    author: 'Admin',
+    content: '<p>Thế hệ R35 của Nissan GT-R, một biểu tượng trong làng xe thể thao, đã chính thức kết thúc vòng đời sản xuất sau 18 năm. Chiếc xe cuối cùng đã lăn bánh khỏi dây chuyền, khép lại một chương huy hoàng của "Godzilla".</p>',
+    publishedAt: '2025-09-06T18:00:00Z',
+    imageUrl: '/image/news2/nissan_gtr_r35.jpg',
+    dataAiHint: 'Nissan GT-R cars',
+  },
+  {
+    id: 'nvidia-gb200-profit',
+    title: 'Siêu lợi nhuận: Máy chủ AI Nvidia GB200 NVL72 tạo ra lợi nhuận 77.6%',
+    source: 'Digitimes',
+    author: 'Admin',
+    content: '<p>Các máy chủ trang bị siêu chip AI Nvidia GB200 NVL72 đang mang lại tỷ suất lợi nhuận gộp lên tới 77.6% cho các nhà sản xuất, cho thấy nhu cầu khổng lồ và vị thế độc tôn của Nvidia trong thị trường AI.</p>',
+    publishedAt: '2025-09-05T10:00:00Z',
+    imageUrl: '/image/news2/nvidia_gb200.jpg',
+    dataAiHint: 'Nvidia chip server',
+  },
+  {
+    id: 'ios-26-auto-mix',
+    title: 'Tính năng Auto Mix khi nghe nhạc trên iOS 26 hay nha!',
+    source: 'AppleInsider',
+    author: 'Admin',
+    content: '<p>Bản cập nhật iOS 26 sắp tới được cho là sẽ giới thiệu tính năng "Auto Mix", tự động tạo ra các bản mix nhạc liền mạch từ thư viện của người dùng, mang lại trải nghiệm nghe nhạc không gián đoạn và đầy thú vị.</p>',
+    publishedAt: '2025-09-04T15:00:00Z',
+    imageUrl: '/image/news2/ios_26_auto_mix.jpg',
+    dataAiHint: 'music app interface',
+  },
+  {
+    id: 'vinfast-battery-stations',
+    title: 'VinFast sẽ triển khai 150.000 trạm đổi pin dành cho xe máy điện trong năm nay',
+    source: 'VietnamPlus',
+    author: 'Admin',
+    content: '<p>VinFast đặt mục tiêu đầy tham vọng khi lên kế hoạch triển khai 150.000 trạm đổi pin cho xe máy điện trên toàn quốc trong năm nay, nhằm thúc đẩy việc sử dụng xe điện và giải quyết vấn đề lo ngại về phạm vi hoạt động.</p>',
+    publishedAt: '2025-09-03T09:00:00Z',
+    imageUrl: '/image/news2/vinfast_battery.jpg',
+    dataAiHint: 'Vinfast electric scooter',
+  },
+  {
+    id: 'canon-event',
+    title: 'Sáng nay cùng Canon',
+    source: 'Canon Vietnam',
+    author: 'Admin',
+    content: '<p>Sự kiện "Sáng nay cùng Canon" đã diễn ra thành công, quy tụ nhiều nhiếp ảnh gia và người yêu công nghệ để trải nghiệm các sản phẩm mới nhất và chia sẻ kinh nghiệm nhiếp ảnh.</p>',
+    publishedAt: '2025-09-02T12:00:00Z',
+    imageUrl: '/image/news2/canon_event.jpg',
+    dataAiHint: 'photography event',
+  },
+  {
     id: 'ai-viet-2025-bao-cao',
     title: 'AI Việt 2025: Gần 80% người dùng tiếp cận; ChatGPT dẫn đầu thị trường theo báo cáo Decision Lab',
     source: 'Decision Lab',
@@ -98,6 +178,7 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
 
 
 
