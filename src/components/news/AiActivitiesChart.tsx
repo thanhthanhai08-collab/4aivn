@@ -33,7 +33,7 @@ const CustomLabel = ({ viewBox, value, name }: any) => {
 
     return (
         <g>
-            <text x={cx} y={cy - 12} textAnchor="middle" dominantBaseline="central" className="fill-foreground font-bold text-xl" style={{fill: 'currentColor'}}>
+            <text x={cx} y={cy - 12} textAnchor="middle" dominantBaseline="central" className="font-bold text-xl" style={{fill: 'currentColor'}}>
                 {`${value}%`}
             </text>
             {lines.map((line:string, index:number) => (
@@ -72,7 +72,7 @@ export function AiActivitiesChart() {
                                     stroke="none"
                                 >
                                     <Cell fill={entry.color} />
-                                    <Cell fill="hsl(var(--muted))" />
+                                    <Cell fill="hsl(var(--border))" />
                                     <Label 
                                       content={<CustomLabel value={entry.value} name={entry.name} />} 
                                       position="center"
