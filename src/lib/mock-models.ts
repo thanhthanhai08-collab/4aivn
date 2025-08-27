@@ -737,10 +737,10 @@ So với GPT-4o, GPT-4.1 giảm 26% chi phí API, giúp tiết kiệm đáng k�
     name: 'DeepSeek V3.1 (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Deepseek',
-    description: `+ DeepSeek R1-0528 là phiên bản nâng cấp mới nhất DeepSeek, được công bố vào tháng 5 năm 2025 và cũng là mô hình mã nguồn mở nên người dùng có thể triển khai cục bộ trên chính máy chủ của các bạn.
-+ Phiên bản này đánh dấu bước tiến quan trọng trong khả năng suy luận sâu sắc, hiệu suất xử lý và tối ưu tài nguyên, giúp DeepSeek R1 có thể cạnh tranh trực tiếp cả về chất lượng và giá cả với các mô hình của Google và Open Al.
-+ Không giống các mô hình "open-weight" nhưng hạn chế giấy phép (như LLaMA), DeepSeek R1 cho phép sử dụng thương mại, tùy chỉnh và triển khai tự do, khiến nó trở thành “trụ cột" mới cho các startup, nhà nghiên cứu, và ứng dụng Al độc lập.
-+ Đổi lại là tốc độ sinh token khá chậm 28.6 token/s cho nên người dùng sẽ chờ đợi hơi lâu nhưng đó không là gì so với tiềm năng nó mang lại.`,
+    description: `+ DeepSeek V3.1 (Reasoning) là phiên bản kế nhiệm trong dòng mô hình DeepSeek, được tối ưu hóa đặc biệt cho các tác vụ đòi hỏi khả năng suy luận phức tạp, ra mắt vào tháng 8 năm 2025. Đây là mô hình mã nguồn mở, cho phép người dùng tự do triển khai trên hạ tầng riêng.
++ Phiên bản này tập trung vào việc cải thiện khả năng suy luận logic và giải quyết vấn đề nhiều bước, giúp nó cạnh tranh hiệu quả với các mô hình hàng đầu từ Google và OpenAI.
++ Giống như các phiên bản trước, DeepSeek V3.1 cho phép sử dụng thương mại và tùy chỉnh, trở thành một lựa chọn hấp dẫn cho các doanh nghiệp và nhà phát triển muốn xây dựng các ứng dụng AI độc lập.
++ Mô hình này cân bằng giữa hiệu suất suy luận cao và tốc độ xử lý hợp lý, mang lại một giải pháp mạnh mẽ cho các ứng dụng chuyên sâu.`,
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     userRating: 4.4,
