@@ -23,26 +23,6 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'hacker glasses code',
   },
   {
-    id: 'quantum-computer-japan',
-    title: 'Nhật Bản ra mắt máy tính lượng tử đầu tiên sản xuất hoàn toàn trong nước',
-    source: 'Reuters',
-    author: 'Admin',
-    content: '<p>Các nhà nghiên cứu Nhật Bản đã ra mắt máy tính lượng tử đầu tiên được sản xuất hoàn toàn trong nước, một bước tiến quan trọng trong cuộc đua toàn cầu nhằm phát triển công nghệ tính toán thế hệ mới.</p>',
-    publishedAt: '2025-09-07T11:00:00Z',
-    imageUrl: '/image/news2/quantum_computer_japan.jpg',
-    dataAiHint: 'quantum computer',
-  },
-  {
-    id: 'nissan-gtr-r35-final',
-    title: 'Sau 18 năm, chiếc Nissan GT-R R35 cuối cùng đã xuất xưởng',
-    source: 'Motor1',
-    author: 'Admin',
-    content: '<p>Thế hệ R35 của Nissan GT-R, một biểu tượng trong làng xe thể thao, đã chính thức kết thúc vòng đời sản xuất sau 18 năm. Chiếc xe cuối cùng đã lăn bánh khỏi dây chuyền, khép lại một chương huy hoàng của "Godzilla".</p>',
-    publishedAt: '2025-09-06T18:00:00Z',
-    imageUrl: '/image/news2/nissan_gtr_r35.jpg',
-    dataAiHint: 'Nissan GT-R cars',
-  },
-  {
     id: 'nvidia-gb200-profit',
     title: 'Siêu lợi nhuận: Máy chủ AI Nvidia GB200 NVL72 tạo ra lợi nhuận 77.6%',
     source: 'Digitimes',
@@ -51,16 +31,6 @@ export const mockNews2: NewsArticle[] = [
     publishedAt: '2025-09-05T10:00:00Z',
     imageUrl: '/image/news2/nvidia_gb200.jpg',
     dataAiHint: 'Nvidia chip server',
-  },
-  {
-    id: 'ios-26-auto-mix',
-    title: 'Tính năng Auto Mix khi nghe nhạc trên iOS 26 hay nha!',
-    source: 'AppleInsider',
-    author: 'Admin',
-    content: '<p>Bản cập nhật iOS 26 sắp tới được cho là sẽ giới thiệu tính năng "Auto Mix", tự động tạo ra các bản mix nhạc liền mạch từ thư viện của người dùng, mang lại trải nghiệm nghe nhạc không gián đoạn và đầy thú vị.</p>',
-    publishedAt: '2025-09-04T15:00:00Z',
-    imageUrl: '/image/news2/ios_26_auto_mix.jpg',
-    dataAiHint: 'music app interface',
   },
   {
     id: 'vinfast-battery-stations',
@@ -178,12 +148,3 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
-
-
-
-
-
-
-
-
-
