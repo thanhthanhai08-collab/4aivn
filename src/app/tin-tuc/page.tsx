@@ -78,8 +78,8 @@ export default function NewsPage() {
         </header>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Skeleton className="lg:col-span-2 h-[400px] w-full rounded-lg" />
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <Skeleton className="lg:col-span-3 h-[400px] w-full rounded-lg" />
             <div className="space-y-4">
                  {[...Array(5)].map((_, i) => (
                     <div key={i} className="flex items-center space-x-4">
@@ -93,9 +93,9 @@ export default function NewsPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Main content */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-3 space-y-8">
                 {featuredArticle && (
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                         <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
