@@ -97,8 +97,8 @@ export default function NewsPage() {
             {/* Main content */}
             <div className="lg:col-span-2 space-y-8">
                 {featuredArticle && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                        <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
                            <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[4/3] relative">
                                 <Image
                                     src={featuredArticle.imageUrl}
@@ -117,7 +117,7 @@ export default function NewsPage() {
                         </div>
                         
                         {secondaryArticle && (
-                            <div className="p-4 rounded-lg bg-card border flex flex-col justify-between">
+                            <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
                                 <div>
                                     <h2 className="text-xl font-bold font-headline mb-2">
                                         <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
