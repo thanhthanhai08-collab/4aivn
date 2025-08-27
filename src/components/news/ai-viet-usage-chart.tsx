@@ -16,7 +16,7 @@ const chartData = [
   { name: "Kiki", value: 3, type: "local" },
   { name: "Claude", value: 2, type: "international" },
   { name: "Perplexity", value: 2, type: "international" },
-].sort((a, b) => a.value - b.value); // Sort for vertical display
+].sort((a, b) => b.value - a.value); // Sort descending for horizontal display
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -41,18 +41,21 @@ export function AiVietUsageChart() {
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={chartData}
-            layout="vertical"
-            margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+            layout="horizontal"
+            margin={{ top: 5, right: 30, left: -10, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-            <XAxis type="number" hide />
-            <YAxis 
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis 
               dataKey="name" 
               type="category" 
               tickLine={false} 
-              axisLine={false} 
-              width={80}
+              axisLine={false}
+              angle={-45}
+              textAnchor="end"
+              height={80}
+              interval={0}
             />
+            <YAxis type="number" hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--accent))' }} />
             <Legend 
               verticalAlign="top" 
@@ -72,7 +75,7 @@ export function AiVietUsageChart() {
                   fill={entry.type === 'local' ? 'hsl(var(--chart-2))' : 'hsl(var(--primary))'}
                 />
               ))}
-              <LabelList dataKey="value" position="right" formatter={(value: number) => `${value}%`} />
+              <LabelList dataKey="value" position="top" formatter={(value: number) => `${value}%`} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
