@@ -28,7 +28,7 @@ const CustomLabel = (props: any) => {
     const { x, y, width, height, value } = props;
     if (value > 0) {
         return (
-            <text x={x + width / 2} y={y + height - 10} fill="#fff" textAnchor="middle" dy={0} className="font-semibold text-sm">
+            <text x={x + width / 2} y={y + height / 2} fill="#fff" textAnchor="middle" dy=".3em" className="font-semibold text-sm">
                 {`${value}%`}
             </text>
         );
@@ -58,9 +58,15 @@ export function AiSatisfactionChart() {
             <Bar dataKey="score" stackId="a" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="score" content={<CustomLabel />} />
             </Bar>
-            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--border))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="remaining" stackId="a" fill="hsl(var(--muted))" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
+         <div className="flex justify-center mt-4">
+            <div className="flex items-center text-sm text-muted-foreground">
+                <span className="w-3 h-3 rounded-full bg-primary mr-2"></span>
+                <span>Điểm CSAT*</span>
+            </div>
+        </div>
       </CardContent>
     </Card>
   )
