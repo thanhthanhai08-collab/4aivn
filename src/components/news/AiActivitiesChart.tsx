@@ -5,16 +5,16 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: "Trò chuyện với AI", value: 40, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
-  { name: "Cập nhật tin tức", value: 37, category: "Thói quen hàng ngày", color: "hsl(var(--chart-4))" },
-  { name: "Học kỹ năng mới", value: 34, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
-  { name: "Luyện tập giao tiếp", value: 33, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
+  { name: "Trò chuyện\nvới AI", value: 40, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
+  { name: "Cập nhật\ntin tức", value: 37, category: "Thói quen hàng ngày", color: "hsl(var(--chart-4))" },
+  { name: "Học kỹ năng\nmới", value: 34, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
+  { name: "Luyện tập\ngiao tiếp", value: 33, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
   { name: "Dịch thuật", value: 33, category: "Công việc và giáo dục", color: "hsl(var(--chart-2))" },
-  { name: "Sáng tạo ảnh/video", value: 31, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
-  { name: "Phát triển nội dung", value: 29, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
-  { name: "Tra cứu thuốc & sức khỏe", value: 29, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
-  { name: "Cập nhật xu hướng", value: 28, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
-  { name: "Tra cứu vấn đề sức khỏe", value: 27, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
+  { name: "Sáng tạo ảnh\n/ video", value: 31, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
+  { name: "Phát triển\nnội dung", value: 29, category: "Sáng tạo", color: "hsl(var(--chart-1))" },
+  { name: "Tra cứu thuốc\n& sức khỏe", value: 29, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
+  { name: "Cập nhật\nxu hướng", value: 28, category: "Giải trí và giao lưu", color: "hsl(var(--chart-5))" },
+  { name: "Tra cứu\nvấn đề sức khỏe", value: 27, category: "Sức khỏe và thể chất", color: "hsl(var(--chart-3))" },
 ];
 
 const legendData = [
@@ -27,7 +27,7 @@ const legendData = [
 
 const CustomLabel = ({ viewBox, value, name }: any) => {
     const { cx, cy } = viewBox;
-    const lines = name.replace(/\//g, '/\n').replace(/ & /g, ' & \n').split('\n');
+    const lines = name.split('\n');
     const lineHeight = 14; 
     const startY = cy - (lines.length - 1) * lineHeight / 2;
 
@@ -55,7 +55,7 @@ export function AiActivitiesChart() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {data.map((entry, index) => (
                 <div key={index} className="flex flex-col items-center text-center">
-                    <div style={{ width: '100%', height: 150 }}>
+                    <div style={{ width: '100%', height: 180 }}>
                         <ResponsiveContainer>
                             <PieChart>
                                 <Pie
@@ -64,8 +64,8 @@ export function AiActivitiesChart() {
                                     nameKey="name"
                                     cx="50%"
                                     cy="50%"
-                                    innerRadius="75%"
-                                    outerRadius="90%"
+                                    innerRadius="80%"
+                                    outerRadius="100%"
                                     startAngle={90}
                                     endAngle={450}
                                     paddingAngle={0}
