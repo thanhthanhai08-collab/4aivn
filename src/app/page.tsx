@@ -334,22 +334,26 @@ export default function HomePage() {
               data-ai-hint="strategy chess"
             />
             <div className="relative grid md:grid-cols-2 gap-8 items-center text-white">
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
-                  Lựa chọn các Model phù hợp
-                </h2>
-              </div>
-              <div className="text-center md:text-right space-y-4">
-                 <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
-                   Thông qua Bảng xếp hạng
-                </h2>
-                <Button 
-                  size="lg" 
-                  asChild 
-                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
-                >
-                  <Link href="/bang-xep-hang">Khám phá</Link>
-                </Button>
+              <div className="md:col-span-2 text-center md:text-left">
+                  <div className="md:flex md:items-center md:justify-between md:gap-8">
+                      <div className="space-y-4 mb-8 md:mb-0 text-center md:text-left">
+                          <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                              Lựa chọn các Model phù hợp
+                          </h2>
+                          <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                              Thông qua Bảng xếp hạng
+                          </h2>
+                      </div>
+                      <div className="text-center md:text-right">
+                          <Button 
+                              size="lg" 
+                              asChild 
+                              className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
+                          >
+                              <Link href="/bang-xep-hang">Khám phá</Link>
+                          </Button>
+                      </div>
+                  </div>
               </div>
             </div>
           </div>
