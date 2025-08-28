@@ -335,11 +335,13 @@ export default function HomePage() {
             />
             <div className="relative z-10 flex-grow flex flex-col justify-between">
               <div className="flex justify-between items-start">
-                  <div className="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-relaxed">
-                      LỰA CHỌN CÁC <br /> MODEL PHÙ HỢP
+                  <div className="text-3xl md:text-4xl font-bold text-gray-800 text-center">
+                      <div>LỰA CHỌN CÁC</div>
+                      <div className="mt-2">MODEL PHÙ HỢP</div>
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-relaxed">
-                      THÔNG QUA <br /> BẢNG XẾP HẠNG
+                  <div className="text-3xl md:text-4xl font-bold text-gray-800 text-center">
+                      <div>THÔNG QUA</div>
+                      <div className="mt-2">BẢNG XẾP HẠNG</div>
                   </div>
               </div>
               <div className="flex justify-end">
