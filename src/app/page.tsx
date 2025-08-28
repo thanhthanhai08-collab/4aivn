@@ -339,11 +339,13 @@ export default function HomePage() {
                   <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
                     Lựa chọn các Model phù hợp
                   </h2>
-                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
-                    Thông qua Bảng xếp hạng
-                  </h2>
                 </div>
-                <div className="flex-shrink-0 text-center md:text-right">
+                 <div className="flex-1 space-y-4 text-center md:text-right">
+                    <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                        Thông qua Bảng xếp hạng
+                    </h2>
+                </div>
+                <div className="flex-shrink-0 text-center md:text-left mt-4 md:mt-0 md:ml-8">
                   <Button 
                     size="lg" 
                     asChild 
