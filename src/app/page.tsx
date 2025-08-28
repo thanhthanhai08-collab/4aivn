@@ -333,29 +333,14 @@ export default function HomePage() {
               className="object-cover"
               data-ai-hint="rankings board chart"
             />
-            <div className="relative z-10 flex-grow flex flex-col text-foreground">
-                {/* Top Row for Text */}
-                <div className="flex-1 flex justify-between items-start">
-                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm">
-                    Lựa chọn các Model phù hợp
-                  </h2>
-                  <div className="w-1/2 flex justify-center text-center">
-                    <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm">
-                        Thông qua bảng xếp hạng
-                    </h2>
-                  </div>
-                </div>
-
-                {/* Bottom Row for Button */}
-                <div className="flex justify-end items-end">
-                  <Button 
-                    size="lg" 
-                    asChild 
-                    className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
-                  >
-                    <Link href="/bang-xep-hang">Khám phá</Link>
-                  </Button>
-                </div>
+            <div className="relative z-10 flex-grow flex flex-col justify-end items-end text-foreground">
+              <Button 
+                size="lg" 
+                asChild 
+                className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
+              >
+                <Link href="/bang-xep-hang">Khám phá</Link>
+              </Button>
             </div>
           </div>
         </div>
