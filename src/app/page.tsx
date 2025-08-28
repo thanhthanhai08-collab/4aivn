@@ -327,25 +327,19 @@ export default function HomePage() {
         <div className="container">
           <div className="relative rounded-2xl overflow-hidden bg-gray-800 p-8 md:p-12">
             <Image 
-              src="https://picsum.photos/1200/400"
-              alt="Bàn cờ vua với các quân cờ được xếp hạng"
+              src="/image/Banner bảng xếp hạng.png"
+              alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
               className="object-cover opacity-20"
-              data-ai-hint="strategy chess"
+              data-ai-hint="rankings board chart"
             />
-            <div className="relative text-white">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="flex-1 space-y-4 text-center md:text-left">
+            <div className="relative text-white flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex-1 md:text-left text-center">
                   <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
                     Lựa chọn các Model phù hợp
                   </h2>
-                </div>
-                 <div className="flex-1 space-y-4 text-center md:text-right">
-                    <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
-                        Thông qua Bảng xếp hạng
-                    </h2>
-                </div>
-                <div className="flex-shrink-0 text-center md:text-left mt-4 md:mt-0 md:ml-8">
+              </div>
+              <div className="flex-shrink-0 text-center md:text-left mt-4 md:mt-0">
                   <Button 
                     size="lg" 
                     asChild 
@@ -354,6 +348,10 @@ export default function HomePage() {
                     <Link href="/bang-xep-hang">Khám phá</Link>
                   </Button>
                 </div>
+              <div className="flex-1 md:text-right text-center">
+                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                      Thông qua Bảng xếp hạng
+                  </h2>
               </div>
             </div>
           </div>
