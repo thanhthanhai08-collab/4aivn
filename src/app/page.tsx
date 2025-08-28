@@ -321,8 +321,40 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Rankings Banner Section */}
+      <section className="py-12 md:py-16">
+        <div className="container">
+          <div className="relative rounded-2xl overflow-hidden bg-gray-800 p-8 md:p-12">
+            <Image 
+              src="https://picsum.photos/1200/400"
+              alt="Bàn cờ vua với các quân cờ được xếp hạng"
+              fill
+              className="object-cover opacity-20"
+              data-ai-hint="strategy chess"
+            />
+            <div className="relative grid md:grid-cols-2 gap-8 items-center text-white">
+              <div className="space-y-4">
+                <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                  Lựa chọn các Model phù hợp
+                </h2>
+              </div>
+              <div className="text-center md:text-right space-y-4">
+                 <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+                   Thông qua Bảng xếp hạng
+                </h2>
+                <Button 
+                  size="lg" 
+                  asChild 
+                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
+                >
+                  <Link href="/bang-xep-hang">Khám phá</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </AppLayout>
   );
 }
-
-    
