@@ -6,8 +6,43 @@ export const mockNews2: NewsArticle[] = [
     id: 'apple-mistral-perplexity-talks',
     title: 'Apple được cho là đã thảo luận về việc mua lại các startup AI Mistral và Perplexity',
     source: 'Bloomberg',
-    author: 'Anh Tú',
-    content: '<p>Apple đang đẩy mạnh chiến lược AI của mình bằng cách thảo luận với các startup hàng đầu như Mistral AI và Perplexity. Các cuộc đàm phán này cho thấy tham vọng của Apple trong việc tích hợp các công nghệ AI tiên tiến vào hệ sinh thái sản phẩm của mình, từ iPhone đến các dịch vụ đám mây, nhằm cạnh tranh trực tiếp với các đối thủ như Google và Microsoft.</p>',
+    author: 'Mai',
+    content: `<p>Trong bối cảnh công nghệ AI đang phát triển nhanh chóng, Apple được cho là đang tích cực tìm cách tăng cường khả năng AI của mình thông qua các thương vụ mua lại và sáp nhập. Theo The Information, Apple đang trong giai đoạn đầu đàm phán để mua lại startup AI Perplexity AI và cũng đang thảo luận về công ty AI Pháp Mistral. Động thái này cho thấy một sự thay đổi chiến lược quan trọng của gã khổng lồ công nghệ nước Mỹ.</p>
+  
+  <h2><strong>Vì Sao Apple lại phải tìm kiếm các thương vụ mua lại và sáp nhập?</strong></h2>
+  <p>Việc mua lại một công ty khởi nghiệp AI có thể giải quyết nhiều vấn đề của Apple hiện nay:</p>
+  <ul>
+    <li><strong>Đe dọa từ vụ kiện chống độc quyền của Google:</strong> Thỏa thuận tìm kiếm sinh lợi của Apple với Google đang bị đe dọa bởi một vụ kiện chống độc quyền ở Mỹ. Việc mất đi thỏa thuận này có thể khiến Apple thiếu hụt doanh thu ước tính 20 tỷ USD. Việc mua lại Perplexity có thể cho phép Apple ra mắt công cụ tìm kiếm mang thương hiệu riêng, chuẩn bị cho một tương lai không có Google Search.</li>
+    <li><strong>Thu hẹp khoảng cách AI:</strong> Apple bị coi là “lỡ chuyến tàu” trong cuộc đua AI thể hiện qua việc Apple Intelligence và Siri liên tục bị rời lịch ra mắt các tính năng mới. Ngay cả khi so với AI của Samsung thì Apple Intelligence cũng không thể so sánh được chứ đừng nói đến ChatGPT hoặc Gemini. Việc mua lại một startup AI có thể sẽ giúp Apple trở lại với đường đua AI.</li>
+[IMAGE:/image/news2/Apple Intelligence.png|Minh họa Apple Intelligence|Apple Intelligence AI]
+    <li><strong>Tăng cường uy tín và khả năng tuyển dụng các nhân tài AI:</strong> Hãy nhìn vào Mark Zuckerberg đã chi tiền tấn để săn đón các nhân tài AI hoặc cách đây không lâu cũng đã chi 15 tỷ đô để mua lại 49% cổ phần của Scale AI. Thế mới thấy các nhân tài AI hiện nay được săn đón ráo riết như thế nào, việc mua lại các startup AI có thể mang lại các nhân tài về lĩnh vực này cho Apple.</li>
+    <li><strong>Sự cần thiết phải hành động:</strong> Apple rất cần thiết phải hành động để gã khổng lồ không bị coi là công ty hạng 2 về lĩnh vực AI.</li>
+  </ul>
+  
+  <h2><strong>Perplexity AI, Mistral AI mang lại điều gì?</strong></h2>
+  <p><strong>Perplexity AI</strong> được mô tả là một công cụ tìm kiếm và trả lời dựa trên AI, được coi là một giải pháp thay thế tiềm năng cho Google. Với sản phẩm tìm kiếm đã được chứng minh và đánh giá đặc biệt với mức giá ước tính khoảng 14 tỷ đô (mặc dù đã tăng lên 18 tỷ đô trong vòng gọi vốn gần đây nhất) hoàn toàn phù hợp để tích hợp vào Siri hoặc Apple Intelligence.</p>
+  <p>Nhưng có một nhược điểm ở đây: nếu Apple sử dụng API như Perplexity, có thể khó duy trì chính sách quyền riêng tư nghiêm ngặt của mình.</p>
+  <p><strong>Mistral AI</strong> là một trong những startup AI tiên phong khi được thành lập từ sớm và chuyên về các mô hình ngôn ngữ lớn (LLM) gọn nhẹ, hiệu quả. Nhưng sản phẩm của startup đến từ Pháp này chủ yếu là mã nguồn mở và thương mại hóa các mô hình độc quyền qua sản phẩm dựa trên API cho khách hàng doanh nghiệp.</p>
+  <p>Mới đây Mistral đã hoàn thành vòng gọi vốn Series B trị giá 600 triệu Euro (khoảng 644 triệu USD), nâng định giá công ty lên 6 tỷ USD (gấp ba lần so với 2 tỷ USD trong vòng chưa đầy sáu tháng) điều này giúp Mistral có thể trở thành công ty AI mã nguồn mở có giá trị nhất thế giới và là công ty AI lớn thứ năm toàn cầu, chỉ sau OpenAI, Anthropic, Databricks và xAI.</p>
+  <p>Tuy nhiên có lo ngại rằng sẽ có rào cản rất lớn đến từ chính phủ Pháp nếu Apple mua lại công ty AI có thể coi là tốt nhất ở EU hiện nay.</p>
+  
+  <h2><strong>Cuộc Tranh Luận Nội Bộ tại Apple</strong></h2>
+  <p>Bên trong Apple, việc có nên theo đuổi các thương vụ mua lại AI lớn như Perplexity và Mistral hay không vẫn đang là một chủ đề tranh luận:</p>
+  <ul>
+    <li>Eddy Cue (Giám đốc Dịch vụ): Là người ủng hộ mạnh mẽ nhất các thương vụ mua lại AI lớn. Ông được biết đến là người đã công khai khen ngợi Perplexity và từng ủng hộ các thương vụ mua lại lớn khác trong quá khứ như Netflix và Tesla, dù chúng bị Tim Cook từ chối.</li>
+    <li>Tim Cook (CEO): Vẫn để ngỏ ý tưởng về các thương vụ M&A có thể "đẩy nhanh lộ trình" của Apple.</li>
+    <li>Craig Federighi (Giám đốc Phần mềm): Lại nghi ngại về bất kỳ thương vụ AI lớn nào, tin rằng đội ngũ của ông có thể tự phát triển để khắc phục điểm yếu về AI của Apple.</li>
+    <li><strong>Quan điểm khác:</strong> Nhiều giám đốc điều hành khác của Apple cũng có những phản đối đối với các thương vụ mua lại. Apple nổi tiếng với sự không thích chi tiêu quá mức cho bất kỳ công ty hay đội ngũ nào và thường ưu tiên các thương vụ AI nhỏ hơn.</li>
+  </ul>
+  
+  <h2><strong>Lựa chọn của Apple sẽ là như thế nào?</strong></h2>
+  <p>Dữ liệu trước đây cho thấy Apple không phải lúc nào thương vụ mua lại và sáp nhập hàng tỷ đô la cũng suôn sẻ:</p>
+  <ul>
+    <li>Thương vụ mua lại Beats đã gây ra sự xung đột về văn hóa kéo dài rất nhiều năm, nhưng nó cũng giúp Apple phát triển Apple Music đang đi đúng hướng.</li>
+    <li>Phố Wall cũng nhiều lần thúc giục Tim Cook mua lại Netflix hoặc một hãng phim lớn. Song thay vào đó, Apple đã xây dựng nền tảng phát trực tuyến TV+ từ đầu. Dịch vụ này đang đi đúng hướng để phát triển bền vững.</li>
+    <li>Trước khi có Apple Music thì cũng rất nhiều người bày tỏ nguyện vọng mua lại Spotify nhưng Apple lại chọn xây dựng dịch vụ của riêng mình, mặc dù Spotify chắc chắn sẽ giúp tăng tốc trong mảng âm thanh.</li>
+  </ul>
+  <p>Đây mới chỉ là các cuộc thảo luận về việc mua lại Perplexity và Mistral AI chứ chưa có kí kết gì cả. Kết quả của những cuộc đàm phán này sẽ có tác động đáng kể đến Apple hoặc rộng ra là thị trường AI.</p>`,
     publishedAt: '2025-09-09T09:00:00Z',
     imageUrl: '/image/news2/Apple làm việc với Mistra và Perplexity.png',
     dataAiHint: 'Apple iPhone AI',
@@ -140,3 +175,5 @@ export const mockNews2: NewsArticle[] = [
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   }
 ];
+
+    
