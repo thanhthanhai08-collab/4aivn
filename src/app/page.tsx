@@ -327,7 +327,7 @@ export default function HomePage() {
         <div className="container">
           <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
             <Image 
-              src="/image/Banner cho nút bảng xếp hạng.png"
+              src="/image/Banner bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
               className="object-cover object-top"
