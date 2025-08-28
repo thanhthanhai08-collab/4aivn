@@ -339,8 +339,8 @@ export default function HomePage() {
                   <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm">
                     Lựa chọn các Model phù hợp
                   </h2>
-                  <div className="w-full flex justify-center">
-                    <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm text-center">
+                  <div className="w-1/2 flex justify-center text-center">
+                    <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm">
                         Thông qua bảng xếp hạng
                     </h2>
                   </div>
