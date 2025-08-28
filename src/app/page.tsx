@@ -325,9 +325,9 @@ export default function HomePage() {
       {/* Rankings Banner Section */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[350px] flex flex-col">
+          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
             <Image 
-              src="/image/Banner bảng xếp hạng.png"
+              src="/image/Banner cho nút bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
               className="object-cover"
