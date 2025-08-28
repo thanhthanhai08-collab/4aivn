@@ -187,7 +187,7 @@ export default function HomePage() {
       {/* Placeholder for Airtable-like visual if desired */}
       <section className="py-12 md:py-16 hidden"> 
         <div className="container">
-          <Image src="https://placehold.co/1200x600.png" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="dashboard interface" />
+          <Image src="https://picsum.photos/1200/600" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="dashboard interface" />
         </div>
       </section>
 
@@ -325,34 +325,35 @@ export default function HomePage() {
       {/* Rankings Banner Section */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <div className="relative rounded-2xl overflow-hidden bg-gray-800 p-8 md:p-12">
+          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[350px] flex flex-col">
             <Image 
               src="/image/Banner bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
-              className="object-cover opacity-20"
+              className="object-cover"
               data-ai-hint="rankings board chart"
             />
-            <div className="relative text-white flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1 md:text-left text-center">
-                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
+            <div className="relative z-10 flex-grow flex flex-col text-foreground">
+                {/* Top Row for Text */}
+                <div className="flex-1 flex justify-between items-start">
+                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm">
                     Lựa chọn các Model phù hợp
                   </h2>
-              </div>
-              <div className="flex-shrink-0 text-center md:text-left mt-4 md:mt-0">
+                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight max-w-sm text-right">
+                      Thông qua Bảng xếp hạng
+                  </h2>
+                </div>
+
+                {/* Bottom Row for Button */}
+                <div className="flex justify-end items-end">
                   <Button 
                     size="lg" 
                     asChild 
-                    className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg w-full sm:w-auto"
+                    className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
                   >
                     <Link href="/bang-xep-hang">Khám phá</Link>
                   </Button>
                 </div>
-              <div className="flex-1 md:text-right text-center">
-                  <h2 className="text-4xl md:text-5xl font-headline font-bold leading-tight">
-                      Thông qua Bảng xếp hạng
-                  </h2>
-              </div>
             </div>
           </div>
         </div>
