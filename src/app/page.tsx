@@ -330,7 +330,7 @@ export default function HomePage() {
               src="/image/Banner cho bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
-              className="object-cover object-top"
+              className="object-cover object-top opacity-65"
               data-ai-hint="rankings board chart"
             />
             <div className="relative z-10 flex-grow flex flex-col justify-between">
@@ -346,7 +346,7 @@ export default function HomePage() {
                 <Button 
                   size="lg" 
                   asChild 
-                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg bg-opacity-60"
+                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg bg-opacity-90"
                 >
                   <Link href="/bang-xep-hang">Khám phá</Link>
                 </Button>
