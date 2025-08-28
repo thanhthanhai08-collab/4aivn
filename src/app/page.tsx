@@ -325,7 +325,7 @@ export default function HomePage() {
       {/* Rankings Banner Section */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[582px] flex flex-col">
+          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
             <Image 
               src="/image/Banner cho nút bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
@@ -333,14 +333,24 @@ export default function HomePage() {
               className="object-cover object-top"
               data-ai-hint="rankings board chart"
             />
-            <div className="relative z-10 flex-grow flex flex-col justify-end items-end">
-              <Button 
-                size="lg" 
-                asChild 
-                className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                <Link href="/bang-xep-hang">Khám phá</Link>
-              </Button>
+            <div className="relative z-10 flex-grow flex flex-col justify-between">
+              <div className="flex justify-between items-start">
+                  <div className="text-3xl md:text-4xl font-bold text-gray-800">
+                      LỰA CHỌN CÁC <br /> MODEL PHÙ HỢP
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-gray-800 text-center">
+                      THÔNG QUA <br /> BẢNG XẾP HẠNG
+                  </div>
+              </div>
+              <div className="flex justify-end">
+                <Button 
+                  size="lg" 
+                  asChild 
+                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  <Link href="/bang-xep-hang">Khám phá</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
