@@ -327,7 +327,7 @@ export default function HomePage() {
         <div className="container">
           <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
             <Image 
-              src="/image/Banner bảng xếp hạng.png"
+              src="/image/Banner cho bảng xếp hạng.png"
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
               className="object-cover object-top"
@@ -346,7 +346,7 @@ export default function HomePage() {
                 <Button 
                   size="lg" 
                   asChild 
-                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg bg-opacity-60"
                 >
                   <Link href="/bang-xep-hang">Khám phá</Link>
                 </Button>
