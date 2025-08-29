@@ -36,8 +36,13 @@ const RenderCustomizedLabel = (props: any) => {
   let yOffset: number;
   let dy: string | number;
 
-  yOffset = nameLines.length > 1 ? -15 : -10;
-  dy = -4;
+  if (dataPoint.name.includes('Qwen Image')) {
+    yOffset = 20; // Increased offset to move it further down
+    dy = '1.2em';
+  } else {
+    yOffset = nameLines.length > 1 ? -15 : -10;
+    dy = -4;
+  }
 
   return (
     <text x={x} y={y + yOffset} dy={dy} fill="#e0e0e0" fontSize={12} textAnchor="middle">
