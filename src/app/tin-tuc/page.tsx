@@ -119,7 +119,7 @@ export default function NewsPage() {
                         {secondaryArticle && (
                             <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
                                 <div className="space-y-3">
-                                     <Link href={`/tin-tuc/${secondaryArticle.id}`} className="block aspect-video relative rounded-md overflow-hidden group">
+                                     <Link href={`/tin-tuc/${secondaryArticle.id}`} className="block aspect-[4/3] relative rounded-md overflow-hidden group">
                                          <Image
                                             src={secondaryArticle.imageUrl}
                                             alt={secondaryArticle.title}
