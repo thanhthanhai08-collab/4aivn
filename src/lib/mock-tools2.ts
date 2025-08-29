@@ -220,7 +220,7 @@ export const mockLovableTool: Tool[] = [
     `,
   },
   {
-    id: 'Gemini 2.5 Flash Image',
+    id: 'gemini-2.5-flash-image',
     name: 'Gemini 2.5 Flash Image',
     context: 'Tạo hình ảnh',
     developer: 'Google',
