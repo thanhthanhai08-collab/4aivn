@@ -19,14 +19,14 @@ const QuickViewItem = ({ article }: { article: any }) => (
         <div className="flex-grow">
             <Link href={`/tin-tuc/${article.id}`} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{article.title}</Link>
         </div>
-        <Link href={`/tin-tuc/${article.id}`} className="flex-shrink-0">
-            <div className="relative w-16 h-16 rounded-md overflow-hidden">
+        <Link href={`/tin-tuc/${article.id}`} className="flex-shrink-0 w-24">
+            <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden">
                 <Image
                     src={article.imageUrl}
                     alt={article.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
-                    sizes="64px"
+                    sizes="96px"
                     data-ai-hint={article.dataAiHint || "news thumbnail"}
                 />
             </div>
