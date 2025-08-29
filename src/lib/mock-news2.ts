@@ -74,6 +74,7 @@ export const mockNews2: NewsArticle[] = [
   <p>Theo bảng xếp hạng LMArena thì Gemini 2.5 Flash Image có tốc độ tạo ảnh từ prompt chậm hơn so với Gemini 2.0 Flash Image nhưng bỏ xa các đối thủ là GPT Image 1 và Flux 1. Còn về chất lượng ảnh thì thể hiện vượt trội so với các đối thủ còn lại thậm chí nó còn nhỉnh hơn so với Imagen 4 Ultra một model quá nổi tiếng về độ sắc nét và chân thực của ảnh.</p>
 [GEMINI_FLASH_IMAGE_CHART]
   <p>Sang phần chỉnh sửa ảnh thì Gemini 2.5 Flash Image vẫn thể hiện giống như tạo ảnh, vẫn vượt trội so với các đối thủ GPT Image 1 và Qwen Image Edit.</p>
+[IMAGE_EDITING_CHART]
   <p>Còn khi so với Midjourney và Stable Diffusion thì đây là những mô hình chuyên biệt phục vụ chỉ một bộ phận người dùng cho nên khi so sánh sẽ hơi khó khăn. Còn đối với riêng Adobe đã nhận ra tiềm năng của Gemini 2.5 Flash Image nên họ đã tích hợp ngay mô hình này vào Firefly và Express, cho phép sáng tạo liền mạch trong hệ sinh thái Creative Cloud.</p>
   <h2><strong>Google Gemini 2.5 Flash Image vẫn có những hạn chế</strong></h2>
   <p>Gemini 2.5 Flash Image có lúc gây ra sự khó chịu khi kiểm duyệt quá mức đặc biệt là đối với prompt xuất hiện trẻ em và hầu hết các hình ảnh xuất hiện phụ nữ đều quá khó để sửa đổi. Tất nhiên Google cũng biết điều này Google đã tích hợp watermark kỹ thuật số vô hình SynthID vào tất cả các hình ảnh được tạo hoặc chỉnh sửa bằng Gemini 2.5 Flash Image để nhận diện nguồn gốc khi có những bức ảnh cung cấp thông tin sai lệch.</p>
@@ -212,3 +213,4 @@ export const mockNews2: NewsArticle[] = [
     
 
     
+

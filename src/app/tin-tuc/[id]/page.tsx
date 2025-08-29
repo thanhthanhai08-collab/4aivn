@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { AiSatisfactionChart } from "@/components/news/AiSatisfactionChart";
 import { ProfitabilityChart } from "@/components/news/ProfitabilityChart";
 import { GeminiFlashImageBenchmarkChart } from "@/components/news/gemini-flash-image-benchmark-chart";
+import { ImageEditingBenchmarkChart } from "@/components/news/image-editing-benchmark-chart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -48,7 +49,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -86,6 +87,13 @@ const renderContent = (content: string, articleId: string) => {
     if (part === '[GEMINI_FLASH_IMAGE_CHART]') {
         if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
             return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
+        }
+        return null;
+    }
+    
+    if (part === '[IMAGE_EDITING_CHART]') {
+        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+            return <ImageEditingBenchmarkChart key={`${index}-image-edit-chart`} />;
         }
         return null;
     }
