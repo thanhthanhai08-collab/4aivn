@@ -14,7 +14,7 @@ export const mockNews2: NewsArticle[] = [
   <ul>
     <li><strong>Đe dọa từ vụ kiện chống độc quyền của Google:</strong> Thỏa thuận tìm kiếm sinh lợi của Apple với Google đang bị đe dọa bởi một vụ kiện chống độc quyền ở Mỹ. Việc mất đi thỏa thuận này có thể khiến Apple thiếu hụt doanh thu ước tính 20 tỷ USD. Việc mua lại Perplexity có thể cho phép Apple ra mắt công cụ tìm kiếm mang thương hiệu riêng, chuẩn bị cho một tương lai không có Google Search.</li>
     <li><strong>Thu hẹp khoảng cách AI:</strong> Apple bị coi là “lỡ chuyến tàu” trong cuộc đua AI thể hiện qua việc Apple Intelligence và Siri liên tục bị rời lịch ra mắt các tính năng mới. Ngay cả khi so với AI của Samsung thì Apple Intelligence cũng không thể so sánh được chứ đừng nói đến ChatGPT hoặc Gemini. Việc mua lại một startup AI có thể sẽ giúp Apple trở lại với đường đua AI.</li>
-[IMAGE:/image/news2/Apple Intelligence.png|Minh họa Apple Intelligence|Apple Intelligence AI]
+[IMAGE:/image/news2/Ảnh Apple Intelligence.webp|Minh họa Apple Intelligence|Apple Intelligence AI]
     <li><strong>Tăng cường uy tín và khả năng tuyển dụng các nhân tài AI:</strong> Hãy nhìn vào Mark Zuckerberg đã chi tiền tấn để săn đón các nhân tài AI hoặc cách đây không lâu cũng đã chi 15 tỷ đô để mua lại 49% cổ phần của Scale AI. Thế mới thấy các nhân tài AI hiện nay được săn đón ráo riết như thế nào, việc mua lại các startup AI có thể mang lại các nhân tài về lĩnh vực này cho Apple.</li>
     <li><strong>Sự cần thiết phải hành động:</strong> Apple rất cần thiết phải hành động để gã khổng lồ không bị coi là công ty hạng 2 về lĩnh vực AI.</li>
   </ul>
