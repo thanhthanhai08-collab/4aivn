@@ -30,6 +30,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { AiSatisfactionChart } from "@/components/news/AiSatisfactionChart";
 import { ProfitabilityChart } from "@/components/news/ProfitabilityChart";
+import { GeminiFlashImageBenchmarkChart } from "@/components/news/gemini-flash-image-benchmark-chart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -47,7 +48,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -78,6 +79,13 @@ const renderContent = (content: string, articleId: string) => {
     if (part === '[PROFITABILITY_CHART]') {
         if (articleId === 'nvidia-gb200-profit') {
             return <ProfitabilityChart key={`${index}-profit-chart`} />;
+        }
+        return null;
+    }
+    
+    if (part === '[GEMINI_FLASH_IMAGE_CHART]') {
+        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+            return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
         }
         return null;
     }
