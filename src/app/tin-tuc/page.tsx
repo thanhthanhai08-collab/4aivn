@@ -118,12 +118,22 @@ export default function NewsPage() {
                         
                         {secondaryArticle && (
                             <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
-                                <div>
-                                    <h2 className="text-xl font-bold font-headline mb-2">
-                                        <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
-                                    </h2>
-                                    <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
-                                    <p className="text-sm text-foreground/80 line-clamp-4">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
+                                <div className="space-y-3">
+                                     <Link href={`/tin-tuc/${secondaryArticle.id}`} className="block aspect-video relative rounded-md overflow-hidden group">
+                                         <Image
+                                            src={secondaryArticle.imageUrl}
+                                            alt={secondaryArticle.title}
+                                            fill
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                         />
+                                     </Link>
+                                    <div>
+                                        <h2 className="text-xl font-bold font-headline mb-2">
+                                            <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
+                                        </h2>
+                                        <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
+                                        <p className="text-sm text-foreground/80 line-clamp-3">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
+                                    </div>
                                 </div>
                                 <Button asChild variant="link" className="p-0 self-start mt-4">
                                     <Link href={`/tin-tuc/${secondaryArticle.id}`}>Đọc thêm &rarr;</Link>
