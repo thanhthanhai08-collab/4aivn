@@ -19,10 +19,10 @@ const CustomTooltip = ({ active, payload }: any) => {
       <div className="bg-background border border-border p-3 rounded-lg shadow-lg">
         <p className="font-bold text-base mb-2">{dataPoint.name}</p>
         <p style={{ color: dataPoint.color }}>
-          LMArena Elo Score: {dataPoint.elo.toLocaleString()}
+          Điểm Elo LMArena: {dataPoint.elo.toLocaleString()}
         </p>
         <p style={{ color: dataPoint.color }}>
-          Throughput: {(dataPoint.throughput / 1000).toLocaleString()}k pixels/sec
+          Tốc độ: {(dataPoint.throughput / 1000).toLocaleString()}k pixels/sec
         </p>
       </div>
     );
@@ -50,7 +50,7 @@ export function GeminiFlashImageBenchmarkChart() {
   return (
     <Card className="my-8 bg-[#1a1a1a] text-white border-gray-700">
       <CardHeader className="text-center">
-        <CardTitle>Text to Image: Overall Preference on LMArena</CardTitle>
+        <CardTitle>Tạo ảnh từ văn bản: Bảng xếp hạng tổng thể trên LMArena</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={400}>
@@ -66,22 +66,22 @@ export function GeminiFlashImageBenchmarkChart() {
             <XAxis 
               type="number" 
               dataKey="throughput" 
-              name="Throughput" 
+              name="Tốc độ" 
               unit="k"
               domain={[0, 180000]}
               tickFormatter={(tick) => `${tick / 1000}k`}
               stroke="#a0a0a0"
             >
-                <Label value="Throughput (pixels per second)" offset={-25} position="insideBottom" fill="#a0a0a0" />
+                <Label value="Tốc độ (pixels per second)" offset={-25} position="insideBottom" fill="#a0a0a0" />
             </XAxis>
             <YAxis 
                 type="number" 
                 dataKey="elo" 
-                name="LMArena Elo scores" 
+                name="Điểm Elo LMArena" 
                 domain={[950, 1200]}
                 stroke="#a0a0a0"
             >
-                <Label value="LMArena Elo scores" angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
+                <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
             </YAxis>
             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
             <Scatter data={data} fill="#8884d8" shape="circle" label={<RenderCustomizedLabel />}>
