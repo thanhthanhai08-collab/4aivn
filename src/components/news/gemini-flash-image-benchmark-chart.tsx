@@ -38,7 +38,7 @@ const RenderCustomizedLabel = (props: any) => {
   let yOffset: number;
   let dy: string | number;
 
-  if (dataPoint.name === 'Imagen 4\nUltra 06-06') {
+  if (dataPoint.name.includes('Imagen 4')) {
     // Move this specific label below the dot
     yOffset = 10;
     dy = '1.2em';
