@@ -51,11 +51,43 @@ export const mockNews2: NewsArticle[] = [
     id: 'google-ra-mat-gemini-2-5-flash-image',
     title: 'Google ra mắt Gemini 2.5 Flash Image – Đòn bẩy mới cho các mô hình chỉnh sửa ảnh',
     source: 'TechCrunch',
-    author: 'Elair Maika',
-    content: '<p>Một nhóm nghiên cứu mới đã phát hiện ra phương pháp ẩn các cuộc tấn công prompt injection trong hình ảnh để thực hiện ý đồ xấu. Prompt injection là cách giấu các lệnh cho một hệ thống AI như LLM, thường ở vị trí không ngờ tới. Kỹ thuật này có thể được sử dụng để đánh lừa các mô hình AI đa phương thức, như Google Lens, bằng cách nhúng các prompt độc hại vào pixel của hình ảnh, gây ra các hành vi không mong muốn.</p>',
+    author: 'Mai',
+    content: `<p>Ngày 26/8, Google chính thức ra mắt Gemini 2.5 Flash Image. Dù mới là bản Preview nhưng đây vẫn là những cải tiến đáng kể, vượt trội so với Gemini 2.0 Flash Image, thậm chí có phần nhỉnh hơn so với chính Imagen 4.</p>
+  <p>Vậy là sau 1 năm kể từ Gemini 2.0 Flash Image, Google lại mang đến mô hình này được thiết kế để tạo ảnh chất lượng cao, cực nhanh, từ đó nâng cao tiêu chuẩn cho những gì AI có thể làm được với hình ảnh.</p>
+
+
+  <h2><strong>Google Gemini 2.5 Flash Image có sức mạnh như thế nào?</strong></h2>
+  <p>Gemini 2.5 Flash Image (trước đây có mã danh "nano-banana" trong giai đoạn thử nghiệm) với việc mới ra mắt thì hiện đang là mô hình chỉnh sửa và tạo hình ảnh mới nhất và mạnh mẽ của Google.</p>
+  <p>Để nói về điểm nổi bật của Gemini 2.5 Flash Image thì có rất nhiều nhưng ở đây sau quá trình sử dụng và trải nghiệm thì thấy có những ưu điểm sau:</p>
+  <ul>
+    <li><strong>Độ chân thực được nâng cấp:</strong> Sau khi sử dụng Gemini 2.5 Flash Image, mình thấy những chi tiết khi tạo ảnh được rõ hơn và được nâng cấp hơn hẳn với Gemini 2.0 Flash Image và có nhỉnh hơn đôi chút so với Imagen 4.</li>
+    <li><strong>Chỉnh sửa chi tiết hình ảnh:</strong> Người dùng hoàn toàn có thể chỉnh sửa một chi tiết nhỏ trong ảnh mà vẫn giữ được bố cục ảnh, thậm chí có người dùng có thể yêu cầu thay đổi phong cách của ảnh mà vẫn giữ được bố cục ảnh chỉ dựa trên prompt.</li>
+    <li><strong>Nhân vật đồng nhất:</strong> Đây là vấn đề nan giải của các model chỉnh sửa ảnh hiện nay, rất khó cho các model giữ được nhân vật đồng nhất trừ khi sử dụng các Lora đã được đào tạo sẵn, nhưng Gemini 2.5 Flash Image mình thấy có phần giữ được hơn hẳn so với GPT Image 1.</li>
+    <li><strong>Chỉnh sửa đa bước (multi-turn editing):</strong> Người dùng có thể chỉnh sửa ảnh với mỗi chuỗi các yêu cầu chỉ trong một lần prompt mà không chỉ áp dụng với các yêu cầu bình thường mà còn những yêu cầu phức tạp như ánh sáng, vật liệu môi trường. Ví dụ người dùng có thể thay đổi nguồn sáng từ trái sang phải và đổi ghế từ ghế nhựa sang ghế gỗ trong cùng một prompt.</li>
+    <li><strong>Hiểu biết về thế giới thực:</strong> Mô hình hiểu được các mối quan hệ vật lý giữa các đối tượng trong ảnh, ánh sáng, và các yếu tố khác. Điều này cho phép nó tạo ra các thay đổi tự nhiên và phù hợp với bối cảnh. Ví dụ: khi thêm một chiếc áo khoác, mô hình sẽ tự động điều chỉnh ánh sáng và nếp gấp sao cho chân thực nhất.</li>
+    <li><strong>Tối ưu chi phí:</strong> Giá chỉ 0.039 USD/hình ảnh – thấp hơn so với OpenAI gpt-image và Flux-Kontext.</li>
+  </ul>
+
+
+  <h2><strong>Google Gemini 2.5 Flash Image thể hiện thế nào khi so sánh với các đối thủ còn lại?</strong></h2>
+  <p>Gemini 2.5 Flash Image với tên mã Nano Banana thì tạo cho chúng ta liên tưởng đến đồ chơi nhưng công cụ này cực kỳ chuyên nghiệp vậy nó thể hiện như thế nào so với các đối thủ của nó?</p>
+  <p>Theo bảng xếp hạng LMArena thì Gemini 2.5 Flash Image có tốc độ tạo ảnh từ prompt chậm hơn so với Gemini 2.0 Flash Image nhưng bỏ xa các đối thủ là GPT Image 1 và Flux 1. Còn về chất lượng ảnh thì thể hiện vượt trội so với các đối thủ còn lại thậm chí nó còn nhỉnh hơn so với Imagen 4 Ultra một model quá nổi tiếng về độ sắc nét và chân thực của ảnh.</p>
+  <p>Sang phần chỉnh sửa ảnh thì Gemini 2.5 Flash Image vẫn thể hiện giống như tạo ảnh, vẫn vượt trội so với các đối thủ GPT Image 1 và Qwen Image Edit.</p>
+  <p>Còn khi so với Midjourney và Stable Diffusion thì đây là những mô hình chuyên biệt phục vụ chỉ một bộ phận người dùng cho nên khi so sánh sẽ hơi khó khăn. Còn đối với riêng Adobe đã nhận ra tiềm năng của Gemini 2.5 Flash Image nên họ đã tích hợp ngay mô hình này vào Firefly và Express, cho phép sáng tạo liền mạch trong hệ sinh thái Creative Cloud.</p>
+  <h2><strong>Google Gemini 2.5 Flash Image vẫn có những hạn chế</strong></h2>
+  <p>Gemini 2.5 Flash Image có lúc gây ra sự khó chịu khi kiểm duyệt quá mức đặc biệt là đối với prompt xuất hiện trẻ em và hầu hết các hình ảnh xuất hiện phụ nữ đều quá khó để sửa đổi. Tất nhiên Google cũng biết điều này Google đã tích hợp watermark kỹ thuật số vô hình SynthID vào tất cả các hình ảnh được tạo hoặc chỉnh sửa bằng Gemini 2.5 Flash Image để nhận diện nguồn gốc khi có những bức ảnh cung cấp thông tin sai lệch.</p>
+  <p>Mô hình này vẫn chưa làm việc tốt đối với các prompt dài, nếu các prompt dài thì việc nhầm lẫn sẽ xuất hiện gây ra sự khó chịu cho người dùng đây là vấn đề cố hữu đối với các model chỉnh sửa ảnh hi vọng Google và các hãng sẽ xử lý vấn đề này sớm.</p>
+
+
+  <h2><strong>Làm sao để tiếp cận Gemini 2.5 Flash Image?</strong></h2>
+  <p>Tin vui là bạn có thể trải nghiệm Nano Banana (Gemini 2.5 Flash Image) một cách dễ dàng!</p>
+  <ul>
+    <li><strong>Google AI Studio hoặc ứng dụng Gemini App</strong> (trên web và di động). Người dùng miễn phí có thể thực hiện tối đa 100 chỉnh sửa mỗi ngày.</li>
+<li><strong>Dành cho nhà phát triển và doanh nghiệp:</strong> Mô hình cũng có sẵn thông qua Gemini API và Vertex AI để tích tích hợp vào các ứng dụng của riêng bạn.</li>   <li><strong>Chi phí:</strong> Qua API, chi phí là khoảng 4 cent cho mỗi hình ảnh (hoặc $0.039), một mức giá rất cạnh tranh so với các mô hình khác.</li>
+  </ul>`,
     publishedAt: '2025-09-08T14:00:00Z',
-    imageUrl: '/image/news2/hackers_circle_to_search.jpg',
-    dataAiHint: 'hacker glasses code',
+    imageUrl: '/image/news2/Gemini 2.5 Flash Image ra mắt.png',
+    dataAiHint: 'Gemini 2.5 Flash Image ra mắt',
   },
   {
     id: 'nvidia-gb200-profit',
