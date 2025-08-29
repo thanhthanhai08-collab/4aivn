@@ -5,11 +5,11 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: 'Gemini 2.5\nFlash Image', throughput: 123000, elo: 1360, color: '#4185F4' },
-  { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1175, color: '#82ca9d' },
-  { name: 'FLUX.1\nKontext [max]', throughput: 75000, elo: 1190, color: '#8884d8' },
-  { name: 'Qwen Image\nEdit', throughput: 22000, elo: 1145, color: '#ffc658' },
-  { name: 'Gemini 2.0\nFlash Image', throughput: 173000, elo: 1098, color: '#FFFFFF' },
+  { name: 'Gemini 2.5\nFlash Image', throughput: 123000, elo: 1362, color: '#4185F4' },
+  { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1170, color: '#82ca9d' },
+  { name: 'FLUX.1\nKontext [max]', throughput: 75000, elo: 1191, color: '#8884d8' },
+  { name: 'Qwen Image\nEdit', throughput: 20000, elo: 1145, color: '#ffc658' },
+  { name: 'Gemini 2.0\nFlash Image', throughput: 173000, elo: 1093, color: '#FFFFFF' },
 ];
 
 const CustomTooltip = ({ active, payload }: any) => {
