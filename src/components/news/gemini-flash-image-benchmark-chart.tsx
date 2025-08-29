@@ -67,7 +67,6 @@ export function GeminiFlashImageBenchmarkChart() {
               type="number" 
               dataKey="throughput" 
               name="Tốc độ" 
-              unit="k"
               domain={[0, 180000]}
               tickFormatter={(tick) => `${tick / 1000}k`}
               stroke="#a0a0a0"
