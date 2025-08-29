@@ -50,7 +50,7 @@ export function GeminiFlashImageBenchmarkChart() {
   return (
     <Card className="my-8 bg-[#1a1a1a] text-white border-gray-700">
       <CardHeader className="text-center">
-        <CardTitle>Bảng xếp hạng tổng thể trên LMArena</CardTitle>
+        <CardTitle>Text to image: Bảng xếp hạng tổng thể trên LMArena</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={400}>
