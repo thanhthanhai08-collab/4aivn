@@ -5,25 +5,34 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: 'Gemini 2.0\nFlash Image', throughput: 168000, elo: 995, color: '#FFFFFF' },
-  { name: 'FLUX.1\nKontext [max]', throughput: 70000, elo: 1070, color: '#8884d8' },
-  { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1125, color: '#82ca9d' },
-  { name: 'Imagen 4\nUltra 06-06', throughput: 125000, elo: 1140, color: '#ffc658' },
-  { name: 'Gemini 2.5\nFlash Image', throughput: 128000, elo: 1150, color: '#4185F4' },
+  { name: 'Gemini 2.0\nFlash Image', throughput: 173000, elo: 988, color: '#FFFFFF' },
+  { name: 'FLUX.1\nKontext [max]', throughput: 75000, elo: 1075, color: '#8884d8' },
+  { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1129, color: '#82ca9d' },
+  { name: 'Imagen 4\nUltra 06-06', throughput: 119000, elo: 1135, color: '#ffc658' },
+  { name: 'Gemini 2.5\nFlash Image', throughput: 123000, elo: 1147, color: '#4185F4' },
 ];
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
     return (
-      <div className="bg-background border border-border p-3 rounded-lg shadow-lg">
-        <p className="font-bold text-base mb-2">{dataPoint.name.replace('\n', ' ')}</p>
-        <p style={{ color: dataPoint.color }}>
-          Điểm Elo LMArena: {dataPoint.elo.toLocaleString()}
-        </p>
-        <p style={{ color: dataPoint.color }}>
-          Tốc độ: {(dataPoint.throughput / 1000).toLocaleString()}k pixels/sec
-        </p>
+      <div className="bg-background/80 backdrop-blur-sm border border-border p-3 rounded-lg shadow-lg text-sm">
+        <table className="w-full text-left">
+            <thead>
+                <tr className="border-b border-border/50">
+                    <th className="pr-4 pb-1 font-semibold">Model</th>
+                    <th className="px-4 pb-1 font-semibold text-center">Tốc độ</th>
+                    <th className="pl-4 pb-1 font-semibold text-center">Điểm Elo LMArena</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr className="font-medium">
+                    <td className="pr-4 pt-1">{dataPoint.name.replace('\n', ' ')}</td>
+                    <td className="px-4 pt-1 text-center">{(dataPoint.throughput / 1000)}k</td>
+                    <td className="pl-4 pt-1 text-center">{dataPoint.elo}</td>
+                </tr>
+            </tbody>
+        </table>
       </div>
     );
   }
