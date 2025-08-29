@@ -34,10 +34,22 @@ const RenderCustomizedLabel = (props: any) => {
   const { x, y, value, index } = props;
   const dataPoint = data[index];
   const nameLines = dataPoint.name.split('\n');
-  const yOffset = nameLines.length > 1 ? -15 : -10;
+  
+  let yOffset: number;
+  let dy: string | number;
+
+  if (dataPoint.name === 'Imagen 4\nUltra 06-06') {
+    // Move this specific label below the dot
+    yOffset = 5;
+    dy = '1.2em';
+  } else {
+    // Keep other labels above the dot
+    yOffset = nameLines.length > 1 ? -15 : -10;
+    dy = -4;
+  }
 
   return (
-    <text x={x} y={y + yOffset} dy={-4} fill="#e0e0e0" fontSize={12} textAnchor="middle">
+    <text x={x} y={y + yOffset} dy={dy} fill="#e0e0e0" fontSize={12} textAnchor="middle">
       {nameLines.map((line, i) => (
         <tspan key={i} x={x} dy={i > 0 ? "1.2em" : 0}>{line}</tspan>
       ))}
