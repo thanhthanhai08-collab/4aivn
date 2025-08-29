@@ -57,7 +57,7 @@ export function ImageEditingBenchmarkChart() {
   return (
     <Card className="my-8 bg-[#1a1a1a] text-white border-gray-700">
       <CardHeader className="text-center">
-        <CardTitle>Chỉnh sửa ảnh: Bảng xếp hạng tổng thể trên LMArena</CardTitle>
+        <CardTitle>Image Editing: Bảng xếp hạng tổng thể trên LMArena</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={400}>
