@@ -37,7 +37,7 @@ const RenderCustomizedLabel = (props: any) => {
   let dy: string | number;
 
   if (dataPoint.name.includes('Imagen 4')) {
-    yOffset = 10;
+    yOffset = 20; // Increased offset to move it further down
     dy = '1.2em';
   } else {
     yOffset = nameLines.length > 1 ? -15 : -10;
