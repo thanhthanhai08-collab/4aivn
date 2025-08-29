@@ -80,8 +80,9 @@ export function GeminiFlashImageBenchmarkChart() {
                 name="Điểm Elo LMArena" 
                 domain={[950, 1200]}
                 stroke="#a0a0a0"
+                width={80}
             >
-                <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
+                <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" offset={-10} style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
             </YAxis>
             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
             <Scatter data={data} fill="#8884d8" shape="circle" label={<RenderCustomizedLabel />}>
