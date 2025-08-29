@@ -218,7 +218,47 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho doanh nghiệp với các tính năng bảo mật và quản lý nâng cao.</li>
         </ul>
     `,
+  },
+  {
+    id: 'Gemini 2.5 Flash Image',
+    name: 'Gemini 2.5 Flash Image',
+    context: 'Tạo hình ảnh',
+    developer: 'Google',
+    description: 'Gemini 2.5 Flash Image là mô hình tạo và chỉnh sửa ảnh nhanh, mạnh mẽ từ Google. Nó nổi bật với khả năng chỉnh sửa chi tiết, duy trì sự nhất quán của nhân vật và xử lý các yêu cầu phức tạp trong một lần prompt.',
+    logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
+    link: 'https://deepmind.google/technologies/gemini/',
+    imageUrl: '/image/Ảnh công cụ Gemini 2.5 Flash Image.png',
+    longDescription: '<p>Gemini 2.5 Flash Image là một mô hình AI đa năng của Google, được thiết kế để tạo và chỉnh sửa hình ảnh với tốc độ và chất lượng cao. Nó không chỉ tạo ra hình ảnh từ văn bản mà còn cho phép người dùng chỉnh sửa các chi tiết nhỏ trong ảnh, thay đổi phong cách mà vẫn giữ nguyên bố cục. Một trong những điểm mạnh nhất của mô hình này là khả năng duy trì sự nhất quán của nhân vật qua nhiều lần tạo, một thách thức lớn đối với nhiều công cụ AI khác.</p><p>Với khả năng hiểu các prompt đa bước, Gemini 2.5 Flash Image có thể xử lý các yêu cầu phức tạp như thay đổi nguồn sáng và vật liệu trong cùng một lệnh, mang lại sự linh hoạt và kiểm soát sáng tạo cho người dùng. Đây là công cụ lý tưởng cho các nhà thiết kế, nghệ sĩ và người sáng tạo nội dung muốn tạo ra các sản phẩm hình ảnh độc đáo và chuyên nghiệp.</p>',
+    features: [
+      "Chỉnh sửa chi tiết hình ảnh mà vẫn giữ bố cục.",
+      "Duy trì sự nhất quán của nhân vật qua nhiều lần tạo.",
+      "Xử lý các yêu cầu chỉnh sửa đa bước trong một prompt.",
+      "Hiểu biết tốt về các mối quan hệ vật lý và ánh sáng.",
+      "Tạo ảnh chất lượng cao và chân thực.",
+      "Giá cả cạnh tranh, tối ưu chi phí."
+    ],
+    useCases: [
+        'Tạo hình ảnh minh họa cho truyện và sách.',
+        'Thiết kế nhân vật cho game và phim hoạt hình.',
+        'Chỉnh sửa và cải thiện ảnh sản phẩm, quảng cáo.',
+        'Sáng tạo nghệ thuật số với các yêu cầu phức tạp.',
+        'Tạo nội dung hình ảnh nhất quán cho các chiến dịch thương hiệu.'
+    ],
+    whoIsItFor: [
+        'Nhà thiết kế đồ họa',
+        'Nghệ sĩ kỹ thuật số',
+        'Người sáng tạo nội dung',
+        'Nhà phát triển game',
+        'Người làm marketing'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Miễn phí:</strong> Người dùng miễn phí có thể thực hiện tối đa 100 chỉnh sửa mỗi ngày trên Google AI Studio hoặc ứng dụng Gemini.</li>
+            <li><strong>API:</strong> Chi phí khoảng $0.039/hình ảnh, phù hợp cho các nhà phát triển và doanh nghiệp muốn tích hợp vào ứng dụng riêng.</li>
+        </ul>
+    `,
   }
 ];
 
+    
     
