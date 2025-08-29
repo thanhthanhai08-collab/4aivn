@@ -40,7 +40,7 @@ const RenderCustomizedLabel = (props: any) => {
 
   if (dataPoint.name === 'Imagen 4\nUltra 06-06') {
     // Move this specific label below the dot
-    yOffset = 5;
+    yOffset = 10;
     dy = '1.2em';
   } else {
     // Keep other labels above the dot
