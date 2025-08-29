@@ -16,23 +16,12 @@ const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
     return (
-      <div className="bg-background/80 backdrop-blur-sm border border-border p-3 rounded-lg shadow-lg text-sm">
-        <table className="w-full text-left">
-            <thead>
-                <tr className="border-b border-border/50">
-                    <th className="pr-4 pb-1 font-semibold">Model</th>
-                    <th className="px-4 pb-1 font-semibold text-center">Tốc độ</th>
-                    <th className="pl-4 pb-1 font-semibold text-center">Điểm Elo LMArena</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr className="font-medium">
-                    <td className="pr-4 pt-1">{dataPoint.name.replace('\n', ' ')}</td>
-                    <td className="px-4 pt-1 text-center">{(dataPoint.throughput / 1000)}k</td>
-                    <td className="pl-4 pt-1 text-center">{dataPoint.elo}</td>
-                </tr>
-            </tbody>
-        </table>
+      <div className="bg-background border border-border p-4 rounded-lg shadow-xl text-card-foreground">
+        <div className="font-semibold text-base mb-2">{dataPoint.name.replace('\n', ' ')}</div>
+        <div className="space-y-1 text-sm">
+            <p><span className="text-muted-foreground">Điểm Elo LMArena:</span> <span className="font-bold text-primary">{dataPoint.elo}</span></p>
+            <p><span className="text-muted-foreground">Tốc độ:</span> <span className="font-bold text-primary">{(dataPoint.throughput / 1000).toLocaleString()}k pixels/sec</span></p>
+        </div>
       </div>
     );
   }
@@ -48,11 +37,9 @@ const RenderCustomizedLabel = (props: any) => {
   let dy: string | number;
 
   if (dataPoint.name.includes('Imagen 4')) {
-    // Move this specific label below the dot
     yOffset = 10;
     dy = '1.2em';
   } else {
-    // Keep other labels above the dot
     yOffset = nameLines.length > 1 ? -15 : -10;
     dy = -4;
   }
