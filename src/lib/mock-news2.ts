@@ -44,12 +44,12 @@ export const mockNews2: NewsArticle[] = [
   </ul>
   <p>Đây mới chỉ là các cuộc thảo luận về việc mua lại Perplexity và Mistral AI chứ chưa có kí kết gì cả. Kết quả của những cuộc đàm phán này sẽ có tác động đáng kể đến Apple hoặc rộng ra là thị trường AI.</p>`,
     publishedAt: '2025-09-09T09:00:00Z',
-    imageUrl: '/image/news2/Apple làm việc với Mistra và Perplexity.png',
+    imageUrl: '/image/news2/Apple Intelligence.png',
     dataAiHint: 'Apple iPhone AI',
   },
   {
-    id: 'hackers-circle-to-search-exploit',
-    title: 'Hackers có thể cài mã độc vào hình ảnh, đánh lừa cơ chế circle to search',
+    id: 'google-ra-mat-gemini-2-5-flash-image',
+    title: 'Google ra mắt Gemini 2.5 Flash Image – Đòn bẩy mới cho các mô hình chỉnh sửa ảnh',
     source: 'TechCrunch',
     author: 'Elair Maika',
     content: '<p>Một nhóm nghiên cứu mới đã phát hiện ra phương pháp ẩn các cuộc tấn công prompt injection trong hình ảnh để thực hiện ý đồ xấu. Prompt injection là cách giấu các lệnh cho một hệ thống AI như LLM, thường ở vị trí không ngờ tới. Kỹ thuật này có thể được sử dụng để đánh lừa các mô hình AI đa phương thức, như Google Lens, bằng cách nhúng các prompt độc hại vào pixel của hình ảnh, gây ra các hành vi không mong muốn.</p>',
