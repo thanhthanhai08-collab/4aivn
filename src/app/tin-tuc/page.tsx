@@ -110,7 +110,7 @@ export default function NewsPage() {
                            </Link>
                            <div className="p-4 bg-card flex-grow flex flex-col">
                                 <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
-                                     <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:underline">{featuredArticle.title}</Link>
+                                     <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
                                 </h2>
                                 <p className="text-sm text-muted-foreground mt-2">Bởi {featuredArticle.author}</p>
                            </div>
