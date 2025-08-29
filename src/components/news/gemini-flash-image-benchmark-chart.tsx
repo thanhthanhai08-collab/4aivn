@@ -5,11 +5,11 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: 'Gemini 2.0 Flash Image', throughput: 168000, elo: 995, color: '#FFFFFF' },
-  { name: 'FLUX.1 Kontext [max]', throughput: 70000, elo: 1070, color: '#8884d8' },
-  { name: 'ChatGPT 4o / GPT Image 1 (High)', throughput: 28000, elo: 1125, color: '#82ca9d' },
-  { name: 'Imagen 4 Ultra 06-06', throughput: 125000, elo: 1140, color: '#ffc658' },
-  { name: 'Gemini 2.5 Flash Image', throughput: 128000, elo: 1150, color: '#4185F4' },
+  { name: 'Gemini 2.0\nFlash Image', throughput: 168000, elo: 995, color: '#FFFFFF' },
+  { name: 'FLUX.1\nKontext [max]', throughput: 70000, elo: 1070, color: '#8884d8' },
+  { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1125, color: '#82ca9d' },
+  { name: 'Imagen 4\nUltra 06-06', throughput: 125000, elo: 1140, color: '#ffc658' },
+  { name: 'Gemini 2.5\nFlash Image', throughput: 128000, elo: 1150, color: '#4185F4' },
 ];
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     const dataPoint = payload[0].payload;
     return (
       <div className="bg-background border border-border p-3 rounded-lg shadow-lg">
-        <p className="font-bold text-base mb-2">{dataPoint.name}</p>
+        <p className="font-bold text-base mb-2">{dataPoint.name.replace('\n', ' ')}</p>
         <p style={{ color: dataPoint.color }}>
           Điểm Elo LMArena: {dataPoint.elo.toLocaleString()}
         </p>
@@ -33,8 +33,8 @@ const CustomTooltip = ({ active, payload }: any) => {
 const RenderCustomizedLabel = (props: any) => {
   const { x, y, value, index } = props;
   const dataPoint = data[index];
-  const nameLines = dataPoint.name.split(' ');
-  const yOffset = nameLines.length > 2 ? -15 : -10;
+  const nameLines = dataPoint.name.split('\n');
+  const yOffset = nameLines.length > 1 ? -15 : -10;
 
   return (
     <text x={x} y={y + yOffset} dy={-4} fill="#e0e0e0" fontSize={12} textAnchor="middle">
@@ -81,7 +81,7 @@ export function GeminiFlashImageBenchmarkChart() {
                 stroke="#a0a0a0"
                 width={80}
             >
-                <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" offset={-10} style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
+                <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" offset={-20} style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
             </YAxis>
             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
             <Scatter data={data} fill="#8884d8" shape="circle" label={<RenderCustomizedLabel />}>
