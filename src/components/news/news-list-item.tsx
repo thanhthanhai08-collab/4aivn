@@ -78,7 +78,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
           alt={article.title}
           width={400}
           height={250}
-          className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 shadow-lg shadow-red-500/20 group-hover:shadow-red-500/40"
+          className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 shadow-lg group-hover:shadow-xl"
           data-ai-hint={article.dataAiHint}
         />
       </Link>
