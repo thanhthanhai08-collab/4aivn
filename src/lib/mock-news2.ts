@@ -52,7 +52,7 @@ export const mockNews2: NewsArticle[] = [
     title: 'Google ra mắt Gemini 2.5 Flash Image – Đòn bẩy mới cho các mô hình chỉnh sửa ảnh',
     source: 'TechCrunch',
     author: 'Mai',
-    content: `<p>Ngày 26/8, Google chính thức ra mắt Gemini 2.5 Flash Image. Dù mới là bản Preview nhưng đây vẫn là những cải tiến đáng kể, vượt trội so với Gemini 2.0 Flash Image, thậm chí có phần nhỉnh hơn so với chính Imagen 4.</p>
+    content: `<p>Vào ngày 26/8, Google đã tạo ra một cú hích mới trong lĩnh vực AI tạo sinh với việc ra mắt Gemini 2.5 Flash Image. Mặc dù chỉ là phiên bản xem trước (Preview), mô hình này đã cho thấy những cải tiến vượt bậc, không chỉ bỏ xa người tiền nhiệm Gemini 2.0 Flash Image mà còn được đánh giá nhỉnh hơn cả 'gã khổng lồ' về độ chân thực là Imagen 4.</p>
   <p>Vậy là sau 1 năm kể từ Gemini 2.0 Flash Image, Google lại mang đến mô hình này được thiết kế để tạo ảnh chất lượng cao, cực nhanh, từ đó nâng cao tiêu chuẩn cho những gì AI có thể làm được với hình ảnh.</p>
 
 
