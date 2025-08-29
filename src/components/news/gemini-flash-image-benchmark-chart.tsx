@@ -1,7 +1,7 @@
 // src/components/news/gemini-flash-image-benchmark-chart.tsx
 "use client"
 
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, Cell } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, Cell, ZAxis } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
@@ -37,7 +37,7 @@ const RenderCustomizedLabel = (props: any) => {
   let dy: string | number;
 
   if (dataPoint.name.includes('Imagen 4')) {
-    yOffset = 20; // Increased offset to move it further down
+    yOffset = 25; // Increased offset to move it further down
     dy = '1.2em';
   } else {
     yOffset = nameLines.length > 1 ? -15 : -10;
@@ -91,6 +91,7 @@ export function GeminiFlashImageBenchmarkChart() {
             >
                 <Label value="Điểm Elo LMArena" angle={-90} position="insideLeft" offset={5} style={{ textAnchor: 'middle', fill: '#a0a0a0' }} />
             </YAxis>
+            <ZAxis dataKey="elo" range={[50, 200]} />
             <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
             <Scatter data={data} fill="#8884d8" shape="circle" label={<RenderCustomizedLabel />}>
               {data.map((entry, index) => (
