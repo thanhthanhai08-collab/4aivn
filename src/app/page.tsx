@@ -156,6 +156,22 @@ export default function HomePage() {
 
   return (
     <AppLayout>
+      {/* 80 Years Banner */}
+      <section className="bg-background py-4 border-b">
+        <div className="container flex items-center justify-center sm:justify-start">
+          <div className="flex items-center space-x-4">
+            <div className="text-center">
+              <div className="text-5xl font-extrabold text-red-600">80</div>
+              <div className="text-lg font-bold text-blue-800 -mt-2">năm</div>
+            </div>
+            <div className="text-blue-800">
+              <div className="text-2xl sm:text-3xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
+              <div className="text-lg sm:text-xl font-bold">1945 - 2025</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
        <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
