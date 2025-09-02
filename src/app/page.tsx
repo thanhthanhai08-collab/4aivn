@@ -191,22 +191,16 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Independence Day Banner Section */}
+       {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
         <div className="container">
-          <div className="flex items-center justify-center p-4 rounded-lg shadow-lg bg-gray-50">
-            <div className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
-                <p className="text-6xl font-extrabold text-red-600 leading-none">80</p>
-                <p className="text-xl font-bold text-blue-800 leading-none">năm</p>
-              </div>
-              <div className="border-l-2 border-gray-300 h-16 mx-2"></div>
-              <div>
-                <p className="text-2xl font-bold text-blue-800 tracking-wider">ĐỘC LẬP VÀ KHÁT VỌNG</p>
-                <p className="text-xl font-semibold text-blue-800">1945 - 2025</p>
-              </div>
-            </div>
-          </div>
+          <Image 
+            src="/image/Banner quốc khánh.png"
+            alt="Banner kỷ niệm 80 năm quốc khánh Việt Nam"
+            width={1920}
+            height={250}
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
         </div>
       </section>
 
