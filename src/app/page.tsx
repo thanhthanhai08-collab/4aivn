@@ -190,20 +190,23 @@ export default function HomePage() {
           <Image src="https://picsum.photos/1200/600" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="dashboard interface" />
         </div>
       </section>
-
+      
       {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
         <div className="container">
-            <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
-                <Image 
-                    src="/image/Banner quốc khánh.png"
-                    alt="Banner Kỷ niệm 80 năm Quốc Khánh Việt Nam"
-                    width={1920}
-                    height={250}
-                    className="object-cover w-full h-auto"
-                    data-ai-hint="Vietnam independence day banner"
-                />
+          <div className="flex items-center justify-center p-4 rounded-lg shadow-lg bg-gray-50">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <p className="text-6xl font-extrabold text-red-600 leading-none">80</p>
+                <p className="text-xl font-bold text-blue-800 leading-none">năm</p>
+              </div>
+              <div className="border-l-2 border-gray-300 h-16 mx-2"></div>
+              <div>
+                <p className="text-2xl font-bold text-blue-800 tracking-wider">ĐỘC LẬP VÀ KHÁT VỌNG</p>
+                <p className="text-xl font-semibold text-blue-800">1945 - 2025</p>
+              </div>
             </div>
+          </div>
         </div>
       </section>
 
