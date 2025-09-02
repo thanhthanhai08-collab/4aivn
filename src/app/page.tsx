@@ -191,6 +191,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Independence Day Banner Section */}
+      <section className="py-8 bg-background">
+        <div className="container">
+            <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden shadow-2xl">
+                <Image 
+                    src="/image/Banner quốc khánh.png"
+                    alt="Banner Kỷ niệm 80 năm Quốc Khánh Việt Nam"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="Vietnam independence day banner"
+                />
+            </div>
+        </div>
+      </section>
 
       {/* AI Tool Ranking Section */}
       <section className="py-16 bg-background">
