@@ -164,26 +164,11 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-           {/* Combined div */}
-          <div className="flex flex-col items-center justify-center mb-8 relative">
-              <div className="absolute top-0 left-0 text-left">
-                  <div className="flex items-center space-x-2">
-                      <div className="text-center">
-                          <div className="text-2xl font-extrabold text-red-600">80</div>
-                          <div className="text-xs font-bold text-blue-800 -mt-1">năm</div>
-                      </div>
-                      <div className="text-blue-800">
-                          <div className="text-base font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
-                          <div className="text-sm font-bold">1945 - 2025</div>
-                      </div>
-                  </div>
-              </div>
-              <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px] w-full">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
-                      <span className="break-words">{displayedText}</span>
-                      <span className="animate-blink text-primary">|</span>
-                  </h1>
-              </div>
+          <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px] w-full mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
+                  <span className="break-words">{displayedText}</span>
+                  <span className="animate-blink text-primary">|</span>
+              </h1>
           </div>
 
             <p className="max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl">
@@ -209,7 +194,17 @@ export default function HomePage() {
       
        {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
-        <div className="container">
+        <div className="container space-y-4 text-center">
+            <div className="flex items-center justify-center space-x-4">
+                <div className="text-center">
+                    <div className="text-5xl font-extrabold text-red-600">80</div>
+                    <div className="text-lg font-bold text-blue-800 -mt-1">năm</div>
+                </div>
+                <div className="text-blue-800">
+                    <div className="text-3xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
+                    <div className="text-2xl font-bold">1945 - 2025</div>
+                </div>
+            </div>
           <Image 
             src="/image/Banner quốc khánh.png"
             alt="Banner kỷ niệm 80 năm quốc khánh Việt Nam"
