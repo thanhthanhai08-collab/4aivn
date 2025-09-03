@@ -164,7 +164,7 @@ export default function HomePage() {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-          <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px] w-full mb-8">
+           <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px] w-full mb-8 pt-10">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4 text-center">
                   <span className="break-words">{displayedText}</span>
                   <span className="animate-blink text-primary">|</span>
