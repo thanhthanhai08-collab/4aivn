@@ -166,7 +166,7 @@ export default function HomePage() {
         <div className="container relative text-center">
            {/* Combined div */}
           <div className="flex flex-col items-center justify-center mb-8 relative">
-              <div className="absolute bottom-0 left-0 text-left">
+              <div className="absolute top-0 left-0 text-left">
                   <div className="flex items-center space-x-2">
                       <div className="text-center">
                           <div className="text-2xl font-extrabold text-red-600">80</div>
