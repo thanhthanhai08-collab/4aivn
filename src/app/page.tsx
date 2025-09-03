@@ -156,31 +156,29 @@ export default function HomePage() {
 
   return (
     <AppLayout>
-      {/* 80 Years Banner */}
-      <section className="bg-background py-4 border-b">
-        <div className="container flex items-center justify-center sm:justify-start">
-          <div className="flex items-center space-x-4">
-            <div className="text-center">
-              <div className="text-5xl font-extrabold text-red-600">80</div>
-              <div className="text-lg font-bold text-blue-800 -mt-2">năm</div>
-            </div>
-            <div className="text-blue-800">
-              <div className="text-2xl sm:text-3xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
-              <div className="text-lg sm:text-xl font-bold">1945 - 2025</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Hero Section */}
-       <section className="relative py-20 md:py-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
+       {/* Hero Section */}
+       <section className="relative pt-8 pb-20 md:pt-12 md:pb-32 bg-gradient-to-br from-violet-50 to-slate-50 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
             {/* Decorative background elements */}
             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-3xl animate-pulse"></div>
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
         <div className="container relative text-center">
-          <div className="flex flex-col justify-center items-center min-h-[280px] sm:min-h-[260px]">
+           {/* 80 Years Banner */}
+          <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center space-x-3">
+              <div className="text-center">
+                <div className="text-4xl font-extrabold text-red-600">80</div>
+                <div className="text-base font-bold text-blue-800 -mt-1.5">năm</div>
+              </div>
+              <div className="text-blue-800 text-left">
+                <div className="text-xl sm:text-2xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
+                <div className="text-base sm:text-lg font-bold">1945 - 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px]">
              <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
               <span className="break-words">{displayedText}</span>
               <span className="animate-blink text-primary">|</span>
