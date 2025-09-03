@@ -165,7 +165,7 @@ export default function HomePage() {
         </div>
         <div className="container relative text-center">
           <div className="flex flex-col justify-center items-center min-h-[220px] sm:min-h-[200px] w-full mb-8">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-foreground leading-tight sm:leading-snug md:leading-relaxed h-[160px] flex items-center justify-center mb-4 text-center">
                   <span className="break-words">{displayedText}</span>
                   <span className="animate-blink text-primary">|</span>
               </h1>
@@ -195,7 +195,7 @@ export default function HomePage() {
        {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
         <div className="container space-y-4 text-center">
-            <div className="flex items-center justify-center space-x-4">
+            <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="text-center">
                     <div className="text-5xl font-extrabold text-red-600">80</div>
                     <div className="text-lg font-bold text-blue-800 -mt-1">năm</div>
