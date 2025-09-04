@@ -207,10 +207,50 @@ export const mockNews2: NewsArticle[] = [
     publishedAt: '2025-08-10T09:00:00Z',
     imageUrl: '/image/news2/Gemini ra mắt tính năng tạo sách truyện cá nhân hóa cực kì sáng tạo.png',
     dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
-  }
+  },
+  {
+    id: 'meta-ai-lieu-co-tro-thanh-bom-xit',
+    title: 'Meta AI liệu có trở thành “bom xịt”?',
+    source: 'Bloomberg',
+    author: 'Mai',
+    content: `<p>Ra mắt vào tháng 4-2024, Meta AI được kỳ vọng là một ứng dụng độc lập đóng vai trò trợ lý ảo của Meta, đến thời điểm này Meta AI đã ra mắt thêm phần "Discover" để người dùng khám phá cách cộng đồng tạo nội dung AI, tuy nhiên sản phẩm này vẫn được đánh giá là được phát triển quá vội vàng từ ứng dụng AI đi kèm kính thông minh.</p>
+    <p>Chỉ sau vài tháng, hàng loạt phản hồi tiêu cực đã xuất hiện, cho rằng trải nghiệm kém, nội dung trên nguồn cấp dữ liệu không cập nhật, và AI thường xuyên "bịa đặt" thông tin. Dù đã đầu tư hàng tỷ đô la vào phát triển AI cộng với nguồn lực khổng lồ, Meta AI vẫn bị đánh giá là thiếu cá nhân hóa, hoạt động rời rạc và chưa đủ sức cạnh tranh với các ông lớn như ChatGPT, Gemini, Claude, Deepseek.</p>
+
+
+    <h2><strong>Trải nghiệm rời rạc, cá nhân hóa rất yếu kém</strong></h2>
+    <p>Một trong những vấn đề lớn nhất của Meta AI là thiếu tính liền mạch. Khi người dùng chuyển đổi giữa Facebook, Instagram, Messenger hoặc WhatsApp, các cuộc trò chuyện của họ với Meta AI không thể đồng bộ, gây ra trải nghiệm rời rạc. Mỗi nền tảng lại có một phiên bản Meta AI hoạt động khác nhau: WhatsApp tập trung vào gợi ý tác vụ và quản lý lịch, Messenger vượt trội trong việc tạo ảnh, và Facebook nghiêng về tóm tắt bình luận.</p>
+    <p>Sự phân mảnh này trái ngược với ChatGPT hoặc Gemini hoặc thậm chí Perplexity có thể làm tốt hơn với lịch sử trò chuyện có thể đồng bộ hóa trên các thiết bị và nền tảng, tạo ra cảm giác thống nhất- điều cực kì cần thiết với các nền tảng hiện nay.</p>
+    <p>Tính cá nhân hóa cũng bị đánh giá thấp.</p>
+    <p>Mặc dù Meta AI biết vị trí và một số sở thích của người dùng nhưng vẫn đưa ra gợi ý các hoạt động sự kiện không hề liên quan. Ứng dụng này không truy xuất dữ liệu cá nhân từ Facebook hoặc Instagram để điều chỉnh câu trả lời, một hạn chế khiến người dùng thất vọng. Đáng chú ý, AI đôi khi "tự bịa" chi tiết về cuộc sống cá nhân của người dùng, làm giảm độ tin cậy tạo ra trải nghiệm rất tệ nếu nói về độ hiểu người dùng trong các sản phẩm của Meta.</p>
+    <p>Bloomberg News đã thử nghiệm và chỉ ra rằng Meta AI có thể nhận ra một số sở thích cơ bản của người dùng nhưng vẫn dễ đưa ra thông tin sai lệch, đặc biệt khi được hỏi những câu hỏi cần cập nhật thông tin mới nhất (điều mà Grok 4 đang làm rất tốt) hoặc liên quan đến dữ liệu cá nhân.</p>
+
+
+    <h2><strong>Phản hồi tiêu cực và thách thức cạnh tranh</strong></h2>
+    <p>Meta AI đã nhận được nhiều ý kiến trái chiều kể từ khi ra mắt cho rằng Meta đang ép người dùng sử dụng đi kèm với các ứng dụng phổ biến mà không đem lại lợi ích gì.</p>
+    <p>Mặc dù tiếp cận hơn 1 tỷ người dùng thông qua các mạng xã hội Facebook, Instagram, Messenger và WhatsApp, Meta AI vẫn chưa tạo được sức hấp dẫn riêng. Phần "Discover" của ứng dụng chủ yếu hiển thị ảnh AI do người lạ tạo không hề liên quan tới người dùng và đôi khi Discover còn hiển thị các yếu tố nhạy cảm.</p>
+    <p>Về mặt chiến lược, CEO Zuckerberg chắc chắn không đổ hàng tỷ đô la chỉ để chơi mà Zuckerberg đã coi Meta AI là con bài chiến lược trong khả năng cạnh tranh với ChatGPT, Gemini hoặc Claude, Grok. Chắc chắn mục tiêu dài hạn của Meta AI vẫn là AGI - Trí tuệ nhân tạo tổng quát có thể thực hiện tác vụ giống như con người.</p>
+    <p>Hiện nay Meta AI vẫn đang rất xa vời tham vọng của mình, Meta cũng đã có nhiều động thái thay đổi như mở nguồn mô hình ngôn ngữ Llama của mình, đẩy nhanh nghiên cứu và tuyển dụng nhân tài từ Apple và OpenAI. Có lẽ chúng ta phải chờ đợi sự thay đổi ở Llama 5.</p>
+
+
+    <h2><strong>Cuộc hôn nhân đổ vỡ với Scale AI</strong></h2>
+    <p>Một minh chứng cho sự loay hoay của Meta nữa chính là sự hợp tấc của họ với Scale AI</p>
+    <p>Tháng 6 năm 2025, Meta công bố khoản đầu tư trị giá 14,3 tỷ USD vào Scale AI, đồng thời đưa CEO Alexander Wang và nhiều nhân sự cấp cao về làm việc tại Meta Superintelligence Labs (MSL). Nhưng giờ đây MSL đang có tình trạng chảy máu chất xám nghiêm trọng với ít nhất 8 nhân sự chủ chốt rời đi ,bao gồm các nhân vật quan trọng như Bert Maher và Tony Liu</p>
+    
+    <h2><strong>Thách thức nội bộ và quy định</strong></h2>
+    <p>Meta đang đối mặt với tình trạng chảy máu chất xám nghiêm trọng trong Meta Superintelligence Labs (MSL), với ít nhất tám nhân sự chủ chốt rời đi chỉ trong ba tháng, bao gồm các nhân vật quan trọng như Bert Maher và Tony Liu. Các đợt tái tổ chức thường xuyên và chiến lược không rõ ràng đã làm gián đoạn các dự án AI quan trọng như mô hình "Behemoth".</p>
+    <p>Sự rối ren đỉnh điểm của vụ việc này Các nhóm nghiên cứu tại TBD Labs đã nhiều lần phải tìm đến dữ liệu từ những nhà cung cấp khác như Mercor hay Surge vì đánh giá dữ liệu của Scale AI “không đủ chuẩn” cho các thí nghiệm quy mô lớn.</p>
+    <p>Hoặc vụ các khách hàng lớn của Scale AI như Open AI, Google đồng loạt rời bỏ họ khiến Scale AI gặp cực kì nhiều khó khăn và thách thức.</p>
+    <p>Vậy là CEO Zuckerberg đã đổ rất nhiều tiền chỉ để theo kịp về AI với các đối thủ như Open AI, Google, xAI nhưng vẫn còn chưa đâu vào đâu cho thấy trong lĩnh vực AI tiền “không” phải là tất cả.</p>`,
+    publishedAt: '2025-09-12T10:00:00Z',
+    imageUrl: '/image/news2/Meta-AI-bom-xit.png',
+    dataAiHint: 'Meta AI lieu co thanh bom xit',
+  },
 ];
 
     
 
     
 
+
+
+  
