@@ -242,7 +242,7 @@ export const mockNews2: NewsArticle[] = [
     <p>Hoặc vụ các khách hàng lớn của Scale AI như Open AI, Google đồng loạt rời bỏ họ khiến Scale AI gặp cực kì nhiều khó khăn và thách thức.</p>
     <p>Vậy là CEO Zuckerberg đã đổ rất nhiều tiền chỉ để theo kịp về AI với các đối thủ như Open AI, Google, xAI nhưng vẫn còn chưa đâu vào đâu cho thấy trong lĩnh vực AI tiền “không” phải là tất cả.</p>`,
     publishedAt: '2025-09-12T10:00:00Z',
-    imageUrl: '/image/news2/Meta-AI-bom-xit.png',
+    imageUrl: '/image/news2/Ảnh về Meta AI.png',
     dataAiHint: 'Meta AI lieu co thanh bom xit',
   },
 ];
