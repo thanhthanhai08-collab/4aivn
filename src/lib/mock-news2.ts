@@ -10,20 +10,20 @@ export const mockNews2: NewsArticle[] = [
     content: `<p>Sự ra đời của các Mô hình Ngôn ngữ Lớn (LLM) đã tạo ra một sự thay đổi mô hình trong cách con người tương tác với công nghệ AI, mang lại tiềm năng chưa từng có để tăng năng suất và giảm bớt các tác vụ tẻ nhạt cho những người làm công việc tri thức. Khi những công cụ mạnh mẽ này ngày càng phổ biến, các ứng dụng chuyên biệt đang xuất hiện để đáp ứng nhu cầu cụ thể trong các lĩnh vực khác nhau. Một trong những công cụ đó, NotebookLM, do Google Lab phát triển, nổi bật như một trợ lý AI đầy hứa hẹn được thiết kế đặc biệt để tăng cường học tập và nghiên cứu bằng cách hợp lý hóa tương tác với tài liệu và thông tin.</p>
     [IMAGE:/image/news2/NotebookLM.png|Minh họa NotebookLM|NotebookLM AI]
     <h2><strong>NotebookLM là gì? Một trợ lý nghiên cứu được hỗ trợ bởi Gemini</strong></h2>
-    <p>NotebookLM là một công cụ hỗ trợ người dùng trong việc ghi chú, nghiên cứu và làm việc với tài liệu. NotebookLM được Google tích hợp Gemini 1.5 Pro, nó cho phép người dùng thực hiện nhiều tác vụ khác nhau như tóm tắt các văn bản dài, trả lời câu hỏi dựa trên nội dung đầu vào và gợi ý thông tin liên quan để mở rộng một chủ đề. Một điểm khác biệt chính của NotebookLM là khả năng hoạt động theo nguyên tắc của hệ thống RAG (Retrieval-Augmented Generation) tức là chỉ phân tích dựa trên các nguồn dữ liệu do người dùng cung cấp. Điều này giúp giảm đáng kể rủi ro "ảo giác" – việc tạo ra thông tin không chính xác hoặc không tồn tại là tính trạng chung với các LLM hiện nay. Tính năng này đảm bảo rằng tất cả các phản hồi đều dựa trên các nguồn có thể kiểm chứng, một khía cạnh quan trọng cho tính chính xác trong học thuật và nghiên cứu.</p>
+    <p>NotebookLM là một công cụ hỗ trợ người dùng trong việc ghi chú, nghiên cứu và làm việc với tài liệu. NotebookLM được Google tích hợp mô hình Gemini mới nhất, nó cho phép người dùng thực hiện nhiều tác vụ khác nhau như tóm tắt các văn bản dài, trả lời câu hỏi dựa trên nội dung đầu vào và gợi ý thông tin liên quan để mở rộng một chủ đề. Một điểm khác biệt chính của NotebookLM là khả năng hoạt động theo nguyên tắc của hệ thống RAG (Retrieval-Augmented Generation) tức là chỉ phân tích dựa trên các nguồn dữ liệu do người dùng cung cấp. Điều này giúp giảm đáng kể rủi ro "ảo giác" – việc tạo ra thông tin không chính xác hoặc không tồn tại là tính trạng chung với các LLM hiện nay. Tính năng này đảm bảo rằng tất cả các phản hồi đều dựa trên các nguồn có thể kiểm chứng, một khía cạnh quan trọng cho tính chính xác trong học thuật và nghiên cứu.</p>
     <p>2. NotebookLM cung cấp một bộ chức năng giải quyết trực tiếp các thách thức phổ biến trong quy trình học tập và nghiên cứu:</p>
-    <h2><strong> Nạp dữ liệu đầu vào đa dạng</strong></h2>
+    <h2><strong>Nạp dữ liệu đầu vào đa dạng</strong></h2>
     <p>Nó vẫn giống như các LLM chung có thể đưa dữ liệu vào dạng văn bản, khác biệt ở đây là NotebookLM có thể xử lý nhiều định dạng tài liệu. Người dùng có thể tải lên tệp trực tiếp từ máy tính (ví dụ: PDF, Doc, tệp văn bản), chọn tài liệu từ Google Docs hoặc Google Slides, hoặc cung cấp liên kết đến các trang web và thậm chí cả video YouTube. Nó thậm chí còn có thể tự động khám phá các nguồn có liên quan (thông qua tính năng Discover) dựa trên truy vấn của người dùng và thêm chúng vào không gian làm việc để phân tích.<br>
     Khả năng thu thập rộng rãi này biến nó thành một trung tâm linh hoạt để tổng hợp tài liệu nghiên cứu khác hẳn với tính năng Deep Reasearch trên các LLM đang phát triển như Gemini, ChatGPT là chúng ta có thể chọn lọc nguồn đầu vào khi sử dụng NotebookLM còn đối với Deep Reasearch thì không thể.</p>
-    <h2><strong> Xử lý thông tin thông minh</strong></h2>
+    <h2><strong>Xử lý thông tin thông minh</strong></h2>
     <ul>
         <li>Tóm tắt: Người làm công việc nghiên cứu hay bất cứ công việc gì cần sự nhanh chóng và chính xác thường cần cô đọng nội dung dài. NotebookLM vượt trội ở khía cạnh này, không chỉ vậy khi người dùng thấy một tóm tắt hay thì có thể bấm 2 nút add to note là có thể chỉnh sửa biến thành nguồn dữ liệu đầu vào của chính nội dung đó khi bấm nút convert to source, từ đó cho thấy việc kiểm soát nội dung đầu vào cực kì tiện lợi của NotebookLM.
         Tuy nhiên có một nhược điểm ở đây là nếu chúng ta không bấm add to note thì khi tải lại trang thì những tóm tắt hay này không được lưu lại và sẽ bị mất có lẽ Google đã không để bộ nhớ cho phần này.</li>
         <li>Trả lời câu hỏi dựa theo nguồn đầu vào: Người dùng có thể đặt câu hỏi trực tiếp liên quan đến các tài liệu đã tải lên và NotebookLM sẽ cung cấp câu trả lời trích dẫn các nguồn cụ thể được đánh số rõ ràng trong tài liệu. Việc liên kết trực tiếp này giúp xây dựng niềm tin vào thông tin được tạo ra và cho phép dễ dàng xác minh, cộng thêm việc sử dụng RAG sẽ tạo thêm niềm tin về độ tin cậy trong nội dung do AI tạo ra.</li>
         <li>Tạo và mở rộng ý tưởng: Ngoài việc trả lời trực tiếp, nó có thể gợi ý thông tin liên quan hoặc giúp mở rộng một chủ đề nhất định, lúc này nó lại đóng vai trò trợ lý ảo giống như các LLM thông thường.</li>
         <li>Tạo bản đồ tư duy (Mind Map): Một tính năng độc đáo là khả năng tạo bản đồ tư duy từ nội dung đã tải lên. Biểu diễn trực quan thông tin này giúp người dùng nắm bắt tổng quan về một chủ đề, xác định các khái niệm chính và ghi nhớ các chi tiết phức tạp, giúp việc nghiên cứu trở nên trực quan và dễ nhớ hơn.</li>
-    </ul>
-    <h2> Định dạng đầu ra linh hoạt</h2>
+    </ul></p>
+    <h2><strong>Định dạng đầu ra linh hoạt</strong></h2>
     <p>Đầu ra cực kỳ linh hoạt là một ưu điểm của Notebook LM nhưng có một thứ khiến nó càng thêm hữu dụng nữa đó là tất cả đầu ra như podcast, video của Notebook LM đều đã hỗ trợ tiếng Việt.<br>
     <ul>
         <li>Tạo Audio overview: Đối với những ai hay di chuyển nhưng vẫn muốn học tập chắc chắn là tín đồ của Podcast hoặc các bài nói Audio, vậy còn gì tuyệt vời hơn khi có thể tạo các bài nói từ các tài liệu nghiên cứu của chính mình hoặc các nguồn uy tín, không những thế người nghe có thể tùy chỉnh các phong cách nói chuyện trong đó như: Đi sâu vào vấn đề, Trình bày ngắn gọn, Một bài phê bình đánh giá, hoặc có thể là một cuộc tranh luận hoặc có thể diều chỉnh độ dài ngắn của bài nói luôn.</li>
@@ -36,10 +36,10 @@ export const mockNews2: NewsArticle[] = [
             <li>Timeline (Dòng thời gian): Sắp xếp các sự kiện hoặc mốc thời gian quan trọng được đề cập trong tài liệu của bạn theo trình tự thời gian. Rất hữu ích cho các nghiên cứu lịch sử hoặc các dự án cần theo dõi tiến trình.</li>
         </ul></li>
     </ul></p>
-    <h2><strong> Chia sẻ kiến thức hợp tác</strong></h2>
+    <h2><strong>Chia sẻ kiến thức hợp tác</strong></h2>
     <p>NotebookLM hỗ trợ khả năng chia sẻ, cho phép người dùng chia sẻ "notebook" của họ với người khác. Điều này có thể biến một không gian nghiên cứu cá nhân thành một cơ sở kiến thức chung cho một nhóm hoặc thậm chí một chatbot nội bộ cho một công ty, nơi nhân viên có thể nhanh chóng truy vấn các chính sách của công ty hoặc kiến thức tổ chức.
     Nhưng khi đó người dùng sẽ phải đăng ký gói Notebook LM Pro vì gói Pro mới cho phép người dùng tương tác với notebook của người chia sẻ còn gói miễn phí thì xem được thôi. Tất nhiên Google cũng cam kết tính bảo mật và quyền riêng tư khi sử dụng Notebook LM.</p>
-    <h2> Notebook LM và bối cảnh mở rộng hơn</h2>
+    <h2><strong>Notebook LM và bối cảnh mở rộng hơn</strong></h2>
     <p><strong>NotebookLM trong bối cảnh rộng lớn hơn của AI cho công việc tri thức</strong><br>
     Các chức năng của NotebookLM hoàn toàn phù hợp với nhu cầu ngày càng tăng của những người làm công việc tri thức đối với các công cụ dựa trên LLM. Các cuộc khảo sát chỉ ra rằng người lao động ngày càng sử dụng LLM cho các nhiệm vụ "thông tin" như tìm kiếm, học hỏi và tóm tắt, và họ mong muốn các khả năng trong tương lai để phân tích dữ liệu của riêng họ. NotebookLM trực tiếp giải quyết những mong muốn này bằng cách cho phép người dùng tải lên dữ liệu độc quyền của họ và tương tác với nó, và với khả năng chia sẻ thì việc Notebook LM tham gia và quy trình làm việc và hợp tác lớn chắc chắn sẽ dễ dàng khi muốn tạo ra cơ sở kiến thức chung phù hợp.</p>
     <p>Sự ra đời của Notebook LM chắc chắn cuộc chơi sẽ không chỉ khép kín với Google và sẽ có sự tham gia của các LLM như những mô hình được hỗ trợ bởi Ollama hoặc Hugging Face cục bộ trong các môi trường như Jupyter Notebook sẽ tương tự như Notebook LM. Nhưng khi này mọi chuyện sẽ chỉnh dành cho các nhà phát triển với khả năng code và hiểu về Python không những thế các nhà phát triển có thể fine-tune các mô hình để tạo ra các kết quả chính xác với nhu cầu và mục đích nghiên cứu hơn nữa.</p>`,
@@ -288,7 +288,7 @@ export const mockNews2: NewsArticle[] = [
     <p>Vậy là CEO Zuckerberg đã đổ rất nhiều tiền chỉ để theo kịp về AI với các đối thủ như Open AI, Google, xAI nhưng vẫn còn chưa đâu vào đâu cho thấy trong lĩnh vực AI tiền “không” phải là tất cả.</p>`,
     publishedAt: '2025-09-12T10:00:00Z',
     imageUrl: '/image/news2/Ảnh về Meta AI.png',
-    dataAiHint: 'Meta AI lieu co thanh bom xit',
+    dataAiHint: 'Meta AI lieu co thanh bom xit'
   },
 ];
     
@@ -299,5 +299,6 @@ export const mockNews2: NewsArticle[] = [
 
 
   
+
 
 
