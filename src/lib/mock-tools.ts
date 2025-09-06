@@ -571,9 +571,15 @@ export const mockTools: Tool[] = [
         'Bất kỳ ai cần xử lý và hiểu thông tin từ tài liệu'
     ],
     pricingPlans: `
+        <h3>Gói miễn phí</h3>
+        <p>Cung cấp các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.</p>
+        <h3>NotebookLM Pro (có trong gói Google AI Pro - $19.9/tháng)</h3>
+        <p>Hoàn toàn giống như NotebookLM nhưng có thêm những lợi ích sau:</p>
         <ul>
-            <li><strong>Gói miễn phí:</strong> Cung cấp đầy đủ các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.</li>
-            <li><strong>Gói Pro (Sắp ra mắt):</strong> Sẽ bao gồm các tính năng nâng cao như khả năng tương tác với notebook được chia sẻ và các giới hạn sử dụng cao hơn.</li>
+            <li>Nhận bản Tổng quan bằng âm thanh, sổ ghi chú, câu hỏi và các nguồn cho mỗi sổ ghi chú nhiều gấp 5 lần.</li>
+            <li>Tuỳ chỉnh phong cách và độ dài cho câu trả lời liên quan đến sổ ghi chú.</li>
+            <li>Tạo sổ ghi chú dùng chung cho nhóm của bạn và nhận số liệu phân tích về mức sử dụng.</li>
+            <li>Tăng cường bảo mật và quyền riêng tư.</li>
         </ul>
     `,
   }
@@ -618,3 +624,6 @@ export const mockTools: Tool[] = [
 
 
 
+
+
+    
