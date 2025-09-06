@@ -99,7 +99,7 @@ export default function NewsPage() {
                 {featuredArticle && (
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                         <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
-                           <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[4/3] relative">
+                           <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[16/9] relative">
                                 <Image
                                     src={featuredArticle.imageUrl}
                                     alt={featuredArticle.title}
