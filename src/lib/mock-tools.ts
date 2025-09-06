@@ -542,11 +542,11 @@ export const mockTools: Tool[] = [
     name: 'NotebookLM',
     context: 'Hỗ trợ viết',
     developer: 'Google',
-    description: 'NotebookLM là một trợ lý AI được thiết kế để tăng cường học tập và nghiên cứu bằng cách hợp lý hóa tương tác với tài liệu và thông tin. Được hỗ trợ bởi Gemini 1.5 Pro, nó giúp tóm tắt, trả lời câu hỏi và tạo ý tưởng dựa trên các nguồn do người dùng cung cấp.',
+    description: 'NotebookLM là một trợ lý AI được thiết kế để tăng cường học tập và nghiên cứu bằng cách hợp lý hóa tương tác với tài liệu và thông tin. Được hỗ trợ bởi mô hình Gemini mới nhất, nó giúp tóm tắt, trả lời câu hỏi và tạo ý tưởng dựa trên các nguồn do người dùng cung cấp.',
     logoUrl: '/image/Logo NotebookLM.png',
     link: 'https://notebooklm.google.com/',
     imageUrl: '/image/Ảnh công cụ AI NotebookLM.png',
-    longDescription: '<p>NotebookLM là một công cụ hỗ trợ người dùng trong việc ghi chú, nghiên cứu và làm việc với tài liệu. Được tích hợp Gemini 1.5 Pro, nó cho phép người dùng thực hiện nhiều tác vụ khác nhau như tóm tắt các văn bản dài, trả lời câu hỏi dựa trên nội dung đầu vào và gợi ý thông tin liên quan. Một điểm khác biệt chính của NotebookLM là nó hoạt động dựa trên các nguồn dữ liệu do người dùng cung cấp, giúp giảm thiểu rủi ro "ảo giác" và đảm bảo tính chính xác.</p><p>Công cụ này có thể xử lý nhiều định dạng tài liệu, từ PDF, Google Docs đến các liên kết web và video YouTube, biến nó thành một trung tâm linh hoạt để tổng hợp tài liệu nghiên cứu. Với khả năng tạo báo cáo, podcast và video, NotebookLM là một trợ lý đa năng cho bất kỳ ai làm công việc tri thức.</p>',
+    longDescription: '<p>NotebookLM là một công cụ hỗ trợ người dùng trong việc ghi chú, nghiên cứu và làm việc với tài liệu. Được tích hợp mô hình Gemini mới nhất, nó cho phép người dùng thực hiện nhiều tác vụ khác nhau như tóm tắt các văn bản dài, trả lời câu hỏi dựa trên nội dung đầu vào và gợi ý thông tin liên quan. Một điểm khác biệt chính của NotebookLM là nó hoạt động dựa trên các nguồn dữ liệu do người dùng cung cấp, giúp giảm thiểu rủi ro "ảo giác" và đảm bảo tính chính xác.</p><p>Công cụ này có thể xử lý nhiều định dạng tài liệu, từ PDF, Google Docs đến các liên kết web và video YouTube, biến nó thành một trung tâm linh hoạt để tổng hợp tài liệu nghiên cứu. Với khả năng tạo báo cáo, podcast và video, NotebookLM là một trợ lý đa năng cho bất kỳ ai làm công việc tri thức.</p>',
     features: [
       "Tóm tắt và trả lời câu hỏi dựa trên nguồn tài liệu được cung cấp.",
       "Hoạt động theo nguyên tắc RAG để tăng độ chính xác.",
@@ -573,12 +573,12 @@ export const mockTools: Tool[] = [
     pricingPlans: `
         <h3>Gói miễn phí</h3>
         <p>Cung cấp các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.</p>
-        <h3>NotebookLM Pro (có trong gói Google AI Pro - $19.9/tháng)</h3>
-        <p>Hoàn toàn giống như NotebookLM nhưng có thêm những lợi ích sau:</p>
+        <h3>NotebookLM Pro</h3>
+        <p>Gói này được sử dụng khi đăng ký gói <strong>Google AI Pro ($19.9/tháng)</strong>, bao gồm các lợi ích sau:</p>
         <ul>
-            <li>Nhận bản Tổng quan bằng âm thanh, sổ ghi chú, câu hỏi và các nguồn cho mỗi sổ ghi chú nhiều gấp 5 lần.</li>
-            <li>Tuỳ chỉnh phong cách và độ dài cho câu trả lời liên quan đến sổ ghi chú.</li>
-            <li>Tạo sổ ghi chú dùng chung cho nhóm của bạn và nhận số liệu phân tích về mức sử dụng.</li>
+            <li>Tạo Audio Overview, Notes, Questions, và Sources nhiều gấp 5 lần so với gói miễn phí.</li>
+            <li>Tùy chỉnh phong cách và độ dài cho câu trả lời.</li>
+            <li>Chia sẻ sổ ghi chú và nhận phân tích sử dụng.</li>
             <li>Tăng cường bảo mật và quyền riêng tư.</li>
         </ul>
     `,
