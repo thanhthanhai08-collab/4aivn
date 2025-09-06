@@ -537,6 +537,46 @@ export const mockTools: Tool[] = [
         <p>Gói này chỉ miễn phi 1 lần nếu hết 1 lần thì phải mua thêm credit</p>
     `,
   },
+  {
+    id: 'notebooklm',
+    name: 'NotebookLM',
+    context: 'Hỗ trợ viết',
+    developer: 'Google',
+    description: 'NotebookLM là một trợ lý AI được thiết kế để tăng cường học tập và nghiên cứu bằng cách hợp lý hóa tương tác với tài liệu và thông tin. Được hỗ trợ bởi Gemini 1.5 Pro, nó giúp tóm tắt, trả lời câu hỏi và tạo ý tưởng dựa trên các nguồn do người dùng cung cấp.',
+    logoUrl: '/image/Logo NotebookLM.png',
+    link: 'https://notebooklm.google.com/',
+    imageUrl: '/image/Ảnh công cụ AI NotebookLM.png',
+    longDescription: '<p>NotebookLM là một công cụ hỗ trợ người dùng trong việc ghi chú, nghiên cứu và làm việc với tài liệu. Được tích hợp Gemini 1.5 Pro, nó cho phép người dùng thực hiện nhiều tác vụ khác nhau như tóm tắt các văn bản dài, trả lời câu hỏi dựa trên nội dung đầu vào và gợi ý thông tin liên quan. Một điểm khác biệt chính của NotebookLM là nó hoạt động dựa trên các nguồn dữ liệu do người dùng cung cấp, giúp giảm thiểu rủi ro "ảo giác" và đảm bảo tính chính xác.</p><p>Công cụ này có thể xử lý nhiều định dạng tài liệu, từ PDF, Google Docs đến các liên kết web và video YouTube, biến nó thành một trung tâm linh hoạt để tổng hợp tài liệu nghiên cứu. Với khả năng tạo báo cáo, podcast và video, NotebookLM là một trợ lý đa năng cho bất kỳ ai làm công việc tri thức.</p>',
+    features: [
+      "Tóm tắt và trả lời câu hỏi dựa trên nguồn tài liệu được cung cấp.",
+      "Hoạt động theo nguyên tắc RAG để tăng độ chính xác.",
+      "Hỗ trợ nhiều định dạng đầu vào: PDF, Docs, Slides, URL, video YouTube.",
+      "Tạo báo cáo, podcast, và video tổng quan từ tài liệu.",
+      "Tạo bản đồ tư duy trực quan.",
+      "Chia sẻ không gian làm việc để cộng tác.",
+      "Giao diện trực quan và dễ sử dụng."
+    ],
+    useCases: [
+        'Nghiên cứu và học tập hiệu quả.',
+        'Tóm tắt tài liệu và sách dài.',
+        'Chuẩn bị cho các kỳ thi và bài thuyết trình.',
+        'Tạo nội dung giáo dục đa phương tiện.',
+        'Xây dựng cơ sở kiến thức cho nhóm làm việc.'
+    ],
+    whoIsItFor: [
+        'Học sinh, sinh viên',
+        'Nhà nghiên cứu',
+        'Người làm công việc tri thức',
+        'Giáo viên và giảng viên',
+        'Bất kỳ ai cần xử lý và hiểu thông tin từ tài liệu'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói miễn phí:</strong> Cung cấp đầy đủ các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.</li>
+            <li><strong>Gói Pro (Sắp ra mắt):</strong> Sẽ bao gồm các tính năng nâng cao như khả năng tương tác với notebook được chia sẻ và các giới hạn sử dụng cao hơn.</li>
+        </ul>
+    `,
+  }
 ];
     
 
@@ -565,6 +605,7 @@ export const mockTools: Tool[] = [
 
 
     
+
 
 
 
