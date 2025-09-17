@@ -7,7 +7,7 @@ import { AppLayout } from '@/components/layout/app-layout';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Clean AI Hub - Khám phá & Xếp hạng Công cụ AI',
+  title: '4AIVN - Khám phá & Xếp hạng Công cụ AI',
   description: 'Trung tâm của bạn về xếp hạng công cụ AI, tin tức AI mới nhất và trải nghiệm chatbot demo.',
   icons: {
     icon: '/favicon.ico', // Assuming a favicon might be added later

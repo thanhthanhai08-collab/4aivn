@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, MessageSquare, Newspaper, ShieldCheck, LayoutGrid, X, Home, TrendingUp, Search as SearchIcon } from "lucide-react";
+import { Menu, MessageSquare, Newspaper, X, Home, TrendingUp, Search as SearchIcon, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { UserNav } from "@/components/auth/user-nav";
 import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState, type FormEvent } from "react";
+import { Logo } from "@/components/logo";
 
 const navItems = [
   { href: "/", label: "Trang chủ", icon: Home },
@@ -45,9 +46,9 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <ShieldCheck className="h-6 w-6 text-primary" />
+          <Logo className="h-6 w-6" />
           <span className="font-bold font-headline sm:inline-block text-lg">
-            Clean AI Hub
+            4AIVN
           </span>
         </Link>
         
@@ -102,9 +103,9 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
               <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={() => setIsSheetOpen(false)}>
-                <ShieldCheck className="h-6 w-6 text-primary" />
+                <Logo className="h-6 w-6" />
                 <span className="font-bold font-headline sm:inline-block text-lg">
-                  Clean AI Hub
+                  4AIVN
                 </span>
               </Link>
               

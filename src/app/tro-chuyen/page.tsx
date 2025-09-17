@@ -30,7 +30,7 @@ export default function ChatPage() {
     setMessages([
       {
         id: "initial-ai-greeting",
-        text: "Xin chào! Tôi là chatbot của Clean AI Hub. Tôi có thể giúp gì cho bạn về các công cụ, mô hình hoặc tin tức AI có trên trang web này?",
+        text: "Xin chào! Tôi là chatbot của 4AIVN. Tôi có thể giúp gì cho bạn về các công cụ, mô hình hoặc tin tức AI có trên trang web này?",
         sender: "ai",
         timestamp: Date.now(),
       },

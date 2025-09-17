@@ -19,7 +19,7 @@ export default function AiTermsOfUsePage() {
 
             <h2>1. Chấp nhận Điều khoản</h2>
             <p>
-              Bằng cách sử dụng các tính năng Trí tuệ Nhân tạo (AI) trên Clean AI Hub ("Dịch vụ"), bạn đồng ý tuân thủ các Điều khoản Sử dụng AI này. Các điều khoản này bổ sung cho Điều khoản Dịch vụ chung của chúng tôi.
+              Bằng cách sử dụng các tính năng Trí tuệ Nhân tạo (AI) trên 4AIVN ("Dịch vụ"), bạn đồng ý tuân thủ các Điều khoản Sử dụng AI này. Các điều khoản này bổ sung cho Điều khoản Dịch vụ chung của chúng tôi.
             </p>
 
             <h2>2. Sử dụng Hợp lý</h2>
@@ -36,7 +36,7 @@ export default function AiTermsOfUsePage() {
 
             <h2>3. Nội dung do AI tạo ra</h2>
             <p>
-              Mặc dù chúng tôi cố gắng đảm bảo tính chính xác và hữu ích của nội dung do AI tạo ra, chúng tôi không thể đảm bảo rằng nó sẽ luôn hoàn hảo hoặc không có lỗi. Bạn có trách nhiệm xem xét và xác minh mọi thông tin do AI cung cấp trước khi dựa vào nó cho các quyết định quan trọng. Clean AI Hub không chịu trách nhiệm cho bất kỳ tổn thất hoặc thiệt hại nào phát sinh từ việc bạn sử dụng nội dung do AI tạo ra.
+              Mặc dù chúng tôi cố gắng đảm bảo tính chính xác và hữu ích của nội dung do AI tạo ra, chúng tôi không thể đảm bảo rằng nó sẽ luôn hoàn hảo hoặc không có lỗi. Bạn có trách nhiệm xem xét và xác minh mọi thông tin do AI cung cấp trước khi dựa vào nó cho các quyết định quan trọng. 4AIVN không chịu trách nhiệm cho bất kỳ tổn thất hoặc thiệt hại nào phát sinh từ việc bạn sử dụng nội dung do AI tạo ra.
             </p>
             
             <h2>4. Quyền sở hữu và Giấy phép</h2>
@@ -51,7 +51,7 @@ export default function AiTermsOfUsePage() {
 
             <h2>6. Liên hệ với chúng tôi</h2>
             <p>
-              Nếu bạn có bất kỳ câu hỏi nào về các Điều khoản Sử dụng AI này, vui lòng liên hệ với chúng tôi tại: info@cleanai.vn.
+              Nếu bạn có bất kỳ câu hỏi nào về các Điều khoản Sử dụng AI này, vui lòng liên hệ với chúng tôi tại: info@4aivn.vn.
             </p>
           </CardContent>
         </Card>

@@ -1,7 +1,8 @@
 
 // src/components/layout/site-footer.tsx
 import Link from "next/link";
-import { ShieldCheck, Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 const quickLinks = [
   { href: "/", label: "Trang chủ" },
@@ -33,9 +34,9 @@ export function SiteFooter() {
           {/* Column 1: Brand & Social */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2 mb-3">
-              <ShieldCheck className="h-7 w-7 text-primary" />
+              <Logo className="h-7 w-7" />
               <span className="font-bold font-headline text-xl text-primary">
-                Clean AI Hub
+                4AIVN
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -103,7 +104,7 @@ export function SiteFooter() {
             <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start">
                     <Mail className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Email: CleanAIhub@gmail.com</span>
+                    <span>Email: 4aivn@gmail.com</span>
                 </li>
                  <li className="flex items-start">
                     <Phone className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
@@ -120,7 +121,7 @@ export function SiteFooter() {
 
         <div className="mt-12 pt-8 border-t border-border/60 text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Clean AI Hub. Mọi quyền được bảo lưu.
+            &copy; {new Date().getFullYear()} 4AIVN. Mọi quyền được bảo lưu.
           </p>
         </div>
       </div>

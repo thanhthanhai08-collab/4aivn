@@ -19,7 +19,7 @@ export default function TermsOfServicePage() {
 
             <h2>1. Giới thiệu</h2>
             <p>
-              Các Điều khoản dịch vụ này chi phối việc bạn sử dụng trang web của chúng tôi, Clean AI Hub. Bằng cách truy cập hoặc sử dụng dịch vụ, bạn đồng ý bị ràng buộc bởi các Điều khoản này.
+              Các Điều khoản dịch vụ này chi phối việc bạn sử dụng trang web của chúng tôi, 4AIVN. Bằng cách truy cập hoặc sử dụng dịch vụ, bạn đồng ý bị ràng buộc bởi các Điều khoản này.
             </p>
 
             <h2>2. Sử dụng dịch vụ</h2>
@@ -39,12 +39,12 @@ export default function TermsOfServicePage() {
 
             <h2>5. Giới hạn Trách nhiệm</h2>
             <p>
-              Trong mọi trường hợp, Clean AI Hub, cũng như giám đốc, nhân viên, đối tác, đại lý, nhà cung cấp hoặc chi nhánh của nó, sẽ không chịu trách nhiệm pháp lý cho bất kỳ thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, do hậu quả hoặc trừng phạt nào, bao gồm nhưng không giới hạn, mất lợi nhuận, dữ liệu, việc sử dụng, thiện chí hoặc các tổn thất vô hình khác.
+              Trong mọi trường hợp, 4AIVN, cũng như giám đốc, nhân viên, đối tác, đại lý, nhà cung cấp hoặc chi nhánh của nó, sẽ không chịu trách nhiệm pháp lý cho bất kỳ thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, do hậu quả hoặc trừng phạt nào, bao gồm nhưng không giới hạn, mất lợi nhuận, dữ liệu, việc sử dụng, thiện chí hoặc các tổn thất vô hình khác.
             </p>
 
             <h2>6. Liên hệ với chúng tôi</h2>
             <p>
-              Nếu bạn có bất kỳ câu hỏi nào về các Điều khoản này, vui lòng liên hệ với chúng tôi tại: info@cleanai.vn.
+              Nếu bạn có bất kỳ câu hỏi nào về các Điều khoản này, vui lòng liên hệ với chúng tôi tại: info@4aivn.vn.
             </p>
           </CardContent>
         </Card>

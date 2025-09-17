@@ -63,7 +63,7 @@ export default function SearchResultsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Nếu bạn muốn tìm kiếm nâng cao điều gì trên website Clean AI Hub thì bạn có thể chat trực tiếp với trợ lý AI của chúng tôi ở góc phải màn hình. Điều đó có thể nâng cao trải nghiệm web đó. Còn nếu bạn muốn tìm kiếm công cụ AI thì hoàn toàn có thể sử dụng đường dẫn dưới đây.
+                  Nếu bạn muốn tìm kiếm nâng cao điều gì trên website 4AIVN thì bạn có thể chat trực tiếp với trợ lý AI của chúng tôi ở góc phải màn hình. Điều đó có thể nâng cao trải nghiệm web đó. Còn nếu bạn muốn tìm kiếm công cụ AI thì hoàn toàn có thể sử dụng đường dẫn dưới đây.
                 </p>
               </CardContent>
               <CardFooter>
