@@ -11,7 +11,7 @@ if (!process.env.TAVILY_API_KEY) {
 }
 
 /**
- * Finds relevant context from the Clean AI Hub website using Tavily AI API directly.
+ * Finds relevant context from the 4AIVN website using Tavily AI API directly.
  * @param query The user's search query.
  * @param topK The number of search results to return.
  * @returns A promise that resolves to an array of context strings.

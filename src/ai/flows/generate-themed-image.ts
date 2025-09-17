@@ -31,7 +31,7 @@ const generateThemedImageFlow = ai.defineFlow(
     outputSchema: GenerateThemedImageOutputSchema,
   },
   async (input) => {
-    const fullPrompt = `You are an AI image generator. Create an image that embodies a clean, modern, and minimalist aesthetic, suitable for a tech-focused website called "Clean AI Hub". The image should evoke a sense of innovation and intelligence. Consider incorporating a palette harmonious with dark blue (like #0B69FF), light gray (like #F5F5F5), and light purple (like #E8E6FB). The core subject of the image should be: ${input.userInput}`;
+    const fullPrompt = `You are an AI image generator. Create an image that embodies a clean, modern, and minimalist aesthetic, suitable for a tech-focused website called "4AIVN". The image should evoke a sense of innovation and intelligence. Consider incorporating a palette harmonious with dark blue (like #0B69FF), light gray (like #F5F5F5), and light purple (like #E8E6FB). The core subject of the image should be: ${input.userInput}`;
 
     const {media} = await ai.generate({
       model: 'googleai/gemini-2.0-flash-exp', // Crucial for image generation
