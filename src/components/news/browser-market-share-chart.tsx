@@ -53,4 +53,8 @@ export function BrowserMarketShareChart() {
             <Legend />
           </PieChart>
         </ResponsiveContainer>
-        <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Statcounter Global Stats,
+        <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Statcounter Global Stats</p>
+      </CardContent>
+    </Card>
+  )
+}
