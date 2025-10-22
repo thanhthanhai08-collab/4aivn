@@ -32,6 +32,7 @@ import { AiSatisfactionChart } from "@/components/news/AiSatisfactionChart";
 import { ProfitabilityChart } from "@/components/news/ProfitabilityChart";
 import { GeminiFlashImageBenchmarkChart } from "@/components/news/gemini-flash-image-benchmark-chart";
 import { ImageEditingBenchmarkChart } from "@/components/news/image-editing-benchmark-chart";
+import { BrowserMarketShareChart } from "@/components/news/browser-market-share-chart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -49,10 +50,13 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    if (part === '[BROWSER_MARKET_SHARE_CHART]') {
+      return <BrowserMarketShareChart key={`${index}-browser-chart`} />;
+    }
     if (part === '[BENCHMARK_CHART]') {
       if (articleId === 'openai-gpt-oss-ra-mat') {
         return <GptOssBenchmarkChart key={`${index}-chart`} />;
