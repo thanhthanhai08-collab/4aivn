@@ -1,7 +1,7 @@
 // src/app/news/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
@@ -150,6 +150,7 @@ function NewsDetailContent({ id }: { id: string }) {
   const [summary, setSummary] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [bookmarkedNewsIds, setBookmarkedNewsIds] = useState<string[]>([]);
 
   useEffect(() => {
     const foundArticle = allMockNews.find((a) => a.id === id);
@@ -157,6 +158,7 @@ function NewsDetailContent({ id }: { id: string }) {
       setArticle(foundArticle);
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
+          setBookmarkedNewsIds(userData.bookmarkedNews || []);
           setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
         });
       }
@@ -185,6 +187,8 @@ function NewsDetailContent({ id }: { id: string }) {
     
     const newBookmarkState = !isBookmarked;
     setIsBookmarked(newBookmarkState); // Optimistic UI update
+    setBookmarkedNewsIds(prev => newBookmarkState ? [...prev, id] : prev.filter(bId => bId !== id));
+
 
     try {
       await toggleNewsBookmark(currentUser.uid, id, isBookmarked);
@@ -192,9 +196,52 @@ function NewsDetailContent({ id }: { id: string }) {
     } catch (error) {
       console.error("Failed to update bookmark:", error);
       setIsBookmarked(!newBookmarkState); // Revert on error
+      setBookmarkedNewsIds(prev => !newBookmarkState ? [...prev, id] : prev.filter(bId => bId !== id));
       toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
     }
   };
+  
+  const recommendedNews = useMemo(() => {
+    if (!article) return [];
+
+    const getKeywords = (text: string): Set<string> => {
+        return new Set(text.toLowerCase().split(/\s+/).filter(word => word.length > 4));
+    };
+
+    let recommended: NewsArticle[] = [];
+
+    // If user is logged in and has bookmarks, prioritize similar to bookmarks
+    if (currentUser && bookmarkedNewsIds.length > 0) {
+        const bookmarkedArticles = allMockNews.filter(n => bookmarkedNewsIds.includes(n.id));
+        const bookmarkedKeywords = new Set<string>();
+        bookmarkedArticles.forEach(b => {
+            getKeywords(b.title).forEach(kw => bookmarkedKeywords.add(kw));
+        });
+
+        recommended = allMockNews
+            .filter(n => n.id !== article.id)
+            .map(n => {
+                const titleKeywords = getKeywords(n.title);
+                const intersection = new Set([...titleKeywords].filter(kw => bookmarkedKeywords.has(kw)));
+                return { ...n, score: intersection.size };
+            })
+            .sort((a, b) => b.score - a.score);
+    } 
+    // Otherwise, find articles related to the current one
+    else {
+        const currentKeywords = getKeywords(article.title);
+        recommended = allMockNews
+            .filter(n => n.id !== article.id)
+            .map(n => {
+                const titleKeywords = getKeywords(n.title);
+                const intersection = new Set([...titleKeywords].filter(kw => currentKeywords.has(kw)));
+                return { ...n, score: intersection.size };
+            })
+            .sort((a, b) => b.score - a.score);
+    }
+    
+    return recommended.slice(0, 3);
+  }, [article, currentUser, bookmarkedNewsIds]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -244,9 +291,6 @@ function NewsDetailContent({ id }: { id: string }) {
       </AppLayout>
     );
   }
-  
-  const latestNews = allMockNews.filter(a => a.id !== article.id).sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()).slice(0, 3);
-
 
   return (
     <AppLayout>
@@ -354,7 +398,7 @@ function NewsDetailContent({ id }: { id: string }) {
                   <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {latestNews.map(related => (
+                  {recommendedNews.map(related => (
                     <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                       <div className="flex items-start space-x-4">
                         <div className="relative w-24 h-24 shrink-0">
@@ -386,7 +430,7 @@ function NewsDetailContent({ id }: { id: string }) {
             Các bài viết liên quan
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestNews.map((article) => (
+            {recommendedNews.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}
           </div>
