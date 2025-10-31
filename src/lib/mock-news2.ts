@@ -44,7 +44,7 @@ export const mockNews2: NewsArticle[] = [
     <li>Lưu lịch sử tạo ảnh (gồm ảnh kết quả, prompt và thời gian).”</li>
 </ul>
 <p>Sau khi hoàn thiện prompt, chỉ cần bấm <strong>Build</strong> và chờ vài giây để xem kết quả.</p>
-<img src="/image/news2/Anh-google-ai-studio-app.png" alt="Anh-google-ai-studio-app.png">
+[IMAGE:/image/news2/Anh-google-ai-studio-app.png|Ảnh tạo từ Google Ai Studio|App Google AI studio]
 <h3>Bước 4: AI tự động thực hiện các bước</h3>
 <p><strong>Quá trình xây dựng:</strong> AI Studio sẽ chạy chương trình, qua các giai đoạn như</p>
 <ul>
@@ -71,9 +71,9 @@ export const mockNews2: NewsArticle[] = [
 </ul>
 <p>Và điều thú vị nhất là: bạn có thể chỉnh sửa ứng dụng như đang dùng Canva hay Figma với nút <strong>Annotate app</strong> — nơi bạn có thể vẽ, thêm chữ, đổi màu... tất cả đều diễn ra tự nhiên và trực quan nhất có thể.</p>
 <img src="/image/news2/Annotate app-Google-ai-studio.png" alt="Có thể chỉnh sửa tự nhiên với nút anonotate app">
-<h3>Bước 5: Chạy thử và Triển khai</h3>
+<h3>Bước 4: Chạy thử và Triển khai</h3>
 <p>Sau khi hoàn thiện, bạn có các tùy chọn sau:</p>
-<table style="width:100%; border-collapse: collapse; border: 1px solid #dddddd;">
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
   <thead>
     <tr>
       <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Hành động</th>
@@ -101,7 +101,7 @@ export const mockNews2: NewsArticle[] = [
 </table>
 <h2><strong>3. Có thể phát triển app hoàn chỉnh với Google AI Studio không?</strong></h2>
 <p>Tất nhiên, với mục đích cá nhân hoặc thử nghiệm ý tưởng nhanh, Google AI Studio là lựa chọn tuyệt vời vừa dễ dùng, vừa có chi phí gần như bằng 0. Tuy nhiên, nếu bạn muốn xây dựng một ứng dụng hoàn chỉnh (full-stack) với phần backend, UX, UI... mà vẫn không biết lập trình, thì nên cân nhắc các nền tảng khác phù hợp hơn.</p>
-<table style="width:100%; border-collapse: collapse; border: 1px solid #dddddd;">
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
   <thead>
     <tr>
       <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Mục đích</th>
