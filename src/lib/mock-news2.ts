@@ -415,7 +415,7 @@ export const mockNews2: NewsArticle[] = [
     author: 'Mai',
     source: 'Tổng hợp',
     publishedAt: '2025-10-22T09:00:00Z',
-    imageUrl: '/image/news2/Perplexity Comet và ChatGPT Atlas.png',
+    imageUrl: '/image/news2/Cuoc-chien-perplexity-comet-và-chatpgt-atlas.png',
     dataAiHint: 'perplexity comet vs chatgpt atlas',
     content: `<div class="container">
 <h1>Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI Định Hình Lại Internet</h1>
@@ -471,5 +471,7 @@ export const mockNews2: NewsArticle[] = [
     
 
 
+
+    
 
     
