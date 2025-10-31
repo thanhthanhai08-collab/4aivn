@@ -62,7 +62,7 @@ export const mockNews2: NewsArticle[] = [
     <li>“Thêm cho tôi ảnh 3 và ảnh 4 để ghép 4 ảnh thành 1”</li>
     <li>hoặc “Đổi giao diện sang nền tối.”</li>
 </ul>
-<img src="/image/news2/Anh-studio-app-sau-chinh-sua.png" alt="Chỉnh sửa app bằng ngôn ngữ tự nhiên">
+[IMAGE:/image/news2/Anh-studio-app-sau-chinh-sua.png|Chỉnh sửa app từ Google Ai Studio|Chỉnh sửa ngôn ngữ tự nhiên]
 <p>Nếu bạn chưa thêm các API hoặc SDK trong mục Supercharge your apps with AI ở bước trước, cũng đừng lo. Chỉ cần một prompt đơn giản, AI sẽ tự động tích hợp các API hoặc SDK cần thiết vào mini app của bạn — nhanh gọn và cực kỳ tiện lợi.</p>
 <p>Bạn thậm chí có thể yêu cầu những tính năng nâng cao như:</p>
 <ul>
@@ -73,49 +73,49 @@ export const mockNews2: NewsArticle[] = [
 <img src="/image/news2/Annotate app-Google-ai-studio.png" alt="Có thể chỉnh sửa tự nhiên với nút anonotate app">
 <h3>Bước 4: Chạy thử và Triển khai</h3>
 <p>Sau khi hoàn thiện, bạn có các tùy chọn sau:</p>
-<table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-  <thead>
-    <tr>
-      <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Hành động</th>
-      <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Cách thực hiện</th>
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
+  <thead style="border: 1px solid #e0e0e0;">
+    <tr style="border: 1px solid #e0e0e0;">
+      <th style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Hành động</th>
+      <th style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Cách thực hiện</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Chạy thử trong trình duyệt</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Nhấn nút "Run" hoặc xem live preview.</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Chạy thử trong trình duyệt</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Nhấn nút "Run" hoặc xem live preview.</td>
     </tr>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Chia sẻ app qua link</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Nhấn "Share" → Copy link.</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Chia sẻ app qua link</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Nhấn "Share" → Copy link.</td>
     </tr>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Tải về mã nguồn</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Nhấn "Download" (File ZIP chứa mã React + TypeScript).</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Tải về mã nguồn</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Nhấn "Download" (File ZIP chứa mã React + TypeScript).</td>
     </tr>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Triển khai lên cloud</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Nhấn "Deploy" → Google Cloud Run (cần tài khoản Google Cloud).</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Triển khai lên cloud</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Nhấn "Deploy" → Google Cloud Run (cần tài khoản Google Cloud).</td>
     </tr>
   </tbody>
 </table>
 <h2><strong>3. Có thể phát triển app hoàn chỉnh với Google AI Studio không?</strong></h2>
 <p>Tất nhiên, với mục đích cá nhân hoặc thử nghiệm ý tưởng nhanh, Google AI Studio là lựa chọn tuyệt vời vừa dễ dùng, vừa có chi phí gần như bằng 0. Tuy nhiên, nếu bạn muốn xây dựng một ứng dụng hoàn chỉnh (full-stack) với phần backend, UX, UI... mà vẫn không biết lập trình, thì nên cân nhắc các nền tảng khác phù hợp hơn.</p>
-<table style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;">
-  <thead>
-    <tr>
-      <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Mục đích</th>
-      <th style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Công cụ được đề xuất</th>
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
+  <thead style="border: 1px solid #e0e0e0;">
+    <tr style="border: 1px solid #e0e0e0;">
+      <th style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Mục đích</th>
+      <th style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Công cụ được đề xuất</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Sử dụng Cá nhân, Tạo mẫu nhanh (Prototyping), Thử nghiệm ý tưởng</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Google AI Studio</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Sử dụng Cá nhân, Tạo mẫu nhanh (Prototyping), Thử nghiệm ý tưởng</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Google AI Studio</td>
     </tr>
-    <tr>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Phát triển ứng dụng thương mại, Sản phẩm full-stack, Cần khả năng mở rộng</td>
-      <td style="border: 1px solid #dddddd; padding: 8px; text-align: left;">Google Firebase, Lovable, Bolt, Replit, Microsoft 365</td>
+    <tr style="border: 1px solid #e0e0e0;">
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Phát triển ứng dụng thương mại, Sản phẩm full-stack, Cần khả năng mở rộng</td>
+      <td style="border: 1px solid #e0e0e0; padding: 8px; text-align: left;">Google Firebase, Lovable, Bolt, Replit, Microsoft 365</td>
     </tr>
   </tbody>
 </table>
@@ -418,7 +418,7 @@ export const mockNews2: NewsArticle[] = [
     imageUrl: '/image/news2/Perplexity Comet và ChatGPT Atlas.png',
     dataAiHint: 'perplexity comet vs chatgpt atlas',
     content: `<div class="container">
-<h1 id="section-1">Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI Định Hình Lại Internet</h1>
+<h1>Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI Định Hình Lại Internet</h1>
 <div class="toc">
 <div class="toc-title">Mục lục</div>
 <ul>
