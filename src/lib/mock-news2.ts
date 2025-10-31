@@ -73,51 +73,51 @@ export const mockNews2: NewsArticle[] = [
 <img src="/image/news2/Annotate app-Google-ai-studio.png" alt="Có thể chỉnh sửa tự nhiên với nút anonotate app">
 <h3>Bước 4: Chạy thử và Triển khai</h3>
 <p>Sau khi hoàn thiện, bạn có các tùy chọn sau:</p>
-<table>
-<thead>
-<tr>
-<th>Hành động</th>
-<th>Cách thực hiện</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Chạy thử trong trình duyệt</td>
-<td>Nhấn nút "Run" hoặc xem live preview.</td>
-</tr>
-<tr>
-<td>Chia sẻ app qua link</td>
-<td>Nhấn "Share" → Copy link.</td>
-</tr>
-<tr>
-<td>Tải về mã nguồn</td>
-<td>Nhấn "Download" (File ZIP chứa mã React + TypeScript).</td>
-</tr>
-<tr>
-<td>Triển khai lên cloud</td>
-<td>Nhấn "Deploy" → Google Cloud Run (cần tài khoản Google Cloud).</td>
-</tr>
-</tbody>
+<table style="width:100%; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Hành động</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Cách thực hiện</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Chạy thử trong trình duyệt</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Nhấn nút "Run" hoặc xem live preview.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Chia sẻ app qua link</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Nhấn "Share" → Copy link.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Tải về mã nguồn</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Nhấn "Download" (File ZIP chứa mã React + TypeScript).</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Triển khai lên cloud</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Nhấn "Deploy" → Google Cloud Run (cần tài khoản Google Cloud).</td>
+    </tr>
+  </tbody>
 </table>
 <h2><strong>3. Có thể phát triển app hoàn chỉnh với Google AI Studio không?</strong></h2>
 <p>Tất nhiên, với mục đích cá nhân hoặc thử nghiệm ý tưởng nhanh, Google AI Studio là lựa chọn tuyệt vời vừa dễ dùng, vừa có chi phí gần như bằng 0. Tuy nhiên, nếu bạn muốn xây dựng một ứng dụng hoàn chỉnh (full-stack) với phần backend, UX, UI... mà vẫn không biết lập trình, thì nên cân nhắc các nền tảng khác phù hợp hơn.</p>
-<table>
-<thead>
-<tr>
-<th>Mục đích</th>
-<th>Công cụ được đề xuất</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Sử dụng Cá nhân, Tạo mẫu nhanh (Prototyping), Thử nghiệm ý tưởng</td>
-<td>Google AI Studio</td>
-</tr>
-<tr>
-<td>Phát triển ứng dụng thương mại, Sản phẩm full-stack, Cần khả năng mở rộng</td>
-<td>Google Firebase, Lovable, Bolt, Replit, Microsoft 365</td>
-</tr>
-</tbody>
+<table style="width:100%; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Mục đích</th>
+      <th style="border: 1px solid black; padding: 8px; text-align: left;">Công cụ được đề xuất</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Sử dụng Cá nhân, Tạo mẫu nhanh (Prototyping), Thử nghiệm ý tưởng</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Google AI Studio</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Phát triển ứng dụng thương mại, Sản phẩm full-stack, Cần khả năng mở rộng</td>
+      <td style="border: 1px solid black; padding: 8px; text-align: left;">Google Firebase, Lovable, Bolt, Replit, Microsoft 365</td>
+    </tr>
+  </tbody>
 </table>
 <p>Google AI Studio không phải lựa chọn tối ưu để phát triển sản phẩm ở quy mô lớn hay cần bảo mật cao. Thay vào đó, bạn có thể tải mã nguồn (code) từ AI Studio rồi tải lên hoặc có thể sysn trực tiếp qua Github để tiếp tục triển khai tiếp trên những nền tảng khác như Firebase Studio (trong hệ sinh thái Google), Lovable, Replit, hoặc Bolt, Microsoft 365. Các nền tảng này giúp bạn hoàn thiện ứng dụng hơn, với các tính năng back-end mạnh mẽ đồng thời vẫn tận dụng được sức mạnh của AI từ Google AI Studio.</p>`
   },
@@ -465,3 +465,4 @@ export const mockNews2: NewsArticle[] = [
     
 
     
+
