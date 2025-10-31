@@ -417,14 +417,7 @@ export const mockNews2: NewsArticle[] = [
     publishedAt: '2025-10-22T09:00:00Z',
     imageUrl: '/image/news2/Perplexity Comet và ChatGPT Atlas.png',
     dataAiHint: 'perplexity comet vs chatgpt atlas',
-    content: `<!DOCTYPE html><html lang="vi"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-</head>
-<body>
-<div class="container">
+    content: `<div class="container">
 <h1 id="section-1">Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI Định Hình Lại Internet</h1>
 <div class="toc">
 <div class="toc-title">Mục lục</div>
@@ -436,20 +429,20 @@ export const mockNews2: NewsArticle[] = [
 </ul>
 </div>
 <h2 id="section-section-1">Sự Trỗi Dậy của Trình Duyệt AI: Một Kỷ Nguyên Mới Cho Internet</h2>
-<p>Năm 2025 chứng kiến một cuộc cách mạng trong cách chúng ta tương tác với Internet. Thay vì chỉ là công cụ hiển thị nội dung, trình duyệt web đang được tái định hình thành những "trợ lý thông minh". Sự trỗi dậy của các trình duyệt AI-native (trí tuệ nhân tạo gốc) như <strong>Perplexity Comet</strong> và <strong>ChatGPT Atlas</strong> của OpenAI đang báo hiệu một cuộc chiến mới, thách thức sự thống trị lâu năm của Google Chrome và Apple Safari.</p>
-<p>Cuộc chuyển dịch này được thúc đẩy bởi những tiến bộ vượt bậc của các mô hình ngôn ngữ lớn (LLM), biến trình duyệt từ một công cụ điều hướng thụ động thành một đối tác nhận thức chủ động. Giám đốc điều hành OpenAI, Sam Altman, gọi đây là "cơ hội hiếm có, một thập kỷ một lần để định nghĩa lại trình duyệt có thể làm được gì". Các công ty công nghệ đang chạy đua để chiếm lĩnh "điểm tương tác đầu tiên" của người dùng trên mạng, có khả năng làm thay đổi sâu sắc mô hình kinh doanh dựa trên quảng cáo vốn là nền tảng của các công cụ tìm kiếm truyền thống.</p>
+<p>Năm 2025 chứng kiến một cuộc cách mạng trong cách chúng ta tương tác với Internet. Thay vì chỉ là công cụ hiển thị nội dung, trình duyệt web đang được tái định hình thành những &#34;trợ lý thông minh&#34;. Sự trỗi dậy của các trình duyệt AI-native (trí tuệ nhân tạo gốc) như <strong>Perplexity Comet</strong> và <strong>ChatGPT Atlas</strong> của OpenAI đang báo hiệu một cuộc chiến mới, thách thức sự thống trị lâu năm của Google Chrome và Apple Safari.</p>
+<p>Cuộc chuyển dịch này được thúc đẩy bởi những tiến bộ vượt bậc của các mô hình ngôn ngữ lớn (LLM), biến trình duyệt từ một công cụ điều hướng thụ động thành một đối tác nhận thức chủ động. Giám đốc điều hành OpenAI, Sam Altman, gọi đây là &#34;cơ hội hiếm có, một thập kỷ một lần để định nghĩa lại trình duyệt có thể làm được gì&#34;. Các công ty công nghệ đang chạy đua để chiếm lĩnh &#34;điểm tương tác đầu tiên&#34; của người dùng trên mạng, có khả năng làm thay đổi sâu sắc mô hình kinh doanh dựa trên quảng cáo vốn là nền tảng của các công cụ tìm kiếm truyền thống.</p>
 <p>Tuy nhiên, con đường thay đổi này không hề dễ dàng. Google Chrome vẫn đang chiếm lĩnh thị trường với một thị phần khổng lồ, trong khi Safari giữ vững vị thế nhờ sự tích hợp sâu vào hệ sinh thái Apple.</p>
 [BROWSER_MARKET_SHARE_CHART]
 <h2 id="section-section-2">Hai Triết Lý Đối Lập: ChatGPT Atlas vs. Perplexity Comet</h2>
 <p>Mặc dù cùng hướng đến một tương lai duyệt web thông minh hơn, ChatGPT Atlas và Perplexity Comet lại theo đuổi hai triết lý hoàn toàn khác biệt, phục vụ cho những nhu cầu và thói quen sử dụng khác nhau.</p>
 [AI_BROWSER_FOCUS_CHART]
-<p><strong>ChatGPT Atlas</strong> được mệnh danh là "bộ não hành động của web" (action-oriented web brain). Trọng tâm của Atlas là tự động hóa và năng suất. Với tính năng nổi bật là <strong>Agent Mode</strong> (chế độ Tác tử), Atlas có thể tự thực hiện các tác vụ phức tạp gồm nhiều bước như đặt vé máy bay, mua sắm trực tuyến, hay lên lịch hẹn. Nó biến trình duyệt thành một "phi công phụ" (co-pilot), giúp người dùng hoàn thành công việc thay vì chỉ tìm kiếm thông tin. Các tính năng khác như "Browser Memory" (bộ nhớ trình duyệt) và "In-line writing help" (hỗ trợ viết trực tiếp) càng củng cố vai trò của Atlas như một trợ lý cá nhân hóa, giúp giảm thiểu các thao tác thủ công và tiết kiệm thời gian.</p>
-<blockquote>Atlas ưu tiên "hành động" - đơn giản hóa cách bạn làm việc trực tuyến.</blockquote>
+<p><strong>ChatGPT Atlas</strong> được mệnh danh là &#34;bộ não hành động của web&#34; (action-oriented web brain). Trọng tâm của Atlas là tự động hóa và năng suất. Với tính năng nổi bật là <strong>Agent Mode</strong> (chế độ Tác tử), Atlas có thể tự thực hiện các tác vụ phức tạp gồm nhiều bước như đặt vé máy bay, mua sắm trực tuyến, hay lên lịch hẹn. Nó biến trình duyệt thành một &#34;phi công phụ&#34; (co-pilot), giúp người dùng hoàn thành công việc thay vì chỉ tìm kiếm thông tin. Các tính năng khác như &#34;Browser Memory&#34; (bộ nhớ trình duyệt) và &#34;In-line writing help&#34; (hỗ trợ viết trực tiếp) càng củng cố vai trò của Atlas như một trợ lý cá nhân hóa, giúp giảm thiểu các thao tác thủ công và tiết kiệm thời gian.</p>
+<blockquote>Atlas ưu tiên &#34;hành động&#34; - đơn giản hóa cách bạn làm việc trực tuyến.</blockquote>
 <figure>
 <img alt="Chế độ Tác tử của Atlas đang mua sắm" src="https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg" style="max-height: 280px; max-width: 100%;"/>
 <figcaption>Chế độ Tác tử của ChatGPT Atlas có thể tự động thực hiện các yêu cầu mua sắm phức tạp cho người dùng</figcaption>
 </figure>
-<p>Ngược lại, <strong>Perplexity Comet</strong> được xây dựng như một "không gian làm việc tri thức" (knowledge workspace), tập trung vào nghiên cứu và độ chính xác. Triết lý của Comet là "biết" (knowing), đảm bảo thông tin đáng tin cậy, cập nhật và minh bạch. Tính năng nổi bật của nó là khả năng tổng hợp thông tin từ nhiều nguồn, cung cấp các câu trả lời có trích dẫn rõ ràng và có thể kiểm chứng. Comet cho phép người dùng tạo các "Spaces" (Không gian) riêng cho từng dự án, giúp tổ chức các tab, ghi chú và cuộc trò chuyện một cách khoa học. Điều này biến nó thành một "nhà nghiên cứu thông minh" (intelligent researcher), lý tưởng cho các học giả, nhà báo và chuyên gia phân tích.</p>
+<p>Ngược lại, <strong>Perplexity Comet</strong> được xây dựng như một &#34;không gian làm việc tri thức&#34; (knowledge workspace), tập trung vào nghiên cứu và độ chính xác. Triết lý của Comet là &#34;biết&#34; (knowing), đảm bảo thông tin đáng tin cậy, cập nhật và minh bạch. Tính năng nổi bật của nó là khả năng tổng hợp thông tin từ nhiều nguồn, cung cấp các câu trả lời có trích dẫn rõ ràng và có thể kiểm chứng. Comet cho phép người dùng tạo các &#34;Spaces&#34; (Không gian) riêng cho từng dự án, giúp tổ chức các tab, ghi chú và cuộc trò chuyện một cách khoa học. Điều này biến nó thành một &#34;nhà nghiên cứu thông minh&#34; (intelligent researcher), lý tưởng cho các học giả, nhà báo và chuyên gia phân tích.</p>
 <div class="clear-float"></div>
 <h2 id="section-section-3">Thách Thức Ngôi Vương: Tác Động đến Chrome, Safari và Toàn Ngành</h2>
 <p>Sự xuất hiện của Atlas và Comet không chỉ là một cuộc cạnh tranh về tính năng, mà còn là một thách thức trực tiếp đến mô hình kinh doanh và vị thế của các ông lớn. Google Chrome, với thị phần toàn cầu vượt trội, đối mặt với nguy cơ bị suy giảm doanh thu quảng cáo. Các trình duyệt AI cung cấp câu trả lời tổng hợp trực tiếp, làm giảm nhu cầu người dùng phải nhấp vào các liên kết, vốn là nền tảng của mô hình quảng cáo tìm kiếm. Gartner dự báo rằng việc sử dụng công cụ tìm kiếm truyền thống có thể giảm 25% vào năm 2026 khi người dùng chuyển sang các trợ lý AI.</p>
@@ -457,17 +450,18 @@ export const mockNews2: NewsArticle[] = [
 <p>Sự cạnh tranh này đang thúc đẩy một thị trường hoàn toàn mới. Thị trường trình duyệt AI được dự báo sẽ tăng trưởng mạnh mẽ, từ 4,5 tỷ USD vào năm 2024 lên đến 76,8 tỷ USD vào năm 2034, với tốc độ tăng trưởng kép hàng năm (CAGR) là 32,8%. Điều này cho thấy tiềm năng to lớn và sự thay đổi căn bản trong cách ngành công nghệ nhìn nhận về vai trò của trình duyệt.</p>
 [AI_BROWSER_MARKET_GROWTH_CHART]
 <h2 id="section-section-4">Rủi Ro Tiềm Ẩn và Tương Lai Phía Trước</h2>
-<p>Mặc dù hứa hẹn, các trình duyệt AI cũng mang đến những rủi ro đáng kể, đặc biệt là về bảo mật và quyền riêng tư. Việc trao quyền cho một tác tử AI để tự động duyệt web và thực hiện hành động trên các tài khoản đã đăng nhập của người dùng tạo ra những lỗ hổng mới. Các nhà nghiên cứu bảo mật đã phát hiện ra các lỗ hổng nghiêm trọng như <a href="https://time.com/7323827/ai-browsers-perplexity-comet/" target="_blank">"CometJacking"</a> trên Perplexity Comet, nơi một liên kết độc hại có thể chiếm quyền điều khiển trợ lý AI để đánh cắp thông tin nhạy cảm từ email hoặc các dịch vụ khác. Đây là một thách thức cơ bản đối với an ninh mạng trong kỷ nguyên AI.</p>
+<p>Mặc dù hứa hẹn, các trình duyệt AI cũng mang đến những rủi ro đáng kể, đặc biệt là về bảo mật và quyền riêng tư. Việc trao quyền cho một tác tử AI để tự động duyệt web và thực hiện hành động trên các tài khoản đã đăng nhập của người dùng tạo ra những lỗ hổng mới. Các nhà nghiên cứu bảo mật đã phát hiện ra các lỗ hổng nghiêm trọng như &#34;CometJacking&#34; trên Perplexity Comet, nơi một liên kết độc hại có thể chiếm quyền điều khiển trợ lý AI để đánh cắp thông tin nhạy cảm từ email hoặc các dịch vụ khác. Đây là một thách thức cơ bản đối với an ninh mạng trong kỷ nguyên AI.</p>
 <p>Bên cạnh đó, hiệu suất cũng là một vấn đề. Các tính năng AI, đặc biệt là chế độ tác tử, có thể tiêu tốn nhiều tài nguyên CPU và bộ nhớ, và đôi khi hoạt động chậm hơn so với việc người dùng tự thực hiện. Các tính năng này vẫn còn ở giai đoạn đầu và thường xuyên gặp lỗi.</p>
-<p>Về tương lai, cuộc chiến trình duyệt AI sẽ định hình lại cả mô hình kinh doanh. Thay vì dựa vào quảng cáo, các công ty như OpenAI và Perplexity đang khám phá các mô hình dựa trên đăng ký (subscription) cho các tính năng cao cấp. Perplexity ban đầu cung cấp Comet với giá 200 USD/tháng cho gói Max, sau đó <a href="https://www.emarketer.com/content/perplexity-makes-its-comet-browser-free--taking-aim-chrome" target="_blank">chuyển sang miễn phí</a> với một số giới hạn. Trong khi đó, OpenAI cung cấp Atlas miễn phí nhưng tính phí cho Agent Mode. Cuộc chiến này không chỉ là về công nghệ, mà còn là về việc tìm ra một mô hình kinh doanh bền vững cho tương lai của web.</p>
+<p>Về tương lai, cuộc chiến trình duyệt AI sẽ định hình lại cả mô hình kinh doanh. Thay vì dựa vào quảng cáo, các công ty như OpenAI và Perplexity đang khám phá các mô hình dựa trên đăng ký (subscription) cho các tính năng cao cấp. Perplexity ban đầu cung cấp Comet với giá 200 USD/tháng cho gói Max, sau đó chuyển sang miễn phí với một số giới hạn. Trong khi đó, OpenAI cung cấp Atlas miễn phí nhưng tính phí cho Agent Mode. Cuộc chiến này không chỉ là về công nghệ, mà còn là về việc tìm ra một mô hình kinh doanh bền vững cho tương lai của web.</p>
 <p>Dù con đường phía trước còn nhiều chông gai, sự chuyển dịch sang một kỷ nguyên duyệt web thông minh, nơi trình duyệt trở thành một đối tác chủ động, dường như là không thể đảo ngược. Cuộc chiến giữa những người khổng lồ và những kẻ thách thức sẽ tiếp tục định hình lại trải nghiệm kỹ thuật số của chúng ta trong nhiều năm tới.</p>
-</div>
-</body></html>`,
+</div>`
   },
 ];
     
     
 
 
+
+    
 
     
