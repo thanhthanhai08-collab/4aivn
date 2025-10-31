@@ -4,7 +4,7 @@ import type { NewsArticle } from '@/lib/types';
 export const mockNews2: NewsArticle[] = [
   {
     id: 'tao-mini-app-ai-mien-phi-cung-google-ai-studio',
-    title: 'Tạo Mini App AI Miễn Phí Chỉ Với Vài Cú Click Cùng Google AI Studio',
+    title: 'Tạo mini app miễn phí chỉ với vài cú click cùng Google AI Studio',
     source: 'Google',
     author: 'Mai',
     publishedAt: '2025-10-31T09:00:00Z',
@@ -470,3 +470,6 @@ export const mockNews2: NewsArticle[] = [
 
     
 
+
+
+    
