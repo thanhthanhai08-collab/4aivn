@@ -70,7 +70,7 @@ export const mockNews2: NewsArticle[] = [
     <li>Thêm nút chuyển giọng nói thành văn bản để tăng tính tương tác cho app.</li>
 </ul>
 <p>Và điều thú vị nhất là: bạn có thể chỉnh sửa ứng dụng như đang dùng Canva hay Figma với nút <strong>Annotate app</strong> — nơi bạn có thể vẽ, thêm chữ, đổi màu... tất cả đều diễn ra tự nhiên và trực quan nhất có thể.</p>
-<img src="/image/news2/Annotate app-Google-ai-studio.png" alt="Có thể chỉnh sửa tự nhiên với nút anonotate app">
+[IMAGE:/image/news2/Nut-annotate app-Google-ai-studio.png|Nút annotate app từ Google Ai Studio|Chỉnh sửa tự nhiên hơn]
 <h3>Bước 4: Chạy thử và Triển khai</h3>
 <p>Sau khi hoàn thiện, bạn có các tùy chọn sau:</p>
 <table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
@@ -469,3 +469,4 @@ export const mockNews2: NewsArticle[] = [
 
 
     
+
