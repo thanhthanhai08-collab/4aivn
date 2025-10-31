@@ -3,6 +3,125 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews2: NewsArticle[] = [
   {
+    id: 'tao-mini-app-ai-mien-phi-cung-google-ai-studio',
+    title: 'Tạo Mini App AI Miễn Phí Chỉ Với Vài Cú Click Cùng Google AI Studio',
+    source: 'Google',
+    author: 'Mai',
+    publishedAt: '2025-10-31T09:00:00Z',
+    imageUrl: '/image/news2/Suc-manh-tao-app-google-ai-studio.png',
+    dataAiHint: "Google AI Studio là môi trường phát triển miễn phí, giúp bất kỳ ai tạo ứng dụng AI không cần code bằng cách sử dụng các mô hình Gemini 2.5 Pro/Flash và tích hợp dễ dàng các API/SDK của Google (như Google Maps, Google Search, Veo 3).",
+    content: `<p>Trí tuệ nhân tạo (AI) đang thay đổi hoàn toàn cách con người tạo ra ứng dụng (app). Giờ đây, bạn không cần là lập trình viên chuyên nghiệp chỉ cần một trợ lý AI thông minh, bạn đã có thể biến ý tưởng thành sản phẩm thật.</p>
+<p>Google AI Studio chính là minh chứng rõ nhất cho sự thay đổi đó. Nền tảng này cho phép bất kỳ ai, dù không biết lập trình, cũng có thể tạo ứng dụng theo ý mình. Với bản cập nhật mới nhất, việc làm app AI giờ đơn giản như trò chuyện tự nhiên với các mô tả ý tưởng bằng ngôn ngữ tự nhiên, phần còn lại để AI lo.</p>
+<h2><strong>1. Google AI Studio: Lập trình AI không cần biết code</strong></h2>
+<p>Google AI Studio là một môi trường phát triển chạy trực tiếp trên trình duyệt, được tạo ra để đơn giản hóa tối đa quá trình tạo mẫu và xây dựng ứng dụng dựa trên các mô hình AI mạnh mẽ của Google — hiện tại là Gemini 2.5 Pro và Gemini 2.5 Flash.</p>
+<p>Nếu trước đây, Gemini chỉ được ví như “bộ não” thông minh của ứng dụng, thì giờ đây Google AI Studio đã giúp nó có thêm “tay chân” với khả năng kết nối trực tiếp tới các API và SDK trong hệ sinh thái Google (thông qua mục Supercharge your apps with AI). Nhờ đó, việc mở rộng tính năng trở nên cực kỳ dễ dàng, bạn có thể khiến ứng dụng hoạt động đúng như mong muốn mà không cần phải tự tay cấu hình API, SDK rườm rà như trước.</p>
+<p>Tất nhiên, với các API hoặc SDK của bên thứ ba, bạn vẫn cần nhập thủ công. Nhưng nhờ hệ sinh thái “khổng lồ” của Google — bao gồm Nano Bananas, Veo 3, Text-to-Speech, Google Search, và đặc biệt là Google Maps — gần như mọi nhu cầu cơ bản đều đã được đáp ứng.</p>
+<p>Mình đã thử nghiệm và có thể xác nhận rằng Google Maps hoạt động hoàn toàn ổn định cho mini app tại Việt Nam, ví dụ như ứng dụng tìm đường hay xem giao thông theo thời gian thực. Còn khi dùng dữ liệu từ Google Search, kết quả trả về quá “chất lượng” — không cần phụ thuộc vào các công cụ cào dữ liệu (scraping) khác nữa.</p>
+<p>Hoặc đơn giản chúng ta có thêm chế độ suy luận thông minh cho ứng dụng khi kết nối với Gemini 2.5 Pro hoặc tăng tốc trả lời cho chatbot với Gemini 2.5 Flash-lite một phiên bản rút gọn của Gemini 2.5 Flash.</p>
+<p>Điểm cộng lớn tiếp theo Google AI Studio thì nó hiện hoàn toàn miễn phí để trải nghiệm. Mình đã dùng thử và chưa mất bất kỳ khoản phí nào với lượng credit miễn phí mà Google cung cấp khá hào phóng, đủ để thoải mái thử sức với Gemini 2.5, Nano Bananas, Veo 3 và nhiều công cụ khác cho mục đích cá nhân.</p>
+<h2><strong>2. Hướng Dẫn Từng Bước Tạo Mini App AI</strong></h2>
+<p>Quá trình tạo ứng dụng trên Google AI Studio rất đơn giản, chỉ cần thực hiện theo các bước sau:</p>
+<h3>Bước 1: Truy cập và Thiết lập</h3>
+<ol>
+    <li><strong>Truy cập:</strong> Bạn truy cập vào trang công cụ Google AI Studio.</li>
+    <li><strong>Đăng nhập:</strong> Đăng nhập bằng tài khoản Google của bạn.</li>
+    <li><strong>Bắt đầu xây dựng:</strong> Vào tab “Build” (Xây dựng). Tại đây khi chọn vào tab Start, bạn có thể chọn mô hình AI (mặc định là Gemini 2.5 Pro hoặc Gemini 2.5 Flash làm trợ lý chính cho bạn) và bạn cũng có thể chọn ngôn ngữ lập trình ở đây là React hoặc Angular tùy bạn thích nếu không chọn thì AI sẽ mặc định là React.</li>
+</ol>
+<h3>Bước 2: Lên ý tưởng cho ứng dụng</h3>
+<p>Nếu bạn vẫn chưa nghĩ ra ý tưởng cụ thể, đừng lo hãy ghé vào <strong>App Gallery</strong> để xem qua những ứng dụng mẫu mà Google hoặc cộng đồng người dùng đã tạo. Đây là cách nhanh nhất để bạn lấy cảm hứng và hiểu rõ hơn về những gì có thể làm được.</p>
+<p>Còn nếu bạn “lười” hơn một chút, thì chỉ cần nhấn vào nút <strong>I’m feeling lucky</strong> trong tab Start. Ngay lập tức, Google AI Studio sẽ gợi ý cho bạn những ý tưởng thú vị, kèm theo ví dụ về cách tích hợp các API, SDK (trong mục Supercharge your apps with AI) và những prompt mà AI sử dụng. Cách này vừa tiết kiệm thời gian, vừa giúp bạn học được cách AI tư duy khi tạo ứng dụng.</p>
+<p>Nếu bạn đã có ý tưởng rõ ràng thì đến phần tiếp thôi nào.</p>
+<h3>Bước 3: Viết yêu cầu (Prompt) cụ thể</h3>
+<p>Nếu bạn chưa có một prompt chi tiết với đầy đủ yêu cầu về chức năng, ngôn ngữ hay giao diện như các mẫu trong nút I’m feeling lucky, cũng không sao cả. Bạn hoàn toàn có thể tạo ứng dụng chỉ với một câu đơn giản, ví dụ: “Tạo cho tôi ứng dụng ghép ảnh.” Lúc này, AI sẽ tự động quyết định mọi thứ và thực hiện các bước còn lại cho bạn.</p>
+<p>Tuy nhiên, việc mô tả càng chi tiết thì kết quả sẽ càng sát ý tưởng, giúp giảm thời gian chỉnh sửa. Nếu có thể, bạn nên cung cấp hình ảnh tham chiếu hoặc bản phác thảo từ các công cụ như Figma hay Canva, vì AI có thể hiểu và tạo giao diện gần như chính xác theo mẫu đó.</p>
+<p>Đừng quên thêm các tính năng bổ trợ trong mục <strong>Supercharge your apps with AI</strong> để AI tự kết nối các API hoặc SDK cần thiết, hoặc thậm chí bật chế độ suy luận thông minh cho ứng dụng.</p>
+<p>Ví dụ, một prompt chi tiết có thể như sau, các bạn có thể tham khảo</p>
+<p>“Tạo một AI Web App cho phép người dùng:</p>
+<ul>
+    <li>Tải lên 2 ảnh (1 & 2) → Ứng dụng sẽ ghép thành 1 ảnh tổng hợp.</li>
+    <li>Hỗ trợ nhiều tỉ lệ ảnh: 1:1, 16:9, 4:3, 3:2.</li>
+    <li>Có xem trước ảnh, nút tải xuống (Download).</li>
+    <li>Lưu lịch sử tạo ảnh (gồm ảnh kết quả, prompt và thời gian).”</li>
+</ul>
+<p>Sau khi hoàn thiện prompt, chỉ cần bấm <strong>Build</strong> và chờ vài giây để xem kết quả.</p>
+<img src="/image/news2/Anh-google-ai-studio-app.png" alt="Anh-google-ai-studio-app.png">
+<h3>Bước 4: AI tự động thực hiện các bước</h3>
+<p><strong>Quá trình xây dựng:</strong> AI Studio sẽ chạy chương trình, qua các giai đoạn như</p>
+<ul>
+    <li>Xác định phạm vi giao diện (Defining the UI Scope).</li>
+    <li>Phát triển ứng dụng React (Developing the React App).</li>
+    <li>Lên kế hoạch cấu trúc ứng dụng (Planning the app structure).</li>
+    <li>Tích hợp Gemini API (Integrating Gemini API).</li>
+    <li>Tự động phát hiện và sửa lỗi (Auto fix error).</li>
+</ul>
+<p><strong>2. Xem trước và sửa ứng dụng bằng hội thoại:</strong></p>
+<p>Giao diện của mini app sẽ hiển thị bản xem trước (preview) ngay trong trình duyệt, giúp bạn thấy ngay ứng dụng hoạt động như thế nào.</p>
+<p>Với dân lập trình (dev), bạn có thể chỉnh sửa trực tiếp trong phần code. Nhưng nếu bạn không rành kỹ thuật, thì cũng chẳng sao — chỉ cần trò chuyện với AI, bạn vẫn có thể yêu cầu thêm, bớt hoặc chỉnh sửa tính năng mà không cần đụng đến một dòng mã nào.</p>
+<p>Ví dụ, bạn có thể nói:</p>
+<ul>
+    <li>“Thêm cho tôi ảnh 3 và ảnh 4 để ghép 4 ảnh thành 1”</li>
+    <li>hoặc “Đổi giao diện sang nền tối.”</li>
+</ul>
+<img src="/image/news2/Anh-studio-app-sau-chinh-sua.png" alt="Chỉnh sửa app bằng ngôn ngữ tự nhiên">
+<p>Nếu bạn chưa thêm các API hoặc SDK trong mục Supercharge your apps with AI ở bước trước, cũng đừng lo. Chỉ cần một prompt đơn giản, AI sẽ tự động tích hợp các API hoặc SDK cần thiết vào mini app của bạn — nhanh gọn và cực kỳ tiện lợi.</p>
+<p>Bạn thậm chí có thể yêu cầu những tính năng nâng cao như:</p>
+<ul>
+    <li>Tạo video từ ảnh bằng Veo 3, ứng dụng sẽ tự động kết nối với API của Veo.</li>
+    <li>Thêm nút chuyển giọng nói thành văn bản để tăng tính tương tác cho app.</li>
+</ul>
+<p>Và điều thú vị nhất là: bạn có thể chỉnh sửa ứng dụng như đang dùng Canva hay Figma với nút <strong>Annotate app</strong> — nơi bạn có thể vẽ, thêm chữ, đổi màu... tất cả đều diễn ra tự nhiên và trực quan nhất có thể.</p>
+<img src="/image/news2/Annotate app-Google-ai-studio.png" alt="Có thể chỉnh sửa tự nhiên với nút anonotate app">
+<h3>Bước 4: Chạy thử và Triển khai</h3>
+<p>Sau khi hoàn thiện, bạn có các tùy chọn sau:</p>
+<table>
+<thead>
+<tr>
+<th>Hành động</th>
+<th>Cách thực hiện</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chạy thử trong trình duyệt</td>
+<td>Nhấn nút "Run" hoặc xem live preview.</td>
+</tr>
+<tr>
+<td>Chia sẻ app qua link</td>
+<td>Nhấn "Share" → Copy link.</td>
+</tr>
+<tr>
+<td>Tải về mã nguồn</td>
+<td>Nhấn "Download" (File ZIP chứa mã React + TypeScript).</td>
+</tr>
+<tr>
+<td>Triển khai lên cloud</td>
+<td>Nhấn "Deploy" → Google Cloud Run (cần tài khoản Google Cloud).</td>
+</tr>
+</tbody>
+</table>
+<h2><strong>3. Có thể phát triển app hoàn chỉnh với Google AI Studio không?</strong></h2>
+<p>Tất nhiên, với mục đích cá nhân hoặc thử nghiệm ý tưởng nhanh, Google AI Studio là lựa chọn tuyệt vời vừa dễ dùng, vừa có chi phí gần như bằng 0. Tuy nhiên, nếu bạn muốn xây dựng một ứng dụng hoàn chỉnh (full-stack) với phần backend, UX, UI... mà vẫn không biết lập trình, thì nên cân nhắc các nền tảng khác phù hợp hơn.</p>
+<table>
+<thead>
+<tr>
+<th>Mục đích</th>
+<th>Công cụ được đề xuất</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sử dụng Cá nhân, Tạo mẫu nhanh (Prototyping), Thử nghiệm ý tưởng</td>
+<td>Google AI Studio</td>
+</tr>
+<tr>
+<td>Phát triển ứng dụng thương mại, Sản phẩm full-stack, Cần khả năng mở rộng</td>
+<td>Google Firebase, Lovable, Bolt, Replit, Microsoft 365</td>
+</tr>
+</tbody>
+</table>
+<p>Google AI Studio không phải lựa chọn tối ưu để phát triển sản phẩm ở quy mô lớn hay cần bảo mật cao. Thay vào đó, bạn có thể tải mã nguồn (code) từ AI Studio rồi tải lên hoặc có thể sysn trực tiếp qua Github để tiếp tục triển khai tiếp trên những nền tảng khác như Firebase Studio (trong hệ sinh thái Google), Lovable, Replit, hoặc Bolt, Microsoft 365. Các nền tảng này giúp bạn hoàn thiện ứng dụng hơn, với các tính năng back-end mạnh mẽ đồng thời vẫn tận dụng được sức mạnh của AI từ Google AI Studio.</p>`
+  },
+  {
     id: 'notebooklm-cong-cu-hoc-tap-nghien-cuu',
     title: 'NotebookLM: Công cụ tuyệt vời để học tập và nghiên cứu',
     source: 'Google',
@@ -296,31 +415,59 @@ export const mockNews2: NewsArticle[] = [
     author: 'Mai',
     source: 'Tổng hợp',
     publishedAt: '2025-10-22T09:00:00Z',
-    imageUrl: 'https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg',
+    imageUrl: '/image/news2/Perplexity Comet và ChatGPT Atlas.png',
     dataAiHint: 'perplexity comet vs chatgpt atlas',
-    content: `<p>Năm 2025 chứng kiến một cuộc cách mạng trong cách chúng ta tương tác với Internet. Thay vì chỉ là công cụ hiển thị nội dung, trình duyệt web đang được tái định hình thành những "trợ lý thông minh". Sự trỗi dậy của các trình duyệt AI-native (trí tuệ nhân tạo gốc) như <strong>Perplexity Comet</strong> và <strong>ChatGPT Atlas</strong> của OpenAI đang báo hiệu một cuộc chiến mới, thách thức sự thống trị lâu năm của Google Chrome và Apple Safari.</p>
+    content: `<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+<div class="container">
+<h1 id="section-1">Perplexity Comet và ChatGPT Atlas: Cuộc Chiến Trình Duyệt AI Định Hình Lại Internet</h1>
+<div class="toc">
+<div class="toc-title">Mục lục</div>
+<ul>
+<li><a href="#section-section-1">Sự Trỗi Dậy của Trình Duyệt AI: Một Kỷ Nguyên Mới Cho Internet</a></li>
+<li><a href="#section-section-2">Hai Triết Lý Đối Lập: ChatGPT Atlas vs. Perplexity Comet</a></li>
+<li><a href="#section-section-3">Thách Thức Ngôi Vương: Tác Động đến Chrome, Safari và Toàn Ngành</a></li>
+<li><a href="#section-section-4">Rủi Ro Tiềm Ẩn và Tương Lai Phía Trước</a></li>
+</ul>
+</div>
+<h2 id="section-section-1">Sự Trỗi Dậy của Trình Duyệt AI: Một Kỷ Nguyên Mới Cho Internet</h2>
+<p>Năm 2025 chứng kiến một cuộc cách mạng trong cách chúng ta tương tác với Internet. Thay vì chỉ là công cụ hiển thị nội dung, trình duyệt web đang được tái định hình thành những "trợ lý thông minh". Sự trỗi dậy của các trình duyệt AI-native (trí tuệ nhân tạo gốc) như <strong>Perplexity Comet</strong> và <strong>ChatGPT Atlas</strong> của OpenAI đang báo hiệu một cuộc chiến mới, thách thức sự thống trị lâu năm của Google Chrome và Apple Safari.</p>
 <p>Cuộc chuyển dịch này được thúc đẩy bởi những tiến bộ vượt bậc của các mô hình ngôn ngữ lớn (LLM), biến trình duyệt từ một công cụ điều hướng thụ động thành một đối tác nhận thức chủ động. Giám đốc điều hành OpenAI, Sam Altman, gọi đây là "cơ hội hiếm có, một thập kỷ một lần để định nghĩa lại trình duyệt có thể làm được gì". Các công ty công nghệ đang chạy đua để chiếm lĩnh "điểm tương tác đầu tiên" của người dùng trên mạng, có khả năng làm thay đổi sâu sắc mô hình kinh doanh dựa trên quảng cáo vốn là nền tảng của các công cụ tìm kiếm truyền thống.</p>
 <p>Tuy nhiên, con đường thay đổi này không hề dễ dàng. Google Chrome vẫn đang chiếm lĩnh thị trường với một thị phần khổng lồ, trong khi Safari giữ vững vị thế nhờ sự tích hợp sâu vào hệ sinh thái Apple.</p>
 [BROWSER_MARKET_SHARE_CHART]
-<h2>Hai Triết Lý Đối Lập: ChatGPT Atlas vs. Perplexity Comet</h2>
+<h2 id="section-section-2">Hai Triết Lý Đối Lập: ChatGPT Atlas vs. Perplexity Comet</h2>
 <p>Mặc dù cùng hướng đến một tương lai duyệt web thông minh hơn, ChatGPT Atlas và Perplexity Comet lại theo đuổi hai triết lý hoàn toàn khác biệt, phục vụ cho những nhu cầu và thói quen sử dụng khác nhau.</p>
 [AI_BROWSER_FOCUS_CHART]
 <p><strong>ChatGPT Atlas</strong> được mệnh danh là "bộ não hành động của web" (action-oriented web brain). Trọng tâm của Atlas là tự động hóa và năng suất. Với tính năng nổi bật là <strong>Agent Mode</strong> (chế độ Tác tử), Atlas có thể tự thực hiện các tác vụ phức tạp gồm nhiều bước như đặt vé máy bay, mua sắm trực tuyến, hay lên lịch hẹn. Nó biến trình duyệt thành một "phi công phụ" (co-pilot), giúp người dùng hoàn thành công việc thay vì chỉ tìm kiếm thông tin. Các tính năng khác như "Browser Memory" (bộ nhớ trình duyệt) và "In-line writing help" (hỗ trợ viết trực tiếp) càng củng cố vai trò của Atlas như một trợ lý cá nhân hóa, giúp giảm thiểu các thao tác thủ công và tiết kiệm thời gian.</p>
 <blockquote>Atlas ưu tiên "hành động" - đơn giản hóa cách bạn làm việc trực tuyến.</blockquote>
-[IMAGE:https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg|Chế độ Tác tử của Atlas đang mua sắm|agent mode shopping]
+<figure>
+<img alt="Chế độ Tác tử của Atlas đang mua sắm" src="https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg" style="max-height: 280px; max-width: 100%;"/>
+<figcaption>Chế độ Tác tử của ChatGPT Atlas có thể tự động thực hiện các yêu cầu mua sắm phức tạp cho người dùng</figcaption>
+</figure>
 <p>Ngược lại, <strong>Perplexity Comet</strong> được xây dựng như một "không gian làm việc tri thức" (knowledge workspace), tập trung vào nghiên cứu và độ chính xác. Triết lý của Comet là "biết" (knowing), đảm bảo thông tin đáng tin cậy, cập nhật và minh bạch. Tính năng nổi bật của nó là khả năng tổng hợp thông tin từ nhiều nguồn, cung cấp các câu trả lời có trích dẫn rõ ràng và có thể kiểm chứng. Comet cho phép người dùng tạo các "Spaces" (Không gian) riêng cho từng dự án, giúp tổ chức các tab, ghi chú và cuộc trò chuyện một cách khoa học. Điều này biến nó thành một "nhà nghiên cứu thông minh" (intelligent researcher), lý tưởng cho các học giả, nhà báo và chuyên gia phân tích.</p>
-<h2>Thách Thức Ngôi Vương: Tác Động đến Chrome, Safari và Toàn Ngành</h2>
+<div class="clear-float"></div>
+<h2 id="section-section-3">Thách Thức Ngôi Vương: Tác Động đến Chrome, Safari và Toàn Ngành</h2>
 <p>Sự xuất hiện của Atlas và Comet không chỉ là một cuộc cạnh tranh về tính năng, mà còn là một thách thức trực tiếp đến mô hình kinh doanh và vị thế của các ông lớn. Google Chrome, với thị phần toàn cầu vượt trội, đối mặt với nguy cơ bị suy giảm doanh thu quảng cáo. Các trình duyệt AI cung cấp câu trả lời tổng hợp trực tiếp, làm giảm nhu cầu người dùng phải nhấp vào các liên kết, vốn là nền tảng của mô hình quảng cáo tìm kiếm. Gartner dự báo rằng việc sử dụng công cụ tìm kiếm truyền thống có thể giảm 25% vào năm 2026 khi người dùng chuyển sang các trợ lý AI.</p>
 <p>Đối với Apple Safari, thách thức lại nằm ở việc đổi mới. Safari luôn được đánh giá cao về hiệu suất, tiết kiệm năng lượng và tích hợp sâu với hệ điều hành. Tuy nhiên, việc thiếu các tính năng AI tiên tiến có thể khiến nó trở nên tụt hậu. Cuộc đua này buộc Apple phải tăng tốc tích hợp AI vào trình duyệt của mình để giữ chân người dùng trong hệ sinh thái.</p>
 <p>Sự cạnh tranh này đang thúc đẩy một thị trường hoàn toàn mới. Thị trường trình duyệt AI được dự báo sẽ tăng trưởng mạnh mẽ, từ 4,5 tỷ USD vào năm 2024 lên đến 76,8 tỷ USD vào năm 2034, với tốc độ tăng trưởng kép hàng năm (CAGR) là 32,8%. Điều này cho thấy tiềm năng to lớn và sự thay đổi căn bản trong cách ngành công nghệ nhìn nhận về vai trò của trình duyệt.</p>
 [AI_BROWSER_MARKET_GROWTH_CHART]
-<h2>Rủi Ro Tiềm Ẩn và Tương Lai Phía Trước</h2>
-<p>Mặc dù hứa hẹn, các trình duyệt AI cũng mang đến những rủi ro đáng kể, đặc biệt là về bảo mật và quyền riêng tư. Việc trao quyền cho một tác tử AI để tự động duyệt web và thực hiện hành động trên các tài khoản đã đăng nhập của người dùng tạo ra những lỗ hổng mới. Các nhà nghiên cứu bảo mật đã phát hiện ra các lỗ hổng nghiêm trọng như "CometJacking" trên Perplexity Comet, nơi một liên kết độc hại có thể chiếm quyền điều khiển trợ lý AI để đánh cắp thông tin nhạy cảm từ email hoặc các dịch vụ khác. Đây là một thách thức cơ bản đối với an ninh mạng trong kỷ nguyên AI.</p>
+<h2 id="section-section-4">Rủi Ro Tiềm Ẩn và Tương Lai Phía Trước</h2>
+<p>Mặc dù hứa hẹn, các trình duyệt AI cũng mang đến những rủi ro đáng kể, đặc biệt là về bảo mật và quyền riêng tư. Việc trao quyền cho một tác tử AI để tự động duyệt web và thực hiện hành động trên các tài khoản đã đăng nhập của người dùng tạo ra những lỗ hổng mới. Các nhà nghiên cứu bảo mật đã phát hiện ra các lỗ hổng nghiêm trọng như <a href="https://time.com/7323827/ai-browsers-perplexity-comet/" target="_blank">"CometJacking"</a> trên Perplexity Comet, nơi một liên kết độc hại có thể chiếm quyền điều khiển trợ lý AI để đánh cắp thông tin nhạy cảm từ email hoặc các dịch vụ khác. Đây là một thách thức cơ bản đối với an ninh mạng trong kỷ nguyên AI.</p>
 <p>Bên cạnh đó, hiệu suất cũng là một vấn đề. Các tính năng AI, đặc biệt là chế độ tác tử, có thể tiêu tốn nhiều tài nguyên CPU và bộ nhớ, và đôi khi hoạt động chậm hơn so với việc người dùng tự thực hiện. Các tính năng này vẫn còn ở giai đoạn đầu và thường xuyên gặp lỗi.</p>
-<p>Về tương lai, cuộc chiến trình duyệt AI sẽ định hình lại cả mô hình kinh doanh. Thay vì dựa vào quảng cáo, các công ty như OpenAI và Perplexity đang khám phá các mô hình dựa trên đăng ký (subscription) cho các tính năng cao cấp. Perplexity ban đầu cung cấp Comet với giá 200 USD/tháng cho gói Max, sau đó chuyển sang miễn phí với một số giới hạn. Trong khi đó, OpenAI cung cấp Atlas miễn phí nhưng tính phí cho Agent Mode. Cuộc chiến này không chỉ là về công nghệ, mà còn là về việc tìm ra một mô hình kinh doanh bền vững cho tương lai của web.</p>
-<p>Dù con đường phía trước còn nhiều chông gai, sự chuyển dịch sang một kỷ nguyên duyệt web thông minh, nơi trình duyệt trở thành một đối tác chủ động, dường như là không thể đảo ngược. Cuộc chiến giữa những người khổng lồ và những kẻ thách thức sẽ tiếp tục định hình lại trải nghiệm kỹ thuật số của chúng ta trong nhiều năm tới.</p>`,
+<p>Về tương lai, cuộc chiến trình duyệt AI sẽ định hình lại cả mô hình kinh doanh. Thay vì dựa vào quảng cáo, các công ty như OpenAI và Perplexity đang khám phá các mô hình dựa trên đăng ký (subscription) cho các tính năng cao cấp. Perplexity ban đầu cung cấp Comet với giá 200 USD/tháng cho gói Max, sau đó <a href="https://www.emarketer.com/content/perplexity-makes-its-comet-browser-free--taking-aim-chrome" target="_blank">chuyển sang miễn phí</a> với một số giới hạn. Trong khi đó, OpenAI cung cấp Atlas miễn phí nhưng tính phí cho Agent Mode. Cuộc chiến này không chỉ là về công nghệ, mà còn là về việc tìm ra một mô hình kinh doanh bền vững cho tương lai của web.</p>
+<p>Dù con đường phía trước còn nhiều chông gai, sự chuyển dịch sang một kỷ nguyên duyệt web thông minh, nơi trình duyệt trở thành một đối tác chủ động, dường như là không thể đảo ngược. Cuộc chiến giữa những người khổng lồ và những kẻ thách thức sẽ tiếp tục định hình lại trải nghiệm kỹ thuật số của chúng ta trong nhiều năm tới.</p>
+</div>
+</body></html>`,
   },
 ];
     
     
 
+
+
+    
