@@ -296,5 +296,42 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Enterprise:</strong> Giải pháp tùy chỉnh cho các doanh nghiệp lớn với các yêu cầu về bảo mật và quy mô riêng.</li>
         </ul>
     `,
+  },
+  {
+    id: 'comet-browser',
+    name: 'Comet',
+    context: 'Trình duyệt AI',
+    developer: 'Perplexity',
+    imageUrl: '/image/Ảnh công cụ AI Perplexity Comet.png',
+    description: 'Comet là một trình duyệt AI thế hệ mới từ Perplexity, được thiết kế để biến việc duyệt web thành một trải nghiệm tương tác và thông minh hơn, tập trung vào nghiên cứu và cung cấp thông tin chính xác.',
+    longDescription: '<p>Comet là một trình duyệt AI của Perplexity, được xây dựng để trở thành một "không gian làm việc tri thức". Nó tập trung vào việc cung cấp các câu trả lời chính xác, đáng tin cậy với các trích dẫn rõ ràng, giúp người dùng nghiên cứu và khám phá thông tin một cách hiệu quả.</p><p>Thay vì chỉ là một công cụ hiển thị, Comet hoạt động như một trợ lý nghiên cứu thông minh, tổng hợp thông tin từ nhiều nguồn và cho phép người dùng tổ chức các dự án của họ một cách khoa học.</p>',
+    logoUrl: '/image/Logo Perplexity.png',
+    link: 'https://www.perplexity.ai/comet',
+    features: [
+      "Tích hợp công cụ tìm kiếm đối thoại của Perplexity.",
+      "Tự động tổng hợp và trích dẫn nguồn thông tin.",
+      "Tạo 'Spaces' để tổ chức các phiên nghiên cứu.",
+      "Hỗ trợ tìm kiếm chuyên sâu trong các lĩnh vực cụ thể.",
+      "Giao diện tối giản và tập trung vào nội dung."
+    ],
+    useCases: [
+      'Nghiên cứu học thuật và khoa học.',
+      'Phân tích thị trường và đối thủ cạnh tranh.',
+      'Tổng hợp thông tin cho việc viết báo hoặc blog.',
+      'Học tập và khám phá các chủ đề mới.'
+    ],
+    whoIsItFor: [
+      'Nhà nghiên cứu',
+      'Học sinh, sinh viên',
+      'Nhà báo',
+      'Nhà phân tích',
+      'Người dùng tò mò muốn có câu trả lời chính xác'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Miễn phí:</strong> Cung cấp các tính năng tìm kiếm và tổ chức cơ bản.</li>
+            <li><strong>Gói Pro ($20/tháng):</strong> Mở khóa các mô hình AI mạnh mẽ hơn, tìm kiếm chuyên sâu không giới hạn và các tính năng nâng cao khác.</li>
+        </ul>
+    `,
   }
 ];
