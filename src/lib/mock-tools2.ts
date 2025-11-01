@@ -257,6 +257,45 @@ export const mockLovableTool: Tool[] = [
             <li><strong>API:</strong> Chi phí khoảng $0.039/hình ảnh, phù hợp cho các nhà phát triển và doanh nghiệp muốn tích hợp vào ứng dụng riêng.</li>
         </ul>
     `,
+  },
+  {
+    id: 'bolt',
+    name: 'Bolt',
+    context: 'Code cho Web app',
+    developer: 'Bolt',
+    imageUrl: '/image/Ảnh công cụ AI Bolt.png',
+    description: 'Bolt là một nền tảng phát triển AI thế hệ mới giúp bạn xây dựng, triển khai và quản lý các ứng dụng web một cách nhanh chóng và hiệu quả, tích hợp sâu với các mô hình ngôn ngữ lớn để tự động hóa quy trình.',
+    longDescription: '<p>Bolt là một nền tảng phát triển ứng dụng web được hỗ trợ bởi AI, được thiết kế để đơn giản hóa quá trình tạo ra các sản phẩm phần mềm phức tạp. Nền tảng này cung cấp một môi trường tích hợp, nơi bạn có thể mô tả các yêu cầu của mình bằng ngôn ngữ tự nhiên và xem AI xây dựng các thành phần tương ứng, từ giao diện người dùng đến logic backend.</p><p>Với Bolt, các nhà phát triển có thể tăng tốc độ làm việc, giảm thiểu các tác vụ lặp đi lặp lại và tập trung vào việc tạo ra các tính năng sáng tạo. Nền tảng này cũng hỗ trợ triển khai liền mạch và quản lý vòng đời ứng dụng, làm cho nó trở thành một giải pháp toàn diện cho các nhóm phát triển hiện đại.</p>',
+    logoUrl: '/image/Logo Bolt.png',
+    link: 'https://bolt.new',
+    features: [
+      "Phát triển ứng dụng bằng ngôn ngữ tự nhiên.",
+      "Tự động hóa việc tạo mã cho frontend và backend.",
+      "Tích hợp sẵn các mô hình AI hàng đầu.",
+      "Giao diện trực quan để quản lý và tùy chỉnh.",
+      "Hỗ trợ triển khai nhanh chóng lên đám mây.",
+      "Cung cấp các mẫu dựng sẵn để bắt đầu nhanh."
+    ],
+    useCases: [
+        'Xây dựng nhanh các ứng dụng web và API.',
+        'Tạo sản phẩm mẫu và MVP trong thời gian ngắn.',
+        'Tự động hóa các tác vụ phát triển phần mềm.',
+        'Tích hợp các tính năng AI vào ứng dụng hiện có.',
+        'Phát triển các công cụ nội bộ cho doanh nghiệp.'
+    ],
+    whoIsItFor: [
+        'Nhà phát triển web',
+        'Startup công nghệ',
+        'Doanh nghiệp vừa và nhỏ',
+        'Kỹ sư phần mềm'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Free:</strong> Bao gồm các tính năng cơ bản để xây dựng và thử nghiệm các ứng dụng nhỏ.</li>
+            <li><strong>Gói Pro:</strong> Cung cấp thêm tài nguyên, hỗ trợ ưu tiên và các tính năng nâng cao cho các dự án chuyên nghiệp.</li>
+            <li><strong>Gói Enterprise:</strong> Giải pháp tùy chỉnh cho các doanh nghiệp lớn với các yêu cầu về bảo mật và quy mô riêng.</li>
+        </ul>
+    `,
   }
 ];
 
