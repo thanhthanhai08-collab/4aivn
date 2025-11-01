@@ -263,10 +263,10 @@ export const mockLovableTool: Tool[] = [
     name: 'Bolt',
     context: 'Code cho Web app',
     developer: 'Bolt',
-    imageUrl: '/image/Ảnh công cụ AI Bolt.png',
+    imageUrl: '/image/Anh-cong-cu-bolt.png',
     description: 'Bolt là một nền tảng phát triển AI thế hệ mới giúp bạn xây dựng, triển khai và quản lý các ứng dụng web một cách nhanh chóng và hiệu quả, tích hợp sâu với các mô hình ngôn ngữ lớn để tự động hóa quy trình.',
     longDescription: '<p>Bolt là một nền tảng phát triển ứng dụng web được hỗ trợ bởi AI, được thiết kế để đơn giản hóa quá trình tạo ra các sản phẩm phần mềm phức tạp. Nền tảng này cung cấp một môi trường tích hợp, nơi bạn có thể mô tả các yêu cầu của mình bằng ngôn ngữ tự nhiên và xem AI xây dựng các thành phần tương ứng, từ giao diện người dùng đến logic backend.</p><p>Với Bolt, các nhà phát triển có thể tăng tốc độ làm việc, giảm thiểu các tác vụ lặp đi lặp lại và tập trung vào việc tạo ra các tính năng sáng tạo. Nền tảng này cũng hỗ trợ triển khai liền mạch và quản lý vòng đời ứng dụng, làm cho nó trở thành một giải pháp toàn diện cho các nhóm phát triển hiện đại.</p>',
-    logoUrl: '/image/Logo Bolt.png',
+    logoUrl: '/image/Logo-bolt.png',
     link: 'https://bolt.new',
     features: [
       "Phát triển ứng dụng bằng ngôn ngữ tự nhiên.",
@@ -298,6 +298,3 @@ export const mockLovableTool: Tool[] = [
     `,
   }
 ];
-
-    
-    
