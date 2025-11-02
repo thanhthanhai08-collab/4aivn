@@ -342,7 +342,7 @@ export const mockLovableTool: Tool[] = [
     imageUrl: '/image/Anh-cong-cu-atlas.png',
     description: 'Atlas là trình duyệt AI của OpenAI, được thiết kế để biến việc duyệt web thành một trải nghiệm thông minh và chủ động, tập trung vào việc tự động hóa các tác vụ và cung cấp câu trả lời thông minh.',
     longDescription: '<p>Atlas là trình duyệt web do OpenAI phát triển, tích hợp sâu các khả năng của mô hình ngôn ngữ lớn để tạo ra một trải nghiệm duyệt web thông minh và hiệu quả. Thay vì chỉ hiển thị các trang web, Atlas hoạt động như một trợ lý chủ động, có khả năng tự động hóa các tác vụ phức tạp, tóm tắt nội dung và cung cấp câu trả lời trực tiếp từ web.</p><p>Với "Chế độ Tác tử" (Agent Mode), Atlas có thể thực hiện các chuỗi hành động như đặt vé máy bay hoặc mua sắm trực tuyến thay cho người dùng. Đây là công cụ mạnh mẽ dành cho những ai muốn tối ưu hóa năng suất và biến trình duyệt thành một đối tác làm việc thực thụ.</p>',
-    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    logoUrl: '/image/Logo-chatgpt-atlas.png',
     link: 'https://chatgpt.com/vi-VN/atlas/get-started/',
     features: [
       "Chế độ Tác tử (Agent Mode) để tự động hóa các tác vụ phức tạp.",
