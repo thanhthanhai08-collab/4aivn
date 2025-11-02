@@ -93,9 +93,9 @@ export const mockLovableTool: Tool[] = [
     developer: 'Vbee',
     imageUrl: '/image/Ảnh công cụ AI Vbee.png',
     description: 'Vbee AI là nền tảng chuyển đổi văn bản thành giọng nói (Text-to-Speech) hàng đầu tại Việt Nam, cung cấp các giải pháp giọng nói AI tự nhiên, đa dạng và có cảm xúc, được ứng dụng rộng rãi trong nhiều lĩnh vực.',
+    longDescription: '<p>Vbee là một công ty công nghệ tiên phong tại Việt Nam, chuyên sâu về các giải pháp xử lý giọng nói và ngôn ngữ tự nhiên bằng trí tuệ nhân tạo. Nền tảng Text-to-Speech của Vbee nổi bật với khả năng tạo ra giọng đọc có ngữ điệu tự nhiên, chân thực như người thật, hỗ trợ đa dạng giọng đọc theo vùng miền (Bắc, Trung, Nam) và giới tính.</p><p>Công nghệ của Vbee được ứng dụng rộng rãi để tạo ra các sản phẩm âm thanh chất lượng cao như sách nói, báo nói, lồng tiếng cho video, hệ thống tổng đài tự động và các giải pháp cho nhà thông minh. Với khả năng tùy chỉnh linh hoạt, Vbee giúp các doanh nghiệp và nhà sáng tạo nội dung tiết kiệm chi phí và thời gian sản xuất, đồng thời nâng cao trải nghiệm của người dùng cuối.</p>',
     logoUrl: '/image/Logo Vbee.png',
     link: 'https://vbee.vn/?aff=clean-ai-hub',
-    longDescription: '<p>Vbee là một công ty công nghệ tiên phong tại Việt Nam, chuyên sâu về các giải pháp xử lý giọng nói và ngôn ngữ tự nhiên bằng trí tuệ nhân tạo. Nền tảng Text-to-Speech của Vbee nổi bật với khả năng tạo ra giọng đọc có ngữ điệu tự nhiên, chân thực như người thật, hỗ trợ đa dạng giọng đọc theo vùng miền (Bắc, Trung, Nam) và giới tính.</p><p>Công nghệ của Vbee được ứng dụng rộng rãi để tạo ra các sản phẩm âm thanh chất lượng cao như sách nói, báo nói, lồng tiếng cho video, hệ thống tổng đài tự động và các giải pháp cho nhà thông minh. Với khả năng tùy chỉnh linh hoạt, Vbee giúp các doanh nghiệp và nhà sáng tạo nội dung tiết kiệm chi phí và thời gian sản xuất, đồng thời nâng cao trải nghiệm của người dùng cuối.</p>',
     features: [
         "Chuyển đổi văn bản thành giọng nói tiếng Việt tự nhiên, có cảm xúc.",
         "Hỗ trợ đa dạng giọng đọc theo vùng miền và giới tính.",
@@ -302,10 +302,10 @@ export const mockLovableTool: Tool[] = [
     name: 'Comet',
     context: 'Trình duyệt AI',
     developer: 'Perplexity',
-    imageUrl: '/image/Ảnh công cụ AI Perplexity Comet.png',
+    imageUrl: '/image/Anh-cong-cu-comet.png',
     description: 'Comet là một trình duyệt AI thế hệ mới từ Perplexity, được thiết kế để biến việc duyệt web thành một trải nghiệm tương tác và thông minh hơn, tập trung vào nghiên cứu và cung cấp thông tin chính xác.',
     longDescription: '<p>Comet là một trình duyệt AI của Perplexity, được xây dựng để trở thành một "không gian làm việc tri thức". Nó tập trung vào việc cung cấp các câu trả lời chính xác, đáng tin cậy với các trích dẫn rõ ràng, giúp người dùng nghiên cứu và khám phá thông tin một cách hiệu quả.</p><p>Thay vì chỉ là một công cụ hiển thị, Comet hoạt động như một trợ lý nghiên cứu thông minh, tổng hợp thông tin từ nhiều nguồn và cho phép người dùng tổ chức các dự án của họ một cách khoa học.</p>',
-    logoUrl: '/image/Logo Perplexity.png',
+    logoUrl: '/image/Logo-comet-brower.png',
     link: 'https://www.perplexity.ai/comet',
     features: [
       "Tích hợp công cụ tìm kiếm đối thoại của Perplexity.",
