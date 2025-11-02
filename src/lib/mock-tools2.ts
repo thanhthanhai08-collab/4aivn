@@ -333,5 +333,41 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Pro ($20/tháng):</strong> Mở khóa các mô hình AI mạnh mẽ hơn, tìm kiếm chuyên sâu không giới hạn và các tính năng nâng cao khác.</li>
         </ul>
     `,
+  },
+  {
+    id: 'atlas-browser',
+    name: 'Atlas',
+    context: 'Trình duyệt AI',
+    developer: 'OpenAI',
+    imageUrl: '/image/Anh-cong-cu-atlas.png',
+    description: 'Atlas là trình duyệt AI của OpenAI, được thiết kế để biến việc duyệt web thành một trải nghiệm thông minh và chủ động, tập trung vào việc tự động hóa các tác vụ và cung cấp câu trả lời thông minh.',
+    longDescription: '<p>Atlas là trình duyệt web do OpenAI phát triển, tích hợp sâu các khả năng của mô hình ngôn ngữ lớn để tạo ra một trải nghiệm duyệt web thông minh và hiệu quả. Thay vì chỉ hiển thị các trang web, Atlas hoạt động như một trợ lý chủ động, có khả năng tự động hóa các tác vụ phức tạp, tóm tắt nội dung và cung cấp câu trả lời trực tiếp từ web.</p><p>Với "Chế độ Tác tử" (Agent Mode), Atlas có thể thực hiện các chuỗi hành động như đặt vé máy bay hoặc mua sắm trực tuyến thay cho người dùng. Đây là công cụ mạnh mẽ dành cho những ai muốn tối ưu hóa năng suất và biến trình duyệt thành một đối tác làm việc thực thụ.</p>',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://chatgpt.com/vi-VN/atlas/get-started/',
+    features: [
+      "Chế độ Tác tử (Agent Mode) để tự động hóa các tác vụ phức tạp.",
+      "Tích hợp sâu với các mô hình AI của OpenAI.",
+      "Tóm tắt trang web và nội dung video.",
+      "Hỗ trợ viết lách và chỉnh sửa trực tiếp trên trang.",
+      "Bộ nhớ trình duyệt để cá nhân hóa trải nghiệm."
+    ],
+    useCases: [
+      'Tự động hóa các quy trình làm việc trực tuyến.',
+      'Nghiên cứu và tổng hợp thông tin nhanh chóng.',
+      'Hỗ trợ viết email, báo cáo và các tài liệu khác.',
+      'Tối ưu hóa năng suất cá nhân và công việc.'
+    ],
+    whoIsItFor: [
+      'Người dùng chuyên nghiệp',
+      'Nhà phát triển',
+      'Nhà nghiên cứu',
+      'Bất kỳ ai muốn tăng năng suất duyệt web'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói Miễn phí:</strong> Cung cấp các tính năng duyệt web và tóm tắt cơ bản.</li>
+            <li><strong>Gói Plus/Pro:</strong> Mở khóa Chế độ Tác tử (Agent Mode) và các tính năng nâng cao khác với một khoản phí hàng tháng.</li>
+        </ul>
+    `,
   }
 ];
