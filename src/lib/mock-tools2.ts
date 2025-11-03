@@ -49,7 +49,7 @@ export const mockLovableTool: Tool[] = [
     name: 'ElevenLabs',
     context: 'Tạo giọng nói',
     developer: 'ElevenLabs',
-    imageUrl: '/image/Ảnh công cụ ElevenLabs.png',
+    imageUrl: '/image/Ảnh công cụ AI ElevenLabs.png',
     description: 'ElevenLabs là nền tảng AI tạo giọng nói hàng đầu, cho phép tạo ra các giọng đọc tự nhiên, biểu cảm và chân thực từ văn bản với nhiều ngôn ngữ khác nhau.',
     longDescription: '<p>ElevenLabs là một công ty công nghệ chuyên về phát triển phần mềm tổng hợp giọng nói và chuyển văn bản thành giọng nói (text-to-speech) bằng trí tuệ nhân tạo. Nền tảng của họ nổi tiếng với khả năng tạo ra các giọng đọc có chất lượng cao, tự nhiên và biểu cảm, hỗ trợ nhiều ngôn ngữ và cho phép người dùng nhân bản giọng nói (voice cloning) một cách dễ dàng.</p><p>Công cụ này được sử dụng rộng rãi bởi các nhà sáng tạo nội dung, nhà phát triển game, và các doanh nghiệp muốn tạo ra các sản phẩm âm thanh chuyên nghiệp như sách nói, podcast, lồng tiếng cho video, và các ứng dụng tương tác bằng giọng nói.</p>',
     logoUrl: '/image/Logo ElevenLabs.png',
@@ -385,7 +385,8 @@ export const mockLovableTool: Tool[] = [
       "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
       "Tích hợp với các ứng dụng và dịch vụ của bên thứ ba.",
       "Giao diện trực quan để xây dựng và quản lý các luồng công việc.",
-      "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ"
+      "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ",
+      "Hỗ trợ tự động thu thập và phân tích dữ liệu với cả link youtube"
     ],
     useCases: [
         'Tự động hóa nghiên cứu thị trường.',
