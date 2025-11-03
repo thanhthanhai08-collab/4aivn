@@ -56,7 +56,7 @@ export const mockNews2: NewsArticle[] = [
 </ul>
 <p><strong>2. Xem trước và sửa ứng dụng bằng hội thoại:</strong></p>
 <p>Giao diện của mini app sẽ hiển thị bản xem trước (preview) ngay trong trình duyệt, giúp bạn thấy ngay ứng dụng hoạt động như thế nào.</p>
-<p>Với dân lập trình (dev), bạn có thể chỉnh sửa trực tiếp trong phần code. Nhưng nếu bạn không rành kỹ thuật, thì cũng chẳng sao — chỉ cần trò chuyện với AI, bạn vẫn có thể yêu cầu thêm, bớt hoặc chỉnh sửa tính năng mà không cần đụng đến một dòng mã nào.</p>
+<p>Với dân lập trình (dev), bạn có thể chỉnh sửa trực tiếp trong phần code. Nhưng nếu bạn không rành kỹ thuật, thì cũng chẳng sao cả — chỉ cần trò chuyện với AI, bạn vẫn có thể yêu cầu thêm, bớt hoặc chỉnh sửa tính năng mà không cần đụng đến một dòng mã nào.</p>
 <p>Ví dụ, bạn có thể nói:</p>
 <ul>
     <li>“Thêm cho tôi ảnh 3 và ảnh 4 để ghép 4 ảnh thành 1”</li>
@@ -477,6 +477,7 @@ export const mockNews2: NewsArticle[] = [
 
 <h2><strong>Vai trò của con người</strong></h2>
 <p>Hệ thống của Telexistence sử dụng AI độc quyền tên là Gordon để thực hiện hầu hết các thao tác sắp xếp hàng hóa một cách tự động. Tuy nhiên, tự động hóa hoàn toàn trong trường hợp này vẫn chưa thể áp dụng mà vẫn cần đến con người.</p>
+[HUMAN_ROBOT_COLLABORATION_CHART]
 <p>Phần lớn thời gian, robot TX SCARA hoạt động tự động, nhưng khi xảy ra các sự cố ngoài dự kiến, ví dụ như làm rơi chai nước hoặc sắp xếp sai vị trí, người điều khiển từ xa sẽ can thiệp. Việc can thiệp thủ công này (khoảng 4% các trường hợp) đòi hỏi người điều khiển phải sử dụng kính VR để "nhập" vào robot và điều khiển nó nhặt vật thể bị rơi.</p>
 <p>Quá trình này được các nhà nghiên cứu gọi là "sự hóa thân kỹ thuật số" (digital re-embodiment). Về cơ bản, người lao động đang vận hành cơ thể máy móc thông qua giao diện truyền hình ảnh để cung cấp khả năng cảm biến và vận động mà robot và AI hiện tại vẫn còn thiếu. Người lao động từ xa đóng vai trò là "người giám sát" và "chốt an toàn" (failsafe) cho máy móc khi hệ thống tự động thất bại.</p>
 
