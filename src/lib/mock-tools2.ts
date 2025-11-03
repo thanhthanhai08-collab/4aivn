@@ -271,7 +271,7 @@ export const mockLovableTool: Tool[] = [
     features: [
       "Phát triển ứng dụng bằng ngôn ngữ tự nhiên.",
       "Tự động hóa việc tạo mã cho frontend và backend.",
-      "Tích hợp sẵn các mô hình AI hàng đầu.",
+      "Hỗ trợ deloy trực tiếp lên Netlify.",
       "Giao diện trực quan để quản lý và tùy chỉnh.",
       "Hỗ trợ triển khai nhanh chóng lên đám mây.",
       "Cung cấp các mẫu dựng sẵn để bắt đầu nhanh."
@@ -410,26 +410,3 @@ export const mockLovableTool: Tool[] = [
     `,
   }
 ];
-    
-    
-
-
-
-    
-
-    
-
-
-
-    
-
-
-
-    
-
-    
-
-
-
-
-
