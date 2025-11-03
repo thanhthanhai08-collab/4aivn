@@ -71,7 +71,7 @@ export default function NewsPage() {
         <header className="mb-8 md:mb-12 text-center">
           <h1 className="text-4xl font-headline font-bold text-foreground">Tin tức & Cập nhật AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Luôn cập nhật những diễn biến mới nhất trong thế giới Trí tuệ Nhân tạo.
+            Luôn cập nhật những diễn biến mới nhất trong thế giới AI.
           </p>
         </header>
 
