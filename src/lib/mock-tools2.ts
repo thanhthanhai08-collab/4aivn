@@ -385,7 +385,7 @@ export const mockLovableTool: Tool[] = [
       "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
       "Tích hợp với các ứng dụng và dịch vụ của bên thứ ba.",
       "Giao diện trực quan để xây dựng và quản lý các luồng công việc.",
-      "Khả năng học hỏi và cải thiện theo thời gian."
+      "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ"
     ],
     useCases: [
         'Tự động hóa nghiên cứu thị trường.',
@@ -427,6 +427,7 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
 
 
