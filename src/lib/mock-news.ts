@@ -345,7 +345,7 @@ export const mockNews: NewsArticle[] = [
         <p>Trợ lý AI sẽ cung cấp câu trả lời chi tiết cho câu hỏi của bạn cùng nguồn văn bản tương ứng được gọi là tri thức của trợ lý. Để đảm bảo độ tin cậy và chính xác, bạn có thể kiểm tra lại <strong>nguồn trích dẫn được đánh dấu màu đỏ</strong> trong câu trả lời. Trợ lý AI cũng cung cấp bộ cẩm nang toàn diện về đơn vị hành chính cấp tỉnh và cấp xã mới (nằm ở góc trên bên phải màn hình), bao gồm các nghị quyết của Ủy ban Thường vụ Quốc hội về việc sắp xếp đơn vị hành chính mới.</p>
         <p>Việc đưa sản phẩm AI này vào sử dụng ngay sau khi đất nước sắp xếp lại các đơn vị hành chính thể hiện cam kết mạnh mẽ của chính phủ trong việc đóng góp vào công cuộc chuyển đổi số quốc gia, hướng tới một nền hành chính công minh bạch và hiệu quả hơn.</p>
         <p>Bạn đã trải nghiệm trợ lý AI này chưa? Hãy chia sẻ cảm nhận của bạn nhé!</p>`,
-    publishedAt: new Date().toISOString(),
+    publishedAt: '2025-10-02T09:00:00Z',
     imageUrl: '/image/news/Trợ lý AI Vietel.png',
     dataAiHint: 'Viettel AI Assistant',
     link: 'https://tracuuphuongxa.trolyao.org/'
@@ -528,6 +528,9 @@ Không chỉ vậy, Claudius còn gặp phải tình trạng "ảo giác", như 
 
     
 
+
+
+    
 
 
     
