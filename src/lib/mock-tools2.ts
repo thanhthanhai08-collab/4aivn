@@ -408,5 +408,45 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói năm (Khuyên dùng):</strong> $149.99/năm (tương đương $12.50/tháng).</li>
         </ul>
     `,
-  }
+  },
+  {
+    id: 'suno',
+    name: 'Suno',
+    context: 'Tạo nhạc AI',
+    developer: 'Suno',
+    imageUrl: '/image/Anh-cong-cu-suno.png',
+    description: 'Suno là một công cụ AI tạo nhạc, cho phép người dùng tạo ra các bài hát hoàn chỉnh (lời, nhạc cụ, và giọng hát) từ những mô tả văn bản đơn giản.',
+    longDescription: '<p>Suno là một nền tảng AI sáng tạo, chuyên biến những ý tưởng văn bản thành các bài hát hoàn chỉnh. Người dùng chỉ cần nhập một vài dòng mô tả về thể loại, chủ đề, hoặc tâm trạng, Suno sẽ tự động tạo ra lời bài hát, sáng tác nhạc nền và thể hiện bằng giọng hát AI. Công cụ này mở ra một cánh cửa mới cho những người không có chuyên môn về âm nhạc nhưng vẫn muốn tạo ra các sản phẩm âm nhạc độc đáo.</p><p>Với giao diện thân thiện và khả năng tạo nhạc nhanh chóng, Suno là công cụ lý tưởng để thử nghiệm ý tưởng, tạo nhạc cho video, podcast, hoặc đơn giản là để giải trí. Nền tảng này đang thu hút một cộng đồng người dùng đông đảo và liên tục được cải tiến với các mô hình AI mới.</p>',
+    logoUrl: '/image/Logo-suno.png',
+    link: 'https://suno.com/home',
+    features: [
+      "Tạo bài hát hoàn chỉnh từ mô tả văn bản.",
+      "Hỗ trợ nhiều thể loại và phong cách âm nhạc.",
+      "Tự động tạo lời bài hát và giọng hát AI.",
+      "Giao diện đơn giản, dễ sử dụng.",
+      "Cho phép tùy chỉnh và mở rộng bài hát đã tạo.",
+      "Có gói miễn phí để trải nghiệm."
+    ],
+    useCases: [
+        'Sáng tác nhạc cho người không chuyên.',
+        'Tạo nhạc nền cho video và podcast.',
+        'Thử nghiệm các ý tưởng âm nhạc mới.',
+        'Tạo bài hát cho các sự kiện cá nhân.',
+        'Giải trí và sáng tạo nghệ thuật.'
+    ],
+    whoIsItFor: [
+        'Người yêu âm nhạc',
+        'Nhà sáng tạo nội dung',
+        'Người làm marketing',
+        'Giáo viên',
+        'Bất kỳ ai muốn thử sức với việc tạo nhạc'
+    ],
+    pricingPlans: `
+      <ul>
+        <li><strong>Free Plan ($0/tháng):</strong> 50 credit mỗi ngày (10 bài hát), không dùng cho mục đích thương mại.</li>
+        <li><strong>Pro Plan ($8/tháng):</strong> 2,500 credit mỗi tháng (500 bài hát), quyền sử dụng thương mại, truy cập model v5 mới nhất, và nhiều tính năng Pro.</li>
+        <li><strong>Premier Plan ($24/tháng):</strong> 10,000 credit mỗi tháng (2,000 bài hát), đầy đủ các tính năng cao cấp nhất và quyền truy cập Suno Studio.</li>
+      </ul>
+    `,
+  },
 ];
