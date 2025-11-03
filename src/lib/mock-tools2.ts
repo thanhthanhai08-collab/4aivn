@@ -369,6 +369,44 @@ export const mockLovableTool: Tool[] = [
             <li><strong>Gói Plus/Pro:</strong> Mở khóa Chế độ Tác tử (Agent Mode) và các tính năng nâng cao khác với một khoản phí hàng tháng.</li>
         </ul>
     `,
+  },
+  {
+    id: 'skywork',
+    name: 'Skywork',
+    context: 'AI Agent',
+    developer: 'Skywork AI',
+    imageUrl: '/image/Anh-cong-cu-skywork.png',
+    description: 'Skywork là một nền tảng AI Agent giúp tự động hóa các tác vụ phức tạp, từ nghiên cứu, phân tích dữ liệu đến quản lý dự án, tối ưu hóa quy trình làm việc của bạn.',
+    longDescription: '<p>Skywork là một nền tảng AI Agent tiên tiến, được thiết kế để hoạt động như một trợ lý ảo thông minh, có khả năng tự động hóa các quy trình công việc phức tạp. Bằng cách hiểu các yêu cầu bằng ngôn ngữ tự nhiên, Skywork có thể tự lập kế hoạch, thực thi các tác vụ như nghiên cứu thị trường, phân tích dữ liệu, tạo báo cáo và tương tác với các ứng dụng khác.</p><p>Nền tảng này nhằm mục đích giải phóng người dùng khỏi các công việc lặp đi lặp lại, cho phép họ tập trung vào các nhiệm vụ chiến lược và sáng tạo hơn. Với Skywork, bạn có thể xây dựng các luồng công việc tùy chỉnh để phù hợp với nhu cầu cụ thể của doanh nghiệp mình.</p>',
+    logoUrl: '/image/Logo-skywork.png',
+    link: 'https://skywork.ai',
+    features: [
+      "Tự động hóa các tác vụ nghiên cứu và thu thập dữ liệu.",
+      "Phân tích dữ liệu và tạo báo cáo tự động.",
+      "Tích hợp với các ứng dụng và dịch vụ của bên thứ ba.",
+      "Giao diện trực quan để xây dựng và quản lý các luồng công việc.",
+      "Khả năng học hỏi và cải thiện theo thời gian."
+    ],
+    useCases: [
+        'Tự động hóa nghiên cứu thị trường.',
+        'Phân tích dữ liệu bán hàng và tạo báo cáo.',
+        'Quản lý dự án và theo dõi tiến độ công việc.',
+        'Tạo nội dung marketing tự động.',
+        'Tự động hóa các tác vụ hỗ trợ khách hàng.'
+    ],
+    whoIsItFor: [
+        'Nhà phân tích kinh doanh',
+        'Quản lý dự án',
+        'Người làm marketing',
+        'Chủ doanh nghiệp'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Gói miễn phí:</strong> Cung cấp các tính năng cơ bản để làm quen với nền tảng.</li>
+            <li><strong>Gói Pro:</strong> Dành cho các cá nhân và nhóm nhỏ với nhu cầu tự động hóa cao hơn.</li>
+            <li><strong>Gói Enterprise:</strong> Giải pháp tùy chỉnh cho các doanh nghiệp lớn với yêu cầu phức tạp.</li>
+        </ul>
+    `
   }
 ];
     
@@ -389,3 +427,4 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
