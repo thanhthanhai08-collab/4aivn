@@ -24,7 +24,7 @@ export function HumanRobotCollaborationChart() {
   return (
     <Card className="my-8">
       <CardHeader className="text-center">
-        <CardTitle>Phân chia Tác vụ giữa AI và Con người trong Hệ thống Robot TX SCARA</CardTitle>
+        <CardTitle>Phân chia tác vụ giữa AI và con người trong hệ thống robot TX SCARA</CardTitle>
         <CardDescription>Minh họa mô hình cộng tác Người – Robot (Hybridity)</CardDescription>
       </CardHeader>
       <CardContent>
