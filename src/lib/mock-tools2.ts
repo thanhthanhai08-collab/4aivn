@@ -290,11 +290,11 @@ export const mockLovableTool: Tool[] = [
         'Kỹ sư phần mềm'
     ],
     pricingPlans: `
-        <ul>
-            <li><strong>Gói Free:</strong> Bao gồm các tính năng cơ bản để xây dựng và thử nghiệm các ứng dụng nhỏ.</li>
-            <li><strong>Gói Pro:</strong> Cung cấp thêm tài nguyên, hỗ trợ ưu tiên và các tính năng nâng cao cho các dự án chuyên nghiệp.</li>
-            <li><strong>Gói Enterprise:</strong> Giải pháp tùy chỉnh cho các doanh nghiệp lớn với các yêu cầu về bảo mật và quy mô riêng.</li>
-        </ul>
+      <ul>
+        <li><strong>Gói Free ($0):</strong> Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.</li>
+        <li><strong>Gói Pro ($25/tháng):</strong> Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.</li>
+        <li><strong>Gói Teams ($30/tháng/thành viên):</strong> Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries.</li>
+      </ul>
     `,
   },
   {
