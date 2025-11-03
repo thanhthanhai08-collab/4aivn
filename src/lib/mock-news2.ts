@@ -456,6 +456,40 @@ export const mockNews2: NewsArticle[] = [
 <p>Dù con đường phía trước còn nhiều chông gai, sự chuyển dịch sang một kỷ nguyên duyệt web thông minh, nơi trình duyệt trở thành một đối tác chủ động, dường như là không thể đảo ngược. Cuộc chiến giữa những người khổng lồ và những kẻ thách thức sẽ tiếp tục định hình lại trải nghiệm kỹ thuật số của chúng ta trong nhiều năm tới.</p>
 </div>`
   },
+  {
+    id: 'robot-dieu-khien-tu-xa',
+    title: 'Robot đóng vai nhân viên cửa hàng nhưng người điều khiển ngồi cách xa 3.000km!',
+    author: 'Mai',
+    source: 'Tổng hợp',
+    content: `<p>Thế giới đang chứng kiến một sự chuyển đổi lao động số hóa đáng kinh ngạc: những kỹ sư trẻ tuổi ngồi tại trung tâm tài chính Manila, Philippines, lại đang điều khiển những con robot sắp xếp hàng hóa tại các cửa hàng tiện lợi ở Tokyo, Nhật Bản, cách đó hơn 3.000 km.</p>
+<p>Xu hướng này không chỉ giải quyết cuộc khủng hoảng thiếu hụt lao động mà Nhật Bản đang đối mặt mà còn định hình lại bản chất của công việc thủ công trong kỷ nguyên tự động hóa.</p>
+
+<h2><strong>Khủng hoảng lao động Nhật Bản và giải pháp robot thay thế</strong></h2>
+<p>Là một trong những nền kinh tế lớn nhất thế giới, Nhật Bản đang phải đối mặt với thách thức dân số già hóa và lực lượng lao động sụt giảm. Tình trạng thiếu hụt nhân sự này đặc biệt nghiêm trọng trong các ngành dịch vụ, bao gồm cả chuỗi cửa hàng tiện lợi (konbini). Với hơn 56.000 cửa hàng trên khắp cả nước, các konbini như FamilyMart và Lawson là một phần thiết yếu của đời sống hàng ngày ở Nhật Bản.</p>
+<p>Để giải quyết vấn đề này, các chuỗi cửa hàng tiện lợi đã chuyển sang sử dụng công nghệ. Công ty khởi nghiệp robotics Telexistence (TX), có trụ sở tại Tokyo, đã phát triển một giải pháp robot từ xa.</p>
+<p>Telexistence đã hợp tác với FamilyMart để triển khai robot TX SCARA. Mẫu robot này, chạy trên nền tảng AI Jetson của Nvidia, được thiết kế để thay thế công việc bổ sung sản phẩm lặp đi lặp lại trong các cửa hàng bán lẻ. Cụ thể, robot TX SCARA có khả năng xử lý tất cả chai PET và lon nước đóng hộp có kích cỡ khác nhau trong tủ mát.</p>
+[IMAGE:/image/news2/Anh-robot-lam-viec-o-cua-hang.png|Robot làm việc ở cửa hàng|Robot thay con người]
+
+<h2><strong>Cầu nối 3.000km: Từ Manila đến Tokyo</strong></h2>
+<p>Telexistence đã cung cấp robot cho hơn 300 cửa hàng tiện lợi trên khắp Nhật Bản (bao gồm FamilyMart và Lawson, và sắp tới là 7-Eleven). Điều độc đáo là những robot này được giám sát và điều khiển từ xa bởi đội ngũ nhân viên của Astro Robotics – một công ty khởi nghiệp tại Philippines chuyên cung cấp "nhân lực robot".</p>
+<p>Mô hình này xuất hiện do việc tìm kiếm nhân công sắp xếp hàng hóa ở Nhật Bản đang ngày càng khó khăn và tốn kém, mặc dù mức lương tối thiểu khá cao. Ngược lại, Philippines là một trung tâm gia công (outsourcing) toàn cầu với lực lượng lao động trẻ, am hiểu công nghệ và chi phí thấp hơn nhiều.</p>
+<p>Tại văn phòng ở Manila, khoảng 60 nhân viên trẻ tuổi sử dụng kính thực tế ảo (VR) và cần điều khiển để giám sát và vận hành robot. Công nghệ này cho phép các cửa hàng ở Nhật Bản thuê nhân viên từ bất cứ nơi nào trên thế giới, qua đó giải quyết tình trạng thiếu hụt lao động.</p>
+
+<h2><strong>Vai trò của con người</strong></h2>
+<p>Hệ thống của Telexistence sử dụng AI độc quyền tên là Gordon để thực hiện hầu hết các thao tác sắp xếp hàng hóa một cách tự động. Tuy nhiên, tự động hóa hoàn toàn trong trường hợp này vẫn chưa thể áp dụng mà vẫn cần đến con người.</p>
+<p>Phần lớn thời gian, robot TX SCARA hoạt động tự động, nhưng khi xảy ra các sự cố ngoài dự kiến, ví dụ như làm rơi chai nước hoặc sắp xếp sai vị trí, người điều khiển từ xa sẽ can thiệp. Việc can thiệp thủ công này (khoảng 4% các trường hợp) đòi hỏi người điều khiển phải sử dụng kính VR để "nhập" vào robot và điều khiển nó nhặt vật thể bị rơi.</p>
+<p>Quá trình này được các nhà nghiên cứu gọi là "sự hóa thân kỹ thuật số" (digital re-embodiment). Về cơ bản, người lao động đang vận hành cơ thể máy móc thông qua giao diện truyền hình ảnh để cung cấp khả năng cảm biến và vận động mà robot và AI hiện tại vẫn còn thiếu. Người lao động từ xa đóng vai trò là "người giám sát" và "chốt an toàn" (failsafe) cho máy móc khi hệ thống tự động thất bại.</p>
+
+<h2><strong>Những đánh đổi và nỗi lo mới</strong></h2>
+<p>Mô hình lao động robot từ xa này, dù mang tính tiên tiến, lại bộc lộ những mâu thuẫn phức tạp của chủ nghĩa tư bản toàn cầu trong lĩnh vực tự động hóa.</p>
+<p><strong>1. Chi phí lao động thấp:</strong> Các công ty toàn cầu đang tìm kiếm nguồn lao động rẻ, ngay cả trong những công việc đòi hỏi kỹ năng cao như vận hành robot. Mặc dù công việc được xem là hiện đại, kỹ sư và cử nhân công nghệ thông tin tại Philippines thường chỉ được trả mức lương thấp hơn nhiều so với đồng nghiệp tại các quốc gia phát triển.</p>
+<p><strong>2. Sức khỏe và áp lực:</strong> Những người điều khiển robot phải đối mặt với áp lực lớn trong việc xử lý lỗi nhanh chóng để không làm gián đoạn hệ thống. Hơn nữa, họ thường xuyên cảm thấy chóng mặt và hoa mắt do "say mạng" – một dạng say tàu xe liên quan đến việc sử dụng kính thực tế ảo (VR) trong thời gian dài.</p>
+<p><strong>3. Nguy cơ con người bị thay thế:</strong> Đằng sau cơ hội việc làm là nỗi lo bị chính công nghệ "nuốt chửng". Toàn bộ thao tác của người điều khiển robot đang được ghi lại để huấn luyện AI. Mục đích của việc thu thập dữ liệu này là để phát triển thế hệ robot tương lai có thể tự hoạt động mà không cần sự hỗ trợ của con người. Giáo sư Lionel Robert (Đại học Michigan, Mỹ) nhận định người lao động trở thành người giám sát máy móc, không khác gì “phiên bản dự phòng” của robot.</p>
+<p>Tương lai của lực lượng lao động được dự đoán sẽ là sự kết hợp "lai" giữa robot, AI, tự động hóa và con người. Trong khi mô hình robot từ xa ở FamilyMart chứng minh rằng công nghệ có thể vượt qua khoảng cách địa lý (3.000km) để giải quyết vấn đề logistics, nó cũng đặt ra câu hỏi về việc giá trị của sức lao động thủ công được số hóa này sẽ được định nghĩa như thế nào trong một thế giới ngày càng tự động hóa.</p>`,
+    publishedAt: '2025-11-03T09:00:00Z',
+    imageUrl: '/image/news2/Anh-bia-nguoi-dieu-khien-robot.png',
+    dataAiHint: 'Robot TX SCARA của Telexistence (Nhật Bản), được điều khiển từ xa bởi nhân viên ở Philippines (cách 3.000km) qua kính VR, đang giải quyết khủng hoảng thiếu hụt lao động tại các cửa hàng tiện lợi FamilyMart. Hệ thống AI tự động, nhưng con người can thiệp khi robot gặp lỗi (digital re-embodiment).',
+  },
 ];
     
     
