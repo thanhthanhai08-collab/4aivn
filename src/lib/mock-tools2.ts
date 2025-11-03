@@ -382,7 +382,7 @@ export const mockLovableTool: Tool[] = [
     link: 'https://skywork.ai',
     features: [
       "Tự động hóa các tác vụ nghiên cứu và thu thập dữ liệu.",
-      "Phân tích dữ liệu và tạo báo cáo tự động.",
+      "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
       "Tích hợp với các ứng dụng và dịch vụ của bên thứ ba.",
       "Giao diện trực quan để xây dựng và quản lý các luồng công việc.",
       "Khả năng học hỏi và cải thiện theo thời gian."
@@ -427,5 +427,6 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
 
