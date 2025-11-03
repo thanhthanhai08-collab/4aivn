@@ -383,7 +383,7 @@ export const mockLovableTool: Tool[] = [
     features: [
       "Tự động hóa các tác vụ nghiên cứu và thu thập dữ liệu.",
       "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
-      "Tích hợp với các ứng dụng và dịch vụ của bên thứ ba.",
+      "Hỗ trợ tải file lên làm cơ sở dữ liệu cho Agent",
       "Giao diện trực quan để xây dựng và quản lý các luồng công việc.",
       "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ",
       "Hỗ trợ tự động thu thập và phân tích dữ liệu với cả link youtube"
@@ -428,6 +428,7 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
 
 
