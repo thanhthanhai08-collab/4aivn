@@ -383,9 +383,9 @@ export const mockLovableTool: Tool[] = [
     features: [
       "Tự động hóa các tác vụ nghiên cứu và thu thập dữ liệu.",
       "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
+      "Giao diện trực quan đặc biệt hỗ trợ hẹn giờ xử lý công việc",
       "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ",
       "Hỗ trợ tải file lên làm cơ sở dữ liệu cho Agent",
-      "Giao diện trực quan đặc biệt hỗ trợ hẹn giờ xử lý công việc",
       "Hỗ trợ tự động thu thập và phân tích dữ liệu với cả link youtube"
     ],
     useCases: [
@@ -393,7 +393,7 @@ export const mockLovableTool: Tool[] = [
         'Phân tích dữ liệu bán hàng và tạo báo cáo.',
         'Quản lý dự án và theo dõi tiến độ công việc.',
         'Tạo nội dung marketing tự động.',
-        'Tự động hóa các tác vụ hỗ trợ khách hàng.'
+        'Tạo podcast chuyên sâu về một chủ đề bất kì'
     ],
     whoIsItFor: [
         'Nhà phân tích kinh doanh',
@@ -428,6 +428,7 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
 
 
