@@ -402,11 +402,11 @@ export const mockLovableTool: Tool[] = [
     ],
     pricingPlans: `
         <ul>
-            <li><strong>Gói miễn phí:</strong> Cung cấp các tính năng cơ bản để làm quen với nền tảng.</li>
-            <li><strong>Gói Pro:</strong> Dành cho các cá nhân và nhóm nhỏ với nhu cầu tự động hóa cao hơn.</li>
-            <li><strong>Gói Enterprise:</strong> Giải pháp tùy chỉnh cho các doanh nghiệp lớn với yêu cầu phức tạp.</li>
+            <li><strong>Gói tháng:</strong> $14.99 cho tháng đầu tiên, sau đó là $16.99/tháng.</li>
+            <li><strong>Gói quý:</strong> $39.99/quý (tương đương $13.33/tháng).</li>
+            <li><strong>Gói năm (Khuyên dùng):</strong> $149.99/năm (tương đương $12.50/tháng).</li>
         </ul>
-    `
+    `,
   }
 ];
     
@@ -427,4 +427,5 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
