@@ -61,10 +61,8 @@ export default function NewsPage() {
     );
   }
 
-  const featuredArticle = allMockNews.find(a => a.id === 'nvidia-gb200-profit');
-  const secondaryArticle = allMockNews.find(a => a.id === 'google-ra-mat-gemini-2-5-flash-image');
-  const quickViewArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id].includes(a.id)).slice(0, 6);
-  const remainingArticles = allMockNews.filter(a => ![featuredArticle?.id, secondaryArticle?.id].includes(a.id));
+  const [featuredArticle, secondaryArticle, ...remainingArticles] = allMockNews;
+  const quickViewArticles = remainingArticles.slice(0, 6);
 
 
   return (
