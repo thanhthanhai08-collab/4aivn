@@ -535,7 +535,7 @@ export const mockLovableTool: Tool[] = [
     name: 'Pippit AI',
     context: 'Tạo video',
     developer: 'Pippit AI',
-    imageUrl: '/image/Logo-pippit-ai.png',
+    imageUrl: '/image/Anh-cong-cu-pippit-ai.png',
     description: 'Pippit AI là một công cụ tạo video mạnh mẽ, cho phép biến các đường link (URL) thành các video quảng cáo, video giới thiệu sản phẩm hoặc video marketing hấp dẫn chỉ trong vài phút. Nền tảng này sử dụng AI để tự động phân tích nội dung từ trang web và tạo ra các video chuyên nghiệp với hình ảnh, văn bản và giọng nói phù hợp.',
     longDescription: '<p>Pippit AI là một giải pháp sáng tạo cho phép người dùng tạo video một cách nhanh chóng và dễ dàng từ các đường link có sẵn. Chỉ cần dán một URL, AI của Pippit sẽ tự động quét nội dung, hình ảnh và thông tin liên quan để tạo ra một kịch bản video hoàn chỉnh. Người dùng có thể tùy chỉnh thêm về phong cách, âm nhạc, và giọng đọc để tạo ra một sản phẩm video độc đáo, phù hợp với mục đích marketing, giới thiệu sản phẩm hoặc tạo nội dung cho mạng xã hội. Đây là công cụ lý tưởng cho các nhà marketing, chủ doanh nghiệp và người sáng tạo nội dung muốn tiết kiệm thời gian và chi phí sản xuất video.</p>',
     logoUrl: '/image/Logo-pippit-ai.png',
@@ -586,3 +586,4 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
