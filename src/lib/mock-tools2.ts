@@ -489,6 +489,47 @@ export const mockLovableTool: Tool[] = [
       </ul>
     `,
   },
+  {
+    id: 'luma-ai',
+    name: 'Luma AI',
+    context: 'Tạo video',
+    developer: 'Luma Labs',
+    imageUrl: '/image/Ảnh công cụ Luma AI.png',
+    description: 'Luma AI là một công cụ AI tạo video từ văn bản và hình ảnh, cho phép người dùng tạo ra các đoạn video chất lượng cao với các phong cách đa dạng.',
+    longDescription: '<p>Luma AI là một nền tảng AI sáng tạo, chuyên biến những ý tưởng văn bản và hình ảnh thành các video sống động. Người dùng có thể mô tả cảnh quay, hành động, hoặc phong cách mong muốn, và Luma AI sẽ tạo ra một đoạn video tương ứng. Công cụ này cũng hỗ trợ tạo video từ hình ảnh tĩnh, làm cho các bức ảnh trở nên sống động hơn. Với giao diện thân thiện và khả năng tạo video nhanh chóng, Luma AI là một công cụ mạnh mẽ cho các nhà làm phim, người sáng tạo nội dung, và bất kỳ ai muốn biến ý tưởng của mình thành video.</p>',
+    logoUrl: '/image/Logo Luma AI.png',
+    link: 'https://lumalabs.ai',
+    features: [
+      "Tạo video từ mô tả văn bản (Text-to-Video).",
+      "Tạo video từ hình ảnh tĩnh (Image-to-Video).",
+      "Hỗ trợ nhiều phong cách và hiệu ứng hình ảnh.",
+      "Giao diện web dễ sử dụng.",
+      "Cung cấp API để tích hợp vào các ứng dụng khác.",
+      "Có gói miễn phí để người dùng trải nghiệm."
+    ],
+    useCases: [
+      'Tạo các đoạn phim ngắn và video nghệ thuật.',
+      'Sản xuất video quảng cáo và marketing.',
+      'Tạo nội dung video cho mạng xã hội.',
+      'Minh họa các khái niệm phức tạp bằng video.',
+      'Làm sống động các bức ảnh tĩnh.'
+    ],
+    whoIsItFor: [
+      'Nhà làm phim và biên tập video',
+      'Người sáng tạo nội dung',
+      'Người làm marketing',
+      'Nghệ sĩ kỹ thuật số',
+      'Bất kỳ ai muốn tạo video từ AI'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Free:</strong> $0/tháng - 8 Videos (chế độ nháp), Sử dụng hạn chế, Độ phân giải nháp, Ưu tiên xử lý thấp, Chỉ sử dụng phi thương mại, Có watermark.</li>
+            <li><strong>Lite:</strong> $7.99/tháng - 50 Videos (chế độ nháp), 3,200 credit hàng tháng, Truy cập Full Ray3, 4k với up-res, Ưu tiên xử lý cao, Chỉ sử dụng phi thương mại, Có watermark.</li>
+            <li><strong>Plus:</strong> $23.99/tháng - 160 Videos (chế độ nháp), 10,000 credit hàng tháng, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark.</li>
+            <li><strong>Unlimited:</strong> $75.99/tháng - 10,000 credit hàng tháng, Sử dụng không giới hạn ở Chế độ Thư giãn, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark.</li>
+        </ul>
+    `,
+  },
 ];
     
     
