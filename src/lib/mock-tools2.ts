@@ -530,6 +530,43 @@ export const mockLovableTool: Tool[] = [
         </ul>
     `,
   },
+  {
+    id: 'pippit-ai',
+    name: 'Pippit AI',
+    context: 'Tạo video',
+    developer: 'Pippit AI',
+    imageUrl: '/image/Logo-pippit-ai.png',
+    description: 'Pippit AI là một công cụ tạo video mạnh mẽ, cho phép biến các đường link (URL) thành các video quảng cáo, video giới thiệu sản phẩm hoặc video marketing hấp dẫn chỉ trong vài phút. Nền tảng này sử dụng AI để tự động phân tích nội dung từ trang web và tạo ra các video chuyên nghiệp với hình ảnh, văn bản và giọng nói phù hợp.',
+    longDescription: '<p>Pippit AI là một giải pháp sáng tạo cho phép người dùng tạo video một cách nhanh chóng và dễ dàng từ các đường link có sẵn. Chỉ cần dán một URL, AI của Pippit sẽ tự động quét nội dung, hình ảnh và thông tin liên quan để tạo ra một kịch bản video hoàn chỉnh. Người dùng có thể tùy chỉnh thêm về phong cách, âm nhạc, và giọng đọc để tạo ra một sản phẩm video độc đáo, phù hợp với mục đích marketing, giới thiệu sản phẩm hoặc tạo nội dung cho mạng xã hội. Đây là công cụ lý tưởng cho các nhà marketing, chủ doanh nghiệp và người sáng tạo nội dung muốn tiết kiệm thời gian và chi phí sản xuất video.</p>',
+    logoUrl: '/image/Logo-pippit-ai.png',
+    link: 'https://www.pippit.ai/',
+    features: [
+      "Tạo video tự động từ đường link (URL).",
+      "Tạo ảnh đại diện (avatar) chuyên nghiệp.",
+      "Tạo poster cho các chương trình khuyến mãi, giảm giá.",
+      "Cung cấp studio ảnh để tùy chỉnh hình ảnh.",
+      "Trình tạo video và poster cho các ngày lễ.",
+      "Dung lượng lưu trữ lớn (500 GB)."
+    ],
+    useCases: [
+        'Tạo video quảng cáo sản phẩm từ trang bán hàng.',
+        'Sản xuất video giới thiệu dịch vụ từ trang chủ công ty.',
+        'Tạo video tóm tắt nội dung bài viết blog.',
+        'Tạo các poster và video cho các chiến dịch marketing ngày lễ.'
+    ],
+    whoIsItFor: [
+        'Nhà marketing kỹ thuật số',
+        'Chủ doanh nghiệp thương mại điện tử',
+        'Người sáng tạo nội dung',
+        'Quản lý mạng xã hội'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Miễn phí:</strong> 0đ, 150 điểm tín dụng/tuần (tạo 2 phút video và 75 hình ảnh), không cần thẻ tín dụng, dung lượng lưu trữ 500 GB.</li>
+            <li><strong>Starter:</strong> 380.000đ/tháng (thanh toán hàng năm), 21.600 điểm tín dụng/năm (tạo 360 phút video và 10.800 hình ảnh), có thể mua thêm điểm tín dụng, đầy đủ tính năng AI và dung lượng lưu trữ 500 GB.</li>
+        </ul>
+    `,
+  },
 ];
     
     
@@ -549,4 +586,3 @@ export const mockLovableTool: Tool[] = [
     
 
     
-
