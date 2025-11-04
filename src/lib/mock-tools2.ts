@@ -383,9 +383,9 @@ export const mockLovableTool: Tool[] = [
       "Tự động hóa các tác vụ nghiên cứu và thu thập dữ liệu.",
       "Phân tích dữ liệu và tạo báo cáo tự động bằng Doc, Slides, Sheets, Code",
       "Giao diện trực quan đặc biệt hỗ trợ hẹn giờ xử lý công việc",
-      "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ",
       "Hỗ trợ tải file lên làm cơ sở dữ liệu cho Agent",
-      "Hỗ trợ tự động thu thập và phân tích dữ liệu với cả link youtube"
+      "Hỗ trợ tự động thu thập và phân tích dữ liệu với cả link youtube",
+      "Có hỗ trợ tạo Podcasts bằng nhiều ngôn ngữ",
     ],
     useCases: [
         'Tự động hóa nghiên cứu thị trường.',
@@ -453,10 +453,10 @@ export const mockLovableTool: Tool[] = [
     name: 'Canva',
     context: 'Tạo hình ảnh',
     developer: 'Canva',
-    imageUrl: '/image/Anh cong cu Canva.png',
+    imageUrl: '/image/Anh-cong-cu-canva.png',
     description: 'Canva là một nền tảng thiết kế đồ họa trực tuyến phổ biến, tích hợp các công cụ AI mạnh mẽ để giúp người dùng dễ dàng tạo ra các thiết kế chuyên nghiệp từ bài đăng mạng xã hội, thuyết trình, đến video và trang web.',
     longDescription: '<p>Canva là một công cụ thiết kế toàn diện, giúp người dùng không chuyên cũng có thể tạo ra các sản phẩm đồ họa đẹp mắt một cách nhanh chóng. Với kho tài nguyên khổng lồ gồm mẫu, hình ảnh, và biểu tượng, Canva cho phép bạn tùy chỉnh mọi thứ một cách dễ dàng. Gần đây, Canva đã tích hợp các tính năng AI như Magic Write (viết nội dung), Magic Design (tạo mẫu tự động), và các công cụ chỉnh sửa ảnh thông minh, biến nó thành một trợ lý thiết kế mạnh mẽ.</p><p>Nền tảng này phù hợp cho cả cá nhân, đội nhóm và doanh nghiệp, cung cấp các giải pháp từ việc tạo nội dung cho mạng xã hội đến xây dựng bộ nhận diện thương hiệu hoàn chỉnh.</p>',
-    logoUrl: '/image/Logo Canva.png',
+    logoUrl: '/image/Logo-canva.png',
     link: 'https://www.canva.com',
     features: [
       "Trình chỉnh sửa kéo-thả trực quan, dễ sử dụng.",
