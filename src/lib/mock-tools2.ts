@@ -465,7 +465,7 @@ export const mockLovableTool: Tool[] = [
       "Hỗ trợ làm việc nhóm và cộng tác theo thời gian thực.",
       "Khả năng tạo và chỉnh sửa video.",
       "Tạo trang web đơn giản (Canva Sites).",
-      "Tích hợp với nhiều ứng dụng và dịch vụ khác."
+      "Hỗ trợ tiếng việt trong thiết kế cực tốt."
     ],
     useCases: [
         'Thiết kế bài đăng cho mạng xã hội (Facebook, Instagram).',
