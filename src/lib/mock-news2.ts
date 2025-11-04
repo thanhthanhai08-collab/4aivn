@@ -3,6 +3,67 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews2: NewsArticle[] = [
   {
+    id: 'lo-hong-chatgpt-atlas',
+    title: 'Lỗ hổng nghiêm trọng khiến người dùng ChatGPT Atlas có thể bị đánh cắp dữ liệu với mã độc',
+    source: 'LayerX Security',
+    author: 'Mai',
+    publishedAt: '2025-11-04T09:00:00Z',
+    imageUrl: '/image/news2/Anh-lo-hong-nghiem-trong-chatpgt-atlas.png',
+    dataAiHint: 'Trình duyệt AI ChatGPT Atlas có lỗ hổng CSRF nghiêm trọng, cho phép chèn lệnh độc hại vĩnh viễn vào tính năng \'Memory\' của AI, dẫn đến nguy cơ đánh cắp dữ liệu. Khả năng bảo mật chống lừa đảo của Atlas kém hơn 90% so với Google Chrome và Microsoft Edge.',
+    content: `<p>OpenAI gần đây đã ra mắt trình duyệt AI ChatGPT Atlas, một bước đi nhằm thách thức sự thống trị của Google Chrome và thúc đẩy thói quen tìm kiếm dựa trên AI. Điểm khác biệt cốt lõi của Atlas là đặt ChatGPT vào vị trí trung tâm của trải nghiệm duyệt web.</p>
+<p>Tuy nhiên, trình duyệt AI này đã nhanh chóng bị phát hiện một lỗ hổng bảo mật nghiêm trọng ngay sau khi ra mắt. Lỗ hổng này đặc biệt nguy hiểm vì nó có thể cho phép hacker đánh cắp dữ liệu người dùng bằng mã độc có khả năng tồn tại "vĩnh viễn" trong bộ nhớ của AI.</p>
+<h2><strong>Lỗ hổng giả mạo yêu cầu chéo trang (CSRF) khai thác Bộ nhớ AI</strong></h2>
+<p>Theo báo cáo từ LayerX Security, cuộc tấn công này khai thác lỗ hổng giả mạo yêu cầu chéo trang (CSRF) để chèn các lệnh độc hại vào bộ nhớ liên tục của ChatGPT.</p>
+<p>Tính năng "Memory" (bộ nhớ) được thiết kế để AI ghi nhớ các chi tiết hữu ích như tên hoặc sở thích của người dùng nhằm cá nhân hóa các phản hồi. Tuy nhiên, giờ đây, tính năng hữu ích này lại có thể bị "làm hỏng" và biến thành một vũ khí dai dẳng để chạy mã tùy ý.</p>
+<h3>Kịch bản tấn công diễn ra như thế nào?</h3>
+<p>Kịch bản tấn công được mô tả diễn ra khá đơn giản:</p>
+<ol>
+    <li>Người dùng đăng nhập vào ChatGPT Atlas.</li>
+    <li>Họ bị lừa nhấp vào một liên kết độc hại.</li>
+    <li>Trang web độc hại này sau đó bí mật kích hoạt yêu cầu CSRF, âm thầm đưa hướng dẫn độc hại vào bộ nhớ ChatGPT của nạn nhân.</li>
+</ol>
+<h3>Mối đe dọa từ việc bộ nhớ bị Tiêm nhiễm Bộ nhớ Thường trú</h3>
+<p>Điều khiến lỗ hổng này trở nên đặc biệt nguy hiểm là nó nhắm vào bộ nhớ liên tục của AI, chứ không chỉ phiên trình duyệt.</p>
+<ul>
+    <li><strong>Tính chất vĩnh viễn:</strong> Michelle Levy, Giám đốc nghiên cứu bảo mật tại LayerX Security, giải thích rằng kẻ tấn công đã dùng thủ thuật để "lừa" AI ghi lệnh độc hại vào bộ nhớ. Lệnh này sẽ nằm vùng vĩnh viễn trong AI — trừ khi người dùng tự tay vào cài đặt để xóa — và có thể được kích hoạt trên nhiều thiết bị và phiên làm việc. Thậm chí, việc đổi máy tính, đăng xuất rồi đăng nhập lại hay dùng một trình duyệt khác cũng không loại bỏ được lệnh độc hại này.</li>
+    <li><strong>Hậu quả:</strong> Khi người dùng đưa ra một truy vấn hoàn toàn hợp pháp sau này (ví dụ: yêu cầu AI viết mã), các “bộ nhớ" bị nhiễm độc sẽ được kích hoạt. Hậu quả là hacker có thể chạy mã ngầm, đánh cắp dữ liệu hoặc chiếm được các quyền kiểm soát cao hơn trên hệ thống.</li>
+</ul>
+<h3>Hệ thống phòng thủ kém so với đối thủ</h3>
+<p>LayerX Security cũng chỉ ra rằng vấn đề bảo mật trên ChatGPT Atlas trở nên trầm trọng hơn do trình duyệt này thiếu các biện pháp kiểm soát chống lừa đảo mạnh mẽ.</p>
+<p>Trong các thử nghiệm với hơn 100 lỗ hổng và trang lừa đảo, Atlas chỉ ngăn chặn được 5,8% các trang web độc hại. Con số này quá khiêm tốn so với Google Chrome (47%) hay Microsoft Edge (53%), khiến người dùng Atlas "dễ bị tấn công hơn tới 90%" so với các trình duyệt truyền thống.</p>
+<p>Phát hiện này cho thấy các trình duyệt AI đang trở thành một mặt trận tấn công mới.</p>
+<h3>Cách người dùng ChatGPT tự bảo vệ bản thân</h3>
+<p>Nếu bạn lo lắng về việc thông tin cá nhân bị lưu trữ hoặc bị ô nhiễm trong bộ nhớ AI, bạn có thể thực hiện các biện pháp sau:</p>
+<ol>
+    <li><strong>Xóa bộ nhớ đã lưu (Manage memories):</strong>
+        <ul>
+            <li>Bạn có thể khiến ChatGPT "quên" thông tin cá nhân bằng cách nhấp vào biểu tượng hồ sơ của mình.</li>
+            <li>Chọn cài đặt (Settings) > Cá nhân hóa (Personalization).</li>
+            <li>Sau đó, nhấp vào liên kết quản lý bộ nhớ (Manage memories).</li>
+            <li>Tại đây, bạn sẽ nhận được một danh sách đầy đủ tất cả các sự thật mà ChatGPT đã lưu trữ về bạn. Bạn có thể chọn Xóa tất cả (Delete All) ở cuối cửa sổ để xóa sạch bộ nhớ của nó.</li>
+            <li>Để ngăn ChatGPT lưu trữ bất kỳ thông tin cá nhân nào trong tương lai, bạn có thể quay lại màn hình trước đó và tắt tùy chọn tham chiếu bộ nhớ đã lưu (Reference saved memories).</li>
+        </ul>
+    </li>
+    <li><strong>Sử dụng chế độ trò chuyện tạm thời:</strong>
+        <ul>
+            <li>Nếu bạn muốn thảo luận với ChatGPT về một vấn đề cá nhân hoặc điều gì đó không muốn nó lưu trữ, hãy sử dụng chế độ trò chuyện tạm thời (temporary chat).</li>
+            <li>Chế độ này được kích hoạt bằng cách nhấp vào biểu tượng bong bóng thoại có dấu chấm ở cạnh ảnh hồ sơ của bạn.</li>
+            <li>Khi ở chế độ này, AI sẽ không lưu trữ bất kỳ điều gì vào bộ nhớ của nó và cuộc trò chuyện cũng sẽ không xuất hiện trong lịch sử của bạn.</li>
+        </ul>
+    </li>
+    <li><strong>Không chia sẻ thông tin nhạy cảm:</strong>
+        <ul>
+            <li>Tuyệt đối không tiết lộ các loại thông tin như thông tin định danh (số căn cước công dân, bằng lái xe, hộ chiếu, địa chỉ, số điện thoại), kết quả khám bệnh, thông tin tài chính (số tài khoản ngân hàng), thông tin độc quyền của doanh nghiệp, hoặc thông tin đăng nhập (mật khẩu, mã PIN) cho AI.</li>
+        </ul>
+    </li>
+    <li><strong>Bảo mật tài khoản bằng 2FA:</strong>
+        <ul>
+            <li>Để loại bỏ gần như hoàn toàn rủi ro bên thứ ba xâm nhập vào tài khoản của bạn và thu thập dữ liệu cá nhân, hãy bật xác thực hai yếu tố (2FA). Bạn thực hiện việc này bằng cách vào Cài đặt (Settings) > Bảo mật (Security) và nhấp để bật xác thực đa yếu tố (multi-factor authentication).</li>
+        </ul>
+    </li>
+</ol>`
+  },
+  {
     id: 'tao-mini-app-ai-mien-phi-cung-google-ai-studio',
     title: 'Tạo mini app miễn phí chỉ với vài cú click cùng Google AI Studio',
     source: 'Google',
