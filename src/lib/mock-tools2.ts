@@ -567,6 +567,46 @@ export const mockLovableTool: Tool[] = [
         </ul>
     `,
   },
+  {
+    id: 'replit',
+    name: 'Replit',
+    context: 'Code cho Web app',
+    developer: 'Replit',
+    description: 'Replit là một môi trường phát triển tích hợp (IDE) trực tuyến, cho phép bạn viết mã, cộng tác và triển khai ứng dụng trực tiếp từ trình duyệt.',
+    longDescription: '<p>Replit là một nền tảng lập trình dựa trên đám mây, cung cấp một môi trường phát triển tích hợp (IDE) mạnh mẽ ngay trong trình duyệt của bạn. Nó hỗ trợ hơn 50 ngôn ngữ lập trình, cho phép bạn viết mã, chạy và gỡ lỗi các dự án mà không cần cài đặt bất kỳ phần mềm nào. Replit nổi bật với khả năng cộng tác theo thời gian thực, cho phép nhiều người cùng làm việc trên một dự án.</p><p>Nền tảng này cũng tích hợp AI thông qua Replit AI, một trợ lý ảo giúp viết mã, gỡ lỗi và giải thích code. Với các tính năng như triển khai ứng dụng dễ dàng và một cộng đồng lớn mạnh, Replit là công cụ lý tưởng cho việc học lập trình, tạo mẫu nhanh và phát triển các dự án cá nhân cũng như chuyên nghiệp.</p>',
+    logoUrl: '/image/Logo-replit.png',
+    link: 'https://replit.com/',
+    imageUrl: '/image/Anh-cong-cu-replit.png',
+    features: [
+      "IDE trực tuyến hỗ trợ hơn 50 ngôn ngữ lập trình.",
+      "Cộng tác viết mã theo thời gian thực (Multiplayer).",
+      "Triển khai ứng dụng dễ dàng (Deployments).",
+      "Trợ lý AI hỗ trợ viết và gỡ lỗi code.",
+      "Quản lý gói và môi trường tự động.",
+      "Tích hợp Git và GitHub."
+    ],
+    useCases: [
+      "Học và giảng dạy lập trình.",
+      "Phát triển và tạo mẫu ứng dụng web.",
+      "Xây dựng API và backend.",
+      "Cộng tác trên các dự án phần mềm.",
+      "Tổ chức các cuộc thi lập trình (hackathons)."
+    ],
+    whoIsItFor: [
+      'Học sinh, sinh viên',
+      'Nhà phát triển phần mềm',
+      'Giáo viên và người hướng dẫn',
+      'Người mới bắt đầu học lập trình'
+    ],
+    pricingPlans: `
+        <ul>
+            <li><strong>Starter (Free):</strong> $5 credit hàng tháng, 10 ứng dụng phát triển, ứng dụng công khai.</li>
+            <li><strong>Replit Core ($20/tháng, thanh toán hàng năm):</strong> $25 credit hàng tháng, không gian làm việc cá nhân, truy cập Full Agent, tạo ứng dụng và tự động hóa.</li>
+            <li><strong>Teams ($35/user/tháng, thanh toán hàng năm):</strong> $40 credit hàng tháng, mọi thứ trong Replit Core, thanh toán tập trung, kiểm soát truy cập dựa trên vai trò.</li>
+            <li><strong>Enterprise (Tùy chỉnh):</strong> Giá tùy chỉnh, mọi thứ trong Teams, SSO/SAML, SCIM, kiểm soát quyền riêng tư nâng cao.</li>
+        </ul>
+    `,
+  },
 ];
     
     
@@ -586,4 +626,5 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 
