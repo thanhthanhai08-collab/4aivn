@@ -36,12 +36,11 @@ export const mockLovableTool: Tool[] = [
         'Bất kỳ ai muốn biến ý tưởng thành ứng dụng'
     ],
     pricingPlans: `
-        <ul>
-            <li><strong>Gói Free ($0/tháng):</strong> Miễn phí mãi mãi, cung cấp 5 credit hàng ngày, phù hợp để khám phá và thực hiện các dự án công khai.</li>
-            <li><strong>Gói Pro ($25/tháng):</strong> Dành cho các nhóm làm việc nhanh, bao gồm mọi thứ trong gói Free, cộng thêm 100 credit hàng tháng, dự án riêng tư, và nhiều tính năng chuyên nghiệp khác.</li>
-            <li><strong>Gói Business ($50/tháng):</strong> Dành cho các bộ phận đang phát triển, bao gồm mọi thứ trong gói Pro, cộng thêm các tính năng kiểm soát nâng cao như SSO, dự án cá nhân, và mẫu thiết kế.</li>
-            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho các tổ chức lớn, cung cấp hỗ trợ chuyên biệt, tích hợp tùy chỉnh, và các hệ thống thiết kế riêng.</li>
-        </ul>
+      <ul>
+        <li><strong>Gói Free ($0):</strong> Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.</li>
+        <li><strong>Gói Pro ($25/tháng):</strong> Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.</li>
+        <li><strong>Gói Teams ($30/tháng/thành viên):</strong> Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries.</li>
+      </ul>
     `,
   },
   {
@@ -449,4 +448,64 @@ export const mockLovableTool: Tool[] = [
       </ul>
     `,
   },
+  {
+    id: 'canva',
+    name: 'Canva',
+    context: 'Tạo hình ảnh',
+    developer: 'Canva',
+    imageUrl: '/image/Anh cong cu Canva.png',
+    description: 'Canva là một nền tảng thiết kế đồ họa trực tuyến phổ biến, tích hợp các công cụ AI mạnh mẽ để giúp người dùng dễ dàng tạo ra các thiết kế chuyên nghiệp từ bài đăng mạng xã hội, thuyết trình, đến video và trang web.',
+    longDescription: '<p>Canva là một công cụ thiết kế toàn diện, giúp người dùng không chuyên cũng có thể tạo ra các sản phẩm đồ họa đẹp mắt một cách nhanh chóng. Với kho tài nguyên khổng lồ gồm mẫu, hình ảnh, và biểu tượng, Canva cho phép bạn tùy chỉnh mọi thứ một cách dễ dàng. Gần đây, Canva đã tích hợp các tính năng AI như Magic Write (viết nội dung), Magic Design (tạo mẫu tự động), và các công cụ chỉnh sửa ảnh thông minh, biến nó thành một trợ lý thiết kế mạnh mẽ.</p><p>Nền tảng này phù hợp cho cả cá nhân, đội nhóm và doanh nghiệp, cung cấp các giải pháp từ việc tạo nội dung cho mạng xã hội đến xây dựng bộ nhận diện thương hiệu hoàn chỉnh.</p>',
+    logoUrl: '/image/Logo Canva.png',
+    link: 'https://www.canva.com',
+    features: [
+      "Trình chỉnh sửa kéo-thả trực quan, dễ sử dụng.",
+      "Kho mẫu thiết kế khổng lồ cho mọi nhu cầu.",
+      "Magic Studio: Bộ công cụ AI để tạo và chỉnh sửa nội dung.",
+      "Hỗ trợ làm việc nhóm và cộng tác theo thời gian thực.",
+      "Khả năng tạo và chỉnh sửa video.",
+      "Tạo trang web đơn giản (Canva Sites).",
+      "Tích hợp với nhiều ứng dụng và dịch vụ khác."
+    ],
+    useCases: [
+        'Thiết kế bài đăng cho mạng xã hội (Facebook, Instagram).',
+        'Tạo bài thuyết trình chuyên nghiệp.',
+        'Thiết kế CV, danh thiếp, và các ấn phẩm cá nhân.',
+        'Xây dựng bộ nhận diện thương hiệu cho doanh nghiệp.',
+        'Chỉnh sửa video ngắn và tạo ảnh bìa YouTube.'
+    ],
+    whoIsItFor: [
+        'Người làm marketing và quản lý mạng xã hội',
+        'Chủ doanh nghiệp nhỏ',
+        'Học sinh, sinh viên',
+        'Blogger và người sáng tạo nội dung',
+        'Bất kỳ ai không phải là nhà thiết kế chuyên nghiệp'
+    ],
+    pricingPlans: `
+      <ul>
+          <li><strong>Canva Free:</strong> Miễn phí cho mọi người, cung cấp các công cụ thiết kế cơ bản và hàng ngàn mẫu miễn phí.</li>
+          <li><strong>Canva Pro ($12.99/tháng cho 1 người):</strong> Mở khóa toàn bộ kho tài nguyên premium, các công cụ AI nâng cao, bộ nhận diện thương hiệu và nhiều tính năng mạnh mẽ khác.</li>
+          <li><strong>Canva for Teams ($25/tháng cho 5 người đầu tiên):</strong> Bao gồm tất cả tính năng của Pro, cộng thêm các công cụ quản lý và cộng tác dành cho đội nhóm.</li>
+      </ul>
+    `,
+  },
 ];
+    
+    
+
+
+
+    
+
+    
+
+
+
+    
+
+
+
+    
+
+    
+
