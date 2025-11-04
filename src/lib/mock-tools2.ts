@@ -494,10 +494,10 @@ export const mockLovableTool: Tool[] = [
     name: 'Luma AI',
     context: 'Tạo video',
     developer: 'Luma Labs',
-    imageUrl: '/image/Ảnh công cụ Luma AI.png',
+    imageUrl: 'image/Anh-cong-cu-luma.png',
     description: 'Luma AI là một công cụ AI tạo video từ văn bản và hình ảnh, cho phép người dùng tạo ra các đoạn video chất lượng cao với các phong cách đa dạng.',
     longDescription: '<p>Luma AI là một nền tảng AI sáng tạo, chuyên biến những ý tưởng văn bản và hình ảnh thành các video sống động. Người dùng có thể mô tả cảnh quay, hành động, hoặc phong cách mong muốn, và Luma AI sẽ tạo ra một đoạn video tương ứng. Công cụ này cũng hỗ trợ tạo video từ hình ảnh tĩnh, làm cho các bức ảnh trở nên sống động hơn. Với giao diện thân thiện và khả năng tạo video nhanh chóng, Luma AI là một công cụ mạnh mẽ cho các nhà làm phim, người sáng tạo nội dung, và bất kỳ ai muốn biến ý tưởng của mình thành video.</p>',
-    logoUrl: '/image/Logo Luma AI.png',
+    logoUrl: '/image/Logo-luma-ai.png',
     link: 'https://lumalabs.ai',
     features: [
       "Tạo video từ mô tả văn bản (Text-to-Video).",
