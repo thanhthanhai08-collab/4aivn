@@ -31,6 +31,7 @@ export const mockNews2: NewsArticle[] = [
 <h3>Hệ thống phòng thủ kém so với đối thủ</h3>
 <p>LayerX Security cũng chỉ ra rằng vấn đề bảo mật trên ChatGPT Atlas trở nên trầm trọng hơn do trình duyệt này thiếu các biện pháp kiểm soát chống lừa đảo mạnh mẽ.</p>
 <p>Trong các thử nghiệm với hơn 100 lỗ hổng và trang lừa đảo, Atlas chỉ ngăn chặn được 5,8% các trang web độc hại. Con số này quá khiêm tốn so với Google Chrome (47%) hay Microsoft Edge (53%), khiến người dùng Atlas "dễ bị tấn công hơn tới 90%" so với các trình duyệt truyền thống.</p>
+[ATLAS_SECURITY_CHART]
 <p>Phát hiện này cho thấy các trình duyệt AI đang trở thành một mặt trận tấn công mới.</p>
 <h3>Cách người dùng ChatGPT tự bảo vệ bản thân</h3>
 <p>Nếu bạn lo lắng về việc thông tin cá nhân bị lưu trữ hoặc bị ô nhiễm trong bộ nhớ AI, bạn có thể thực hiện các biện pháp sau:</p>
@@ -571,3 +572,4 @@ export const mockNews2: NewsArticle[] = [
     
 
     
+

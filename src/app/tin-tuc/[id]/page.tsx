@@ -36,6 +36,7 @@ import { BrowserMarketShareChart } from "@/components/news/browser-market-share-
 import { AiBrowserMarketGrowthChart } from "@/components/news/ai-browser-market-growth-chart";
 import { AiBrowserFocusChart } from "@/components/news/ai-browser-focus-chart";
 import { HumanRobotCollaborationChart } from "@/components/news/human-robot-collaboration-chart";
+import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-benchmark-chart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -53,10 +54,13 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    if (part === '[ATLAS_SECURITY_CHART]') {
+      return <AtlasSecurityBenchmarkChart key={`${index}-atlas-security-chart`} />;
+    }
     if (part === '[HUMAN_ROBOT_COLLABORATION_CHART]') {
       return <HumanRobotCollaborationChart key={`${index}-human-robot-chart`} />;
     }
