@@ -484,8 +484,8 @@ export const mockLovableTool: Tool[] = [
     pricingPlans: `
       <ul>
           <li><strong>Canva Free:</strong> Miễn phí cho mọi người, cung cấp các công cụ thiết kế cơ bản và hàng ngàn mẫu miễn phí.</li>
-          <li><strong>Canva Pro ($12.99/tháng cho 1 người):</strong> Mở khóa toàn bộ kho tài nguyên premium, các công cụ AI nâng cao, bộ nhận diện thương hiệu và nhiều tính năng mạnh mẽ khác.</li>
-          <li><strong>Canva for Teams ($25/tháng cho 5 người đầu tiên):</strong> Bao gồm tất cả tính năng của Pro, cộng thêm các công cụ quản lý và cộng tác dành cho đội nhóm.</li>
+          <li><strong>Canva Pro (150.000đ/tháng cho 1 người):</strong> Mở khóa toàn bộ kho tài nguyên premium, các công cụ AI nâng cao, bộ nhận diện thương hiệu và nhiều tính năng mạnh mẽ khác.</li>
+          <li><strong>Canva for Teams (200.000đ/tháng cho 1 người):</strong> Bao gồm tất cả tính năng của Pro, cộng thêm các công cụ quản lý và cộng tác dành cho đội nhóm.</li>
       </ul>
     `,
   },
