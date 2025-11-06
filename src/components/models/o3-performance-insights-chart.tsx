@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
@@ -5,14 +6,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const data = {
   'openai-o3': [
+    { name: "Agentic Coding", score: 35 },
+    { name: "Agentic Tool Use", score: 81 },
+    { name: "AA-LCR", score: 69 },
+    { name: "Humanity's Exam", score: 20 },
     { name: "MMLU-Pro", score: 85 },
     { name: "GPQA Diamond", score: 83 },
-    { name: "Humanity's Exam", score: 20 },
-    { name: "LiveCodeBench", score: 78 },
+    { name: "LiveCodeBench", score: 81 },
     { name: "SciCode", score: 41 },
     { name: "IFBench", score: 71 },
     { name: "AIME 2025", score: 88 },
-    { name: "AA-LCR", score: 69 },
   ],
   'grok-4': [
     { name: "MMLU-Pro", score: 87 },
@@ -281,3 +284,5 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    

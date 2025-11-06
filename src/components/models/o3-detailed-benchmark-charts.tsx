@@ -1,3 +1,4 @@
+
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
@@ -39,7 +40,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'grok-4', score: 82.0 },
     { modelId: 'openai-o3-pro', score: 81.0 },
     { modelId: 'openai-o4-mini-high', score: 80.0 },
-    { modelId: 'openai-o3', score: 78.0 },
+    { modelId: 'openai-o3', score: 81.0 },
     { modelId: 'gemini-2.5-pro', score: 80.0 },
     { modelId: 'deepseek-r1-jan25', score: 77.0 },
     { modelId: 'deepseek-v3.1-reasoning', score: 78.0 },
@@ -233,3 +234,6 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
 
+
+
+    
