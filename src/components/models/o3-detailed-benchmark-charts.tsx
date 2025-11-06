@@ -44,7 +44,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'deepseek-r1-jan25', score: 77.0 },
     { modelId: 'deepseek-v3.1-reasoning', score: 78.0 },
     { modelId: 'qwen3-235b-reasoning', score: 79.0 },
-    { modelId: 'gpt-5-high', score: 67.0 },
+    { modelId: 'gpt-5-high', score: 85.0 },
     { modelId: 'gpt-5-medium', score: 70.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 70.0 },
     { modelId: 'gpt-5-mini', score: 69.0 },
@@ -229,5 +229,6 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
     
+
 
 
