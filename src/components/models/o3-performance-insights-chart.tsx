@@ -18,14 +18,16 @@ const data = {
     { name: "AIME 2025", score: 88 },
   ],
   'grok-4': [
+    { name: "Agentic Coding", score: 38 },
+    { name: "Agentic Tool Use", score: 75 },
+    { name: "AA-LCR", score: 68 },
+    { name: "Humanity's Exam", score: 23.9 },
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 88 },
-    { name: "Humanity's Exam", score: 23.9 },
     { name: "LiveCodeBench", score: 82 },
     { name: "SciCode", score: 46 },
     { name: "IFBench", score: 54 },
     { name: "AIME 2025", score: 93 },
-    { name: "AA-LCR", score: 68 },
   ],
   'gemini-2.5-pro': [
     { name: "MMLU-Pro", score: 86 },
