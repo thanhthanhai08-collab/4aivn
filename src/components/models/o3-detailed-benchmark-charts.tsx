@@ -49,7 +49,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'gpt-5-medium', score: 70.0 },
     { modelId: 'gemini-2.5-flash-reasoning', score: 70.0 },
     { modelId: 'gpt-5-mini', score: 69.0 },
-    { modelId: 'gpt-5-low', score: 75.0 },
+    { modelId: 'gpt-5-low', score: 76.0 },
     { modelId: 'gpt-oss-120b-high', score: 64.0 },
     { modelId: 'gpt-5-nano', score: 60.0 },
     { modelId: 'claude-4-opus-thinking', score: 64.0 },
