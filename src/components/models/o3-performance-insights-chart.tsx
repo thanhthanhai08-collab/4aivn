@@ -57,14 +57,16 @@ const data = {
     { name: "AIME 2025", score: 94 },
   ],
   'gpt-5-medium': [
+    { name: "Agentic Coding", score: 36 },
+    { name: "Agentic Tool Use", score: 87 },
+    { name: "AA-LCR", score: 73 },
+    { name: "Humanity's Exam", score: 23.5 },
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 84 },
-    { name: "Humanity's Exam", score: 23.5 },
     { name: "LiveCodeBench", score: 70 },
     { name: "SciCode", score: 41 },
     { name: "IFBench", score: 71 },
     { name: "AIME 2025", score: 92 },
-    { name: "AA-LCR", score: 73 },
   ],
   'qwen3-235b-reasoning': [
     { name: "MMLU-Pro", score: 84 },

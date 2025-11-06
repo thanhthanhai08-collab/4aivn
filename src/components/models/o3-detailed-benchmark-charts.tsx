@@ -33,7 +33,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'llama-4-maverick', score: 19.0 },
     { modelId: 'claude-4.1-opus', score: 50.0 },
     { modelId: 'gpt-oss-20b-high', score: 62.0 },
-    { modelId: 'gpt-5-codex-high', score: 35.0 },
+    { modelId: 'gpt-5-codex-high', score: 99.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -59,7 +59,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'llama-4-maverick', score: 40.0 },
     { modelId: 'claude-4.1-opus', score: 69.0 },
     { modelId: 'gpt-oss-20b-high', score: 72.0 },
-    { modelId: 'gpt-5-codex-high', score: 46.0 },
+    { modelId: 'gpt-5-codex-high', score: 84.0 },
     { modelId: 'qwenq-32b', score: 63.0 },
   ],
   mmlu: [
@@ -85,7 +85,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
     { modelId: 'llama-4-maverick', score: 81.0 },
     { modelId: 'claude-4.1-opus', score: 81.0 },
     { modelId: 'gpt-oss-20b-high', score: 74.0 },
-    { modelId: 'gpt-5-codex-high', score: 81.0 },
+    { modelId: 'gpt-5-codex-high', score: 87.0 },
     { modelId: 'qwenq-32b', score: 76.0 },
   ],
   ifbench: [
@@ -111,7 +111,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'llama-4-maverick', score: 43.0 },
       { modelId: 'claude-4.1-opus', score: 43.0 },
       { modelId: 'gpt-oss-20b-high', score: 61.0 },
-      { modelId: 'gpt-5-codex-high', score: 43.0 },
+      { modelId: 'gpt-5-codex-high', score: 74.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -137,7 +137,7 @@ const allBenchmarks: Record<string, { modelId: string, score: number }[]> = {
       { modelId: 'llama-4-maverick', score: 67.0 },
       { modelId: 'claude-4.1-opus', score: 70.0 },
       { modelId: 'gpt-oss-20b-high', score: 62.0 },
-      { modelId: 'gpt-5-codex-high', score: 67.0 },
+      { modelId: 'gpt-5-codex-high', score: 84.0 },
       { modelId: 'qwenq-32b', score: 59.0 },
   ]
 };
@@ -229,6 +229,7 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
     
+
 
 
 
