@@ -305,7 +305,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{model.id === 'openai-o3' ? '20/12/2024' : model.id === 'openai-o4-mini-high' ? '16/04/2025' : (model.id === 'gpt-5-high' || model.id === 'gpt-5-medium' || model.id === 'gpt-5-mini' || model.id === 'gpt-5-low' || model.id === 'gpt-5-nano') ? '07/08/2025' : model.id === 'qwen3-235b-reasoning' ? '25/07/2025' : model.id === 'deepseek-r1-jan25' ? '28/05/2025' : model.id === 'deepseek-v3.1-reasoning' ? '21/08/2025' : model.id === 'gemini-2.5-flash-reasoning' ? '17/06/2025' : (model.id === 'gpt-oss-120b-high' || model.id === 'gpt-oss-20b-high' || model.id === 'claude-4.1-opus') ? '05/08/2025' : (model.id === 'claude-4-opus-thinking' || model.id === 'claude-4-sonnet-thinking') ? '22/05/2025' : model.id === 'claude-4.1-opus-thinking' ? '05/08/2025' : model.id === 'grok-3-mini-reasoning-high' ? '17/02/2025' : model.id === 'llama-nemotron-ultra-reasoning' ? '07/04/2025' : model.id === 'llama-4-maverick' ? '05/04/2025' : model.id === 'gpt-5-codex-high' ? '14/04/2025' : model.id === 'qwenq-32b' ? '06/03/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{model.id === 'openai-o3' ? '20/12/2024' : model.id === 'openai-o4-mini-high' ? '16/04/2025' : (model.id === 'gpt-5-high' || model.id === 'gpt-5-medium' || model.id === 'gpt-5-mini' || model.id === 'gpt-5-low' || model.id === 'gpt-5-nano') ? '07/08/2025' : model.id === 'qwen3-235b-reasoning' ? '25/07/2025' : model.id === 'deepseek-r1-jan25' ? '28/05/2025' : model.id === 'deepseek-v3.1-reasoning' ? '21/08/2025' : model.id === 'gemini-2.5-flash-reasoning' ? '17/06/2025' : (model.id === 'gpt-oss-120b-high' || model.id === 'gpt-oss-20b-high' || model.id === 'claude-4.1-opus') ? '05/08/2025' : (model.id === 'claude-4-opus-thinking' || model.id === 'claude-4-sonnet-thinking') ? '22/05/2025' : model.id === 'claude-4.1-opus-thinking' ? '05/08/2025' : model.id === 'grok-3-mini-reasoning-high' ? '17/02/2025' : model.id === 'llama-nemotron-ultra-reasoning' ? '07/04/2025' : model.id === 'llama-4-maverick' ? '05/04/2025' : model.id === 'gpt-5-codex-high' ? '15/09/2025' : model.id === 'qwenq-32b' ? '06/03/2025' : '09/07/2025'}</p>
                             </div>
                         </div>
                     </CardContent>
@@ -454,3 +454,5 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
+
+    

@@ -638,8 +638,8 @@ hiệu quả trong công việc.`,
     contextLengthToken: '400k',
     intelligenceScore: 68,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 121.2,
-    latencyFirstChunkSeconds: 34.33,
+    speedTokensPerSecond: 171.6,
+    latencyFirstChunkSeconds: 40.71,
   },
   {
     id: 'deepseek-r1-jan25',
@@ -800,3 +800,5 @@ hiệu quả trong công việc.`,
     latencyFirstChunkSeconds: 0.32,
   },
 ];
+
+    
