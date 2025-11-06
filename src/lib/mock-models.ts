@@ -277,10 +277,10 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     contextLengthToken: '400k',
-    intelligenceScore: 69,
+    intelligenceScore: 68,
     pricePerMillionTokens: 3.44,
-    speedTokensPerSecond: 111.9,
-    latencyFirstChunkSeconds: 74.88
+    speedTokensPerSecond: 74.5,
+    latencyFirstChunkSeconds: 122.57
   },
   {
     id: 'gpt-5-medium',
