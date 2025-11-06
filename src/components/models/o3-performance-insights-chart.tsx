@@ -233,6 +233,8 @@ const data = {
     { name: "IFBench", score: 74 },
     { name: "AIME 2025", score: 99 },
     { name: "AA-LCR", score: 69 },
+    { name: "Agentic Coding", score: 36 },
+    { name: "Agentic Tool Use", score: 87 },
   ],
   'qwenq-32b': [
     { name: "MMLU-Pro", score: 76 },
