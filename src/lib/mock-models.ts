@@ -489,6 +489,32 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 17.0,
   },
   {
+    id: 'qwen3-235b-reasoning',
+    name: 'Qwen3 235B A22B 2507 (reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: `+ Qwen3 235B là mô hình ngôn ngữ lớn (LLM) mã nguồn mở với 235 tỷ tham số do Alibaba Cloud phát triển. Được phát hành vào tháng 7 năm 2025, Qwen3 nổi bật với khả năng xử lý đa phương thức và hiệu suất suy luận mạnh mẽ, đặc biệt trong các lĩnh vực lập trình và toán học.
++ Mô hình này được xây dựng trên kiến trúc Transformer và huấn luyện trên một tập dữ liệu khổng lồ, bao gồm cả văn bản và mã nguồn.
++ Qwen3 235B là một lựa chọn mạnh mẽ cho các nhà phát triển và doanh nghiệp muốn xây dựng các ứng dụng AI tiên tiến, tận dụng lợi thế của một mô hình mã nguồn mở với hiệu suất cao và chi phí hợp lý.`,
+    logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
+    link: 'https://qwen.aliyun.com/',
+    userRating: 4.6,
+    ratingCount: 150,
+    features: [
+      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 260K token.",
+      "Chỉ số thông minh 57 → Dựa trên trung bình các điểm benchmark.",
+      "Giá trung bình $2.63 / 1 triệu token.",
+      "Tốc độ sinh token là 74.9 token/s.",
+      "Độ trễ 1.38s là thời gian chờ trung bình."
+    ],
+    isFavorite: false,
+    contextLengthToken: '260K',
+    intelligenceScore: 57,
+    pricePerMillionTokens: 2.63,
+    speedTokensPerSecond: 74.9,
+    latencyFirstChunkSeconds: 1.38,
+  },
+  {
     id: 'claude-4-opus-thinking',
     name: 'Claude 4 Opus Thinking',
     type: 'Mô hình ngôn ngữ lớn',
