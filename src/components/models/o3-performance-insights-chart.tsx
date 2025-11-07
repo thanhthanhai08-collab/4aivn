@@ -39,7 +39,7 @@ const data = {
     { name: "AIME 2025", score: 88 },
     { name: "AA-LCR", score: 66 },
   ],
-   'openai-o4-mini-high': [
+   'gpt-5-mini-high': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 78 },
     { name: "Humanity's Exam", score: 17.5 },
@@ -290,5 +290,7 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    
 
     
