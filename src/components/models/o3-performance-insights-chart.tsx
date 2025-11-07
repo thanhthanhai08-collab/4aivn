@@ -118,14 +118,16 @@ const data = {
     { name: "AA-LCR", score: 62 },
   ],
   'gpt-5-mini-medium': [
+    { name: "Agentic Coding", score: 27 },
+    { name: "Agentic Tool Use", score: 71 },
+    { name: "AA-LCR", score: 66 },
+    { name: "Humanity's Exam", score: 14.6 },
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 80 },
-    { name: "Humanity's Exam", score: 14.6 },
     { name: "LiveCodeBench", score: 69 },
     { name: "SciCode", score: 41 },
     { name: "IFBench", score: 71 },
     { name: "AIME 2025", score: 85 },
-    { name: "AA-LCR", score: 66 },
   ],
   'gpt-5-low': [
     { name: "Agentic Coding", score: 25 },
