@@ -27,7 +27,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-5-low', score: 83.0 },
     { modelId: 'gpt-5-nano', score: 78.0 },
     { modelId: 'claude-4-opus-thinking', score: 73.0 },
-    { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
     { modelId: 'claude-4.5-sonnet-thinking', score: 88.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 85.0 },
     { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
@@ -53,7 +53,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-oss-120b-high', score: 88.0 },
     { modelId: 'gpt-5-nano', score: 60.0 },
     { modelId: 'claude-4-opus-thinking', score: 64.0 },
-    { modelId: 'claude-4.1-opus-thinking', score: 66.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 65.0 },
     { modelId: 'claude-4.5-sonnet-thinking', score: 71.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 70.0 },
     { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
@@ -70,7 +70,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'openai-o3', score: 85.0 },
     { modelId: 'deepseek-r1-jan25', score: 85.0 },
     { modelId: 'deepseek-v3.1-reasoning', score: 85.0 },
-    { modelId: 'claude-4.1-opus-thinking', score: 84.0 },
+    { modelId: 'claude-4.1-opus-thinking', score: 88.0 },
     { modelId: 'qwen3-235b-reasoning', score: 84.0 },
     { modelId: 'gpt-5-mini-high', score: 84.0 },
     { modelId: 'gpt-5-high', score: 87.0 },
@@ -131,7 +131,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'gpt-5-low', score: 81.0 },
       { modelId: 'gpt-oss-120b-high', score: 78.0 },
       { modelId: 'gpt-5-nano', score: 67.0 },
-      { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
+      { modelId: 'claude-4.1-opus-thinking', score: 81.0 },
       { modelId: 'claude-4.5-sonnet-thinking', score: 83.0 },
       { modelId: 'grok-3-mini-reasoning-high', score: 79.0 },
       { modelId: 'llama-nemotron-ultra-reasoning', score: 73.0 },
@@ -241,6 +241,7 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
     
+
 
 
 

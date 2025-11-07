@@ -174,14 +174,16 @@ const data = {
     { name: "AA-LCR", score: 34 },
   ],
   'claude-4.1-opus-thinking': [
-    { name: "MMLU-Pro", score: 84 },
-    { name: "GPQA Diamond", score: 80 },
-    { name: "Humanity's Exam", score: 11.6 },
-    { name: "LiveCodeBench", score: 66 },
-    { name: "SciCode", score: 40 },
+    { name: "Agentic Coding", score: 32 },
+    { name: "Agentic Tool Use", score: 71 },
+    { name: "AA-LCR", score: 66 },
+    { name: "Humanity's Exam", score: 11.9 },
+    { name: "MMLU-Pro", score: 88 },
+    { name: "GPQA Diamond", score: 81 },
+    { name: "LiveCodeBench", score: 65 },
+    { name: "SciCode", score: 41 },
     { name: "IFBench", score: 55 },
-    { name: "AIME 2025", score: 84 },
-    { name: "AA-LCR", score: 70 },
+    { name: "AIME 2025", score: 80 },
   ],
   'claude-4.5-sonnet-thinking': [
     { name: "Agentic Coding", score: 33 },
@@ -302,4 +304,5 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     
 
     
+
 
