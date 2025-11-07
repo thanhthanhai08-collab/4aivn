@@ -305,11 +305,11 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 32.41,
   },
   {
-    id: 'deepseek-v3.1-reasoning',
-    name: 'DeepSeek V3.1 (Reasoning)',
+    id: 'deepseek-v3.1-terminus-reasoning',
+    name: 'DeepSeek V3.1 Terminus (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Deepseek',
-    description: `+ DeepSeek V3.1 (Reasoning) là phiên bản kế nhiệm trong dòng mô hình DeepSeek, được tối ưu hóa đặc biệt cho các tác vụ đòi hỏi khả năng suy luận phức tạp, ra mắt vào tháng 8 năm 2025. Đây là mô hình mã nguồn mở, cho phép người dùng tự do triển khai trên hạ tầng riêng.
+    description: `+ DeepSeek V3.1 Terminus (Reasoning) là phiên bản kế nhiệm trong dòng mô hình DeepSeek, được tối ưu hóa đặc biệt cho các tác vụ đòi hỏi khả năng suy luận phức tạp, ra mắt vào tháng 8 năm 2025. Đây là mô hình mã nguồn mở, cho phép người dùng tự do triển khai trên hạ tầng riêng.
 + Phiên bản này tập trung vào việc cải thiện khả năng suy luận logic và giải quyết vấn đề nhiều bước, giúp nó cạnh tranh hiệu quả với các mô hình hàng đầu từ Google và OpenAI.
 + Giống như các phiên bản trước, DeepSeek V3.1 cho phép sử dụng thương mại và tùy chỉnh, trở thành một lựa chọn hấp dẫn cho các doanh nghiệp và nhà phát triển muốn xây dựng các ứng dụng AI độc lập.
 + Mô hình này cân bằng giữa hiệu suất suy luận cao và tốc độ xử lý hợp lý, mang lại một giải pháp mạnh mẽ cho các ứng dụng chuyên sâu.`,
@@ -690,11 +690,3 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
 ];
-
-
-
-    
-
-    
-
-

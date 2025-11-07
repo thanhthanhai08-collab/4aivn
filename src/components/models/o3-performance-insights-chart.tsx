@@ -97,7 +97,7 @@ const data = {
     { name: "AIME 2025", score: 76 },
     { name: "AA-LCR", score: 56 },
   ],
-  'deepseek-v3.1-reasoning': [
+  'deepseek-v3.1-terminus-reasoning': [
     { name: "MMLU-Pro", score: 85 },
     { name: "GPQA Diamond", score: 78 },
     { name: "Humanity's Exam", score: 13 },
@@ -300,9 +300,3 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
-
-    
-
-    
-
-
