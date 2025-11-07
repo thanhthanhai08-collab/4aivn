@@ -32,14 +32,14 @@ const data = {
   'gemini-2.5-pro': [
     { name: "Agentic Coding", score: 25 },
     { name: "Agentic Tool Use", score: 54 },
+    { name: "AA-LCR", score: 66 },
+    { name: "Humanity's Exam", score: 21.1 },
     { name: "MMLU-Pro", score: 86 },
     { name: "GPQA Diamond", score: 84 },
-    { name: "Humanity's Exam", score: 21.1 },
     { name: "LiveCodeBench", score: 80 },
     { name: "SciCode", score: 43 },
     { name: "IFBench", score: 49 },
     { name: "AIME 2025", score: 88 },
-    { name: "AA-LCR", score: 66 },
   ],
    'gpt-5-mini-high': [
     { name: "Agentic Coding", score: 31 },
@@ -117,7 +117,7 @@ const data = {
     { name: "AIME 2025", score: 73 },
     { name: "AA-LCR", score: 62 },
   ],
-  'gpt-5-mini': [
+  'gpt-5-mini-medium': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 80 },
     { name: "Humanity's Exam", score: 14.6 },
@@ -298,4 +298,3 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     
 
     
-

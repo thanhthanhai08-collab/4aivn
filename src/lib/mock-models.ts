@@ -154,11 +154,11 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 23.97,
   },
   {
-    id: 'gpt-5-mini',
-    name: 'GPT-5 mini',
+    id: 'gpt-5-mini-medium',
+    name: 'GPT-5 mini (medium)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'OpenAI',
-    description: 'GPT-5 mini là phiên bản nhỏ gọn và hiệu quả của dòng GPT-5, được tối ưu hóa cho tốc độ và chi phí, mang lại hiệu suất mạnh mẽ cho các ứng dụng yêu cầu phản hồi nhanh.',
+    description: 'GPT-5 mini (medium) là phiên bản cân bằng của dòng GPT-5 mini, được tối ưu hóa cho tốc độ và chi phí, mang lại hiệu suất mạnh mẽ cho các ứng dụng yêu cầu phản hồi nhanh.',
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     contextLengthToken: '400k',
@@ -728,4 +728,3 @@ export const mockAIModels: AIModel[] = [
     
 
     
-
