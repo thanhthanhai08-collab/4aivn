@@ -30,6 +30,8 @@ const data = {
     { name: "AIME 2025", score: 93 },
   ],
   'gemini-2.5-pro': [
+    { name: "Agentic Coding", score: 25 },
+    { name: "Agentic Tool Use", score: 54 },
     { name: "MMLU-Pro", score: 86 },
     { name: "GPQA Diamond", score: 84 },
     { name: "Humanity's Exam", score: 21.1 },
@@ -296,3 +298,4 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     
 
     
+
