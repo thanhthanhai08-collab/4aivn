@@ -65,24 +65,6 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 79.63,
   },
   {
-    id: 'openai-o3',
-    name: 'OpenAI o3',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'OpenAI',
-    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.\n+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.\n+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.\n+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground.`,
-    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
-    link: 'https://openai.com/',
-    userRating: 4.9,
-    ratingCount: 350,
-    features: [],
-    isFavorite: false,
-    contextLengthToken: '200k',
-    intelligenceScore: 65,
-    pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 109.2,
-    latencyFirstChunkSeconds: 14.11,
-  },
-  {
     id: 'grok-4',
     name: 'Grok 4',
     type: 'Mô hình ngôn ngữ lớn',
@@ -116,6 +98,24 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 6,
     speedTokensPerSecond: 33.9,
     latencyFirstChunkSeconds: 18.74,
+  },
+  {
+    id: 'openai-o3',
+    name: 'OpenAI o3',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: `+ OpenAI o3 là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.\n+ OpenAI o3 là một trong những mô hình đầu tiên của OpenAI có khả năng sử dụng công cụ một cách tự động trong quy trình suy luận, từ đó có thể truy cập thông tin thời gian thực, phân tích dữ liệu phức tạp và phối hợp nhiều khả năng để giải quyết các vấn đề đa bước hiệu quả hơn.\n+ OpenAI o3 đã áp dụng các kỹ thuật điều chỉnh và kiểm soát mới nhằm giảm thiểu các kết quả gây hại hoặc thiên lệch, đồng thời nâng cao tính minh bạch trong quá trình suy luận của mô hình.\n+ Mô hình cũng được tích hợp trong các dịch vụ như ChatGPT, API, Playground.`,
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    userRating: 4.9,
+    ratingCount: 350,
+    features: [],
+    isFavorite: false,
+    contextLengthToken: '200k',
+    intelligenceScore: 65,
+    pricePerMillionTokens: 3.5,
+    speedTokensPerSecond: 109.2,
+    latencyFirstChunkSeconds: 14.11,
   },
   {
     id: 'gpt-5-mini-high',
@@ -264,8 +264,8 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '131k',
     intelligenceScore: 61,
     pricePerMillionTokens: 0.26,
-    speedTokensPerSecond: 223.7,
-    latencyFirstChunkSeconds: 0.41,
+    speedTokensPerSecond: 383,
+    latencyFirstChunkSeconds: 0.38,
   },
   {
     id: 'gemini-2.5-pro',
@@ -696,3 +696,4 @@ export const mockAIModels: AIModel[] = [
     
 
     
+

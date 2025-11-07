@@ -142,14 +142,16 @@ const data = {
     { name: "AIME 2025", score: 83 },
   ],
   'gpt-oss-120b-high': [
+    { name: "Agentic Coding", score: 22 },
+    { name: "Agentic Tool Use", score: 66 },
+    { name: "AA-LCR", score: 51 },
+    { name: "Humanity's Exam", score: 18.5 },
     { name: "MMLU-Pro", score: 81 },
     { name: "GPQA Diamond", score: 78 },
-    { name: "Humanity's Exam", score: 18.5 },
-    { name: "LiveCodeBench", score: 64 },
-    { name: "SciCode", score: 36 },
+    { name: "LiveCodeBench", score: 88 },
+    { name: "SciCode", score: 39 },
     { name: "IFBench", score: 69 },
     { name: "AIME 2025", score: 93 },
-    { name: "AA-LCR", score: 51 },
   ],
   'gpt-5-nano': [
     { name: "MMLU-Pro", score: 77 },
@@ -300,3 +302,4 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     
 
     
+

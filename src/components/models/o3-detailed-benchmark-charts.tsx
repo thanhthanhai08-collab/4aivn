@@ -50,7 +50,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gemini-2.5-flash-reasoning', score: 70.0 },
     { modelId: 'gpt-5-mini-medium', score: 69.0 },
     { modelId: 'gpt-5-low', score: 76.0 },
-    { modelId: 'gpt-oss-120b-high', score: 64.0 },
+    { modelId: 'gpt-oss-120b-high', score: 88.0 },
     { modelId: 'gpt-5-nano', score: 60.0 },
     { modelId: 'claude-4-opus-thinking', score: 64.0 },
     { modelId: 'claude-4.1-opus-thinking', score: 66.0 },
@@ -241,5 +241,6 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
 
     
+
 
 
