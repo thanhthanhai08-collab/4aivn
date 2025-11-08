@@ -269,15 +269,11 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 32.41,
   },
   {
-    id: 'claude-4.1-opus',
-    name: 'Claude 4.1 Opus',
+    id: 'claude-4.5-sonnet',
+    name: 'Claude 4.5 Sonnet',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Anthropic',
-    description: `+ Claude 4.1 Opus là phiên bản cao cấp nhất trong dòng mô hình Claude 4 của Anthropic ( vừa ra mắt tháng 5 năm 2025) Claude Opus 4 được tối ưu đặc biệt cho các tác vụ đòi hỏi khả năng suy luận sâu với nhiều bước phức tạp đi kèm độ chính xác.
-+ Claude 4.1 Opus thật sự có lẽ là mô hình thông minh nhất hiện nay vì các lý do
-+ Claude 4.1 Opus có khả năng suy luận qua nhiều bước (multi-step reasoning), giúp mô hình xử lý vấn đề logic và có hệ thống, giảm tối đa"lối tắt" hay thủ thuật không những thế nó còn bổ sung chế độ  cho phép mô hình tạm dừng để cân nhắc kỹ lưỡng nhiều bước trước khi đưa ra câu trả lời cuối cùng, điều đó giúp nó thông minh hơn 65% so với Claude 3.7 Sonnet.
-+ Trong điểm thông minh ở đây không bổ sung benchmark như SWE-bench (78.3%) và Terminal-bench (85.2%) mà Claude 4.1 Opus đạt được chứ không là nó bỏ xa các mô hình GPT-4.1 (54.6%) và Gemini 2.5 Pro (63.8%).
-+ Claude 4.1 Opus còn rất thân thiện và khả năng hoạt động ổn định với tiếng Việt. Mô hình này là ít lỗi nhất và ổn định nhất so với GPT 4.1 và Gemini 2.5 Pro nếu ai đã từng trải nghiệm nhưng có nhược điểm là giá rất cao vì vậy chỉ phù hợp với những ai có điều kiện và mô hình là doanh nghiệp.`,
+    description: `Claude 4.5 Sonnet là một trong hai phiên bản chủ lực của dòng mô hình Claude 4.5, được thiết kế để cân bằng giữa hiệu suất và chi phí, phù hợp với các ứng dụng cần khối lượng xử lý lớn, tốc độ phản hồi nhanh nhưng vẫn giữ được khả năng suy luận và lập trình nâng cao.`,
     logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
     link: 'https://www.anthropic.com/news/claude-3-family',
     userRating: 4.5,

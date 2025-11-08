@@ -235,7 +235,7 @@ const data = {
     { name: "AIME 2025", score: 19 },
     { name: "AA-LCR", score: 46 },
   ],
-  'claude-4.1-opus': [
+  'claude-4.5-sonnet': [
     { name: "MMLU-Pro", score: 81 },
     { name: "GPQA Diamond", score: 70 },
     { name: "Humanity's Exam", score: 4.8 },
