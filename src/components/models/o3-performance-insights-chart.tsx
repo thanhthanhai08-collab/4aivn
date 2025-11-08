@@ -202,6 +202,8 @@ const data = {
     { name: "AIME 2025", score: 88 },
   ],
   'grok-3-mini-reasoning-high': [
+    { name: "Agentic Coding", score: 16 },
+    { name: "Agentic Tool Use", score: 90 },
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 79 },
     { name: "Humanity's Exam", score: 11.1 },
