@@ -167,7 +167,7 @@ const data = {
     { name: "AIME 2025", score: 78 },
     { name: "AA-LCR", score: 40 },
   ],
-  'claude-4-opus-thinking': [
+  'claude-4.5-haiku-thinking': [
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 80 },
     { name: "Humanity's Exam", score: 11.7 },
