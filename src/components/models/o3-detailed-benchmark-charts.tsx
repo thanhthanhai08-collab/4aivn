@@ -35,6 +35,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.1-opus', score: 50.0 },
     { modelId: 'gpt-oss-20b-high', score: 62.0 },
     { modelId: 'gpt-5-codex-high', score: 99.0 },
+    { modelId: 'deepseek-v3.2-exp', score: 88.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -62,6 +63,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-oss-20b-high', score: 72.0 },
     { modelId: 'gpt-5-codex-high', score: 84.0 },
     { modelId: 'qwenq-32b', score: 63.0 },
+    { modelId: 'deepseek-v3.2-exp', score: 79.0 },
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
@@ -88,6 +90,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-oss-20b-high', score: 74.0 },
     { modelId: 'gpt-5-codex-high', score: 87.0 },
     { modelId: 'qwenq-32b', score: 76.0 },
+    { modelId: 'deepseek-v3.2-exp', score: 85.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -113,6 +116,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'claude-4.1-opus', score: 43.0 },
       { modelId: 'gpt-oss-20b-high', score: 61.0 },
       { modelId: 'gpt-5-codex-high', score: 74.0 },
+      { modelId: 'deepseek-v3.2-exp', score: 54.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -140,6 +144,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'gpt-oss-20b-high', score: 62.0 },
       { modelId: 'gpt-5-codex-high', score: 84.0 },
       { modelId: 'qwenq-32b', score: 59.0 },
+      { modelId: 'deepseek-v3.2-exp', score: 80.0 },
   ]
 };
 

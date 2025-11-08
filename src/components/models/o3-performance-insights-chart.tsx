@@ -272,6 +272,18 @@ const data = {
     { name: "LiveCodeBench", score: 63 },
     { name: "SciCode", score: 36 },
   ],
+  'deepseek-v3.2-exp': [
+    { name: "Agentic Coding", score: 29 },
+    { name: "Agentic Tool Use", score: 34 },
+    { name: "AA-LCR", score: 69 },
+    { name: "Humanity's Exam", score: 13.8 },
+    { name: "MMLU-Pro", score: 85 },
+    { name: "GPQA Diamond", score: 80 },
+    { name: "LiveCodeBench", score: 79 },
+    { name: "SciCode", score: 38 },
+    { name: "IFBench", score: 54 },
+    { name: "AIME 2025", score: 88 },
+  ],
 };
 
 
