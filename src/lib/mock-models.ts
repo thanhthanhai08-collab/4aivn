@@ -592,11 +592,11 @@ export const mockAIModels: AIModel[] = [
         "Độ trễ 0.35s."
     ],
     isFavorite: false,
-    contextLengthToken: '131k',
-    intelligenceScore: 49,
+    contextLengthToken: '130k',
+    intelligenceScore: 52,
     pricePerMillionTokens: 0.09,
-    speedTokensPerSecond: 302.6,
-    latencyFirstChunkSeconds: 0.4,
+    speedTokensPerSecond: 230.1,
+    latencyFirstChunkSeconds: 0.32,
   },
   {
     id: 'qwenq-32b',
@@ -706,3 +706,4 @@ export const mockAIModels: AIModel[] = [
 ];
 
     
+
