@@ -150,7 +150,10 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'gpt-5-codex-high', score: 84.0 },
       { modelId: 'qwenq-32b', score: 59.0 },
       { modelId: 'deepseek-v3.2-exp', score: 80.0 },
-  ]
+  ],
+  'aa-lcr': [
+    { modelId: 'deepseek-r1-jan25', score: 55.0 },
+  ],
 };
 
 
@@ -222,6 +225,7 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
     const knowledgeData = getComparisonData(allBenchmarks.mmlu, modelId);
     const ifBenchData = getComparisonData(allBenchmarks.ifbench, modelId);
     const gpqaData = getComparisonData(allBenchmarks.gpqa, modelId);
+    const aaLcrData = getComparisonData(allBenchmarks['aa-lcr'], modelId);
 
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -230,6 +234,7 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
             {knowledgeData.length > 0 && <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} />}
             {ifBenchData.length > 0 && <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} />}
             {gpqaData.length > 0 && <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} />}
+            {aaLcrData.length > 0 && <BenchmarkChart title="Lý luận ngữ cảnh dài" subtitle="AA-LCR" data={aaLcrData} />}
         </div>
     )
 }

@@ -313,8 +313,8 @@ export const mockAIModels: AIModel[] = [
         "Độ trễ 2.49s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     contextLengthToken: '128k',
-    intelligenceScore: 59,
-    pricePerMillionTokens: 0.96,
+    intelligenceScore: 52,
+    pricePerMillionTokens: 1.98,
     speedTokensPerSecond: 21.1,
     latencyFirstChunkSeconds: 3.32,
   },
@@ -704,6 +704,4 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
 ];
-
     
-

@@ -90,14 +90,16 @@ const data = {
     { name: "AIME 2025", score: 91 },
   ],
   'deepseek-r1-jan25': [
+    { name: "Agentic Coding", score: 15 },
+    { name: "Agentic Tool Use", score: 37 },
+    { name: "AA-LCR", score: 55 },
+    { name: "Humanity's Exam", score: 14.9 },
     { name: "MMLU-Pro", score: 85 },
     { name: "GPQA Diamond", score: 81 },
-    { name: "Humanity's Exam", score: 14.9 },
     { name: "LiveCodeBench", score: 77 },
     { name: "SciCode", score: 40 },
     { name: "IFBench", score: 40 },
     { name: "AIME 2025", score: 76 },
-    { name: "AA-LCR", score: 56 },
   ],
   'deepseek-v3.1-terminus-reasoning': [
     { name: "Agentic Coding", score: 28 },
