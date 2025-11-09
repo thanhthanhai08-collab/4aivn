@@ -384,11 +384,11 @@ export const mockAIModels: AIModel[] = [
       "Tốc độ sinh token là 351.2 token /s.",
       "Độ trễ 13.24s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    contextLengthToken: '1m',
-    intelligenceScore: 58,
+    contextLengthToken: '1.0M',
+    intelligenceScore: 54,
     pricePerMillionTokens: 0.85,
-    speedTokensPerSecond: 299.9,
-    latencyFirstChunkSeconds: 17.0,
+    speedTokensPerSecond: 255.0,
+    latencyFirstChunkSeconds: 15.61,
   },
   {
     id: 'grok-3-mini-reasoning-high',

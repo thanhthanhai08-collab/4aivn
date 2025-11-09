@@ -112,14 +112,16 @@ const data = {
     { name: "AIME 2025", score: 90 },
   ],
   'gemini-2.5-flash-reasoning': [
-    { name: "MMLU-Pro", score: 83 },
+    { name: "Agentic Coding", score: 16 },
+    { name: "Agentic Tool Use", score: 46 },
+    { name: "AA-LCR", score: 64 },
+    { name: "Humanity's Exam", score: 12.7 },
+    { name: "MMLU-Pro", score: 84 },
     { name: "GPQA Diamond", score: 79 },
-    { name: "Humanity's Exam", score: 11.1 },
-    { name: "LiveCodeBench", score: 70 },
-    { name: "SciCode", score: 39 },
-    { name: "IFBench", score: 50 },
-    { name: "AIME 2025", score: 73 },
-    { name: "AA-LCR", score: 62 },
+    { name: "LiveCodeBench", score: 71 },
+    { name: "SciCode", score: 41 },
+    { name: "IFBench", score: 52 },
+    { name: "AIME 2025", score: 78 },
   ],
   'gpt-5-mini-medium': [
     { name: "Agentic Coding", score: 27 },
@@ -334,5 +336,3 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
-
-    
