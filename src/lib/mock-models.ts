@@ -387,7 +387,7 @@ export const mockAIModels: AIModel[] = [
     contextLengthToken: '1.0M',
     intelligenceScore: 54,
     pricePerMillionTokens: 0.85,
-    speedTokensPerSecond: 255.0,
+    speedTokensPerSecond: 255,
     latencyFirstChunkSeconds: 15.61,
   },
   {
@@ -625,11 +625,11 @@ export const mockAIModels: AIModel[] = [
         "Tốc độ sinh token là 99 token /s.",
         "Độ trễ 0.43s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    contextLengthToken: '131k',
-    intelligenceScore: 48,
-    pricePerMillionTokens: 0.49,
-    speedTokensPerSecond: 54.4,
-    latencyFirstChunkSeconds: 0.55,
+    contextLengthToken: '260k',
+    intelligenceScore: 55,
+    pricePerMillionTokens: 2.4,
+    speedTokensPerSecond: 33.7,
+    latencyFirstChunkSeconds: 2.95,
   },
   {
     id: 'llama-nemotron-ultra-reasoning',

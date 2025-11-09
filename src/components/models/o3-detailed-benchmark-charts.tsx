@@ -37,6 +37,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-oss-20b-high', score: 89.0 },
     { modelId: 'gpt-5-codex-high', score: 99.0 },
     { modelId: 'deepseek-v3.2-exp', score: 88.0 },
+    { modelId: 'qwen3-max', score: 81.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
@@ -64,7 +65,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.5-sonnet', score: 59.0 },
     { modelId: 'gpt-oss-20b-high', score: 78.0 },
     { modelId: 'gpt-5-codex-high', score: 84.0 },
-    { modelId: 'qwen3-max', score: 63.0 },
+    { modelId: 'qwen3-max', score: 77.0 },
     { modelId: 'deepseek-v3.2-exp', score: 79.0 },
   ],
   mmlu: [
@@ -92,7 +93,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.5-sonnet', score: 86.0 },
     { modelId: 'gpt-oss-20b-high', score: 75.0 },
     { modelId: 'gpt-5-codex-high', score: 87.0 },
-    { modelId: 'qwen3-max', score: 76.0 },
+    { modelId: 'qwen3-max', score: 84.0 },
     { modelId: 'deepseek-v3.2-exp', score: 85.0 },
   ],
   ifbench: [
@@ -121,6 +122,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'gpt-oss-20b-high', score: 65.0 },
       { modelId: 'gpt-5-codex-high', score: 74.0 },
       { modelId: 'deepseek-v3.2-exp', score: 54.0 },
+      { modelId: 'qwen3-max', score: 44.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
@@ -148,11 +150,12 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'claude-4.5-sonnet', score: 73.0 },
       { modelId: 'gpt-oss-20b-high', score: 69.0 },
       { modelId: 'gpt-5-codex-high', score: 84.0 },
-      { modelId: 'qwen3-max', score: 59.0 },
+      { modelId: 'qwen3-max', score: 76.0 },
       { modelId: 'deepseek-v3.2-exp', score: 80.0 },
   ],
   'aa-lcr': [
     { modelId: 'deepseek-r1-jan25', score: 55.0 },
+    { modelId: 'qwen3-max', score: 47.0 },
   ],
 };
 
