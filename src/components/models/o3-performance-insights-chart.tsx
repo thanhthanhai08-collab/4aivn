@@ -215,6 +215,18 @@ const data = {
     { name: "IFBench", score: 46 },
     { name: "AIME 2025", score: 85 },
   ],
+  'grok-4-fast-reasoning': [
+    { name: "Agentic Coding", score: 18 },
+    { name: "Agentic Tool Use", score: 66 },
+    { name: "AA-LCR", score: 65 },
+    { name: "Humanity's Exam", score: 17 },
+    { name: "MMLU-Pro", score: 85 },
+    { name: "GPQA Diamond", score: 85 },
+    { name: "LiveCodeBench", score: 83 },
+    { name: "SciCode", score: 44 },
+    { name: "IFBench", score: 51 },
+    { name: "AIME 2025", score: 90 },
+  ],
   'llama-nemotron-ultra-reasoning': [
     { name: "MMLU-Pro", score: 83 },
     { name: "GPQA Diamond", score: 73 },
@@ -322,3 +334,5 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    

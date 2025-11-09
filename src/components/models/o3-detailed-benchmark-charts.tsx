@@ -30,6 +30,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
     { modelId: 'claude-4.5-sonnet-thinking', score: 88.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 85.0 },
+    { modelId: 'grok-4-fast-reasoning', score: 90.0 },
     { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
     { modelId: 'llama-4-maverick', score: 19.0 },
     { modelId: 'claude-4.5-sonnet', score: 37.0 },
@@ -57,6 +58,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.1-opus-thinking', score: 65.0 },
     { modelId: 'claude-4.5-sonnet-thinking', score: 71.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 70.0 },
+    { modelId: 'grok-4-fast-reasoning', score: 83.0 },
     { modelId: 'llama-nemotron-ultra-reasoning', score: 64.0 },
     { modelId: 'llama-4-maverick', score: 40.0 },
     { modelId: 'claude-4.5-sonnet', score: 59.0 },
@@ -84,6 +86,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-5-nano', score: 77.0 },
     { modelId: 'claude-4.5-sonnet-thinking', score: 88.0 },
     { modelId: 'grok-3-mini-reasoning-high', score: 83.0 },
+    { modelId: 'grok-4-fast-reasoning', score: 85.0 },
     { modelId: 'llama-nemotron-ultra-reasoning', score: 83.0 },
     { modelId: 'llama-4-maverick', score: 81.0 },
     { modelId: 'claude-4.5-sonnet', score: 86.0 },
@@ -111,6 +114,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'claude-4.1-opus-thinking', score: 55.0 },
       { modelId: 'claude-4.5-sonnet-thinking', score: 57.0 },
       { modelId: 'grok-3-mini-reasoning-high', score: 46.0 },
+      { modelId: 'grok-4-fast-reasoning', score: 51.0 },
       { modelId: 'llama-nemotron-ultra-reasoning', score: 38.0 },
       { modelId: 'llama-4-maverick', score: 43.0 },
       { modelId: 'claude-4.5-sonnet', score: 43.0 },
@@ -138,6 +142,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'claude-4.1-opus-thinking', score: 81.0 },
       { modelId: 'claude-4.5-sonnet-thinking', score: 83.0 },
       { modelId: 'grok-3-mini-reasoning-high', score: 79.0 },
+      { modelId: 'grok-4-fast-reasoning', score: 85.0 },
       { modelId: 'llama-nemotron-ultra-reasoning', score: 73.0 },
       { modelId: 'llama-4-maverick', score: 67.0 },
       { modelId: 'claude-4.5-sonnet', score: 73.0 },
@@ -228,3 +233,5 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
         </div>
     )
 }
+
+    
