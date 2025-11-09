@@ -86,42 +86,6 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 18.74,
   },
   {
-    id: 'gpt-5-mini-high',
-    name: 'GPT-5 mini (high)',
-    type: 'Mô hình ngôn ngữ lớn',
-    developer: 'OpenAI',
-    description: `+ GPT-5 Mini (High) là phiên bản nâng cấp hiệu suất của dòng mô hình GPT-5 Mini, được ra mắt vào đầu năm 2025. Đây là biến thể được tối ưu để xử lý các tác vụ suy luận phức tạp hơn, phù hợp với các nhu cầu nghiên cứu khoa học nâng cao, lập trình mã nguồn phức tạp và giải quyết các bài toán toán học khó khăn, trong khi vẫn giữ được chi phí vận hành thấp và tốc độ phản hồi nhanh hơn nhiều so với các mô hình cao cấp như o3 hay GPT-4.
-+ Mặc dù có sức mạnh tính toán gần bằng các mô hình cao cấp, GPT-5 Mini (High) vẫn duy trì chi phí vận hành hợp lý, giúp người dùng tiết kiệm ngân sách so với việc sử dụng các mô hình lớn hơn. Tốc độ phản hồi của mô hình vẫn nhanh, tuy có độ trễ cao hơn một chút so với GPT-5 Mini tiêu chuẩn do yêu cầu tính toán phức tạp hơn.
-+ GPT-5 Mini (High) phù hợp với các ứng dụng đòi hỏi độ chính xác cao và suy luận chuyên sâu như soạn truy vấn SQL phức tạp, giải thích các khái niệm khoa học nâng cao, phát triển phần mềm phức tạp và nghiên cứu chuyên ngành.`,
-    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
-    link: 'https://openai.com/',
-    userRating: 4.9,
-    ratingCount: 210,
-    features: [
-      "Độ dài ngữ cảnh (context window) có thể xử lý một lần là 200 nghìn token→ Tức là có thể xử lý khoảng 150 nghìn từ hoặc 600 trang văn bản trong 1 lần xử lý .",
-      "Chỉ số thông minh 70 →Dựa trên trung bình các điểm benmark là",
-      "• MMLU-Pro (Reasoning & Knowledge) 83%",
-      "• GPQA Diamond (Scientific Reasoning) 78%",
-      "• Humanity's Exam (Reasoning & Knowledge) 17.5%",
-      "• LiveCodeBench (Coding) 80%",
-      "• SciCode (Coding) 47%",
-      "• HumanEval (Coding) 99%",
-      "• MATH-500 (Quantitative reasoning) 99%",
-      "• AIME 2024 (Competition Math) 94%",
-      "Giá trung bình 1.93 USD / 1 triệu token → Dựa trên các thông số giá",
-      "• Giá đầu vào 1.1 USD / 1 triệu token.",
-      "• Giá đầu ra 4.5 USD / 1 triệu token.",
-      "Tốc độ sinh token khá nhanh là 115.5 token /s.",
-      "Độ trễ 48.33s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
-    ],
-    isFavorite: false,
-    contextLengthToken: '400K',
-    intelligenceScore: 64,
-    pricePerMillionTokens: 0.69,
-    speedTokensPerSecond: 104.3,
-    latencyFirstChunkSeconds: 23.97,
-  },
-  {
     id: 'gpt-5-medium',
     name: 'GPT-5 (medium)',
     type: 'Mô hình ngôn ngữ lớn',
@@ -394,7 +358,7 @@ export const mockAIModels: AIModel[] = [
     name: 'Gemini 2.5 Flash (Reasoning)',
     type: 'AI Đa phương thức',
     developer: 'Google',
-    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 6-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.
+    description: `+ Gemini 2.5 Flash (Reasoning) cập nhật mới nhất là tháng 9-2025 là phiên bản nâng cấp của Gemini 2.0 Flash đặc biệt với chắc năng suy luận nâng cao (Reasoning) mang đến hiệu suất ở mức chấp nhận được kết hợp với chi phí và độ mượt mà.
 + Nâng cấp từ Gemini 2.0 flash nên độ dài ngữ cảnh (context window) ở mức 1 triệu token là mức trở nên bình thường đối với nhà Google.
 + Gemini 2.5 flash đặc biệt phù hợp với các ứng dụng chatbot hoặc web /app cần phản hồi nhanh mà vẫn giữ được sự thông minh. Vì vậy sẽ là đối thủ trực tiếp với Claude 4 Sonnet Thinking nhưng Claude 4 Sonnet có giá chát hơn hẳn.`,
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
