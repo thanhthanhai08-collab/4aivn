@@ -287,7 +287,7 @@ const data = {
     { name: "IFBench", score: 74 },
     { name: "AIME 2025", score: 99 },
   ],
-  'qwenq-32b': [
+  'qwen3-max': [
     { name: "MMLU-Pro", score: 76 },
     { name: "GPQA Diamond", score: 59 },
     { name: "Humanity's Exam", score: 8.2 },

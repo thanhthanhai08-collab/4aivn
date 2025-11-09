@@ -64,7 +64,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.5-sonnet', score: 59.0 },
     { modelId: 'gpt-oss-20b-high', score: 78.0 },
     { modelId: 'gpt-5-codex-high', score: 84.0 },
-    { modelId: 'qwenq-32b', score: 63.0 },
+    { modelId: 'qwen3-max', score: 63.0 },
     { modelId: 'deepseek-v3.2-exp', score: 79.0 },
   ],
   mmlu: [
@@ -92,7 +92,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'claude-4.5-sonnet', score: 86.0 },
     { modelId: 'gpt-oss-20b-high', score: 75.0 },
     { modelId: 'gpt-5-codex-high', score: 87.0 },
-    { modelId: 'qwenq-32b', score: 76.0 },
+    { modelId: 'qwen3-max', score: 76.0 },
     { modelId: 'deepseek-v3.2-exp', score: 85.0 },
   ],
   ifbench: [
@@ -148,7 +148,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'claude-4.5-sonnet', score: 73.0 },
       { modelId: 'gpt-oss-20b-high', score: 69.0 },
       { modelId: 'gpt-5-codex-high', score: 84.0 },
-      { modelId: 'qwenq-32b', score: 59.0 },
+      { modelId: 'qwen3-max', score: 59.0 },
       { modelId: 'deepseek-v3.2-exp', score: 80.0 },
   ],
   'aa-lcr': [

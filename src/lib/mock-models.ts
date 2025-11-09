@@ -599,14 +599,11 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 0.32,
   },
   {
-    id: 'qwenq-32b',
-    name: 'QwenQ-32B',
+    id: 'qwen3-max',
+    name: 'Qwen3 Max',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Alibaba',
-    description: `+ Qwen QwQ-32B (viết tắt của "Qwen With Questions") là mô hình ngôn ngữ lớn (LLM) với 32 tỷ tham số do Alibaba phát triển, ra mắt đầu năm 2025.
-+ Mặc dù chỉ có 32 tỷ tham số, QwQ-32B được tối ưu để hoạt động hiệu quả với yêu cầu tài nguyên thấp hơn nhiều so với các mô hình lớn hơn như DeepSeek-R1 (671 tỷ tham số). Mô hình chỉ cần khoảng 24GB VRAM để chạy, phù hợp với các GPU phổ biến như Nvidia RTX 4090 hoặc cao hơn, giúp mở rộng khả năng triển khai trên nhiều thiết bị.
-+ QwQ-32B được phát hành dưới giấy phép Apache 2.0 (mã nguồn mở), cho phép các nhà phát triển, doanh nghiệp và cộng đồng nghiên cứu sử dụng, tùy chỉnh và tích hợp mô hình một cách tự do.
-+ Mô hình vẫn còn một số hạn chế như khả năng trộn lẫn ngôn ngữ hoặc chuyển đổi mã không mong muốn, có thể dẫn đến phản hồi dài dòng hoặc vòng lặp suy luận đệ quy. Ngoài ra, cần áp dụng các biện pháp an toàn để đảm bảo hiệu suất và tránh các kết quả không phù hợp khi triển khai thực tế.`,
+    description: `Qwen3 Max là phiên bản mạnh mẽ nhất trong dòng mô hình Qwen3 của Alibaba, được tối ưu hóa để cung cấp hiệu suất cao nhất trong các tác vụ phức tạp. Với kiến trúc Transformer tiên tiến và được huấn luyện trên một tập dữ liệu khổng lồ, Qwen3 Max vượt trội trong các lĩnh vực đòi hỏi suy luận sâu, hiểu ngôn ngữ tự nhiên và khả năng lập trình nâng cao.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
