@@ -674,11 +674,11 @@ export const mockAIModels: AIModel[] = [
       "Tốc độ sinh token là 42.7 token /s.",
       "Độ trễ 0.66s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
-    contextLengthToken: '128k',
-    intelligenceScore: 46,
-    pricePerMillionTokens: 0.9,
-    speedTokensPerSecond: 41.0,
-    latencyFirstChunkSeconds: 0.67,
+    contextLengthToken: '130K',
+    intelligenceScore: 45,
+    pricePerMillionTokens: 0.17,
+    speedTokensPerSecond: 77.9,
+    latencyFirstChunkSeconds: 0.21,
   },
   {
     id: 'llama-4-maverick',
