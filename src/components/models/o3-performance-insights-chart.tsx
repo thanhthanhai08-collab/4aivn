@@ -161,7 +161,7 @@ const data = {
     { name: "IFBench", score: 69 },
     { name: "AIME 2025", score: 93 },
   ],
-  'gpt-5-nano': [
+  'gpt-5-nano-high': [
     { name: "MMLU-Pro", score: 77 },
     { name: "GPQA Diamond", score: 67 },
     { name: "Humanity's Exam", score: 7.6 },
