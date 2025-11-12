@@ -455,6 +455,20 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 1.38,
   },
   {
+    id: 'qwen3-vl-235b-a22b-reasoning',
+    name: 'Qwen3 VL 235B A22B (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Alibaba',
+    description: 'Qwen3 VL 235B A22B là phiên bản nâng cao trong dòng Qwen3, được tối ưu hóa cho khả năng suy luận và xử lý ngôn ngữ phức tạp. Với kiến trúc 235 tỷ tham số, mô hình này cung cấp hiệu suất vượt trội trong các tác vụ đòi hỏi sự hiểu biết sâu sắc về ngữ cảnh và logic.',
+    logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
+    link: 'https://qwen.aliyun.com/',
+    contextLengthToken: '260k',
+    intelligenceScore: 54,
+    pricePerMillionTokens: 2.63,
+    speedTokensPerSecond: 42.3,
+    latencyFirstChunkSeconds: 1.20,
+  },
+  {
     id: 'deepseek-v3.2-exp',
     name: 'DeepSeek V3.2 Exp',
     type: 'Mô hình ngôn ngữ lớn',
@@ -702,4 +716,3 @@ export const mockAIModels: AIModel[] = [
   },
 ];
     
-
