@@ -233,7 +233,7 @@ const data = {
     { name: "IFBench", score: 51 },
     { name: "AIME 2025", score: 90 },
   ],
-  'llama-nemotron-ultra-reasoning': [
+  'llama-nemotron-super-49b-v1-5-reasoning': [
     { name: "Agentic Coding", score: 0 },
     { name: "Agentic Tool Use", score: 0 },
     { name: "MMLU-Pro", score: 83 },

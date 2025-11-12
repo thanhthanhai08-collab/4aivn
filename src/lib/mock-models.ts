@@ -646,13 +646,13 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 2.95,
   },
   {
-    id: 'llama-nemotron-ultra-reasoning',
-    name: 'Llama Nemotron Ultra Reasoning',
+    id: 'llama-nemotron-super-49b-v1-5-reasoning',
+    name: 'Llama Nemotron Super 49B v1.5 (Reasoning)',
     type: 'Mô hình ngôn ngữ lớn',
     developer: 'Nvidia',
-    description: `+ Llama Nemotron Ultra là phiên bản cao cấp nhất trong dòng mô hình Llama Nemotron do NVIDIA phát triển, dựa trên nền tảng Llama 3.1 của Meta, với quy mô 253 tỷ tham số. Ra mắt đầu năm 2025, Nemotron Ultra được thiết kế đặc biệt để xử lý các tác vụ suy luận phức tạp, toán học nâng cao, lập trình và các nhiệm vụ khoa học với độ chính xác và hiệu suất vượt trội.
+    description: `+ Llama Nemotron Super 49B v1.5 (Reasoning) là phiên bản cao cấp nhất trong dòng mô hình Llama Nemotron do NVIDIA phát triển, dựa trên nền tảng Llama 3.1 của Meta. Ra mắt đầu năm 2025, Nemotron Super được thiết kế đặc biệt để xử lý các tác vụ suy luận phức tạp, toán học nâng cao, lập trình và các nhiệm vụ khoa học với độ chính xác và hiệu suất vượt trội.
 + Mô hình được tối ưu đặc biệt cho hạ tầng GPU NVIDIA đa thiết bị, sử dụng các kỹ thuật như Neural Architecture Search (NAS) và Feed-Forward Network (FFN) Fusion giúp giảm đáng kể độ trễ và tăng thông lượng, đồng thời tiết kiệm bộ nhớ và chi phí vận hành trong môi trường trung tâm dữ liệu. Vì vậy cực kì thích hợp cho những cá nhân, công ty đang chạy phần cứng của Nvidia.
-+ NVIDIA phát hành Llama Nemotron Ultra dưới giấy phép mở, cho phép doanh nghiệp và nhà phát triển sử dụng, tùy chỉnh và triển khai mô hình trong các ứng dụng thương mại với độ tin cậy cao.`,
++ NVIDIA phát hành Llama Nemotron Super dưới giấy phép mở, cho phép doanh nghiệp và nhà phát triển sử dụng, tùy chỉnh và triển khai mô hình trong các ứng dụng thương mại với độ tin cậy cao.`,
     logoUrl: '/image/Logo Llama Nemotron Ultra Reasoning cho bảng xếp hạng.png',
     link: '#',
     userRating: 4.9,
