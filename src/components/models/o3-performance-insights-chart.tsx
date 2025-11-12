@@ -185,7 +185,7 @@ const data = {
     { name: "IFBench", score: 54 },
     { name: "AIME 2025", score: 84 },
   ],
-  'claude-4.1-opus-thinking': [
+  'claude-4.5-sonnet': [
     { name: "Agentic Coding", score: 32 },
     { name: "Agentic Tool Use", score: 71 },
     { name: "AA-LCR", score: 66 },
@@ -245,7 +245,7 @@ const data = {
     { name: "IFBench", score: 37 },
     { name: "AIME 2025", score: 77 },
   ],
-  'llama-4-maverick': [
+  'seed-oss-36b-instruct': [
     { name: "Agentic Coding", score: 0 },
     { name: "Agentic Tool Use", score: 0 },
     { name: "MMLU-Pro", score: 81 },
@@ -256,18 +256,6 @@ const data = {
     { name: "IFBench", score: 43 },
     { name: "AIME 2025", score: 19 },
     { name: "AA-LCR", score: 46 },
-  ],
-  'claude-4.5-sonnet': [
-    { name: "Agentic Coding", score: 27 },
-    { name: "Agentic Tool Use", score: 71 },
-    { name: "AA-LCR", score: 51 },
-    { name: "Humanity's Exam", score: 7.1 },
-    { name: "MMLU-Pro", score: 86 },
-    { name: "GPQA Diamond", score: 73 },
-    { name: "LiveCodeBench", score: 59 },
-    { name: "SciCode", score: 43 },
-    { name: "IFBench", score: 43 },
-    { name: "AIME 2025", score: 37 },
   ],
   'gpt-oss-20b-high': [
     { name: "Agentic Coding", score: 10 },
