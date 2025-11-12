@@ -534,11 +534,11 @@ export const mockAIModels: AIModel[] = [
       "Độ trễ 0.94s là thời gian chờ trung bình từ khi bấm “enter” gửi thông tin đến khi mô hình trả lời token đầu tiên."
     ],
     isFavorite: false,
-    contextLengthToken: '400k',
-    intelligenceScore: 54,
+    contextLengthToken: '400K',
+    intelligenceScore: 51,
     pricePerMillionTokens: 0.14,
-    speedTokensPerSecond: 213.3,
-    latencyFirstChunkSeconds: 35.77,
+    speedTokensPerSecond: 104.5,
+    latencyFirstChunkSeconds: 169.07,
   },
   {
     id: 'claude-4.5-sonnet',
@@ -702,3 +702,4 @@ export const mockAIModels: AIModel[] = [
   },
 ];
     
+
