@@ -173,6 +173,18 @@ const data = {
     { name: "IFBench", score: 68 },
     { name: "AIME 2025", score: 84 },
   ],
+  'gpt-5-nano-medium': [
+      { name: 'Agentic Coding', score: 16 },
+      { name: 'Agentic Tool Use', score: 30 },
+      { name: 'AA-LCR', score: 40 },
+      { name: 'Humanity\'s Last Exam', score: 7.6 },
+      { name: 'MMLU-Pro', score: 77 },
+      { name: 'GPQA Diamond', score: 67 },
+      { name: 'LiveCodeBench', score: 76 },
+      { name: 'SciCode', score: 34 },
+      { name: 'IFBench', score: 66 },
+      { name: 'AIME 2025', score: 78 },
+  ],
   'claude-4.5-haiku-thinking': [
     { name: "Agentic Coding", score: 26 },
     { name: "Agentic Tool Use", score: 55 },
@@ -363,5 +375,3 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
-
-    

@@ -291,7 +291,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Qwen3 VL 235B A22B là phiên bản nâng cao trong dòng Qwen3, được tối ưu hóa cho khả năng suy luận và xử lý ngôn ngữ phức tạp. Với kiến trúc 235 tỷ tham số, mô hình này cung cấp hiệu suất vượt trội trong các tác vụ đòi hỏi sự hiểu biết sâu sắc về ngữ cảnh và logic.',
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: 'https://qwen.aliyun.com/',
-    contextLengthToken: '260k',
+    contextLengthToken: '256k',
     intelligenceScore: 54,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 42.3,
@@ -344,6 +344,21 @@ export const mockAIModels: AIModel[] = [
     pricePerMillionTokens: 0.14,
     speedTokensPerSecond: 104.5,
     latencyFirstChunkSeconds: 169.07,
+  },
+  {
+    id: 'gpt-5-nano-medium',
+    name: 'GPT-5 nano (medium)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-5 nano (medium) là phiên bản cân bằng trong dòng GPT-5 nano, cung cấp sự kết hợp tối ưu giữa tốc độ, chi phí và hiệu suất. Nó được thiết kế để xử lý hiệu quả các tác vụ thông thường với độ trễ thấp, là lựa chọn lý tưởng cho các ứng dụng tương tác đòi hỏi phản hồi nhanh.',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    isFavorite: false,
+    contextLengthToken: '400k',
+    intelligenceScore: 49,
+    pricePerMillionTokens: 0.69,
+    speedTokensPerSecond: 109,
+    latencyFirstChunkSeconds: 69.04,
   },
   {
     id: 'gpt-oss-20b-high',
@@ -409,6 +424,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 
