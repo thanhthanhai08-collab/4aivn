@@ -79,7 +79,7 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.5,
     ratingCount: 240,
     isFavorite: false,
-    contextLengthToken: '1.0m',
+    contextLengthToken: '1m',
     intelligenceScore: 63,
     pricePerMillionTokens: 6,
     speedTokensPerSecond: 59.2,
@@ -152,7 +152,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Grok 4 Fast (Reasoning) là phiên bản tốc độ cao của dòng Grok 4, được tối ưu hóa để cung cấp các phản hồi suy luận nhanh chóng mà không làm giảm đáng kể độ chính xác. Đây là giải pháp lý tưởng cho các ứng dụng đòi hỏi tương tác tức thì và xử lý khối lượng lớn các truy vấn.',
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: 'https://x.ai/grok',
-    contextLengthToken: '2.0m',
+    contextLengthToken: '2m',
     intelligenceScore: 60,
     pricePerMillionTokens: 0.28,
     speedTokensPerSecond: 209.5,
@@ -246,7 +246,7 @@ export const mockAIModels: AIModel[] = [
     link: 'https://deepmind.google/technologies/gemini/',
     userRating: 4.9,
     ratingCount: 195,
-    contextLengthToken: '1.0m',
+    contextLengthToken: '1m',
     intelligenceScore: 54,
     pricePerMillionTokens: 0.85,
     speedTokensPerSecond: 255,
@@ -428,3 +428,4 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
