@@ -179,7 +179,7 @@ export const mockAIModels: AIModel[] = [
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 59,
-    pricePerMillionTokens: 30.00,
+    pricePerMillionTokens: 30,
     speedTokensPerSecond: 42,
     latencyFirstChunkSeconds: 1.66,
   },
@@ -194,7 +194,7 @@ export const mockAIModels: AIModel[] = [
     isFavorite: false,
     contextLengthToken: '1m',
     intelligenceScore: 50,
-    pricePerMillionTokens: 6.00,
+    pricePerMillionTokens: 6.0,
     speedTokensPerSecond: 69.1,
     latencyFirstChunkSeconds: 2.24,
   },
@@ -277,7 +277,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: 'https://qwen.aliyun.com/',
     isFavorite: false,
-    contextLengthToken: '260k',
+    contextLengthToken: '256k',
     intelligenceScore: 57,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 74.9,
@@ -295,7 +295,7 @@ export const mockAIModels: AIModel[] = [
     intelligenceScore: 54,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 42.3,
-    latencyFirstChunkSeconds: 1.20,
+    latencyFirstChunkSeconds: 1.2,
   },
   {
     id: 'deepseek-v3.2-exp',
@@ -305,7 +305,7 @@ export const mockAIModels: AIModel[] = [
     description: `DeepSeek V3.2 Exp là phiên bản thử nghiệm mới nhất trong dòng mô hình DeepSeek, ra mắt vào cuối tháng 9 năm 2025. Đây là mô hình mã nguồn mở, cho phép người dùng tự do triển khai trên hạ tầng riêng. Phiên bản này tập trung vào việc cải thiện tốc độ và hiệu quả suy luận, trong khi vẫn duy trì được hiệu suất mạnh mẽ.`,
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
-    contextLengthToken: '130k',
+    contextLengthToken: '128k',
     intelligenceScore: 57,
     pricePerMillionTokens: 0.32,
     speedTokensPerSecond: 28.0,
@@ -326,7 +326,7 @@ export const mockAIModels: AIModel[] = [
     isFavorite: false,
     contextLengthToken: '200k',
     intelligenceScore: 55,
-    pricePerMillionTokens: 2.00,
+    pricePerMillionTokens: 2.0,
     speedTokensPerSecond: 43.0,
     latencyFirstChunkSeconds: 0.85,
   },
@@ -354,7 +354,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     isFavorite: false,
-    contextLengthToken: '130k',
+    contextLengthToken: '131k',
     intelligenceScore: 52,
     pricePerMillionTokens: 0.09,
     speedTokensPerSecond: 230.1,
@@ -368,7 +368,7 @@ export const mockAIModels: AIModel[] = [
     description: `Qwen3 Max là phiên bản mạnh mẽ nhất trong dòng mô hình Qwen3 của Alibaba, được tối ưu hóa để cung cấp hiệu suất cao nhất trong các tác vụ phức tạp. Với kiến trúc Transformer tiên tiến và được huấn luyện trên một tập dữ liệu khổng lồ, Qwen3 Max vượt trội trong các lĩnh vực đòi hỏi suy luận sâu, hiểu ngôn ngữ tự nhiên và khả năng lập trình nâng cao.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: '#',
-    contextLengthToken: '260k',
+    contextLengthToken: '262k',
     intelligenceScore: 55,
     pricePerMillionTokens: 2.4,
     speedTokensPerSecond: 33.7,
@@ -401,7 +401,7 @@ export const mockAIModels: AIModel[] = [
     isFavorite: false,
     contextLengthToken: '512k',
     intelligenceScore: 52,
-    pricePerMillionTokens: 0.30,
+    pricePerMillionTokens: 0.3,
     speedTokensPerSecond: 30.8,
     latencyFirstChunkSeconds: 1.71,
   },
@@ -409,6 +409,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 
