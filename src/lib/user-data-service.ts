@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentReference, DocumentData, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentReference, DocumentData, collection, getDocs, query, where, increment } from "firebase/firestore";
 
 const USER_DATA_COLLECTION = "user-data";
 const TOOLS_COLLECTION = "tools";
@@ -27,6 +27,7 @@ export interface UserProfileData {
 export interface AggregateRatingData {
     ratingCount: number;
     totalStars: number;
+    viewCount?: number;
 }
 
 // Interface for a single review to be displayed
@@ -56,7 +57,7 @@ export async function getUserProfileData(uid: string): Promise<UserProfileData> 
 export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
     const reviews: ToolReview[] = [];
     try {
-        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLLECTION));
+        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLlection));
 
         usersSnapshot.forEach(docSnap => {
             const userData = docSnap.data() as UserProfileData;
@@ -88,9 +89,10 @@ export async function getAggregateRating(collectionName: string, docId: string):
         return {
             ratingCount: data.ratingCount || 0,
             totalStars: data.totalStars || 0,
+            viewCount: data.viewCount || 0,
         };
     }
-    return { ratingCount: 0, totalStars: 0 };
+    return { ratingCount: 0, totalStars: 0, viewCount: 0 };
 }
 
 
@@ -189,4 +191,14 @@ export async function setModelRating(uid: string, modelId: string, newRating: nu
         // Update aggregate model rating
         transaction.set(modelDocRef, { ratingCount, totalStars }, { merge: true });
     });
+}
+
+// New function to increment view count for a tool
+export async function incrementToolViewCount(toolId: string) {
+    const toolDocRef = getToolDocRef(toolId);
+    try {
+        await setDoc(toolDocRef, { viewCount: increment(1) }, { merge: true });
+    } catch (error) {
+        console.error("Error incrementing tool view count for toolId:", toolId, error);
+    }
 }

@@ -24,6 +24,7 @@ import {
   getUserProfileData,
   getAggregateRating,
   getAllToolReviews,
+  incrementToolViewCount,
   type UserToolRating,
   type ToolReview,
 } from "@/lib/user-data-service";
@@ -31,7 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, limit, query } from "firebase/firestore";
 import { mockNews } from "@/lib/mock-news";
 import { NewsCard } from "@/components/news/news-card";
 
@@ -88,6 +89,7 @@ function ToolDetailContent({ id }: { id: string }) {
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [ranking, setRanking] = useState<number | null>(null);
+  const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -107,16 +109,24 @@ function ToolDetailContent({ id }: { id: string }) {
     'AI tìm kiếm': '🔍',
   };
 
-  const featuredTools = initialMockTools.filter(t => ['midjourney', 'sora-ai', 'gpt-image-1'].includes(t.id));
   const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
 
   useEffect(() => {
+    // Increment view count when the component mounts
+    incrementToolViewCount(id);
+    
     const fetchData = async () => {
       setIsLoading(true);
       const foundTool = initialMockTools.find((t) => t.id === id);
       
       if (foundTool) {
         setTool(foundTool);
+
+        // Fetch top 3 featured tools based on viewCount
+        const toolsQuery = query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(3));
+        const featuredToolsSnapshot = await getDocs(toolsQuery);
+        const featuredToolIds = featuredToolsSnapshot.docs.map(doc => doc.id);
+        setFeaturedTools(initialMockTools.filter(t => featuredToolIds.includes(t.id)));
         
         // Fetch all tool ratings to calculate rank
         const toolsSnapshot = await getDocs(collection(db, "tools"));
