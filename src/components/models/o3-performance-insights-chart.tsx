@@ -246,16 +246,16 @@ const data = {
     { name: "AIME 2025", score: 77 },
   ],
   'seed-oss-36b-instruct': [
-    { name: "Agentic Coding", score: 0 },
-    { name: "Agentic Tool Use", score: 0 },
-    { name: "MMLU-Pro", score: 81 },
-    { name: "GPQA Diamond", score: 67 },
-    { name: "Humanity's Exam", score: 4.8 },
-    { name: "LiveCodeBench", score: 40 },
-    { name: "SciCode", score: 33 },
-    { name: "IFBench", score: 43 },
-    { name: "AIME 2025", score: 19 },
-    { name: "AA-LCR", score: 46 },
+    { name: "Agentic Coding", score: 6 },
+    { name: "Agentic Tool Use", score: 49 },
+    { name: "AA-LCR", score: 58 },
+    { name: "Humanity's Exam", score: 9.1 },
+    { name: "MMLU-Pro", score: 82 },
+    { name: "GPQA Diamond", score: 73 },
+    { name: "LiveCodeBench", score: 77 },
+    { name: "SciCode", score: 37 },
+    { name: "IFBench", score: 42 },
+    { name: "AIME 2025", score: 85 },
   ],
   'gpt-oss-20b-high': [
     { name: "Agentic Coding", score: 10 },
@@ -351,3 +351,5 @@ export function O3PerformanceInsightsChart({ modelId }: { modelId: keyof typeof 
     </Card>
   )
 }
+
+    

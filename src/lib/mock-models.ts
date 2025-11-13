@@ -418,11 +418,13 @@ export const mockAIModels: AIModel[] = [
     userRating: 4.4,
     ratingCount: 160,
     isFavorite: false,
-    contextLengthToken: '1m',
-    intelligenceScore: 42,
-    pricePerMillionTokens: 0.39,
-    speedTokensPerSecond: 167.8,
-    latencyFirstChunkSeconds: 0.32,
+    contextLengthToken: '510K',
+    intelligenceScore: 52,
+    pricePerMillionTokens: 0.30,
+    speedTokensPerSecond: 30.8,
+    latencyFirstChunkSeconds: 1.71,
   },
 ];
+    
+
     
