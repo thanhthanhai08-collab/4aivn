@@ -399,11 +399,11 @@ export const mockAIModels: AIModel[] = [
 + NVIDIA phát hành Llama Nemotron Super dưới giấy phép mở, cho phép doanh nghiệp và nhà phát triển sử dụng, tùy chỉnh và triển khai mô hình trong các ứng dụng thương mại với độ tin cậy cao.`,
     logoUrl: '/image/Logo Llama Nemotron Ultra Reasoning cho bảng xếp hạng.png',
     link: '#',
-    contextLengthToken: '130k',
+    contextLengthToken: '128k',
     intelligenceScore: 45,
     pricePerMillionTokens: 0.17,
-    speedTokensPerSecond: 77.9,
-    latencyFirstChunkSeconds: 0.21,
+    speedTokensPerSecond: 75,
+    latencyFirstChunkSeconds: 0.25,
   },
   {
     id: 'seed-oss-36b-instruct',
@@ -420,10 +420,39 @@ export const mockAIModels: AIModel[] = [
     speedTokensPerSecond: 30.8,
     latencyFirstChunkSeconds: 1.71,
   },
+  {
+    id: 'gpt-5-mini-high',
+    name: 'GPT-5 mini (high)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-5 mini (high) là mô hình AI thế hệ mới của OpenAI, ra mắt tháng 4 năm 2025, được tối ưu hóa đặc biệt cho các tác vụ lập trình. Với khả năng hiểu ngữ cảnh code phức tạp và tuân thủ hướng dẫn chặt chẽ, GPT-5 Codex (high) mang lại hiệu suất vượt trội, giúp các nhà phát triển tăng tốc độ làm việc và xây dựng các ứng dụng phức tạp một cách hiệu quả hơn.',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '400k',
+    intelligenceScore: 62,
+    pricePerMillionTokens: 0.69,
+    speedTokensPerSecond: 104.9,
+    latencyFirstChunkSeconds: 23.97,
+  },
+  {
+    id: 'openai-o3-pro',
+    name: 'OpenAI o3 Pro',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: `OpenAI o3 Pro là mô hình ngôn ngữ thế hệ mới do OpenAI phát triển, được ra mắt chính thức vào cuối năm 2024 như một bước tiến vượt bậc so với phiên bản tiền nhiệm o1. Đây là một mô hình transformer phản chiếu (reflective generative pre-trained transformer) được thiết kế đặc biệt để xử lý các câu hỏi đòi hỏi suy luận logic nhiều bước và tư duy phân tích sâu sắc.`,
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '200k',
+    intelligenceScore: 61,
+    pricePerMillionTokens: 3.5,
+    speedTokensPerSecond: 109.2,
+    latencyFirstChunkSeconds: 14.11,
+  },
 ];
     
 
     
+
 
 
 
