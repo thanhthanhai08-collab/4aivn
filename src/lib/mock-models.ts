@@ -42,7 +42,7 @@ export const mockAIModels: AIModel[] = [
 + Một số người dùng và chuyên gia cho rằng Grok 4 có thể được thiết kế để phản ánh quan điểm chính trị cá nhân của Elon Musk khi trả lời các câu hỏi nhạy cảm, do mô hình tham khảo các bài đăng trên tài khoản X của Musk.`,
     logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
     link: '#',
-    contextLengthToken: '260k',
+    contextLengthToken: '256k',
     intelligenceScore: 65,
     pricePerMillionTokens: 6,
     speedTokensPerSecond: 33.9,
@@ -212,7 +212,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Deepseek cho bảng xếp hạng.png',
     link: 'https://www.deepseek.com/',
     isFavorite: false,
-    contextLengthToken: '130k',
+    contextLengthToken: '128k',
     intelligenceScore: 58,
     pricePerMillionTokens: 1.91,
     speedTokensPerSecond: 0,
@@ -384,7 +384,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo-bytedance.png',
     link: 'https://www.bytedance.com/',
     isFavorite: false,
-    contextLengthToken: '510k',
+    contextLengthToken: '512k',
     intelligenceScore: 52,
     pricePerMillionTokens: 0.30,
     speedTokensPerSecond: 30.8,
@@ -394,5 +394,6 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
