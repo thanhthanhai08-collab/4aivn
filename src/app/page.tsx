@@ -7,6 +7,7 @@ import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
+import { mockOpalTool } from "@/lib/mock-tools3";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
 import { AppLayout } from "@/components/layout/app-layout";
@@ -26,7 +27,7 @@ const TYPING_TEXTS = [
   "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
 ];
 
-const combinedMockTools = [...mockTools, ...mockLovableTool];
+const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 

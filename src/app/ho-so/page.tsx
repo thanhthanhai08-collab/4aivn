@@ -12,6 +12,7 @@ import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
+import { mockOpalTool } from "@/lib/mock-tools3";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
 import { mockAIModels } from "@/lib/mock-models";
@@ -31,7 +32,7 @@ import {
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
 
-const combinedMockTools = [...mockTools, ...mockLovableTool];
+const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 

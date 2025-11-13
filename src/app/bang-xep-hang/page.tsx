@@ -9,6 +9,7 @@ import type { Tool, AIModel } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
+import { mockOpalTool } from "@/lib/mock-tools3";
 import { mockAIModels } from "@/lib/mock-models";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -28,7 +29,7 @@ const parseContextLength = (tokenStr?: string): number => {
   return parseFloat(lower) || -Infinity;
 };
 
-const combinedMockTools = [...mockTools, ...mockLovableTool];
+const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -175,5 +176,3 @@ export default function RankingsPage() {
     </AppLayout>
   );
 }
-
-    

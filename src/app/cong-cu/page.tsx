@@ -7,13 +7,14 @@ import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
+import { mockOpalTool } from "@/lib/mock-tools3";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const combinedMockTools = [...mockTools, ...mockLovableTool];
+const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 export default function ToolsPage() {
   const searchParams = useSearchParams();

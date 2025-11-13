@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid, Newspaper } from "lucide-react";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
+import { mockOpalTool } from "@/lib/mock-tools3";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -34,7 +35,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { mockNews } from "@/lib/mock-news";
 import { NewsCard } from "@/components/news/news-card";
 
-const initialMockTools = [...mockTools, ...mockLovableTool];
+const initialMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -564,5 +565,3 @@ function ToolDetailContent({ id }: { id: string }) {
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent id={params.id} />;
 }
-
-    
