@@ -169,6 +169,21 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 32.41,
   },
   {
+    id: 'claude-4.1-opus-thinking',
+    name: 'Claude 4.1 Opus Thinking',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'Anthropic',
+    description: `Claude 4.1 Opus Thinking là phiên bản nâng cao của dòng Claude, được tối ưu hóa cho các tác vụ đòi hỏi suy luận sâu và độ chính xác cao. Với khả năng xử lý thông tin phức tạp và tuân thủ các chỉ dẫn nhiều bước, mô hình này là lựa chọn lý tưởng cho các ứng dụng chuyên nghiệp và nghiên cứu.`,
+    logoUrl: '/image/Logo Claude AI cho bảng xếp hạng.png',
+    link: 'https://www.anthropic.com/news/claude-3-family',
+    isFavorite: false,
+    contextLengthToken: '200k',
+    intelligenceScore: 59,
+    pricePerMillionTokens: 30.00,
+    speedTokensPerSecond: 42,
+    latencyFirstChunkSeconds: 1.66,
+  },
+  {
     id: 'claude-4.5-sonnet',
     name: 'Claude 4.5 Sonnet',
     type: 'Mô hình ngôn ngữ lớn',
@@ -394,6 +409,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 

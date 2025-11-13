@@ -317,6 +317,18 @@ const data = {
     { name: "IFBench", score: 54 },
     { name: "AIME 2025", score: 88 },
   ],
+  'claude-4.1-opus-thinking': [
+    { name: "Agentic Coding", score: 32 },
+    { name: "Agentic Tool Use", score: 71 },
+    { name: "AA-LCR", score: 66 },
+    { name: "Humanity's Exam", score: 11.9 },
+    { name: "MMLU-Pro", score: 88 },
+    { name: "GPQA Diamond", score: 81 },
+    { name: "LiveCodeBench", score: 65 },
+    { name: "SciCode", score: 41 },
+    { name: "IFBench", score: 55 },
+    { name: "AIME 2025", score: 80 },
+  ],
 };
 
 
