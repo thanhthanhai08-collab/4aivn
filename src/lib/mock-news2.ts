@@ -3,6 +3,96 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews2: NewsArticle[] = [
   {
+    id: 'gpt-5-1-ra-mat',
+    title: 'GPT-5.1 ra mắt với nâng cấp thông minh hơn,thân thiện hơn cùng khả năng điều chỉnh giọng điệu cá nhân hóa toàn diện hơn.',
+    source: 'OpenAI',
+    author: 'Mai',
+    publishedAt: '2025-11-15T09:00:00Z',
+    imageUrl: '/image/news2/Openai-ra-mat-chatpgt-5.1.png',
+    dataAiHint: 'GPT-5.1 ra mắt 13/11/2025 với hai biến thể (Instant & Thinking) tập trung vào lý luận thích ứng (adaptive reasoning) và cá nhân hóa toàn diện giọng điệu (8 Personality Presets). Mô hình Instant nhanh và thân thiện, Thinking tối ưu cho suy luận phức tạp, đồng thời cải thiện hiệu quả token và tuân thủ hướng dẫn.',
+    content: `<p>OpenAI vừa tung ra GPT-5.1, phiên bản nâng cấp mới nhất cho GPT-5 cung cấp năng lượng tươi mới cho ChatGPT, vào ngày 13 tháng 11 năm 2025. Bản cập nhật này được mô tả là một bước tiến về năng lực và trải nghiệm, tập trung vào việc làm cho ChatGPT thông minh hơn, dễ trò chuyện hơn và dễ tùy chỉnh hơn bao giờ hết.</p>
+<p>Bản làm mới này được công bố cực nhanh chỉ ba tháng sau khi GPT-5 ra mắt (tháng 8/2025), nhằm giải quyết những phàn nàn từ người dùng rằng mô hình trước đó cảm thấy lạnh lùng và đôi khi xử lý các tác vụ kém hơn các GPT-4o hoặc GPT-4. OpenAI cho biết họ đã lắng nghe ý kiến người dùng, rằng một AI tuyệt vời không chỉ cần thông minh mà còn phải thú vị khi trò chuyện.</p>
+<p>CEO Sam Altman của OpenAI gọi GPT-5.1 là "một bản nâng cấp tốt" và đặc biệt thích những cải tiến về khả năng làm theo hướng dẫn và tính năng tư duy thích ứng.</p>
+
+
+<h2><strong>Hai Biến Thể Mới: Instant và Thinking</strong></h2>
+<p>GPT-5.1 vẫn ra mắt với hai biến thể được nâng cấp, nhằm mục tiêu tối ưu hóa trải nghiệm người dùng:</p>
+
+
+<h3>GPT-5.1 Instant:</h3>
+<ul>
+    <li>Đây chắc chắn sẽ là mô hình được sử dụng rộng rãi nhất của ChatGPT.</li>
+    <li>Mặc định thân thiện và trò chuyện tự nhiên hơn. Các thử nghiệm ban đầu cho thấy nó có thể gây bất ngờ bởi sự linh hoạt và dí dỏm trong khi vẫn duy trì sự rõ ràng và hữu ích.</li>
+    <li>Nó ưu tiên tốc độ và đối thoại trôi chảy, rất phù hợp cho các tác vụ như động não hoặc tóm tắt bài viết.</li>
+    <li>Lần đầu tiên, GPT-5.1 Instant có thể sử dụng lý luận thích ứng (adaptive reasoning) để tự quyết định khi nào cần suy nghĩ sâu hơn trước khi trả lời các câu hỏi khó. Điều này giúp mô hình đưa ra phản hồi chính xác và chi tiết hơn mà vẫn duy trì tốc độ nhanh.</li>
+</ul>
+
+
+<h3>GPT-5.1 Thinking:</h3>
+<ul>
+    <li>Mô hình này được thiết kế cho các tác vụ suy luận phức tạp và chuyên sâu hơn.</li>
+    <li>Nó tự điều chỉnh thời gian suy nghĩ: dành nhiều thời gian hơn cho các vấn đề phức tạp và phản hồi nhanh hơn với các câu hỏi đơn giản.</li>
+    <li>So với GPT-5 Thinking, phiên bản 5.1 này nhanh hơn khoảng gấp đôi trên các tác vụ dễ dàng nhưng lại chậm hơn gấp đôi trên các tác vụ khó nhất.</li>
+    <li>Điểm đặc biệt là cách phản hồi đã được cải thiện, giảm bớt các từ ngữ chuyên môn khô khan, khó hiểu. Điều này giúp mọi người dễ dàng nắm bắt các kiến thức phức tạp mà không cảm thấy khó khăn hay mơ hồ như trước.</li>
+</ul>
+
+
+<p>Cả hai mô hình đều vẫn giữ ưu điểm của GPT-5 là sử dụng một bộ định tuyến thông minh, có khả năng tự động phân loại và chuyển tiếp truy vấn đến mô hình hiệu quả nhất. Nhờ vậy, người dùng hoàn toàn thoát khỏi việc phải tự tay lựa chọn mô hình, tiết kiệm thời gian và công sức. và OpenAI báo cáo rằng bộ định tuyến này xác định độ phức tạp chính xác trong 94% trường hợp sử dụng.</p>
+
+
+<h2><strong>Nâng cấp thông minh: tốc độ, hiệu quả và độ chính xác</strong></h2>
+<p>Đối với các nhà phát triển và người dùng chuyên nghiệp, GPT-5.1 mang lại những cải tiến đáng kể về khả năng và hiệu suất:</p>
+<ul>
+    <li>Lý luận thích ứng (Adaptive reasoning): Hệ thống này cho phép mô hình phân bổ nguồn lực tính toán động, đáp ứng nhanh chóng với các truy vấn đơn giản trong khi dành độ sâu xử lý lớn hơn cho các tác vụ phức tạp.</li>
+    <li>Hiệu suất Coding tốt hơn: GPT-5.1 được thiết kế để tăng tốc độ viết code và giảm chi phí. Việc giới thiệu chế độ "no reasoning" (không suy luận sâu) lý tưởng cho các tác vụ tra cứu đơn giản, giúp cắt giảm đáng kể độ trễ (latency) và tiêu thụ token (chi phí).</li>
+    <li>Hiệu quả Token: GPT-5.1 Thinking đạt kết quả tốt hơn mô hình o3 trước đó của OpenAI, trong khi sử dụng ít hơn 50-80% token đầu ra. Điều này thay đổi cơ bản tính kinh tế của việc triển khai AI, đặc biệt là đối với các tác vụ lập trình phức tạp.</li>
+    <li>Bộ nhớ đệm đã được nâng cấp, mở rộng thời gian ghi nhớ prompt (prompt catching) của bạn đến 24 giờ. Những yêu cầu thường xuyên sẽ chỉ cần được xử lý một lần, từ đó tăng tốc độ phản hồi và giảm chi phí một cách hiệu quả cho những ứng dụng sử dụng AI</li>
+    <li>Cải thiện tuân thủ hướng dẫn: Mô hình giờ đây tuân thủ tốt hơn các hướng dẫn tùy chỉnh, với các ví dụ như người dùng yêu cầu các câu trả lời của ChatGPT ngắn gọn hơn thì nó sẽ ngăn chặn những hành vi phụ làm cho câu trả lời dài dòng hơn, ví dụ như tạo thêm các báo cáo, hoặc bình luận dài dòng hơn.</li>
+</ul>
+
+
+<h2><strong>Khả năng điều chỉnh giọng điệu cá nhân hóa toàn diện</strong></h2>
+<p>Một trong những cập nhật lớn nhất của GPT-5.1 là khả năng tùy chỉnh giọng điệu và phong cách giao tiếp để phù hợp với sở thích đa dạng của người dùng.</p>
+
+
+<h3>Các chế độ giọng điệu và tính cách (Personality Presets):</h3>
+<p>Người dùng có thể chọn tới 8 chế độ cá tính khác nhau, áp dụng ngay lập tức trên mọi cuộc trò chuyện:</p>
+<ol>
+    <li>Mặc định (Default).</li>
+    <li>Chuyên nghiệp (Professional).</li>
+    <li>Thân thiện (Friendly) (trước đây là Listener).</li>
+    <li>Thẳng thắn (Candid).</li>
+    <li>Hài hước/Khác biệt (Quirky).</li>
+    <li>Hiệu quả (Efficient) (trước đây là Robot).</li>
+    <li>Mọt sách (Nerdy).</li>
+    <li>Hoài nghi (Cynical).</li>
+</ol>
+
+
+<h3>Khả năng tinh chỉnh (Fine-tuning controls):</h3>
+<p>Ngoài các cài đặt sẵn, OpenAI đang thử nghiệm các điều khiển chi tiết hơn, cho phép người dùng tinh chỉnh các đặc điểm cụ thể của ChatGPT:</p>
+<ul>
+    <li>Mức độ ngắn gọn (Conciseness).</li>
+    <li>Mức độ thân thiện (Warmth).</li>
+    <li>Mức độ dễ đọc/dễ quét (Scannability).</li>
+    <li>Tần suất sử dụng biểu tượng cảm xúc (emoji).</li>
+</ul>
+<p>Thậm chí, ChatGPT có thể chủ động đề xuất cập nhật tùy chọn giọng điệu và phong cách trong khi trò chuyện.</p>
+
+
+<h2><strong>Khả năng triển khai và API</strong></h2>
+<p>GPT-5.1 Instant và Thinking đang được triển khai dần dần.</p>
+<ul>
+    <li>Người dùng trả phí (Pro, Plus, Go, Business) sẽ là những người đầu tiên nhận được quyền truy cập. Một vài ngày nữa thì sẽ đến lượt người dùng miễn phí .</li>
+    <li>Các gói Enterprise và Education có quyền truy cập sớm 7 ngày.</li>
+    <li>Các mô hình GPT-5 cũ vẫn sẽ sử dụng được trong vòng 3 tháng đối với người dùng vẫn thích mô hình cũ hơn.</li>
+    <li>Open AI dự kiến sẽ mở kết nối API sau khoảng 7 ngày. GPT-5.1 Instant sẽ có tên API là gpt-5.1-chat-latest, và GPT-5.1 Thinking là gpt-5.1.</li>
+</ul>
+
+
+<p>GPT-5.1 sẽ không chỉ là một bản cập nhật thú vị hơn với khả năng suy luận thích ứng mạnh mẽ, mà còn là sự khẳng định vị thế dẫn đầu trong việc hướng tới việc cá nhân hóa hoàn toàn trải nghiệm AI. Với các tùy chọn điều chỉnh giọng điệu và phong cách, OpenAI đang cố gắng đảm bảo rằng mô hình hàng đầu của họ không chỉ thông minh mà còn dễ sử dụng, thân thiện và thích ứng với sở thích riêng của từng người dùng.</p>`
+  },
+  {
     id: 'lo-hong-chatgpt-atlas',
     title: 'Lỗ hổng nghiêm trọng khiến người dùng ChatGPT Atlas có thể bị đánh cắp dữ liệu với mã độc',
     source: 'LayerX Security',
@@ -572,4 +662,3 @@ export const mockNews2: NewsArticle[] = [
     
 
     
-
