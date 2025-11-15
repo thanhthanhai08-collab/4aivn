@@ -57,7 +57,7 @@ export const mockNews2: NewsArticle[] = [
 
 <h3>Các chế độ giọng điệu và tính cách (Personality Presets):</h3>
 <p>Người dùng có thể chọn tới 8 chế độ cá tính khác nhau, áp dụng ngay lập tức trên mọi cuộc trò chuyện:</p>
-<ol>
+<ul>
     <li>Mặc định (Default).</li>
     <li>Chuyên nghiệp (Professional).</li>
     <li>Thân thiện (Friendly) (trước đây là Listener).</li>
@@ -66,7 +66,7 @@ export const mockNews2: NewsArticle[] = [
     <li>Hiệu quả (Efficient) (trước đây là Robot).</li>
     <li>Mọt sách (Nerdy).</li>
     <li>Hoài nghi (Cynical).</li>
-</ol>
+</ul>
 
 
 <h3>Khả năng tinh chỉnh (Fine-tuning controls):</h3>
@@ -278,6 +278,9 @@ export const mockNews2: NewsArticle[] = [
     title: 'NotebookLM: Công cụ tuyệt vời để học tập và nghiên cứu',
     source: 'Google',
     author: 'Mai',
+    publishedAt: '2025-09-13T10:00:00Z',
+    imageUrl: '/image/news2/Notebook LM công cụ học tập.png',
+    dataAiHint: 'NotebookLM công cụ học tập nghiên cứu',
     content: `<p>Sự ra đời của các Mô hình Ngôn ngữ Lớn (LLM) đã tạo ra một sự thay đổi mô hình trong cách con người tương tác với công nghệ AI, mang lại tiềm năng chưa từng có để tăng năng suất và giảm bớt các tác vụ tẻ nhạt cho những người làm công việc tri thức. Khi những công cụ mạnh mẽ này ngày càng phổ biến, các ứng dụng chuyên biệt đang xuất hiện để đáp ứng nhu cầu cụ thể trong các lĩnh vực khác nhau. Một trong những công cụ đó, NotebookLM, do Google Lab phát triển, nổi bật như một trợ lý AI đầy hứa hẹn được thiết kế đặc biệt để tăng cường học tập và nghiên cứu bằng cách hợp lý hóa tương tác với tài liệu và thông tin.</p>
     [IMAGE:/image/news2/NotebookLM.png|Minh họa NotebookLM|NotebookLM AI]
     <h2><strong>NotebookLM là gì? Một trợ lý nghiên cứu được hỗ trợ bởi Gemini</strong></h2>
@@ -314,15 +317,15 @@ export const mockNews2: NewsArticle[] = [
     <p><strong>NotebookLM trong bối cảnh rộng lớn hơn của AI cho công việc tri thức</strong><br>
     Các chức năng của NotebookLM hoàn toàn phù hợp với nhu cầu ngày càng tăng của những người làm công việc tri thức đối với các công cụ dựa trên LLM. Các cuộc khảo sát chỉ ra rằng người lao động ngày càng sử dụng LLM cho các nhiệm vụ "thông tin" như tìm kiếm, học hỏi và tóm tắt, và họ mong muốn các khả năng trong tương lai để phân tích dữ liệu của riêng họ. NotebookLM trực tiếp giải quyết những mong muốn này bằng cách cho phép người dùng tải lên dữ liệu độc quyền của họ và tương tác với nó, và với khả năng chia sẻ thì việc Notebook LM tham gia và quy trình làm việc và hợp tác lớn chắc chắn sẽ dễ dàng khi muốn tạo ra cơ sở kiến thức chung phù hợp.</p>
     <p>Sự ra đời của Notebook LM chắc chắn cuộc chơi sẽ không chỉ khép kín với Google và sẽ có sự tham gia của các LLM như những mô hình được hỗ trợ bởi Ollama hoặc Hugging Face cục bộ trong các môi trường như Jupyter Notebook sẽ tương tự như Notebook LM. Nhưng khi này mọi chuyện sẽ chỉnh dành cho các nhà phát triển với khả năng code và hiểu về Python không những thế các nhà phát triển có thể fine-tune các mô hình để tạo ra các kết quả chính xác với nhu cầu và mục đích nghiên cứu hơn nữa.</p>`,
-    publishedAt: '2025-09-13T10:00:00Z',
-    imageUrl: '/image/news2/Notebook LM công cụ học tập.png',
-    dataAiHint: 'NotebookLM công cụ học tập nghiên cứu'
   },
   {
     id: 'apple-mistral-perplexity-talks',
     title: 'Apple được cho là đã thảo luận về việc mua lại các startup AI Mistral và Perplexity',
     source: 'Bloomberg',
     author: 'Mai',
+    publishedAt: '2025-09-09T09:00:00Z',
+    imageUrl: '/image/news2/Apple Intelligence.png',
+    dataAiHint: 'Apple iPhone AI',
     content: `<p>Trong bối cảnh công nghệ AI đang phát triển nhanh chóng, Apple được cho là đang tích cực tìm cách tăng cường khả năng AI của mình thông qua các thương vụ mua lại và sáp nhập. Theo The Information, Apple đang trong giai đoạn đầu đàm phán để mua lại startup AI Perplexity AI và cũng đang thảo luận về công ty AI Pháp Mistral. Động thái này cho thấy một sự thay đổi chiến lược quan trọng của gã khổng lồ công nghệ nước Mỹ.</p>
   
   <h2><strong>Vì Sao Apple lại phải tìm kiếm các thương vụ mua lại và sáp nhập?</strong></h2>
@@ -359,15 +362,15 @@ export const mockNews2: NewsArticle[] = [
     <li>Trước khi có Apple Music thì cũng rất nhiều người bày tỏ nguyện vọng mua lại Spotify nhưng Apple lại chọn xây dựng dịch vụ của riêng mình, mặc dù Spotify chắc chắn sẽ giúp tăng tốc trong mảng âm thanh.</li>
   </ul>
   <p>Đây mới chỉ là các cuộc thảo luận về việc mua lại Perplexity và Mistral AI chứ chưa có kí kết gì cả. Kết quả của những cuộc đàm phán này sẽ có tác động đáng kể đến Apple hoặc rộng ra là thị trường AI.</p>`,
-    publishedAt: '2025-09-09T09:00:00Z',
-    imageUrl: '/image/news2/Apple Intelligence.png',
-    dataAiHint: 'Apple iPhone AI',
   },
   {
     id: 'google-ra-mat-gemini-2-5-flash-image',
     title: 'Google ra mắt Gemini 2.5 Flash Image – Đòn bẩy mới cho các mô hình chỉnh sửa ảnh',
     source: 'TechCrunch',
     author: 'Mai',
+    publishedAt: '2025-09-08T14:00:00Z',
+    imageUrl: '/image/news2/Gemini 2.5 Flash Image ra mắt.png',
+    dataAiHint: 'Gemini 2.5 Flash Image ra mắt',
     content: `<p>Google vừa chính thức trình làng Gemini 2.5 Flash Image vào ngày 26/8, một bản nâng cấp đầy hứa hẹn. Dù mới ở dạng Preview, mô hình này đã thể hiện sự nâng cấp đáng kể so với Gemini 2.0 Flash Image và thậm chí có phần lấn át cả Imagen 4 về một số mặt.</p>
   <p>Vậy là sau 1 năm kể từ Gemini 2.0 Flash Image, Google lại mang đến mô hình này được thiết kế để tạo ảnh chất lượng cao, cực nhanh, từ đó nâng cao tiêu chuẩn cho những gì AI có thể làm được với hình ảnh.</p>
 
@@ -403,15 +406,15 @@ export const mockNews2: NewsArticle[] = [
     <li><strong>Google AI Studio hoặc ứng dụng Gemini App</strong> (trên web và di động). Người dùng miễn phí có thể thực hiện tối đa 100 chỉnh sửa mỗi ngày.</li>
 <li><strong>Dành cho nhà phát triển và doanh nghiệp:</strong> Mô hình cũng có sẵn thông qua Gemini API và Vertex AI để tích tích hợp vào các ứng dụng của riêng bạn.</li>   <li><strong>Chi phí:</strong> Qua API, chi phí là khoảng 4 cent cho mỗi hình ảnh (hoặc $0.039), một mức giá rất cạnh tranh so với các mô hình khác.</li>
   </ul>`,
-    publishedAt: '2025-09-08T14:00:00Z',
-    imageUrl: '/image/news2/Gemini 2.5 Flash Image ra mắt.png',
-    dataAiHint: 'Gemini 2.5 Flash Image ra mắt',
   },
   {
     id: 'nvidia-gb200-profit',
     title: 'Siêu lợi nhuận cho Nvidia với máy chủ AI Nvidia GB200 NVL72 lên tới 77.6%',
     source: 'Digitimes',
     author: 'Mai',
+    publishedAt: '2025-09-05T10:00:00Z',
+    imageUrl: '/image/news2/Máy chủ AI Nvidia GB200 NVL72.png',
+    dataAiHint: 'Siêu lợi nhuận với máy chủ AI Nvidia GB200 NVL72',
     content: `<p>Hiện nay, khi nền kinh tế GPU đang gây ra nhiều lo lắng trong giới tài chính, Morgan Stanley đã đưa ra một phân tích khá thuyết phục về lợi thế hiệu quả vượt trội khi sử dụng GPU NVIDIA GB200 NVL72 cho các trung tâm dữ liệu AI quy mô lớn.</p>
   <p>Để những ai chưa biết, mỗi máy chủ AI NVL72 chứa 72 GPU NVIDIA B200 cùng với 36 CPU Grace, tất cả được kết nối qua công nghệ liên kết băng thông cao, độ trễ thấp NVLink 5. Cần lưu ý rằng mỗi máy chủ NVL72 này hiện có giá khoảng 3,1 triệu đô la gấp hơn 16 lần so với 190.000 đô la cho một máy chủ H100.</p>
   <p>Morgan Stanley tin rằng việc sử dụng giải pháp mới nhất của NVIDIA có ý nghĩa kinh tế.</p>
@@ -425,15 +428,15 @@ export const mockNews2: NewsArticle[] = [
   <h2><strong>Chi phí sở hữu tổng thể (TCO)</strong></h2>
   <p>Theo Morgan Stanley giả định một trung tâm dữ liệu AI 100MW sẽ có chi phí cơ sở hạ tầng là 660 triệu đô la, khấu hao trong 10 năm còn chi phí GPU có thể dao động từ 367 triệu đô la đến 2,273 tỷ đô la, khấu hao trong 4 năm. Cuối cùng, chi phí vận hành được tính dựa trên hiệu suất năng lượng của các hệ thống làm mát khác nhau và giá điện trung bình toàn cầu.</p>
   <p>Theo đó, các hệ thống NVIDIA GB200 NVL72 có tổng chi phí sở hữu (TCO) cao nhất là 806,58 triệu đô la, tiếp theo là nền tảng MI355X với 774,11 triệu đô la.</p>`,
-    publishedAt: '2025-09-05T10:00:00Z',
-    imageUrl: '/image/news2/Máy chủ AI Nvidia GB200 NVL72.png',
-    dataAiHint: 'Siêu lợi nhuận với máy chủ AI Nvidia GB200 NVL72',
   },
   {
     id: 'ai-viet-2025-bao-cao',
     title: 'AI Việt 2025: Gần 80% người dùng tiếp cận; ChatGPT dẫn đầu thị trường theo báo cáo Decision Lab',
     source: 'Decision Lab',
     author: 'Mai',
+    publishedAt: '2025-08-20T09:00:00Z',
+    imageUrl: '/image/news2/ChatGPT dẫn đầu AI Việt.png',
+    dataAiHint: 'AI Hay và Kiki vô cùng cạnh tranh trong AI Việt',
     content: `<p>Báo cáo mới nhất từ Decision Lab đã vẽ nên một bức tranh sống động và đầy tiềm năng về thị trường trí tuệ nhân tạo (AI) tại Việt Nam. Theo dữ liệu được công bố tháng 7/2025, gần 80% người dùng trực tuyến tại Việt Nam đã sử dụng AI trong vòng 3 tháng qua, cho thấy tốc độ thích nghi nhanh chóng với AI của người Việt. </p>
   <h2><strong>Mức độ thâm nhập và bức tranh thị trường AI tại Việt Nam</strong></h2>
   <p>Thị trường AI tiêu dùng Việt Nam đang chứng kiến mức độ thâm nhập rất cao. Khảo sát trực tuyến của Decision Lab, thực hiện từ ngày 20-28/07 với 600 người tham gia, cho thấy gần 80% người dùng trực tuyến đã tiếp cận các công cụ AI trong 3 tháng gần nhất, và 33% trong số đó đã tích hợp AI vào các hoạt động thường nhật và 55% trong số đó trả phí dịch vụ. Điều này cho thấy AI không chỉ là một công cụ tiện ích mà còn đang dần trở thành một phần không thể thiếu trong đời sống của người Việt.</p>
@@ -465,15 +468,15 @@ export const mockNews2: NewsArticle[] = [
   <p>Việt Nam đang thể hiện một vai trò nổi bật trên bản đồ AI toàn cầu. Theo Bảng Chỉ số AI Thế giới 2025 do WIN (Mạng lưới Nghiên cứu Thị trường Độc lập Toàn cầu) công bố, Việt Nam xếp hạng 6/40 quốc gia, vượt qua nhiều nền kinh tế phát triển như Hàn Quốc, Australia, và Nhật Bản. Điều này cho thấy người Việt không chỉ cởi mở mà còn sẵn sàng tham gia tích cực vào kỷ nguyên trí tuệ nhân tạo.</p>
   <p>Đặc biệt, Việt Nam đứng thứ 3 về mức độ tin tưởng AI (65,6 điểm) và thứ 5 về mức độ chấp nhận AI (71,6 điểm) cho thấy mức độ chấp nhận sử dụng AI của người Việt.</p>
   <p>Với mức độ tin cậy và thái độ tích cực cao, Việt Nam đang có nhiều lợi thế để bứt phá trong cuộc đua AI toàn cầu. Vì vậy, câu hỏi đặt ra cho người trẻ Việt Nam không phải là khi nào cần sử dụng AI, mà là làm thế nào để áp dụng AI một cách hiệu quả vào công việc.</p>`,
-    publishedAt: '2025-08-20T09:00:00Z',
-    imageUrl: '/image/news2/ChatGPT dẫn đầu AI Việt.png',
-    dataAiHint: 'AI Hay và Kiki vô cùng cạnh tranh trong AI Việt',
   },
   {
     id: 'gemini-tao-sach-truyen',
     title: 'Gemini ra mắt tính năng tạo sách truyện cá nhân hóa cực kì sáng tạo',
     source: 'Google',
     author: 'Nam',
+    publishedAt: '2025-08-10T09:00:00Z',
+    imageUrl: '/image/news2/Gemini ra mắt tính năng tạo sách truyện cá nhân hóa cực kì sáng tạo.png',
+    dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện',
     content: `<p>Chúng tôi rất vui mừng thông báo về một cập nhật thú vị trong ứng dụng Gemini, mở ra một cách thức hoàn toàn mới để biến những ý tưởng của bạn thành hiện thực: những cuốn sách kể chuyện được minh họa cá nhân hóa hoàn chỉnh với sự hỗ trợ của giọng đọc.</p>
 <p>Google đã giới thiệu tính năng mới này vào ngày <strong>6/8/2025</strong>, rất gần với ngày ra mắt của GPT-5. Vì vậy, mức độ quan tâm tất nhiên không thể so sánh với sự kiện từ OpenAI. Tuy nhiên, đây vẫn là một tính năng cực kì hữu ích và thú vị, cho phép bạn dễ dàng tạo ra những câu chuyện độc đáo, phù hợp với mọi trí tưởng tượng.</p>
 <h2><strong>Tính năng hoạt động như thế nào?</strong></h2>
@@ -520,15 +523,15 @@ export const mockNews2: NewsArticle[] = [
 <p><em>Kết quả minh họa sách Gemini</em></p>
 [IMAGE:/image/news2/Sách cho bé tạo bởi Gemini.png|Kết quả minh họa sách Gemini|Gemini storybook page 2]
 <p><em>Kết quả minh họa sách Gemini</em></p>`,
-    publishedAt: '2025-08-10T09:00:00Z',
-    imageUrl: '/image/news2/Gemini ra mắt tính năng tạo sách truyện cá nhân hóa cực kì sáng tạo.png',
-    dataAiHint: 'Gemini ra mắt tính năng tạo sách truyện'
   },
   {
     id: 'meta-ai-lieu-co-tro-thanh-bom-xit',
     title: 'Meta AI liệu có trở thành “bom xịt”?',
     source: 'Bloomberg',
     author: 'Mai',
+    publishedAt: '2025-09-12T10:00:00Z',
+    imageUrl: '/image/news2/Ảnh về Meta AI.png',
+    dataAiHint: 'Meta AI lieu co thanh bom xit',
     content: `<p>Ra mắt vào tháng 4-2024, Meta AI được kỳ vọng là một ứng dụng độc lập đóng vai trò trợ lý ảo của Meta, đến thời điểm này Meta AI đã ra mắt thêm phần "Discover" để người dùng khám phá cách cộng đồng tạo nội dung AI, tuy nhiên sản phẩm này vẫn được đánh giá là được phát triển quá vội vàng từ ứng dụng AI đi kèm kính thông minh.</p>
     <p>Chỉ sau vài tháng, hàng loạt phản hồi tiêu cực đã xuất hiện, cho rằng trải nghiệm kém, nội dung trên nguồn cấp dữ liệu không cập nhật, và AI thường xuyên "bịa đặt" thông tin. Dù đã đầu tư hàng tỷ đô la vào phát triển AI cộng với nguồn lực khổng lồ, Meta AI vẫn bị đánh giá là thiếu cá nhân hóa, hoạt động rời rạc và chưa đủ sức cạnh tranh với các ông lớn như ChatGPT, Gemini, Claude, Deepseek.</p>
 
@@ -557,9 +560,6 @@ export const mockNews2: NewsArticle[] = [
     <p>Sự rối ren đỉnh điểm của vụ việc này Các nhóm nghiên cứu tại TBD Labs đã nhiều lần phải tìm đến dữ liệu từ những nhà cung cấp khác như Mercor hay Surge vì đánh giá dữ liệu của Scale AI “không đủ chuẩn” cho các thí nghiệm quy mô lớn.</p>
     <p>Hoặc vụ các khách hàng lớn của Scale AI như Open AI, Google đồng loạt rời bỏ họ khiến Scale AI gặp cực kì nhiều khó khăn và thách thức.</p>
     <p>Vậy là CEO Zuckerberg đã đổ rất nhiều tiền chỉ để theo kịp về AI với các đối thủ như Open AI, Google, xAI nhưng vẫn còn chưa đâu vào đâu cho thấy trong lĩnh vực AI tiền “không” phải là tất cả.</p>`,
-    publishedAt: '2025-09-12T10:00:00Z',
-    imageUrl: '/image/news2/Ảnh về Meta AI.png',
-    dataAiHint: 'Meta AI lieu co thanh bom xit'
   },
   {
     id: 'perplexity-comet-vs-chatgpt-atlas',
@@ -613,6 +613,9 @@ export const mockNews2: NewsArticle[] = [
     title: 'Robot đóng vai nhân viên cửa hàng nhưng người điều khiển ngồi cách xa 3.000km!',
     author: 'Mai',
     source: 'Tổng hợp',
+    publishedAt: '2025-11-03T09:00:00Z',
+    imageUrl: '/image/news2/Anh-bia-nguoi-dieu-khien-robot.png',
+    dataAiHint: 'Robot TX SCARA của Telexistence (Nhật Bản), được điều khiển từ xa bởi nhân viên ở Philippines (cách 3.000km) qua kính VR, đang giải quyết khủng hoảng thiếu hụt lao động tại các cửa hàng tiện lợi FamilyMart. Hệ thống AI tự động, nhưng con người can thiệp khi robot gặp lỗi (digital re-embodiment).',
     content: `<p>Thế giới đang chứng kiến một sự chuyển đổi lao động số hóa đáng kinh ngạc: những kỹ sư trẻ tuổi ngồi tại trung tâm tài chính Manila, Philippines, lại đang điều khiển những con robot sắp xếp hàng hóa tại các cửa hàng tiện lợi ở Tokyo, Nhật Bản, cách đó hơn 3.000 km.</p>
 <p>Xu hướng này không chỉ giải quyết cuộc khủng hoảng thiếu hụt lao động mà Nhật Bản đang đối mặt mà còn định hình lại bản chất của công việc thủ công trong kỷ nguyên tự động hóa.</p>
 
@@ -639,9 +642,6 @@ export const mockNews2: NewsArticle[] = [
 <p><strong>2. Sức khỏe và áp lực:</strong> Những người điều khiển robot phải đối mặt với áp lực lớn trong việc xử lý lỗi nhanh chóng để không làm gián đoạn hệ thống. Hơn nữa, họ thường xuyên cảm thấy chóng mặt và hoa mắt do "say mạng" – một dạng say tàu xe liên quan đến việc sử dụng kính thực tế ảo (VR) trong thời gian dài.</p>
 <p><strong>3. Nguy cơ con người bị thay thế:</strong> Đằng sau cơ hội việc làm là nỗi lo bị chính công nghệ "nuốt chửng". Toàn bộ thao tác của người điều khiển robot đang được ghi lại để huấn luyện AI. Mục đích của việc thu thập dữ liệu này là để phát triển thế hệ robot tương lai có thể tự hoạt động mà không cần sự hỗ trợ của con người. Giáo sư Lionel Robert (Đại học Michigan, Mỹ) nhận định người lao động trở thành người giám sát máy móc, không khác gì “phiên bản dự phòng” của robot.</p>
 <p>Tương lai của lực lượng lao động được dự đoán sẽ là sự kết hợp "lai" giữa robot, AI, tự động hóa và con người. Trong khi mô hình robot từ xa ở FamilyMart chứng minh rằng công nghệ có thể vượt qua khoảng cách địa lý (3.000km) để giải quyết vấn đề logistics, nó cũng đặt ra câu hỏi về việc giá trị của sức lao động thủ công được số hóa này sẽ được định nghĩa như thế nào trong một thế giới ngày càng tự động hóa.</p>`,
-    publishedAt: '2025-11-03T09:00:00Z',
-    imageUrl: '/image/news2/Anh-bia-nguoi-dieu-khien-robot.png',
-    dataAiHint: 'Robot TX SCARA của Telexistence (Nhật Bản), được điều khiển từ xa bởi nhân viên ở Philippines (cách 3.000km) qua kính VR, đang giải quyết khủng hoảng thiếu hụt lao động tại các cửa hàng tiện lợi FamilyMart. Hệ thống AI tự động, nhưng con người can thiệp khi robot gặp lỗi (digital re-embodiment).',
   },
 ];
     
@@ -662,3 +662,4 @@ export const mockNews2: NewsArticle[] = [
     
 
     
+
