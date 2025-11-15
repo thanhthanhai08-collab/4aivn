@@ -39,6 +39,7 @@ export const mockNews2: NewsArticle[] = [
 
 <p>Cả hai mô hình đều vẫn giữ ưu điểm của GPT-5 là sử dụng một bộ định tuyến thông minh, có khả năng tự động phân loại và chuyển tiếp truy vấn đến mô hình hiệu quả nhất. Nhờ vậy, người dùng hoàn toàn thoát khỏi việc phải tự tay lựa chọn mô hình, tiết kiệm thời gian và công sức. và OpenAI báo cáo rằng bộ định tuyến này xác định độ phức tạp chính xác trong 94% trường hợp sử dụng.</p>
 
+[GPT5_V1_TOKEN_CHART]
 
 <h2><strong>Nâng cấp thông minh: tốc độ, hiệu quả và độ chính xác</strong></h2>
 <p>Đối với các nhà phát triển và người dùng chuyên nghiệp, GPT-5.1 mang lại những cải tiến đáng kể về khả năng và hiệu suất:</p>

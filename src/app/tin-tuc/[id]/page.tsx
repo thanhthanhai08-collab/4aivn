@@ -1,7 +1,7 @@
 // src/app/news/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, Fragment, useMemo } from "react";
+import { useEffect, useState, Fragment, useMemo, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
@@ -37,6 +37,8 @@ import { AiBrowserMarketGrowthChart } from "@/components/news/ai-browser-market-
 import { AiBrowserFocusChart } from "@/components/news/ai-browser-focus-chart";
 import { HumanRobotCollaborationChart } from "@/components/news/human-robot-collaboration-chart";
 import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-benchmark-chart";
+import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
+
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -54,10 +56,13 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    if (part === '[GPT5_V1_TOKEN_CHART]') {
+      return <Gpt5V1TokenChart key={`${index}-gpt5-token-chart`} />;
+    }
     if (part === '[ATLAS_SECURITY_CHART]') {
       return <AtlasSecurityBenchmarkChart key={`${index}-atlas-security-chart`} />;
     }
@@ -449,5 +454,6 @@ function NewsDetailContent({ id }: { id: string }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  return <NewsDetailContent id={params.id} />;
+  const { id } = use(Promise.resolve(params));
+  return <NewsDetailContent id={id} />;
 }
