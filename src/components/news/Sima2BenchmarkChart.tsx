@@ -37,6 +37,7 @@ export function Sima2BenchmarkChart() {
               left: 20,
               bottom: 5,
             }}
+            barSize={100}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="name" axisLine={false} tickLine={false} label={{ value: 'Model', position: 'insideBottom', offset: -5 }} />
@@ -56,5 +57,3 @@ export function Sima2BenchmarkChart() {
     </Card>
   )
 }
-
-    
