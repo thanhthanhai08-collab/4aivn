@@ -1,3 +1,4 @@
+
 // src/app/profile/page.tsx
 "use client";
 
@@ -15,6 +16,7 @@ import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
+import { mockNews3 } from "@/lib/mock-news3";
 import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -33,7 +35,7 @@ import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
 
 const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
-const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+const allMockNews = [...mockNews, ...mockNews2, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 
 const sortToolsByRating = (tools: Tool[]) => {

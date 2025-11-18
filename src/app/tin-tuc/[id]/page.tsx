@@ -1,3 +1,4 @@
+
 // src/app/news/[id]/page.tsx
 "use client";
 
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
+import { mockNews3 } from "@/lib/mock-news3";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -152,7 +154,7 @@ const renderContent = (content: string, articleId: string) => {
   });
 };
 
-const allMockNews = [...mockNews, ...mockNews2];
+const allMockNews = [...mockNews, ...mockNews2, ...mockNews3];
 
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();

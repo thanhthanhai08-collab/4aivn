@@ -10,6 +10,7 @@ import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
+import { mockNews3 } from "@/lib/mock-news3";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,7 +29,7 @@ const TYPING_TEXTS = [
 ];
 
 const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
-const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+const allMockNews = [...mockNews, ...mockNews2, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 
 export default function HomePage() {

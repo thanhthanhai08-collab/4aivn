@@ -1,3 +1,4 @@
+
 // src/app/tin-tuc/page.tsx
 "use client";
 
@@ -6,12 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { mockNews } from "@/lib/mock-news";
 import { mockNews2 } from "@/lib/mock-news2";
+import { mockNews3 } from "@/lib/mock-news3";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsListItem } from "@/components/news/news-list-item";
 import { Button } from "@/components/ui/button";
 
-const allMockNews = [...mockNews, ...mockNews2].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+const allMockNews = [...mockNews, ...mockNews2, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 const QuickViewItem = ({ article }: { article: any }) => (
     <div className="flex items-center space-x-4 group">
