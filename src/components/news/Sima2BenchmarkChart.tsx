@@ -41,7 +41,7 @@ export function Sima2BenchmarkChart() {
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="name" axisLine={false} tickLine={false} label={{ value: 'Model', position: 'insideBottom', offset: -5 }} />
-            <YAxis unit="%" domain={[0, 100]} label={{ value: 'Tỷ lệ thành công (%)', angle: -90, position: 'insideLeft' }} />
+            <YAxis unit="%" domain={[0, 100]} label={{ value: 'Tỷ lệ thành công (%)', angle: -90, position: 'insideLeft', offset: -10 }} />
             <Tooltip content={<CustomTooltip />} cursor={{fill: 'hsl(var(--accent))'}} />
             <Bar dataKey="Tỷ lệ thành công" radius={[4, 4, 0, 0]}>
               {data.map((entry, index) => (
@@ -49,7 +49,7 @@ export function Sima2BenchmarkChart() {
               ))}
               <LabelList dataKey="Tỷ lệ thành công" position="top" formatter={(value: number) => `${value}%`} />
             </Bar>
-            <ReferenceLine y={76} label={{ value: 'Con người', position: 'right' }} stroke="hsl(var(--muted-foreground))" strokeDasharray="3 3" />
+            <ReferenceLine y={76} label={{ value: 'Con người', position: 'insideTopRight' }} stroke="hsl(var(--muted-foreground))" strokeDasharray="3 3" />
           </BarChart>
         </ResponsiveContainer>
         <p className="text-xs text-muted-foreground mt-2 text-center">Nguồn: Google DeepMind</p>
