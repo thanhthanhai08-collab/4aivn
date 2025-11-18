@@ -16,7 +16,7 @@ export const mockNews3: NewsArticle[] = [
 
 <h2><strong>Nâng cấp bộ não với sức mạnh Gemini 2.5 Flash Lite</strong></h2>
 <p>SIMA 2 đã được nhận được cập nhật lớn về trí tuệ nhờ được tích hợp mô hình ngôn ngữ lớn Gemini 2.5 Flash Lite làm lõi suy luận. Điều này đã giúp SIMA từ một tác nhân AI chỉ biết "thực hiện chỉ thị" (instruction-follower) thành một người bạn đồng hành hơn.</p>
-
+[SIMA2_BENCHMARK_CHART]
 
 <h3>SIMA 2 thông minh hơn SIMA 1 so sánh với con người như thế nào?</h3>
 <ul>
@@ -71,3 +71,5 @@ export const mockNews3: NewsArticle[] = [
 <p>Vậy SIMA 2 chính là minh chứng cho việc các ông lớn như Google chắc chắn chưa thay đổi mục tiêu AGI của họ, từ đó chắc chắn tạo ra tương lai AI có thể tương tác và hỗ trợ chúng ta trong nhiều lĩnh vực hơn nữa.</p>`
   },
 ];
+
+    

@@ -40,6 +40,7 @@ import { AiBrowserFocusChart } from "@/components/news/ai-browser-focus-chart";
 import { HumanRobotCollaborationChart } from "@/components/news/human-robot-collaboration-chart";
 import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-benchmark-chart";
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
+import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 
 
 const AdBanner = () => (
@@ -58,10 +59,13 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    if (part === '[SIMA2_BENCHMARK_CHART]') {
+      return <Sima2BenchmarkChart key={`${index}-sima2-chart`} />;
+    }
     if (part === '[GPT5_V1_TOKEN_CHART]') {
       return <Gpt5V1TokenChart key={`${index}-gpt5-token-chart`} />;
     }
@@ -459,3 +463,5 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
   const { id } = use(Promise.resolve(params));
   return <NewsDetailContent id={id} />;
 }
+
+    
