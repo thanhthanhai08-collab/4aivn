@@ -341,6 +341,18 @@ const data = {
     { name: "IFBench", score: 55 },
     { name: "AIME 2025", score: 80 },
   ],
+  'gemini-3-pro': [
+    { name: 'Agentic Coding', score: 39 },
+    { name: 'Agentic Tool Use', score: 87 },
+    { name: 'AA-LCR', score: 71 },
+    { name: 'Humanity\'s Last Exam', score: 37.2 },
+    { name: 'MMLU-Pro', score: 90 },
+    { name: 'GPQA Diamond', score: 91 },
+    { name: 'LiveCodeBench', score: 92 },
+    { name: 'SciCode', score: 56 },
+    { name: 'IFBench', score: 70 },
+    { name: 'AIME 2025', score: 90 },
+  ],
 };
 
 

@@ -32,6 +32,20 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 90.69,
   },
   {
+    id: 'gemini-3-pro',
+    name: 'Gemini 3 Pro',
+    type: 'AI Đa phương thức',
+    developer: 'Google',
+    description: 'Gemini 3 Pro, ra mắt tháng 11 năm 2025, là mô hình AI đa phương thức hàng đầu của Google. Với chỉ số thông minh 73, nó mang lại khả năng suy luận, lập trình và xử lý ngôn ngữ vượt trội, trở thành công cụ mạnh mẽ cho các ứng dụng chuyên nghiệp đòi hỏi độ chính xác cao và hiểu biết sâu sắc.',
+    logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
+    link: 'https://deepmind.google/technologies/gemini/',
+    contextLengthToken: '1M tokens',
+    intelligenceScore: 73,
+    pricePerMillionTokens: 4.50,
+    speedTokensPerSecond: 130,
+    latencyFirstChunkSeconds: 30.62,
+  },
+  {
     id: 'grok-4',
     name: 'Grok 4',
     type: 'Mô hình ngôn ngữ lớn',
@@ -452,6 +466,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 
