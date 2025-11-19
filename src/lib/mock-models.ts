@@ -39,7 +39,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Gemini 3 Pro, ra mắt tháng 11 năm 2025, là mô hình AI đa phương thức hàng đầu của Google. Với chỉ số thông minh 73, nó mang lại khả năng suy luận, lập trình và xử lý ngôn ngữ vượt trội, trở thành công cụ mạnh mẽ cho các ứng dụng chuyên nghiệp đòi hỏi độ chính xác cao và hiểu biết sâu sắc.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/',
-    contextLengthToken: '1M tokens',
+    contextLengthToken: '1m',
     intelligenceScore: 73,
     pricePerMillionTokens: 4.50,
     speedTokensPerSecond: 130,
@@ -466,6 +466,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 
