@@ -73,7 +73,7 @@ const data = {
     { name: "MMLU-Pro", score: 87 },
     { name: "GPQA Diamond", score: 87 },
     { name: "LiveCodeBench", score: 87 },
-    { name: "SciCode", score: 41 },
+    { name: "SciCode", score: 43 },
     { name: "IFBench", score: 73 },
     { name: "AIME 2025", score: 94 },
   ],
