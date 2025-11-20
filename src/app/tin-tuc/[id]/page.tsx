@@ -41,6 +41,7 @@ import { HumanRobotCollaborationChart } from "@/components/news/human-robot-coll
 import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-benchmark-chart";
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
 import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
+import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 
 
 const AdBanner = () => (
@@ -59,10 +60,13 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    if (part === '[GEMINI_3_BENCHMARK_CHART]') {
+      return <Gemini3BenchmarkChart key={`${index}-gemini3-chart`} />;
+    }
     if (part === '[SIMA2_BENCHMARK_CHART]') {
       return <Sima2BenchmarkChart key={`${index}-sima2-chart`} />;
     }
