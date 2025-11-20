@@ -65,6 +65,18 @@ const data = {
     { name: "IFBench", score: 73 },
     { name: "AIME 2025", score: 94 },
   ],
+  'gpt-5-1-high': [
+    { name: "Agentic Coding", score: 43 },
+    { name: "Agentic Tool Use", score: 82 },
+    { name: "AA-LCR", score: 75 },
+    { name: "Humanity's Exam", score: 26.5 },
+    { name: "MMLU-Pro", score: 87 },
+    { name: "GPQA Diamond", score: 87 },
+    { name: "LiveCodeBench", score: 87 },
+    { name: "SciCode", score: 41 },
+    { name: "IFBench", score: 73 },
+    { name: "AIME 2025", score: 94 },
+  ],
   'gpt-5-medium': [
     { name: "Agentic Coding", score: 36 },
     { name: "Agentic Tool Use", score: 87 },

@@ -3,6 +3,20 @@ import type { AIModel } from '@/lib/types';
 
 export const mockAIModels: AIModel[] = [
   {
+    id: 'gpt-5-1-high',
+    name: 'GPT-5.1 (high)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'OpenAI',
+    description: 'GPT-5.1 (high) là phiên bản nâng cấp của GPT-5, tập trung vào việc cải thiện khả năng suy luận thích ứng và cá nhân hóa, mang lại hiệu suất cao cho các tác vụ phức tạp.',
+    logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
+    link: 'https://openai.com/',
+    contextLengthToken: '400k',
+    intelligenceScore: 70,
+    pricePerMillionTokens: 3.44,
+    speedTokensPerSecond: 126,
+    latencyFirstChunkSeconds: 19.46,
+  },
+  {
     id: 'gpt-5-codex-high',
     name: 'GPT-5 Codex (high)',
     type: 'Mô hình ngôn ngữ lớn',
@@ -466,6 +480,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 
