@@ -8,7 +8,7 @@ export const mockNews3: NewsArticle[] = [
     source: 'Google',
     author: 'Mai',
     publishedAt: '2025-11-20T09:00:00Z',
-    imageUrl: '/image/news2/gemini-3-ai-ra-mat.png',
+    imageUrl: '/image/news3/gemini-3-ai-ra-mat.png',
     dataAiHint: 'Google ra mắt Gemini 3 ngày 19-11-2025',
     content: `<p>Ngày 19-11-2025, Google đã chính thức giới thiệu Gemini 3, mô hình AI tiên tiến và thông minh nhất của mình, được thiết kế để giúp người dùng hiện thực hóa mọi ý tưởng.</p>
 <p>CEO Sundar Pichai đã tuyên bố Gemini 3 là "mô hình tốt nhất trên thế giới về khả năng hiểu đa phương thức". Mô hình này đánh dấu sự nâng cấp trong hành trình tiến tới trí tuệ nhân tạo tổng quát (AGI).</p>
