@@ -351,7 +351,7 @@ const data = {
     { name: 'LiveCodeBench', score: 92 },
     { name: 'SciCode', score: 56 },
     { name: 'IFBench', score: 70 },
-    { name: 'AIME 2025', score: 90 },
+    { name: 'AIME 2025', score: 96 },
   ],
 };
 
