@@ -51,15 +51,15 @@ export const mockNews3: NewsArticle[] = [
 <p>Gemini 3 có sự thể hiện rất tốt trong khả năng tạo mã code và xử lý các prompt phức tạp để tạo ra giao diện web tương tác và phong phú hơn nhưng thật sự vẫn về khả năng coding mình vẫn tin tưởng Claude Sonnet 4.5 hơn, bởi khi Gemini 3 gặp vấn đề với code sẽ không tập trung xử lý vấn đề đó mà càng sửa càng sai không giống như Claude Sonnet 4.5 điều này gây khó khăn so với những người không hiểu nhiều về code.</p>
 <ul>
     <li>Về tốc độ, khi sử dụng coding thì Gemini 3 nhanh hơn đáng kể so với Claude Sonnet 4.5 và GPT 5.1 đặc biệt nhanh gấp 2 lần so với Gemini 2.5 đối với các tác vụ nhỏ và trung bình.</li>
-    <li>Để hỗ trợ phát triển các agent, Google cũng phát hành nền tảng phát triển agentic mới là **Google Antigravity** sử dụng khả năng suy luận và công cụ của Gemini 3 để biến AI thành một agent mới có khả năng hoạt động độc lập và tích cực.</li>
+    <li>Để hỗ trợ phát triển các agent, Google cũng phát hành nền tảng phát triển agentic mới là Google Antigravity sử dụng khả năng suy luận và công cụ của Gemini 3 để biến AI thành một agent mới có khả năng hoạt động độc lập và tích cực.</li>
 </ul>
 
 
 <h3>Bao giờ có thể sử dụng Gemini 3</h3>
 <p>Gemini 3 đang được triển khai trên toàn bộ hệ sinh thái của Google bắt đầu ngày 19 tháng 11</p>
 <ul>
-    <li>Ở khung chat Gemini thì Google đã cho chọn chế độ **Fast** và **Thinking** chứ không phải lựa chọn LLM như Gemini 2.5 nữa điều đó cũng sẽ cho thấy việc Google tự động hóa việc lựa chọn LLM cho các tác vụ từ đơn giản phức tạp giống như điều mà Open AI đã làm với GPT-5.</li>
-    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ **AI Mode**. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas và Comet.</li>
+    <li>Ở khung chat Gemini thì Google đã cho chọn chế độ Fast và Thinking chứ không phải lựa chọn LLM như Gemini 2.5 nữa điều đó cũng sẽ cho thấy việc Google tự động hóa việc lựa chọn LLM cho các tác vụ từ đơn giản phức tạp giống như điều mà Open AI đã làm với GPT-5.</li>
+    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ AI Mode. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas và Comet.</li>
 </ul>`
   },
   {
@@ -129,7 +129,5 @@ export const mockNews3: NewsArticle[] = [
 <p>Các kỹ năng cấp cao mà SIMA 2 học được trong môi trường ảo như điều hướng không gian, sử dụng công cụ và tự hợp tác để giải quyết vấn đề là những thành phần cơ bản cần thiết cho các ứng dụng robot và xe tự lái trong thế giới thực.</p>
 <p>Giống như việc bạn cần hiểu “tủ lạnh” và "bát đũa" là gì và cách di chuyển trong nhà để lấy chúng, robot cũng cần học rất nhiều về điều này khi mà sư chính xác được đặt lên hàng đầu hiện nay những robot như vậy hoàn toàn do con người điều khiển vì vậy chắc chắn SIMA 2 sẽ tập trung vào việc học những hành vi cần độ chính xác cao này.</p>
 <p>Vậy SIMA 2 chính là minh chứng cho việc các ông lớn như Google chắc chắn chưa thay đổi mục tiêu AGI của họ, từ đó chắc chắn tạo ra tương lai AI có thể tương tác và hỗ trợ chúng ta trong nhiều lĩnh vực hơn nữa.</p>`
-  },
+  }
 ];
-
-    
