@@ -10,7 +10,7 @@ export const mockNews2: NewsArticle[] = [
     publishedAt: '2025-11-15T09:00:00Z',
     imageUrl: '/image/news2/Openai-ra-mat-chatpgt-5.1.png',
     dataAiHint: 'GPT-5.1 ra mắt 13/11/2025 với hai biến thể (Instant & Thinking) tập trung vào lý luận thích ứng (adaptive reasoning) và cá nhân hóa toàn diện giọng điệu (8 Personality Presets). Mô hình Instant nhanh và thân thiện, Thinking tối ưu cho suy luận phức tạp, đồng thời cải thiện hiệu quả token và tuân thủ hướng dẫn.',
-    content: `<p>OpenAI vừa tung ra GPT-5.1, phiên bản nâng cấp mới nhất cho GPT-5 cung cấp năng lượng tươi mới cho ChatGPT, vào ngày 13 tháng 11 năm 2025. Bản cập nhật này được mô tả là một bước tiến về năng lực và trải nghiệm, tập trung vào việc làm cho ChatGPT thông minh hơn, dễ trò chuyện hơn và dễ tùy chỉnh hơn bao giờ hết.</p>
+    content: `<p>OpenAI vừa tung ra  <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT-5.1</a> , phiên bản nâng cấp mới nhất cho GPT-5 cung cấp năng lượng tươi mới cho ChatGPT, vào ngày 13 tháng 11 năm 2025. Bản cập nhật này được mô tả là một bước tiến về năng lực và trải nghiệm, tập trung vào việc làm cho ChatGPT thông minh hơn, dễ trò chuyện hơn và dễ tùy chỉnh hơn bao giờ hết.</p>
 <p>Bản làm mới này được công bố cực nhanh chỉ ba tháng sau khi GPT-5 ra mắt (tháng 8/2025), nhằm giải quyết những phàn nàn từ người dùng rằng mô hình trước đó cảm thấy lạnh lùng và đôi khi xử lý các tác vụ kém hơn các GPT-4o hoặc GPT-4. OpenAI cho biết họ đã lắng nghe ý kiến người dùng, rằng một AI tuyệt vời không chỉ cần thông minh mà còn phải thú vị khi trò chuyện.</p>
 <p>CEO Sam Altman của OpenAI gọi GPT-5.1 là "một bản nâng cấp tốt" và đặc biệt thích những cải tiến về khả năng làm theo hướng dẫn và tính năng tư duy thích ứng.</p>
 
@@ -663,4 +663,5 @@ export const mockNews2: NewsArticle[] = [
     
 
     
+
 
