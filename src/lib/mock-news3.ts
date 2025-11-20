@@ -19,7 +19,7 @@ export const mockNews3: NewsArticle[] = [
 
 
 <h3>Càn quét các bảng xếp hạng</h3>
-<p>Với sự ra mắt có thể nói trong âm thầm không phải là một bước nhảy vọt nhưng vẫn có sức nặng khi đã đứng đầu rất nhiều bảng xếp hạng LLM (như LMArena,...)</p>
+<p>Gemini 3 Pro với sự ra mắt có thể nói trong âm thầm không phải là một bước nhảy vọt nhưng vẫn có sức nặng khi đã đứng đầu rất nhiều bảng xếp hạng LLM (như LMArena,...)</p>
 <ul>
     <li>Tất nhiên nếu so với Gemini 2.5 là Gemini 3 hoàn toàn vượt trội ở mọi tiêu chuẩn AI, như ở việc xác định ngữ cảnh và ý định đằng sau yêu cầu của người dùng, cho phép người dùng nhận được kết quả mong muốn với ít đoạn prompting hơn.</li>
     <li>Gemini 3 vượt trội so với Gemini thế hệ trước là bình thường nhưng điểm số của nó cũng vượt qua cả <a href="/mo-hinh/claude-4.5-sonnet-thinking" target="_blank">Claude 4.5 Sonnet</a> và  <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT 5.1</a> đơn cứ như việc Gemini 3 thể hiện khả năng suy luận ở cấp độ tiến sĩ (PhD-level reasoning) với điểm số cao trên các bài kiểm tra Humanity’s Last Exam là 37.5% không dùng công cụ vượt trội so với Claude Sonnet 4.5 (13.7%) và GPT 5.1 (26.5%) hoặc điểm GPQA Diamond (91.9%) cũng tiếp tục vượt lên với Claude Sonnet 4.5 (83.4%) và GPT 5.1 (88.1%)</li>
@@ -59,7 +59,7 @@ export const mockNews3: NewsArticle[] = [
 <p>Gemini 3 đang được triển khai trên toàn bộ hệ sinh thái của Google bắt đầu ngày 19 tháng 11</p>
 <ul>
     <li>Ở khung chat Gemini thì Google đã cho chọn chế độ Fast và Thinking chứ không phải lựa chọn LLM như Gemini 2.5 nữa điều đó cũng sẽ cho thấy việc Google tự động hóa việc lựa chọn LLM cho các tác vụ từ đơn giản phức tạp giống như điều mà Open AI đã làm với GPT-5.</li>
-    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ AI Mode. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas và Comet.</li>
+    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ <strong>AI Mode</strong>. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas  <a href="/cong-cu/atlas-browser" target="_blank">ChatGPT Atlas</a>  và  <a href="/cong-cu/comet-browser" target="_blank">Perplexity Comet</a>.</li>
 </ul>`
   },
   {
