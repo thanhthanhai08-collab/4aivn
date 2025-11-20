@@ -3,6 +3,66 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews3: NewsArticle[] = [
   {
+    id: 'google-ra-mat-gemini-3',
+    title: 'Google ra mắt Gemini 3: Mô hình AI thông minh nhất thế giới, bước tiến mới của Google tới AGI',
+    source: 'Google',
+    author: 'Mai',
+    publishedAt: '2025-11-20T09:00:00Z',
+    imageUrl: '/image/news2/gemini-3-ai-ra-mat.png',
+    dataAiHint: 'Google ra mắt Gemini 3 ngày 19-11-2025',
+    content: `<p>Ngày 19-11-2025, Google đã chính thức giới thiệu Gemini 3, mô hình AI tiên tiến và thông minh nhất của mình, được thiết kế để giúp người dùng hiện thực hóa mọi ý tưởng.</p>
+<p>CEO Sundar Pichai đã tuyên bố Gemini 3 là "mô hình tốt nhất trên thế giới về khả năng hiểu đa phương thức". Mô hình này đánh dấu sự nâng cấp trong hành trình tiến tới trí tuệ nhân tạo tổng quát (AGI).</p>
+
+
+<h2><strong>Sự nâng cấp so với Gemini 2.5 như thế nào</strong></h2>
+<p>Như vậy sau 8 tháng kể từ khi ra mắt Gemini 2.5 thì Google đã quay lại với Gemini 3 với sự nâng cấp về khả năng suy luận và hiểu ngữ cảnh, nó là sự kết hợp của tất cả các khả năng của các thế hệ Gemini trước lại với nhau.</p>
+
+
+<h3>Càn quét các bảng xếp hạng</h3>
+<p>Gemini 3 Pro với sự ra mắt có thể nói trong âm thầm không phải là một bước nhảy vọt nhưng vẫn có sức nặng khi đã đứng đầu rất nhiều bảng xếp hạng LLM (như LMArena,...)</p>
+<ul>
+    <li>Tất nhiên nếu so với Gemini 2.5 là Gemini 3 hoàn toàn vượt trội ở mọi tiêu chuẩn AI, như ở việc xác định ngữ cảnh và ý định đằng sau yêu cầu của người dùng, cho phép người dùng nhận được kết quả mong muốn với ít đoạn prompting hơn.</li>
+    <li>Gemini 3 vượt trội so với Gemini thế hệ trước là bình thường nhưng điểm số của nó cũng vượt qua cả Claude Sonnet 4.5 và GPT 5.1 đơn cứ như việc Gemini 3 thể hiện khả năng suy luận ở cấp độ tiến sĩ (PhD-level reasoning) với điểm số cao trên các bài kiểm tra Humanity’s Last Exam là 37.5% không dùng công cụ vượt trội so với Claude Sonnet 4.5 (13.7%) và GPT 5.1 (26.5%) hoặc điểm GPQA Diamond (91.9%) cũng tiếp tục vượt lên với Claude Sonnet 4.5 (83.4%) và GPT 5.1 (88.1%)</li>
+</ul>
+
+
+<h3>Sức mạnh đa phương thức (Multimodality)</h3>
+<p>Gemini 3 vẫn được tiếp nối với Gemini 2.5 ở khả năng tổng hợp thông tin liền mạch trên nhiều phương thức, bao gồm văn bản, hình ảnh, video, âm thanh và mã code. Tất nhiên là với bài kiểm tra đều tốt hơn Gemini 2.5 với 81% điểm MMMU-Pro (Gemini 2.5 là 68%) và 87.6% điểm Video-MMMU (Gemini 2.5 là 83.6% theo Google).</p>
+[IMAGE:/image/news3/gemini_3_diem_so.gif|Điểm số của Gemini 3|Thống kê sức mạnh Gemini 3]
+<h2><strong>Tình huống sử dụng thực tế như thế nào</strong></h2>
+<ul>
+    <li><strong>Sử dụng trong học tập và nghiên cứu:</strong> Gemini 3 có thể phân tích các bài báo học thuật hoặc bài giảng video dài và tạo mã code cho các hình ảnh trực quan tương tác hoặc thẻ ghi nhớ nhưng mình đã thử với video dài 4 tiếng thật sự Gemini 3 chế độ Fast sẽ không ghi nhớ được hết sẽ sai hoặc thiếu các chi tiết vì vậy bây giờ chưa nên tin tưởng hoàn toàn vào những thông tin mà Gemini 3 đưa ra mà hãy làm việc đó với Notebook LM.</li>
+    <li><strong>Trong lĩnh vực sáng tạo và lập kế hoạch:</strong> Gemini 3 hoàn toàn có thể phiên dịch và chuyển đổi các công thức nấu ăn viết tay bằng nhiều ngôn ngữ khác nhau thành sách dạy nấu ăn rất thích hợp để chia sẻ. Thậm chí theo Google nó hoàn toàn có thể viết một bài thơ nắm bắt được vật lý học của phản ứng tổng hợp hạt nhân, hoặc viết mã code để tạo hình ảnh trực quan về dòng plasma trong tokamak.</li>
+    <li><strong>Trong lĩnh vực phân tích video thể thao:</strong> Gemini 3 có thể phân tích video về trận đấu thể thao (như pickleball, quần vợt,...) xác định các kĩ năng cần cải thiện và tạo kế hoạch luyện tập.</li>
+</ul>
+
+
+<h2><strong>Gemini 3 Deep Think có chế độ suy nghĩ nâng cao không</strong></h2>
+<p>Google cũng giới thiệu Deep think mode một chế độ suy luận được tăng cường, để giúp giải quyết các vấn đề phức tạp hơn giống như Gemini 2.5 nhưng thật sự nó cho ra kết quả sẽ rất là lâu.</p>
+<ul>
+    <li>Chế độ Deep Think đang được thử nghiệm và dự kiến sẽ sớm có mặt cho người dùng đăng ký Google AI Ultra trong những tuần tới vì vậy mình chưa có cơ hội trải nghiệm nhưng với người dùng bình thường thì chế độ Thinking cũng khá phù hợp.</li>
+</ul>
+
+
+<h2><strong>Khả năng cho nhà phát triển và tốc độ triển khai</strong></h2>
+
+
+<h3>Khả năng coding Gemini 3 tốt như thế nào</h3>
+<p>Gemini 3 có sự thể hiện rất tốt trong khả năng tạo mã code và xử lý các prompt phức tạp để tạo ra giao diện web tương tác và phong phú hơn nhưng thật sự vẫn về khả năng coding mình vẫn tin tưởng Claude Sonnet 4.5 hơn, bởi khi Gemini 3 gặp vấn đề với code sẽ không tập trung xử lý vấn đề đó mà càng sửa càng sai không giống như Claude Sonnet 4.5 điều này gây khó khăn so với những người không hiểu nhiều về code.</p>
+<ul>
+    <li>Về tốc độ, khi sử dụng coding thì Gemini 3 nhanh hơn đáng kể so với Claude Sonnet 4.5 và GPT 5.1 đặc biệt nhanh gấp 2 lần so với Gemini 2.5 đối với các tác vụ nhỏ và trung bình.</li>
+    <li>Để hỗ trợ phát triển các agent, Google cũng phát hành nền tảng phát triển agentic mới là **Google Antigravity** sử dụng khả năng suy luận và công cụ của Gemini 3 để biến AI thành một agent mới có khả năng hoạt động độc lập và tích cực.</li>
+</ul>
+
+
+<h3>Bao giờ có thể sử dụng Gemini 3</h3>
+<p>Gemini 3 đang được triển khai trên toàn bộ hệ sinh thái của Google bắt đầu ngày 19 tháng 11</p>
+<ul>
+    <li>Ở khung chat Gemini thì Google đã cho chọn chế độ **Fast** và **Thinking** chứ không phải lựa chọn LLM như Gemini 2.5 nữa điều đó cũng sẽ cho thấy việc Google tự động hóa việc lựa chọn LLM cho các tác vụ từ đơn giản phức tạp giống như điều mà Open AI đã làm với GPT-5.</li>
+    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ **AI Mode**. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas và Comet.</li>
+</ul>`
+  },
+  {
     id: 'sima-2-ai-agent',
     title: 'Gặp gỡ SIMA 2 – Trợ lý AI chơi game có thể suy nghĩ như người thật!',
     source: 'Google DeepMind',

@@ -460,8 +460,7 @@ function NewsDetailContent({ id }: { id: string }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const { id } = use(Promise.resolve(params));
-  return <NewsDetailContent id={id} />;
+  return <NewsDetailContent id={params.id} />;
 }
 
     
