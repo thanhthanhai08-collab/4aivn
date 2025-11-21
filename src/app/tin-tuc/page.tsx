@@ -144,7 +144,7 @@ export default function NewsPage() {
                 
                 {/* Remaining articles list */}
                 <div className="space-y-8 pt-8 border-t">
-                    {allMockNews.map((article) => (
+                    {remainingArticles.map((article) => (
                         <NewsListItem key={article.id} article={article} />
                     ))}
                 </div>
