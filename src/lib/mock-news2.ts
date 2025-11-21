@@ -1,3 +1,4 @@
+
 import type { NewsArticle } from '@/lib/types';
 
 export const mockNews2: NewsArticle[] = [
@@ -7,9 +8,9 @@ export const mockNews2: NewsArticle[] = [
     source: 'OpenAI',
     author: 'Mai',
     publishedAt: '2025-11-15T09:00:00Z',
-    imageUrl: '/image/news2/Openai-ra-mat-chatpgt-5.1.png',
+    imageUrl: '/image/news2/gpt-5-1-ra-mat.png',
     dataAiHint: 'GPT-5.1 ra mắt 13/11/2025 với hai biến thể (Instant & Thinking) tập trung vào lý luận thích ứng (adaptive reasoning) và cá nhân hóa toàn diện giọng điệu (8 Personality Presets). Mô hình Instant nhanh và thân thiện, Thinking tối ưu cho suy luận phức tạp, đồng thời cải thiện hiệu quả token và tuân thủ hướng dẫn.',
-    content: `<p>OpenAI vừa tung ra  <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT-5.1</a> , phiên bản nâng cấp mới nhất cho GPT-5 cung cấp năng lượng tươi mới cho ChatGPT, vào ngày 13 tháng 11 năm 2025. Bản cập nhật này được mô tả là một bước tiến về năng lực và trải nghiệm, tập trung vào việc làm cho ChatGPT thông minh hơn, dễ trò chuyện hơn và dễ tùy chỉnh hơn bao giờ hết.</p>
+    content: `<p>OpenAI vừa tung ra  <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT-5.1</a> , phiên bản nâng cấp mới nhất cho <a href="/mo-hinh/gpt-5-high" target="_blank">GPT-5</a> cung cấp năng lượng tươi mới cho ChatGPT, vào ngày 13 tháng 11 năm 2025. Bản cập nhật này được mô tả là một bước tiến về năng lực và trải nghiệm, tập trung vào việc làm cho ChatGPT thông minh hơn, dễ trò chuyện hơn và dễ tùy chỉnh hơn bao giờ hết.</p>
 <p>Bản làm mới này được công bố cực nhanh chỉ ba tháng sau khi GPT-5 ra mắt (tháng 8/2025), nhằm giải quyết những phàn nàn từ người dùng rằng mô hình trước đó cảm thấy lạnh lùng và đôi khi xử lý các tác vụ kém hơn các GPT-4o hoặc GPT-4. OpenAI cho biết họ đã lắng nghe ý kiến người dùng, rằng một AI tuyệt vời không chỉ cần thông minh mà còn phải thú vị khi trò chuyện.</p>
 <p>CEO Sam Altman của OpenAI gọi GPT-5.1 là "một bản nâng cấp tốt" và đặc biệt thích những cải tiến về khả năng làm theo hướng dẫn và tính năng tư duy thích ứng.</p>
 
@@ -93,62 +94,6 @@ export const mockNews2: NewsArticle[] = [
 <p>GPT-5.1 sẽ không chỉ là một bản cập nhật thú vị hơn với khả năng suy luận thích ứng mạnh mẽ, mà còn là sự khẳng định vị thế dẫn đầu trong việc hướng tới việc cá nhân hóa hoàn toàn trải nghiệm AI. Với các tùy chọn điều chỉnh giọng điệu và phong cách, OpenAI đang cố gắng đảm bảo rằng mô hình hàng đầu của họ không chỉ thông minh mà còn dễ sử dụng, thân thiện và thích ứng với sở thích riêng của từng người dùng.</p>`
   },
   {
-    id: 'google-deepmind-ra-mat-robot-tx-scara',
-    title: 'Google DeepMind ra mắt robot TX SCARA: Bước tiến mới trong tự động hóa kho hàng',
-    source: 'Google DeepMind',
-    author: 'Mai',
-    publishedAt: '2025-10-30T09:00:00Z',
-    imageUrl: '/image/news2/tx-scara-robot-ra-mat.png',
-    dataAiHint: 'Robot TX SCARA của Google DeepMind ra mắt',
-    content: `<p>Google DeepMind và Telexistence Inc. vừa công bố một bước đột phá trong ngành robot công nghiệp: robot TX SCARA. Được trang bị mô hình nền tảng AI Gordon, TX SCARA có khả năng thực hiện các nhiệm vụ phức tạp như nhặt và đặt hàng (picking and packing) với hiệu suất và độ chính xác cao.</p>
-
-<h2><strong>AI Gordon: Bộ não đằng sau TX SCARA</strong></h2>
-<p>AI Gordon được huấn luyện trên một tập dữ liệu khổng lồ gồm hàng triệu video, hình ảnh và hướng dẫn văn bản, cho phép nó hiểu và thực hiện các nhiệm vụ một cách linh hoạt. Gordon có khả năng khái quát hóa từ dữ liệu đào tạo để xử lý các vật thể và tình huống chưa từng gặp trước đây, một thách thức lớn đối với các hệ thống robot truyền thống.</p>
-[IMAGE:/image/news2/ai-gordon-tx-scara.gif|Minh họa hoạt động của AI Gordon|AI Gordon robot arm]
-<p>Thử nghiệm tại các cửa hàng tiện lợi FamilyMart ở Nhật Bản, nơi robot đảm nhận việc bổ sung hàng hóa lên kệ, cho thấy AI Gordon đã tự động hóa <strong>96%</strong> các thao tác nhặt hàng, giảm đáng kể sự can thiệp của con người.</p>
-
-<h2><strong>Mô hình cộng tác Người – Robot (Hybridity)</strong></h2>
-<p>TX SCARA hoạt động theo mô hình cộng tác, trong đó AI xử lý phần lớn công việc, và con người sẽ can thiệp khi AI gặp khó khăn. Mô hình này không chỉ giúp tăng hiệu quả mà còn giảm chi phí lao động và cải thiện điều kiện làm việc.</p>
-[HUMAN_ROBOT_COLLABORATION_CHART]
-
-<h2><strong>Tầm nhìn tương lai: AI Agent và hơn thế nữa</strong></h2>
-<p>Sự thành công của TX SCARA và AI Gordon là một minh chứng cho tiềm năng của các mô hình nền tảng trong việc tạo ra các robot thông minh, có khả năng thích ứng với môi trường làm việc thực tế. Google DeepMind đặt mục tiêu phát triển các robot AI có thể thực hiện hàng nghìn nhiệm vụ khác nhau, mở ra một kỷ nguyên mới của tự động hóa trong nhiều ngành công nghiệp.</p>
-<p>Dự án này là một bước tiến quan trọng hướng tới việc xây dựng các AI Agent thực thụ, có khả năng tương tác và hỗ trợ con người trong thế giới vật lý.</p>`,
-  },
-  {
-    id: 'trinh-duyet-ai-atlas-va-comet',
-    title: 'Cuộc chiến trình duyệt AI: ChatGPT Atlas vs. Perplexity Comet – Ai sẽ thống trị tương lai?',
-    source: 'Tổng hợp',
-    author: 'Mai',
-    publishedAt: '2025-10-25T09:00:00Z',
-    imageUrl: '/image/news2/trinh-duyet-ai-atlas-comet.png',
-    dataAiHint: 'ChatGPT Atlas và Perplexity Comet',
-    content: `<p>Thị trường trình duyệt web, vốn bị thống trị bởi Google Chrome trong nhiều năm, đang đứng trước một cuộc cách mạng mới với sự ra đời của các trình duyệt AI. Hai cái tên nổi bật nhất hiện nay là <strong>ChatGPT Atlas</strong> của OpenAI và <strong>Perplexity Comet</strong>. Cả hai đều hứa hẹn mang đến một trải nghiệm duyệt web thông minh hơn, nhưng chúng lại có những cách tiếp cận và triết lý hoàn toàn khác nhau.</p>
-
-<h2><strong>Tổng quan thị trường trình duyệt hiện tại</strong></h2>
-<p>Theo dữ liệu từ Statcounter, Google Chrome vẫn đang chiếm lĩnh thị trường với hơn 68% thị phần. Tuy nhiên, sự phát triển của AI đang tạo ra một cơ hội lớn để thay đổi cục diện này.</p>
-[BROWSER_MARKET_SHARE_CHART]
-<p>Dự báo của Market.us cho thấy thị trường trình duyệt AI sẽ tăng trưởng từ 4.5 tỷ USD vào năm 2024 lên đến 76.8 tỷ USD vào năm 2034.</p>
-[AI_BROWSER_MARKET_GROWTH_CHART]
-
-<h2><strong>ChatGPT Atlas: Trợ lý chủ động</strong></h2>
-<p>Atlas của OpenAI được thiết kế như một "trợ lý chủ động", tập trung vào việc tự động hóa các tác vụ thay cho người dùng. Với "Chế độ Tác tử" (Agent Mode), Atlas có thể thực hiện các chuỗi hành động phức tạp như đặt vé máy bay, mua sắm trực tuyến, hoặc lên kế hoạch du lịch chỉ với một vài câu lệnh.</p>
-<p>Điểm mạnh của Atlas là khả năng tích hợp sâu với các mô hình AI hàng đầu của OpenAI, giúp nó hiểu và thực hiện các yêu cầu một cách thông minh. Tuy nhiên, nó cũng có những hạn chế, đặc biệt là trong việc bảo vệ khỏi các trang web độc hại.</p>
-[ATLAS_SECURITY_BENCHMARK_CHART]
-
-<h2><strong>Perplexity Comet: Không gian làm việc tri thức</strong></h2>
-<p>Ngược lại, Comet của Perplexity tự định vị mình là một "không gian làm việc tri thức", tập trung vào việc cung cấp các câu trả lời chính xác và đáng tin cậy. Comet không cố gắng tự động hóa mọi thứ, mà thay vào đó, nó hoạt động như một công cụ nghiên cứu mạnh mẽ, giúp người dùng tìm kiếm, tổng hợp và tổ chức thông tin một cách hiệu quả.</p>
-<p>Comet nổi bật với khả năng trích dẫn nguồn rõ ràng, giúp người dùng dễ dàng kiểm chứng thông tin. Giao diện tối giản và tập trung vào nội dung cũng là một điểm cộng lớn của trình duyệt này.</p>
-
-<h2><strong>So sánh trọng tâm: Tự động hóa vs. Độ chính xác</strong></h2>
-<p>Sự khác biệt cốt lõi giữa Atlas và Comet nằm ở trọng tâm của chúng. Atlas ưu tiên sự tiện lợi và tự động hóa, trong khi Comet đặt độ chính xác và tính xác thực lên hàng đầu.</p>
-[AI_BROWSER_FOCUS_CHART]
-
-<h2><strong>Tương lai của trình duyệt AI</strong></h2>
-<p>Cả Atlas và Comet đều cho thấy tiềm năng to lớn của việc tích hợp AI vào trình duyệt. Trong khi Atlas hứa hẹn một tương lai nơi các tác vụ lặp đi lặp lại được tự động hóa hoàn toàn, thì Comet lại mang đến một công cụ mạnh mẽ cho việc nghiên cứu và học tập.</p>
-<p>Cuộc chiến giữa hai gã khổng lồ này sẽ định hình tương lai của cách chúng ta tương tác với Internet. Liệu người dùng sẽ ưu tiên sự tiện lợi của một trợ lý chủ động hay sự tin cậy của một không gian làm việc tri thức? Câu trả lời sẽ sớm được sáng tỏ.</p>`,
-  },
-  {
     id: 'lo-hong-chatgpt-atlas',
     title: 'Lỗ hổng nghiêm trọng khiến người dùng ChatGPT Atlas có thể bị đánh cắp dữ liệu với mã độc',
     source: 'LayerX Security',
@@ -177,7 +122,7 @@ export const mockNews2: NewsArticle[] = [
 <h3>Hệ thống phòng thủ kém so với đối thủ</h3>
 <p>LayerX Security cũng chỉ ra rằng vấn đề bảo mật trên ChatGPT Atlas trở nên trầm trọng hơn do trình duyệt này thiếu các biện pháp kiểm soát chống lừa đảo mạnh mẽ.</p>
 <p>Trong các thử nghiệm với hơn 100 lỗ hổng và trang lừa đảo, Atlas chỉ ngăn chặn được 5,8% các trang web độc hại. Con số này quá khiêm tốn so với Google Chrome (47%) hay Microsoft Edge (53%), khiến người dùng Atlas "dễ bị tấn công hơn tới 90%" so với các trình duyệt truyền thống.</p>
-[ATLAS_SECURITY_BENCHMARK_CHART]
+[ATLAS_SECURITY_CHART]
 <p>Phát hiện này cho thấy các trình duyệt AI đang trở thành một mặt trận tấn công mới.</p>
 <h3>Cách người dùng ChatGPT tự bảo vệ bản thân</h3>
 <p>Nếu bạn lo lắng về việc thông tin cá nhân bị lưu trữ hoặc bị ô nhiễm trong bộ nhớ AI, bạn có thể thực hiện các biện pháp sau:</p>
@@ -327,7 +272,7 @@ export const mockNews2: NewsArticle[] = [
     </tr>
   </tbody>
 </table>
-<p>Google AI Studio không phải lựa chọn tối ưu để phát triển sản phẩm ở quy mô lớn hay cần bảo mật cao. Thay vào đó, bạn có thể tải mã nguồn (code) từ AI Studio rồi tải lên hoặc có thể sysn trực tiếp qua Github để tiếp tục triển khai tiếp trên những nền tảng khác như Firebase Studio (trong hệ sinh thái Google), Lovable, Replit, hoặc Bolt, Microsoft 365. Các nền tảng này giúp bạn hoàn thiện ứng dụng hơn, với các tính năng back-end mạnh mẽ đồng thời vẫn tận dụng được sức mạnh của AI từ Google AI Studio.</p>`,
+<p>Google AI Studio không phải lựa chọn tối ưu để phát triển sản phẩm ở quy mô lớn hay cần bảo mật cao. Thay vào đó, bạn có thể tải mã nguồn (code) từ AI Studio rồi tải lên hoặc có thể sysn trực tiếp qua Github để tiếp tục triển khai tiếp trên những nền tảng khác như Firebase Studio (trong hệ sinh thái Google), Lovable, Replit, hoặc Bolt, Microsoft 365. Các nền tảng này giúp bạn hoàn thiện ứng dụng hơn, với các tính năng back-end mạnh mẽ đồng thời vẫn tận dụng được sức mạnh của AI từ Google AI Studio.</p>`
   },
   {
     id: 'notebooklm-cong-cu-hoc-tap-nghien-cuu',
