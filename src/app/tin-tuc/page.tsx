@@ -1,4 +1,3 @@
-
 // src/app/tin-tuc/page.tsx
 "use client";
 
@@ -64,7 +63,7 @@ export default function NewsPage() {
   }
 
   const [featuredArticle, secondaryArticle, ...remainingArticles] = allMockNews;
-  const quickViewArticles = remainingArticles.slice(0, 6);
+  const quickViewArticles = allMockNews.slice(0, 7);
 
 
   return (
@@ -145,7 +144,7 @@ export default function NewsPage() {
                 
                 {/* Remaining articles list */}
                 <div className="space-y-8 pt-8 border-t">
-                    {remainingArticles.map((article) => (
+                    {allMockNews.map((article) => (
                         <NewsListItem key={article.id} article={article} />
                     ))}
                 </div>
