@@ -69,6 +69,9 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
     .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
     .replace(/&nbsp;/g, " ")
     .trim();
+    
+  const authorImageSrc = article.author ? `/image/authors/${article.author.toLowerCase().replace(/\s+/g, '-')}.jpg` : "";
+
 
   return (
     <article className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center group">
@@ -94,7 +97,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center space-x-3">
              <Avatar className="h-8 w-8">
-               <AvatarImage src={`/image/authors/${article.author?.toLowerCase().replace(' ', '-')}.jpg`} alt={article.author} />
+               <AvatarImage src={authorImageSrc} alt={article.author} />
               <AvatarFallback>{getAuthorInitials(article.author)}</AvatarFallback>
             </Avatar>
             <div className="flex items-center space-x-2">
