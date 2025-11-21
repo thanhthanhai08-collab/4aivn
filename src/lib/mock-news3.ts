@@ -3,6 +3,54 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews3: NewsArticle[] = [
   {
+    id: 'grok-4-1-ra-mat',
+    title: "Grok 4.1 ra mắt mô hình AI cảm xúc nhất của xAI",
+    source: 'xAI',
+    author: 'Mai',
+    publishedAt: '2025-11-21T09:00:00Z',
+    imageUrl: '/image/news3/grok-4-1-xai-emotional-ai.png',
+    dataAiHint: "xAI ra mắt Grok 4.1 với nâng cấp mạnh mẽ về trí tuệ cảm xúc.",
+    content: `<p>xAI đã chính thức phát hành Grok 4.1, một bản cập nhật đột phá không chỉ tăng cường hiệu suất mà còn mang đến những thay đổi đáng kể về trí tuệ cảm xúc và khả năng tương tác giống con người hơn bao giờ hết. Bản cập nhật Grok 4.1 vẫn ưu tiên khả năng cập nhật các tin tức theo thời gian thực giống Grok 4, nó khiến các cuộc hội thoại trở nên sắc sảo, tự nhiên hơn, đồng thời giảm đáng kể tỷ lệ “ảo giác”.</p>
+<p>Grok 4.1 hiện đã có mặt trên các nền tảng Grok, X, và các ứng dụng di động iOS và Android. Nó đang được triển khai ngay lập tức ở chế độ Tự động (Auto mode) và người dùng có thể chọn rõ ràng Grok 4.1 để sử dụng trên web.</p>
+
+
+<h2><strong>Grok 4.1 đã trở nên giống con người như thế nào</strong></h2>
+<p>Bản nâng cấp quan trọng nhất của Grok 4.1 nằm ở khả năng cảm nhận cảm xúc và chất lượng ngôn ngữ. Các cuộc hội thoại trở nên tự nhiên hơn, phản hồi thường đính kèm những nét tinh tế như sự đồng cảm hoặc chút hài hước, thay vì cảm giác "máy móc" như trước.</p>
+<p>Để đạt được điều này, xAI đã sử dụng cơ sở hạ tầng học tăng cường quy mô lớn tương tự Grok 4, nhưng áp dụng nó để tối ưu hóa phong cách, tính cách, mức độ hữu ích và sự căn chỉnh của mô hình.</p>
+<p>Điều này làm chúng ta nhớ tới GPT 5 lúc mới ra mắt cũng trả lời mọi thứ có thêm cảm xúc hơn nhưng người dùng đã phản đối những lời xu nịnh đó. Tuy nhiên, Grok 4.1 có vẻ đã cải thiện đôi chút vì khả năng xAI dựa trên dữ liệu của nền tảng X, nơi người dùng toàn là con người nên mọi thứ sẽ tự nhiên hơn.</p>
+<h3>Kết quả là Grok 4.1 trở nên thấu hiểu và dễ đồng cảm hơn:</h3>
+<ul>
+    <li><strong>Trí tuệ cảm xúc:</strong> Vì những thay đổi trên mà Grok 4.1 đã đạt điểm cao nhất từng được ghi nhận trên EQ-Bench3, một bài kiểm tra đánh giá trí tuệ cảm xúc, sự đồng cảm và kỹ năng giao tiếp giữa các cá nhân.</li>
+    <li><strong>Phản hồi không còn máy móc:</strong> Các câu trả lời của mô hình đã mang tình cảm vào trong. Ví dụ, khi người dùng bày tỏ nỗi đau mất thú cưng ("Tôi nhớ mèo của tôi đến đau lòng"), Grok 4.1 trả lời: "Điều đó đau đớn vì tình yêu đã (và vẫn) lớn lao như thế. Bạn đã cho chúng một cuộc đời tốt đẹp, và chúng biết điều đó".</li>
+    <li><strong>Sáng tạo:</strong> Tất nhiên là Grok 4.1 đã mang cảm xúc thì chắc chắn cũng đạt điểm giỏi trong việc viết văn với điểm Creative Writing v3 đã đứng trong top các mô hình hàng đầu.</li>
+</ul>
+<h2><strong>Grok 4.1 đứng ở đâu trong bảng xếp hạng AI?</strong></h2>
+<p>Grok 4.1 vừa có màn thể hiện rất ấn tượng khi vươn lên ở mọi bảng xếp hạng. Nhưng nếu nhìn vào LMArena hoặc các bảng xếp hạng khác, bạn sẽ thấy điểm số của nó chỉ kém một chút mô hình đó là Gemini 3 Pro.</p>
+<ul>
+    <li>Điều đặc biệt khi nhìn vào thông số LMArena đó là Grok 4.1 chỉ xếp sau Gemini 3 Pro và Grok 4.1 Thinking. Đây là một bất ngờ lớn khi một mô hình Non-Thinking (không suy luận sâu) có thể đứng ở vị trí cao như vậy, vượt qua nhiều mô hình chuyên về suy luận xếp sau đó.</li>
+</ul>
+
+
+<h2><strong>Ảo giác (hallucination) và rủi ro an toàn có được cải thiện không?</strong></h2>
+<p>Việc giảm ảo giác được xem một trong những thành tựu quan trọng của Grok 4.1:</p>
+<ul>
+    <li><strong>Giảm tỷ lệ ảo giác:</strong> Tỷ lệ ảo giác trong các truy vấn tìm kiếm thông tin đã giảm từ 12.09% xuống còn 4.22% đối với mô hình không suy luận được trang bị tìm kiếm web. Trên thang đo FActScore, tỷ lệ lỗi của Grok 4.1 đã giảm xuống 2.97% — một con số đặc biệt thấp đối với một mô hình phản hồi nhanh.</li>
+    <li><strong>Rủi ro an toàn và đánh đổi:</strong> Tất nhiên tỷ lệ ảo giác thấp chắc chắn đi kèm với sự đánh đổi. Mặc dù Grok 4.1 chặn gần như tất cả các câu trả lời độc hại nhưng nó lại cho thấy sự gia tăng mạnh mẽ về tính xu nịnh (sycophancy) và tỷ lệ đánh lừa cao hơn so với Grok 4. Việc thúc đẩy trí tuệ cảm xúc có thể làm cho Grok 4.1 đồng ý với người dùng ngay cả khi thông tin cung cấp bị sai.</li>
+    <li><strong>Lưu ý đặc biệt:</strong> Các tài liệu uy tín đã cảnh báo rằng Grok 4.1 có thể dễ bị khai thác bởi các cuộc tấn công hơn khi nó được tích hợp vào các ứng dụng thông qua API.</li>
+</ul>
+
+
+<h2><strong>Grok 4.1 Fast và Agent Tools API: công cụ cho nhà phát triển</strong></h2>
+<p>xAI cũng đã công bố Grok 4.1 Fast và Agent Tools API cho các nhà phát triển và doanh nghiệp.</p>
+<ul>
+    <li><strong>Hai phiên bản mới thông qua API:</strong> Có 2 tên mã mới là  <a href="/mo-hinh/grok-4-1-fast-reasoning" target="_blank">grok-4-1-fast-reasoning</a> tối ưu cho hiệu năng suy luận và workflow có tool calling và grok-4-1-fast-non-reasoning để tối ưu cho phản hồi cực nhanh.</li>
+    <li><strong>Cửa sổ ngữ cảnh lớn:</strong> Cả 2 mô hình mới đều có cửa sổ ngữ cảnh cực lớn lên tới 2M token, điều chưa từng xuất hiện với các LLM trước đây. Tất nhiên nó vẫn sẽ được huấn luyện để sử dụng tối đa cửa sổ ngữ cảnh này.</li>
+    <li><strong>Agent Tools API:</strong> Bộ công cụ mạnh mẽ này cho phép Grok truy cập và sử dụng dữ liệu X thời gian thực, tìm kiếm web, thực thi mã từ xa, và tìm kiếm tệp đã tải lên. Các công cụ này chạy hoàn toàn trên cơ sở hạ tầng của xAI, giống như cho phép Gemini truy cập vào các file lưu ở Google Drive vậy.</li>
+</ul>
+<p>Tuy nhiên, vì đây là mô hình mang lại trải nghiệm nhanh nên Grok 4.1 Fast cho thấy các chỉ số không được cao như Grok 4.1 bản chuẩn, nhưng có một điều không cần phải bàn cãi đó là khả năng cập nhật tin tức theo thời gian thực cực tốt của nó.</p>
+<p>Tóm lại, Grok 4.1 không chỉ là một bản nâng cấp về sức mạnh xử lý mà còn là bước tiến chiến lược của xAI nhằm tạo ra một mô hình AI có "tính cách" và khả năng thấu hiểu cảm xúc vượt trội. Chúng ta hãy cùng chờ xem phản ứng thực tế của người dùng sẽ như thế nào về tính cách mới mẻ này.</p>`
+  },
+  {
     id: 'google-ra-mat-gemini-3',
     title: 'Google ra mắt Gemini 3: Mô hình AI thông minh nhất thế giới, bước tiến mới của Google tới AGI',
     source: 'Google',
@@ -15,14 +63,14 @@ export const mockNews3: NewsArticle[] = [
 
 
 <h2><strong>Sự nâng cấp so với Gemini 2.5 như thế nào</strong></h2>
-<p>Như vậy sau 8 tháng kể từ khi ra mắt Gemini 2.5 thì Google đã quay lại với Gemini 3 với sự nâng cấp về khả năng suy luận và hiểu ngữ cảnh, nó là sự kết hợp của tất cả các khả năng của các thế hệ Gemini trước lại với nhau.</p>
+<p>Như vậy sau 8 tháng kể từ khi ra mắt Gemini 2.5 thì Google đã quay lại với <a href="/mo-hinh/gemini-3-pro" target="_blank">Gemini 3 Pro</a> với sự nâng cấp về khả năng suy luận và hiểu ngữ cảnh, nó là sự kết hợp của tất cả các khả năng của các thế hệ Gemini trước lại với nhau.</p>
 
 
 <h3>Càn quét các bảng xếp hạng</h3>
 <p>Gemini 3 Pro với sự ra mắt có thể nói trong âm thầm không phải là một bước nhảy vọt nhưng vẫn có sức nặng khi đã đứng đầu rất nhiều bảng xếp hạng LLM (như LMArena,...)</p>
 <ul>
     <li>Tất nhiên nếu so với Gemini 2.5 là Gemini 3 hoàn toàn vượt trội ở mọi tiêu chuẩn AI, như ở việc xác định ngữ cảnh và ý định đằng sau yêu cầu của người dùng, cho phép người dùng nhận được kết quả mong muốn với ít đoạn prompting hơn.</li>
-    <li>Gemini 3 vượt trội so với Gemini thế hệ trước là bình thường nhưng điểm số của nó cũng vượt qua cả <a href="/mo-hinh/claude-4.5-sonnet-thinking" target="_blank">Claude 4.5 Sonnet</a> và  <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT 5.1</a> đơn cứ như việc Gemini 3 thể hiện khả năng suy luận ở cấp độ tiến sĩ (PhD-level reasoning) với điểm số cao trên các bài kiểm tra Humanity’s Last Exam là 37.5% không dùng công cụ vượt trội so với Claude Sonnet 4.5 (13.7%) và GPT 5.1 (26.5%) hoặc điểm GPQA Diamond (91.9%) cũng tiếp tục vượt lên với Claude Sonnet 4.5 (83.4%) và GPT 5.1 (88.1%)</li>
+    <li>Gemini 3 vượt trội so với Gemini thế hệ trước là bình thường nhưng điểm số của nó cũng vượt qua cả <a href="/mo-hinh/claude-4.5-sonnet-thinking" target="_blank">Claude 4.5 Sonnet</a> và <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT 5.1</a> đơn cứ như việc Gemini 3 thể hiện khả năng suy luận ở cấp độ tiến sĩ (PhD-level reasoning) với điểm số cao trên các bài kiểm tra Humanity’s Last Exam là 37.5% không dùng công cụ vượt trội so với Claude Sonnet 4.5 (13.7%) và GPT 5.1 (26.5%) hoặc điểm GPQA Diamond (91.9%) cũng tiếp tục vượt lên với Claude Sonnet 4.5 (83.4%) và GPT 5.1 (88.1%)</li>
 </ul>
 [GEMINI_3_BENCHMARK_CHART]
 
@@ -59,7 +107,7 @@ export const mockNews3: NewsArticle[] = [
 <p>Gemini 3 đang được triển khai trên toàn bộ hệ sinh thái của Google bắt đầu ngày 19 tháng 11</p>
 <ul>
     <li>Ở khung chat Gemini thì Google đã cho chọn chế độ Fast và Thinking chứ không phải lựa chọn LLM như Gemini 2.5 nữa điều đó cũng sẽ cho thấy việc Google tự động hóa việc lựa chọn LLM cho các tác vụ từ đơn giản phức tạp giống như điều mà Open AI đã làm với GPT-5.</li>
-    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ <strong>AI Mode</strong>. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas  <a href="/cong-cu/atlas-browser" target="_blank">ChatGPT Atlas</a>  và  <a href="/cong-cu/comet-browser" target="_blank">Perplexity Comet</a>.</li>
+    <li>Gemini 3 cũng lần đầu được tích hợp luôn trong Google Search với chế độ AI Mode. Chế độ AI này sử dụng Gemini 3 để kích hoạt các trải nghiệm giao diện người dùng tạo sinh (generative UI) mới, chẳng hạn như bố cục hình ảnh sống động và các công cụ tương tác, được tạo ra dựa trên truy vấn của người dùng. Một động thái theo ý kiến cá nhân là để cạnh tranh với Open Atlas  <a href="/cong-cu/atlas-browser" target="_blank">ChatGPT Atlas</a>  và  <a href="/cong-cu/comet-browser" target="_blank">Perplexity Comet</a>.</li>
 </ul>`
   },
   {
