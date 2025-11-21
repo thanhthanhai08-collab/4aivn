@@ -18,6 +18,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gpt-5-medium', score: 92.0 },
     { modelId: 'gpt-5-mini-high', score: 91.0 },
     { modelId: 'grok-4', score: 93.0 },
+    { modelId: 'grok-4.1-fast-reasoning', score: 89.0 },
     { modelId: 'openai-o3', score: 88.0 },
     { modelId: 'gemini-2.5-pro', score: 88.0 },
     { modelId: 'deepseek-r1-jan25', score: 76.0 },
@@ -45,6 +46,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
+    { modelId: 'grok-4.1-fast-reasoning', score: 82.0 },
     { modelId: 'openai-o3-pro', score: 81.0 },
     { modelId: 'gpt-5-mini-high', score: 84.0 },
     { modelId: 'openai-o3', score: 81.0 },
@@ -78,6 +80,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
   ],
   mmlu: [
     { modelId: 'grok-4', score: 87.0 },
+    { modelId: 'grok-4.1-fast-reasoning', score: 85.0 },
     { modelId: 'claude-4.5-haiku-thinking', score: 76.0 },
     { modelId: 'gemini-2.5-pro', score: 86.0 },
     { modelId: 'openai-o3', score: 85.0 },
@@ -110,6 +113,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
+      { modelId: 'grok-4.1-fast-reasoning', score: 53.0 },
       { modelId: 'qwen3-235b-reasoning', score: 51.0 },
       { modelId: 'gpt-oss-120b-high', score: 69.0 },
       { modelId: 'openai-o3', score: 71.0 },
@@ -142,6 +146,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
+      { modelId: 'grok-4.1-fast-reasoning', score: 85.0 },
       { modelId: 'gemini-2.5-pro', score: 84.0 },
       { modelId: 'openai-o3-pro', score: 84.0 },
       { modelId: 'openai-o3', score: 83.0 },
@@ -174,6 +179,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'gemini-3-pro', score: 91.0 },
   ],
   'aa-lcr': [
+    { modelId: 'grok-4.1-fast-reasoning', score: 68.0 },
     { modelId: 'deepseek-r1-jan25', score: 55.0 },
     { modelId: 'qwen3-max', score: 47.0 },
     { modelId: 'gpt-5-nano-high', score: 42.0},
@@ -186,6 +192,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gemini-3-pro', score: 71.0 },
   ],
    'agentic-coding': [
+    { modelId: 'grok-4.1-fast-reasoning', score: 23.0 },
     { modelId: 'openai-o3', score: 35 },
     { modelId: 'grok-4', score: 38 },
     { modelId: 'gemini-2.5-pro', score: 25 },
@@ -218,6 +225,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gemini-3-pro', score: 39 },
   ],
   'agentic-tool-use': [
+    { modelId: 'grok-4.1-fast-reasoning', score: 93.0 },
     { modelId: 'openai-o3', score: 81 },
     { modelId: 'grok-4', score: 75 },
     { modelId: 'gemini-2.5-pro', score: 54 },
@@ -250,6 +258,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gemini-3-pro', score: 87 },
   ],
   'humanitys-exam': [
+    { modelId: 'grok-4.1-fast-reasoning', score: 17.6 },
     { modelId: 'openai-o3', score: 20 },
     { modelId: 'grok-4', score: 23.9 },
     { modelId: 'gemini-2.5-pro', score: 21.1 },
@@ -282,6 +291,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'gemini-3-pro', score: 37.2 },
   ],
   scicode: [
+    { modelId: 'grok-4.1-fast-reasoning', score: 44.0 },
     { modelId: 'openai-o3', score: 41 },
     { modelId: 'grok-4', score: 46 },
     { modelId: 'gemini-2.5-pro', score: 43 },

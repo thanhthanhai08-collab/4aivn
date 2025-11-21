@@ -77,6 +77,20 @@ export const mockAIModels: AIModel[] = [
     latencyFirstChunkSeconds: 18.74,
   },
   {
+    id: 'grok-4.1-fast-reasoning',
+    name: 'Grok 4.1 Fast (Reasoning)',
+    type: 'Mô hình ngôn ngữ lớn',
+    developer: 'xAI',
+    description: 'Grok 4.1 Fast (Reasoning) là phiên bản cập nhật của dòng Grok, tối ưu hóa cho tốc độ và khả năng suy luận. Với hiệu suất cao và độ trễ thấp, nó là lựa chọn lý tưởng cho các ứng dụng tương tác thời gian thực đòi hỏi câu trả lời nhanh và logic.',
+    logoUrl: '/image/Logo Grok cho bảng xếp hạng.png',
+    link: 'https://x.ai/',
+    contextLengthToken: '2m',
+    intelligenceScore: 64,
+    pricePerMillionTokens: 0.35,
+    speedTokensPerSecond: 99.0,
+    latencyFirstChunkSeconds: 14.55,
+  },
+  {
     id: 'gpt-5-medium',
     name: 'GPT-5 (medium)',
     type: 'Mô hình ngôn ngữ lớn',
@@ -480,6 +494,7 @@ export const mockAIModels: AIModel[] = [
     
 
     
+
 
 
 

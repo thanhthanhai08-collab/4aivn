@@ -29,6 +29,18 @@ const data = {
     { name: "IFBench", score: 54 },
     { name: "AIME 2025", score: 93 },
   ],
+    'grok-4.1-fast-reasoning': [
+    { name: "Agentic Coding", score: 23 },
+    { name: "Agentic Tool Use", score: 93 },
+    { name: "AA-LCR", score: 68 },
+    { name: "Humanity's Exam", score: 17.6 },
+    { name: "MMLU-Pro", score: 85 },
+    { name: "GPQA Diamond", score: 85 },
+    { name: "LiveCodeBench", score: 82 },
+    { name: "SciCode", score: 44 },
+    { name: "IFBench", score: 53 },
+    { name: "AIME 2025", score: 89 },
+  ],
   'gemini-2.5-pro': [
     { name: "Agentic Coding", score: 25 },
     { name: "Agentic Tool Use", score: 54 },
