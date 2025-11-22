@@ -47,7 +47,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
     { modelId: 'grok-4.1-fast-reasoning', score: 82.0 },
-    { modelId: 'openai-o3-pro', score: 81.0 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 81.0 },
     { modelId: 'gpt-5-mini-high', score: 84.0 },
     { modelId: 'openai-o3', score: 81.0 },
     { modelId: 'gemini-2.5-pro', score: 80.0 },
@@ -148,7 +148,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'grok-4', score: 88.0 },
       { modelId: 'grok-4.1-fast-reasoning', score: 85.0 },
       { modelId: 'gemini-2.5-pro', score: 84.0 },
-      { modelId: 'openai-o3-pro', score: 84.0 },
+      { modelId: 'qwen3-next-80b-a3b-reasoning', score: 84.0 },
       { modelId: 'openai-o3', score: 83.0 },
       { modelId: 'deepseek-r1-jan25', score: 81.0 },
       { modelId: 'deepseek-v3.1-terminus-reasoning', score: 79.0 },
