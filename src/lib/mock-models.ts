@@ -471,7 +471,7 @@ export const mockAIModels: AIModel[] = [
     logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png',
     link: 'https://openai.com/',
     contextLengthToken: '400k',
-    intelligenceScore: 62,
+    intelligenceScore: 64,
     pricePerMillionTokens: 0.69,
     speedTokensPerSecond: 104.9,
     latencyFirstChunkSeconds: 23.97,
@@ -511,3 +511,6 @@ export const mockAIModels: AIModel[] = [
 
 
 
+
+
+    
