@@ -333,7 +333,7 @@ export const mockAIModels: AIModel[] = [
     description: 'Qwen3 VL 235B A22B là phiên bản nâng cao trong dòng Qwen3, được tối ưu hóa cho khả năng suy luận và xử lý ngôn ngữ phức tạp. Với kiến trúc 235 tỷ tham số, mô hình này cung cấp hiệu suất vượt trội trong các tác vụ đòi hỏi sự hiểu biết sâu sắc về ngữ cảnh và logic.',
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: 'https://qwen.aliyun.com/',
-    contextLengthToken: '256k',
+    contextLengthToken: '262k',
     intelligenceScore: 54,
     pricePerMillionTokens: 2.63,
     speedTokensPerSecond: 42.3,
@@ -514,4 +514,5 @@ export const mockAIModels: AIModel[] = [
 
 
     
+
 
