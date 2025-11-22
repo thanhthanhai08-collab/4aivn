@@ -195,24 +195,26 @@ export default function HomePage() {
       
        {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
-        <div className="container space-y-4 text-center">
-             <div className="flex items-center justify-center space-x-4 mb-4">
-                <div className="text-center">
-                    <div className="text-6xl font-extrabold text-red-600">80</div>
-                    <div className="text-xl font-bold text-blue-800 -mt-1">năm</div>
-                </div>
-                <div className="text-blue-800 flex flex-col items-start text-left">
-                    <div className="text-4xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
-                    <div className="text-3xl font-bold">1945 - 2025</div>
+        <div className="container">
+            <div className="space-y-4 text-center">
+                 <div className="flex items-center justify-center space-x-4 mb-4">
+                    <div className="text-center">
+                        <div className="text-6xl font-extrabold text-red-600">80</div>
+                        <div className="text-xl font-bold text-blue-800 -mt-1">năm</div>
+                    </div>
+                    <div className="text-blue-800 flex flex-col items-start text-left">
+                        <div className="text-4xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
+                        <div className="text-3xl font-bold">1945 - 2025</div>
+                    </div>
                 </div>
             </div>
-          <Image 
-            src="/image/Banner quốc khánh.png"
-            alt="Banner kỷ niệm 80 năm quốc khánh Việt Nam"
-            width={1920}
-            height={250}
-            className="w-full h-auto rounded-lg shadow-lg"
-          />
+            <Image 
+                src="/image/Banner quốc khánh.png"
+                alt="Banner kỷ niệm 80 năm quốc khánh Việt Nam"
+                width={1920}
+                height={250}
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
         </div>
       </section>
 
@@ -384,5 +386,3 @@ export default function HomePage() {
     </AppLayout>
   );
 }
-
-    
