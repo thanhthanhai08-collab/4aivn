@@ -43,11 +43,12 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 88.0 },
     { modelId: 'claude-4.1-opus-thinking', score: 80.0 },
     { modelId: 'gemini-3-pro', score: 96.0 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 84.0 },
   ],
   livecode: [
     { modelId: 'grok-4', score: 82.0 },
     { modelId: 'grok-4.1-fast-reasoning', score: 82.0 },
-    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 81.0 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 78.0 },
     { modelId: 'gpt-5-mini-high', score: 84.0 },
     { modelId: 'openai-o3', score: 81.0 },
     { modelId: 'gemini-2.5-pro', score: 80.0 },
@@ -110,6 +111,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 84.0 },
     { modelId: 'claude-4.1-opus-thinking', score: 88.0 },
     { modelId: 'gemini-3-pro', score: 90.0 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 82.0 },
   ],
   ifbench: [
       { modelId: 'grok-4', score: 54.0 },
@@ -143,12 +145,13 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
       { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 56.0 },
       { modelId: 'claude-4.1-opus-thinking', score: 55.0 },
       { modelId: 'gemini-3-pro', score: 70.0 },
+      { modelId: 'qwen3-next-80b-a3b-reasoning', score: 61.0 },
   ],
   gpqa: [
       { modelId: 'grok-4', score: 88.0 },
       { modelId: 'grok-4.1-fast-reasoning', score: 85.0 },
       { modelId: 'gemini-2.5-pro', score: 84.0 },
-      { modelId: 'qwen3-next-80b-a3b-reasoning', score: 84.0 },
+      { modelId: 'qwen3-next-80b-a3b-reasoning', score: 76.0 },
       { modelId: 'openai-o3', score: 83.0 },
       { modelId: 'deepseek-r1-jan25', score: 81.0 },
       { modelId: 'deepseek-v3.1-terminus-reasoning', score: 79.0 },
@@ -190,6 +193,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'seed-oss-36b-instruct', score: 58.0 },
     { modelId: 'claude-4.1-opus-thinking', score: 66.0 },
     { modelId: 'gemini-3-pro', score: 71.0 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 60.0 },
   ],
    'agentic-coding': [
     { modelId: 'grok-4.1-fast-reasoning', score: 23.0 },
@@ -223,6 +227,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 11 },
     { modelId: 'claude-4.1-opus-thinking', score: 32 },
     { modelId: 'gemini-3-pro', score: 39 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 9 },
   ],
   'agentic-tool-use': [
     { modelId: 'grok-4.1-fast-reasoning', score: 93.0 },
@@ -256,6 +261,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 54 },
     { modelId: 'claude-4.1-opus-thinking', score: 71 },
     { modelId: 'gemini-3-pro', score: 87 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 42 },
   ],
   'humanitys-exam': [
     { modelId: 'grok-4.1-fast-reasoning', score: 17.6 },
@@ -289,6 +295,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 10.1 },
     { modelId: 'claude-4.1-opus-thinking', score: 11.9 },
     { modelId: 'gemini-3-pro', score: 37.2 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 11.7 },
   ],
   scicode: [
     { modelId: 'grok-4.1-fast-reasoning', score: 44.0 },
@@ -322,6 +329,7 @@ const allBenchmarks: Record<string, { modelId: string; score: number }[]> = {
     { modelId: 'qwen3-vl-235b-a22b-reasoning', score: 40 },
     { modelId: 'claude-4.1-opus-thinking', score: 41 },
     { modelId: 'gemini-3-pro', score: 56 },
+    { modelId: 'qwen3-next-80b-a3b-reasoning', score: 39 },
   ]
 };
 

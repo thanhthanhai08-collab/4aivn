@@ -377,6 +377,18 @@ const data = {
     { name: 'IFBench', score: 70 },
     { name: 'AIME 2025', score: 96 },
   ],
+  'qwen3-next-80b-a3b-reasoning': [
+    { name: "Agentic Coding", score: 9 },
+    { name: "Agentic Tool Use", score: 42 },
+    { name: "AA-LCR", score: 60 },
+    { name: "Humanity's Exam", score: 11.7 },
+    { name: "MMLU-Pro", score: 82 },
+    { name: "GPQA Diamond", score: 76 },
+    { name: "LiveCodeBench", score: 78 },
+    { name: "SciCode", score: 39 },
+    { name: "IFBench", score: 61 },
+    { name: "AIME 2025", score: 84 },
+  ],
 };
 
 

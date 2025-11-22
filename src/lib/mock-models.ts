@@ -484,11 +484,11 @@ export const mockAIModels: AIModel[] = [
     description: `Qwen3 Next 80B A3B là một phiên bản nâng cấp trong dòng mô hình Qwen của Alibaba, được tối ưu hóa cho khả năng suy luận phức tạp. Với 80 tỷ tham số và kiến trúc A3B tiên tiến, mô hình này cung cấp hiệu suất vượt trội trong các tác vụ đòi hỏi sự hiểu biết sâu sắc, logic và khả năng giải quyết vấn đề nhiều bước.`,
     logoUrl: '/image/Logo Qwen cho bảng xếp hạng.png',
     link: 'https://qwen.aliyun.com/',
-    contextLengthToken: '200k',
-    intelligenceScore: 61,
-    pricePerMillionTokens: 3.5,
-    speedTokensPerSecond: 109.2,
-    latencyFirstChunkSeconds: 14.11,
+    contextLengthToken: '262k',
+    intelligenceScore: 54,
+    pricePerMillionTokens: 1.88,
+    speedTokensPerSecond: 170.0,
+    latencyFirstChunkSeconds: 1.14,
   },
 ];
     
@@ -514,3 +514,4 @@ export const mockAIModels: AIModel[] = [
 
 
     
+
