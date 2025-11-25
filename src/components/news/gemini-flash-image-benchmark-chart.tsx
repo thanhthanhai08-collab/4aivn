@@ -9,7 +9,7 @@ const data = [
   { name: 'FLUX.1\nKontext [max]', throughput: 75000, elo: 1075, color: '#8884d8' },
   { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1129, color: '#82ca9d' },
   { name: 'Imagen 4\nUltra 06-06', throughput: 119000, elo: 1135, color: '#ffc658' },
-  { name: 'Gemini 2.5\nFlash Image', throughput: 123000, elo: 1147, color: '#4185F4' },
+  { name: 'Nano Banana Pro', throughput: 123000, elo: 1147, color: '#4185F4' },
 ];
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -105,3 +105,5 @@ export function GeminiFlashImageBenchmarkChart() {
     </Card>
   )
 }
+
+    

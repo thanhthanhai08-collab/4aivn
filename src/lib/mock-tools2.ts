@@ -219,15 +219,15 @@ export const mockLovableTool: Tool[] = [
     `,
   },
   {
-    id: 'gemini-2.5-flash-image',
-    name: 'Gemini 2.5 Flash Image',
+    id: 'nano-banana-pro',
+    name: 'Nano Banana Pro',
     context: 'Tạo hình ảnh',
     developer: 'Google',
-    description: 'Gemini 2.5 Flash Image là mô hình tạo và chỉnh sửa ảnh nhanh, mạnh mẽ từ Google. Nó nổi bật với khả năng chỉnh sửa chi tiết, duy trì sự nhất quán của nhân vật và xử lý các yêu cầu phức tạp trong một lần prompt.',
+    description: 'Nano Banana Pro là mô hình tạo và chỉnh sửa ảnh nhanh, mạnh mẽ từ Google, nổi bật với khả năng chỉnh sửa chi tiết, duy trì sự nhất quán của nhân vật và xử lý các yêu cầu phức tạp trong một prompt duy nhất.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
     link: 'https://deepmind.google/technologies/gemini/',
     imageUrl: '/image/Ảnh công cụ Gemini 2.5 Flash Image.png',
-    longDescription: '<p>Gemini 2.5 Flash Image là một mô hình AI đa năng của Google, được thiết kế để tạo và chỉnh sửa hình ảnh với tốc độ và chất lượng cao. Nó không chỉ tạo ra hình ảnh từ văn bản mà còn cho phép người dùng chỉnh sửa các chi tiết nhỏ trong ảnh, thay đổi phong cách mà vẫn giữ nguyên bố cục. Một trong những điểm mạnh nhất của mô hình này là khả năng duy trì sự nhất quán của nhân vật qua nhiều lần tạo, một thách thức lớn đối với nhiều công cụ AI khác.</p><p>Với khả năng hiểu các prompt đa bước, Gemini 2.5 Flash Image có thể xử lý các yêu cầu phức tạp như thay đổi nguồn sáng và vật liệu trong cùng một lệnh, mang lại sự linh hoạt và kiểm soát sáng tạo cho người dùng. Đây là công cụ lý tưởng cho các nhà thiết kế, nghệ sĩ và người sáng tạo nội dung muốn tạo ra các sản phẩm hình ảnh độc đáo và chuyên nghiệp.</p>',
+    longDescription: '<p>Nano Banana Pro (trước đây là Gemini 2.5 Flash Image) là một mô hình AI đa năng của Google, được thiết kế để tạo và chỉnh sửa hình ảnh với tốc độ và chất lượng cao. Nó không chỉ tạo ra hình ảnh từ văn bản mà còn cho phép người dùng chỉnh sửa các chi tiết nhỏ trong ảnh, thay đổi phong cách mà vẫn giữ nguyên bố cục. Một trong những điểm mạnh nhất của mô hình này là khả năng duy trì sự nhất quán của nhân vật qua nhiều lần tạo, một thách thức lớn đối với nhiều công cụ AI khác.</p><p>Với khả năng hiểu các prompt đa bước, Nano Banana Pro có thể xử lý các yêu cầu phức tạp như thay đổi nguồn sáng và vật liệu trong cùng một lệnh, mang lại sự linh hoạt và kiểm soát sáng tạo cho người dùng. Đây là công cụ lý tưởng cho các nhà thiết kế, nghệ sĩ và người sáng tạo nội dung muốn tạo ra các sản phẩm hình ảnh độc đáo và chuyên nghiệp.</p>',
     features: [
       "Chỉnh sửa chi tiết hình ảnh mà vẫn giữ bố cục.",
       "Duy trì sự nhất quán của nhân vật qua nhiều lần tạo.",
@@ -577,7 +577,6 @@ export const mockLovableTool: Tool[] = [
     longDescription: '<p>Replit là một nền tảng lập trình dựa trên đám mây, cung cấp một môi trường phát triển tích hợp (IDE) mạnh mẽ ngay trong trình duyệt của bạn. Nó hỗ trợ hơn 50 ngôn ngữ lập trình, cho phép bạn viết mã, chạy và gỡ lỗi các dự án mà không cần cài đặt bất kỳ phần mềm nào. Replit nổi bật với khả năng cộng tác theo thời gian thực, cho phép nhiều người cùng làm việc trên một dự án.</p><p>Nền tảng này cũng tích hợp AI thông qua Replit AI, một trợ lý ảo giúp viết mã, gỡ lỗi và giải thích code. Với các tính năng như triển khai ứng dụng dễ dàng và một cộng đồng lớn mạnh, Replit là công cụ lý tưởng cho việc học lập trình, tạo mẫu nhanh và phát triển các dự án cá nhân cũng như chuyên nghiệp.</p>',
     logoUrl: '/image/Logo-replit.png',
     link: 'https://replit.com/',
-    imageUrl: '/image/Anh-cong-cu-replit.png',
     features: [
       "IDE trực tuyến hỗ trợ hơn 50 ngôn ngữ lập trình.",
       "Cộng tác viết mã theo thời gian thực (Multiplayer).",
@@ -630,5 +629,7 @@ export const mockLovableTool: Tool[] = [
 
 
 
+
+    
 
     

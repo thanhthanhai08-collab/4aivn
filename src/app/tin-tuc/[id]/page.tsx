@@ -60,7 +60,7 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[GEMINI_FLASH_IMAGE_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
+  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
@@ -119,7 +119,7 @@ const renderContent = (content: string, articleId: string) => {
         return null;
     }
     
-    if (part === '[GEMINI_FLASH_IMAGE_CHART]') {
+    if (part === '[NANO_BANANA_CHART]') {
         if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
             return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
         }
@@ -466,5 +466,7 @@ function NewsDetailContent({ id }: { id: string }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent id={params.id} />;
 }
+
+    
 
     

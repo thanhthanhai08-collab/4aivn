@@ -5,7 +5,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const data = [
-  { name: 'Gemini 2.5\nFlash Image', throughput: 123000, elo: 1362, color: '#4185F4' },
+  { name: 'Nano Banana Pro', throughput: 123000, elo: 1362, color: '#4185F4' },
   { name: 'ChatGPT 4o /\nGPT Image 1 (High)', throughput: 28000, elo: 1170, color: '#82ca9d' },
   { name: 'FLUX.1\nKontext [max]', throughput: 75000, elo: 1191, color: '#8884d8' },
   { name: 'Qwen Image\nEdit', throughput: 20000, elo: 1145, color: '#ffc658' },
@@ -104,3 +104,5 @@ export function ImageEditingBenchmarkChart() {
     </Card>
   )
 }
+
+    
