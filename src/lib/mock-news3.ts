@@ -3,6 +3,52 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews3: NewsArticle[] = [
   {
+    id: 'nano-banana-pro-ra-mat',
+    title: 'Nano Banana Pro (Gemini 3 Pro Image) đã ra mắt: Sự nâng cấp bùng nổ thách thức mọi đối thủ',
+    source: 'Google',
+    author: 'Mai',
+    publishedAt: '2025-11-25T09:00:00Z',
+    imageUrl: '/image/news3/nano-banana-pro-gemini-3-image-generation.png',
+    dataAiHint: 'Nano Banana Pro (Gemini 3 Pro Image) ra mắt với nâng cấp đột phá.',
+    content: `<p>Sự ra mắt của Nano Banana Pro (tên chính thức là Gemini 3 Pro Image), được xây dựng trên nền tảng Gemini 3 Pro, thực sự là một sự nâng cấp xuất sắc.</p>
+<p>Cá nhân tôi vẫn còn bất ngờ khi Gemini 3 giờ đây xuất hiện thêm Nano Banana Pro. Nó không chỉ mang đến một bước nâng cấp lớn so với Nano Banana mà có thể sẽ khiến nhiều người quên đi những mô hình, nền tảng tạo ảnh khác như Midjourney, GPT Image 1 hay thậm chí phần nào đó là Photoshop.</p>
+
+
+<h2><strong>Trải nghiệm thực tế của Nano Banana Pro như thế nào?</strong></h2>
+<p>Nano Banana Pro được thiết kế để tận dụng khả năng suy luận nâng cao và hiểu biết sâu rộng về thế giới thực của Gemini 3. Phiên bản Pro này không chỉ giúp tạo ra hình ảnh đẹp đơn thuần mà còn giúp xây dựng nội dung hữu ích hơn, chẳng hạn như sơ đồ minh họa hoặc infographic chính xác dựa trên thông tin thực tế hoặc dữ liệu do người dùng cung cấp.</p>
+<p>Trong quá trình thử nghiệm, có 4 điểm nâng cấp lớn nhất mang lại sự khác biệt rõ rệt so với bản Nano Banana (Gemini 2.5 Flash Image):</p>
+<ul>
+    <li><strong>Chữ (text) trong ảnh có thể chính xác 99%:</strong> Chúng ta đều biết điểm yếu chung của các AI tạo ảnh là khả năng xử lý văn bản rất kém, dù là tiếng Anh hay tiếng Việt. Nhưng với sự trợ giúp từ Gemini 3, câu chuyện đã khác, chúng ta hoàn toàn có thể chuyển đổi tài liệu, sách, ảnh từ tiếng Anh sang tiếng Việt hoặc tô màu chúng cực kỳ chính xác. Điều này trước kia vốn là nhiệm vụ bất khả thi.</li>
+    <li><strong>Độ phân giải cực cao (4K):</strong> Trước đây, muốn ảnh AI đạt tới 4K để phục vụ in ấn hay quảng cáo là một cơn ác mộng, thường phải tốn công sức làm nét lại. Giờ đây, chất lượng 4K không còn là điều quá xa vời với Nano Banana Pro, còn các độ phân giải thấp hơn như 2K thì mô hình này cân dư sức.</li>
+    <li><strong>Khả năng suy luận và hỗ trợ Google Search:</strong> Nhờ sự hỗ trợ của Gemini 3 Pro, mô hình hoàn toàn có khả năng suy luận qua các câu lệnh phức tạp. Đặc biệt hơn, nó có thể sử dụng Google Search để lấy dữ liệu thời gian thực tạo ra hình ảnh. Ví dụ: Bạn có thể yêu cầu vẽ hình ảnh ăn mừng dựa trên kết quả của một trận thể thao vừa kết thúc hoặc có thể tạo hình ảnh thiệt hại của 2 cơn bão vừa xảy ra ở miền trung và dưới đây là kết quả mình cho ra.</li>
+[IMAGE:/image/news3/bao-cao-thiet-hai-bao-lu-nano-banana-pro.png|Báo cáo thiệt hại bão lũ|Dựa trên sức mạnh nano banana pro]
+
+
+    <li><strong>Giữ khuôn mặt/khung hình cực ổn định:</strong> Đối với những ai làm thương hiệu hoặc cần sự nhất quán, tính năng này cực kỳ cần thiết. Mô hình có khả năng giữ nguyên khuôn mặt hoặc khung hình của nhân vật xuất sắc ngay cả khi thay đổi bối cảnh, trang phục. Nhờ vậy, bạn có thể dễ dàng tạo ra toàn bộ một bộ nhận diện thương hiệu đồng nhất.</li>
+[IMAGE:/image/news3/nano-banana-pro-giu-on-dinh-khuon-mat.png|Khả năng giữ ổn định khuôn mặt|Dựa trên sức mạnh nano banana pro]
+</ul>
+
+
+<h2><strong>Những điều Nano Banana Pro cần cải thiện</strong></h2>
+<p>Mặc dù rất ấn tượng, Nano Banana Pro vẫn gặp khó khăn hoặc một số lỗi nhỏ cần cải thiện:</p>
+<ul>
+    <li><strong>Logic sơ đồ đôi khi hơi "ngáo":</strong> Dù có Gemini 3 hỗ trợ nhưng khoản vẽ sơ đồ hay infographic nhiều lúc vẫn bị lộn xộn (ví dụ: bước 2 lại nhảy lên nằm trước bước 1) dù hình ảnh chất lượng. Lỗi này khó sửa bằng prompt, thường phải tạo lại từ đầu.</li>
+    <li><strong>Chữ trong ảnh vẫn xuất hiện lỗi chính tả:</strong> Lâu lâu AI vẫn cho ra bức ảnh sai chính tả với tỷ lệ khoảng 1/10. Mức này hoàn toàn chấp nhận được nhưng chưa hoàn hảo 100%.</li>
+    <li><strong>Ghép ảnh chưa thực sự mượt: Khả năng hòa trộn khuôn mặt vào khung hình mới vẫn chưa được tự nhiên lắm, đối với những người khó tính thì nhìn bằng mắt thường là thấy hơi giả trân. Nên với những ca khó cần độ chính xác cao, chúng ta vẫn phải nhờ đến bàn tay hậu kỳ của các bạn designer.</li>
+</ul>
+
+
+<h2><strong>Làm thế nào để trải nghiệm Nano Banana Pro?</strong></h2>
+<p>Nano Banana Pro có thể sử dụng được hoàn toàn miễn phí trong ứng dụng Gemini.</p>
+<ol>
+    <li>Mở ứng dụng Gemini (hoặc truy cập trên web).</li>
+    <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini để tạo ảnh.</li>
+    <li>Chọn tùy chọn trong mục công cụ chọn <strong>"Create images"</strong> (Tạo hình ảnh).</li>
+</ol>
+<p>Người dùng gói miễn phí sẽ nhận được một hạn mức sử dụng Pro giới hạn. Sau khi dùng hết hạn mức này, hệ thống sẽ tự động chuyển về mô hình Nano Banana gốc. Người dùng đăng ký các gói cao hơn (Google AI Plus, Pro, và Ultra) sẽ nhận được hạn mức sử dụng Nano Banana Pro cao hơn đáng kể.</p>
+<p>Tóm lại, Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
+  },
+  {
     id: 'grok-4-1-ra-mat',
     title: "Grok 4.1 ra mắt mô hình AI cảm xúc nhất của xAI",
     source: 'xAI',
