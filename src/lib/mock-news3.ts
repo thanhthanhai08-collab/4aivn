@@ -40,11 +40,11 @@ export const mockNews3: NewsArticle[] = [
 
 <h2><strong>Làm thế nào để trải nghiệm Nano Banana Pro?</strong></h2>
 <p>Nano Banana Pro có thể sử dụng được hoàn toàn miễn phí trong ứng dụng Gemini.</p>
-<ol>
+<ul>
     <li>Mở ứng dụng Gemini (hoặc truy cập trên web).</li>
     <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini 3 để tạo ảnh.</li>
     <li>Chọn tùy chọn trong mục công cụ chọn <strong>"Create images"</strong> (Tạo hình ảnh).</li>
-</ol>
+</ul>
 <p>Người dùng gói miễn phí sẽ nhận được một hạn mức sử dụng Pro giới hạn. Sau khi dùng hết hạn mức này, hệ thống sẽ tự động chuyển về mô hình Nano Banana gốc. Người dùng đăng ký các gói cao hơn (Google AI Plus, Pro, và Ultra) sẽ nhận được hạn mức sử dụng Nano Banana Pro cao hơn đáng kể.</p>
 <p>Vậy là Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
   },
