@@ -10,7 +10,7 @@ export const mockNews3: NewsArticle[] = [
     publishedAt: '2025-11-25T09:00:00Z',
     imageUrl: '/image/news3/nano-banana-pro-gemini-3-image-generation.png',
     dataAiHint: 'Nano Banana Pro (Gemini 3 Pro Image) ra mắt với nâng cấp đột phá.',
-    content: `<p>Sự ra mắt của Nano Banana Pro (tên chính thức là Gemini 3 Pro Image), được xây dựng trên nền tảng Gemini 3 Pro, thực sự là một sự nâng cấp xuất sắc.</p>
+    content: `<p>Sự ra mắt của <a href="/cong-cu/nano-banana-pro" target="_blank">Nano Banana Pro</a>  (tên chính thức là Gemini 3 Pro Image), được xây dựng trên nền tảng Gemini 3 Pro, thực sự là một sự nâng cấp xuất sắc.</p>
 <p>Cá nhân tôi vẫn còn bất ngờ khi Gemini 3 giờ đây xuất hiện thêm Nano Banana Pro. Nó không chỉ mang đến một bước nâng cấp lớn so với Nano Banana mà có thể sẽ khiến nhiều người quên đi những mô hình, nền tảng tạo ảnh khác như Midjourney, GPT Image 1 hay thậm chí phần nào đó là Photoshop.</p>
 
 
@@ -34,7 +34,7 @@ export const mockNews3: NewsArticle[] = [
 <ul>
     <li><strong>Logic sơ đồ đôi khi hơi "ngáo":</strong> Dù có Gemini 3 hỗ trợ nhưng khoản vẽ sơ đồ hay infographic nhiều lúc vẫn bị lộn xộn (ví dụ: bước 2 lại nhảy lên nằm trước bước 1) dù hình ảnh chất lượng. Lỗi này khó sửa bằng prompt, thường phải tạo lại từ đầu.</li>
     <li><strong>Chữ trong ảnh vẫn xuất hiện lỗi chính tả:</strong> Lâu lâu AI vẫn cho ra bức ảnh sai chính tả với tỷ lệ khoảng 1/10. Mức này hoàn toàn chấp nhận được nhưng chưa hoàn hảo 100%.</li>
-    <li><strong>Ghép ảnh chưa thực sự mượt: Khả năng hòa trộn khuôn mặt vào khung hình mới vẫn chưa được tự nhiên lắm, đối với những người khó tính thì nhìn bằng mắt thường là thấy hơi giả trân. Nên với những ca khó cần độ chính xác cao, chúng ta vẫn phải nhờ đến bàn tay hậu kỳ của các bạn designer.</li>
+    <li><strong>Ghép ảnh chưa thực sự mượt:</strong> Khả năng hòa trộn khuôn mặt vào khung hình mới vẫn chưa được tự nhiên lắm, đối với những người khó tính thì nhìn bằng mắt thường là thấy hơi giả trân. Nên với những ca khó cần độ chính xác cao, chúng ta vẫn phải nhờ đến bàn tay hậu kỳ của các bạn designer.</li>
 </ul>
 
 
@@ -42,11 +42,11 @@ export const mockNews3: NewsArticle[] = [
 <p>Nano Banana Pro có thể sử dụng được hoàn toàn miễn phí trong ứng dụng Gemini.</p>
 <ol>
     <li>Mở ứng dụng Gemini (hoặc truy cập trên web).</li>
-    <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini để tạo ảnh.</li>
+    <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini 3 để tạo ảnh.</li>
     <li>Chọn tùy chọn trong mục công cụ chọn <strong>"Create images"</strong> (Tạo hình ảnh).</li>
 </ol>
 <p>Người dùng gói miễn phí sẽ nhận được một hạn mức sử dụng Pro giới hạn. Sau khi dùng hết hạn mức này, hệ thống sẽ tự động chuyển về mô hình Nano Banana gốc. Người dùng đăng ký các gói cao hơn (Google AI Plus, Pro, và Ultra) sẽ nhận được hạn mức sử dụng Nano Banana Pro cao hơn đáng kể.</p>
-<p>Tóm lại, Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
+<p>Vậy là Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
   },
   {
     id: 'grok-4-1-ra-mat',
