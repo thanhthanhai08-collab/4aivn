@@ -223,10 +223,10 @@ export const mockLovableTool: Tool[] = [
     name: 'Nano Banana Pro',
     context: 'Tạo hình ảnh',
     developer: 'Google',
-    description: 'Nano Banana Pro là mô hình tạo và chỉnh sửa ảnh nhanh, mạnh mẽ từ Google, nổi bật với khả năng chỉnh sửa chi tiết, duy trì sự nhất quán của nhân vật và xử lý các yêu cầu phức tạp trong một prompt duy nhất.',
+    description: 'Nano Banana Pro (hay gọi là Gemini 3 Pro Image) là mô hình tạo và chỉnh sửa ảnh nhanh, mạnh mẽ từ Google, nổi bật với khả năng chỉnh sửa chi tiết, duy trì sự nhất quán của nhân vật và xử lý các yêu cầu phức tạp trong một prompt duy nhất.',
     logoUrl: '/image/Logo Gemini cho bảng xếp hạng.png',
-    link: 'https://deepmind.google/technologies/gemini/',
-    imageUrl: '/image/Ảnh công cụ Gemini 2.5 Flash Image.png',
+    link: 'https://deepmind.google.com/technologies/gemini/',
+    imageUrl: '/image/Anh-cong-cu-nano-banana-pro.png',
     longDescription: '<p>Nano Banana Pro (hay gọi là Gemini 3 Pro Image) là một mô hình AI đa năng của Google, được thiết kế để tạo và chỉnh sửa hình ảnh với tốc độ và chất lượng cao. Nó không chỉ tạo ra hình ảnh từ văn bản mà còn cho phép người dùng chỉnh sửa các chi tiết nhỏ trong ảnh, thay đổi phong cách mà vẫn giữ nguyên bố cục. Một trong những điểm mạnh nhất của mô hình này là khả năng duy trì sự nhất quán của nhân vật qua nhiều lần tạo, một thách thức lớn đối với nhiều công cụ AI khác.</p><p>Với khả năng hiểu các prompt đa bước, Nano Banana Pro có thể xử lý các yêu cầu phức tạp như thay đổi nguồn sáng và vật liệu trong cùng một lệnh, mang lại sự linh hoạt và kiểm soát sáng tạo cho người dùng. Đây là công cụ lý tưởng cho các nhà thiết kế, nghệ sĩ và người sáng tạo nội dung muốn tạo ra các sản phẩm hình ảnh độc đáo và chuyên nghiệp.</p>',
     features: [
       "Chỉnh sửa chi tiết hình ảnh mà vẫn giữ bố cục.",
@@ -442,9 +442,9 @@ export const mockLovableTool: Tool[] = [
     ],
     pricingPlans: `
       <ul>
-        <li><strong>Free Plan ($0/tháng):</strong> 50 credit mỗi ngày (10 bài hát), không dùng cho mục đích thương mại.</li>
-        <li><strong>Pro Plan ($8/tháng):</strong> 2,500 credit mỗi tháng (500 bài hát), quyền sử dụng thương mại, truy cập model v5 mới nhất, và nhiều tính năng Pro.</li>
-        <li><strong>Premier Plan ($24/tháng):</strong> 10,000 credit mỗi tháng (2,000 bài hát), đầy đủ các tính năng cao cấp nhất và quyền truy cập Suno Studio.</li>
+          <li><strong>Free Plan ($0/tháng):</strong> 50 credit mỗi ngày (10 bài hát), không dùng cho mục đích thương mại.</li>
+          <li><strong>Pro Plan ($8/tháng):</strong> 2,500 credit mỗi tháng (500 bài hát), quyền sử dụng thương mại, truy cập model v5 mới nhất, và nhiều tính năng Pro.</li>
+          <li><strong>Premier Plan ($24/tháng):</strong> 10,000 credit mỗi tháng (2,000 bài hát), đầy đủ các tính năng cao cấp nhất và quyền truy cập Suno Studio.</li>
       </ul>
     `,
   },
@@ -633,3 +633,4 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
