@@ -40,11 +40,11 @@ export const mockNews3: NewsArticle[] = [
 
 <h2><strong>Làm thế nào để trải nghiệm Nano Banana Pro?</strong></h2>
 <p>Nano Banana Pro có thể sử dụng được hoàn toàn miễn phí trong ứng dụng Gemini.</p>
-<ol>
+<ul>
     <li>Mở ứng dụng Gemini (hoặc truy cập trên web).</li>
     <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini 3 để tạo ảnh.</li>
     <li>Chọn tùy chọn trong mục công cụ chọn <strong>"Create images"</strong> (Tạo hình ảnh).</li>
-</ol>
+</ul>
 <p>Người dùng gói miễn phí sẽ nhận được một hạn mức sử dụng Pro giới hạn. Sau khi dùng hết hạn mức này, hệ thống sẽ tự động chuyển về mô hình Nano Banana gốc. Người dùng đăng ký các gói cao hơn (Google AI Plus, Pro, và Ultra) sẽ nhận được hạn mức sử dụng Nano Banana Pro cao hơn đáng kể.</p>
 <p>Vậy là Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
   },
@@ -223,6 +223,8 @@ export const mockNews3: NewsArticle[] = [
 <p>Ông Vahdat đã cảnh báo thẳng thắn rằng: Hiện tại, cuộc đua xây dựng cơ sở hạ tầng cho AI mới chính là phần quan trọng nhất và đắt đỏ nhất của toàn bộ cuộc chơi AI này!</p>
 <h2><strong>Ưu thế của Google đi kèm với thách thức</strong></h2>
 <p>Để đạt được mức tăng trưởng hạ tầng AI gấp 1.000 lần mà không làm chi phí vượt tầm kiểm soát, Google tiếp tục đặt cược vào hiệu suất và hiệu quả năng lượng.</p>
+
+
 <h3>Tối ưu hóa hiệu suất và chi phí</h3>
 <p>Google đã đặt ra mục tiêu với quá nhiều thách thức: cần cung cấp năng lực tính toán, lưu trữ và kết nối gấp 1.000 lần so với hiện nay, nhưng phải duy trì chi phí và mức tiêu thụ điện năng ở mức tương đương.</p>
 <p>Để thực hiện điều này, Google áp dụng triết lý thiết kế đồng bộ rất giống của Nvidia. Đây là việc tích hợp chặt chẽ phần mềm, thuật toán (do DeepMind tự phát triển) với kiến trúc phần cứng “cây nhà lá vườn” của Google đó là TPU Ironwood và CPU Axion.</p>
@@ -264,5 +266,3 @@ export const mockNews3: NewsArticle[] = [
 <p>Google đang biến trung tâm dữ liệu thành một cỗ máy thống nhất và cực kỳ hiệu quả. Họ tập trung vào việc đồng bộ thiết kế giúp phần cứng bắt tay với phần mềm để cùng xử lý tác vụ cùng tiết kiệm điện năng, hơn nữa là dùng chip nhà làm giống như điều Apple đã và đang làm để bảo đảm vị thế dẫn đầu trong cuộc đua với tốc độ chóng mặt!</p>`
   },
 ];
-
-    
