@@ -3,71 +3,17 @@ import type { NewsArticle } from '@/lib/types';
 
 export const mockNews3: NewsArticle[] = [
   {
-    id: 'google-ke-hoach-mo-rong-ha-tang-ai',
-    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 Lần: Đặt cược lớn vào AI',
-    source: 'Google',
-    author: 'Mai',
-    publishedAt: '2025-11-27T09:00:00Z',
-    imageUrl: '/image/news3/google-1000x-ha-tang-ai.png',
-    dataAiHint: 'Google công bố kế hoạch mở rộng năng lực AI gấp 1.000 lần trong 4-5 năm, tập trung vào kỷ nguyên suy luận.',
-    content: `<p>Google đã công bố một yêu cầu nội bộ đầy tham vọng nhằm tăng công suất AI lên gấp 1.000 lần trong vòng 4 đến 5 năm tới. Động thái này diễn ra trong bối cảnh cuộc đua AI toàn cầu đang nóng lên và đòi hỏi các công ty công nghệ phải đầu tư khổng lồ vào cơ sở hạ tầng tính toán, bất chấp những lo ngại về bong bóng AI.</p>
-<p>Phó chủ tịch phụ trách cơ sở hạ tầng AI của Google Cloud, ông Amin Vahdat đã trình bày lộ trình này tại một cuộc họp toàn công ty vào đầu tháng 11, nhấn mạnh rằng Google phải tăng gấp đôi năng lực phục vụ AI sau mỗi sáu tháng để đáp ứng nhu cầu bùng nổ.</p>
-<h2><strong>Kỷ nguyên suy luận là gì và tại sao nó lại quan trọng với các mô hình AI</strong></h2>
-<p>Sự phát triển của AI đang bùng nổ chưa từng thấy, lý do là vì chúng ta đã chuyển từ việc chủ yếu huấn luyện các mô hình AI sang một giai đoạn mới gọi là kỷ nguyên suy luận (Inference Era) tức là để AI tự suy luận, tự quyết định.</p>
-<p>Trước đây, giai đoạn tốn kém và ngốn tài nguyên nhất là lúc AI đang học hỏi. Nhưng giờ đây thì khác, đối với những mô hình siêu xịn mới nhất như <a href="/mo-hinh/gemini-3-pro" target="_blank">Gemini 3 Pro</a> lại cần một lượng sức mạnh máy tính khổng lồ và liên tục để làm những việc như: suy nghĩ, lập luận và viết code.</p>
-<p>Ông Vahdat đã cảnh báo thẳng thắn rằng: Hiện tại, cuộc đua xây dựng cơ sở hạ tầng cho AI mới chính là phần quan trọng nhất và đắt đỏ nhất của toàn bộ cuộc chơi AI này!</p>
-<h2><strong>Ưu thế của Google đi kèm với thách thức</strong></h2>
-<p>Để đạt được mức tăng trưởng hạ tầng AI gấp 1.000 lần mà không làm chi phí vượt tầm kiểm soát, Google tiếp tục đặt cược vào hiệu suất và hiệu quả năng lượng.</p>
-<h3>Tối ưu hóa hiệu suất và chi phí</h3>
-<p>Google đã đặt ra mục tiêu với quá nhiều thách thức: cần cung cấp năng lực tính toán, lưu trữ và kết nối gấp 1.000 lần so với hiện nay, nhưng phải duy trì chi phí và mức tiêu thụ điện năng ở mức tương đương.</p>
-<p>Để thực hiện điều này, Google áp dụng triết lý thiết kế đồng bộ rất giống của Nvidia. Đây là việc tích hợp chặt chẽ phần mềm, thuật toán (do DeepMind tự phát triển) với kiến trúc phần cứng “cây nhà lá vườn” của Google đó là TPU Ironwood và CPU Axion.</p>
-<h3>Vai trò của TPU Ironwood và CPU Axion là gì</h3>
-<p>Chip TPU Ironwood thế hệ thứ 7 (ra mắt vào tháng 4/2025) là trung tâm của chiến lược mở rộng này.</p>
-<ul>
-    <li>Ironwood được thiết kế cho mục đích suy luận mô hình ngôn ngữ lớn (LLM inferencing).</li>
-    <li>Google tuyên bố Ironwood cung cấp hiệu suất đỉnh cao gấp 10 lần so với TPU v5p ra mắt 2018 và hiệu suất trên mỗi watt gấp 2 lần so với thế hệ Trillium trước đó.</li>
-    <li>Mỗi chip TPU v7 Ironwood được làm mát bằng chất lỏng có khả năng đạt **4.6 petaFLOPS** (FP8 dense). Để hiểu rõ, chúng ta so sánh ngay với Blackwell B200 mới nhất của Nvidia cũng chỉ đạt 4.5 petaFLOPS (FP8 dense).</li>
-</ul>
-<p>Bên cạnh đó, Google sử dụng CPU tự phát triển Axion (dựa trên Arm). Các khối lượng công việc đa năng đang được chuyển sang các bộ xử lý hiệu quả hơn này để giải phóng năng lượng và không gian nhiệt cho các TPU ngốn điện để phục vụ tác vụ AI chuyên dụng.</p>
-[IMAGE:/image/news3/google-tu-san-xuat-tpu-cpu.png|Google tự sản xuất TPU và CPU|Google tự phát triên a-z]
-<h3>Thách thức hạ tầng và năng lượng</h3>
-<p>Việc tăng công suất tính toán lên mức siêu lớn tất nhiên cũng phải đòi hỏi phải vượt qua các rào cản vật lý lớn về điện năng và làm mát.</p>
-<p>Hiện tại, các con chip AI đang mạnh mẽ đến mức chúng trở thành những "lò sưởi tí hon". Dù kích thước chip rất nhỏ, nhưng nhiệt độ và sức nóng mà chúng tạo ra lại cực kỳ khủng khiếp.</p>
-<p>Để giải quyết vấn đề này, Google đang thực hiện hai giải pháp chính:</p>
-<ul>
-    <li><strong>Làm mát bằng chất lỏng:</strong> Họ đã chuyển sang dùng nước hoặc chất lỏng chuyên dụng để làm mát trực tiếp các chip. Cách này hiệu quả hơn rất nhiều so với quạt gió.</li>
-    <li><strong>Hệ thống điện 48V:</strong> Google đang triển khai hệ thống phân phối điện 48V. Đây là một giải pháp giúp truyền tải điện hiệu quả hơn và giảm thiểu việc lãng phí điện năng bị biến thành nhiệt.</li>
-</ul>
-<p>Trong tương lai, khi các tủ máy (rack) chứa chip mạnh đến mức cần công suất hàng trăm kilowatt, Google đang nghiên cứu đến một bước đột phá lớn hơn: chuyển sang dùng nguồn điện một chiều DC 400 V. Điều này sẽ giúp họ khai thác toàn bộ sức mạnh của các hệ thống học máy khổng lồ mà không sợ bị quá tải về điện.</p>
-<h3>Cam kết môi trường và khủng hoảng năng lượng</h3>
-<p>Theo Alphabet (công ty mẹ của Google) luôn đặt mục tiêu Net Zero (phát thải ròng bằng 0) vào năm 2030 giống như chính phủ Việt Nam ta. Tuy nhiên, nhu cầu năng lượng cho mảng AI đang bị cảnh báo là rất lớn và có thể ảnh hưởng đến các mục tiêu khí hậu của Alphabet.</p>
-<p>Để giải quyết tình trạng thiếu hụt năng lượng trên toàn cầu, Google đang tìm kiếm các nguồn cung cấp năng lượng tại chỗ đáng tin cậy, sạch sẽ và có chi phí thấp. Google đã công bố đầu tư vào năng lượng hạt nhân (Kyros), sử dụng các lò phản ứng mô-đun nhỏ (SMRs) 500 megawatt.</p>
-<h3>Bong bóng và rủi ro tài chính của AI sẽ diễn biến thế nào</h3>
-<p>Mặc dù Google đang dốc hết tiền đầu tư vào công nghệ AI nhưng trên thị trường tài chính, ai cũng đang lo lắng về một bong bóng AI sắp vỡ.</p>
-<p>Bản thân Sundar Pichai (CEO Alphabet) cũng phải thẳng thắn thừa nhận: "Có những yếu tố hơi phi lý trong cách thị trường đang định giá các công ty AI hiện nay." Bằng chứng là Alphabet đã nâng dự báo chi tiêu cho xây dựng cơ sở hạ tầng (CapEx) cho năm 2025 lên đến 93 tỷ USD một con số khổng lồ!</p>
-<p>Tuy nhiên, ông Pichai có một lập luận rất chắc chắn” Rủi ro lớn nhất không phải là đầu tư quá nhiều, mà là không đầu tư đủ.”</p>
-<p>Ông đưa ra ví dụ: Mảng Google Cloud đang tăng trưởng rất ấn tượng, nhưng đáng lẽ doanh thu còn phải cao hơn nữa nếu như họ có đủ năng lực tính toán để phục vụ khách hàng. Nói cách khác, Google chấp nhận rủi ro đầu tư lớn để không bỏ lỡ cơ hội kiếm tiền khủng trong tương lai.</p>
-<h3>Google có đang thách thức sự thống trị của Nvidia</h3>
-<p>Google đang tăng tốc đầu tư vào hệ thống TPU (chip xử lý AI riêng của họ) và theo đuổi chiến lược tự làm từ A đến Z (từ thiết kế đến sản xuất chip). Điều này đang tạo ra một giải pháp thay thế rất tiềm năng cho chip GPU của Nvidia vị vua đang thống trị thị trường hạ tầng AI hiện nay.</p>
-<p>Chip TPU của Google là một loại mạch điện tử (ASIC) được sinh ra chỉ để làm một việc: tính toán cho AI. Nó không giống như GPU của Nvidia.</p>
-<ul>
-    <li>GPU của Nvidia giống như một vận động viên đa năng, rất linh hoạt và làm được nhiều việc hơn.</li>
-    <li>TPU của Google giống như một vận động viên chuyên biệt, có thể làm một số tác vụ huấn luyện và suy luận AI khối lượng lớn hiệu quả hơn và ít tốn điện hơn đối thủ.</li>
-</ul>
-<p>Canh bạc đặt cược vào TPU của Google đang bắt đầu có hiệu quả khi Meta Platforms đang đàm phán để sử dụng TPU của Google với mục đích là đa dạng hóa nhà cung cấp và giảm bớt sự phụ thuộc vào Nvidia. Dự kiến, Meta có thể bắt đầu thuê năng lực TPU từ năm 2026 và mua chip số lượng lớn từ năm 2027.</p>
-<p>Tóm lại, kế hoạch tăng tốc hạ tầng AI lên gấp 1.000 lần của Google không chỉ là một mục tiêu về số lượng mà là là sự thay đổi về cách thiết kế hệ thống.</p>
-<p>Google đang biến trung tâm dữ liệu thành một cỗ máy thống nhất và cực kỳ hiệu quả. Họ tập trung vào việc đồng bộ thiết kế giúp phần cứng bắt tay với phần mềm để cùng xử lý tác vụ cùng tiết kiệm điện năng, hơn nữa là dùng chip nhà làm giống như điều Apple đã và đang làm để bảo đảm vị thế dẫn đầu trong cuộc đua với tốc độ chóng mặt!</p>`
-  },
-  {
     id: 'nano-banana-pro-ra-mat',
     title: 'Nano Banana Pro (Gemini 3 Pro Image) đã ra mắt: Sự nâng cấp bùng nổ thách thức mọi đối thủ',
     source: 'Google',
     author: 'Mai',
     publishedAt: '2025-11-25T09:00:00Z',
     imageUrl: '/image/news3/nano-banana-pro-gemini-3-image-generation.png',
-    dataAiHint: 'Nano Banana Pro (Gemini 3 Pro Image) ra mắt với nâng cấp đột phá.',
+    dataAiHint: 'Nano Banana Pro (Gemini 3 Pro Image) ra mắt với nâng cấp đột phá:.',
     content: `<p>Sự ra mắt của <a href="/cong-cu/nano-banana-pro" target="_blank">Nano Banana Pro</a>  (tên chính thức là Gemini 3 Pro Image), được xây dựng trên nền tảng Gemini 3 Pro, thực sự là một sự nâng cấp xuất sắc.</p>
 <p>Cá nhân tôi vẫn còn bất ngờ khi Gemini 3 giờ đây xuất hiện thêm Nano Banana Pro. Nó không chỉ mang đến một bước nâng cấp lớn so với Nano Banana mà có thể sẽ khiến nhiều người quên đi những mô hình, nền tảng tạo ảnh khác như Midjourney, GPT Image 1 hay thậm chí phần nào đó là Photoshop.</p>
+
+
 <h2><strong>Trải nghiệm thực tế của Nano Banana Pro như thế nào?</strong></h2>
 <p>Nano Banana Pro được thiết kế để tận dụng khả năng suy luận nâng cao và hiểu biết sâu rộng về thế giới thực của Gemini 3. Phiên bản Pro này không chỉ giúp tạo ra hình ảnh đẹp đơn thuần mà còn giúp xây dựng nội dung hữu ích hơn, chẳng hạn như sơ đồ minh họa hoặc infographic chính xác dựa trên thông tin thực tế hoặc dữ liệu do người dùng cung cấp.</p>
 <p>Trong quá trình thử nghiệm, có 4 điểm nâng cấp lớn nhất mang lại sự khác biệt rõ rệt so với bản Nano Banana (Gemini 2.5 Flash Image):</p>
@@ -76,9 +22,13 @@ export const mockNews3: NewsArticle[] = [
     <li><strong>Độ phân giải cực cao (4K):</strong> Trước đây, muốn ảnh AI đạt tới 4K để phục vụ in ấn hay quảng cáo là một cơn ác mộng, thường phải tốn công sức làm nét lại. Giờ đây, chất lượng 4K không còn là điều quá xa vời với Nano Banana Pro, còn các độ phân giải thấp hơn như 2K thì mô hình này cân dư sức.</li>
     <li><strong>Khả năng suy luận và hỗ trợ Google Search:</strong> Nhờ sự hỗ trợ của Gemini 3 Pro, mô hình hoàn toàn có khả năng suy luận qua các câu lệnh phức tạp. Đặc biệt hơn, nó có thể sử dụng Google Search để lấy dữ liệu thời gian thực tạo ra hình ảnh. Ví dụ: Bạn có thể yêu cầu vẽ hình ảnh ăn mừng dựa trên kết quả của một trận thể thao vừa kết thúc hoặc có thể tạo hình ảnh thiệt hại của 2 cơn bão vừa xảy ra ở miền trung và dưới đây là kết quả mình cho ra.</li>
 [IMAGE:/image/news3/bao-cao-thiet-hai-bao-lu-nano-banana-pro.png|Báo cáo thiệt hại bão lũ|Dựa trên sức mạnh nano banana pro]
+
+
     <li><strong>Giữ khuôn mặt/khung hình cực ổn định:</strong> Đối với những ai làm thương hiệu hoặc cần sự nhất quán, tính năng này cực kỳ cần thiết. Mô hình có khả năng giữ nguyên khuôn mặt hoặc khung hình của nhân vật xuất sắc ngay cả khi thay đổi bối cảnh, trang phục. Nhờ vậy, bạn có thể dễ dàng tạo ra toàn bộ một bộ nhận diện thương hiệu đồng nhất.</li>
 [IMAGE:/image/news3/nano-banana-pro-giu-on-dinh-khuon-mat.png|Khả năng giữ ổn định khuôn mặt|Dựa trên sức mạnh nano banana pro]
 </ul>
+
+
 <h2><strong>Những điều Nano Banana Pro cần cải thiện</strong></h2>
 <p>Mặc dù rất ấn tượng, Nano Banana Pro vẫn gặp khó khăn hoặc một số lỗi nhỏ cần cải thiện:</p>
 <ul>
@@ -86,13 +36,15 @@ export const mockNews3: NewsArticle[] = [
     <li><strong>Chữ trong ảnh vẫn xuất hiện lỗi chính tả:</strong> Lâu lâu AI vẫn cho ra bức ảnh sai chính tả với tỷ lệ khoảng 1/10. Mức này hoàn toàn chấp nhận được nhưng chưa hoàn hảo 100%.</li>
     <li><strong>Ghép ảnh chưa thực sự mượt:</strong> Khả năng hòa trộn khuôn mặt vào khung hình mới vẫn chưa được tự nhiên lắm, đối với những người khó tính thì nhìn bằng mắt thường là thấy hơi giả trân. Nên với những ca khó cần độ chính xác cao, chúng ta vẫn phải nhờ đến bàn tay hậu kỳ của các bạn designer.</li>
 </ul>
+
+
 <h2><strong>Làm thế nào để trải nghiệm Nano Banana Pro?</strong></h2>
 <p>Nano Banana Pro có thể sử dụng được hoàn toàn miễn phí trong ứng dụng Gemini.</p>
-<ul>
+<ol>
     <li>Mở ứng dụng Gemini (hoặc truy cập trên web).</li>
     <li>Chọn mô hình <strong>"Thinking"</strong> (tư duy). Mục này nên dùng vì Nano Banana Pro sẽ lấy sức mạnh tư duy của Gemini 3 để tạo ảnh.</li>
     <li>Chọn tùy chọn trong mục công cụ chọn <strong>"Create images"</strong> (Tạo hình ảnh).</li>
-</ul>
+</ol>
 <p>Người dùng gói miễn phí sẽ nhận được một hạn mức sử dụng Pro giới hạn. Sau khi dùng hết hạn mức này, hệ thống sẽ tự động chuyển về mô hình Nano Banana gốc. Người dùng đăng ký các gói cao hơn (Google AI Plus, Pro, và Ultra) sẽ nhận được hạn mức sử dụng Nano Banana Pro cao hơn đáng kể.</p>
 <p>Vậy là Nano Banana Pro giống như một nhiếp ảnh gia chuyên nghiệp mới được trang bị máy ảnh 4K và bộ xử lý thông minh. Nó có thể tạo ra những bức ảnh siêu thực, nhưng đôi khi vẫn cần bạn hướng dẫn cụ thể về logic và ý định để đảm bảo bức ảnh không chỉ đẹp mà còn hợp lý.</p>`
   },
@@ -148,8 +100,12 @@ export const mockNews3: NewsArticle[] = [
     dataAiHint: 'Google ra mắt Gemini 3 ngày 19-11-2025',
     content: `<p>Ngày 19-11-2025, Google đã chính thức giới thiệu Gemini 3, mô hình AI tiên tiến và thông minh nhất của mình, được thiết kế để giúp người dùng hiện thực hóa mọi ý tưởng.</p>
 <p>CEO Sundar Pichai đã tuyên bố Gemini 3 là "mô hình tốt nhất trên thế giới về khả năng hiểu đa phương thức". Mô hình này đánh dấu sự nâng cấp trong hành trình tiến tới trí tuệ nhân tạo tổng quát (AGI).</p>
+
+
 <h2><strong>Sự nâng cấp so với Gemini 2.5 như thế nào</strong></h2>
 <p>Như vậy sau 8 tháng kể từ khi ra mắt Gemini 2.5 thì Google đã quay lại với <a href="/mo-hinh/gemini-3-pro" target="_blank">Gemini 3 Pro</a> với sự nâng cấp về khả năng suy luận và hiểu ngữ cảnh, nó là sự kết hợp của tất cả các khả năng của các thế hệ Gemini trước lại với nhau.</p>
+
+
 <h3>Càn quét các bảng xếp hạng</h3>
 <p>Gemini 3 Pro với sự ra mắt có thể nói trong âm thầm không phải là một bước nhảy vọt nhưng vẫn có sức nặng khi đã đứng đầu rất nhiều bảng xếp hạng LLM (như LMArena,...)</p>
 <ul>
@@ -157,6 +113,7 @@ export const mockNews3: NewsArticle[] = [
     <li>Gemini 3 vượt trội so với Gemini thế hệ trước là bình thường nhưng điểm số của nó cũng vượt qua cả <a href="/mo-hinh/claude-4.5-sonnet-thinking" target="_blank">Claude 4.5 Sonnet</a> và <a href="/mo-hinh/gpt-5-1-high" target="_blank">GPT 5.1</a> đơn cứ như việc Gemini 3 thể hiện khả năng suy luận ở cấp độ tiến sĩ (PhD-level reasoning) với điểm số cao trên các bài kiểm tra Humanity’s Last Exam là 37.5% không dùng công cụ vượt trội so với Claude Sonnet 4.5 (13.7%) và GPT 5.1 (26.5%) hoặc điểm GPQA Diamond (91.9%) cũng tiếp tục vượt lên với Claude Sonnet 4.5 (83.4%) và GPT 5.1 (88.1%)</li>
 </ul>
 [GEMINI_3_BENCHMARK_CHART]
+
 <h3>Sức mạnh đa phương thức (Multimodality)</h3>
 <p>Gemini 3 vẫn được tiếp nối với Gemini 2.5 ở khả năng tổng hợp thông tin liền mạch trên nhiều phương thức, bao gồm văn bản, hình ảnh, video, âm thanh và mã code. Tất nhiên là với bài kiểm tra đều tốt hơn Gemini 2.5 với 81% điểm MMMU-Pro (Gemini 2.5 là 68%) và 87.6% điểm Video-MMMU (Gemini 2.5 là 83.6% theo Google).</p>
 [IMAGE:/image/news3/gemini_3_diem_so.gif|Điểm số của Gemini 3|Thống kê sức mạnh Gemini 3]
@@ -166,18 +123,26 @@ export const mockNews3: NewsArticle[] = [
     <li><strong>Trong lĩnh vực sáng tạo và lập kế hoạch:</strong> Gemini 3 hoàn toàn có thể phiên dịch và chuyển đổi các công thức nấu ăn viết tay bằng nhiều ngôn ngữ khác nhau thành sách dạy nấu ăn rất thích hợp để chia sẻ. Thậm chí theo Google nó hoàn toàn có thể viết một bài thơ nắm bắt được vật lý học của phản ứng tổng hợp hạt nhân, hoặc viết mã code để tạo hình ảnh trực quan về dòng plasma trong tokamak.</li>
     <li><strong>Trong lĩnh vực phân tích video thể thao:</strong> Gemini 3 có thể phân tích video về trận đấu thể thao (như pickleball, quần vợt,...) xác định các kĩ năng cần cải thiện và tạo kế hoạch luyện tập.</li>
 </ul>
+
+
 <h2><strong>Gemini 3 Deep Think có chế độ suy nghĩ nâng cao không</strong></h2>
 <p>Google cũng giới thiệu Deep think mode một chế độ suy luận được tăng cường, để giúp giải quyết các vấn đề phức tạp hơn giống như Gemini 2.5 nhưng thật sự nó cho ra kết quả sẽ rất là lâu.</p>
 <ul>
     <li>Chế độ Deep Think đang được thử nghiệm và dự kiến sẽ sớm có mặt cho người dùng đăng ký Google AI Ultra trong những tuần tới vì vậy mình chưa có cơ hội trải nghiệm nhưng với người dùng bình thường thì chế độ Thinking cũng khá phù hợp.</li>
 </ul>
+
+
 <h2><strong>Khả năng cho nhà phát triển và tốc độ triển khai</strong></h2>
+
+
 <h3>Khả năng coding Gemini 3 tốt như thế nào</h3>
 <p>Gemini 3 có sự thể hiện rất tốt trong khả năng tạo mã code và xử lý các prompt phức tạp để tạo ra giao diện web tương tác và phong phú hơn nhưng thật sự vẫn về khả năng coding mình vẫn tin tưởng Claude Sonnet 4.5 hơn, bởi khi Gemini 3 gặp vấn đề với code sẽ không tập trung xử lý vấn đề đó mà càng sửa càng sai không giống như Claude Sonnet 4.5 điều này gây khó khăn so với những người không hiểu nhiều về code.</p>
 <ul>
     <li>Về tốc độ, khi sử dụng coding thì Gemini 3 nhanh hơn đáng kể so với Claude Sonnet 4.5 và GPT 5.1 đặc biệt nhanh gấp 2 lần so với Gemini 2.5 đối với các tác vụ nhỏ và trung bình.</li>
     <li>Để hỗ trợ phát triển các agent, Google cũng phát hành nền tảng phát triển agentic mới là Google Antigravity sử dụng khả năng suy luận và công cụ của Gemini 3 để biến AI thành một agent mới có khả năng hoạt động độc lập và tích cực.</li>
 </ul>
+
+
 <h3>Bao giờ có thể sử dụng Gemini 3</h3>
 <p>Gemini 3 đang được triển khai trên toàn bộ hệ sinh thái của Google bắt đầu ngày 19 tháng 11</p>
 <ul>
@@ -242,4 +207,62 @@ export const mockNews3: NewsArticle[] = [
 <p>Giống như việc bạn cần hiểu “tủ lạnh” và "bát đũa" là gì và cách di chuyển trong nhà để lấy chúng, robot cũng cần học rất nhiều về điều này khi mà sư chính xác được đặt lên hàng đầu hiện nay những robot như vậy hoàn toàn do con người điều khiển vì vậy chắc chắn SIMA 2 sẽ tập trung vào việc học những hành vi cần độ chính xác cao này.</p>
 <p>Vậy SIMA 2 chính là minh chứng cho việc các ông lớn như Google chắc chắn chưa thay đổi mục tiêu AGI của họ, từ đó chắc chắn tạo ra tương lai AI có thể tương tác và hỗ trợ chúng ta trong nhiều lĩnh vực hơn nữa.</p>`
   },
+  {
+    id: 'google-ke-hoach-mo-rong-ha-tang-ai',
+    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 Lần để giữ vững vị thế dẫn đầu',
+    source: 'Google',
+    author: 'Mai',
+    publishedAt: '2025-11-27T09:00:00Z',
+    imageUrl: '/image/news3/google-1000x-ha-tang-ai.png',
+    dataAiHint: 'Google công bố kế hoạch mở rộng năng lực AI gấp 1.000 lần trong 4-5 năm, tập trung vào kỷ nguyên suy luận.',
+    content: `<p>Google đã công bố một yêu cầu nội bộ đầy tham vọng nhằm tăng công suất AI lên gấp 1.000 lần trong vòng 4 đến 5 năm tới. Động thái này diễn ra trong bối cảnh cuộc đua AI toàn cầu đang nóng lên và đòi hỏi các công ty công nghệ phải đầu tư khổng lồ vào cơ sở hạ tầng tính toán, bất chấp những lo ngại về bong bóng AI.</p>
+<p>Phó chủ tịch phụ trách cơ sở hạ tầng AI của Google Cloud, ông Amin Vahdat đã trình bày lộ trình này tại một cuộc họp toàn công ty vào đầu tháng 11, nhấn mạnh rằng Google phải tăng gấp đôi năng lực phục vụ AI sau mỗi sáu tháng để đáp ứng nhu cầu bùng nổ.</p>
+<h2><strong>Kỷ nguyên suy luận là gì và tại sao nó lại quan trọng với các mô hình AI</strong></h2>
+<p>Sự phát triển của AI đang bùng nổ chưa từng thấy, lý do là vì chúng ta đã chuyển từ việc chủ yếu huấn luyện các mô hình AI sang một giai đoạn mới gọi là kỷ nguyên suy luận (Inference Era) tức là để AI tự suy luận, tự quyết định.</p>
+<p>Trước đây, giai đoạn tốn kém và ngốn tài nguyên nhất là lúc AI đang học hỏi. Nhưng giờ đây thì khác, đối với những mô hình siêu xịn mới nhất như <a href="/mo-hinh/gemini-3-pro" target="_blank">Gemini 3 Pro</a> lại cần một lượng sức mạnh máy tính khổng lồ và liên tục để làm những việc như: suy nghĩ, lập luận và viết code.</p>
+<p>Ông Vahdat đã cảnh báo thẳng thắn rằng: Hiện tại, cuộc đua xây dựng cơ sở hạ tầng cho AI mới chính là phần quan trọng nhất và đắt đỏ nhất của toàn bộ cuộc chơi AI này!</p>
+<h2><strong>Ưu thế của Google đi kèm với thách thức</strong></h2>
+<p>Để đạt được mức tăng trưởng hạ tầng AI gấp 1.000 lần mà không làm chi phí vượt tầm kiểm soát, Google tiếp tục đặt cược vào hiệu suất và hiệu quả năng lượng.</p>
+<h3>Tối ưu hóa hiệu suất và chi phí</h3>
+<p>Google đã đặt ra mục tiêu với quá nhiều thách thức: cần cung cấp năng lực tính toán, lưu trữ và kết nối gấp 1.000 lần so với hiện nay, nhưng phải duy trì chi phí và mức tiêu thụ điện năng ở mức tương đương.</p>
+<p>Để thực hiện điều này, Google áp dụng triết lý thiết kế đồng bộ rất giống của Nvidia. Đây là việc tích hợp chặt chẽ phần mềm, thuật toán (do DeepMind tự phát triển) với kiến trúc phần cứng “cây nhà lá vườn” của Google đó là TPU Ironwood và CPU Axion.</p>
+<h3>Vai trò của TPU Ironwood và CPU Axion là gì</h3>
+<p>Chip TPU Ironwood thế hệ thứ 7 (ra mắt vào tháng 4/2025) là trung tâm của chiến lược mở rộng này.</p>
+<ul>
+    <li>Ironwood được thiết kế cho mục đích suy luận mô hình ngôn ngữ lớn (LLM inferencing).</li>
+    <li>Google tuyên bố Ironwood cung cấp hiệu suất đỉnh cao gấp 10 lần so với TPU v5p ra mắt 2018 và hiệu suất trên mỗi watt gấp 2 lần so với thế hệ Trillium trước đó.</li>
+    <li>Mỗi chip TPU v7 Ironwood được làm mát bằng chất lỏng có khả năng đạt **4.6 petaFLOPS** (FP8 dense). Để hiểu rõ, chúng ta so sánh ngay với Blackwell B200 mới nhất của Nvidia cũng chỉ đạt 4.5 petaFLOPS (FP8 dense).</li>
+</ul>
+<p>Bên cạnh đó, Google sử dụng CPU tự phát triển Axion (dựa trên Arm). Các khối lượng công việc đa năng đang được chuyển sang các bộ xử lý hiệu quả hơn này để giải phóng năng lượng và không gian nhiệt cho các TPU ngốn điện để phục vụ tác vụ AI chuyên dụng.</p>
+[IMAGE:/image/news3/google-tu-san-xuat-tpu-cpu.png|Google tự sản xuất TPU và CPU|Google tự phát triên a-z]
+<h3>Thách thức hạ tầng và năng lượng</h3>
+<p>Việc tăng công suất tính toán lên mức siêu lớn tất nhiên cũng phải đòi hỏi phải vượt qua các rào cản vật lý lớn về điện năng và làm mát.</p>
+<p>Hiện tại, các con chip AI đang mạnh mẽ đến mức chúng trở thành những "lò sưởi tí hon". Dù kích thước chip rất nhỏ, nhưng nhiệt độ và sức nóng mà chúng tạo ra lại cực kỳ khủng khiếp.</p>
+<p>Để giải quyết vấn đề này, Google đang thực hiện hai giải pháp chính:</p>
+<ul>
+    <li><strong>Làm mát bằng chất lỏng:</strong> Họ đã chuyển sang dùng nước hoặc chất lỏng chuyên dụng để làm mát trực tiếp các chip. Cách này hiệu quả hơn rất nhiều so với quạt gió.</li>
+    <li><strong>Hệ thống điện 48V:</strong> Google đang triển khai hệ thống phân phối điện 48V. Đây là một giải pháp giúp truyền tải điện hiệu quả hơn và giảm thiểu việc lãng phí điện năng bị biến thành nhiệt.</li>
+</ul>
+<p>Trong tương lai, khi các tủ máy (rack) chứa chip mạnh đến mức cần công suất hàng trăm kilowatt, Google đang nghiên cứu đến một bước đột phá lớn hơn: chuyển sang dùng nguồn điện một chiều DC 400 V. Điều này sẽ giúp họ khai thác toàn bộ sức mạnh của các hệ thống học máy khổng lồ mà không sợ bị quá tải về điện.</p>
+<h3>Cam kết môi trường và khủng hoảng năng lượng</h3>
+<p>Theo Alphabet (công ty mẹ của Google) luôn đặt mục tiêu Net Zero (phát thải ròng bằng 0) vào năm 2030 giống như chính phủ Việt Nam ta. Tuy nhiên, nhu cầu năng lượng cho mảng AI đang bị cảnh báo là rất lớn và có thể ảnh hưởng đến các mục tiêu khí hậu của Alphabet.</p>
+<p>Để giải quyết tình trạng thiếu hụt năng lượng trên toàn cầu, Google đang tìm kiếm các nguồn cung cấp năng lượng tại chỗ đáng tin cậy, sạch sẽ và có chi phí thấp. Google đã công bố đầu tư vào năng lượng hạt nhân (Kyros), sử dụng các lò phản ứng mô-đun nhỏ (SMRs) 500 megawatt.</p>
+<h3>Bong bóng và rủi ro tài chính của AI sẽ diễn biến thế nào</h3>
+<p>Mặc dù Google đang dốc hết tiền đầu tư vào công nghệ AI nhưng trên thị trường tài chính, ai cũng đang lo lắng về một bong bóng AI sắp vỡ.</p>
+<p>Bản thân Sundar Pichai (CEO Alphabet) cũng phải thẳng thắn thừa nhận: "Có những yếu tố hơi phi lý trong cách thị trường đang định giá các công ty AI hiện nay." Bằng chứng là Alphabet đã nâng dự báo chi tiêu cho xây dựng cơ sở hạ tầng (CapEx) cho năm 2025 lên đến 93 tỷ USD một con số khổng lồ!</p>
+<p>Tuy nhiên, ông Pichai có một lập luận rất chắc chắn” Rủi ro lớn nhất không phải là đầu tư quá nhiều, mà là không đầu tư đủ.”</p>
+<p>Ông đưa ra ví dụ: Mảng Google Cloud đang tăng trưởng rất ấn tượng, nhưng đáng lẽ doanh thu còn phải cao hơn nữa nếu như họ có đủ năng lực tính toán để phục vụ khách hàng. Nói cách khác, Google chấp nhận rủi ro đầu tư lớn để không bỏ lỡ cơ hội kiếm tiền khủng trong tương lai.</p>
+<h3>Google có đang thách thức sự thống trị của Nvidia</h3>
+<p>Google đang tăng tốc đầu tư vào hệ thống TPU (chip xử lý AI riêng của họ) và theo đuổi chiến lược tự làm từ A đến Z (từ thiết kế đến sản xuất chip). Điều này đang tạo ra một giải pháp thay thế rất tiềm năng cho chip GPU của Nvidia vị vua đang thống trị thị trường hạ tầng AI hiện nay.</p>
+<p>Chip TPU của Google là một loại mạch điện tử (ASIC) được sinh ra chỉ để làm một việc: tính toán cho AI. Nó không giống như GPU của Nvidia.</p>
+<ul>
+    <li>GPU của Nvidia giống như một vận động viên đa năng, rất linh hoạt và làm được nhiều việc hơn.</li>
+    <li>TPU của Google giống như một vận động viên chuyên biệt, có thể làm một số tác vụ huấn luyện và suy luận AI khối lượng lớn hiệu quả hơn và ít tốn điện hơn đối thủ.</li>
+</ul>
+<p>Canh bạc đặt cược vào TPU của Google đang bắt đầu có hiệu quả khi Meta Platforms đang đàm phán để sử dụng TPU của Google với mục đích là đa dạng hóa nhà cung cấp và giảm bớt sự phụ thuộc vào Nvidia. Dự kiến, Meta có thể bắt đầu thuê năng lực TPU từ năm 2026 và mua chip số lượng lớn từ năm 2027.</p>
+<p>Tóm lại, kế hoạch tăng tốc hạ tầng AI lên gấp 1.000 lần của Google không chỉ là một mục tiêu về số lượng mà là là sự thay đổi về cách thiết kế hệ thống.</p>
+<p>Google đang biến trung tâm dữ liệu thành một cỗ máy thống nhất và cực kỳ hiệu quả. Họ tập trung vào việc đồng bộ thiết kế giúp phần cứng bắt tay với phần mềm để cùng xử lý tác vụ cùng tiết kiệm điện năng, hơn nữa là dùng chip nhà làm giống như điều Apple đã và đang làm để bảo đảm vị thế dẫn đầu trong cuộc đua với tốc độ chóng mặt!</p>`
+  },
 ];
+
+    
