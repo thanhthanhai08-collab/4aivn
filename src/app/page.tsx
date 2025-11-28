@@ -8,14 +8,12 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
-import { mockNews } from "@/lib/mock-news";
-import { mockNews3 } from "@/lib/mock-news3";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef } from "react";
 import type { Tool, NewsArticle } from "@/lib/types";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -28,13 +26,12 @@ const TYPING_TEXTS = [
 ];
 
 const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
-const allMockNews = [...mockNews, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-
 
 export default function HomePage() {
-  const latestNews = allMockNews.slice(0, 6); // Fetch more for seamless scroll
+  const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [topTools, setTopTools] = useState<Tool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
+  const [isLoadingNews, setIsLoadingNews] = useState(true);
 
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -101,6 +98,27 @@ export default function HomePage() {
     return () => stopScrolling();
   }, []);
 
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const newsCollection = collection(db, "news");
+        const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"), limit(6));
+        const querySnapshot = await getDocs(newsQuery);
+        const newsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          publishedAt: doc.data().publishedAt.toDate().toISOString(),
+        } as NewsArticle));
+        setLatestNews(newsData);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      } finally {
+        setIsLoadingNews(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   useEffect(() => {
     const fetchToolRatings = async () => {
@@ -309,14 +327,22 @@ export default function HomePage() {
               ref={carouselRef}
               className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-y"
             >
-                {[...latestNews, ...latestNews].map((article, index) => (
-                  <div 
-                    key={`${article.id}-${index}`} 
-                    className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3"
-                  >
-                    <NewsCard article={article} />
-                  </div>
-                ))}
+                {isLoadingNews ? (
+                  [...Array(6)].map((_, i) => (
+                    <div key={i} className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3">
+                      <Skeleton className="h-full w-full rounded-lg min-h-[300px]" />
+                    </div>
+                  ))
+                ) : (
+                  [...latestNews, ...latestNews].map((article, index) => (
+                    <div 
+                      key={`${article.id}-${index}`} 
+                      className="flex-none px-3 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/3"
+                    >
+                      <NewsCard article={article} />
+                    </div>
+                  ))
+                )}
             </div>
 
             <Button

@@ -6,9 +6,6 @@ import { useEffect, useState, Fragment, useMemo, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
-import { mockNews } from "@/lib/mock-news";
-import { mockNews2 } from "@/lib/mock-news2";
-import { mockNews3 } from "@/lib/mock-news3";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -42,6 +39,8 @@ import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-be
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
 import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 
 const AdBanner = () => (
@@ -162,8 +161,6 @@ const renderContent = (content: string, articleId: string) => {
   });
 };
 
-const allMockNews = [...mockNews, ...mockNews2, ...mockNews3];
-
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -173,26 +170,70 @@ function NewsDetailContent({ id }: { id: string }) {
   const [summary, setSummary] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [recommendedNews, setRecommendedNews] = useState<NewsArticle[]>([]);
   const [bookmarkedNewsIds, setBookmarkedNewsIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const foundArticle = allMockNews.find((a) => a.id === id);
-    if (foundArticle) {
-      setArticle(foundArticle);
-      if (currentUser) {
-        getUserProfileData(currentUser.uid).then(userData => {
-          setBookmarkedNewsIds(userData.bookmarkedNews || []);
-          setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
-        });
+    const fetchArticle = async () => {
+      if (!id) return;
+      setIsLoading(true);
+      try {
+        const docRef = doc(db, "news", id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const foundArticle = {
+            id: docSnap.id,
+            ...data,
+            publishedAt: data.publishedAt.toDate().toISOString(),
+          } as NewsArticle;
+
+          setArticle(foundArticle);
+
+          if (currentUser) {
+            getUserProfileData(currentUser.uid).then(userData => {
+              setBookmarkedNewsIds(userData.bookmarkedNews || []);
+              setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
+            });
+          }
+          if (foundArticle.content.length > 200) {
+            summarizeNewsArticle({ articleContent: foundArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
+              .then(output => setSummary(output.summary))
+              .catch(err => console.error("Failed to generate summary:", err));
+          }
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      } finally {
+        setIsLoading(false);
       }
-      if (foundArticle.content.length > 200) {
-        summarizeNewsArticle({ articleContent: foundArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
-          .then(output => setSummary(output.summary))
-          .catch(err => console.error("Failed to generate summary:", err));
-      }
-    }
-    setIsLoading(false);
+    };
+    
+    fetchArticle();
   }, [id, currentUser]);
+
+  useEffect(() => {
+    const fetchRecommendedNews = async () => {
+      if (!article) return;
+      
+      const newsCollection = collection(db, "news");
+      // For simplicity, fetching latest news as recommendation
+      const q = query(newsCollection, orderBy("publishedAt", "desc"), limit(4));
+      const querySnapshot = await getDocs(q);
+      const newsData = querySnapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() } as NewsArticle))
+        .filter(n => n.id !== article.id) // Exclude current article
+        .slice(0, 3); // Take 3
+      setRecommendedNews(newsData);
+    };
+
+    if (article) {
+      fetchRecommendedNews();
+    }
+  }, [article]);
 
   useEffect(() => {
     if (!id) return;
@@ -224,48 +265,6 @@ function NewsDetailContent({ id }: { id: string }) {
     }
   };
   
-  const recommendedNews = useMemo(() => {
-    if (!article) return [];
-
-    const getKeywords = (text: string): Set<string> => {
-        return new Set(text.toLowerCase().split(/\s+/).filter(word => word.length > 4));
-    };
-
-    let recommended: NewsArticle[] = [];
-
-    // If user is logged in and has bookmarks, prioritize similar to bookmarks
-    if (currentUser && bookmarkedNewsIds.length > 0) {
-        const bookmarkedArticles = allMockNews.filter(n => bookmarkedNewsIds.includes(n.id));
-        const bookmarkedKeywords = new Set<string>();
-        bookmarkedArticles.forEach(b => {
-            getKeywords(b.title).forEach(kw => bookmarkedKeywords.add(kw));
-        });
-
-        recommended = allMockNews
-            .filter(n => n.id !== article.id)
-            .map(n => {
-                const titleKeywords = getKeywords(n.title);
-                const intersection = new Set([...titleKeywords].filter(kw => bookmarkedKeywords.has(kw)));
-                return { ...n, score: intersection.size };
-            })
-            .sort((a, b) => b.score - a.score);
-    } 
-    // Otherwise, find articles related to the current one
-    else {
-        const currentKeywords = getKeywords(article.title);
-        recommended = allMockNews
-            .filter(n => n.id !== article.id)
-            .map(n => {
-                const titleKeywords = getKeywords(n.title);
-                const intersection = new Set([...titleKeywords].filter(kw => currentKeywords.has(kw)));
-                return { ...n, score: intersection.size };
-            })
-            .sort((a, b) => b.score - a.score);
-    }
-    
-    return recommended.slice(0, 3);
-  }, [article, currentUser, bookmarkedNewsIds]);
-
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       toast({
@@ -466,7 +465,3 @@ function NewsDetailContent({ id }: { id: string }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent id={params.id} />;
 }
-
-    
-
-    

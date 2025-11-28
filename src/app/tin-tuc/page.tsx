@@ -4,17 +4,15 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { mockNews } from "@/lib/mock-news";
-import { mockNews2 } from "@/lib/mock-news2";
-import { mockNews3 } from "@/lib/mock-news3";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsListItem } from "@/components/news/news-list-item";
 import { Button } from "@/components/ui/button";
+import type { NewsArticle } from "@/lib/types";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-const allMockNews = [...mockNews, ...mockNews2, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-
-const QuickViewItem = ({ article }: { article: any }) => (
+const QuickViewItem = ({ article }: { article: NewsArticle }) => (
     <div className="flex items-center space-x-4 group">
         <span className="flex-shrink-0 w-2 h-2 bg-primary rounded-full"></span>
         <div className="flex-grow">
@@ -37,17 +35,39 @@ const QuickViewItem = ({ article }: { article: any }) => (
 
 export default function NewsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  const [allNews, setAllNews] = useState<NewsArticle[]>([]);
 
   useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
+    const fetchNews = async () => {
+      setIsLoading(true);
+      try {
+        const newsCollection = collection(db, "news");
+        const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"));
+        const querySnapshot = await getDocs(newsQuery);
+        const newsData = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            // Ensure publishedAt is a string for client components
+            publishedAt: data.publishedAt.toDate().toISOString(),
+          } as NewsArticle;
+        });
+        setAllNews(newsData);
+      } catch (error) {
+        console.error("Error fetching news from Firestore:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNews();
   }, []);
 
-  if (!mounted) {
+  const [featuredArticle, secondaryArticle, ...remainingArticles] = allNews;
+  const quickViewArticles = allNews.slice(0, 7);
+
+  if (isLoading) {
     return (
       <AppLayout>
         <div className="container py-8">
@@ -62,10 +82,6 @@ export default function NewsPage() {
     );
   }
 
-  const [featuredArticle, secondaryArticle, ...remainingArticles] = allMockNews;
-  const quickViewArticles = allMockNews.slice(0, 7);
-
-
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
@@ -76,20 +92,9 @@ export default function NewsPage() {
           </p>
         </header>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <Skeleton className="lg:col-span-3 h-[400px] w-full rounded-lg" />
-            <div className="space-y-4">
-                 {[...Array(5)].map((_, i) => (
-                    <div key={i} className="flex items-center space-x-4">
-                        <Skeleton className="h-16 w-16 rounded-md" />
-                        <div className="flex-grow space-y-2">
-                             <Skeleton className="h-4 w-full" />
-                             <Skeleton className="h-4 w-2/3" />
-                        </div>
-                    </div>
-                 ))}
-            </div>
+        {allNews.length === 0 && !isLoading ? (
+          <div className="text-center py-16">
+            <p className="text-xl text-muted-foreground">Chưa có bài viết nào để hiển thị.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

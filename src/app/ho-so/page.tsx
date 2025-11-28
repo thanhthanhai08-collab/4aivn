@@ -14,9 +14,6 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
-import { mockNews } from "@/lib/mock-news";
-import { mockNews2 } from "@/lib/mock-news2";
-import { mockNews3 } from "@/lib/mock-news3";
 import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -33,10 +30,10 @@ import {
 } from "@/components/ui/dialog";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
-const allMockNews = [...mockNews, ...mockNews2, ...mockNews3].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
@@ -63,12 +60,14 @@ export default function ProfilePage() {
   const [favoriteModels, setFavoriteModels] = useState<AIModel[]>([]);
   const [bookmarkedNews, setBookmarkedNews] = useState<NewsArticle[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isFetchingData, setIsFetchingData] = useState(true);
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
       router.push("/dang-nhap");
     } else if (currentUser) {
-        getUserProfileData(currentUser.uid).then(data => {
+        setIsFetchingData(true);
+        getUserProfileData(currentUser.uid).then(async (data) => {
             // Load rated models
             const ratedModelIds = Object.keys(data.ratedModels || {});
             const userRatedModels = mockAIModels
@@ -93,9 +92,21 @@ export default function ProfilePage() {
                 .filter(tool => (data.favoriteTools || []).includes(tool.id));
             setFavoriteTools(sortToolsByRating(userFavoriteTools));
             
-            // Load bookmarked news
-            const userBookmarkedNews = allMockNews.filter(article => (data.bookmarkedNews || []).includes(article.id));
-            setBookmarkedNews(userBookmarkedNews);
+            // Load bookmarked news from Firestore
+            const bookmarkedIds = data.bookmarkedNews || [];
+            if (bookmarkedIds.length > 0) {
+              const newsQuery = query(collection(db, "news"), where("__name__", "in", bookmarkedIds));
+              const newsSnapshot = await getDocs(newsQuery);
+              const userBookmarkedNews = newsSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                publishedAt: doc.data().publishedAt.toDate().toISOString(),
+              } as NewsArticle));
+              setBookmarkedNews(userBookmarkedNews);
+            } else {
+              setBookmarkedNews([]);
+            }
+            setIsFetchingData(false);
         }).catch(error => {
             console.error("Failed to fetch user profile data:", error);
             toast({
@@ -103,6 +114,7 @@ export default function ProfilePage() {
                 description: "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
                 variant: "destructive"
             });
+            setIsFetchingData(false);
         });
     }
   }, [currentUser, isLoading, router, toast]);
@@ -122,7 +134,7 @@ export default function ProfilePage() {
     return name.substring(0, 2);
   };
 
-  if (isLoading || !currentUser) {
+  if (isLoading || !currentUser || isFetchingData) {
     return (
       <AppLayout>
         <div className="container py-12">
