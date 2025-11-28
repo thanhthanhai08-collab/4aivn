@@ -208,8 +208,8 @@ export const mockNews3: NewsArticle[] = [
 </ul>`
   },
   {
-    id: 'google-ke-hoach-mo-rong-ha-tang-ai',
-    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 Lần để giữ vững vị thế dẫn đầu',
+    id: 'google-tuyen-bo-ke-hoach-mo-rong-ha-tang-ai',
+    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 Lần để giữ vững thế thống trị',
     source: 'Google',
     author: 'Mai',
     publishedAt: '2025-11-27T09:00:00Z',
@@ -266,3 +266,5 @@ export const mockNews3: NewsArticle[] = [
 <p>Google đang biến trung tâm dữ liệu thành một cỗ máy thống nhất và cực kỳ hiệu quả. Họ tập trung vào việc đồng bộ thiết kế giúp phần cứng bắt tay với phần mềm để cùng xử lý tác vụ cùng tiết kiệm điện năng, hơn nữa là dùng chip nhà làm giống như điều Apple đã và đang làm để bảo đảm vị thế dẫn đầu trong cuộc đua với tốc độ chóng mặt!</p>`
   },
 ];
+
+    
