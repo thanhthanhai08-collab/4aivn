@@ -1,3 +1,4 @@
+
 // src/components/news/news-card.tsx
 "use client";
 

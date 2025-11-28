@@ -50,12 +50,12 @@ export const mockNews3: NewsArticle[] = [
   },
   {
     id: 'grok-4-1-ra-mat',
-    title: "Grok 4.1 ra mắt mô hình AI cảm xúc nhất của xAI",
+    title: 'Grok 4.1 ra mắt mô hình AI cảm xúc nhất của xAI',
     source: 'xAI',
     author: 'Mai',
     publishedAt: '2025-11-21T09:00:00Z',
     imageUrl: '/image/news3/grok-4-1-xai-emotional-ai.png',
-    dataAiHint: "xAI ra mắt Grok 4.1 với nâng cấp mạnh mẽ về trí tuệ cảm xúc.",
+    dataAiHint: 'xAI ra mắt Grok 4.1 với nâng cấp mạnh mẽ về trí tuệ cảm xúc.',
     content: `<p>xAI đã chính thức phát hành Grok 4.1, một bản cập nhật đột phá không chỉ tăng cường hiệu suất mà còn mang đến những thay đổi đáng kể về trí tuệ cảm xúc và khả năng tương tác giống con người hơn bao giờ hết. Bản cập nhật Grok 4.1 vẫn ưu tiên khả năng cập nhật các tin tức theo thời gian thực giống Grok 4, nó khiến các cuộc hội thoại trở nên sắc sảo, tự nhiên hơn, đồng thời giảm đáng kể tỷ lệ “ảo giác”.</p>
 <p>Grok 4.1 hiện đã có mặt trên các nền tảng Grok, X, và các ứng dụng di động iOS và Android. Nó đang được triển khai ngay lập tức ở chế độ Tự động (Auto mode) và người dùng có thể chọn rõ ràng Grok 4.1 để sử dụng trên web.</p>
 <h2><strong>Grok 4.1 đã trở nên giống con người như thế nào</strong></h2>
@@ -208,8 +208,8 @@ export const mockNews3: NewsArticle[] = [
 </ul>`
   },
   {
-    id: 'google-tuyen-bo-ke-hoach-mo-rong-ha-tang-ai-de-giu-vung-vi-the-dan-dau',
-    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 lần để giữ vững thế thống trị',
+    id: 'google-tuyen-bo-ke-hoach-mo-rong-ha-tang-ai',
+    title: 'Google tuyên bố kế hoạch mở rộng hạ tầng AI gấp 1.000 Lần để giữ vững thế thống trị',
     source: 'Google',
     author: 'Mai',
     publishedAt: '2025-11-27T09:00:00Z',
@@ -223,8 +223,6 @@ export const mockNews3: NewsArticle[] = [
 <p>Ông Vahdat đã cảnh báo thẳng thắn rằng: Hiện tại, cuộc đua xây dựng cơ sở hạ tầng cho AI mới chính là phần quan trọng nhất và đắt đỏ nhất của toàn bộ cuộc chơi AI này!</p>
 <h2><strong>Ưu thế của Google đi kèm với thách thức</strong></h2>
 <p>Để đạt được mức tăng trưởng hạ tầng AI gấp 1.000 lần mà không làm chi phí vượt tầm kiểm soát, Google tiếp tục đặt cược vào hiệu suất và hiệu quả năng lượng.</p>
-
-
 <h3>Tối ưu hóa hiệu suất và chi phí</h3>
 <p>Google đã đặt ra mục tiêu với quá nhiều thách thức: cần cung cấp năng lực tính toán, lưu trữ và kết nối gấp 1.000 lần so với hiện nay, nhưng phải duy trì chi phí và mức tiêu thụ điện năng ở mức tương đương.</p>
 <p>Để thực hiện điều này, Google áp dụng triết lý thiết kế đồng bộ rất giống của Nvidia. Đây là việc tích hợp chặt chẽ phần mềm, thuật toán (do DeepMind tự phát triển) với kiến trúc phần cứng “cây nhà lá vườn” của Google đó là TPU Ironwood và CPU Axion.</p>
