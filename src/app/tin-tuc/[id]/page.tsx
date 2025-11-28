@@ -224,7 +224,11 @@ function NewsDetailContent({ id }: { id: string }) {
       const q = query(newsCollection, orderBy("publishedAt", "desc"), limit(4));
       const querySnapshot = await getDocs(q);
       const newsData = querySnapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() } as NewsArticle))
+        .map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            publishedAt: doc.data().publishedAt.toDate().toISOString(),
+        } as NewsArticle))
         .filter(n => n.id !== article.id) // Exclude current article
         .slice(0, 3); // Take 3
       setRecommendedNews(newsData);

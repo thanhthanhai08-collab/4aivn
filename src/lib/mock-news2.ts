@@ -591,7 +591,7 @@ export const mockNews2: NewsArticle[] = [
 [AI_BROWSER_FOCUS_CHART]
 <p><strong>ChatGPT Atlas</strong> được mệnh danh là &#34;bộ não hành động của web&#34; (action-oriented web brain). Trọng tâm của Atlas là tự động hóa và năng suất. Với tính năng nổi bật là <strong>Agent Mode</strong> (chế độ Tác tử), Atlas có thể tự thực hiện các tác vụ phức tạp gồm nhiều bước như đặt vé máy bay, mua sắm trực tuyến, hay lên lịch hẹn. Nó biến trình duyệt thành một &#34;phi công phụ&#34; (co-pilot), giúp người dùng hoàn thành công việc thay vì chỉ tìm kiếm thông tin. Các tính năng khác như &#34;Browser Memory&#34; (bộ nhớ trình duyệt) và &#34;In-line writing help&#34; (hỗ trợ viết trực tiếp) càng củng cố vai trò của Atlas như một trợ lý cá nhân hóa, giúp giảm thiểu các thao tác thủ công và tiết kiệm thời gian.</p>
 <blockquote>Atlas ưu tiên &#34;hành động&#34; - đơn giản hóa cách bạn làm việc trực tuyến.</blockquote>
-<p>[IMAGE:https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg|Chế độ Tác tử của Atlas đang mua sắm|agent mode shopping]</p>
+[IMAGE:https://agents-download.skywork.ai/image/rt/8e9e287a57db5ea4008fd993f232182e.jpg|Chế độ Tác tử của Atlas đang mua sắm|agent mode shopping]
 <p>Ngược lại, <strong>Perplexity Comet</strong> được xây dựng như một &#34;không gian làm việc tri thức&#34; (knowledge workspace), tập trung vào nghiên cứu và độ chính xác. Triết lý của Comet là &#34;biết&#34; (knowing), đảm bảo thông tin đáng tin cậy, cập nhật và minh bạch. Tính năng nổi bật của nó là khả năng tổng hợp thông tin từ nhiều nguồn, cung cấp các câu trả lời có trích dẫn rõ ràng và có thể kiểm chứng. Comet cho phép người dùng tạo các &#34;Spaces&#34; (Không gian) riêng cho từng dự án, giúp tổ chức các tab, ghi chú và cuộc trò chuyện một cách khoa học. Điều này biến nó thành một &#34;nhà nghiên cứu thông minh&#34; (intelligent researcher), lý tưởng cho các học giả, nhà báo và chuyên gia phân tích.</p>
 <div class="clear-float"></div>
 <h2 id="section-section-3">Thách Thức Ngôi Vương: Tác Động đến Chrome, Safari và Toàn Ngành</h2>
@@ -642,5 +642,3 @@ export const mockNews2: NewsArticle[] = [
 <p>Tương lai của lực lượng lao động được dự đoán sẽ là sự kết hợp "lai" giữa robot, AI, tự động hóa và con người. Trong khi mô hình robot từ xa ở FamilyMart chứng minh rằng công nghệ có thể vượt qua khoảng cách địa lý (3.000km) để giải quyết vấn đề logistics, nó cũng đặt ra câu hỏi về việc giá trị của sức lao động thủ công được số hóa này sẽ được định nghĩa như thế nào trong một thế giới ngày càng tự động hóa.</p>`,
   },
 ];
-
-    
