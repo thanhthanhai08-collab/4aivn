@@ -1,4 +1,3 @@
-
 // src/app/news/[id]/page.tsx
 "use client";
 
@@ -449,7 +448,7 @@ function NewsDetailContent({ id }: { id: string }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const id = params.id;
+  const { id } = params;
   
   if (!id) {
     // Optionally, render a loading state or a not found component
