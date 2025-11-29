@@ -1,4 +1,3 @@
-
 // src/app/news/[id]/page.tsx
 "use client";
 
@@ -205,6 +204,7 @@ function NewsDetailContent({ id }: { id: string }) {
     };
 
     const fetchRecommendedNews = async () => {
+        if (!id) return;
         const newsQuery = query(
             collection(db, "tin-tuc"), 
             where("__name__", "!=", id), 

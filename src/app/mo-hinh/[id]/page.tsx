@@ -467,5 +467,3 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
-
-    
