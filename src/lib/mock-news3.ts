@@ -223,6 +223,8 @@ export const mockNews3: NewsArticle[] = [
 <p>Ông Vahdat đã cảnh báo thẳng thắn rằng: Hiện tại, cuộc đua xây dựng cơ sở hạ tầng cho AI mới chính là phần quan trọng nhất và đắt đỏ nhất của toàn bộ cuộc chơi AI này!</p>
 <h2><strong>Ưu thế của Google đi kèm với thách thức</strong></h2>
 <p>Để đạt được mức tăng trưởng hạ tầng AI gấp 1.000 lần mà không làm chi phí vượt tầm kiểm soát, Google tiếp tục đặt cược vào hiệu suất và hiệu quả năng lượng.</p>
+
+
 <h3>Tối ưu hóa hiệu suất và chi phí</h3>
 <p>Google đã đặt ra mục tiêu với quá nhiều thách thức: cần cung cấp năng lực tính toán, lưu trữ và kết nối gấp 1.000 lần so với hiện nay, nhưng phải duy trì chi phí và mức tiêu thụ điện năng ở mức tương đương.</p>
 <p>Để thực hiện điều này, Google áp dụng triết lý thiết kế đồng bộ rất giống của Nvidia. Đây là việc tích hợp chặt chẽ phần mềm, thuật toán (do DeepMind tự phát triển) với kiến trúc phần cứng “cây nhà lá vườn” của Google đó là TPU Ironwood và CPU Axion.</p>
@@ -262,5 +264,43 @@ export const mockNews3: NewsArticle[] = [
 <p>Canh bạc đặt cược vào TPU của Google đang bắt đầu có hiệu quả khi Meta Platforms đang đàm phán để sử dụng TPU của Google với mục đích là đa dạng hóa nhà cung cấp và giảm bớt sự phụ thuộc vào Nvidia. Dự kiến, Meta có thể bắt đầu thuê năng lực TPU từ năm 2026 và mua chip số lượng lớn từ năm 2027.</p>
 <p>Tóm lại, kế hoạch tăng tốc hạ tầng AI lên gấp 1.000 lần của Google không chỉ là một mục tiêu về số lượng mà là là sự thay đổi về cách thiết kế hệ thống.</p>
 <p>Google đang biến trung tâm dữ liệu thành một cỗ máy thống nhất và cực kỳ hiệu quả. Họ tập trung vào việc đồng bộ thiết kế giúp phần cứng bắt tay với phần mềm để cùng xử lý tác vụ cùng tiết kiệm điện năng, hơn nữa là dùng chip nhà làm giống như điều Apple đã và đang làm để bảo đảm vị thế dẫn đầu trong cuộc đua với tốc độ chóng mặt!</p>`
+  },
+  {
+    id: 'cursor-ai-va-lan-song-vibe-coding-moi',
+    title: 'Cursor AI và làn sóng Vibe Coding mới',
+    source: 'Cursor',
+    author: 'Mai',
+    publishedAt: '2025-12-05T09:00:00Z',
+    imageUrl: '/image/news3/cursor-ai-vibe-coding.png',
+    dataAiHint: 'Cursor AI, trình chỉnh sửa code dựa trên AI, đang dẫn đầu xu hướng "Vibe-Driven Development" (Vibe Coding), cho phép lập trình viên tập trung vào ý tưởng và "cảm nhận" thay vì cú pháp. Với khả năng tạo code từ prompt, tự động sửa lỗi và tích hợp AI sâu, Cursor giúp giảm gánh nặng kỹ thuật, tăng tốc độ phát triển và biến việc viết code trở nên sáng tạo, trực quan hơn.',
+    content: `<p>Trong thế giới lập trình, có một thuật ngữ đang nổi lên và gây chú ý: “Vibe-Driven Development” (Phát triển dựa trên cảm nhận), hay còn gọi là Vibe Coding. Đây không chỉ là một trào lưu mà là một sự thay đổi trong cách các lập trình viên tương tác với công cụ của họ, và Cursor AI đang là cái tên tiên phong cho xu hướng này.</p>
+<h2><strong>Vibe Coding là gì?</strong></h2>
+<p>Vibe Coding là phương pháp tiếp cận lập trình trong đó lập trình viên tập trung vào việc mô tả “cảm nhận” hoặc ý định của họ về kết quả cuối cùng, thay vì phải viết từng dòng code chi tiết. Bạn chỉ cần nói cho AI biết bạn muốn gì và AI sẽ lo phần còn lại.</p>
+<p>Ví dụ, thay vì phải nhớ cú pháp phức tạp, bạn có thể nói: “Tạo một nút bấm màu xanh, bo tròn, có hiệu ứng đổ bóng và đặt nó ở giữa màn hình.” AI sẽ tự động tạo ra đoạn code CSS và HTML tương ứng. Đây chính là linh hồn của Vibe Coding.</p>
+
+
+<h2><strong>Cursor AI: Công cụ hoàn hảo cho Vibe Coding</strong></h2>
+<p>Cursor là một trình chỉnh sửa code được xây dựng dựa trên AI, được thiết kế để đưa trải nghiệm Vibe Coding lên một tầm cao mới. Nó không chỉ là một công cụ bổ trợ (add-on) cho VS Code mà là một trình chỉnh sửa (editor) hoàn chỉnh với những tính năng vượt trội:</p>
+<ul>
+    <li><strong>Tạo code từ prompt:</strong> Chỉ cần mô tả yêu cầu, Cursor sẽ tạo ra code cho bạn. Bạn có thể trò chuyện với AI về toàn bộ file hoặc một đoạn code cụ thể, giúp quá trình chỉnh sửa trở nên tự nhiên như đang nói chuyện với một đồng nghiệp.</li>
+    <li><strong>Tự động sửa lỗi (Auto-debug):</strong> Khi gặp lỗi, bạn chỉ cần nhấn một nút và AI sẽ tự động tìm và sửa lỗi. Tính năng này giúp tiết kiệm rất nhiều thời gian so với việc phải dò từng dòng code một cách thủ công.</li>
+    <li><strong>Tích hợp AI sâu:</strong> Cursor được xây dựng với AI làm cốt lõi, không phải là một tính năng được thêm vào sau. Điều này cho phép nó hiểu sâu hơn về ngữ cảnh của dự án và đưa ra những gợi ý thông minh hơn so với các công cụ khác như Copilot.</li>
+    <li><strong>Trò chuyện với thư viện và tài liệu:</strong> Bạn có thể dễ dàng tham khảo tài liệu của các thư viện (documentation) ngay trong trình chỉnh sửa mà không cần chuyển qua lại giữa các cửa sổ.</li>
+</ul>
+[IMAGE:/image/news3/cursor-ai-vibe-coding-example.gif|Minh họa Vibe Coding với Cursor AI|Vibe Coding with Cursor]
+<h2><strong>Tại sao Vibe Coding lại là tương lai?</strong></h2>
+<p>Trước đây, lập trình viên phải dành phần lớn thời gian để vật lộn với cú pháp, cấu hình và các chi tiết kỹ thuật. Giờ đây, với các công cụ AI như Cursor, họ có thể tập trung vào bức tranh lớn hơn: logic nghiệp vụ, trải nghiệm người dùng và kiến trúc hệ thống.</p>
+<p>Vibe Coding đang thay đổi vai trò của lập trình viên từ một người “thợ xây” (builder) thành một “kiến trúc sư” (architect). Công việc không còn là lắp ráp từng viên gạch mà là thiết kế toàn bộ tòa nhà. AI sẽ đảm nhận các công việc lặp đi lặp lại và tốn thời gian, cho phép con người tập trung vào sự sáng tạo và giải quyết vấn đề.</p>
+<h2><strong>Sự khác biệt giữa Cursor AI và các công cụ khác như Copilot là gì?</strong></h2>
+<p>Mặc dù cả hai đều là trợ lý AI, nhưng Copilot giống như một công cụ tự động hoàn thành (autocomplete) thông minh. Nó có thể gợi ý các đoạn code nhỏ nhưng lại thiếu khả năng hiểu ngữ cảnh sâu rộng của toàn bộ dự án.</p>
+<p>Cursor, ngược lại, hoạt động như một đối tác thực thụ. Nó có thể trò chuyện, sửa lỗi và tham gia vào quá trình phát triển ở một cấp độ cao hơn. Nếu Copilot là một người trợ lý cá nhân thì Cursor giống như một lập trình viên cấp dưới (junior developer) luôn sẵn sàng hỗ trợ bạn.</p>
+<h2><strong>Làm thế nào để bắt đầu với Cursor AI?</strong></h2>
+<p>Bạn có thể tải Cursor miễn phí từ trang web chính thức của họ. Phiên bản miễn phí cung cấp các tính năng cơ bản, đủ để bạn trải nghiệm sức mạnh của Vibe Coding. Nếu bạn muốn có các tính năng nâng cao hơn và truy cập vào các mô hình AI mạnh nhất như GPT-4, bạn có thể nâng cấp lên các gói trả phí.</p>
+<ul>
+    <li><strong>Gói Basic (Miễn phí):</strong> Bao gồm các tính năng cơ bản và 50 lượt sử dụng GPT-4 mỗi tháng.</li>
+    <li><strong>Gói Pro ($20/tháng):</strong> 500 lượt sử dụng GPT-4 mỗi tháng và truy cập sớm vào các tính năng mới.</li>
+    <li><strong>Gói Business (Tùy chỉnh):</strong> Dành cho các đội nhóm lớn, với các tính năng quản lý và bảo mật nâng cao.</li>
+</ul>
+<p>Vibe Coding không phải là sự thay thế cho kiến thức lập trình cơ bản, mà là một công cụ giúp bạn nâng cao năng suất và tập trung vào những gì thực sự quan trọng. Với sự hỗ trợ của các công cụ như Cursor AI, tương lai của lập trình sẽ trở nên sáng tạo, trực quan và hiệu quả hơn bao giờ hết.</p>`
   },
 ];
