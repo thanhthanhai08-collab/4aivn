@@ -2,9 +2,10 @@
 // src/app/news/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, Fragment, useMemo, use } from "react";
+import { useEffect, useState, Fragment, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -420,6 +421,20 @@ function NewsDetailContent({ id }: { id: string }) {
   );
 }
 
-export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  return <NewsDetailContent id={params.id} />;
+export default function NewsDetailPage() {
+  const params = useParams();
+  const id = typeof params.id === 'string' ? params.id : '';
+  
+  if (!id) {
+    // Optionally, render a loading state or a not found component
+    return (
+        <AppLayout>
+            <div className="container py-12 text-center">
+                <h1 className="text-2xl font-bold">Đang tải...</h1>
+            </div>
+        </AppLayout>
+    );
+  }
+
+  return <NewsDetailContent id={id} />;
 }
