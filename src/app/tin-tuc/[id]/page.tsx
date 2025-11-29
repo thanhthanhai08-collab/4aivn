@@ -176,7 +176,7 @@ function NewsDetailContent({ id }: { id: string }) {
     const fetchArticle = async () => {
         if (!id) return;
         setIsLoading(true);
-        const docRef = doc(db, "news", id);
+        const docRef = doc(db, "tin-tuc", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -206,7 +206,7 @@ function NewsDetailContent({ id }: { id: string }) {
 
     const fetchRecommendedNews = async () => {
         const newsQuery = query(
-            collection(db, "news"), 
+            collection(db, "tin-tuc"), 
             where("__name__", "!=", id), 
             orderBy("__name__"), 
             limit(3)

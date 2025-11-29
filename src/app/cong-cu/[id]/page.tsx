@@ -177,7 +177,7 @@ function ToolDetailContent({ id }: { id: string }) {
         
         // Fetch related news from Firestore
         const newsQuery = query(
-            collection(db, "news"),
+            collection(db, "tin-tuc"),
             where('title', '>=', foundTool.name),
             where('title', '<=', foundTool.name + '\uf8ff'),
             limit(3)

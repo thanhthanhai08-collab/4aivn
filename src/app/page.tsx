@@ -101,7 +101,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const newsCollection = collection(db, "news");
+        const newsCollection = collection(db, "tin-tuc");
         const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"), limit(6));
         const querySnapshot = await getDocs(newsQuery);
         const newsData = querySnapshot.docs.map(doc => ({
