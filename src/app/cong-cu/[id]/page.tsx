@@ -32,8 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, limit, query } from "firebase/firestore";
-import { mockNews } from "@/lib/mock-news";
+import { collection, getDocs, orderBy, limit, query, where } from "firebase/firestore";
 import { NewsCard } from "@/components/news/news-card";
 
 const initialMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
@@ -175,12 +174,21 @@ function ToolDetailContent({ id }: { id: string }) {
           });
         }
         
-        // Fetch related news
-        const filteredNews = mockNews.filter(article => 
-            article.title.toLowerCase().includes(foundTool.name.toLowerCase()) || 
-            article.content.toLowerCase().includes(foundTool.name.toLowerCase())
-        ).slice(0, 3);
-        setRelatedNews(filteredNews);
+        // Fetch related news from Firestore
+        const newsQuery = query(
+            collection(db, "news"),
+            where('title', '>=', foundTool.name),
+            where('title', '<=', foundTool.name + '\uf8ff'),
+            limit(3)
+        );
+        const newsSnapshot = await getDocs(newsQuery);
+        const newsData = newsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            publishedAt: doc.data().publishedAt.toDate().toISOString(),
+        } as NewsArticle));
+        setRelatedNews(newsData);
+
 
         // Generate enhanced description if needed
         if (foundTool.description.length < 100 && foundTool.description.length > 0) {

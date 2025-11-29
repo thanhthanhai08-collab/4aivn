@@ -23,10 +23,11 @@ import {
   getUserProfileData,
   getAggregateRating
 } from "@/lib/user-data-service";
-import { mockNews } from "@/lib/mock-news";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
+import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 
 function ModelDetailContent({ id }: { id: string }) {
@@ -47,12 +48,25 @@ function ModelDetailContent({ id }: { id: string }) {
     if (foundModel) {
       setModel(foundModel);
 
-      // Find related news articles
-      const filteredNews = mockNews.filter(article => 
-        article.title.toLowerCase().includes(foundModel.name.toLowerCase()) || 
-        article.content.toLowerCase().includes(foundModel.name.toLowerCase())
-      ).slice(0, 3);
-      setRelatedNews(filteredNews);
+      // Fetch related news from Firestore
+      const fetchRelatedNews = async () => {
+          const newsQuery = query(
+              collection(db, "news"),
+              where('title', '>=', foundModel.name),
+              where('title', '<=', foundModel.name + '\uf8ff'),
+              limit(3)
+          );
+          const newsSnapshot = await getDocs(newsQuery);
+          const newsData = newsSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+              publishedAt: doc.data().publishedAt.toDate().toISOString(),
+          } as NewsArticle));
+          setRelatedNews(newsData);
+      };
+      
+      fetchRelatedNews();
+
 
       if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {
