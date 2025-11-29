@@ -58,106 +58,103 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
-  const parts = content.split(combinedRegex).filter(part => part);
+    const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
+    const parts = content.split(combinedRegex).filter(part => part);
 
-  return parts.map((part, index) => {
-    if (part === '[GEMINI_3_BENCHMARK_CHART]') {
-      return <Gemini3BenchmarkChart key={`${index}-gemini3-chart`} />;
-    }
-    if (part === '[SIMA2_BENCHMARK_CHART]') {
-      return <Sima2BenchmarkChart key={`${index}-sima2-chart`} />;
-    }
-    if (part === '[GPT5_V1_TOKEN_CHART]') {
-      return <Gpt5V1TokenChart key={`${index}-gpt5-token-chart`} />;
-    }
-    if (part === '[ATLAS_SECURITY_CHART]') {
-      return <AtlasSecurityBenchmarkChart key={`${index}-atlas-security-chart`} />;
-    }
-    if (part === '[HUMAN_ROBOT_COLLABORATION_CHART]') {
-      return <HumanRobotCollaborationChart key={`${index}-human-robot-chart`} />;
-    }
-    if (part === '[AI_BROWSER_FOCUS_CHART]') {
-      return <AiBrowserFocusChart key={`${index}-ai-browser-focus-chart`} />;
-    }
-    if (part === '[BROWSER_MARKET_SHARE_CHART]') {
-      return <BrowserMarketShareChart key={`${index}-browser-chart`} />;
-    }
-    if (part === '[AI_BROWSER_MARKET_GROWTH_CHART]') {
-      return <AiBrowserMarketGrowthChart key={`${index}-market-growth-chart`} />;
-    }
-    if (part === '[BENCHMARK_CHART]') {
-      if (articleId === 'openai-gpt-oss-ra-mat') {
-        return <GptOssBenchmarkChart key={`${index}-chart`} />;
-      }
-      if (articleId === 'ai-viet-2025-bao-cao') {
-        return <AiVietUsageChart key={`${index}-chart`} />;
-      }
-      return null;
-    }
-    
-    if (part === '[ACTIVITIES_CHART]') {
-        if (articleId === 'ai-viet-2025-bao-cao') {
-            return <AiActivitiesChart key={`${index}-activities-chart`} />;
-        }
-        return null;
-    }
-    
-    if (part === '[SATISFACTION_CHART]') {
-        if (articleId === 'ai-viet-2025-bao-cao') {
-            return <AiSatisfactionChart key={`${index}-satisfaction-chart`} />;
-        }
-        return null;
-    }
+    return parts.map((part, index) => {
+        const trimmedPart = part.trim();
+        if (!trimmedPart) return null;
 
-    if (part === '[PROFITABILITY_CHART]') {
-        if (articleId === 'nvidia-gb200-profit') {
-            return <ProfitabilityChart key={`${index}-profit-chart`} />;
+        if (trimmedPart === '[GEMINI_3_BENCHMARK_CHART]') {
+          return <Gemini3BenchmarkChart key={`${index}-gemini3-chart`} />;
         }
-        return null;
-    }
-    
-    if (part === '[NANO_BANANA_CHART]') {
-        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
-            return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
+        if (trimmedPart === '[SIMA2_BENCHMARK_CHART]') {
+          return <Sima2BenchmarkChart key={`${index}-sima2-chart`} />;
         }
-        return null;
-    }
-    
-    if (part === '[IMAGE_EDITING_CHART]') {
-        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
-            return <ImageEditingBenchmarkChart key={`${index}-image-edit-chart`} />;
+        if (trimmedPart === '[GPT5_V1_TOKEN_CHART]') {
+          return <Gpt5V1TokenChart key={`${index}-gpt5-token-chart`} />;
         }
-        return null;
-    }
+        if (trimmedPart === '[ATLAS_SECURITY_CHART]') {
+          return <AtlasSecurityBenchmarkChart key={`${index}-atlas-security-chart`} />;
+        }
+        if (trimmedPart === '[HUMAN_ROBOT_COLLABORATION_CHART]') {
+          return <HumanRobotCollaborationChart key={`${index}-human-robot-chart`} />;
+        }
+        if (trimmedPart === '[AI_BROWSER_FOCUS_CHART]') {
+          return <AiBrowserFocusChart key={`${index}-ai-browser-focus-chart`} />;
+        }
+        if (trimmedPart === '[BROWSER_MARKET_SHARE_CHART]') {
+          return <BrowserMarketShareChart key={`${index}-browser-chart`} />;
+        }
+        if (trimmedPart === '[AI_BROWSER_MARKET_GROWTH_CHART]') {
+          return <AiBrowserMarketGrowthChart key={`${index}-market-growth-chart`} />;
+        }
+        if (trimmedPart === '[BENCHMARK_CHART]') {
+          if (articleId === 'openai-gpt-oss-ra-mat') {
+            return <GptOssBenchmarkChart key={`${index}-chart`} />;
+          }
+          if (articleId === 'ai-viet-2025-bao-cao') {
+            return <AiVietUsageChart key={`${index}-chart`} />;
+          }
+          return null;
+        }
+        if (trimmedPart === '[ACTIVITIES_CHART]') {
+            if (articleId === 'ai-viet-2025-bao-cao') {
+                return <AiActivitiesChart key={`${index}-activities-chart`} />;
+            }
+            return null;
+        }
+        if (trimmedPart === '[SATISFACTION_CHART]') {
+            if (articleId === 'ai-viet-2025-bao-cao') {
+                return <AiSatisfactionChart key={`${index}-satisfaction-chart`} />;
+            }
+            return null;
+        }
+        if (trimmedPart === '[PROFITABILITY_CHART]') {
+            if (articleId === 'nvidia-gb200-profit') {
+                return <ProfitabilityChart key={`${index}-profit-chart`} />;
+            }
+            return null;
+        }
+        if (trimmedPart === '[NANO_BANANA_CHART]') {
+            if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+                return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
+            }
+            return null;
+        }
+        if (trimmedPart === '[IMAGE_EDITING_CHART]') {
+            if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+                return <ImageEditingBenchmarkChart key={`${index}-image-edit-chart`} />;
+            }
+            return null;
+        }
 
-    const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
-    if (imageMatch) {
-      const [, src, alt, hint] = imageMatch;
-      return (
-        <div key={`${index}-img`} className="my-6 lg:my-8">
-          <Image
-            src={src}
-            alt={alt}
-            width={750}
-            height={420}
-            className="rounded-lg shadow-lg w-full h-auto object-cover"
-            data-ai-hint={hint}
-          />
-        </div>
-      );
-    }
-    
-    // Render the remaining text content
-    if (part.trim().startsWith('<')) {
-      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: part }} />;
-    } else {
-       // Split by newlines and wrap each line in a <p> tag
-       return part.split('\n').map((line, lineIndex) => (
-        line.trim() ? <p key={`${index}-p-${lineIndex}`}>{line}</p> : null
-      ));
-    }
-  });
+        const imageMatch = trimmedPart.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
+        if (imageMatch) {
+            const [, src, alt, hint] = imageMatch;
+            return (
+                <div key={`${index}-img`} className="my-6 lg:my-8">
+                    <Image
+                        src={src}
+                        alt={alt}
+                        width={750}
+                        height={420}
+                        className="rounded-lg shadow-lg w-full h-auto object-cover"
+                        data-ai-hint={hint}
+                    />
+                </div>
+            );
+        }
+
+        // Check if the part contains any HTML tags
+        if (/<[a-z][\s\S]*>/i.test(trimmedPart)) {
+            return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: trimmedPart }} />;
+        }
+
+        // Otherwise, wrap in <p> tags
+        return <p key={`${index}-p`}>{trimmedPart}</p>;
+
+    }).filter(Boolean); // Filter out null/empty elements
 };
 
 function NewsDetailContent({ id }: { id: string }) {
