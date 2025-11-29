@@ -462,7 +462,9 @@ function NewsDetailContent({ id }: { id: string }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  if (!params.id) {
+  const { id } = params;
+  
+  if (!id) {
     // Optionally, render a loading state or a not found component
     return (
         <AppLayout>
@@ -473,5 +475,5 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
     );
   }
 
-  return <NewsDetailContent id={params.id} />;
+  return <NewsDetailContent id={id} />;
 }
