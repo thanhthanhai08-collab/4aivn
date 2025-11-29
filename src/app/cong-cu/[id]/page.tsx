@@ -1,3 +1,4 @@
+
 // src/app/cong-cu/[id]/page.tsx
 "use client";
 

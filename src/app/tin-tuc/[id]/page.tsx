@@ -1,14 +1,13 @@
+
 // src/app/news/[id]/page.tsx
 "use client";
 
 import { useEffect, useState, Fragment, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -58,16 +57,11 @@ const AdBanner = () => (
 );
 
 const renderContent = (content: string, articleId: string) => {
-  // Regex để tìm tất cả các shortcode bạn đã định nghĩa
   const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
   
-  // Tách nội dung thành các phần: Shortcode hoặc Text/HTML
   const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
-    // 1. Xử lý Shortcode (Chart và Component)
-    // (Giữ nguyên logic này vì nó đã hoạt động)
-    
     if (part === '[GEMINI_3_BENCHMARK_CHART]') {
       return <Gemini3BenchmarkChart key={`${index}-gemini3-chart`} />;
     }
@@ -92,7 +86,6 @@ const renderContent = (content: string, articleId: string) => {
     if (part === '[AI_BROWSER_MARKET_GROWTH_CHART]') {
       return <AiBrowserMarketGrowthChart key={`${index}-market-growth-chart`} />;
     }
-    // ... (Giữ nguyên các chart còn lại)
     if (part === '[BENCHMARK_CHART]') {
       if (articleId === 'openai-gpt-oss-ra-mat') {
         return <GptOssBenchmarkChart key={`${index}-chart`} />;
@@ -137,7 +130,7 @@ const renderContent = (content: string, articleId: string) => {
         }
         return null;
     }
-    // Xử lý Image Shortcode
+
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
     if (imageMatch) {
       const [, src, alt, hint] = imageMatch;
@@ -155,22 +148,16 @@ const renderContent = (content: string, articleId: string) => {
       );
     }
     
-    // 2. Xử lý Nội dung Text/HTML (Đã Sửa Đổi)
-    
     const trimmedPart = part.trim();
-
-    // Kiểm tra nếu nó có vẻ là HTML (bắt đầu bằng '<' HOẶC chứa thẻ đóng </p>)
     if (trimmedPart.startsWith('<') || trimmedPart.includes('</p>') || trimmedPart.includes('</h')) {
-      // Dùng dangerouslySetInnerHTML để render HTML
       return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: trimmedPart }} />;
     } else if (trimmedPart) {
-      // Nếu là text thuần túy (không phải HTML), bọc nó trong <p> tags
       return trimmedPart.split('\n').map((line, lineIndex) => (
         line.trim() ? <p key={`${index}-p-${lineIndex}`}>{line}</p> : null
-      )).filter(Boolean); // Loại bỏ các phần tử null/false
+      )).filter(Boolean);
     }
     
-    return null; // Trả về null cho các phần tử rỗng hoặc không xác định
+    return null;
   });
 };
 
@@ -465,7 +452,6 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   
   if (!id) {
-    // Optionally, render a loading state or a not found component
     return (
         <AppLayout>
             <div className="container py-12 text-center">
