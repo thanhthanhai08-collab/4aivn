@@ -95,7 +95,7 @@ export default function ProfilePage() {
             // Load bookmarked news from Firestore
             const bookmarkedIds = data.bookmarkedNews || [];
             if (bookmarkedIds.length > 0) {
-              const newsQuery = query(collection(db, "tin-tuc"), where("__name__", "in", bookmarkedIds));
+              const newsQuery = query(collection(db, "news"), where("__name__", "in", bookmarkedIds));
               const newsSnapshot = await getDocs(newsQuery);
               const userBookmarkedNews = newsSnapshot.docs.map(doc => ({
                 id: doc.id,

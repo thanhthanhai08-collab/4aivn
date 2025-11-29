@@ -51,7 +51,7 @@ function ModelDetailContent({ id }: { id: string }) {
       // Fetch related news from Firestore
       const fetchRelatedNews = async () => {
           const newsQuery = query(
-              collection(db, "tin-tuc"),
+              collection(db, "news"),
               where('title', '>=', foundModel.name),
               where('title', '<=', foundModel.name + '\uf8ff'),
               limit(3)

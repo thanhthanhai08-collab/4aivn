@@ -42,7 +42,7 @@ export default function NewsPage() {
     const fetchNews = async () => {
       setIsLoading(true);
       try {
-        const newsCollection = collection(db, "tin-tuc");
+        const newsCollection = collection(db, "news");
         const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"));
         const querySnapshot = await getDocs(newsQuery);
         const newsData = querySnapshot.docs.map(doc => {
