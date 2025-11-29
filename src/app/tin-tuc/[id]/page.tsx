@@ -15,6 +15,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
 import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
+import { mockNews } from "@/lib/mock-news";
+import { mockNews2 } from "@/lib/mock-news2";
+import { mockNews3 } from "@/lib/mock-news3";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
 import { getComments } from "@/lib/comments-service";
@@ -39,9 +42,8 @@ import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-be
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
 import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 
+const allMockNews = [...mockNews, ...mockNews2, ...mockNews3];
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -164,80 +166,35 @@ const renderContent = (content: string, articleId: string) => {
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
-
+  
   const [article, setArticle] = useState<NewsArticle | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [summary, setSummary] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [recommendedNews, setRecommendedNews] = useState<NewsArticle[]>([]);
-  const [bookmarkedNewsIds, setBookmarkedNewsIds] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      if (!id) return;
-      setIsLoading(true);
-      try {
-        const docRef = doc(db, "news", id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const foundArticle = {
-            id: docSnap.id,
-            ...data,
-            publishedAt: data.publishedAt.toDate().toISOString(),
-          } as NewsArticle;
-
-          setArticle(foundArticle);
-
-          if (currentUser) {
-            getUserProfileData(currentUser.uid).then(userData => {
-              setBookmarkedNewsIds(userData.bookmarkedNews || []);
-              setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
-            });
-          }
-          if (foundArticle.content.length > 200) {
-            summarizeNewsArticle({ articleContent: foundArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
-              .then(output => setSummary(output.summary))
-              .catch(err => console.error("Failed to generate summary:", err));
-          }
-        } else {
-          console.log("No such document!");
-        }
-      } catch (error) {
-        console.error("Error fetching article:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchArticle();
-  }, [id, currentUser]);
-
-  useEffect(() => {
-    const fetchRecommendedNews = async () => {
-      if (!article) return;
-      
-      const newsCollection = collection(db, "news");
-      // For simplicity, fetching latest news as recommendation
-      const q = query(newsCollection, orderBy("publishedAt", "desc"), limit(4));
-      const querySnapshot = await getDocs(q);
-      const newsData = querySnapshot.docs
-        .map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            publishedAt: doc.data().publishedAt.toDate().toISOString(),
-        } as NewsArticle))
-        .filter(n => n.id !== article.id) // Exclude current article
-        .slice(0, 3); // Take 3
-      setRecommendedNews(newsData);
-    };
-
-    if (article) {
-      fetchRecommendedNews();
-    }
+  
+  const recommendedNews = useMemo(() => {
+    if (!article) return [];
+    return allMockNews.filter(n => n.id !== article.id).slice(0, 3);
   }, [article]);
+
+  useEffect(() => {
+    const foundArticle = allMockNews.find((n) => n.id === id);
+    if (foundArticle) {
+      setArticle(foundArticle);
+      if (currentUser) {
+        getUserProfileData(currentUser.uid).then(userData => {
+          setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
+        });
+      }
+      if (foundArticle.content.length > 200) {
+        summarizeNewsArticle({ articleContent: foundArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
+          .then(output => setSummary(output.summary))
+          .catch(err => console.error("Failed to generate summary:", err));
+      }
+    }
+    setIsLoading(false);
+  }, [id, currentUser]);
 
   useEffect(() => {
     if (!id) return;
@@ -255,8 +212,6 @@ function NewsDetailContent({ id }: { id: string }) {
     
     const newBookmarkState = !isBookmarked;
     setIsBookmarked(newBookmarkState); // Optimistic UI update
-    setBookmarkedNewsIds(prev => newBookmarkState ? [...prev, id] : prev.filter(bId => bId !== id));
-
 
     try {
       await toggleNewsBookmark(currentUser.uid, id, isBookmarked);
@@ -264,7 +219,6 @@ function NewsDetailContent({ id }: { id: string }) {
     } catch (error) {
       console.error("Failed to update bookmark:", error);
       setIsBookmarked(!newBookmarkState); // Revert on error
-      setBookmarkedNewsIds(prev => !newBookmarkState ? [...prev, id] : prev.filter(bId => bId !== id));
       toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
     }
   };
