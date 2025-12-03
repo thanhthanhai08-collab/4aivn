@@ -69,7 +69,7 @@ export default function RankingsPage() {
 
   const filteredModels = useMemo(() => {
     const filtered = allModels.filter(model => 
-      model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (model.name && model.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (model.description && model.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
      return filtered.sort((a, b) => {
