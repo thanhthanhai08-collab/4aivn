@@ -11,7 +11,7 @@ import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, type Timestamp } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
@@ -44,7 +44,15 @@ export default function RankingsPage() {
             getDocs(collection(db, "models"))
         ]);
 
-        const dbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+        const dbModels = modelsSnapshot.docs.map(doc => {
+            const data = doc.data();
+            const releaseDateTimestamp = data.releaseDate as Timestamp;
+            return { 
+                id: doc.id, 
+                ...data,
+                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+            } as AIModel
+        });
 
         const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
         toolsSnapshot.forEach(doc => {
@@ -90,7 +98,7 @@ export default function RankingsPage() {
         
         if (ratingB !== ratingA) return ratingB - ratingA;
         
-        return a.name.localeCompare(b.name);
+        return (a.name || "").localeCompare(b.name || "");
     });
   }, [allModels, searchTerm]);
 

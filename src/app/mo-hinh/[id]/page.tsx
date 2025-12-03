@@ -24,7 +24,7 @@ import {
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 
@@ -45,7 +45,15 @@ function ModelDetailContent({ id }: { id: string }) {
     const fetchModels = async () => {
       try {
         const modelsSnapshot = await getDocs(collection(db, 'models'));
-        const modelsList = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+        const modelsList = modelsSnapshot.docs.map(doc => {
+            const data = doc.data();
+            const releaseDateTimestamp = data.releaseDate as Timestamp;
+            return { 
+                id: doc.id, 
+                ...data,
+                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+            } as AIModel
+        });
         setAllModels(modelsList);
       } catch (error) {
         console.error("Error fetching all models:", error);
