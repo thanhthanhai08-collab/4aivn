@@ -110,7 +110,7 @@ const renderContent = (content: string, articleId: string) => {
     }
 
     if (part === '[PROFITABILITY_CHART]') {
-        if (articleId === 'nvidia-gb200-profit') {
+        if (articleId === 'sieu-loi-nhuan-cho-nvidia-voi-may-chu-ai-nvidia-gb200-nvl72') {
             return <ProfitabilityChart key={`${index}-profit-chart`} />;
         }
         return null;

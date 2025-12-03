@@ -10,7 +10,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
-import { mockAIModels } from "@/lib/mock-models";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
@@ -34,7 +33,7 @@ const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [allTools, setAllTools] = useState<Tool[]>(combinedMockTools);
-  const [allModels, setAllModels] = useState<AIModel[]>(mockAIModels);
+  const [allModels, setAllModels] = useState<AIModel[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -45,25 +44,21 @@ export default function RankingsPage() {
             getDocs(collection(db, "models"))
         ]);
 
+        const dbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+
         const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
         toolsSnapshot.forEach(doc => {
           const data = doc.data();
           toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
         });
-
-        const modelRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
-        modelsSnapshot.forEach(doc => {
-            const data = doc.data();
-            modelRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
-        });
         
         setAllTools(combinedMockTools.map(tool => ({ ...tool, ...toolRatings[tool.id] })));
-        setAllModels(mockAIModels.map(model => ({ ...model, ...modelRatings[model.id] })));
+        setAllModels(dbModels);
 
       } catch (error) {
         console.error("Error fetching ratings:", error);
         setAllTools(combinedMockTools); // Fallback to mock data
-        setAllModels(mockAIModels);
+        setAllModels([]);
       } finally {
         setIsLoading(false);
       }
@@ -75,7 +70,7 @@ export default function RankingsPage() {
   const filteredModels = useMemo(() => {
     const filtered = allModels.filter(model => 
       model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      model.description.toLowerCase().includes(searchTerm.toLowerCase())
+      (model.description && model.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
      return filtered.sort((a, b) => {
         const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;

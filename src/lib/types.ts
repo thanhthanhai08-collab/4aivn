@@ -1,4 +1,3 @@
-
 export interface Tool {
   id: string;
   name: string;
@@ -71,6 +70,8 @@ export interface AIModel {
   speedTokensPerSecond?: number; // e.g., 150.6
   latencyFirstChunkSeconds?: number; // e.g., 38.11
   ratingCount?: number;
+  multimodal?: boolean;
+  releaseDate?: string;
 }
 
 export interface Comment {

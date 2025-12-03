@@ -1,4 +1,3 @@
-
 // src/app/profile/page.tsx
 "use client";
 
@@ -14,7 +13,6 @@ import { NewsCard } from "@/components/news/news-card";
 import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
-import { mockAIModels } from "@/lib/mock-models";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
@@ -67,33 +65,42 @@ export default function ProfilePage() {
       router.push("/dang-nhap");
     } else if (currentUser) {
         setIsFetchingData(true);
-        getUserProfileData(currentUser.uid).then(async (data) => {
+        
+        const fetchAllData = async () => {
+          try {
+            const [userData, modelsSnapshot] = await Promise.all([
+              getUserProfileData(currentUser.uid),
+              getDocs(collection(db, "models"))
+            ]);
+            
+            const allDbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+
             // Load rated models
-            const ratedModelIds = Object.keys(data.ratedModels || {});
-            const userRatedModels = mockAIModels
+            const ratedModelIds = Object.keys(userData.ratedModels || {});
+            const userRatedModels = allDbModels
                 .filter(model => ratedModelIds.includes(model.id))
-                .map(model => ({ ...model, myRating: data.ratedModels?.[model.id] }));
+                .map(model => ({ ...model, myRating: userData.ratedModels?.[model.id] }));
             setRatedModels(userRatedModels);
 
             // Load rated tools
-            const ratedToolIds = Object.keys(data.ratedTools || {});
+            const ratedToolIds = Object.keys(userData.ratedTools || {});
             const userRatedTools = combinedMockTools
                 .filter(tool => ratedToolIds.includes(tool.id))
-                .map(tool => ({ ...tool, myRating: data.ratedTools?.[tool.id]?.rating }));
+                .map(tool => ({ ...tool, myRating: userData.ratedTools?.[tool.id]?.rating }));
             setRatedTools(sortToolsByRating(userRatedTools));
 
             // Load favorite models
-            const userFavoriteModels = mockAIModels
-              .filter(model => (data.favoriteModels || []).includes(model.id));
+            const userFavoriteModels = allDbModels
+              .filter(model => (userData.favoriteModels || []).includes(model.id));
             setFavoriteModels(userFavoriteModels);
 
             // Load favorite tools
             const userFavoriteTools = combinedMockTools
-                .filter(tool => (data.favoriteTools || []).includes(tool.id));
+                .filter(tool => (userData.favoriteTools || []).includes(tool.id));
             setFavoriteTools(sortToolsByRating(userFavoriteTools));
             
             // Load bookmarked news from Firestore
-            const bookmarkedIds = data.bookmarkedNews || [];
+            const bookmarkedIds = userData.bookmarkedNews || [];
             if (bookmarkedIds.length > 0) {
               const newsQuery = query(collection(db, "news"), where("__name__", "in", bookmarkedIds));
               const newsSnapshot = await getDocs(newsQuery);
@@ -106,16 +113,19 @@ export default function ProfilePage() {
             } else {
               setBookmarkedNews([]);
             }
-            setIsFetchingData(false);
-        }).catch(error => {
+          } catch (error) {
             console.error("Failed to fetch user profile data:", error);
             toast({
                 title: "Lỗi tải dữ liệu",
                 description: "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
                 variant: "destructive"
             });
+          } finally {
             setIsFetchingData(false);
-        });
+          }
+        };
+        
+        fetchAllData();
     }
   }, [currentUser, isLoading, router, toast]);
 

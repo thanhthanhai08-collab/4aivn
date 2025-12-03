@@ -1,4 +1,3 @@
-
 // src/app/models/[id]/page.tsx
 "use client";
 
@@ -6,7 +5,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
-import { mockAIModels as initialMockModels } from "@/lib/mock-models";
 import type { AIModel, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,12 +24,13 @@ import {
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
-import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 
 function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
+  const [allModels, setAllModels] = useState<AIModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
@@ -43,7 +42,22 @@ function ModelDetailContent({ id }: { id: string }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    const foundModel = initialMockModels.find((m) => m.id === id);
+    const fetchModels = async () => {
+      try {
+        const modelsSnapshot = await getDocs(collection(db, 'models'));
+        const modelsList = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+        setAllModels(modelsList);
+      } catch (error) {
+        console.error("Error fetching all models:", error);
+      }
+    };
+    fetchModels();
+  }, []);
+
+  useEffect(() => {
+    if (allModels.length === 0) return;
+
+    const foundModel = allModels.find((m) => m.id === id);
     
     if (foundModel) {
       setModel(foundModel);
@@ -77,7 +91,7 @@ function ModelDetailContent({ id }: { id: string }) {
 
       getAggregateRating("models", id).then(setAggregateRating);
 
-      if (foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
+      if (foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0 && id !== 'gemini-2.5-pro') {
         generateAiModelDescription({ 
             name: foundModel.name, 
             type: foundModel.type, 
@@ -89,7 +103,7 @@ function ModelDetailContent({ id }: { id: string }) {
       }
     }
     setIsLoading(false);
-  }, [id, currentUser]);
+  }, [id, currentUser, allModels]);
 
   const handleFavoriteToggle = async () => {
     if (!currentUser) {
@@ -194,14 +208,6 @@ function ModelDetailContent({ id }: { id: string }) {
   
   // Specific layout for some models
   if (['openai-o3', 'grok-4', 'qwen3-next-80b-a3b-reasoning', 'gemini-2.5-pro', 'gpt-5-mini-medium', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'deepseek-v3.1-terminus-reasoning', 'gemini-2.5-flash-reasoning', 'gpt-5-low', 'gpt-oss-120b-high', 'gpt-5-nano-high', 'claude-4.5-haiku-thinking', 'claude-4.5-sonnet', 'claude-4.5-sonnet-thinking', 'grok-3-mini-reasoning-high', 'grok-4-fast-reasoning', 'seed-oss-36b-instruct', 'llama-nemotron-super-49b-v1-5-reasoning', 'gpt-oss-20b-high', 'gpt-5-codex-high', 'qwen3-max', 'deepseek-v3.2-exp', 'qwen3-vl-235b-a22b-reasoning', 'claude-4.1-opus-thinking', 'gpt-5-nano-medium', 'gemini-3-pro', 'gpt-5-1-high', 'grok-4.1-fast-reasoning', 'gpt-5-mini-high'].includes(model.id)) {
-    const isO3 = model.id === 'openai-o3';
-    const isGpt5High = model.id === 'gpt-5-high';
-    const isGpt5MiniMedium = model.id === 'gpt-5-mini-medium';
-    const isQwen3 = model.id === 'qwen3-235b-reasoning';
-    const isDeepseekR1 = model.id === 'deepseek-r1-jan25';
-    const isClaude45HaikuThinking = model.id === 'claude-4.5-haiku-thinking';
-    const isClaude45SonnetThinking = model.id === 'claude-4.5-sonnet-thinking';
-
     return (
       <AppLayout>
         <div className="container py-8 md:py-12">
@@ -276,7 +282,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <Layers className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                                <p className="text-muted-foreground">{['claude-4.5-sonnet', 'llama-nemotron-super-49b-v1-5-reasoning', 'gpt-5-codex-high', 'grok-4-fast-reasoning', 'claude-4.1-opus-thinking', 'gpt-5-1-high', 'grok-4.1-fast-reasoning', 'gpt-5-mini-high'].includes(model.id) ? 'Có' : (isQwen3 || isDeepseekR1 || model.id === 'deepseek-v3.1-terminus-reasoning' || isClaude45HaikuThinking || isClaude45SonnetThinking || model.id === 'deepseek-v3.2-exp' || model.id === 'qwen3-max' || model.id === 'qwen3-vl-235b-a22b-reasoning' || model.id === 'qwen3-next-80b-a3b-reasoning' ? 'Không' : 'Có')}</p>
+                                <p className="text-muted-foreground">{model.multimodal ? 'Có' : 'Không'}</p>
                             </div>
                         </div>
                         <div className="flex items-start space-x-3">
@@ -318,7 +324,7 @@ function ModelDetailContent({ id }: { id: string }) {
                             <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                             <div>
                                 <p className="font-semibold">Ngày phát hành</p>
-                                <p className="text-muted-foreground">{model.id === 'openai-o3' ? '20/12/2024' : (model.id === 'gpt-5-high' || model.id === 'gpt-5-medium' || model.id === 'gpt-5-mini-medium' || model.id === 'gpt-5-low' || model.id === 'gpt-5-nano-high' || model.id === 'gpt-5-nano-medium') ? '07/08/2025' : model.id === 'qwen3-235b-reasoning' ? '25/07/2025' : model.id === 'deepseek-r1-jan25' ? '28/05/2025' : model.id === 'deepseek-v3.1-terminus-reasoning' ? '21/08/2025' : model.id === 'gemini-2.5-flash-reasoning' ? '25/09/2025' : model.id === 'gpt-oss-120b-high' ? '05/08/2025' : (model.id === 'claude-4.5-haiku-thinking' || model.id === 'claude-4.5-sonnet-thinking') ? '22/05/2025' : model.id === 'grok-3-mini-reasoning-high' ? '17/02/2025' : model.id === 'grok-4-fast-reasoning' ? '19/09/2025' : model.id === 'llama-nemotron-super-49b-v1-5-reasoning' ? '25/07/2025' : model.id === 'seed-oss-36b-instruct' ? '20/08/2025' : model.id === 'claude-4.5-sonnet' ? '29/09/2025' : model.id === 'gpt-oss-20b-high' ? '05/08/2025' : model.id === 'gpt-5-codex-high' ? '15/09/2025' : model.id === 'qwen3-max' ? '23/09/2025' : model.id === 'deepseek-v3.2-exp' ? '29/09/2025' : model.id === 'qwen3-vl-235b-a22b-reasoning' ? '23/09/2025' : model.id === 'claude-4.1-opus-thinking' ? '05/08/2025' : model.id === 'gemini-3-pro' ? '19/11/2025' : model.id === 'gpt-5-1-high' ? '13/11/2025' : model.id === 'grok-4.1-fast-reasoning' ? '17/11/2025' : model.id === 'gpt-5-mini-high' ? '17/08/2025' : model.id === 'qwen3-next-80b-a3b-reasoning' ? '11/09/2025' : '09/07/2025'}</p>
+                                <p className="text-muted-foreground">{model.releaseDate || 'N/A'}</p>
                             </div>
                         </div>
                     </CardContent>
@@ -335,7 +341,7 @@ function ModelDetailContent({ id }: { id: string }) {
                 <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
                 <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                 <O3DetailedBenchmarkCharts modelId={model.id}/>
+                 <O3DetailedBenchmarkCharts modelId={model.id} allModels={allModels} />
                 </section>
 
                 {relatedNews.length > 0 && (

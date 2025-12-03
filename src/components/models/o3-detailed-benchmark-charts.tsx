@@ -1,11 +1,10 @@
-
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
 import * as React from "react"
 import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
-import { mockAIModels } from "@/lib/mock-models"
+import type { AIModel } from "@/lib/types";
 import { cn } from "@/lib/utils"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 
@@ -338,9 +337,10 @@ interface BenchmarkChartProps {
     title: string;
     subtitle: string;
     data: { modelId: string; score: number; isCurrent?: boolean }[];
+    allModels: AIModel[];
 }
 
-const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
+const BenchmarkChart = ({ title, subtitle, data, allModels }: BenchmarkChartProps) => {
     // Sort data by score in descending order for correct visualization
     const sortedData = [...data].sort((a, b) => b.score - a.score);
 
@@ -353,7 +353,7 @@ const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
             <CardContent>
                  <div className="space-y-4">
                     {sortedData.map(({ modelId, score, isCurrent }) => {
-                        const model = mockAIModels.find(m => m.id === modelId) ?? { name: 'Unknown', logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png' };
+                        const model = allModels.find(m => m.id === modelId) ?? { name: 'Unknown', logoUrl: '/image/Logo Open AI cho bảng xếp hạng.png' };
                         return (
                             <div key={modelId} className="space-y-1">
                                 <div className="flex items-center justify-between text-sm">
@@ -396,7 +396,10 @@ const getComparisonData = (benchmarkData: { modelId: string; score: number }[], 
     return sortedFinal.map(item => ({...item, isCurrent: item.modelId === currentModelId}));
 };
 
-export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
+export function O3DetailedBenchmarkCharts({ modelId, allModels }: { modelId: string; allModels: AIModel[] }) {
+    if (!allModels || allModels.length === 0) {
+      return null; // Or a loading skeleton
+    }
     const mathData = getComparisonData(allBenchmarks.aime, modelId);
     const codingData = getComparisonData(allBenchmarks.livecode, modelId);
     const knowledgeData = getComparisonData(allBenchmarks.mmlu, modelId);
@@ -406,14 +409,12 @@ export function O3DetailedBenchmarkCharts({ modelId }: { modelId: string }) {
 
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mathData.length > 0 && <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathData} />}
-            {codingData.length > 0 && <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingData} />}
-            {knowledgeData.length > 0 && <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} />}
-            {ifBenchData.length > 0 && <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} />}
-            {gpqaData.length > 0 && <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} />}
-            {aaLcrData.length > 0 && <BenchmarkChart title="Lý luận ngữ cảnh dài" subtitle="AA-LCR" data={aaLcrData} />}
+            {mathData.length > 0 && <BenchmarkChart title="Toán học" subtitle="AIME 2025" data={mathData} allModels={allModels} />}
+            {codingData.length > 0 && <BenchmarkChart title="Khả năng code" subtitle="LiveCodeBench" data={codingData} allModels={allModels} />}
+            {knowledgeData.length > 0 && <BenchmarkChart title="Kiến thức tổng hợp" subtitle="MMLU-Pro" data={knowledgeData} allModels={allModels} />}
+            {ifBenchData.length > 0 && <BenchmarkChart title="Khả năng tuân thủ prompt" subtitle="IFBench" data={ifBenchData} allModels={allModels} />}
+            {gpqaData.length > 0 && <BenchmarkChart title="Lý luận nâng cao" subtitle="GPQA" data={gpqaData} allModels={allModels} />}
+            {aaLcrData.length > 0 && <BenchmarkChart title="Lý luận ngữ cảnh dài" subtitle="AA-LCR" data={aaLcrData} allModels={allModels} />}
         </div>
     )
 }
-
-    
