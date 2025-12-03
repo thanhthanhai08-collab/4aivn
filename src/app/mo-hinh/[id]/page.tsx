@@ -338,11 +338,11 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {['openai-o3', 'grok-4', 'gemini-2.5-pro', 'gpt-5-mini-medium', 'qwen3-next-80b-a3b-reasoning', 'gpt-5-high', 'qwen3-235b-reasoning', 'gpt-5-medium', 'deepseek-r1-jan25', 'deepseek-v3.1-terminus-reasoning', 'gemini-2.5-flash-reasoning', 'gpt-5-low', 'gpt-oss-120b-high', 'gpt-5-nano-high', 'claude-4.5-haiku-thinking', 'claude-4.5-sonnet', 'claude-4.5-sonnet-thinking', 'grok-3-mini-reasoning-high', 'grok-4-fast-reasoning', 'seed-oss-36b-instruct', 'llama-nemotron-super-49b-v1-5-reasoning', 'gpt-oss-20b-high', 'gpt-5-codex-high', 'qwen3-max', 'deepseek-v3.2-exp', 'qwen3-vl-235b-a22b-reasoning', 'claude-4.1-opus-thinking', 'gpt-5-nano-medium', 'gemini-3-pro', 'gpt-5-1-high', 'grok-4.1-fast-reasoning', 'gpt-5-mini-high'].includes(model.id) && (
+                 {model.benchmark && model.benchmark.length > 0 && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3PerformanceInsightsChart modelId={model.id as any} />
+                        <O3PerformanceInsightsChart benchmarkData={model.benchmark} />
                     </section>
                  )}
                 
@@ -467,6 +467,16 @@ function ModelDetailContent({ id }: { id: string }) {
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">Loại Model:</span>
                         <Badge variant="outline">{model.type}</Badge>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between">
+                        <span className="text-muted-foreground">Đa phương thức:</span>
+                        <span>{model.multimodal ? 'Có' : 'Không'}</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between">
+                        <span className="text-muted-foreground">Ngày phát hành:</span>
+                        <span>{model.releaseDate || 'N/A'}</span>
                     </div>
                 </CardContent>
             </Card>

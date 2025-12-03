@@ -51,6 +51,11 @@ export interface ChatMessage {
   timestamp: number;
 }
 
+export interface BenchmarkData {
+    name: string;
+    score: number;
+}
+
 export interface AIModel {
   id: string;
   name: string;
@@ -72,6 +77,7 @@ export interface AIModel {
   ratingCount?: number;
   multimodal?: boolean;
   releaseDate?: string;
+  benchmark?: BenchmarkData[];
 }
 
 export interface Comment {
