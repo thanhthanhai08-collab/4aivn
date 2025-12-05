@@ -40,5 +40,3 @@ export function O3PerformanceInsightsChart({ benchmarkData }: { benchmarkData?: 
     </Card>
   )
 }
-
-    
