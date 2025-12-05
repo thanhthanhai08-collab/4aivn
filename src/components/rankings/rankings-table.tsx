@@ -40,21 +40,21 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         <TableHeader>
           <TableRow className="bg-muted/50 hover:bg-muted/50">
             <TableHead className="w-[50px] text-center">Hạng</TableHead>
-            <TableHead className="min-w-[200px]">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
+            <TableHead className="min-w-[200px] text-center">{itemType === 'tool' ? 'Tên công cụ AI' : 'Tên model AI'}</TableHead>
 
             {itemType === 'tool' ? (
               <>
-                <TableHead className="min-w-[150px]">Hạng mục</TableHead>
-                <TableHead className="min-w-[150px]">Nhà phát triển</TableHead>
+                <TableHead className="min-w-[150px] text-center">Hạng mục</TableHead>
+                <TableHead className="min-w-[150px] text-center">Nhà phát triển</TableHead>
               </>
             ) : (
               <>
-                <TableHead className="min-w-[120px]">Nhà phát triển</TableHead>
+                <TableHead className="min-w-[120px] text-center">Nhà phát triển</TableHead>
                 <TableHead className="text-center min-w-[120px]">Độ dài ngữ cảnh<br/>(token)</TableHead>
                 <TableHead className="text-center min-w-[100px]">Chỉ số<br/>thông minh</TableHead>
                 <TableHead className="text-center min-w-[140px]">Giá trung bình<br/>(USD/1M token)</TableHead>
-                <TableHead className="text-right min-w-[100px]">Tốc độ<br/>(tok/s)</TableHead>
-                <TableHead className="text-right min-w-[100px]">Độ trễ<br/>(s)</TableHead>
+                <TableHead className="text-center min-w-[100px]">Tốc độ<br/>(token/s)</TableHead>
+                <TableHead className="text-center min-w-[100px]">Độ trễ<br/>(s)</TableHead>
               </>
             )}
 
@@ -120,16 +120,16 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               
               {itemType === 'tool' ? (
                 <>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <Badge variant="outline">{(item as Tool).context}</Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <span className="text-sm">{(item as Tool).developer}</span>
                   </TableCell>
                 </>
               ) : (
                 <>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <span className="text-sm">{(item as AIModel).developer}</span>
                   </TableCell>
                   <TableCell className="text-center">{(item as AIModel).contextLengthToken || '-'}</TableCell>
@@ -137,10 +137,10 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   <TableCell className="text-center">
                     {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-center">
                     {(item as AIModel).speedTokensPerSecond !== undefined ? (item as AIModel).speedTokensPerSecond.toFixed(1) : '-'}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-center">
                     {(item as AIModel).latencyFirstChunkSeconds !== undefined ? (item as AIModel).latencyFirstChunkSeconds.toFixed(2) : '-'}
                   </TableCell>
                 </>
