@@ -338,11 +338,11 @@ function ModelDetailContent({ id }: { id: string }) {
                     </CardContent>
                 </Card>
                 
-                 {model.benchmark && model.benchmark.length > 0 && (
+                 {model.benchmarks && model.benchmarks.length > 0 && (
                     <section>
                         <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                         <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                        <O3PerformanceInsightsChart benchmarkData={model.benchmark} />
+                        <O3PerformanceInsightsChart benchmarkData={model.benchmarks} />
                     </section>
                  )}
                 

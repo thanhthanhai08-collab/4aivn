@@ -77,7 +77,7 @@ export interface AIModel {
   ratingCount?: number;
   multimodal?: boolean;
   releaseDate?: string;
-  benchmark?: BenchmarkData[];
+  benchmarks?: BenchmarkData[];
 }
 
 export interface Comment {
