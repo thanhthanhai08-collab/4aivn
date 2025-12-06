@@ -15,10 +15,14 @@ import { collection, getDocs, type Timestamp } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
-// Helper function to parse context length strings (e.g., "1m", "200k") into numbers
-const parseContextLength = (tokenStr?: string): number => {
-  if (!tokenStr) return -Infinity;
+// Helper function to parse context length strings (e.g., "1m", "200k") or numbers into numbers
+const parseContextLength = (tokenValue?: string | number): number => {
+  if (tokenValue === undefined || tokenValue === null) return -Infinity;
+  if (typeof tokenValue === 'number') return tokenValue;
+  
+  const tokenStr = String(tokenValue);
   const lower = tokenStr.toLowerCase();
+  
   if (lower.endsWith('m')) {
     return parseFloat(lower.replace('m', '')) * 1000000;
   }

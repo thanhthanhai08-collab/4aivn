@@ -9,10 +9,14 @@ import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Helper function to parse context length strings (e.g., "1m", "200k") into numbers
-const parseContextLength = (tokenStr?: string): number => {
-  if (!tokenStr) return -Infinity;
+// Helper function to parse context length strings (e.g., "1m", "200k") or numbers into numbers
+const parseContextLength = (tokenValue?: string | number): number => {
+  if (tokenValue === undefined || tokenValue === null) return -Infinity;
+  if (typeof tokenValue === 'number') return tokenValue;
+  
+  const tokenStr = String(tokenValue);
   const lower = tokenStr.toLowerCase();
+  
   if (lower.endsWith('m')) {
     return parseFloat(lower.replace('m', '')) * 1000000;
   }
@@ -20,6 +24,21 @@ const parseContextLength = (tokenStr?: string): number => {
     return parseFloat(lower.replace('k', '')) * 1000;
   }
   return parseFloat(lower) || -Infinity;
+};
+
+// Helper function to format context length for display
+const formatContextLength = (tokenValue?: string | number): string => {
+    if (tokenValue === undefined || tokenValue === null) return '-';
+    if (typeof tokenValue === 'number') {
+        if (tokenValue >= 1000000) {
+            return `${tokenValue / 1000000}m`;
+        }
+        if (tokenValue >= 1000) {
+            return `${tokenValue / 1000}k`;
+        }
+        return String(tokenValue);
+    }
+    return String(tokenValue);
 };
 
 interface RankingsTableProps<T extends Tool | AIModel> {
@@ -132,7 +151,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   <TableCell className="text-center">
                     <span className="text-sm">{(item as AIModel).developer}</span>
                   </TableCell>
-                  <TableCell className="text-center">{(item as AIModel).contextLengthToken || '-'}</TableCell>
+                  <TableCell className="text-center">{formatContextLength((item as AIModel).contextLengthToken)}</TableCell>
                   <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
                   <TableCell className="text-center">
                     {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}

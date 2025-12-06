@@ -27,6 +27,20 @@ import { NewsCard } from "@/components/news/news-card";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
+// Helper function to format context length for display
+const formatContextLength = (tokenValue?: string | number): string => {
+    if (tokenValue === undefined || tokenValue === null) return 'N/A';
+    if (typeof tokenValue === 'number') {
+        if (tokenValue >= 1000000) {
+            return `${tokenValue / 1000000}m`;
+        }
+        if (tokenValue >= 1000) {
+            return `${tokenValue / 1000}k`;
+        }
+        return String(tokenValue);
+    }
+    return String(tokenValue);
+};
 
 function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
@@ -307,7 +321,7 @@ function ModelDetailContent({ id }: { id: string }) {
                           <BookOpen className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
-                              <p className="text-muted-foreground">{model.contextLengthToken}</p>
+                              <p className="text-muted-foreground">{formatContextLength(model.contextLengthToken)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
