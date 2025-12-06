@@ -1,10 +1,11 @@
+
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
-import type { AIModel, BenchmarkData } from "@/lib/types";
+import type { AIModel } from "@/lib/types"; 
 import { cn } from "@/lib/utils"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { db } from "@/lib/firebase";
