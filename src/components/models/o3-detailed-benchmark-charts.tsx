@@ -163,9 +163,8 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                         ...lowerModels
                     ];
 
-                    if(combined.length > 1) {
-                        allData.push({ categoryKey: category.key, data: combined });
-                    }
+                    allData.push({ categoryKey: category.key, data: combined });
+
                 } catch (error) {
                     console.error(`Error fetching comparison data for ${category.title}:`, error);
                     // Don't stop the whole process, just skip this category
@@ -182,7 +181,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     
     const renderedCharts = BENCHMARK_CATEGORIES.map(category => {
         const chartData = comparisonData.find(d => d.categoryKey === category.key);
-        if (!chartData || chartData.data.length < 2) return null;
+        if (!chartData || chartData.data.length === 0) return null;
         
         return (
             <BenchmarkChart 
@@ -204,7 +203,12 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     }
 
     if (renderedCharts.length === 0) {
-        return <p className="text-muted-foreground text-center py-4">Không có đủ dữ liệu benchmark để so sánh.</p>
+        return (
+            <div className="text-center py-4 space-y-2">
+                <p className="font-semibold text-xl">Dữ liệu Benchmark Chi tiết</p>
+                <p className="text-muted-foreground">Mô hình này chưa có điểm chuẩn so sánh cho các hạng mục đã chọn.</p>
+            </div>
+        );
     }
 
     return (
