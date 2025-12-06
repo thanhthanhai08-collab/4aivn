@@ -1,3 +1,4 @@
+
 // src/components/rankings/rankings-table.tsx
 "use client";
 
@@ -9,34 +10,20 @@ import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Helper function to parse context length strings (e.g., "1m", "200k") or numbers into numbers
-const parseContextLength = (tokenValue?: string | number): number => {
+// Helper function to handle context length numbers.
+const parseContextLength = (tokenValue?: number): number => {
   if (tokenValue === undefined || tokenValue === null) return -Infinity;
-  if (typeof tokenValue === 'number') return tokenValue;
-  
-  const tokenStr = String(tokenValue);
-  const lower = tokenStr.toLowerCase();
-  
-  if (lower.endsWith('m')) {
-    return parseFloat(lower.replace('m', '')) * 1000000;
-  }
-  if (lower.endsWith('k')) {
-    return parseFloat(lower.replace('k', '')) * 1000;
-  }
-  return parseFloat(lower) || -Infinity;
+  return tokenValue;
 };
 
 // Helper function to format context length for display
-const formatContextLength = (tokenValue?: string | number): string => {
+const formatContextLength = (tokenValue?: number): string => {
     if (tokenValue === undefined || tokenValue === null) return '-';
-    if (typeof tokenValue === 'number') {
-        if (tokenValue >= 1000000) {
-            return `${tokenValue / 1000000}m`;
-        }
-        if (tokenValue >= 1000) {
-            return `${tokenValue / 1000}k`;
-        }
-        return String(tokenValue);
+    if (tokenValue >= 1000000) {
+        return `${tokenValue / 1000000}m`;
+    }
+    if (tokenValue >= 1000) {
+        return `${tokenValue / 1000}k`;
     }
     return String(tokenValue);
 };

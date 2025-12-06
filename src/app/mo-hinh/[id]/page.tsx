@@ -1,3 +1,4 @@
+
 // src/app/models/[id]/page.tsx
 "use client";
 
@@ -28,18 +29,15 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Ti
 import { db } from "@/lib/firebase";
 
 // Helper function to format context length for display
-const formatContextLength = (tokenValue?: string | number): string => {
-    if (tokenValue === undefined || tokenValue === null) return 'N/A';
-    if (typeof tokenValue === 'number') {
-        if (tokenValue >= 1000000) {
-            return `${tokenValue / 1000000}m`;
-        }
-        if (tokenValue >= 1000) {
-            return `${tokenValue / 1000}k`;
-        }
-        return String(tokenValue);
-    }
-    return String(tokenValue);
+const formatContextLength = (tokenValue?: number): string => {
+  if (tokenValue === undefined || tokenValue === null) return 'N/A';
+  if (tokenValue >= 1000000) {
+      return `${tokenValue / 1000000}m`;
+  }
+  if (tokenValue >= 1000) {
+      return `${tokenValue / 1000}k`;
+  }
+  return String(tokenValue);
 };
 
 function ModelDetailContent({ id }: { id: string }) {
