@@ -70,7 +70,7 @@ export interface AIModel {
   myRating?: number;
   features?: string[];
   isFavorite?: boolean; // Added for favorite functionality
-  contextLengthToken?: number; // e.g., 1000000
+  contextLengthToken?: number; 
   intelligenceScore?: number; // e.g., 70
   pricePerMillionTokens?: number; // e.g., 3.44
   speedTokensPerSecond?: number; // e.g., 150.6

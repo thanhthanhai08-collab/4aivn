@@ -30,7 +30,7 @@ import { db } from "@/lib/firebase";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
-  if (tokenValue === undefined || tokenValue === null) return 'N/A';
+  if (tokenValue === undefined || tokenValue === null) return '-';
   if (tokenValue >= 1000000) {
       return `${tokenValue / 1000000}m`;
   }
@@ -42,14 +42,12 @@ const formatContextLength = (tokenValue?: number): string => {
 
 function ModelDetailContent({ id }: { id: string }) {
   const [model, setModel] = useState<AIModel | null>(null);
-  const [allModels, setAllModels] = useState<AIModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
-  const [benchmarks, setBenchmarks] = useState<BenchmarkData[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -60,30 +58,27 @@ function ModelDetailContent({ id }: { id: string }) {
         setIsLoading(true);
 
         try {
-            // Fetch all models for comparison charts
-            const modelsSnapshot = await getDocs(collection(db, 'models'));
-            const modelsList = modelsSnapshot.docs.map(doc => {
-                const data = doc.data();
-                const releaseDateTimestamp = data.releaseDate as Timestamp;
-                return { 
-                    id: doc.id, 
-                    ...data,
-                    releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
-                } as AIModel
-            });
-            setAllModels(modelsList);
-
             // Fetch specific model details
-            const foundModel = modelsList.find(m => m.id === id);
+            const modelDocRef = doc(db, "models", id);
+            const modelDocSnap = await getDoc(modelDocRef);
             
-            if (foundModel) {
-              setModel(foundModel);
-
+            if (modelDocSnap.exists()) {
+              const data = modelDocSnap.data();
+              const releaseDateTimestamp = data.releaseDate as Timestamp;
+              
               // Fetch benchmarks from subcollection
               const benchmarksColRef = collection(db, "models", id, "benchmarks");
               const benchmarksSnapshot = await getDocs(benchmarksColRef);
               const benchmarksData = benchmarksSnapshot.docs.map(doc => doc.data() as BenchmarkData);
-              setBenchmarks(benchmarksData);
+
+              const foundModel = {
+                  id: modelDocSnap.id,
+                  ...data,
+                  releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+                  benchmarks: benchmarksData,
+              } as AIModel;
+
+              setModel(foundModel);
 
               // Fetch related news from Firestore
               const newsQuery = query(
@@ -356,18 +351,18 @@ function ModelDetailContent({ id }: { id: string }) {
                   </CardContent>
               </Card>
               
-               {benchmarks.length > 0 && (
+               {model.benchmarks && model.benchmarks.length > 0 && (
                   <section>
                       <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                       <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                      <O3PerformanceInsightsChart benchmarkData={benchmarks} />
+                      <O3PerformanceInsightsChart benchmarkData={model.benchmarks} />
                   </section>
                )}
               
               <section>
                 <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
                 <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
-                <O3DetailedBenchmarkCharts modelId={model.id} allModels={allModels} />
+                <O3DetailedBenchmarkCharts currentModel={model} />
               </section>
 
               {relatedNews.length > 0 && (
