@@ -1,7 +1,7 @@
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Progress } from "@/components/ui/progress"
 import type { AIModel, BenchmarkData } from "@/lib/types";
@@ -90,7 +90,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     const [comparisonData, setComparisonData] = useState<CategoryComparisonData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchAllComparisonData = async () => {
             setIsLoading(true);
             const allData: CategoryComparisonData[] = [];
