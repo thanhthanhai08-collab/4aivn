@@ -1,4 +1,3 @@
-
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
@@ -126,45 +125,50 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     continue; 
                 }
 
-                const higherQuery = query(
-                    collectionGroup(db, 'benchmarks'),
-                    where('name', '==', category.subtitle),
-                    where('score', '>', currentModelScore),
-                    orderBy('score', 'asc'),
-                    limit(3)
-                );
-                
-                const lowerQuery = query(
-                    collectionGroup(db, 'benchmarks'),
-                    where('name', '==', category.subtitle),
-                    where('score', '<', currentModelScore),
-                    orderBy('score', 'desc'),
-                    limit(3)
-                );
+                try {
+                    const higherQuery = query(
+                        collectionGroup(db, 'benchmarks'),
+                        where('name', '==', category.subtitle),
+                        where('score', '>', currentModelScore),
+                        orderBy('score', 'asc'),
+                        limit(3)
+                    );
+                    
+                    const lowerQuery = query(
+                        collectionGroup(db, 'benchmarks'),
+                        where('name', '==', category.subtitle),
+                        where('score', '<', currentModelScore),
+                        orderBy('score', 'desc'),
+                        limit(3)
+                    );
 
-                const [higherSnapshot, lowerSnapshot] = await Promise.all([
-                    getDocs(higherQuery),
-                    getDocs(lowerQuery)
-                ]);
+                    const [higherSnapshot, lowerSnapshot] = await Promise.all([
+                        getDocs(higherQuery),
+                        getDocs(lowerQuery)
+                    ]);
 
-                const modelPromises = [
-                    ...higherSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
-                    ...lowerSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
-                ];
-                
-                const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
+                    const modelPromises = [
+                        ...higherSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                        ...lowerSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                    ];
+                    
+                    const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
 
-                const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
-                const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
+                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
+                    const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
 
-                const combined = [
-                    ...higherModels,
-                    { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
-                    ...lowerModels
-                ];
+                    const combined = [
+                        ...higherModels,
+                        { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
+                        ...lowerModels
+                    ];
 
-                if(combined.length > 1) {
-                    allData.push({ categoryKey: category.key, data: combined });
+                    if(combined.length > 1) {
+                        allData.push({ categoryKey: category.key, data: combined });
+                    }
+                } catch (error) {
+                    console.error(`Error fetching comparison data for ${category.title}:`, error);
+                    // Don't stop the whole process, just skip this category
                 }
             }
             setComparisonData(allData);
@@ -176,6 +180,21 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
         }
     }, [currentModel]);
     
+    const renderedCharts = BENCHMARK_CATEGORIES.map(category => {
+        const chartData = comparisonData.find(d => d.categoryKey === category.key);
+        if (!chartData || chartData.data.length < 2) return null;
+        
+        return (
+            <BenchmarkChart 
+                key={category.key}
+                title={category.title} 
+                subtitle={category.subtitle} 
+                data={chartData.data} 
+            />
+        );
+    }).filter(Boolean);
+
+
     if (isLoading) {
         return (
              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -184,25 +203,13 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
         )
     }
 
-    if (comparisonData.length === 0) {
+    if (renderedCharts.length === 0) {
         return <p className="text-muted-foreground text-center py-4">Không có đủ dữ liệu benchmark để so sánh.</p>
     }
 
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BENCHMARK_CATEGORIES.map(category => {
-                const chartData = comparisonData.find(d => d.categoryKey === category.key);
-                if (!chartData || chartData.data.length < 2) return null; // Don't render if no comparison data
-                
-                return (
-                    <BenchmarkChart 
-                        key={category.key}
-                        title={category.title} 
-                        subtitle={category.subtitle} 
-                        data={chartData.data} 
-                    />
-                );
-            })}
+            {renderedCharts}
         </div>
     )
 }
