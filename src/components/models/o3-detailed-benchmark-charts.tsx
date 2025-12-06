@@ -13,11 +13,11 @@ import { Skeleton } from "../ui/skeleton";
 
 // Define benchmark categories to display
 const BENCHMARK_CATEGORIES = [
-  { key: 'aime', title: 'Toán học', subtitle: 'AIME 2025' },
-  { key: 'livecode', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
-  { key: 'mmlu', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
+  { key: 'aime-2025', title: 'Toán học', subtitle: 'AIME 2025' },
+  { key: 'livecodebench', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
+  { key: 'mmlu-pro', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
   { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
-  { key: 'gpqa', title: 'Lý luận nâng cao', subtitle: 'GPQA' },
+  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA' },
   { key: 'aa-lcr', title: 'Lý luận ngữ cảnh dài', subtitle: 'AA-LCR' },
 ];
 
@@ -86,6 +86,28 @@ interface CategoryComparisonData {
   data: (AIModel & { benchmarkScore: number; isCurrent?: boolean })[];
 }
 
+const getModelDataFromBenchmarkDoc = async (docSnap: any, modelsMap: Map<string, AIModel>): Promise<(AIModel & { benchmarkScore: number }) | null> => {
+    const modelId = docSnap.ref.parent.parent?.id;
+    if (!modelId) return null;
+
+    let modelDetails = modelsMap.get(modelId);
+    if (!modelDetails) {
+        const modelDocRef = doc(db, 'models', modelId);
+        const modelDocSnap = await getDoc(modelDocRef);
+        if (modelDocSnap.exists()) {
+            modelDetails = { id: modelId, ...modelDocSnap.data() } as AIModel;
+            modelsMap.set(modelId, modelDetails);
+        } else {
+            return null;
+        }
+    }
+    
+    return {
+        ...modelDetails,
+        benchmarkScore: docSnap.data().score,
+    };
+};
+
 export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIModel }) {
     const [comparisonData, setComparisonData] = useState<CategoryComparisonData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -94,33 +116,26 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
         const fetchAllComparisonData = async () => {
             setIsLoading(true);
             const allData: CategoryComparisonData[] = [];
-
-            // Fetch details for all models once to avoid repeated calls inside the loop
-            const modelsSnapshot = await getDocs(query(collectionGroup(db, 'models')));
-            const allModelsMap = new Map<string, AIModel>();
-            modelsSnapshot.forEach(docSnap => {
-                allModelsMap.set(docSnap.id, { id: docSnap.id, ...docSnap.data() } as AIModel);
-            });
+            const modelsMap = new Map<string, AIModel>([[currentModel.id, currentModel]]);
 
             for (const category of BENCHMARK_CATEGORIES) {
-                const currentModelScore = currentModel.benchmarks?.find(b => b.name === category.key)?.score;
+                const currentModelScore = currentModel.benchmarks?.find(b => b.name === category.subtitle)?.score;
 
                 if (currentModelScore === undefined) {
-                    continue; // Skip if current model doesn't have this benchmark
+                    continue; 
                 }
 
-                // Query for models with higher scores
                 const higherQuery = query(
                     collectionGroup(db, 'benchmarks'),
-                    where('name', '==', category.key),
+                    where('name', '==', category.subtitle),
                     where('score', '>', currentModelScore),
                     orderBy('score', 'asc'),
                     limit(3)
                 );
-                // Query for models with lower scores
+                
                 const lowerQuery = query(
                     collectionGroup(db, 'benchmarks'),
-                    where('name', '==', category.key),
+                    where('name', '==', category.subtitle),
                     where('score', '<', currentModelScore),
                     orderBy('score', 'desc'),
                     limit(3)
@@ -131,22 +146,16 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     getDocs(lowerQuery)
                 ]);
 
-                const getModelDataFromBenchmarkDoc = (docSnap: any): (AIModel & { benchmarkScore: number }) | null => {
-                    const modelId = docSnap.ref.parent.parent?.id;
-                    if (!modelId) return null;
-                    
-                    const modelDetails = allModelsMap.get(modelId);
-                    if (!modelDetails) return null;
-
-                    return {
-                        ...modelDetails,
-                        benchmarkScore: docSnap.data().score,
-                    };
-                };
-
-                const higherModels = higherSnapshot.docs.map(getModelDataFromBenchmarkDoc).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
-                const lowerModels = lowerSnapshot.docs.map(getModelDataFromBenchmarkDoc).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
+                const modelPromises = [
+                    ...higherSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                    ...lowerSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                ];
                 
+                const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
+
+                const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
+                const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
+
                 const combined = [
                     ...higherModels,
                     { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
@@ -172,6 +181,10 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                 {BENCHMARK_CATEGORIES.map(category => <ChartSkeleton key={category.key} />)}
             </div>
         )
+    }
+
+    if (comparisonData.length === 0) {
+        return <p className="text-muted-foreground text-center py-4">Không có đủ dữ liệu benchmark để so sánh.</p>
     }
 
     return (
