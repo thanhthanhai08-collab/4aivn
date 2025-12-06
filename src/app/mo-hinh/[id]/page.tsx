@@ -6,7 +6,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
-import type { AIModel, NewsArticle } from "@/lib/types";
+import type { AIModel, NewsArticle, BenchmarkData } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,85 +49,88 @@ function ModelDetailContent({ id }: { id: string }) {
   const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [benchmarks, setBenchmarks] = useState<BenchmarkData[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const modelsSnapshot = await getDocs(collection(db, 'models'));
-        const modelsList = modelsSnapshot.docs.map(doc => {
-            const data = doc.data();
-            const releaseDateTimestamp = data.releaseDate as Timestamp;
-            return { 
-                id: doc.id, 
-                ...data,
-                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
-            } as AIModel
-        });
-        setAllModels(modelsList);
-      } catch (error) {
-        console.error("Error fetching all models:", error);
-      }
+    const fetchAllData = async () => {
+        if (!id) return;
+        setIsLoading(true);
+
+        try {
+            // Fetch all models for comparison charts
+            const modelsSnapshot = await getDocs(collection(db, 'models'));
+            const modelsList = modelsSnapshot.docs.map(doc => {
+                const data = doc.data();
+                const releaseDateTimestamp = data.releaseDate as Timestamp;
+                return { 
+                    id: doc.id, 
+                    ...data,
+                    releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+                } as AIModel
+            });
+            setAllModels(modelsList);
+
+            // Fetch specific model details
+            const foundModel = modelsList.find(m => m.id === id);
+            
+            if (foundModel) {
+              setModel(foundModel);
+
+              // Fetch benchmarks from subcollection
+              const benchmarksColRef = collection(db, "models", id, "benchmarks");
+              const benchmarksSnapshot = await getDocs(benchmarksColRef);
+              const benchmarksData = benchmarksSnapshot.docs.map(doc => doc.data() as BenchmarkData);
+              setBenchmarks(benchmarksData);
+
+              // Fetch related news from Firestore
+              const newsQuery = query(
+                  collection(db, "news"),
+                  where('title', '>=', foundModel.name),
+                  where('title', '<=', foundModel.name + '\uf8ff'),
+                  limit(3)
+              );
+              const newsSnapshot = await getDocs(newsQuery);
+              const newsData = newsSnapshot.docs.map(doc => ({
+                  id: doc.id,
+                  ...doc.data(),
+                  publishedAt: doc.data().publishedAt.toDate().toISOString(),
+              } as NewsArticle));
+              setRelatedNews(newsData);
+
+
+              if (currentUser) {
+                getUserProfileData(currentUser.uid).then(userData => {
+                  setIsFavorite(userData.favoriteModels?.includes(id) || false);
+                  setCurrentRating(userData.ratedModels?.[id] || 0);
+                });
+              }
+
+              getAggregateRating("models", id).then(setAggregateRating);
+
+              if (foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
+                generateAiModelDescription({ 
+                    name: foundModel.name, 
+                    type: foundModel.type, 
+                    developer: foundModel.developer,
+                    link: foundModel.link 
+                })
+                  .then(output => setEnhancedDescription(output.description))
+                  .catch(err => console.error("Failed to generate AI model description:", err));
+              }
+            }
+        } catch (error) {
+            console.error("Error fetching model data:", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
-    fetchModels();
-  }, []);
-
-  useEffect(() => {
-    if (allModels.length === 0) {
-      if(!isLoading) setIsLoading(true); // Show loader if allModels is empty
-      return;
-    };
-
-
-    const foundModel = allModels.find((m) => m.id === id);
     
-    if (foundModel) {
-      setModel(foundModel);
+    fetchAllData();
+  }, [id, currentUser]);
 
-      // Fetch related news from Firestore
-      const fetchRelatedNews = async () => {
-          const newsQuery = query(
-              collection(db, "news"),
-              where('title', '>=', foundModel.name),
-              where('title', '<=', foundModel.name + '\uf8ff'),
-              limit(3)
-          );
-          const newsSnapshot = await getDocs(newsQuery);
-          const newsData = newsSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              publishedAt: doc.data().publishedAt.toDate().toISOString(),
-          } as NewsArticle));
-          setRelatedNews(newsData);
-      };
-      
-      fetchRelatedNews();
-
-
-      if (currentUser) {
-        getUserProfileData(currentUser.uid).then(userData => {
-          setIsFavorite(userData.favoriteModels?.includes(id) || false);
-          setCurrentRating(userData.ratedModels?.[id] || 0);
-        });
-      }
-
-      getAggregateRating("models", id).then(setAggregateRating);
-
-      if (foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
-        generateAiModelDescription({ 
-            name: foundModel.name, 
-            type: foundModel.type, 
-            developer: foundModel.developer,
-            link: foundModel.link 
-        })
-          .then(output => setEnhancedDescription(output.description))
-          .catch(err => console.error("Failed to generate AI model description:", err));
-      }
-    }
-    setIsLoading(false);
-  }, [id, currentUser, allModels, isLoading]);
 
   const handleFavoriteToggle = async () => {
     if (!currentUser) {
@@ -353,11 +356,11 @@ function ModelDetailContent({ id }: { id: string }) {
                   </CardContent>
               </Card>
               
-               {model.benchmarks && model.benchmarks.length > 0 && (
+               {benchmarks.length > 0 && (
                   <section>
                       <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
                       <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
-                      <O3PerformanceInsightsChart benchmarkData={model.benchmarks} />
+                      <O3PerformanceInsightsChart benchmarkData={benchmarks} />
                   </section>
                )}
               
