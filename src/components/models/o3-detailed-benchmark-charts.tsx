@@ -16,7 +16,7 @@ const BENCHMARK_CATEGORIES = [
   { key: 'aime-2025', title: 'Toán học', subtitle: 'AIME 2025' },
   { key: 'livecodebench', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
   { key: 'agentic-coding', title: 'Lập trình có tính tự chủ', subtitle: 'Agentic Coding' },
-  { key: 'agentic-tool-use', title: 'Sử dụng công cụ có tính tự chủ', subtitle: 'Agentic Tool Use' },
+  { key: 'agentic-tool-use', title: 'Sử dụng công cụ tự động', subtitle: 'Agentic Tool Use' },
   { key: 'mmlu-pro', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
   { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
   { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA Diamond' },
@@ -129,7 +129,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
                         where('score', '>', currentModelScore),
-                        orderBy('score', 'asc'),
+                        orderBy('score', 'desc'),
                         limit(3)
                     );
                     const lowerQuery = query(
@@ -152,7 +152,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     
                     const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
 
-                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a, b) => b.benchmarkScore - a.benchmarkScore);
+                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
                     const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore);
                     
                     const combined = [
