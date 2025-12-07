@@ -88,7 +88,8 @@ const getModelDataFromBenchmarkDoc = async (docSnap: any, modelsMap: Map<string,
         const modelDocRef = doc(db, 'models', modelId);
         const modelDocSnap = await getDoc(modelDocRef);
         if (modelDocSnap.exists()) {
-            modelDetails = { id: modelId, ...modelDocSnap.data() } as AIModel;
+            const data = modelDocSnap.data() as Omit<AIModel, 'id'>;
+            modelDetails = { id: modelId, ...data };
             modelsMap.set(modelId, modelDetails);
         } else {
             return null;
@@ -126,7 +127,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
                         where('score', '>', currentModelScore),
-                        orderBy('score', 'desc'),
+                        orderBy('score', 'asc'),
                         limit(3)
                     );
                     const lowerQuery = query(
@@ -149,7 +150,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     
                     const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
 
-                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore);
+                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
                     const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore);
                     
                     const combined = [
