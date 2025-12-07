@@ -1,4 +1,3 @@
-
 // src/app/rankings/page.tsx
 "use client";
 
@@ -12,15 +11,9 @@ import { mockTools } from "@/lib/mock-tools";
 import { mockLovableTool } from "@/lib/mock-tools2";
 import { mockOpalTool } from "@/lib/mock-tools3";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, type Timestamp } from "firebase/firestore";
+import { collection, getDocs, type Timestamp, query, orderBy } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-
-// Helper function to handle context length numbers.
-const parseContextLength = (tokenValue?: number): number => {
-  if (tokenValue === undefined || tokenValue === null) return -Infinity;
-  return tokenValue;
-};
 
 const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
@@ -33,11 +26,22 @@ export default function RankingsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Build the multi-orderBy query for models
+        const modelsQuery = query(
+          collection(db, "models"),
+          orderBy("intelligenceScore", "desc"),
+          orderBy("contextLengthToken", "desc"),
+          orderBy("pricePerMillionTokens", "asc"),
+          orderBy("latencyFirstChunkSeconds", "asc"),
+          orderBy("speedTokensPerSecond", "desc")
+        );
+
         const [toolsSnapshot, modelsSnapshot] = await Promise.all([
-            getDocs(collection(db, "tools")),
-            getDocs(collection(db, "models"))
+          getDocs(collection(db, "tools")),
+          getDocs(modelsQuery) // Use the sorted query
         ]);
 
+        // Process models (data is already sorted by Firestore)
         const dbModels = modelsSnapshot.docs.map(doc => {
             const data = doc.data();
             const releaseDateTimestamp = data.releaseDate as Timestamp;
@@ -48,6 +52,7 @@ export default function RankingsPage() {
             } as AIModel
         });
 
+        // Process tools (and apply ratings)
         const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
         toolsSnapshot.forEach(doc => {
           const data = doc.data();
@@ -58,8 +63,9 @@ export default function RankingsPage() {
         setAllModels(dbModels);
 
       } catch (error) {
-        console.error("Error fetching ratings:", error);
-        setAllTools(combinedMockTools); // Fallback to mock data
+        console.error("Error fetching data:", error);
+        // Fallback to mock/unsorted data on error
+        setAllTools(combinedMockTools); 
         setAllModels([]);
       } finally {
         setIsLoading(false);
@@ -70,33 +76,15 @@ export default function RankingsPage() {
   }, []);
 
   const filteredModels = useMemo(() => {
-    const filtered = allModels.filter(model => 
+    // Data is already sorted from Firestore, just need to filter by search term
+    return allModels.filter(model => 
       (model.name && model.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (model.description && model.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-     return filtered.sort((a, b) => {
-        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-
-        const intelA = a.intelligenceScore ?? -Infinity;
-        const intelB = b.intelligenceScore ?? -Infinity;
-        if (intelB !== intelA) return intelB - intelA;
-
-        const contextA = parseContextLength(a.contextLengthToken);
-        const contextB = parseContextLength(b.contextLengthToken);
-        if (contextB !== contextA) return contextB - contextA;
-
-        const priceA = a.pricePerMillionTokens ?? Infinity;
-        const priceB = b.pricePerMillionTokens ?? Infinity;
-        if (priceA !== priceB) return priceA - priceB;
-        
-        if (ratingB !== ratingA) return ratingB - ratingA;
-        
-        return (a.name || "").localeCompare(b.name || "");
-    });
   }, [allModels, searchTerm]);
 
   const filteredTools = useMemo(() => {
+    // Tools still need client-side sorting as they don't have a complex sort order from Firestore
     const filtered = allTools.filter(tool => 
       tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tool.description.toLowerCase().includes(searchTerm.toLowerCase())

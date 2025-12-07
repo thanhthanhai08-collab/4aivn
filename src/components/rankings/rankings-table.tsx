@@ -1,4 +1,3 @@
-
 // src/components/rankings/rankings-table.tsx
 "use client";
 
@@ -9,12 +8,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// Helper function to handle context length numbers.
-const parseContextLength = (tokenValue?: number): number => {
-  if (tokenValue === undefined || tokenValue === null) return -Infinity;
-  return tokenValue;
-};
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -37,9 +30,6 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
   // Items are pre-sorted by the parent component
   const sortedItems = items;
   
-  let denseRank = 0;
-  let lastSignature = "";
-
   return (
     <div className="overflow-x-auto rounded-lg border shadow-sm">
       <Table>
@@ -73,26 +63,6 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               ? (item.totalStars || 0) / item.ratingCount 
               : 0;
             
-            let rankToShow;
-            if (itemType === 'model') {
-              const modelItem = item as AIModel;
-              const currentSignature = [
-                modelItem.intelligenceScore,
-                parseContextLength(modelItem.contextLengthToken),
-                modelItem.pricePerMillionTokens,
-                averageRating,
-              ].join('-');
-
-              if (currentSignature !== lastSignature) {
-                denseRank = index + 1;
-              }
-              lastSignature = currentSignature;
-              rankToShow = denseRank;
-            } else {
-                // For tools, we use simple index-based ranking to avoid ties.
-                rankToShow = index + 1;
-            }
-
             return (
             <TableRow 
                 key={item.id} 
@@ -103,7 +73,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 )}
             >
               <TableCell className="text-center font-medium">
-                {rankToShow}
+                {index + 1}
               </TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">
