@@ -69,7 +69,16 @@ function ModelDetailContent({ id }: { id: string }) {
               // Fetch benchmarks from subcollection
               const benchmarksColRef = collection(db, "models", id, "benchmarks");
               const benchmarksSnapshot = await getDocs(benchmarksColRef);
-              const benchmarksData = benchmarksSnapshot.docs.map(doc => doc.data() as BenchmarkData);
+              const benchmarksData: BenchmarkData[] = benchmarksSnapshot.docs.map(doc => {
+                  const docData = doc.data();
+                  // Ensure score is a number
+                  const score = typeof docData.score === 'string' ? parseFloat(docData.score) : docData.score;
+                  return {
+                      name: docData.name,
+                      score: isNaN(score) ? 0 : score, // Fallback to 0 if parsing fails
+                  };
+              });
+
 
               const foundModel = {
                   id: modelDocSnap.id,
@@ -385,3 +394,5 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
+
+    
