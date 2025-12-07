@@ -194,11 +194,12 @@ function NewsDetailContent({ id }: { id: string }) {
                 });
             }
 
-            if (fetchedArticle.content.length > 200) {
-                summarizeNewsArticle({ articleContent: fetchedArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
-                .then(output => setSummary(output.summary))
-                .catch(err => console.error("Failed to generate summary:", err));
-            }
+            // The summarizeNewsArticle flow is commented out, so this will not run.
+            // if (fetchedArticle.content.length > 200) {
+            //     summarizeNewsArticle({ articleContent: fetchedArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
+            //     .then(output => setSummary(output.summary))
+            //     .catch(err => console.error("Failed to generate summary:", err));
+            // }
         }
         setIsLoading(false);
     };
@@ -208,7 +209,7 @@ function NewsDetailContent({ id }: { id: string }) {
         const newsQuery = query(
             collection(db, "news"), 
             where("__name__", "!=", id), 
-            orderBy("__name__"), 
+            orderBy("publishedAt", "desc"), 
             limit(3)
         );
         const newsSnapshot = await getDocs(newsQuery);
