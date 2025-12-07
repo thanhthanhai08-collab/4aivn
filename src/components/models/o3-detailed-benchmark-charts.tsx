@@ -112,11 +112,13 @@ const getModelDataFromBenchmarkDoc = async (docSnap: any, modelsMap: Map<string,
 export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIModel }) {
     const [comparisonData, setComparisonData] = useState<CategoryComparisonData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [missingBenchmarks, setMissingBenchmarks] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchAllComparisonData = async () => {
             setIsLoading(true);
             const allData: CategoryComparisonData[] = [];
+            const foundBenchmarkSubtitles = new Set<string>();
             const modelsMap = new Map<string, AIModel>([[currentModel.id, currentModel]]);
 
             for (const category of BENCHMARK_CATEGORIES) {
@@ -125,10 +127,9 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                 if (currentModelScore === undefined) {
                     continue; 
                 }
+                foundBenchmarkSubtitles.add(category.subtitle);
 
                 try {
-                    // Simplified Query: Fetch all models for a specific benchmark, ordered by score.
-                    // This is less efficient in terms of data downloaded but simpler and requires a less complex index.
                     const q = query(
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
@@ -143,17 +144,15 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     const currentIndex = allModelsForCategory.findIndex(m => m.id === currentModel.id);
                     
                     if (currentIndex === -1) {
-                         // If current model not in benchmark, just show it alone
                         allData.push({ categoryKey: category.key, data: [{...currentModel, benchmarkScore: currentModelScore, isCurrent: true}] });
                         continue;
                     }
 
-                    // Find up to 3 models with a higher score and up to 3 with a lower score.
                     const higherModels = allModelsForCategory.slice(Math.max(0, currentIndex - 3), currentIndex);
                     const lowerModels = allModelsForCategory.slice(currentIndex + 1, currentIndex + 4);
 
                     const combined = [
-                        ...higherModels.reverse(), // reverse to show highest score first
+                        ...higherModels.reverse(),
                         { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
                         ...lowerModels
                     ];
@@ -164,6 +163,12 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                     console.error(`Error fetching comparison data for ${category.title}:`, error);
                 }
             }
+
+            const missing = BENCHMARK_CATEGORIES
+                .filter(cat => !foundBenchmarkSubtitles.has(cat.subtitle))
+                .map(cat => cat.subtitle);
+            setMissingBenchmarks(missing);
+
             setComparisonData(allData);
             setIsLoading(false);
         };
@@ -198,9 +203,17 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
 
     if (renderedCharts.length === 0) {
         return (
-            <div className="text-center py-4 space-y-2">
+            <div className="text-center py-4 space-y-4 bg-muted/30 rounded-lg">
                 <p className="font-semibold text-xl">Dữ liệu Benchmark Chi tiết</p>
                 <p className="text-muted-foreground">Mô hình này chưa có điểm chuẩn so sánh cho các hạng mục đã chọn.</p>
+                {missingBenchmarks.length > 0 && (
+                    <div className="px-4">
+                        <p className="text-sm font-medium text-destructive">Gợi ý: Vui lòng bổ sung dữ liệu cho các benchmark sau trong subcollection 'benchmarks' trên Firestore:</p>
+                        <ul className="list-disc list-inside text-left max-w-md mx-auto mt-2 text-destructive/80 text-sm">
+                            {missingBenchmarks.map(b => <li key={b}>{b}</li>)}
+                        </ul>
+                    </div>
+                )}
             </div>
         );
     }
