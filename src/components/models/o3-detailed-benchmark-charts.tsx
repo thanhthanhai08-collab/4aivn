@@ -1,3 +1,4 @@
+
 // src/components/models/o3-detailed-benchmark-charts.tsx
 "use client"
 
@@ -126,43 +127,37 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                 }
 
                 try {
-                    const higherQuery = query(
+                    // Simplified Query: Fetch all models for a specific benchmark, ordered by score.
+                    // This is less efficient in terms of data downloaded but simpler and requires a less complex index.
+                    const q = query(
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
-                        where('score', '>', currentModelScore),
-                        orderBy('score', 'asc'),
-                        limit(3)
+                        orderBy('score', 'desc')
                     );
                     
-                    const lowerQuery = query(
-                        collectionGroup(db, 'benchmarks'),
-                        where('name', '==', category.subtitle),
-                        where('score', '<', currentModelScore),
-                        orderBy('score', 'desc'),
-                        limit(3)
-                    );
+                    const querySnapshot = await getDocs(q);
 
-                    const [higherSnapshot, lowerSnapshot] = await Promise.all([
-                        getDocs(higherQuery),
-                        getDocs(lowerQuery)
-                    ]);
+                    const modelPromises = querySnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap));
+                    const allModelsForCategory = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
 
-                    const modelPromises = [
-                        ...higherSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
-                        ...lowerSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
-                    ];
+                    const currentIndex = allModelsForCategory.findIndex(m => m.id === currentModel.id);
                     
-                    const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
+                    if (currentIndex === -1) {
+                         // If current model not in benchmark, just show it alone
+                        allData.push({ categoryKey: category.key, data: [{...currentModel, benchmarkScore: currentModelScore, isCurrent: true}] });
+                        continue;
+                    }
 
-                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
-                    const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore).sort((a,b) => b.benchmarkScore - a.benchmarkScore);
+                    // Find up to 3 models with a higher score and up to 3 with a lower score.
+                    const higherModels = allModelsForCategory.slice(Math.max(0, currentIndex - 3), currentIndex);
+                    const lowerModels = allModelsForCategory.slice(currentIndex + 1, currentIndex + 4);
 
                     const combined = [
-                        ...higherModels,
+                        ...higherModels.reverse(), // reverse to show highest score first
                         { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
                         ...lowerModels
                     ];
-
+                    
                     allData.push({ categoryKey: category.key, data: combined });
 
                 } catch (error) {
