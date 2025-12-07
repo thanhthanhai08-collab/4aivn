@@ -17,7 +17,7 @@ const BENCHMARK_CATEGORIES = [
   { key: 'livecodebench', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
   { key: 'mmlu-pro', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
   { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
-  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA' },
+  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA Diamond' },
   { key: 'aa-lcr', title: 'Lý luận ngữ cảnh dài', subtitle: 'AA-LCR' },
 ];
 
@@ -167,7 +167,6 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
 
                 } catch (error) {
                     console.error(`Error fetching comparison data for ${category.title}:`, error);
-                    // Don't stop the whole process, just skip this category
                 }
             }
             setComparisonData(allData);
