@@ -12,24 +12,16 @@ import { db } from "@/lib/firebase";
 import { collectionGroup, query, where, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
 import { Skeleton } from "../ui/skeleton";
 
-// Define benchmark categories to display
 const BENCHMARK_CATEGORIES = [
   { key: 'aime-2025', title: 'Toán học', subtitle: 'AIME 2025' },
   { key: 'livecodebench', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
   { key: 'mmlu-pro', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
   { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
-  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA Diamond' },
+  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA' },
   { key: 'aa-lcr', title: 'Lý luận ngữ cảnh dài', subtitle: 'AA-LCR' },
 ];
 
-interface BenchmarkChartProps {
-    title: string;
-    subtitle: string;
-    data: (AIModel & { benchmarkScore: number, isCurrent?: boolean })[];
-}
-
-const BenchmarkChart = ({ title, subtitle, data }: BenchmarkChartProps) => {
-    // Sort data by score in descending order for correct visualization
+const BenchmarkChart = ({ title, subtitle, data }: { title: string; subtitle: string; data: (AIModel & { benchmarkScore: number; isCurrent?: boolean })[] }) => {
     const sortedData = [...data].sort((a, b) => b.benchmarkScore - a.benchmarkScore);
 
     return (
@@ -130,35 +122,43 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                 foundBenchmarkSubtitles.add(category.subtitle);
 
                 try {
-                    const q = query(
+                    const higherQuery = query(
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
-                        orderBy('score', 'desc')
+                        where('score', '>', currentModelScore),
+                        orderBy('score', 'asc'),
+                        limit(3)
                     );
+                    const lowerQuery = query(
+                        collectionGroup(db, 'benchmarks'),
+                        where('name', '==', category.subtitle),
+                        where('score', '<', currentModelScore),
+                        orderBy('score', 'desc'),
+                        limit(3)
+                    );
+
+                    const [higherSnapshot, lowerSnapshot] = await Promise.all([
+                        getDocs(higherQuery),
+                        getDocs(lowerQuery)
+                    ]);
                     
-                    const querySnapshot = await getDocs(q);
-
-                    const modelPromises = querySnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap));
-                    const allModelsForCategory = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
-
-                    const currentIndex = allModelsForCategory.findIndex(m => m.id === currentModel.id);
+                    const modelPromises = [
+                        ...higherSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                        ...lowerSnapshot.docs.map(docSnap => getModelDataFromBenchmarkDoc(docSnap, modelsMap)),
+                    ];
                     
-                    if (currentIndex === -1) {
-                        allData.push({ categoryKey: category.key, data: [{...currentModel, benchmarkScore: currentModelScore, isCurrent: true}] });
-                        continue;
-                    }
+                    const resolvedModels = (await Promise.all(modelPromises)).filter(Boolean) as (AIModel & { benchmarkScore: number })[];
 
-                    const higherModels = allModelsForCategory.slice(Math.max(0, currentIndex - 3), currentIndex);
-                    const lowerModels = allModelsForCategory.slice(currentIndex + 1, currentIndex + 4);
-
+                    const higherModels = resolvedModels.filter(m => m.benchmarkScore > currentModelScore);
+                    const lowerModels = resolvedModels.filter(m => m.benchmarkScore < currentModelScore);
+                    
                     const combined = [
-                        ...higherModels.reverse(),
+                        ...higherModels,
                         { ...currentModel, benchmarkScore: currentModelScore, isCurrent: true },
                         ...lowerModels
                     ];
-                    
-                    allData.push({ categoryKey: category.key, data: combined });
 
+                    allData.push({ categoryKey: category.key, data: combined });
                 } catch (error) {
                     console.error(`Error fetching comparison data for ${category.title}:`, error);
                 }
