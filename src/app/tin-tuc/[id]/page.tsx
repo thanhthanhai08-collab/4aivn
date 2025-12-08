@@ -12,7 +12,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
-import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
+import { summarizeNewsArticle } from "@/ai/flows/ai-tool-description-generator";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
 import { getComments } from "@/lib/comments-service";
@@ -199,7 +199,6 @@ function NewsDetailContent({ id }: { id: string }) {
              const latestNewsQuery = query(
                 collection(db, "news"),
                 where("__name__", "!=", id),
-                orderBy("__name__", "asc"), // Firestore requires an orderBy when using inequality filters
                 orderBy("publishedAt", "desc"),
                 limit(3)
             );
@@ -218,7 +217,6 @@ function NewsDetailContent({ id }: { id: string }) {
                 collection(db, "news"),
                 where("tag", "array-contains-any", fetchedArticle.tag),
                 where("__name__", "!=", id),
-                orderBy("__name__", "asc"), // Required for combining inequality with array-contains-any
                 orderBy("publishedAt", "desc"),
                 limit(3)
               );
@@ -227,7 +225,6 @@ function NewsDetailContent({ id }: { id: string }) {
               relatedQuery = query(
                 collection(db, "news"),
                 where("__name__", "!=", id),
-                orderBy("__name__", "asc"),
                 orderBy("publishedAt", "desc"),
                 limit(3)
               );
