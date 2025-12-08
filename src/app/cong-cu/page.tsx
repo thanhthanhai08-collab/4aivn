@@ -1,3 +1,4 @@
+
 // src/app/tools/page.tsx
 "use client";
 
@@ -5,16 +6,11 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
-import { mockTools } from "@/lib/mock-tools";
-import { mockLovableTool } from "@/lib/mock-tools2";
-import { mockOpalTool } from "@/lib/mock-tools3";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
-
-const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 export default function ToolsPage() {
   const searchParams = useSearchParams();
@@ -24,8 +20,7 @@ export default function ToolsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const [allTools, setAllTools] = useState<Tool[]>(combinedMockTools);
-
+  const [allTools, setAllTools] = useState<Tool[]>([]);
 
   useEffect(() => {
     setMounted(true);
@@ -33,27 +28,20 @@ export default function ToolsPage() {
     const fetchData = async () => {
       try {
         const toolsSnapshot = await getDocs(collection(db, "tools"));
-        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
-        toolsSnapshot.forEach(doc => {
-          const data = doc.data();
-          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
-        });
-        
-        setAllTools(combinedMockTools.map(tool => ({
-          ...tool,
-          ...toolRatings[tool.id]
-        })));
-
+        const dbTools = toolsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        } as Tool));
+        setAllTools(dbTools);
       } catch (error) {
-        console.error("Error fetching tool ratings:", error);
-        setAllTools(combinedMockTools); // Fallback to mock data
+        console.error("Error fetching tools:", error);
+        setAllTools([]); // Fallback to empty array on error
       } finally {
         setIsLoading(false);
       }
     };
     
     fetchData();
-
   }, []);
 
   // Update searchTerm if URL query changes
@@ -62,16 +50,9 @@ export default function ToolsPage() {
   }, [initialSearchQuery]);
 
   const categories = useMemo(() => {
-    // Get existing categories from tools
-    const existingCategoriesFromTools = new Set(allTools.map(tool => tool.context));
-
-    // Add "Model AI" to the set
-    existingCategoriesFromTools.add("Model AI");
-
-    // Convert set to array and sort for consistent order (e.g., alphabetically)
-    const allCategories = Array.from(existingCategoriesFromTools).sort((a, b) => a.localeCompare(b));
-    
-    return allCategories;
+    const toolCategories = new Set(allTools.map(tool => tool.context));
+    toolCategories.add("Model AI"); // Keep this if needed for filter consistency across app
+    return Array.from(toolCategories).sort((a, b) => a.localeCompare(b));
   }, [allTools]);
 
   const sortedTools = useMemo(() => {
@@ -81,7 +62,7 @@ export default function ToolsPage() {
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-    // Sort by average rating (desc), then by rating count (desc), then by name (asc)
+    
     return filtered.sort((a, b) => {
         const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
         const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
@@ -96,7 +77,7 @@ export default function ToolsPage() {
     });
   }, [searchTerm, selectedCategory, allTools]);
 
-  if (!mounted && !initialSearchQuery) { // Added !initialSearchQuery to prevent skeleton flash if search is active
+  if (!mounted && !initialSearchQuery) {
      return (
       <AppLayout>
         <div className="container py-8">
@@ -126,10 +107,10 @@ export default function ToolsPage() {
           categories={categories}
           onSearchChange={setSearchTerm}
           onCategoryChange={setSelectedCategory}
-          initialSearchTerm={searchTerm} // Pass current searchTerm
+          initialSearchTerm={searchTerm}
         />
 
-        {isLoading && !initialSearchQuery ? ( // Also check initialSearchQuery here
+        {isLoading && !initialSearchQuery ? (
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
               <Skeleton key={i} className="h-64 w-full rounded-lg" />

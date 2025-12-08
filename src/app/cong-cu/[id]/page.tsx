@@ -6,9 +6,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid, Newspaper } from "lucide-react";
-import { mockTools } from "@/lib/mock-tools";
-import { mockLovableTool } from "@/lib/mock-tools2";
-import { mockOpalTool } from "@/lib/mock-tools3";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,10 +30,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, limit, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, limit, query, where, doc, getDoc } from "firebase/firestore";
 import { NewsCard } from "@/components/news/news-card";
-
-const initialMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -90,12 +85,13 @@ function ToolDetailContent({ id }: { id: string }) {
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [ranking, setRanking] = useState<number | null>(null);
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
+  const [similarTools, setSimilarTools] = useState<Tool[]>([]);
+  const [complementaryTools, setComplementaryTools] = useState<Tool[]>([]);
+  const [allCategories, setAllCategories] = useState<string[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
   
-  const allCategories = Array.from(new Set(initialMockTools.map(t => t.context)));
-
   const categoryIcons: { [key: string]: string } = {
     'Tạo hình ảnh': '🎨',
     'AI Agent': '🤖',
@@ -107,98 +103,83 @@ function ToolDetailContent({ id }: { id: string }) {
     'Model AI': '🧠',
     'Tạo giọng nói': '🗣️',
     'AI tìm kiếm': '🔍',
+    'Trình duyệt AI': '🌐',
+    'Tạo nhạc AI': '🎵',
   };
 
-  const similarTools = initialMockTools.filter(t => t.id !== id && t.context === tool?.context).slice(0, 4);
-
   useEffect(() => {
-    // Increment view count when the component mounts
+    if (!id) return;
     incrementToolViewCount(id);
     
     const fetchData = async () => {
       setIsLoading(true);
-      const foundTool = initialMockTools.find((t) => t.id === id);
-      
-      if (foundTool) {
-        setTool(foundTool);
+      try {
+        const toolDocRef = doc(db, "tools", id);
+        const toolDocSnap = await getDoc(toolDocRef);
 
-        // Fetch top 3 featured tools based on viewCount
-        const toolsQuery = query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(3));
-        const featuredToolsSnapshot = await getDocs(toolsQuery);
-        const featuredToolIds = featuredToolsSnapshot.docs.map(doc => doc.id);
-        setFeaturedTools(initialMockTools.filter(t => featuredToolIds.includes(t.id)));
-        
-        // Fetch all tool ratings to calculate rank
-        const toolsSnapshot = await getDocs(collection(db, "tools"));
-        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
-        toolsSnapshot.forEach(doc => {
-            const data = doc.data();
-            toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
-        });
+        if (toolDocSnap.exists()) {
+          const foundTool = { id: toolDocSnap.id, ...toolDocSnap.data() } as Tool;
+          setTool(foundTool);
+          
+          // --- Fetch all other data in parallel ---
+          const [
+            allToolsSnapshot,
+            featuredToolsSnapshot,
+            newsSnapshot,
+            allReviewsData,
+            userData,
+            aggregateData
+          ] = await Promise.all([
+            getDocs(collection(db, "tools")),
+            getDocs(query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(4))),
+            getDocs(query(collection(db, "news"), where('title', '>=', foundTool.name), where('title', '<=', foundTool.name + '\uf8ff'), limit(3))),
+            getAllToolReviews(id),
+            currentUser ? getUserProfileData(currentUser.uid) : Promise.resolve(null),
+            getAggregateRating("tools", id)
+          ]);
 
-        const allToolsWithRatings = initialMockTools.map(tool => ({
-            ...tool,
-            ...toolRatings[tool.id]
-        }));
-        
-        // Sort tools to find rank
-        const sortedTools = allToolsWithRatings.sort((a, b) => {
+          // --- Process all tools for ranking, categories, and similar/complementary tools ---
+          const allToolsData = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+          
+          const sortedTools = [...allToolsData].sort((a, b) => {
             const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
             const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
             if (ratingB !== ratingA) return ratingB - ratingA;
-            
             const countA = a.ratingCount ?? 0;
             const countB = b.ratingCount ?? 0;
             if (countB !== countA) return countB - countA;
-            
             return a.name.localeCompare(b.name);
-        });
-
-        const rank = sortedTools.findIndex(t => t.id === id);
-        if (rank !== -1) {
-            setRanking(rank + 1);
-        } else {
-            setRanking(null);
-        }
-
-        // Fetch aggregate rating for the current tool
-        const aggregateData = toolRatings[id] || { totalStars: 0, ratingCount: 0 };
-        setAggregateRating(aggregateData);
-
-        // Fetch all user reviews for this tool
-        getAllToolReviews(id).then(setAllReviews);
-
-        // Fetch user-specific data only if logged in
-        if (currentUser) {
-          getUserProfileData(currentUser.uid).then(userData => {
-            setIsFavorite(userData.favoriteTools?.includes(id) || false);
           });
-        }
-        
-        // Fetch related news from Firestore
-        const newsQuery = query(
-            collection(db, "news"),
-            where('title', '>=', foundTool.name),
-            where('title', '<=', foundTool.name + '\uf8ff'),
-            limit(3)
-        );
-        const newsSnapshot = await getDocs(newsQuery);
-        const newsData = newsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            publishedAt: doc.data().publishedAt.toDate().toISOString(),
-        } as NewsArticle));
-        setRelatedNews(newsData);
+          const rank = sortedTools.findIndex(t => t.id === id);
+          setRanking(rank !== -1 ? rank + 1 : null);
 
+          setAllCategories(Array.from(new Set(allToolsData.map(t => t.context))).sort());
+          setSimilarTools(allToolsData.filter(t => t.id !== id && t.context === foundTool.context).slice(0, 4));
+          setComplementaryTools(allToolsData.filter(t => t.id !== id && t.context !== foundTool.context).slice(8, 11)); // Example logic
 
-        // Generate enhanced description if needed
-        if (foundTool.description.length < 100 && foundTool.description.length > 0) {
-          generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
-            .then(output => setEnhancedDescription(output.description))
-            .catch(err => console.error("Failed to generate AI description:", err));
+          // --- Process other fetched data ---
+          setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== id).slice(0, 3));
+          setAggregateRating(aggregateData);
+          setAllReviews(allReviewsData);
+
+          if (userData) {
+            setIsFavorite(userData.favoriteTools?.includes(id) || false);
+          }
+
+          const newsData = newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: doc.data().publishedAt.toDate().toISOString() } as NewsArticle));
+          setRelatedNews(newsData);
+          
+          if (foundTool.description.length < 100 && foundTool.description.length > 0) {
+            generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
+              .then(output => setEnhancedDescription(output.description))
+              .catch(err => console.error("Failed to generate AI description:", err));
+          }
         }
+      } catch (error) {
+        console.error("Error fetching tool details:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     fetchData();
@@ -244,13 +225,9 @@ function ToolDetailContent({ id }: { id: string }) {
       );
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
-      // Refetch all reviews to include the new one
       getAllToolReviews(id).then(setAllReviews);
-
-      // Refetch aggregate rating
       getAggregateRating("tools", id).then(setAggregateRating);
       
-      // Reset form after successful submission
       setCurrentRating(0);
       setReviewText("");
 
@@ -349,7 +326,6 @@ function ToolDetailContent({ id }: { id: string }) {
             
             <Separator />
             
-            {/* Video/Image Showcase */}
             {(tool.videoUrl || tool.imageUrl) && (
               <section>
                   <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
@@ -377,7 +353,6 @@ function ToolDetailContent({ id }: { id: string }) {
               </section>
             )}
             
-            {/* What is tool? */}
              {tool.longDescription && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">{tool.name} là gì?</h2>
@@ -385,7 +360,6 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
 
-            {/* Key Features */}
             {tool.features && tool.features.length > 0 && (
               <section>
                 <h2 className="text-2xl font-bold font-headline mb-4">Tính năng chính</h2>
@@ -400,8 +374,7 @@ function ToolDetailContent({ id }: { id: string }) {
               </section>
             )}
             
-            {/* Use Cases */}
-             {tool.useCases && (
+             {tool.useCases && tool.useCases.length > 0 && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">Trường hợp sử dụng</h2>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
@@ -415,8 +388,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
             
-            {/* Who is it for? */}
-             {tool.whoIsItFor && (
+             {tool.whoIsItFor && tool.whoIsItFor.length > 0 && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">Đối tượng phù hợp</h2>
                     <div className="flex flex-wrap gap-2">
@@ -427,7 +399,6 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
             
-            {/* Pricing */}
             {tool.pricingPlans && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
@@ -435,14 +406,12 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
             
-            {/* Rating & Reviews Section */}
             <section>
                  <Card>
                     <CardHeader>
                         <CardTitle className="text-2xl font-bold font-headline">Đánh giá & Nhận xét</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-8">
-                        {/* Rating Form */}
                         <div className="bg-muted/30 p-6 rounded-lg">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                                 <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
@@ -472,7 +441,6 @@ function ToolDetailContent({ id }: { id: string }) {
                         
                         <Separator />
 
-                        {/* All Reviews List */}
                         <div>
                              <h3 className="text-2xl font-bold font-headline mb-4">Tất cả bài đánh giá</h3>
                              <ReviewsList reviews={allReviews} />
@@ -481,7 +449,6 @@ function ToolDetailContent({ id }: { id: string }) {
                 </Card>
             </section>
 
-             {/* CTA */}
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
                     <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
@@ -492,22 +459,23 @@ function ToolDetailContent({ id }: { id: string }) {
                  </Card>
             </section>
             
-            {/* Similar Tools */}
-            <section>
-              <h2 className="text-2xl font-bold font-headline mb-4">Công cụ tương tự {tool.name}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {similarTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
-              </div>
-            </section>
+            {similarTools.length > 0 && (
+                <section>
+                <h2 className="text-2xl font-bold font-headline mb-4">Công cụ tương tự {tool.name}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {similarTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
+                </div>
+                </section>
+            )}
             
-            {/* Complementary Tools */}
-            <section>
-              <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name} để tối ưu hóa quy trình làm việc của bạn</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {initialMockTools.slice(8, 11).map(t => <ToolCardSmall key={t.id} tool={t} />)}
-              </div>
-            </section>
-
+            {complementaryTools.length > 0 && (
+                <section>
+                <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name} để tối ưu hóa quy trình làm việc của bạn</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {complementaryTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
+                </div>
+                </section>
+            )}
           </div>
 
           {/* Sidebar */}

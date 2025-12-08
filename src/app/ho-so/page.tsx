@@ -1,3 +1,4 @@
+
 // src/app/profile/page.tsx
 "use client";
 
@@ -10,9 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools } from "@/lib/mock-tools";
-import { mockLovableTool } from "@/lib/mock-tools2";
-import { mockOpalTool } from "@/lib/mock-tools3";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3 } from "lucide-react";
@@ -28,10 +26,8 @@ import {
 } from "@/components/ui/dialog";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, documentId } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-
-const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
@@ -68,41 +64,41 @@ export default function ProfilePage() {
         
         const fetchAllData = async () => {
           try {
-            const [userData, modelsSnapshot] = await Promise.all([
-              getUserProfileData(currentUser.uid),
-              getDocs(collection(db, "models"))
-            ]);
+            const userData = await getUserProfileData(currentUser.uid);
             
+            // --- Fetch all required data in parallel ---
+            const [modelsSnapshot, toolsSnapshot] = await Promise.all([
+              getDocs(collection(db, "models")),
+              getDocs(collection(db, "tools")),
+            ]);
+
             const allDbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
+            const allDbTools = toolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
 
-            // Load rated models
+            // --- Process Data ---
             const ratedModelIds = Object.keys(userData.ratedModels || {});
-            const userRatedModels = allDbModels
+            setRatedModels(
+              allDbModels
                 .filter(model => ratedModelIds.includes(model.id))
-                .map(model => ({ ...model, myRating: userData.ratedModels?.[model.id] }));
-            setRatedModels(userRatedModels);
+                .map(model => ({ ...model, myRating: userData.ratedModels?.[model.id] }))
+            );
 
-            // Load rated tools
             const ratedToolIds = Object.keys(userData.ratedTools || {});
-            const userRatedTools = combinedMockTools
+            const userRatedTools = allDbTools
                 .filter(tool => ratedToolIds.includes(tool.id))
                 .map(tool => ({ ...tool, myRating: userData.ratedTools?.[tool.id]?.rating }));
             setRatedTools(sortToolsByRating(userRatedTools));
 
-            // Load favorite models
-            const userFavoriteModels = allDbModels
-              .filter(model => (userData.favoriteModels || []).includes(model.id));
-            setFavoriteModels(userFavoriteModels);
-
-            // Load favorite tools
-            const userFavoriteTools = combinedMockTools
-                .filter(tool => (userData.favoriteTools || []).includes(tool.id));
+            setFavoriteModels(
+              allDbModels.filter(model => (userData.favoriteModels || []).includes(model.id))
+            );
+            
+            const userFavoriteTools = allDbTools.filter(tool => (userData.favoriteTools || []).includes(tool.id));
             setFavoriteTools(sortToolsByRating(userFavoriteTools));
             
-            // Load bookmarked news from Firestore
             const bookmarkedIds = userData.bookmarkedNews || [];
             if (bookmarkedIds.length > 0) {
-              const newsQuery = query(collection(db, "news"), where("__name__", "in", bookmarkedIds));
+              const newsQuery = query(collection(db, "news"), where(documentId(), "in", bookmarkedIds));
               const newsSnapshot = await getDocs(newsQuery);
               const userBookmarkedNews = newsSnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -113,6 +109,7 @@ export default function ProfilePage() {
             } else {
               setBookmarkedNews([]);
             }
+
           } catch (error) {
             console.error("Failed to fetch user profile data:", error);
             toast({
@@ -136,7 +133,7 @@ export default function ProfilePage() {
   };
   
   const getInitials = (name: string | null | undefined) => {
-    if (!name) return "N"; // Người dùng
+    if (!name) return "N";
     const names = name.split(' ');
     if (names.length > 1) {
       return names[0][0] + names[names.length - 1][0];

@@ -5,9 +5,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ToolCard } from "@/components/tools/tool-card";
 import { NewsCard } from "@/components/news/news-card";
-import { mockTools } from "@/lib/mock-tools";
-import { mockLovableTool } from "@/lib/mock-tools2";
-import { mockOpalTool } from "@/lib/mock-tools3";
 import { AppLayout } from "@/components/layout/app-layout";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -24,8 +21,6 @@ const TYPING_TEXTS = [
   "KHÁM PHÁ BẢNG XẾP HẠNG CÁC CÔNG CỤ AI",
   "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
 ];
-
-const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
 
 export default function HomePage() {
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
@@ -121,19 +116,13 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const fetchToolRatings = async () => {
+    const fetchTopTools = async () => {
       try {
         const toolsSnapshot = await getDocs(collection(db, "tools"));
-        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
-        toolsSnapshot.forEach(doc => {
-          const data = doc.data();
-          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
-        });
-
-        const toolsWithRatings = combinedMockTools.map(tool => ({
-          ...tool,
-          ...toolRatings[tool.id]
-        }));
+        const toolsWithRatings = toolsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as Tool));
         
         const sortedTopTools = toolsWithRatings.sort((a, b) => {
           const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
@@ -151,15 +140,13 @@ export default function HomePage() {
         setTopTools(sortedTopTools);
 
       } catch (error) {
-        console.error("Error fetching tool ratings for homepage:", error);
-        // Fallback to initial mockTools order if Firestore fails
-        setTopTools(combinedMockTools.slice(0, 4));
+        console.error("Error fetching top tools for homepage:", error);
       } finally {
         setIsLoadingTools(false);
       }
     };
 
-    fetchToolRatings();
+    fetchTopTools();
   }, []);
   
   const scrollCarousel = (direction: 'left' | 'right') => {

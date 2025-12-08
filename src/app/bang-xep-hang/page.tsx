@@ -1,3 +1,4 @@
+
 // src/app/rankings/page.tsx
 "use client";
 
@@ -7,26 +8,20 @@ import { RankingsTable } from "@/components/rankings/rankings-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Tool, AIModel } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockTools } from "@/lib/mock-tools";
-import { mockLovableTool } from "@/lib/mock-tools2";
-import { mockOpalTool } from "@/lib/mock-tools3";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, type Timestamp, query, orderBy } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
-const combinedMockTools = [...mockTools, ...mockLovableTool, ...mockOpalTool];
-
 export default function RankingsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [allTools, setAllTools] = useState<Tool[]>(combinedMockTools);
+  const [allTools, setAllTools] = useState<Tool[]>([]);
   const [allModels, setAllModels] = useState<AIModel[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Build the multi-orderBy query for models
         const modelsQuery = query(
           collection(db, "models"),
           orderBy("intelligenceScore", "desc"),
@@ -36,12 +31,13 @@ export default function RankingsPage() {
           orderBy("speedTokensPerSecond", "desc")
         );
 
+        const toolsQuery = query(collection(db, "tools"));
+
         const [toolsSnapshot, modelsSnapshot] = await Promise.all([
-          getDocs(collection(db, "tools")),
-          getDocs(modelsQuery) // Use the sorted query
+          getDocs(toolsQuery),
+          getDocs(modelsQuery)
         ]);
 
-        // Process models (data is already sorted by Firestore)
         const dbModels = modelsSnapshot.docs.map(doc => {
             const data = doc.data();
             const releaseDateTimestamp = data.releaseDate as Timestamp;
@@ -51,21 +47,18 @@ export default function RankingsPage() {
                 releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
             } as AIModel
         });
-
-        // Process tools (and apply ratings)
-        const toolRatings: { [id: string]: { totalStars: number; ratingCount: number } } = {};
-        toolsSnapshot.forEach(doc => {
-          const data = doc.data();
-          toolRatings[doc.id] = { totalStars: data.totalStars || 0, ratingCount: data.ratingCount || 0 };
-        });
         
-        setAllTools(combinedMockTools.map(tool => ({ ...tool, ...toolRatings[tool.id] })));
+        const dbTools = toolsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        } as Tool));
+
+        setAllTools(dbTools);
         setAllModels(dbModels);
 
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Fallback to mock/unsorted data on error
-        setAllTools(combinedMockTools); 
+        setAllTools([]); 
         setAllModels([]);
       } finally {
         setIsLoading(false);
@@ -76,7 +69,6 @@ export default function RankingsPage() {
   }, []);
 
   const filteredModels = useMemo(() => {
-    // Data is already sorted from Firestore, just need to filter by search term
     return allModels.filter(model => 
       (model.name && model.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (model.description && model.description.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -84,7 +76,6 @@ export default function RankingsPage() {
   }, [allModels, searchTerm]);
 
   const filteredTools = useMemo(() => {
-    // Tools still need client-side sorting as they don't have a complex sort order from Firestore
     const filtered = allTools.filter(tool => 
       tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tool.description.toLowerCase().includes(searchTerm.toLowerCase())
