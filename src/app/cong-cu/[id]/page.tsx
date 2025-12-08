@@ -148,12 +148,12 @@ function ToolDetailContent({ id }: { id: string }) {
             const countA = a.ratingCount ?? 0;
             const countB = b.ratingCount ?? 0;
             if (countB !== countA) return countB - countA;
-            return a.name.localeCompare(b.name);
+            return (a.name || '').localeCompare(b.name || '');
           });
           const rank = sortedTools.findIndex(t => t.id === id);
           setRanking(rank !== -1 ? rank + 1 : null);
 
-          setAllCategories(Array.from(new Set(allToolsData.map(t => t.context))).sort());
+          setAllCategories(Array.from(new Set(allToolsData.map(t => t.context).filter(Boolean))).sort());
           setSimilarTools(allToolsData.filter(t => t.id !== id && t.context === foundTool.context).slice(0, 4));
           setComplementaryTools(allToolsData.filter(t => t.id !== id && t.context !== foundTool.context).slice(8, 11)); // Example logic
 
@@ -169,7 +169,7 @@ function ToolDetailContent({ id }: { id: string }) {
           const newsData = newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: doc.data().publishedAt.toDate().toISOString() } as NewsArticle));
           setRelatedNews(newsData);
           
-          if (foundTool.description.length < 100 && foundTool.description.length > 0) {
+          if (foundTool.description && foundTool.description.length < 100 && foundTool.description.length > 0) {
             generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
               .then(output => setEnhancedDescription(output.description))
               .catch(err => console.error("Failed to generate AI description:", err));
@@ -399,11 +399,17 @@ function ToolDetailContent({ id }: { id: string }) {
                 </section>
             )}
             
-            {tool.pricingPlans && (
-                <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.pricingPlans }}/>
-                </section>
+            {tool.pricingPlans && tool.pricingPlans.length > 0 && (
+              <section>
+                  <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
+                  <div className="prose max-w-none">
+                      <ul>
+                          {tool.pricingPlans.map((plan, index) => (
+                              <li key={index}>{plan}</li>
+                          ))}
+                      </ul>
+                  </div>
+              </section>
             )}
             
             <section>

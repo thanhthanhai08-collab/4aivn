@@ -34,14 +34,12 @@ export const mockTools: Tool[] = [
       'Nhà phát triển game',
       'Người sáng tạo nội dung'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Basic:</strong> $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.</li>
-            <li><strong>Gói Standard:</strong> $30/tháng, cung cấp 15 giờ GPU nhanh, lựa chọn phổ biến nhất.</li>
-            <li><strong>Gói Pro:</strong> $60/tháng, cung cấp 30 giờ GPU nhanh, dành cho người dùng chuyên nghiệp.</li>
-            <li><strong>Gói Mega:</strong> $120/tháng, cung cấp 60 giờ GPU nhanh, dành cho doanh nghiệp và người dùng có nhu cầu rất cao.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Basic: $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.",
+      "Gói Standard: $30/tháng, cung cấp 15 giờ GPU nhanh, lựa chọn phổ biến nhất.",
+      "Gói Pro: $60/tháng, cung cấp 30 giờ GPU nhanh, dành cho người dùng chuyên nghiệp.",
+      "Gói Mega: $120/tháng, cung cấp 60 giờ GPU nhanh, dành cho doanh nghiệp và người dùng có nhu cầu rất cao."
+    ],
     isFavorite: true,
   },
   {
@@ -73,9 +71,9 @@ export const mockTools: Tool[] = [
         'Nhà phát triển game',
         'Người làm marketing'
     ],
-    pricingPlans: `
-        <p>GPT Image 1 được tích hợp trong các gói ChatGPT Plus, Team và Enterprise. Người dùng các gói này có thể sử dụng tính năng tạo ảnh theo giới hạn của gói đăng ký mà không phải trả thêm phí cho mỗi hình ảnh.</p>
-    `,
+    pricingPlans: [
+      "GPT Image 1 được tích hợp trong các gói ChatGPT Plus, Team và Enterprise. Người dùng các gói này có thể sử dụng tính năng tạo ảnh theo giới hạn của gói đăng ký mà không phải trả thêm phí cho mỗi hình ảnh."
+    ],
     isFavorite: false,
   },
   {
@@ -107,12 +105,10 @@ export const mockTools: Tool[] = [
         'Người làm marketing và quảng cáo',
         'Nghệ sĩ kỹ thuật số'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Imagen 4 (Tiêu chuẩn):</strong> $0.04/ảnh, phù hợp cho hầu hết các tác vụ tạo ảnh thông thường.</li>
-            <li><strong>Imagen 4 Ultra:</strong> $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Imagen 4 (Tiêu chuẩn): $0.04/ảnh, phù hợp cho hầu hết các tác vụ tạo ảnh thông thường.",
+      "Imagen 4 Ultra: $0.06/ảnh, phiên bản cao cấp tập trung vào độ chính xác và chất lượng hình ảnh vượt trội."
+    ],
     isFavorite: true,
   },
   {
@@ -147,17 +143,13 @@ export const mockTools: Tool[] = [
       'Người dùng chuyên nghiệp muốn kiểm soát tối đa',
       'Doanh nghiệp muốn xây dựng giải pháp AI riêng'
     ],
-    pricingPlans: `
-        <h3>Gói API Credit</h3>
-        <p>Stability AI cung cấp quyền truy cập API thông qua hệ thống tín dụng (credit), với 1 credit tương đương $0.01.</p>
-        <h3>Gói Stable Assistant (Sử dụng qua Web)</h3>
-        <ul>
-            <li><strong>Gói Standard:</strong> $9/tháng, cung cấp 900 credit/tháng.</li>
-            <li><strong>Gói Pro:</strong> $19/tháng, cung cấp 1900 credit/tháng.</li>
-            <li><strong>Gói Plus:</strong> $49/tháng, cung cấp 5500 credit/tháng.</li>
-            <li><strong>Gói Premium:</strong> $99/tháng, cung cấp 12000 credit/tháng.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói API Credit: Stability AI cung cấp quyền truy cập API thông qua hệ thống tín dụng (credit), với 1 credit tương đương $0.01.",
+      "Gói Stable Assistant (Standard): $9/tháng, cung cấp 900 credit/tháng.",
+      "Gói Stable Assistant (Pro): $19/tháng, cung cấp 1900 credit/tháng.",
+      "Gói Stable Assistant (Plus): $49/tháng, cung cấp 5500 credit/tháng.",
+      "Gói Stable Assistant (Premium): $99/tháng, cung cấp 12000 credit/tháng."
+    ],
     isFavorite: false,
   },
   {
@@ -193,13 +185,11 @@ export const mockTools: Tool[] = [
         'Người làm marketing',
         'Nhà phát triển muốn tự động hóa tác vụ'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Free:</strong> Được 1.000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.</li>
-            <li><strong>Gói Professional:</strong> $16-$19.9/tháng với 20.000 credit, hỗ trợ các tính năng nâng cao và tạo video.</li>
-            <li><strong>Gói Ultimate:</strong> $36-$49.9/tháng với 50.000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Free: Được 1.000 credit/tháng, phù hợp để trải nghiệm và sử dụng cho các tác vụ nhỏ.",
+      "Gói Professional: $16-$19.9/tháng với 20.000 credit, hỗ trợ các tính năng nâng cao và tạo video.",
+      "Gói Ultimate: $36-$49.9/tháng với 50.000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn."
+    ],
     isFavorite: false,
   },
   {
@@ -235,18 +225,12 @@ export const mockTools: Tool[] = [
         'Bán hàng',
         'Vận hành'
     ],
-    pricingPlans: `
-        <h3>Cloud</h3>
-        <ul>
-            <li><strong>Free Trial:</strong> Dùng thử miễn phí trong 14 ngày.</li>
-            <li><strong>Starter:</strong> €20-€24/tháng - 2.500 lần chạy workflow, giới hạn 5 workflow.</li>
-            <li><strong>Pro:</strong> €50-€60/tháng - 10.000 lần chạy workflow, giới hạn 20 workflow.</li>
-        </ul>
-        <h3>Self-hosted</h3>
-        <ul>
-            <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Cloud - Free Trial: Dùng thử miễn phí trong 14 ngày.",
+      "Cloud - Starter: €20-€24/tháng - 2.500 lần chạy workflow, giới hạn 5 workflow.",
+      "Cloud - Pro: €50-€60/tháng - 10.000 lần chạy workflow, giới hạn 20 workflow.",
+      "Self-hosted: Được miễn phí phần mềm nên chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý."
+    ],
   },
    {
     id: 'firebase-studio',
@@ -278,13 +262,10 @@ export const mockTools: Tool[] = [
         'Nhóm phát triển phần mềm',
         'Startup công nghệ'
     ],
-    pricingPlans: `
-      <p>Firebase Studio sử dụng mô hình định giá của Firebase với hai gói chính:</p>
-      <ul>
-        <li><strong>Gói Spark (Miễn phí):</strong> Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase, đủ để bắt đầu, học tập và phát triển các dự án nhỏ.</li>
-        <li><strong>Gói Blaze (Trả theo mức sử dụng):</strong> Dành cho các ứng dụng quy mô lớn, bạn chỉ trả tiền cho những tài nguyên vượt quá hạn mức miễn phí. Đây là giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Gói Spark (Miễn phí): Cung cấp một hạn mức sử dụng miễn phí hàng tháng cho hầu hết các dịch vụ của Firebase, đủ để bắt đầu, học tập và phát triển các dự án nhỏ.",
+      "Gói Blaze (Trả theo mức sử dụng): Dành cho các ứng dụng quy mô lớn, bạn chỉ trả tiền cho những tài nguyên vượt quá hạn mức miễn phí. Đây là giải pháp linh hoạt và hiệu quả về chi phí khi ứng dụng của bạn phát triển."
+    ],
   },
   {
     id: 'tavily-ai',
@@ -318,13 +299,11 @@ export const mockTools: Tool[] = [
       "Nhà nghiên cứu",
       "Bất kỳ ai xây dựng ứng dụng dựa trên LLM"
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Researcher:</strong> miễn phí với 1000 credit / 1 tháng khi hết thì mua thêm credit  là $0.008 /1 credit.</li>
-            <li><strong>Gói Project:</strong> là $30 / 1 tháng với  4000 credit / 1 tháng (tức có thể lấy thông tin khoảng 2500 trang/1 tháng).</li>
-            <li><strong>Gói Enterprise:</strong> giành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Researcher: miễn phí với 1000 credit / 1 tháng khi hết thì mua thêm credit  là $0.008 /1 credit.",
+      "Gói Project: là $30 / 1 tháng với  4000 credit / 1 tháng (tức có thể lấy thông tin khoảng 2500 trang/1 tháng).",
+      "Gói Enterprise: giành cho doanh nghiệp nên có thể tùy chỉnh gói dựa theo nhu cầu."
+    ],
   },
   {
     id: 'make',
@@ -359,19 +338,13 @@ export const mockTools: Tool[] = [
         'Người làm việc tự do (freelancer)',
         'Bất kỳ ai muốn tiết kiệm thời gian cho các tác vụ lặp lại'
     ],
-    pricingPlans: `
-        <h3>Cloud</h3>
-        <ul>
-            <li><strong>Gói Free:</strong> 1.000 lượt chạy/tháng, 2 kịch bản hoạt động. Phù hợp để bắt đầu và thử nghiệm.</li>
-            <li><strong>Gói Core:</strong> Từ $9/tháng, 10.000 lượt chạy/tháng, không giới hạn kịch bản. Lý tưởng cho cá nhân và freelancer.</li>
-            <li><strong>Gói Pro:</strong> Từ $16/tháng, 10.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao như biến tùy chỉnh.</li>
-            <li><strong>Gói Teams:</strong> Từ $29/tháng, 10.000 lượt chạy/tháng, thêm các tính năng làm việc nhóm và phân quyền.</li>
-        </ul>
-        <h3>Self-hosted</h3>
-        <ul>
-            <li><strong>Miễn phí phần mềm:</strong> Bạn chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Cloud - Gói Free: 1.000 lượt chạy/tháng, 2 kịch bản hoạt động. Phù hợp để bắt đầu và thử nghiệm.",
+      "Cloud - Gói Core: Từ $9/tháng, 10.000 lượt chạy/tháng, không giới hạn kịch bản. Lý tưởng cho cá nhân và freelancer.",
+      "Cloud - Gói Pro: Từ $16/tháng, 10.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao như biến tùy chỉnh.",
+      "Cloud - Gói Teams: Từ $29/tháng, 10.000 lượt chạy/tháng, thêm các tính năng làm việc nhóm và phân quyền.",
+      "Self-hosted: Được miễn phí phần mềm nên chỉ phải trả chi phí cho hạ tầng (như VPS, tên miền, và các chi phí vận hành khác) để tự lưu trữ và quản lý."
+    ],
   },
   {
     id: 'notion-ai',
@@ -406,13 +379,11 @@ export const mockTools: Tool[] = [
         'Đội nhóm làm việc cộng tác',
         'Bất kỳ ai sử dụng Notion để làm việc và học tập'
     ],
-    pricingPlans: `
-        <ul>
-          <li><strong>Notion AI Add-on:</strong> Là một tiện ích bổ sung cho các tài khoản Notion, có giá $8/thành viên/tháng (thanh toán hàng năm) hoặc $10/thành viên/tháng (thanh toán hàng tháng).</li>
-          <li><strong>Trải nghiệm miễn phí:</strong> Người dùng có thể dùng thử Notion AI với số lượt sử dụng giới hạn.</li>
-          <li><strong>Truy cập không giới hạn:</strong> Để sử dụng không giới hạn, người dùng cần mua gói add-on AI. Điều này áp dụng cho cả người dùng gói Free và Plus.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Notion AI Add-on: Là một tiện ích bổ sung cho các tài khoản Notion, có giá $8/thành viên/tháng (thanh toán hàng năm) hoặc $10/thành viên/tháng (thanh toán hàng tháng).",
+      "Trải nghiệm miễn phí: Người dùng có thể dùng thử Notion AI với số lượt sử dụng giới hạn.",
+      "Truy cập không giới hạn: Để sử dụng không giới hạn, người dùng cần mua gói add-on AI. Điều này áp dụng cho cả người dùng gói Free và Plus."
+    ],
   },
   {
     id: 'sora-ai',
@@ -444,13 +415,11 @@ export const mockTools: Tool[] = [
         'Nhà sáng tạo nội dung',
         'Nghệ sĩ kỹ thuật số'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Tài khoản Free:</strong> Tạo 3 hình ảnh/ngày (không tạo được video).</li>
-            <li><strong>Gói Plus ($20/tháng):</strong> Tạo ảnh và video lên đến 720p, dài tối đa 10 giây.</li>
-            <li><strong>Gói Pro ($200/tháng):</strong> Tạo ảnh và video chất lượng cao hơn (1080p), thời lượng tối đa 20 giây, giới hạn khoảng 500 video/tháng, không có watermark, và tạo đồng thời 5 video.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Tài khoản Free: Tạo 3 hình ảnh/ngày (không tạo được video).",
+      "Gói Plus ($20/tháng): Tạo ảnh và video lên đến 720p, dài tối đa 10 giây.",
+      "Gói Pro ($200/tháng): Tạo ảnh và video chất lượng cao hơn (1080p), thời lượng tối đa 20 giây, giới hạn khoảng 500 video/tháng, không có watermark, và tạo đồng thời 5 video."
+    ],
   },
   {
     id: 'veo-3',
@@ -484,12 +453,10 @@ export const mockTools: Tool[] = [
         'Nhà sáng tạo nội dung',
         'Giáo viên, nhà giáo dục'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Google AI Pro:</strong> 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.</li>
-            <li><strong>Google AI Ultra:</strong> 250 đô/1 tháng và hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/1 tháng (tức là khoảng 300 video/1 tháng)gói này cũng được.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Google AI Pro: 20 đô/1 tháng và được miễn phí tháng sử dụng đầu tiên và hạn chế dùng Veo 3, Flow với 1000 credit/1 tháng (tức là khoảng 10 video/1 tháng)gói này cũng được mở rộng sử dụng ra cả với Gemini 2.5 pro, Whisk, Notebook LLM, Jule.",
+      "Google AI Ultra: 250 đô/1 tháng và hạn mức cao nhất dùng Veo 3, Flow với 25.000 credit/1 tháng (tức là khoảng 300 video/1 tháng)gói này cũng được."
+    ],
   },
   {
     id: 'fire-crawl',
@@ -524,18 +491,13 @@ export const mockTools: Tool[] = [
         'Nhà phân tích kinh doanh',
         'Nhà nghiên cứu'
     ],
-    pricingPlans: `
-      <h3>Gói Crawl và Scrape</h3>
-        <ul>
-            <li><strong>Gói Free:</strong> miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng khi hết 500 credit thì phải mua thêm với giá 1000 credit với giá 9$/1 tháng (hạn mức 10 lần scrape/phút và 1 lần crawl/phút.chỉ thực hiện 2 yêu cầu trong cùng 1 lúc)</li>
-            <li><strong>Gói Hobby:</strong> với 16-19 $/1 tháng thì có 3000 credit có thể scrape được 3000 trang/1 tháng với hạn mức 5 yêu cầu trong cùng 1 lần thực hiện.</li>
-            <li><strong>Gói Standard:</strong> với 83-99 $/1 tháng thì có 100.000 credit có thể crawl được 100.000 trang/1 tháng với hạn mức 50 yêu cầu trong cùng 1 lần thực hiện.</li>
-            <li><strong>Gói Growth:</strong> với 333-399 $/1 tháng thì có 500.000 credit có thể crawl được 500.000 trang/1 tháng với hạn mức 100 yêu cầu trong cùng 1 lần thực hiện.</li>
-            <li><strong>Gói Enterprise:</strong> thì tùy chỉnh theo yêu cầu của người dùng.</li>
-        </ul>
-        <h3>Gói Extract</h3>
-        <p>Gói này chỉ miễn phi 1 lần nếu hết 1 lần thì phải mua thêm credit</p>
-    `,
+    pricingPlans: [
+      "Gói Free: miễn phí với 500 credit có thể scrape được 500 trang với 1 lần sử dụng khi hết 500 credit thì phải mua thêm với giá 1000 credit với giá 9$/1 tháng (hạn mức 10 lần scrape/phút và 1 lần crawl/phút.chỉ thực hiện 2 yêu cầu trong cùng 1 lúc)",
+      "Gói Hobby: với 16-19 $/1 tháng thì có 3000 credit có thể scrape được 3000 trang/1 tháng với hạn mức 5 yêu cầu trong cùng 1 lần thực hiện.",
+      "Gói Standard: với 83-99 $/1 tháng thì có 100.000 credit có thể crawl được 100.000 trang/1 tháng với hạn mức 50 yêu cầu trong cùng 1 lần thực hiện.",
+      "Gói Growth: với 333-399 $/1 tháng thì có 500.000 credit có thể crawl được 500.000 trang/1 tháng với hạn mức 100 yêu cầu trong cùng 1 lần thực hiện.",
+      "Gói Enterprise: thì tùy chỉnh theo yêu cầu của người dùng."
+    ],
   },
   {
     id: 'notebooklm',
@@ -570,18 +532,10 @@ export const mockTools: Tool[] = [
         'Giáo viên và giảng viên',
         'Bất kỳ ai cần xử lý và hiểu thông tin từ tài liệu'
     ],
-    pricingPlans: `
-        <h3>Gói miễn phí</h3>
-        <p>Cung cấp các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.</p>
-        <h3>NotebookLM Pro</h3>
-        <p>Gói này được sử dụng khi đăng ký gói <strong>Google AI Pro ($19.9/tháng)</strong>, bao gồm các lợi ích sau:</p>
-        <ul>
-            <li>Tạo Audio Overview, Notes, Questions, và Sources nhiều gấp 5 lần so với gói miễn phí.</li>
-            <li>Tùy chỉnh phong cách và độ dài cho câu trả lời.</li>
-            <li>Chia sẻ sổ ghi chú và nhận phân tích sử dụng.</li>
-            <li>Tăng cường bảo mật và quyền riêng tư.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói miễn phí: Cung cấp các tính năng cơ bản để nghiên cứu và học tập, phù hợp cho người dùng cá nhân.",
+      "Gói Pro: Sử dụng khi đăng ký gói Google AI Pro ($19.9/tháng), bao gồm tạo Audio Overview, Notes, Questions, và Sources nhiều gấp 5 lần, tùy chỉnh phong cách, chia sẻ và bảo mật nâng cao."
+    ],
   }
 ];
     
@@ -627,3 +581,4 @@ export const mockTools: Tool[] = [
 
 
     
+

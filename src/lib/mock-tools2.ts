@@ -35,13 +35,11 @@ export const mockLovableTool: Tool[] = [
         'Người phát triển sản phẩm (Product Manager)',
         'Bất kỳ ai muốn biến ý tưởng thành ứng dụng'
     ],
-    pricingPlans: `
-      <ul>
-        <li><strong>Gói Free ($0):</strong> Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.</li>
-        <li><strong>Gói Pro ($25/tháng):</strong> Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.</li>
-        <li><strong>Gói Teams ($30/tháng/thành viên):</strong> Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Gói Free ($0): Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.",
+      "Gói Pro ($25/tháng): Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.",
+      "Gói Teams ($30/tháng/thành viên): Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries."
+    ],
   },
   {
     id: 'elevenlabs',
@@ -75,15 +73,13 @@ export const mockLovableTool: Tool[] = [
         'Doanh nghiệp',
         'Nhà phát triển ứng dụng'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Free:</strong> 10.000 ký tự/tháng, tạo được 3 giọng nói tùy chỉnh.</li>
-            <li><strong>Gói Starter ($5/tháng):</strong> 30.000 ký tự/tháng, tạo được 10 giọng nói tùy chỉnh.</li>
-            <li><strong>Gói Creator ($22/tháng)::</strong> 100.000 ký tự/tháng, tạo được 30 giọng nói tùy chỉnh.</li>
-            <li><strong>Gói Pro ($99/tháng):</strong> 500.000 ký tự/tháng, tạo được 160 giọng nói tùy chỉnh.</li>
-            <li><strong>Gói Enterprise:</strong> Gói tùy chỉnh theo nhu cầu của doanh nghiệp lớn.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Free: 10.000 ký tự/tháng, tạo được 3 giọng nói tùy chỉnh.",
+      "Gói Starter ($5/tháng): 30.000 ký tự/tháng, tạo được 10 giọng nói tùy chỉnh.",
+      "Gói Creator ($22/tháng):: 100.000 ký tự/tháng, tạo được 30 giọng nói tùy chỉnh.",
+      "Gói Pro ($99/tháng): 500.000 ký tự/tháng, tạo được 160 giọng nói tùy chỉnh.",
+      "Gói Enterprise: Gói tùy chỉnh theo nhu cầu của doanh nghiệp lớn."
+    ],
   },
   {
     id: 'vbee-ai',
@@ -117,23 +113,15 @@ export const mockLovableTool: Tool[] = [
         'Nhà phát triển phần mềm',
         'Nhà sáng tạo nội dung'
     ],
-    pricingPlans: `
-        <h3>Gói Studio</h3>
-        <ul>
-            <li><strong>Miễn phí:</strong> 3.000 ký tự/ngày, chỉ sử dụng được 1 thiết bị cho 1 tài khoản, 3 giọng nhân bản nhanh.</li>
-            <li><strong>Tiêu chuẩn:</strong> 149.000đ/tháng (hoặc 339.000đ/năm) cho 125k ký tự, sử dụng được 2 thiết bị cho 1 tài khoản, 5 giọng nhân bản nhanh. Mua thêm 12.000đ/50k ký tự.</li>
-            <li><strong>Đặc biệt:</strong> 199.000đ/tháng (hoặc 399.000đ/năm) cho 250k ký tự, sử dụng được 5 thiết bị cho 1 tài khoản, 3 giọng nhân bản chuyên nghiệp, 10 giọng nhân bản nhanh. Mua thêm 10.000đ/50k ký tự.</li>
-            <li><strong>VIP:</strong> 299.000đ/tháng (hoặc 899.000đ/năm) cho 500k ký tự, sử dụng được 5 thiết bị cho 1 tài khoản, 6 giọng nhân bản chuyên nghiệp, 15 giọng nhân bản nhanh. Mua thêm 10.000đ/50k ký tự.</li>
-            <li><strong>Tùy chỉnh:</strong> Tùy chỉnh linh hoạt tối ưu theo nhu cầu sử dụng.</li>
-        </ul>
-        <h3>Gói API</h3>
-        <ul>
-            <li><strong>Trải nghiệm:</strong> 49.000đ cho 120k ký tự, sử dụng 1 tháng với 5 luồng xử lý đồng thời.</li>
-            <li><strong>Nâng cao:</strong> 999.000đ cho 2.7 triệu ký tự, sử dụng 6 tháng với 20 luồng xử lý đồng thời.</li>
-            <li><strong>Cao cấp:</strong> 4.899.000đ cho 14 triệu ký tự, sử dụng 9 tháng với 50 luồng xử lý đồng thời.</li>
-            <li><strong>Doanh nghiệp:</strong> Tùy chỉnh theo nhu cầu.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Studio - Miễn phí: 3.000 ký tự/ngày, 1 thiết bị/tài khoản, 3 giọng nhân bản nhanh.",
+      "Studio - Tiêu chuẩn: 149.000đ/tháng cho 125k ký tự, 2 thiết bị. Mua thêm 12.000đ/50k ký tự.",
+      "Studio - Đặc biệt: 199.000đ/tháng cho 250k ký tự, 5 thiết bị, 3 giọng chuyên nghiệp. Mua thêm 10.000đ/50k ký tự.",
+      "Studio - VIP: 299.000đ/tháng cho 500k ký tự, 5 thiết bị, 6 giọng chuyên nghiệp. Mua thêm 10.000đ/50k ký tự.",
+      "API - Trải nghiệm: 49.000đ cho 120k ký tự, dùng trong 1 tháng.",
+      "API - Nâng cao: 999.000đ cho 2.7 triệu ký tự, dùng trong 6 tháng.",
+      "API - Cao cấp: 4.899.000đ cho 14 triệu ký tự, dùng trong 9 tháng."
+    ],
   },
   {
     id: 'preny',
@@ -168,14 +156,12 @@ export const mockLovableTool: Tool[] = [
         'Người làm giáo dục và đào tạo',
         'Bất kỳ ai muốn có một trợ lý ảo trên trang web'
     ],
-    pricingPlans: `
-      <ul>
-          <li><strong>Gói dùng thử:</strong> Miễn phí trong 7 ngày, giới hạn 1 page, 1 web, 2.000 tin nhắn, 20 nội dung training, và 1 thành viên.</li>
-          <li><strong>Gói cơ bản:</strong> 499.000đ/tháng, giới hạn 5 page, 5 website, 5.000 tin nhắn, 100 tài liệu training, và 5 thành viên.</li>
-          <li><strong>Gói nâng cao:</strong> 999.000đ/tháng, giới hạn 20 page, 20 website, 15.000 tin nhắn, không giới hạn tài liệu training, và không giới hạn thành viên.</li>
-          <li><strong>Gói doanh nghiệp:</strong> 1.999.000đ/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Gói dùng thử: Miễn phí trong 7 ngày, giới hạn 1 page, 1 web, 2.000 tin nhắn, 20 nội dung training, và 1 thành viên.",
+      "Gói cơ bản: 499.000đ/tháng, giới hạn 5 page, 5 website, 5.000 tin nhắn, 100 tài liệu training, và 5 thành viên.",
+      "Gói nâng cao: 999.000đ/tháng, giới hạn 20 page, 20 website, 15.000 tin nhắn, không giới hạn tài liệu training, và không giới hạn thành viên.",
+      "Gói doanh nghiệp: 1.999.000đ/tháng, giới hạn 100 page, 100 website, 30.000 tin nhắn, và đầy đủ các tính năng hỗ trợ cao cấp nhất."
+    ],
   },
   {
     id: 'perplexity',
@@ -210,13 +196,11 @@ export const mockLovableTool: Tool[] = [
         'Lập trình viên, kỹ sư',
         'Bất kỳ ai cần một công cụ tìm kiếm thông minh'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Free:</strong> Cung cấp các tìm kiếm nhanh cơ bản, 5 lượt Pro Search mỗi 4 giờ.</li>
-            <li><strong>Gói Pro ($20/tháng):</strong> Cung cấp hơn 300 lượt Pro Search mỗi ngày, lựa chọn mô hình AI, tải tệp không giới hạn, và nhiều tính năng nâng cao khác.</li>
-            <li><strong>Gói Enterprise (Tùy chỉnh):</strong> Dành cho doanh nghiệp với các tính năng bảo mật và quản lý nâng cao.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Free: Cung cấp các tìm kiếm nhanh cơ bản, 5 lượt Pro Search mỗi 4 giờ.",
+      "Gói Pro ($20/tháng): Cung cấp hơn 300 lượt Pro Search mỗi ngày, lựa chọn mô hình AI, tải tệp không giới hạn, và nhiều tính năng nâng cao khác.",
+      "Gói Enterprise (Tùy chỉnh): Dành cho doanh nghiệp với các tính năng bảo mật và quản lý nâng cao."
+    ],
   },
   {
     id: 'nano-banana-pro',
@@ -250,12 +234,10 @@ export const mockLovableTool: Tool[] = [
         'Nhà phát triển game',
         'Người làm marketing'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Miễn phí:</strong> Người dùng miễn phí có thể thực hiện tối đa 100 chỉnh sửa mỗi ngày trên Google AI Studio hoặc ứng dụng Gemini.</li>
-            <li><strong>API:</strong> Chi phí khoảng $0.039/hình ảnh, phù hợp cho các nhà phát triển và doanh nghiệp muốn tích hợp vào ứng dụng riêng.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Miễn phí: Người dùng miễn phí có thể thực hiện tối đa 100 chỉnh sửa mỗi ngày trên Google AI Studio hoặc ứng dụng Gemini.",
+      "API: Chi phí khoảng $0.039/hình ảnh, phù hợp cho các nhà phát triển và doanh nghiệp muốn tích hợp vào ứng dụng riêng."
+    ],
   },
   {
     id: 'bolt',
@@ -288,13 +270,11 @@ export const mockLovableTool: Tool[] = [
         'Doanh nghiệp vừa và nhỏ',
         'Kỹ sư phần mềm'
     ],
-    pricingPlans: `
-      <ul>
-        <li><strong>Gói Free ($0):</strong> Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.</li>
-        <li><strong>Gói Pro ($25/tháng):</strong> Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.</li>
-        <li><strong>Gói Teams ($30/tháng/thành viên):</strong> Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Gói Free ($0): Bao gồm dự án công khai và riêng tư, giới hạn 300K token hàng ngày (1M token/tháng), giới hạn tải lên 10MB, và tối đa 333k yêu cầu web.",
+      "Gói Pro ($25/tháng): Bắt đầu với 10M token/tháng, không giới hạn token hàng ngày, không có branding của Bolt, giới hạn tải lên 100MB, hỗ trợ tên miền tùy chỉnh, và SEO boosting.",
+      "Gói Teams ($30/tháng/thành viên): Bao gồm tất cả các tính năng của Pro, cộng thêm thanh toán tập trung, quản lý quyền truy cập cấp độ nhóm, và hỗ trợ private NPM registries."
+    ],
   },
   {
     id: 'comet-browser',
@@ -326,12 +306,10 @@ export const mockLovableTool: Tool[] = [
       'Nhà phân tích',
       'Người dùng tò mò muốn có câu trả lời chính xác'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Miễn phí:</strong> Cung cấp các tính năng tìm kiếm và tổ chức cơ bản.</li>
-            <li><strong>Gói Pro ($20/tháng):</strong> Mở khóa các mô hình AI mạnh mẽ hơn, tìm kiếm chuyên sâu không giới hạn và các tính năng nâng cao khác.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Miễn phí: Cung cấp các tính năng tìm kiếm và tổ chức cơ bản.",
+      "Gói Pro ($20/tháng): Mở khóa các mô hình AI mạnh mẽ hơn, tìm kiếm chuyên sâu không giới hạn và các tính năng nâng cao khác."
+    ],
   },
   {
     id: 'atlas-browser',
@@ -362,12 +340,10 @@ export const mockLovableTool: Tool[] = [
       'Nhà nghiên cứu',
       'Bất kỳ ai muốn tăng năng suất duyệt web'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Miễn phí:</strong> Cung cấp các tính năng duyệt web và tóm tắt cơ bản.</li>
-            <li><strong>Gói Plus/Pro:</strong> Mở khóa Chế độ Tác tử (Agent Mode) và các tính năng nâng cao khác với một khoản phí hàng tháng.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Miễn phí: Cung cấp các tính năng duyệt web và tóm tắt cơ bản.",
+      "Gói Plus/Pro: Mở khóa Chế độ Tác tử (Agent Mode) và các tính năng nâng cao khác với một khoản phí hàng tháng."
+    ],
   },
   {
     id: 'skywork',
@@ -400,13 +376,11 @@ export const mockLovableTool: Tool[] = [
         'Người làm marketing',
         'Chủ doanh nghiệp'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói tháng:</strong> $14.99 cho tháng đầu tiên, sau đó là $16.99/tháng.</li>
-            <li><strong>Gói quý:</strong> $39.99/quý (tương đương $13.33/tháng).</li>
-            <li><strong>Gói năm (Khuyên dùng):</strong> $149.99/năm (tương đương $12.50/tháng).</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói tháng: $14.99 cho tháng đầu tiên, sau đó là $16.99/tháng.",
+      "Gói quý: $39.99/quý (tương đương $13.33/tháng).",
+      "Gói năm (Khuyên dùng): $149.99/năm (tương đương $12.50/tháng)."
+    ],
   },
   {
     id: 'suno',
@@ -440,13 +414,11 @@ export const mockLovableTool: Tool[] = [
         'Giáo viên',
         'Bất kỳ ai muốn thử sức với việc tạo nhạc'
     ],
-    pricingPlans: `
-      <ul>
-          <li><strong>Free Plan ($0/tháng):</strong> 50 credit mỗi ngày (10 bài hát), không dùng cho mục đích thương mại.</li>
-          <li><strong>Pro Plan ($8/tháng):</strong> 2,500 credit mỗi tháng (500 bài hát), quyền sử dụng thương mại, truy cập model v5 mới nhất, và nhiều tính năng Pro.</li>
-          <li><strong>Premier Plan ($24/tháng):</strong> 10,000 credit mỗi tháng (2,000 bài hát), đầy đủ các tính năng cao cấp nhất và quyền truy cập Suno Studio.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Free Plan ($0/tháng): 50 credit mỗi ngày (10 bài hát), không dùng cho mục đích thương mại.",
+      "Pro Plan ($8/tháng): 2,500 credit mỗi tháng (500 bài hát), quyền sử dụng thương mại, truy cập model v5 mới nhất, và nhiều tính năng Pro.",
+      "Premier Plan ($24/tháng): 10,000 credit mỗi tháng (2,000 bài hát), đầy đủ các tính năng cao cấp nhất và quyền truy cập Suno Studio."
+    ],
   },
   {
     id: 'canva',
@@ -481,13 +453,11 @@ export const mockLovableTool: Tool[] = [
         'Blogger và người sáng tạo nội dung',
         'Bất kỳ ai không phải là nhà thiết kế chuyên nghiệp'
     ],
-    pricingPlans: `
-      <ul>
-          <li><strong>Canva Free:</strong> Miễn phí cho mọi người, cung cấp các công cụ thiết kế cơ bản và hàng ngàn mẫu miễn phí.</li>
-          <li><strong>Canva Pro (150.000đ/tháng cho 1 người):</strong> Mở khóa toàn bộ kho tài nguyên premium, các công cụ AI nâng cao, bộ nhận diện thương hiệu và nhiều tính năng mạnh mẽ khác.</li>
-          <li><strong>Canva for Teams (200.000đ/tháng cho 1 người):</strong> Bao gồm tất cả tính năng của Pro, cộng thêm các công cụ quản lý và cộng tác dành cho đội nhóm.</li>
-      </ul>
-    `,
+    pricingPlans: [
+      "Canva Free: Miễn phí cho mọi người, cung cấp các công cụ thiết kế cơ bản và hàng ngàn mẫu miễn phí.",
+      "Canva Pro (150.000đ/tháng cho 1 người): Mở khóa toàn bộ kho tài nguyên premium, các công cụ AI nâng cao, bộ nhận diện thương hiệu và nhiều tính năng mạnh mẽ khác.",
+      "Canva for Teams (200.000đ/tháng cho 1 người): Bao gồm tất cả tính năng của Pro, cộng thêm các công cụ quản lý và cộng tác dành cho đội nhóm."
+    ],
   },
   {
     id: 'luma-ai',
@@ -521,14 +491,12 @@ export const mockLovableTool: Tool[] = [
       'Nghệ sĩ kỹ thuật số',
       'Bất kỳ ai muốn tạo video từ AI'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Free:</strong> $0/tháng - 8 Videos (chế độ nháp), Sử dụng hạn chế, Độ phân giải nháp, Ưu tiên xử lý thấp, Chỉ sử dụng phi thương mại, Có watermark.</li>
-            <li><strong>Lite:</strong> $7.99/tháng - 50 Videos (chế độ nháp), 3,200 credit hàng tháng, Truy cập Full Ray3, 4k với up-res, Ưu tiên xử lý cao, Chỉ sử dụng phi thương mại, Có watermark.</li>
-            <li><strong>Plus:</strong> $23.99/tháng - 160 Videos (chế độ nháp), 10,000 credit hàng tháng, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark.</li>
-            <li><strong>Unlimited:</strong> $75.99/tháng - 10,000 credit hàng tháng, Sử dụng không giới hạn ở Chế độ Thư giãn, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Free: $0/tháng - 8 Videos (chế độ nháp), Sử dụng hạn chế, Độ phân giải nháp, Ưu tiên xử lý thấp, Chỉ sử dụng phi thương mại, Có watermark.",
+      "Lite: $7.99/tháng - 50 Videos (chế độ nháp), 3,200 credit hàng tháng, Truy cập Full Ray3, 4k với up-res, Ưu tiên xử lý cao, Chỉ sử dụng phi thương mại, Có watermark.",
+      "Plus: $23.99/tháng - 160 Videos (chế độ nháp), 10,000 credit hàng tháng, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark.",
+      "Unlimited: $75.99/tháng - 10,000 credit hàng tháng, Sử dụng không giới hạn ở Chế độ Thư giãn, Truy cập Full Ray3, 4k với up-res và HDR, Ưu tiên xử lý cao, Cho phép sử dụng thương mại, Không có watermark."
+    ],
   },
   {
     id: 'pippit-ai',
@@ -560,12 +528,10 @@ export const mockLovableTool: Tool[] = [
         'Người sáng tạo nội dung',
         'Quản lý mạng xã hội'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Miễn phí:</strong> 0đ, 150 điểm tín dụng/tuần (tạo 2 phút video và 75 hình ảnh), không cần thẻ tín dụng, dung lượng lưu trữ 500 GB.</li>
-            <li><strong>Starter:</strong> 380.000đ/tháng (thanh toán hàng năm), 21.600 điểm tín dụng/năm (tạo 360 phút video và 10.800 hình ảnh), có thể mua thêm điểm tín dụng, đầy đủ tính năng AI và dung lượng lưu trữ 500 GB.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Miễn phí: 0đ, 150 điểm tín dụng/tuần (tạo 2 phút video và 75 hình ảnh), không cần thẻ tín dụng, dung lượng lưu trữ 500 GB.",
+      "Starter: 380.000đ/tháng (thanh toán hàng năm), 21.600 điểm tín dụng/năm (tạo 360 phút video và 10.800 hình ảnh), có thể mua thêm điểm tín dụng, đầy đủ tính năng AI và dung lượng lưu trữ 500 GB."
+    ],
   },
   {
     id: 'replit',
@@ -598,14 +564,12 @@ export const mockLovableTool: Tool[] = [
       'Giáo viên và người hướng dẫn',
       'Người mới bắt đầu học lập trình'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Starter (Free):</strong> $5 credit hàng tháng, 10 ứng dụng phát triển, ứng dụng công khai.</li>
-            <li><strong>Replit Core ($20/tháng, thanh toán hàng năm):</strong> $25 credit hàng tháng, không gian làm việc cá nhân, truy cập Full Agent, tạo ứng dụng và tự động hóa.</li>
-            <li><strong>Teams ($35/user/tháng, thanh toán hàng năm):</strong> $40 credit hàng tháng, mọi thứ trong Replit Core, thanh toán tập trung, kiểm soát truy cập dựa trên vai trò.</li>
-            <li><strong>Enterprise (Tùy chỉnh):</strong> Giá tùy chỉnh, mọi thứ trong Teams, SSO/SAML, SCIM, kiểm soát quyền riêng tư nâng cao.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Starter (Free): $5 credit hàng tháng, 10 ứng dụng phát triển, ứng dụng công khai.",
+      "Replit Core ($20/tháng, thanh toán hàng năm): $25 credit hàng tháng, không gian làm việc cá nhân, truy cập Full Agent, tạo ứng dụng và tự động hóa.",
+      "Teams ($35/user/tháng, thanh toán hàng năm): $40 credit hàng tháng, mọi thứ trong Replit Core, thanh toán tập trung, kiểm soát truy cập dựa trên vai trò.",
+      "Enterprise (Tùy chỉnh): Giá tùy chỉnh, mọi thứ trong Teams, SSO/SAML, SCIM, kiểm soát quyền riêng tư nâng cao."
+    ],
   },
 ];
     
@@ -633,4 +597,5 @@ export const mockLovableTool: Tool[] = [
     
 
     
+
 

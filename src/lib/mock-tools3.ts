@@ -34,12 +34,10 @@ export const mockOpalTool: Tool[] = [
       'Người làm marketing',
       'Doanh nghiệp nhỏ và vừa'
     ],
-    pricingPlans: `
-        <ul>
-            <li><strong>Gói Personal (Miễn phí):</strong> 1.000 lượt chạy/tháng, phù hợp cho các tác vụ tự động hóa cá nhân.</li>
-            <li><strong>Gói Pro ($25/tháng):</strong> 20.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao và logic phức tạp.</li>
-            <li><strong>Gói Business (Tùy chỉnh):</strong> Dành cho doanh nghiệp với nhu cầu lớn, cung cấp các tính năng quản lý nhóm, bảo mật nâng cao và hỗ trợ chuyên sâu.</li>
-        </ul>
-    `,
+    pricingPlans: [
+      "Gói Personal (Miễn phí): 1.000 lượt chạy/tháng, phù hợp cho các tác vụ tự động hóa cá nhân.",
+      "Gói Pro ($25/tháng): 20.000 lượt chạy/tháng, hỗ trợ các tính năng nâng cao và logic phức tạp.",
+      "Gói Business (Tùy chỉnh): Dành cho doanh nghiệp với nhu cầu lớn, cung cấp các tính năng quản lý nhóm, bảo mật nâng cao và hỗ trợ chuyên sâu."
+    ],
   },
 ];

@@ -12,7 +12,7 @@ export interface Tool {
   features?: string[];
   useCases?: string[];
   whoIsItFor?: string[];
-  pricingPlans?: string;
+  pricingPlans?: string[];
   videoUrl?: string;
   imageUrl?: string;
   userRating?: number; // Average user rating (1-5)
