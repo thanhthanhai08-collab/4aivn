@@ -195,14 +195,11 @@ function NewsDetailContent({ id }: { id: string }) {
             }
             
             // Fetch Recommended News
-            // NOTE: The 'tags' field is not yet in the data model. 
-            // The query below is prepared for when 'tags' are added.
-            // For now, it fetches the latest articles as a fallback.
             let relatedQuery;
-            if (fetchedArticle.tags && fetchedArticle.tags.length > 0) {
+            if (fetchedArticle.tag && fetchedArticle.tag.length > 0) {
               relatedQuery = query(
                 collection(db, "news"),
-                where("tags", "array-contains-any", fetchedArticle.tags),
+                where("tag", "array-contains-any", fetchedArticle.tag),
                 where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
                 limit(3)
