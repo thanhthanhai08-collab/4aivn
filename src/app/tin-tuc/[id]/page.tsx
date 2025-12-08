@@ -169,10 +169,11 @@ function NewsDetailContent({ id }: { id: string }) {
   const [summary, setSummary] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [recommendedNews, setRecommendedNews] = useState<NewsArticle[]>([]);
+  const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   
   useEffect(() => {
-    const fetchArticleAndRecommended = async () => {
+    const fetchArticleData = async () => {
         if (!id) return;
         setIsLoading(true);
         const docRef = doc(db, "news", id);
@@ -194,40 +195,57 @@ function NewsDetailContent({ id }: { id: string }) {
                 });
             }
             
-            // Fetch Recommended News
+            // Fetch Latest News (for sidebar)
+             const latestNewsQuery = query(
+                collection(db, "news"),
+                where("__name__", "!=", id),
+                orderBy("__name__", "asc"), // Firestore requires an orderBy when using inequality filters
+                orderBy("publishedAt", "desc"),
+                limit(3)
+            );
+            const latestNewsSnapshot = await getDocs(latestNewsQuery);
+            const latestNewsData = latestNewsSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                publishedAt: doc.data().publishedAt.toDate().toISOString(),
+            } as NewsArticle));
+            setLatestNews(latestNewsData);
+
+            // Fetch Related News (for bottom section)
             let relatedQuery;
             if (fetchedArticle.tag && fetchedArticle.tag.length > 0) {
               relatedQuery = query(
                 collection(db, "news"),
                 where("tag", "array-contains-any", fetchedArticle.tag),
                 where("__name__", "!=", id),
+                orderBy("__name__", "asc"), // Required for combining inequality with array-contains-any
                 orderBy("publishedAt", "desc"),
                 limit(3)
               );
             } else {
-              // Fallback query if there are no tags: get latest articles, excluding the current one
+              // Fallback: use latest news if no tags
               relatedQuery = query(
                 collection(db, "news"),
                 where("__name__", "!=", id),
+                orderBy("__name__", "asc"),
                 orderBy("publishedAt", "desc"),
                 limit(3)
               );
             }
 
-            const recommendedSnapshot = await getDocs(relatedQuery);
-            const recommendedData = recommendedSnapshot.docs.map(doc => ({
+            const relatedSnapshot = await getDocs(relatedQuery);
+            const relatedData = relatedSnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data(),
                 publishedAt: doc.data().publishedAt.toDate().toISOString(),
             } as NewsArticle));
-            setRecommendedNews(recommendedData);
-
+            setRelatedNews(relatedData);
 
         }
         setIsLoading(false);
     };
 
-    fetchArticleAndRecommended();
+    fetchArticleData();
   }, [id, currentUser]);
 
   useEffect(() => {
@@ -412,7 +430,7 @@ function NewsDetailContent({ id }: { id: string }) {
                   <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {recommendedNews.map(related => (
+                  {latestNews.map(related => (
                     <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                       <div className="flex items-start space-x-4">
                         <div className="relative w-24 h-24 shrink-0">
@@ -444,7 +462,7 @@ function NewsDetailContent({ id }: { id: string }) {
             Các bài viết liên quan
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recommendedNews.map((article) => (
+            {relatedNews.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}
           </div>
