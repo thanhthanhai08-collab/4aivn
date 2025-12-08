@@ -33,6 +33,7 @@ export interface NewsArticle {
   link?: string;
   dataAiHint?: string;
   isBookmarked?: boolean;
+  tags?: string[]; // Add tags for filtering related articles
 }
 
 export interface User {

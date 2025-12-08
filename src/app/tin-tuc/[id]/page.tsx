@@ -172,7 +172,7 @@ function NewsDetailContent({ id }: { id: string }) {
   const [recommendedNews, setRecommendedNews] = useState<NewsArticle[]>([]);
   
   useEffect(() => {
-    const fetchArticle = async () => {
+    const fetchArticleAndRecommended = async () => {
         if (!id) return;
         setIsLoading(true);
         const docRef = doc(db, "news", id);
@@ -193,36 +193,44 @@ function NewsDetailContent({ id }: { id: string }) {
                 setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
                 });
             }
+            
+            // Fetch Recommended News
+            // NOTE: The 'tags' field is not yet in the data model. 
+            // The query below is prepared for when 'tags' are added.
+            // For now, it fetches the latest articles as a fallback.
+            let relatedQuery;
+            if (fetchedArticle.tags && fetchedArticle.tags.length > 0) {
+              relatedQuery = query(
+                collection(db, "news"),
+                where("tags", "array-contains-any", fetchedArticle.tags),
+                where("__name__", "!=", id),
+                orderBy("publishedAt", "desc"),
+                limit(3)
+              );
+            } else {
+              // Fallback query if there are no tags: get latest articles, excluding the current one
+              relatedQuery = query(
+                collection(db, "news"),
+                where("__name__", "!=", id),
+                orderBy("publishedAt", "desc"),
+                limit(3)
+              );
+            }
 
-            // The summarizeNewsArticle flow is commented out, so this will not run.
-            // if (fetchedArticle.content.length > 200) {
-            //     summarizeNewsArticle({ articleContent: fetchedArticle.content.replace(/\[IMAGE:.*?\]/g, '') })
-            //     .then(output => setSummary(output.summary))
-            //     .catch(err => console.error("Failed to generate summary:", err));
-            // }
+            const recommendedSnapshot = await getDocs(relatedQuery);
+            const recommendedData = recommendedSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                publishedAt: doc.data().publishedAt.toDate().toISOString(),
+            } as NewsArticle));
+            setRecommendedNews(recommendedData);
+
+
         }
         setIsLoading(false);
     };
 
-    const fetchRecommendedNews = async () => {
-        if (!id) return;
-        const newsQuery = query(
-            collection(db, "news"), 
-            where("__name__", "!=", id), 
-            orderBy("publishedAt", "desc"), 
-            limit(3)
-        );
-        const newsSnapshot = await getDocs(newsQuery);
-        const newsData = newsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            publishedAt: doc.data().publishedAt.toDate().toISOString(),
-        } as NewsArticle));
-        setRecommendedNews(newsData);
-    };
-
-    fetchArticle();
-    fetchRecommendedNews();
+    fetchArticleAndRecommended();
   }, [id, currentUser]);
 
   useEffect(() => {
