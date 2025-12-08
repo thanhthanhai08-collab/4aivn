@@ -77,8 +77,8 @@ export default function RankingsPage() {
 
   const filteredTools = useMemo(() => {
     const filtered = allTools.filter(tool => 
-      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+      (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
     return filtered.sort((a, b) => {
         const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
@@ -89,7 +89,7 @@ export default function RankingsPage() {
         const countB = b.ratingCount ?? 0;
         if (countB !== countA) return countB - countA;
         
-        return a.name.localeCompare(b.name);
+        return (a.name || '').localeCompare(b.name || '');
     });
   }, [allTools, searchTerm]);
 
