@@ -134,7 +134,7 @@ export default function HomePage() {
           const countB = b.ratingCount ?? 0;
           if (countB !== countA) return countB - countA;
           
-          return a.name.localeCompare(b.name);
+          return (a.name || "").localeCompare(b.name || "");
         }).slice(0, 4);
         
         setTopTools(sortedTopTools);

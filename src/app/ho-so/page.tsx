@@ -40,7 +40,7 @@ const sortToolsByRating = (tools: Tool[]) => {
         const countB = b.ratingCount ?? 0;
         if (countB !== countA) return countB - countA;
 
-        return a.name.localeCompare(b.name);
+        return (a.name || "").localeCompare(b.name || "");
     });
 };
 
