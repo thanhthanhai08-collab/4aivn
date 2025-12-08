@@ -57,8 +57,8 @@ export default function ToolsPage() {
 
   const sortedTools = useMemo(() => {
     const filtered = allTools.filter((tool) => {
-      const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            tool.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                            (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
       return matchesSearch && matchesCategory;
     });
@@ -73,7 +73,7 @@ export default function ToolsPage() {
         const countB = b.ratingCount ?? 0;
         if (countB !== countA) return countB - countA;
         
-        return a.name.localeCompare(b.name);
+        return (a.name || '').localeCompare(b.name || '');
     });
   }, [searchTerm, selectedCategory, allTools]);
 
