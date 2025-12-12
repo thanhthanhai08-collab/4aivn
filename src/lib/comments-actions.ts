@@ -3,11 +3,9 @@
 
 import { db } from "@/lib/firebase";
 import type { User } from "@/lib/types";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const COMMENTS_COLLECTION = "comments";
 
@@ -20,12 +18,26 @@ export async function addComment(articleId: string, user: User, text: string): P
     throw new Error("Comment cannot be empty.");
   }
 
-  await addDoc(collection(db, COMMENTS_COLLECTION), {
+  const commentsCollectionRef = collection(db, COMMENTS_COLLECTION);
+  const payload = {
     articleId: articleId,
     userId: user.uid,
     userName: user.displayName,
     userPhotoURL: user.photoURL,
     text: text,
     createdAt: serverTimestamp(),
-  });
+  };
+
+  try {
+    await addDoc(commentsCollectionRef, payload);
+  } catch (serverError) {
+    const permissionError = new FirestorePermissionError({
+      path: commentsCollectionRef.path,
+      operation: 'create',
+      requestResourceData: payload,
+    });
+    errorEmitter.emit('permission-error', permissionError);
+    // We re-throw the original error so the client-side catch block can handle UI updates.
+    throw serverError;
+  }
 }

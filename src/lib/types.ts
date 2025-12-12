@@ -1,4 +1,3 @@
-
 export interface Tool {
   id: string;
   name: string;
@@ -20,6 +19,7 @@ export interface Tool {
   isFavorite?: boolean;
   myRating?: number;
   ratingCount?: number;
+  viewCount?: number;
 }
 
 export interface NewsArticle {
@@ -44,6 +44,17 @@ export interface User {
   emailVerified: boolean;
   isAnonymous?: boolean;
 }
+
+export interface UserProfileData {
+  favoriteTools?: string[];
+  bookmarkedNews?: string[];
+  ratedTools?: Record<string, UserToolRating>;
+  ratedModels?: Record<string, number>;
+  favoriteModels?: string[];
+  displayName?: string;
+  photoURL?: string | null;
+}
+
 
 export interface ChatMessage {
   id: string;
@@ -71,7 +82,7 @@ export interface AIModel {
   myRating?: number;
   features?: string[];
   isFavorite?: boolean; // Added for favorite functionality
-  contextLengthToken?: number; 
+  contextLengthToken?: number | string; 
   intelligenceScore?: number; // e.g., 70
   pricePerMillionTokens?: number; // e.g., 3.44
   speedTokensPerSecond?: number; // e.g., 150.6
@@ -92,10 +103,13 @@ export interface Comment {
   createdAt: Date;
 }
 
-export interface ToolReview {
+export interface UserToolRating {
+    rating: number;
+    text: string;
+}
+
+export interface ToolReview extends UserToolRating {
     userId: string;
     userName: string;
     userPhotoURL: string | null;
-    rating: number;
-    text: string;
 }

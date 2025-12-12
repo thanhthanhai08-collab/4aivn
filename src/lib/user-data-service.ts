@@ -2,40 +2,14 @@
 'use server';
 
 import { db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentReference, DocumentData, collection, getDocs, query, where, increment } from "firebase/firestore";
+import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentData, collection, getDocs, query, where, increment } from "firebase/firestore";
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
+import type { Tool, AIModel, NewsArticle, ToolReview, UserProfileData } from "./types";
 
 const USER_DATA_COLLECTION = "user-data";
 const TOOLS_COLLECTION = "tools";
 const MODELS_COLLECTION = "models";
-
-// Updated to store both rating and review text for a tool
-export interface UserToolRating {
-    rating: number;
-    text: string;
-}
-
-export interface UserProfileData {
-    favoriteTools?: string[];
-    bookmarkedNews?: string[];
-    ratedTools?: Record<string, UserToolRating>; // Changed from number to UserToolRating
-    ratedModels?: Record<string, number>;
-    favoriteModels?: string[];
-    displayName?: string; // Add displayName to UserProfileData
-    photoURL?: string; // Add photoURL to UserProfileData
-}
-
-export interface AggregateRatingData {
-    ratingCount: number;
-    totalStars: number;
-    viewCount?: number;
-}
-
-// Interface for a single review to be displayed
-export interface ToolReview extends UserToolRating {
-    userId: string;
-    userName: string;
-    userPhotoURL: string | null;
-}
 
 // Helper to get document references
 const getUserDocRef = (uid: string) => doc(db, USER_DATA_COLLECTION, uid);
@@ -57,7 +31,7 @@ export async function getUserProfileData(uid: string): Promise<UserProfileData> 
 export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
     const reviews: ToolReview[] = [];
     try {
-        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLlection));
+        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLLECTION));
 
         usersSnapshot.forEach(docSnap => {
             const userData = docSnap.data() as UserProfileData;
@@ -81,7 +55,7 @@ export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
 }
 
 // Get aggregate rating data for a specific item (tool or model)
-export async function getAggregateRating(collectionName: string, docId: string): Promise<AggregateRatingData> {
+export async function getAggregateRating(collectionName: string, docId: string): Promise<{ ratingCount: number; totalStars: number, viewCount: number }> {
     const docRef = doc(db, collectionName, docId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -99,25 +73,49 @@ export async function getAggregateRating(collectionName: string, docId: string):
 // Toggle favorite status for a tool
 export async function toggleToolFavorite(uid: string, toolId: string, isCurrentlyFavorite: boolean) {
     const docRef = getUserDocRef(uid);
-    await setDoc(docRef, { 
-        favoriteTools: isCurrentlyFavorite ? arrayRemove(toolId) : arrayUnion(toolId) 
-    }, { merge: true });
+    const payload = { favoriteTools: isCurrentlyFavorite ? arrayRemove(toolId) : arrayUnion(toolId) };
+    await setDoc(docRef, payload, { merge: true })
+    .catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'update',
+            requestResourceData: payload,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
+    });
 }
 
 // Toggle favorite status for a model
 export async function toggleModelFavorite(uid: string, modelId: string, isCurrentlyFavorite: boolean) {
     const docRef = getUserDocRef(uid);
-    await setDoc(docRef, {
-        favoriteModels: isCurrentlyFavorite ? arrayRemove(modelId) : arrayUnion(modelId)
-    }, { merge: true });
+    const payload = { favoriteModels: isCurrentlyFavorite ? arrayRemove(modelId) : arrayUnion(modelId) };
+    await setDoc(docRef, payload, { merge: true })
+    .catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'update',
+            requestResourceData: payload,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
+    });
 }
 
 // Toggle bookmark status for a news article
 export async function toggleNewsBookmark(uid: string, newsId: string, isCurrentlyBookmarked: boolean) {
     const docRef = getUserDocRef(uid);
-    await setDoc(docRef, {
-        bookmarkedNews: isCurrentlyBookmarked ? arrayRemove(newsId) : arrayUnion(newsId)
-    }, { merge: true });
+    const payload = { bookmarkedNews: isCurrentlyBookmarked ? arrayRemove(newsId) : arrayUnion(newsId) };
+    await setDoc(docRef, payload, { merge: true })
+    .catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'update',
+            requestResourceData: payload,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
+    });
 }
 
 // Set or update a rating for a tool, now includes review text
@@ -144,18 +142,29 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
             totalStars = totalStars - oldRating + newRating;
         }
 
-        // Update user's rating record with both rating and text, AND their profile info
-        transaction.set(userDocRef, {
-            displayName: displayName || "Người dùng ẩn danh", // Use passed name or a fallback
-            photoURL: photoURL, // Use passed photoURL
+        const userUpdatePayload = {
+            displayName: displayName || "Người dùng ẩn danh",
+            photoURL: photoURL,
             ratedTools: { 
                 ...userData.ratedTools, 
                 [toolId]: { rating: newRating, text: reviewText } 
             }
-        }, { merge: true });
-
-        // Update aggregate tool rating (only stars and count)
-        transaction.set(toolDocRef, { ratingCount, totalStars }, { merge: true });
+        };
+        transaction.set(userDocRef, userUpdatePayload, { merge: true });
+        
+        const toolUpdatePayload = { ratingCount, totalStars };
+        transaction.set(toolDocRef, toolUpdatePayload, { merge: true });
+    }).catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: `Transaction failed for docs: ${userDocRef.path}, ${toolDocRef.path}`,
+            operation: 'update',
+            requestResourceData: { 
+                userUpdate: `ratedTools.${toolId}`, 
+                toolUpdate: '{ratingCount, totalStars}'
+            },
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
     });
 }
 
@@ -183,22 +192,37 @@ export async function setModelRating(uid: string, modelId: string, newRating: nu
             totalStars = totalStars - oldRating + newRating;
         }
         
-        // Update user's rating record
         transaction.set(userDocRef, {
             ratedModels: { ...userData.ratedModels, [modelId]: newRating }
         }, { merge: true });
         
-        // Update aggregate model rating
         transaction.set(modelDocRef, { ratingCount, totalStars }, { merge: true });
+    }).catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: `Transaction failed for docs: ${userDocRef.path}, ${modelDocRef.path}`,
+            operation: 'update',
+            requestResourceData: {
+                userUpdate: `ratedModels.${modelId}`,
+                modelUpdate: '{ratingCount, totalStars}'
+            },
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
     });
 }
 
 // New function to increment view count for a tool
 export async function incrementToolViewCount(toolId: string) {
     const toolDocRef = getToolDocRef(toolId);
-    try {
-        await setDoc(toolDocRef, { viewCount: increment(1) }, { merge: true });
-    } catch (error) {
-        console.error("Error incrementing tool view count for toolId:", toolId, error);
-    }
+    const payload = { viewCount: increment(1) };
+    await setDoc(toolDocRef, payload, { merge: true })
+    .catch(async (serverError) => {
+        const permissionError = new FirestorePermissionError({
+            path: toolDocRef.path,
+            operation: 'update',
+            requestResourceData: payload,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
+    });
 }

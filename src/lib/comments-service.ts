@@ -10,6 +10,8 @@ import {
   type DocumentData,
 } from "firebase/firestore";
 import type { Comment } from "./types";
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const COMMENTS_COLLECTION = "comments";
 
@@ -39,8 +41,16 @@ export function getComments(articleId: string, callback: (comments: Comment[]) =
     const sortedComments = comments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     
     callback(sortedComments);
-  }, (error) => {
-    console.error("Error fetching comments: ", error);
+  }, 
+  // Error callback for the listener
+  async (serverError) => {
+    console.error("Error fetching comments in real-time: ", serverError);
+    const permissionError = new FirestorePermissionError({
+      path: `/${COMMENTS_COLLECTION}`,
+      operation: 'list',
+      requestResourceData: { query: `articleId == ${articleId}` },
+    });
+    errorEmitter.emit('permission-error', permissionError);
   });
 
   return unsubscribe;
