@@ -1,120 +1,99 @@
 /**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/oncall");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ * @fileoverview Cloud Functions for Firebase.
  */
 
-const functions = require("firebase-functions");
+const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+const {defineSecret} = require("firebase-functions/params");
 const admin = require("firebase-admin");
-const { defineSecret } = require("firebase-functions/params");
 
-// Khởi tạo Admin SDK để tương tác với các dịch vụ Firebase khác
+// Initialize Firebase Admin SDK to interact with other Firebase services
 admin.initializeApp();
 const db = admin.firestore();
 
-// 1. Định nghĩa khóa bí mật (Secret Key)
-// Tên 'GEMINI_API_KEY' phải trùng với tên bạn đã đặt khi cấu hình secret trong Firebase.
-const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
-
-// 2. Thiết lập cấu hình thời gian chạy cho function v1
-const runtimeOpts = {
-  maxInstances: 10,
-  // Thêm secret đã định nghĩa vào danh sách các secret mà function cần truy cập
-  secrets: [GEMINI_API_KEY], 
-};
+// Define the secret key. The name 'GEMINI_API_KEY' must match the name you set
+// when configuring the secret in Firebase.
+const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
 
 /**
- * Cloud Function này được kích hoạt khi có bất kỳ sự thay đổi nào (tạo, sửa, xóa)
- * trên một document trong sub-collection 'ratings' của bất kỳ document nào trong collection 'models'.
- * Ví dụ: /models/{modelId}/ratings/{ratingId}
+ * This Cloud Function is triggered on any change (create, update, delete)
+ * to a document in the 'ratings' sub-collection of any document in the 'models' collection.
+ * Example path: /models/{modelId}/ratings/{ratingId}
  */
-exports.aggregateModelRating = functions.runWith(runtimeOpts)
-    .firestore.document('models/{modelId}/ratings/{ratingId}')
-    .onWrite(async (change, context) => {
-        
-        const modelId = context.params.modelId;
-        const modelRef = db.collection('models').doc(modelId);
+exports.aggregateModelRating = onDocumentWritten(
+  {
+    document: "models/{modelId}/ratings/{ratingId}",
+    secrets: [GEMINI_API_KEY],
+  },
+  async (event) => {
+    const modelId = event.params.modelId;
+    const modelRef = db.collection("models").doc(modelId);
 
-        // Lấy dữ liệu của đánh giá trước và sau khi thay đổi
-        const ratingBefore = change.before.data();
-        const ratingAfter = change.after.data();
+    // Get the rating data before and after the change
+    const ratingBefore = event.data?.before.data();
+    const ratingAfter = event.data?.after.data();
 
-        // Lấy giá trị điểm sao (star)
-        const newStars = ratingAfter ? (ratingAfter.starRating || 0) : 0; 
-        const oldStars = ratingBefore ? (ratingBefore.starRating || 0) : 0;
-        
-        const difference = newStars - oldStars;
+    // Get the star rating values
+    const newStars = ratingAfter ? (ratingAfter.starRating || 0) : 0;
+    const oldStars = ratingBefore ? (ratingBefore.starRating || 0) : 0;
 
-        // Nếu chỉ cập nhật nội dung văn bản của đánh giá mà không thay đổi điểm sao, thì không cần tính toán lại.
-        if (difference === 0 && change.before.exists && change.after.exists) {
-            console.log(`Rating updated for model ${modelId}, but starRating is unchanged.`);
-            return null;
+    const difference = newStars - oldStars;
+
+    // If only the review text was updated without changing the star rating, no need to recalculate.
+    if (difference === 0 && event.data?.before.exists && event.data?.after.exists) {
+      console.log(`Rating updated for model ${modelId}, but starRating is unchanged.`);
+      return null;
+    }
+
+    // Use a transaction to ensure data integrity during read and write operations
+    try {
+      await db.runTransaction(async (transaction) => {
+        const modelDoc = await transaction.get(modelRef);
+
+        if (!modelDoc.exists) {
+          console.error(`Model document ${modelId} does not exist!`);
+          return;
         }
 
-        // Sử dụng một transaction để đảm bảo tính toàn vẹn dữ liệu khi đọc và ghi
-        try {
-            await db.runTransaction(async (transaction) => {
-                const modelDoc = await transaction.get(modelRef);
+        // Get the current aggregate values from the model's document
+        const currentCount = modelDoc.data().ratingCount || 0;
+        const currentTotalStars = modelDoc.data().totalStars || 0;
 
-                if (!modelDoc.exists) {
-                    console.error(`Model document ${modelId} does not exist!`);
-                    return; 
-                }
-                
-                // Lấy các giá trị tổng hợp hiện tại từ document của model
-                const currentCount = modelDoc.data().ratingCount || 0;
-                const currentTotalStars = modelDoc.data().totalStars || 0;
+        let updatedCount;
+        let updatedTotalStars;
 
-                let updatedCount;
-                let updatedTotalStars;
-
-                if (!change.after.exists) {
-                    // Kịch bản XÓA đánh giá: Giảm số lượng và tổng điểm
-                    updatedCount = currentCount - 1;
-                    updatedTotalStars = currentTotalStars - oldStars;
-                } else if (!change.before.exists) {
-                    // Kịch bản TẠO MỚI đánh giá: Tăng số lượng và tổng điểm
-                    updatedCount = currentCount + 1;
-                    updatedTotalStars = currentTotalStars + newStars;
-                } else {
-                    // Kịch bản CẬP NHẬT đánh giá: Giữ nguyên số lượng, chỉ cập nhật tổng điểm
-                    updatedCount = currentCount;
-                    updatedTotalStars = currentTotalStars + difference;
-                }
-                
-                // Đảm bảo các giá trị không bị âm
-                updatedCount = updatedCount < 0 ? 0 : updatedCount;
-                updatedTotalStars = updatedTotalStars < 0 ? 0 : updatedTotalStars;
-
-                const averageRating = updatedCount > 0 
-                    ? (updatedTotalStars / updatedCount) 
-                    : 0;
-
-                // Cập nhật các trường tổng hợp vào document của model
-                transaction.update(modelRef, {
-                    ratingCount: updatedCount, 
-                    totalStars: updatedTotalStars, 
-                    averageRating: parseFloat(averageRating.toFixed(2)), // Làm tròn đến 2 chữ số thập phân
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
-                });
-            });
-
-            console.log(`Successfully aggregated ratings for model: ${modelId}`);
-            return null;
-        } catch (error) {
-            console.error(`Failed to aggregate ratings for model ${modelId}:`, error);
-            // Bạn có thể thêm logic xử lý lỗi ở đây, ví dụ như gửi thông báo lỗi
-            return null;
+        if (!event.data?.after.exists) {
+          // Scenario: DELETE rating - Decrease count and total score
+          updatedCount = currentCount - 1;
+          updatedTotalStars = currentTotalStars - oldStars;
+        } else if (!event.data?.before.exists) {
+          // Scenario: CREATE new rating - Increase count and total score
+          updatedCount = currentCount + 1;
+          updatedTotalStars = currentTotalStars + newStars;
+        } else {
+          // Scenario: UPDATE rating - Keep count the same, only update total score
+          updatedCount = currentCount;
+          updatedTotalStars = currentTotalStars + difference;
         }
-    });
 
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
+        // Ensure values are not negative
+        updatedCount = updatedCount < 0 ? 0 : updatedCount;
+        updatedTotalStars = updatedTotalStars < 0 ? 0 : updatedTotalStars;
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+        const averageRating = updatedCount > 0 ? (updatedTotalStars / updatedCount) : 0;
+
+        // Update the aggregate fields in the model's document
+        transaction.update(modelRef, {
+          ratingCount: updatedCount,
+          totalStars: updatedTotalStars,
+          averageRating: parseFloat(averageRating.toFixed(2)), // Round to 2 decimal places
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      });
+
+      console.log(`Successfully aggregated ratings for model: ${modelId}`);
+    } catch (error) {
+      console.error(`Failed to aggregate ratings for model ${modelId}:`, error);
+      // You can add more robust error handling here, like sending a notification
+    }
+    return null;
+  });
