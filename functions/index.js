@@ -23,6 +23,7 @@ exports.aggregateModelRating = onDocumentWritten(
   {
     document: "models/{modelId}/ratings/{ratingId}",
     secrets: [GEMINI_API_KEY],
+    region: 'asia-southeast1',
   },
   async (event) => {
     const modelId = event.params.modelId;
