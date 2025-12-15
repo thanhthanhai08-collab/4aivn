@@ -91,6 +91,7 @@ export interface AIModel {
   multimodal?: boolean;
   releaseDate?: string;
   benchmarks?: BenchmarkData[];
+  averageRating?: number;
 }
 
 export interface Comment {

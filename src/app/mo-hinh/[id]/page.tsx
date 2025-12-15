@@ -20,12 +20,11 @@ import {
   setModelRating,
   toggleModelFavorite,
   getUserProfileData,
-  getAggregateRating
 } from "@/lib/user-data-service";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsCard } from "@/components/news/news-card";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 // Helper function to format context length for display
@@ -45,7 +44,6 @@ function ModelDetailContent({ id }: { id: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
-  const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   
@@ -53,86 +51,90 @@ function ModelDetailContent({ id }: { id: string }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchAllData = async () => {
-        if (!id) return;
-        setIsLoading(true);
+    if (!id) return;
+    setIsLoading(true);
 
-        try {
-            // Fetch specific model details
-            const modelDocRef = doc(db, "models", id);
-            const modelDocSnap = await getDoc(modelDocRef);
+    const modelDocRef = doc(db, "models", id);
+
+    // Set up a real-time listener for the model document
+    const unsubscribe = onSnapshot(modelDocRef, async (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const releaseDateTimestamp = data.releaseDate as Timestamp;
             
-            if (modelDocSnap.exists()) {
-              const data = modelDocSnap.data();
-              const releaseDateTimestamp = data.releaseDate as Timestamp;
-              
-              // Fetch benchmarks from subcollection
+            // Fetch benchmarks from subcollection (this only needs to be done once)
+            let benchmarksData: BenchmarkData[] = [];
+            if (!model || model.benchmarks?.length === 0) {
               const benchmarksColRef = collection(db, "models", id, "benchmarks");
               const benchmarksSnapshot = await getDocs(benchmarksColRef);
-              const benchmarksData: BenchmarkData[] = benchmarksSnapshot.docs.map(doc => {
+              benchmarksData = benchmarksSnapshot.docs.map(doc => {
                   const docData = doc.data();
-                  // Ensure score is a number
                   const score = typeof docData.score === 'string' ? parseFloat(docData.score) : docData.score;
                   return {
                       name: docData.name,
-                      score: isNaN(score) ? 0 : score, // Fallback to 0 if parsing fails
+                      score: isNaN(score) ? 0 : score,
                   };
               });
-
-
-              const foundModel = {
-                  id: modelDocSnap.id,
-                  ...data,
-                  releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
-                  benchmarks: benchmarksData,
-              } as AIModel;
-
-              setModel(foundModel);
-
-              // Fetch related news from Firestore
-              const newsQuery = query(
-                  collection(db, "news"),
-                  where('title', '>=', foundModel.name),
-                  where('title', '<=', foundModel.name + '\uf8ff'),
-                  limit(3)
-              );
-              const newsSnapshot = await getDocs(newsQuery);
-              const newsData = newsSnapshot.docs.map(doc => ({
-                  id: doc.id,
-                  ...doc.data(),
-                  publishedAt: doc.data().publishedAt.toDate().toISOString(),
-              } as NewsArticle));
-              setRelatedNews(newsData);
-
-
-              if (currentUser) {
-                getUserProfileData(currentUser.uid).then(userData => {
-                  setIsFavorite(userData.favoriteModels?.includes(id) || false);
-                  setCurrentRating(userData.ratedModels?.[id] || 0);
-                });
-              }
-
-              getAggregateRating("models", id).then(setAggregateRating);
-
-              if (foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
-                generateAiModelDescription({ 
-                    name: foundModel.name, 
-                    type: foundModel.type, 
-                    developer: foundModel.developer,
-                    link: foundModel.link 
-                })
-                  .then(output => setEnhancedDescription(output.description))
-                  .catch(err => console.error("Failed to generate AI model description:", err));
-              }
             }
-        } catch (error) {
-            console.error("Error fetching model data:", error);
-        } finally {
+
+            const foundModel = {
+                id: docSnap.id,
+                ...data,
+                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+                benchmarks: benchmarksData.length > 0 ? benchmarksData : model?.benchmarks,
+            } as AIModel;
+
+            setModel(foundModel);
+
+            // Fetch related news (only needs to be done once)
+            if (relatedNews.length === 0) {
+                const newsQuery = query(
+                    collection(db, "news"),
+                    where('title', '>=', foundModel.name),
+                    where('title', '<=', foundModel.name + '\uf8ff'),
+                    limit(3)
+                );
+                const newsSnapshot = await getDocs(newsQuery);
+                const newsData = newsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                } as NewsArticle));
+                setRelatedNews(newsData);
+            }
+
+            // Fetch user-specific data (only needs to be done once, or when user changes)
+            if (currentUser) {
+              const userData = await getUserProfileData(currentUser.uid);
+              setIsFavorite(userData.favoriteModels?.includes(id) || false);
+              setCurrentRating(userData.ratedModels?.[id] || 0);
+            }
+
+            // Generate AI description if needed (only once)
+            if (!enhancedDescription && foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
+              generateAiModelDescription({ 
+                  name: foundModel.name, 
+                  type: foundModel.type, 
+                  developer: foundModel.developer,
+                  link: foundModel.link 
+              })
+                .then(output => setEnhancedDescription(output.description))
+                .catch(err => console.error("Failed to generate AI model description:", err));
+            }
+
             setIsLoading(false);
+        } else {
+            console.error("Model not found!");
+            setIsLoading(false);
+            setModel(null);
         }
-    };
-    
-    fetchAllData();
+    }, (error) => {
+        console.error("Error listening to model data:", error);
+        setIsLoading(false);
+    });
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
   }, [id, currentUser]);
 
 
@@ -161,25 +163,17 @@ function ModelDetailContent({ id }: { id: string }) {
     }
 
     const oldRating = currentRating;
-    const oldAggregate = { ...aggregateRating };
-
-    setCurrentRating(rating);
-    setAggregateRating(prev => {
-        let newTotalStars = prev.totalStars - oldRating + rating;
-        let newRatingCount = prev.ratingCount;
-        if(oldRating === 0) {
-            newRatingCount += 1;
-        }
-        return { totalStars: newTotalStars, ratingCount: newRatingCount };
-    });
+    setCurrentRating(rating); // Optimistic UI update
 
     try {
+      // This function now writes to the 'ratings' sub-collection
+      // The cloud function will handle the aggregation.
+      // The real-time listener will update the UI with the new average.
       await setModelRating(currentUser.uid, model.id, rating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
     } catch(error) {
       console.error("Failed to save rating:", error);
-      setCurrentRating(oldRating); 
-      setAggregateRating(oldAggregate);
+      setCurrentRating(oldRating); // Revert on error
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
@@ -235,7 +229,6 @@ function ModelDetailContent({ id }: { id: string }) {
     );
   }
   
-  const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
   const descriptionToDisplay = enhancedDescription || model.description;
 
   return (
@@ -287,7 +280,7 @@ function ModelDetailContent({ id }: { id: string }) {
                           ))}
                           </div>
                            <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                          {averageRating > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {averageRating.toFixed(1)} sao ({aggregateRating.ratingCount} đánh giá)</p>}
+                          {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {(model.averageRating ?? 0).toFixed(1)} sao ({model.ratingCount || 0} đánh giá)</p>}
                       </CardContent>
                   </Card>
               </div>
@@ -326,7 +319,7 @@ function ModelDetailContent({ id }: { id: string }) {
                           <BookOpen className="h-5 w-5 mt-1 text-primary" />
                           <div>
                               <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
-                              <p className="text-muted-foreground">{formatContextLength(model.contextLengthToken)}</p>
+                              <p className="text-muted-foreground">{formatContextLength(model.contextLengthToken as number)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
