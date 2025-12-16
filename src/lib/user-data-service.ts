@@ -170,35 +170,34 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
 
 
 // Set or update a rating for a model by writing to the ratings sub-collection
-export async function setModelRating(uid: string, modelId: string, newRating: number) {
+export async function setModelRating(uid: string, modelId: string, newRating: number, oldRating: number) {
     const userDocRef = getUserDocRef(uid);
     const ratingDocRef = doc(db, MODELS_COLLECTION, modelId, "ratings", uid);
-    
-    // First, update the user's ratedModels map locally
-    const userUpdatePayload = { ratedModels: { [modelId]: newRating } };
-    await setDoc(userDocRef, userUpdatePayload, { merge: true })
-        .catch(async (serverError) => {
-            const permissionError = new FirestorePermissionError({
-                path: userDocRef.path,
-                operation: 'update',
-                requestResourceData: userUpdatePayload,
-            });
-            errorEmitter.emit('permission-error', permissionError);
-            throw serverError; // Re-throw to stop the process
-        });
 
-    // Then, write the rating to the sub-collection to trigger the cloud function
-    const ratingPayload = { starRating: newRating };
-    await setDoc(ratingDocRef, ratingPayload, { merge: true })
-        .catch(async (serverError) => {
-            const permissionError = new FirestorePermissionError({
-                path: ratingDocRef.path,
-                operation: 'write',
-                requestResourceData: ratingPayload,
-            });
-            errorEmitter.emit('permission-error', permissionError);
-            throw serverError; // Re-throw to stop the process
+    try {
+        await runTransaction(db, async (transaction) => {
+            // 1. Update the user's ratedModels map
+            const userDoc = await transaction.get(userDocRef);
+            const userData = userDoc.exists() ? userDoc.data() as UserProfileData : {};
+            const ratedModels = userData.ratedModels || {};
+            ratedModels[modelId] = newRating;
+            
+            const userUpdatePayload = { ratedModels };
+            transaction.set(userDocRef, userUpdatePayload, { merge: true });
+
+            // 2. Write to the sub-collection to trigger the cloud function
+            const ratingPayload = { starRating: newRating, oldRating: oldRating };
+            transaction.set(ratingDocRef, ratingPayload, { merge: true });
         });
+    } catch (serverError) {
+        const permissionError = new FirestorePermissionError({
+            path: `Transaction for ${userDocRef.path} and ${ratingDocRef.path}`,
+            operation: 'write',
+            requestResourceData: { newRating, modelId, uid },
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
+    }
 }
 
 // New function to increment view count for a tool

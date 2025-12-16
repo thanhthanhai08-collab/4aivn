@@ -103,13 +103,6 @@ function ModelDetailContent({ id }: { id: string }) {
                 setRelatedNews(newsData);
             }
 
-            // Fetch user-specific data (only needs to be done once, or when user changes)
-            if (currentUser) {
-              const userData = await getUserProfileData(currentUser.uid);
-              setIsFavorite(userData.favoriteModels?.includes(id) || false);
-              setCurrentRating(userData.ratedModels?.[id] || 0);
-            }
-
             // Generate AI description if needed (only once)
             if (!enhancedDescription && foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
               generateAiModelDescription({ 
@@ -135,7 +128,21 @@ function ModelDetailContent({ id }: { id: string }) {
 
     // Cleanup listener on component unmount
     return () => unsubscribe();
-  }, [id, currentUser]);
+  }, [id]);
+
+  // Effect for user-specific data
+  useEffect(() => {
+    if (currentUser && id) {
+      getUserProfileData(currentUser.uid).then(userData => {
+        setIsFavorite(userData.favoriteModels?.includes(id) || false);
+        setCurrentRating(userData.ratedModels?.[id] || 0);
+      });
+    } else {
+      // Reset user-specific state when logged out
+      setIsFavorite(false);
+      setCurrentRating(0);
+    }
+  }, [currentUser, id]);
 
 
   const handleFavoriteToggle = async () => {
@@ -166,10 +173,7 @@ function ModelDetailContent({ id }: { id: string }) {
     setCurrentRating(rating); // Optimistic UI update
 
     try {
-      // This function now writes to the 'ratings' sub-collection
-      // The cloud function will handle the aggregation.
-      // The real-time listener will update the UI with the new average.
-      await setModelRating(currentUser.uid, model.id, rating);
+      await setModelRating(currentUser.uid, model.id, rating, oldRating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
     } catch(error) {
       console.error("Failed to save rating:", error);
@@ -387,5 +391,3 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
-
-    

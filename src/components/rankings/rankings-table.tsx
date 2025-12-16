@@ -60,7 +60,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
         <TableBody>
           {sortedItems.map((item, index) => {
             const averageRating = item.ratingCount && item.ratingCount > 0 
-              ? (item.totalStars || 0) / item.ratingCount 
+              ? item.averageRating || ((item.totalStars || 0) / item.ratingCount) 
               : 0;
             
             return (
@@ -108,7 +108,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   <TableCell className="text-center">
                     <span className="text-sm">{(item as AIModel).developer}</span>
                   </TableCell>
-                  <TableCell className="text-center">{formatContextLength((item as AIModel).contextLengthToken)}</TableCell>
+                  <TableCell className="text-center">{formatContextLength((item as AIModel).contextLengthToken as number)}</TableCell>
                   <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
                   <TableCell className="text-center">
                     {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
