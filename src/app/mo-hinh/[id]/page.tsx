@@ -2,7 +2,7 @@
 // src/app/models/[id]/page.tsx
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
@@ -130,17 +130,37 @@ function ModelDetailContent({ id }: { id: string }) {
     return () => unsubscribe();
   }, [id]);
 
-  // Effect for user-specific data
+  // Effect for user-specific data (favorite status)
   useEffect(() => {
     if (currentUser && id) {
       getUserProfileData(currentUser.uid).then(userData => {
         setIsFavorite(userData.favoriteModels?.includes(id) || false);
-        setCurrentRating(userData.ratedModels?.[id] || 0);
       });
     } else {
-      // Reset user-specific state when logged out
       setIsFavorite(false);
-      setCurrentRating(0);
+    }
+  }, [currentUser, id]);
+
+  // Effect for user's rating (real-time)
+  useEffect(() => {
+    if (currentUser && id) {
+        const userRatingRef = doc(db, "models", id, "ratings", currentUser.uid);
+        const unsubscribe = onSnapshot(userRatingRef, (docSnap) => {
+            if (docSnap.exists()) {
+                setCurrentRating(docSnap.data().starRating || 0);
+            } else {
+                setCurrentRating(0);
+            }
+        }, (error) => {
+            console.error("Error listening to user rating:", error);
+            setCurrentRating(0);
+        });
+
+        // Cleanup listener when id or currentUser changes
+        return () => unsubscribe();
+    } else {
+        // Reset rating if user logs out or id changes
+        setCurrentRating(0);
     }
   }, [currentUser, id]);
 
@@ -169,15 +189,14 @@ function ModelDetailContent({ id }: { id: string }) {
       return;
     }
 
-    const oldRating = currentRating;
-    setCurrentRating(rating); // Optimistic UI update
-
+    // The UI will update automatically via the onSnapshot listener.
+    // We only need to call the function to write the data.
     try {
-      await setModelRating(currentUser.uid, model.id, rating, oldRating);
+      await setModelRating(currentUser.uid, model.id, rating, currentRating);
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
     } catch(error) {
       console.error("Failed to save rating:", error);
-      setCurrentRating(oldRating); // Revert on error
+      // No need to revert UI, onSnapshot will keep it in sync with the DB.
       toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
     }
   };
@@ -391,3 +410,5 @@ function ModelDetailContent({ id }: { id: string }) {
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
   return <ModelDetailContent id={params.id} />;
 }
+
+    
