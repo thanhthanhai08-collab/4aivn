@@ -218,9 +218,13 @@ function ToolDetailContent({ id }: { id: string }) {
       );
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
-      // No need to manually refetch, onSnapshot will handle the aggregate rating update
-      // Manually refetch reviews list after submission
+      // No need to manually refetch aggregates, onSnapshot handles that.
+      // Manually refetch reviews list after submission.
       getAllToolReviews(id).then(setAllReviews);
+      
+      // Reset review input after successful submission
+      setCurrentRating(0);
+      setReviewText("");
 
     } catch(error) {
       console.error("Failed to save rating:", error);
