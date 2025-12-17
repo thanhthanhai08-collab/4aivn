@@ -191,9 +191,9 @@ export async function setModelRating(uid: string, modelId: string, newRating: nu
         });
     } catch (serverError) {
         const permissionError = new FirestorePermissionError({
-            path: `Transaction for ${userDocRef.path} and ${ratingDocRef.path}`,
+            path: `Transaction involving: ${userDocRef.path} and ${ratingDocRef.path}`,
             operation: 'write',
-            requestResourceData: { newRating, modelId, uid },
+            requestResourceData: { uid, modelId, newRating },
         });
         errorEmitter.emit('permission-error', permissionError);
         throw serverError;
