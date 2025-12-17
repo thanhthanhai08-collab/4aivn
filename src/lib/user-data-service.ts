@@ -201,7 +201,12 @@ export async function setModelRating(uid: string, modelId: string, newRating: nu
         });
 
     // 2. Write to the sub-collection to trigger the cloud function
-    const ratingPayload = { starRating: newRating, oldRating: oldRating };
+    const ratingPayload = { 
+        starRating: newRating, 
+        oldRating: oldRating,
+        userId: uid,
+        updatedAt: new Date().toISOString()
+    };
     await setDoc(ratingDocRef, ratingPayload, { merge: true })
         .catch(async (serverError) => {
             const permissionError = new FirestorePermissionError({
