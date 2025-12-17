@@ -20,9 +20,18 @@ const getModelDocRef = (modelId: string) => doc(db, MODELS_COLLECTION, modelId);
 // Get all profile data for a user
 export async function getUserProfileData(uid: string): Promise<UserProfileData> {
     const docRef = getUserDocRef(uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return docSnap.data() as UserProfileData;
+    try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data() as UserProfileData;
+        }
+    } catch (serverError) {
+        const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'get',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        throw serverError;
     }
     return {}; // Return empty object if no data exists
 }
@@ -169,36 +178,42 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
 }
 
 
-// Set or update a rating for a model by writing to the ratings sub-collection
+// Set or update a rating for a model by writing to the ratings sub-collection and the user-data document
 export async function setModelRating(uid: string, modelId: string, newRating: number, oldRating: number) {
     const userDocRef = getUserDocRef(uid);
     const ratingDocRef = doc(db, MODELS_COLLECTION, modelId, "ratings", uid);
 
-    try {
-        await runTransaction(db, async (transaction) => {
-            // 1. Update the user's ratedModels map
-            const userDoc = await transaction.get(userDocRef);
-            const userData = userDoc.exists() ? userDoc.data() as UserProfileData : {};
-            const ratedModels = userData.ratedModels || {};
-            ratedModels[modelId] = newRating;
-            
-            const userUpdatePayload = { ratedModels };
-            transaction.set(userDocRef, userUpdatePayload, { merge: true });
+    // 1. Update the user's ratedModels map in user-data
+    const userUpdatePayload = {
+        ratedModels: {
+            [modelId]: newRating
+        }
+    };
+    await setDoc(userDocRef, userUpdatePayload, { merge: true })
+        .catch(async (serverError) => {
+            const permissionError = new FirestorePermissionError({
+                path: userDocRef.path,
+                operation: 'update',
+                requestResourceData: userUpdatePayload,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+            throw serverError; // Re-throw to stop execution
+        });
 
-            // 2. Write to the sub-collection to trigger the cloud function
-            const ratingPayload = { starRating: newRating, oldRating: oldRating };
-            transaction.set(ratingDocRef, ratingPayload, { merge: true });
+    // 2. Write to the sub-collection to trigger the cloud function
+    const ratingPayload = { starRating: newRating, oldRating: oldRating };
+    await setDoc(ratingDocRef, ratingPayload, { merge: true })
+        .catch(async (serverError) => {
+            const permissionError = new FirestorePermissionError({
+                path: ratingDocRef.path,
+                operation: 'write',
+                requestResourceData: ratingPayload,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+            throw serverError; // Re-throw to stop execution
         });
-    } catch (serverError) {
-        const permissionError = new FirestorePermissionError({
-            path: `Transaction involving: ${userDocRef.path} and ${ratingDocRef.path}`,
-            operation: 'write',
-            requestResourceData: { uid, modelId, newRating },
-        });
-        errorEmitter.emit('permission-error', permissionError);
-        throw serverError;
-    }
 }
+
 
 // New function to increment view count for a tool
 export async function incrementToolViewCount(toolId: string) {
