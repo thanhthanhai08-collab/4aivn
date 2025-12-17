@@ -86,7 +86,7 @@ async function aggregateIntelligence(modelId) {
 
             // Cập nhật lên trường intelligenceScore trong collection models
             transaction.update(modelRef, {
-                intelligenceScore: parseFloat(intelligenceScore.toFixed(2))
+                intelligenceScore: Math.round(intelligenceScore)
             });
         });
         console.log(`Updated intelligenceScore for model ${modelId}`);
