@@ -1,100 +1,147 @@
 /**
- * @fileoverview Cloud Functions for Firebase.
+ * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const {onDocumentWritten} = require("firebase-functions/v2/firestore");
-const {defineSecret} = require("firebase-functions/params");
+const { onDocumentWritten } = require("firebase-functions/v2/firestore");
+const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 
-// Initialize Firebase Admin SDK to interact with other Firebase services
 admin.initializeApp();
 const db = admin.firestore();
 
-// Define the secret key. The name 'GEMINI_API_KEY' must match the name you set
-// when configuring the secret in Firebase.
 const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
 
+// --- HÀM TÍNH RATING ---
+async function aggregateRatings(collectionName, docId) {
+    const parentRef = db.collection(collectionName).doc(docId);
+    const ratingsRef = parentRef.collection("ratings");
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const ratingsSnapshot = await transaction.get(ratingsRef);
+            let totalStars = 0;
+            let ratingCount = 0;
+
+            ratingsSnapshot.forEach((doc) => {
+                const data = doc.data();
+                if (typeof data.starRating === 'number') {
+                    totalStars += data.starRating;
+                    ratingCount++;
+                }
+            });
+
+            const averageRating = ratingCount > 0 ? (totalStars / ratingCount) : 0;
+
+            transaction.update(parentRef, {
+                averageRating: parseFloat(averageRating.toFixed(2)),
+                ratingCount: ratingCount,
+                totalStars: totalStars,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+        });
+        console.log(`Updated Rating for ${collectionName}/${docId}`);
+    } catch (error) {
+        console.error(`Rating Aggregation Error for ${collectionName}/${docId}:`, error);
+    }
+}
+
+// --- HÀM MỚI: TÍNH INTELLIGENCE SCORE TỪ BENCHMARKS ---
+async function aggregateIntelligence(modelId) {
+    const modelRef = db.collection("models").doc(modelId);
+    const benchmarksRef = modelRef.collection("benchmarks");
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const snapshot = await transaction.get(benchmarksRef);
+            
+            let totalScore = 0;
+            let benchmarkCount = 0;
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                // Find a 'score' or 'value' field of type number
+                let scoreFound = false;
+                if (data.score && typeof data.score === 'number') {
+                    totalScore += data.score;
+                    benchmarkCount++;
+                    scoreFound = true;
+                } else if (data.value && typeof data.value === 'number') {
+                    totalScore += data.value;
+                    benchmarkCount++;
+                    scoreFound = true;
+                }
+                
+                if (!scoreFound) {
+                    // Fallback to scan all numeric fields if specific ones aren't found
+                    Object.values(data).forEach(val => {
+                        if (typeof val === 'number') {
+                            totalScore += val;
+                            benchmarkCount++;
+                        }
+                    });
+                }
+            });
+
+            const intelligenceScore = benchmarkCount > 0 ? (totalScore / benchmarkCount) : 0;
+
+            // Cập nhật lên trường intelligenceScore trong collection models
+            transaction.update(modelRef, {
+                intelligenceScore: parseFloat(intelligenceScore.toFixed(2))
+            });
+        });
+        console.log(`Updated intelligenceScore for model ${modelId}`);
+    } catch (error) {
+        console.error(`Intelligence Aggregation Error for ${modelId}:`, error);
+    }
+}
+
 /**
- * This Cloud Function is triggered on any change (create, update, delete)
- * to a document in the 'ratings' sub-collection of any document in the 'models' collection.
- * Example path: /models/{modelId}/ratings/{ratingId}
+ * Trigger cho RATINGS (Models)
  */
 exports.aggregateModelRating = onDocumentWritten(
-  {
-    document: "models/{modelId}/ratings/{ratingId}",
-    secrets: [GEMINI_API_KEY],
-    region: 'asia-southeast1',
-  },
-  async (event) => {
-    const modelId = event.params.modelId;
-    const modelRef = db.collection("models").doc(modelId);
-
-    // Get the rating data before and after the change
-    const ratingBefore = event.data?.before.data();
-    const ratingAfter = event.data?.after.data();
-
-    // Get the star rating values
-    const newStars = ratingAfter ? (ratingAfter.starRating || 0) : 0;
-    const oldStars = ratingBefore ? (ratingBefore.starRating || 0) : 0;
-
-    const difference = newStars - oldStars;
-
-    // If only the review text was updated without changing the star rating, no need to recalculate.
-    if (difference === 0 && event.data?.before.exists && event.data?.after.exists) {
-      console.log(`Rating updated for model ${modelId}, but starRating is unchanged.`);
-      return null;
+    {
+        document: "models/{modelId}/ratings/{ratingId}",
+        secrets: [GEMINI_API_KEY],
+        region: 'asia-southeast1',
+    },
+    async (event) => {
+        if (!event.data) return null;
+        return aggregateRatings("models", event.params.modelId);
     }
+);
 
-    // Use a transaction to ensure data integrity during read and write operations
-    try {
-      await db.runTransaction(async (transaction) => {
-        const modelDoc = await transaction.get(modelRef);
-
-        if (!modelDoc.exists) {
-          console.error(`Model document ${modelId} does not exist!`);
-          return;
-        }
-
-        // Get the current aggregate values from the model's document
-        const currentCount = modelDoc.data().ratingCount || 0;
-        const currentTotalStars = modelDoc.data().totalStars || 0;
-
-        let updatedCount;
-        let updatedTotalStars;
-
-        if (!event.data?.after.exists) {
-          // Scenario: DELETE rating - Decrease count and total score
-          updatedCount = currentCount - 1;
-          updatedTotalStars = currentTotalStars - oldStars;
-        } else if (!event.data?.before.exists) {
-          // Scenario: CREATE new rating - Increase count and total score
-          updatedCount = currentCount + 1;
-          updatedTotalStars = currentTotalStars + newStars;
-        } else {
-          // Scenario: UPDATE rating - Keep count the same, only update total score
-          updatedCount = currentCount;
-          updatedTotalStars = currentTotalStars + difference;
-        }
-
-        // Ensure values are not negative
-        updatedCount = updatedCount < 0 ? 0 : updatedCount;
-        updatedTotalStars = updatedTotalStars < 0 ? 0 : updatedTotalStars;
-
-        const averageRating = updatedCount > 0 ? (updatedTotalStars / updatedCount) : 0;
-
-        // Update the aggregate fields in the model's document
-        transaction.update(modelRef, {
-          ratingCount: updatedCount,
-          totalStars: updatedTotalStars,
-          averageRating: parseFloat(averageRating.toFixed(2)), // Round to 2 decimal places
-          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        });
-      });
-
-      console.log(`Successfully aggregated ratings for model: ${modelId}`);
-    } catch (error) {
-      console.error(`Failed to aggregate ratings for model ${modelId}:`, error);
-      // You can add more robust error handling here, like sending a notification
+/**
+ * Trigger MỚI cho BENCHMARKS
+ * Chạy mỗi khi bạn thêm/sửa điểm số trong sub-collection benchmarks
+ */
+exports.aggregateModelIntelligence = onDocumentWritten(
+    {
+        document: "models/{modelId}/benchmarks/{benchmarkId}",
+        secrets: [GEMINI_API_KEY],
+        region: 'asia-southeast1',
+    },
+    async (event) => {
+        if (!event.data) return null;
+        return aggregateIntelligence(event.params.modelId);
     }
-    return null;
-  });
+);
+
+/**
+ * Trigger cho RATINGS (Tools)
+ * Lưu ý: Logic này giả định collection 'tools' có cấu trúc tương tự 'models'
+ * với sub-collection 'ratings'.
+ */
+exports.aggregateToolRating = onDocumentWritten(
+    {
+        document: "tools/{toolId}/ratings/{ratingId}",
+        secrets: [GEMINI_API_KEY],
+        region: 'asia-southeast1',
+    },
+    async (event) => {
+        if (!event.data) return null;
+        // This function does not exist yet. We need to implement it based on aggregateRatings
+        // For now, let's assume a similar structure and call a generic handler.
+        // Re-using aggregateRatings for tools assuming the schema is the same.
+        return aggregateRatings("tools", event.params.toolId);
+    }
+);
