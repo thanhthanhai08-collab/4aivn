@@ -39,29 +39,44 @@ export async function getUserProfileData(uid: string): Promise<UserProfileData> 
 // Get all reviews for a specific tool from all users.
 export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
     const reviews: ToolReview[] = [];
-    try {
-        const usersSnapshot = await getDocs(collection(db, USER_DATA_COLLECTION));
+    const ratingsColRef = collection(db, TOOLS_COLLECTION, toolId, 'ratings');
 
-        usersSnapshot.forEach(docSnap => {
-            const userData = docSnap.data() as UserProfileData;
-            if (userData.ratedTools && userData.ratedTools[toolId]) {
-                const reviewData = userData.ratedTools[toolId];
-                if(reviewData.text && reviewData.text.trim() !== '') { // Only show reviews with text
-                    reviews.push({
-                        userId: docSnap.id,
-                        userName: userData.displayName || "Người dùng ẩn danh",
-                        userPhotoURL: userData.photoURL || null,
-                        rating: reviewData.rating,
-                        text: reviewData.text
-                    });
-                }
+    try {
+        const ratingsSnapshot = await getDocs(ratingsColRef);
+
+        const userIds = ratingsSnapshot.docs.map(doc => doc.id);
+        if (userIds.length === 0) return [];
+
+        // Fetch user data in parallel
+        const userDocsQuery = query(collection(db, USER_DATA_COLLECTION), where('__name__', 'in', userIds));
+        const userDocsSnapshot = await getDocs(userDocsQuery);
+        const usersDataMap = new Map<string, UserProfileData>();
+        userDocsSnapshot.forEach(doc => {
+            usersDataMap.set(doc.id, doc.data() as UserProfileData);
+        });
+
+        ratingsSnapshot.forEach(ratingDoc => {
+            const ratingData = ratingDoc.data();
+            const userData = usersDataMap.get(ratingDoc.id);
+
+            if (ratingData.reviewText && ratingData.reviewText.trim() !== '') {
+                reviews.push({
+                    userId: ratingDoc.id,
+                    userName: userData?.displayName || "Người dùng ẩn danh",
+                    userPhotoURL: userData?.photoURL || null,
+                    rating: ratingData.starRating,
+                    text: ratingData.reviewText,
+                });
             }
         });
+
     } catch (error) {
         console.error("Error fetching all tool reviews:", error);
+        // Optionally emit a permission error if needed
     }
-    return reviews;
+    return reviews.sort((a, b) => b.rating - a.rating);
 }
+
 
 // Get aggregate rating data for a specific item (tool or model)
 export async function getAggregateRating(collectionName: string, docId: string): Promise<{ ratingCount: number; totalStars: number, viewCount: number }> {
@@ -127,54 +142,47 @@ export async function toggleNewsBookmark(uid: string, newsId: string, isCurrentl
     });
 }
 
-// Set or update a rating for a tool, now includes review text
+// Set or update a rating for a tool
 export async function setToolRating(uid: string, toolId: string, newRating: number, reviewText: string, displayName: string | null, photoURL: string | null) {
     const userDocRef = getUserDocRef(uid);
-    const toolDocRef = getToolDocRef(toolId);
+    const ratingDocRef = doc(db, TOOLS_COLLECTION, toolId, "ratings", uid);
 
-    await runTransaction(db, async (transaction) => {
-        const userDoc = await transaction.get(userDocRef);
-        const toolDoc = await transaction.get(toolDocRef);
-
-        const userData = userDoc.exists() ? userDoc.data() as UserProfileData : {};
-        const oldRatingData = userData.ratedTools?.[toolId];
-        const oldRating = oldRatingData?.rating || 0;
-
-        const toolData = toolDoc.exists() ? toolDoc.data() : { ratingCount: 0, totalStars: 0 };
-        let ratingCount = toolData.ratingCount || 0;
-        let totalStars = toolData.totalStars || 0;
-
-        if (oldRating === 0) { // New rating
-            ratingCount += 1;
-            totalStars += newRating;
-        } else { // Updating existing rating
-            totalStars = totalStars - oldRating + newRating;
+    // 1. Update the user-data document
+    const userUpdatePayload = {
+        displayName: displayName || "Người dùng ẩn danh",
+        photoURL: photoURL,
+        ratedTools: {
+            [toolId]: { rating: newRating, text: reviewText }
         }
-
-        const userUpdatePayload = {
-            displayName: displayName || "Người dùng ẩn danh",
-            photoURL: photoURL,
-            ratedTools: { 
-                ...userData.ratedTools, 
-                [toolId]: { rating: newRating, text: reviewText } 
-            }
-        };
-        transaction.set(userDocRef, userUpdatePayload, { merge: true });
-        
-        const toolUpdatePayload = { ratingCount, totalStars };
-        transaction.set(toolDocRef, toolUpdatePayload, { merge: true });
-    }).catch(async (serverError) => {
-        const permissionError = new FirestorePermissionError({
-            path: `Transaction failed for docs: ${userDocRef.path}, ${toolDocRef.path}`,
-            operation: 'update',
-            requestResourceData: { 
-                userUpdate: `ratedTools.${toolId}`, 
-                toolUpdate: '{ratingCount, totalStars}'
-            },
+    };
+    await setDoc(userDocRef, userUpdatePayload, { merge: true })
+        .catch(async (serverError) => {
+            const permissionError = new FirestorePermissionError({
+                path: userDocRef.path,
+                operation: 'update',
+                requestResourceData: userUpdatePayload,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+            throw serverError;
         });
-        errorEmitter.emit('permission-error', permissionError);
-        throw serverError;
-    });
+
+    // 2. Write to the sub-collection to trigger the cloud function
+    const ratingPayload = { 
+        starRating: newRating,
+        reviewText: reviewText, // Pass review text to the function trigger document as well
+        userId: uid,
+        updatedAt: new Date().toISOString()
+    };
+    await setDoc(ratingDocRef, ratingPayload, { merge: true })
+        .catch(async (serverError) => {
+            const permissionError = new FirestorePermissionError({
+                path: ratingDocRef.path,
+                operation: 'write',
+                requestResourceData: ratingPayload,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+            throw serverError;
+        });
 }
 
 

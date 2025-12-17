@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, ThumbsUp, Sparkles, PlusCircle, LayoutGrid, Newspaper } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, Sparkles, LayoutGrid, Newspaper } from "lucide-react";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,17 +20,15 @@ import {
   setToolRating,
   toggleToolFavorite,
   getUserProfileData,
-  getAggregateRating,
   getAllToolReviews,
   incrementToolViewCount,
-  type UserToolRating,
   type ToolReview,
 } from "@/lib/user-data-service";
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, limit, query, where, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp } from "firebase/firestore";
 import { NewsCard } from "@/components/news/news-card";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
@@ -81,7 +79,6 @@ function ToolDetailContent({ id }: { id: string }) {
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
-  const [aggregateRating, setAggregateRating] = useState({ totalStars: 0, ratingCount: 0 });
   const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [ranking, setRanking] = useState<number | null>(null);
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
@@ -93,97 +90,93 @@ function ToolDetailContent({ id }: { id: string }) {
   const { toast } = useToast();
   
   const categoryIcons: { [key: string]: string } = {
-    'Tạo hình ảnh': '🎨',
-    'AI Agent': '🤖',
-    'Tự động hóa': '⚙️',
-    'API truy xuất dữ liệu web': '🌐',
-    'Hỗ trợ viết': '✍️',
-    'Tạo video': '🎬',
-    'Code cho Web app': '💻',
-    'Model AI': '🧠',
-    'Tạo giọng nói': '🗣️',
-    'AI tìm kiếm': '🔍',
-    'Trình duyệt AI': '🌐',
-    'Tạo nhạc AI': '🎵',
+    'Tạo hình ảnh': '🎨', 'AI Agent': '🤖', 'Tự động hóa': '⚙️', 'API truy xuất dữ liệu web': '🌐',
+    'Hỗ trợ viết': '✍️', 'Tạo video': '🎬', 'Code cho Web app': '💻', 'Model AI': '🧠',
+    'Tạo giọng nói': '🗣️', 'AI tìm kiếm': '🔍', 'Trình duyệt AI': '🌐', 'Tạo nhạc AI': '🎵',
   };
 
+  // Effect for public tool data (real-time)
   useEffect(() => {
     if (!id) return;
+    setIsLoading(true);
     incrementToolViewCount(id);
-    
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const toolDocRef = doc(db, "tools", id);
-        const toolDocSnap = await getDoc(toolDocRef);
 
-        if (toolDocSnap.exists()) {
-          const foundTool = { id: toolDocSnap.id, ...toolDocSnap.data() } as Tool;
-          setTool(foundTool);
-          
-          // --- Fetch all other data in parallel ---
-          const [
-            allToolsSnapshot,
-            featuredToolsSnapshot,
-            newsSnapshot,
-            allReviewsData,
-            userData,
-            aggregateData
-          ] = await Promise.all([
-            getDocs(collection(db, "tools")),
-            getDocs(query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(4))),
-            getDocs(query(collection(db, "news"), where('title', '>=', foundTool.name), where('title', '<=', foundTool.name + '\uf8ff'), limit(3))),
-            getAllToolReviews(id),
-            currentUser ? getUserProfileData(currentUser.uid) : Promise.resolve(null),
-            getAggregateRating("tools", id)
-          ]);
-
-          // --- Process all tools for ranking, categories, and similar/complementary tools ---
-          const allToolsData = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
-          
-          const sortedTools = [...allToolsData].sort((a, b) => {
-            const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-            const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-            if (ratingB !== ratingA) return ratingB - ratingA;
-            const countA = a.ratingCount ?? 0;
-            const countB = b.ratingCount ?? 0;
-            if (countB !== countA) return countB - countA;
-            return (a.name || '').localeCompare(b.name || '');
-          });
-          const rank = sortedTools.findIndex(t => t.id === id);
-          setRanking(rank !== -1 ? rank + 1 : null);
-
-          setAllCategories(Array.from(new Set(allToolsData.map(t => t.context).filter(Boolean))).sort());
-          setSimilarTools(allToolsData.filter(t => t.id !== id && t.context === foundTool.context).slice(0, 4));
-          setComplementaryTools(allToolsData.filter(t => t.id !== id && t.context !== foundTool.context).slice(8, 11)); // Example logic
-
-          // --- Process other fetched data ---
-          setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== id).slice(0, 3));
-          setAggregateRating(aggregateData);
-          setAllReviews(allReviewsData);
-
-          if (userData) {
-            setIsFavorite(userData.favoriteTools?.includes(id) || false);
-          }
-
-          const newsData = newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: doc.data().publishedAt.toDate().toISOString() } as NewsArticle));
-          setRelatedNews(newsData);
-          
-          if (foundTool.description && foundTool.description.length < 100 && foundTool.description.length > 0) {
-            generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
-              .then(output => setEnhancedDescription(output.description))
-              .catch(err => console.error("Failed to generate AI description:", err));
-          }
+    const toolDocRef = doc(db, "tools", id);
+    const unsubscribe = onSnapshot(toolDocRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const foundTool = { id: docSnap.id, ...docSnap.data() } as Tool;
+        setTool(foundTool);
+        
+        // Fetch related data that only depends on the tool itself (can be done once)
+        if (!enhancedDescription && foundTool.description && foundTool.description.length < 100) {
+          generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
+            .then(output => setEnhancedDescription(output.description))
+            .catch(err => console.error("Failed to generate AI description:", err));
         }
-      } catch (error) {
-        console.error("Error fetching tool details:", error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        setTool(null);
       }
-    };
+      setIsLoading(false);
+    }, (error) => {
+        console.error("Error fetching tool data:", error);
+        setIsLoading(false);
+    });
 
-    fetchData();
+    return () => unsubscribe();
+  }, [id]);
+
+  // Effect for other data (reviews, related items, etc.) - fetched once after tool loads
+  useEffect(() => {
+    if (!tool) return;
+
+    const fetchRelatedData = async () => {
+        try {
+            const [allToolsSnapshot, featuredToolsSnapshot, newsSnapshot, allReviewsData] = await Promise.all([
+                getDocs(collection(db, "tools")),
+                getDocs(query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(4))),
+                getDocs(query(collection(db, "news"), where('title', '>=', tool.name), where('title', '<=', tool.name + '\uf8ff'), limit(3))),
+                getAllToolReviews(tool.id),
+            ]);
+
+            const allToolsData = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            const sortedTools = [...allToolsData].sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0) || (b.ratingCount ?? 0) - (a.ratingCount ?? 0));
+            
+            setRanking(sortedTools.findIndex(t => t.id === tool.id) + 1);
+            setAllCategories(Array.from(new Set(allToolsData.map(t => t.context).filter(Boolean))).sort());
+            setSimilarTools(allToolsData.filter(t => t.id !== tool.id && t.context === tool.context).slice(0, 4));
+            setComplementaryTools(allToolsData.filter(t => t.id !== tool.id && t.context !== tool.context).slice(8, 11));
+            setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
+            setRelatedNews(newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: (doc.data().publishedAt as Timestamp).toDate().toISOString() } as NewsArticle)));
+            setAllReviews(allReviewsData);
+
+        } catch (error) {
+            console.error("Error fetching related data for tool:", error);
+        }
+    };
+    fetchRelatedData();
+  }, [tool]);
+
+  // Effect for user-specific data (favorite, my rating)
+  useEffect(() => {
+    if (!currentUser || !id) {
+        setIsFavorite(false);
+        setCurrentRating(0);
+        setReviewText("");
+        return;
+    }
+    const fetchUserData = async () => {
+        try {
+            const userData = await getUserProfileData(currentUser.uid);
+            setIsFavorite(userData.favoriteTools?.includes(id) || false);
+            setCurrentRating(userData.ratedTools?.[id]?.rating || 0);
+            setReviewText(userData.ratedTools?.[id]?.text || "");
+        } catch (error) {
+            console.error("Failed to fetch user data for tool page:", error);
+        }
+    };
+    fetchUserData();
   }, [id, currentUser]);
+
 
   const handleFavoriteToggle = async () => {
     if (!currentUser) {
@@ -225,11 +218,9 @@ function ToolDetailContent({ id }: { id: string }) {
       );
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
+      // No need to manually refetch, onSnapshot will handle the aggregate rating update
+      // Manually refetch reviews list after submission
       getAllToolReviews(id).then(setAllReviews);
-      getAggregateRating("tools", id).then(setAggregateRating);
-      
-      setCurrentRating(0);
-      setReviewText("");
 
     } catch(error) {
       console.error("Failed to save rating:", error);
@@ -273,7 +264,7 @@ function ToolDetailContent({ id }: { id: string }) {
   }
 
   const descriptionToDisplay = enhancedDescription || tool.description;
-  const averageRating = aggregateRating.ratingCount > 0 ? (aggregateRating.totalStars / aggregateRating.ratingCount) : 0;
+  const averageRating = tool.averageRating || 0;
 
   return (
     <AppLayout>
@@ -310,7 +301,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 <div className="flex items-center gap-1">
                   <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
                   <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
-                  <span>({aggregateRating.ratingCount} đánh giá)</span>
+                  <span>({tool.ratingCount || 0} đánh giá)</span>
                 </div>
                  {ranking && (
                     <div className="flex items-center gap-1">
@@ -343,7 +334,7 @@ function ToolDetailContent({ id }: { id: string }) {
                           <Image
                             src={tool.imageUrl}
                             alt={`Ảnh giới thiệu ${tool.name}`}
-                            layout="fill"
+                            fill
                             className="object-cover"
                             data-ai-hint="tool interface"
                           />

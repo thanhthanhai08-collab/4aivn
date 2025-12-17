@@ -20,6 +20,7 @@ export interface Tool {
   myRating?: number;
   ratingCount?: number;
   viewCount?: number;
+  averageRating?: number;
 }
 
 export interface NewsArticle {
