@@ -26,14 +26,13 @@ import {
 } from "@/components/ui/dialog";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
-import { collection, getDocs, query, where, documentId } from "firebase/firestore";
+import { collection, getDocs, query, where, documentId, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const sortToolsByRating = (tools: Tool[]) => {
     return tools.sort((a, b) => {
-        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-
+        const ratingA = a.averageRating ?? -1;
+        const ratingB = b.averageRating ?? -1;
         if (ratingB !== ratingA) return ratingB - ratingA;
 
         const countA = a.ratingCount ?? 0;
@@ -69,7 +68,12 @@ export default function ProfilePage() {
             // --- Fetch all required data in parallel ---
             const [modelsSnapshot, toolsSnapshot] = await Promise.all([
               getDocs(collection(db, "models")),
-              getDocs(collection(db, "tools")),
+              getDocs(query(
+                collection(db, "tools"),
+                orderBy("averageRating", "desc"),
+                orderBy("ratingCount", "desc"),
+                orderBy("__name__")
+              )),
             ]);
 
             const allDbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
@@ -87,14 +91,14 @@ export default function ProfilePage() {
             const userRatedTools = allDbTools
                 .filter(tool => ratedToolIds.includes(tool.id))
                 .map(tool => ({ ...tool, myRating: userData.ratedTools?.[tool.id]?.rating }));
-            setRatedTools(sortToolsByRating(userRatedTools));
+            setRatedTools(userRatedTools); // Already sorted from Firestore query
 
             setFavoriteModels(
               allDbModels.filter(model => (userData.favoriteModels || []).includes(model.id))
             );
             
             const userFavoriteTools = allDbTools.filter(tool => (userData.favoriteTools || []).includes(tool.id));
-            setFavoriteTools(sortToolsByRating(userFavoriteTools));
+            setFavoriteTools(userFavoriteTools); // Already sorted from Firestore query
             
             const bookmarkedIds = userData.bookmarkedNews || [];
             if (bookmarkedIds.length > 0) {

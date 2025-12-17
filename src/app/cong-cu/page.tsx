@@ -10,14 +10,15 @@ import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
 
 export default function ToolsPage() {
   const searchParams = useSearchParams();
   const initialSearchQuery = searchParams.get('search_query') || "";
+  const initialCategory = searchParams.get('category') || "all";
   
   const [searchTerm, setSearchTerm] = useState(initialSearchQuery);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [allTools, setAllTools] = useState<Tool[]>([]);
@@ -26,8 +27,18 @@ export default function ToolsPage() {
     setMounted(true);
     
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const toolsSnapshot = await getDocs(collection(db, "tools"));
+        const toolsCollectionRef = collection(db, "tools");
+        // Query directly sorted from Firestore using the composite index
+        const toolsQuery = query(
+          toolsCollectionRef, 
+          orderBy("averageRating", "desc"),
+          orderBy("ratingCount", "desc"),
+          orderBy("__name__") // Corresponds to document ID for name sorting
+        );
+        
+        const toolsSnapshot = await getDocs(toolsQuery);
         const dbTools = toolsSnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
@@ -48,36 +59,29 @@ export default function ToolsPage() {
   useEffect(() => {
     setSearchTerm(initialSearchQuery);
   }, [initialSearchQuery]);
+  
+  // Update category if URL query changes
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
 
   const categories = useMemo(() => {
-    const toolCategories = new Set(allTools.map(tool => tool.context));
-    toolCategories.add("Model AI"); // Keep this if needed for filter consistency across app
+    const toolCategories = new Set(allTools.map(tool => tool.context).filter(Boolean));
     return Array.from(toolCategories).sort((a, b) => a.localeCompare(b));
   }, [allTools]);
 
-  const sortedTools = useMemo(() => {
-    const filtered = allTools.filter((tool) => {
-      const matchesSearch = (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+  const filteredTools = useMemo(() => {
+    // The `allTools` array is already sorted by Firestore. We just need to filter.
+    return allTools.filter((tool) => {
+      const matchesSearch = searchTerm === "" || 
+                            (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
                             (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === "all" || tool.context === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-    
-    return filtered.sort((a, b) => {
-        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-
-        if (ratingB !== ratingA) return ratingB - ratingA;
-        
-        const countA = a.ratingCount ?? 0;
-        const countB = b.ratingCount ?? 0;
-        if (countB !== countA) return countB - countA;
-        
-        return (a.name || '').localeCompare(b.name || '');
-    });
   }, [searchTerm, selectedCategory, allTools]);
 
-  if (!mounted && !initialSearchQuery) {
+  if (!mounted) {
      return (
       <AppLayout>
         <div className="container py-8">
@@ -110,22 +114,24 @@ export default function ToolsPage() {
           initialSearchTerm={searchTerm}
         />
 
-        {isLoading && !initialSearchQuery ? (
+        {isLoading ? (
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
               <Skeleton key={i} className="h-64 w-full rounded-lg" />
             ))}
           </div>
-        ) : sortedTools.length > 0 ? (
+        ) : filteredTools.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sortedTools.map((tool, index) => (
+            {filteredTools.map((tool, index) => (
               <ToolCard key={tool.id} tool={tool} rank={index + 1} />
             ))}
           </div>
         ) : (
           <div className="text-center py-16">
             <p className="text-xl text-muted-foreground">
-              {initialSearchQuery && !sortedTools.length ? `Không tìm thấy kết quả nào cho "${initialSearchQuery}".` : "Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn."}
+              {initialSearchQuery || selectedCategory !== 'all'
+                ? `Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn.`
+                : "Không tìm thấy công cụ nào."}
             </p>
           </div>
         )}

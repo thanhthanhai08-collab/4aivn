@@ -31,7 +31,13 @@ export default function RankingsPage() {
           orderBy("speedTokensPerSecond", "desc")
         );
 
-        const toolsQuery = query(collection(db, "tools"));
+        // Updated tools query to use the composite index
+        const toolsQuery = query(
+          collection(db, "tools"),
+          orderBy("averageRating", "desc"),
+          orderBy("ratingCount", "desc"),
+          orderBy("__name__")
+        );
 
         const [toolsSnapshot, modelsSnapshot] = await Promise.all([
           getDocs(toolsQuery),
@@ -76,21 +82,11 @@ export default function RankingsPage() {
   }, [allModels, searchTerm]);
 
   const filteredTools = useMemo(() => {
-    const filtered = allTools.filter(tool => 
+    // Data is already sorted by Firestore. We just need to filter by search term.
+    return allTools.filter(tool => 
       (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-    return filtered.sort((a, b) => {
-        const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-        const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-        if (ratingB !== ratingA) return ratingB - ratingA;
-        
-        const countA = a.ratingCount ?? 0;
-        const countB = b.ratingCount ?? 0;
-        if (countB !== countA) return countB - countA;
-        
-        return (a.name || '').localeCompare(b.name || '');
-    });
   }, [allTools, searchTerm]);
 
   return (

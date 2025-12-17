@@ -118,26 +118,21 @@ export default function HomePage() {
   useEffect(() => {
     const fetchTopTools = async () => {
       try {
-        const toolsSnapshot = await getDocs(collection(db, "tools"));
-        const toolsWithRatings = toolsSnapshot.docs.map(doc => ({
+        const toolsQuery = query(
+          collection(db, "tools"),
+          orderBy("averageRating", "desc"),
+          orderBy("ratingCount", "desc"),
+          orderBy("__name__"),
+          limit(4)
+        );
+        
+        const toolsSnapshot = await getDocs(toolsQuery);
+        const topRankedTools = toolsSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         } as Tool));
         
-        const sortedTopTools = toolsWithRatings.sort((a, b) => {
-          const ratingA = a.ratingCount && a.ratingCount > 0 ? (a.totalStars || 0) / a.ratingCount : -1;
-          const ratingB = b.ratingCount && b.ratingCount > 0 ? (b.totalStars || 0) / b.ratingCount : -1;
-
-          if (ratingB !== ratingA) return ratingB - ratingA;
-          
-          const countA = a.ratingCount ?? 0;
-          const countB = b.ratingCount ?? 0;
-          if (countB !== countA) return countB - countA;
-          
-          return (a.name || "").localeCompare(b.name || "");
-        }).slice(0, 4);
-        
-        setTopTools(sortedTopTools);
+        setTopTools(topRankedTools);
 
       } catch (error) {
         console.error("Error fetching top tools for homepage:", error);
