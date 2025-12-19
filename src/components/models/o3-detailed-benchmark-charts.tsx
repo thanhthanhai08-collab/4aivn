@@ -210,14 +210,6 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
             <div className="text-center py-4 space-y-4 bg-muted/30 rounded-lg">
                 <p className="font-semibold text-xl">Dữ liệu Benchmark Chi tiết</p>
                 <p className="text-muted-foreground">Mô hình này chưa có điểm chuẩn so sánh cho các hạng mục đã chọn.</p>
-                {missingBenchmarks.length > 0 && (
-                    <div className="px-4">
-                        <p className="text-sm font-medium text-destructive">Gợi ý: Vui lòng bổ sung dữ liệu cho các benchmark sau trong subcollection 'benchmarks' trên Firestore:</p>
-                        <ul className="list-disc list-inside text-left max-w-md mx-auto mt-2 text-destructive/80 text-sm">
-                            {missingBenchmarks.map(b => <li key={b}>{b}</li>)}
-                        </ul>
-                    </div>
-                )}
             </div>
         );
     }
