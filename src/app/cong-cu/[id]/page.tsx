@@ -160,16 +160,18 @@ function ToolDetailContent({ id }: { id: string }) {
   useEffect(() => {
     if (!currentUser || !id) {
         setIsFavorite(false);
-        setCurrentRating(0);
-        setReviewText("");
+        // Do not load old ratings, always keep the form fresh
+        // setCurrentRating(0);
+        // setReviewText("");
         return;
     }
     const fetchUserData = async () => {
         try {
             const userData = await getUserProfileData(currentUser.uid);
             setIsFavorite(userData.favoriteTools?.includes(id) || false);
-            setCurrentRating(userData.ratedTools?.[id]?.rating || 0);
-            setReviewText(userData.ratedTools?.[id]?.text || "");
+            // We remove these lines so the review form is always empty.
+            // setCurrentRating(userData.ratedTools?.[id]?.rating || 0);
+            // setReviewText(userData.ratedTools?.[id]?.text || "");
         } catch (error) {
             console.error("Failed to fetch user data for tool page:", error);
         }
