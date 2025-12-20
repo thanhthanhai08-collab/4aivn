@@ -2,12 +2,14 @@
  * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const { onDocumentWritten } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
+const { getFirestore } = require("firebase-admin/firestore");
+
 
 admin.initializeApp();
-const db = admin.firestore();
+const db = getFirestore();
 
 const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
 
@@ -143,5 +145,111 @@ exports.aggregateToolRating = onDocumentWritten(
         // For now, let's assume a similar structure and call a generic handler.
         // Re-using aggregateRatings for tools assuming the schema is the same.
         return aggregateRatings("tools", event.params.toolId);
+    }
+);
+
+// Định nghĩa danh sách các Logo dựa trên nhà phát triển
+const LOGOS = {
+    GOOGLE: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-gemini.webp?alt=media&token=aa09e48b-fb33-4688-b285-d9e8901f19a7",
+    OPENAI: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-open-ai.webp?alt=media&token=21377081-d120-4680-b793-4224d7977ba6",
+    XAI: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-grok.webp?alt=media&token=5d4df9ba-abf0-4b58-84a7-d77d48e453fb",
+    ALIBABA: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-qwen.webp?alt=media&token=879e5e94-ecd1-44b9-9eea-65c8140ad86f",
+    ANTHROPIC: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
+};
+
+// --- FUNCTION CHO MODELS ---
+exports.initModelStructure = onDocumentCreated(
+    { document: "models/{id}", region: "asia-southeast1" },
+    async (event) => {
+        const snapshot = event.data;
+        if (!snapshot) return null;
+
+        const resRef = snapshot.ref;
+        const data = snapshot.data();
+        const dev = data.developer || "";
+        const devLower = dev.toLowerCase();
+
+        // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
+        let autoLogoUrl = data.logoUrl || "";
+        if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
+        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
+        else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
+        else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
+        else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
+
+        const modelFields = {
+            averageRating: 0,
+            ratingCount: 0,
+            intelligenceScore: 0,
+            contextLengthToken: 0,
+            latencyFirstChunkSeconds: 0,
+            pricePerMillionTokens: 0,
+            speedTokensPerSecond: 0,
+            description: data.description || "Đang cập nhật...",
+            developer: dev || "Đang cập nhật...",
+            logoUrl: autoLogoUrl,
+            name: data.name || event.params.id,
+            type: data.type || "LLM",
+            multimodal: data.multimodal || false,
+            releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
+        };
+
+        await resRef.set(modelFields, { merge: true });
+
+        // Khởi tạo Sub-collection 'benchmarks'
+        const benchmarks = [
+            { id: "aa-lcr", name: "AA-LCR" },
+            { id: "agentic-coding", name: "Agentic Coding" },
+            { id: "agentic-tool-use", name: "Agentic Tool Use" },
+            { id: "aime-2025", name: "AIME 2025" },
+            { id: "gpqa-diamond", name: "GPQA Diamond" },
+            { id: "humanitys-last-exam", name: "Humanity's Last Exam" },
+            { id: "ifbench", name: "IFBench" },
+            { id: "livecodebench", name: "LiveCodeBench" },
+            { id: "mmlu-pro", name: "MMLU Pro" },
+            { id: "scicode", name: "SciCode" }
+        ];
+
+        const batch = db.batch();
+        benchmarks.forEach((bm) => {
+            const bmRef = resRef.collection("benchmarks").doc(bm.id);
+            batch.set(bmRef, {
+                name: bm.name,
+                score: 0
+            });
+        });
+
+        return batch.commit();
+    }
+);
+
+// --- FUNCTION CHO TOOLS ---
+exports.initToolStructure = onDocumentCreated(
+    { document: "tools/{id}", region: "asia-southeast1" },
+    async (event) => {
+        const snapshot = event.data;
+        if (!snapshot) return null;
+
+        const resRef = snapshot.ref;
+        const data = snapshot.data();
+
+        const toolFields = {
+            averageRating: 0,
+            ratingCount: 0,
+            context: data.context || "",
+            description: data.description || "",
+            developer: data.developer || "",
+            imageUrl: data.imageUrl || "",
+            link: data.link || "",
+            logoUrl: data.logoUrl || "",
+            longDescription: data.longDescription || "",
+            name: data.name || event.params.id,
+            pricingPlans: data.pricingPlans || [],
+            useCases: data.useCases || [],
+            whoIsItFor: data.whoIsItFor || [],
+           
+        };
+
+        return resRef.set(toolFields, { merge: true });
     }
 );
