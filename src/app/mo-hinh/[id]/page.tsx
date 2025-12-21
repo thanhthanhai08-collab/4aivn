@@ -13,7 +13,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
-import { generateAiModelDescription } from "@/ai/flows/ai-model-description-generator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -44,7 +43,6 @@ function ModelDetailContent({ id }: { id: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
-  const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   
   const { currentUser } = useAuth();
@@ -101,18 +99,6 @@ function ModelDetailContent({ id }: { id: string }) {
                     publishedAt: doc.data().publishedAt.toDate().toISOString(),
                 } as NewsArticle));
                 setRelatedNews(newsData);
-            }
-
-            // Generate AI description if needed (only once)
-            if (!enhancedDescription && foundModel.description && foundModel.description.length < 100 && foundModel.description.length > 0) {
-              generateAiModelDescription({ 
-                  name: foundModel.name, 
-                  type: foundModel.type, 
-                  developer: foundModel.developer,
-                  link: foundModel.link 
-              })
-                .then(output => setEnhancedDescription(output.description))
-                .catch(err => console.error("Failed to generate AI model description:", err));
             }
 
             setIsLoading(false);
@@ -252,8 +238,6 @@ function ModelDetailContent({ id }: { id: string }) {
     );
   }
   
-  const descriptionToDisplay = enhancedDescription || model.description;
-
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
@@ -281,7 +265,7 @@ function ModelDetailContent({ id }: { id: string }) {
                           </div>
                       </CardHeader>
                       <CardContent>
-                          <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{descriptionToDisplay}</p>
+                          <p className="text-lg text-muted-foreground max-w-4xl whitespace-pre-line">{model.description}</p>
                       </CardContent>
                   </Card>
               </div>

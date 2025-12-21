@@ -13,7 +13,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
-import { generateAiToolDescription } from "@/ai/flows/ai-tool-description-generator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -79,7 +78,6 @@ function ToolDetailContent({ id }: { id: string }) {
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
-  const [enhancedDescription, setEnhancedDescription] = useState<string | null>(null);
   const [ranking, setRanking] = useState<number | null>(null);
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
   const [similarTools, setSimilarTools] = useState<Tool[]>([]);
@@ -106,13 +104,6 @@ function ToolDetailContent({ id }: { id: string }) {
       if (docSnap.exists()) {
         const foundTool = { id: docSnap.id, ...docSnap.data() } as Tool;
         setTool(foundTool);
-        
-        // Fetch related data that only depends on the tool itself (can be done once)
-        if (!enhancedDescription && foundTool.description && foundTool.description.length < 100) {
-          generateAiToolDescription({ name: foundTool.name, context: foundTool.context, link: foundTool.link })
-            .then(output => setEnhancedDescription(output.description))
-            .catch(err => console.error("Failed to generate AI description:", err));
-        }
       } else {
         setTool(null);
       }
@@ -160,18 +151,12 @@ function ToolDetailContent({ id }: { id: string }) {
   useEffect(() => {
     if (!currentUser || !id) {
         setIsFavorite(false);
-        // Do not load old ratings, always keep the form fresh
-        // setCurrentRating(0);
-        // setReviewText("");
         return;
     }
     const fetchUserData = async () => {
         try {
             const userData = await getUserProfileData(currentUser.uid);
             setIsFavorite(userData.favoriteTools?.includes(id) || false);
-            // We remove these lines so the review form is always empty.
-            // setCurrentRating(userData.ratedTools?.[id]?.rating || 0);
-            // setReviewText(userData.ratedTools?.[id]?.text || "");
         } catch (error) {
             console.error("Failed to fetch user data for tool page:", error);
         }
@@ -220,7 +205,6 @@ function ToolDetailContent({ id }: { id: string }) {
       );
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
-      // No need to manually refetch aggregates, onSnapshot handles that.
       // Manually refetch reviews list after submission.
       getAllToolReviews(id).then(setAllReviews);
       
@@ -269,7 +253,6 @@ function ToolDetailContent({ id }: { id: string }) {
     );
   }
 
-  const descriptionToDisplay = enhancedDescription || tool.description;
   const averageRating = tool.averageRating || 0;
 
   return (
@@ -317,7 +300,7 @@ function ToolDetailContent({ id }: { id: string }) {
               </div>
 
               <div className="space-y-4">
-                  <p className="text-lg text-foreground/80 whitespace-pre-line">{descriptionToDisplay}</p>
+                  <p className="text-lg text-foreground/80 whitespace-pre-line">{tool.description}</p>
               </div>
             </section>
             
