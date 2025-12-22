@@ -83,7 +83,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
           width={400}
           height={250}
           className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
-          data-ai-hint={article.dataAiHint}
+          
         />
       </Link>
       <div className="md:col-span-3">

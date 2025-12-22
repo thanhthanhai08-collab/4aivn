@@ -24,7 +24,7 @@ export function ToolCardSmall({ tool }: ToolCardSmallProps) {
           width={40} 
           height={40} 
           className="rounded-md object-contain"
-          data-ai-hint="logo company" 
+           
         />
         <div className="flex-grow">
           <p className="font-semibold">{tool.name}</p>

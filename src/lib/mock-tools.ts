@@ -190,7 +190,6 @@ export const mockTools: Tool[] = [
       "Gói Professional: $16-$19.9/tháng với 20.000 credit, hỗ trợ các tính năng nâng cao và tạo video.",
       "Gói Ultimate: $36-$49.9/tháng với 50.000 credit, dành cho người dùng chuyên nghiệp và doanh nghiệp cần khối lượng công việc lớn."
     ],
-    isFavorite: false,
   },
   {
     id: 'n8n',
@@ -581,4 +580,5 @@ export const mockTools: Tool[] = [
 
 
     
+
 

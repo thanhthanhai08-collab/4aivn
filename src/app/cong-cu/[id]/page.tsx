@@ -325,7 +325,7 @@ function ToolDetailContent({ id }: { id: string }) {
                             alt={`Ảnh giới thiệu ${tool.name}`}
                             fill
                             className="object-cover"
-                            data-ai-hint="tool interface"
+                            
                           />
                         </div>
                       ) : null}

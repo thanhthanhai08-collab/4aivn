@@ -26,7 +26,7 @@ const QuickViewItem = ({ article }: { article: NewsArticle }) => (
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                     sizes="96px"
-                    data-ai-hint={article.dataAiHint || "news thumbnail"}
+                    
                 />
             </div>
         </Link>

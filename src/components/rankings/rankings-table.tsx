@@ -83,7 +83,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                     width={32}
                     height={32}
                     className="rounded-md object-contain"
-                    data-ai-hint="logo company"
+                    
                   />
                   <div className="flex flex-col">
                     <Link href={itemType === 'model' ? `/mo-hinh/${item.id}` : `/cong-cu/${item.id}`} className="font-medium hover:underline transition-colors">

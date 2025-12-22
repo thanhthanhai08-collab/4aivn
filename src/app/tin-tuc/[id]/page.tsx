@@ -49,7 +49,7 @@ const AdBanner = () => (
         width={400}
         height={250}
         className="mx-auto rounded-md shadow-md"
-        data-ai-hint="chatbot advertisement"
+        
       />
     </Link>
   </div>
@@ -141,7 +141,7 @@ const renderContent = (content: string, articleId: string) => {
             width={750}
             height={420}
             className="rounded-lg shadow-lg w-full h-auto object-cover"
-            data-ai-hint={hint}
+            
           />
         </div>
       );
@@ -366,7 +366,7 @@ function NewsDetailContent({ id }: { id: string }) {
                   height={450}
                   className="rounded-lg shadow-lg mb-8 w-full object-cover"
                   priority
-                  data-ai-hint={article.dataAiHint || "technology abstract"}
+                  
                 />
               )}
               
@@ -437,7 +437,7 @@ function NewsDetailContent({ id }: { id: string }) {
                             fill
                             className="object-cover rounded-md transition-transform group-hover:scale-105"
                             sizes="96px"
-                            data-ai-hint={related.dataAiHint}
+                            
                           />
                         </div>
                         <div>

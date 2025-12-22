@@ -27,7 +27,7 @@ export function ModelCard({ model }: ModelCardProps) {
               width={48} 
               height={48} 
               className="rounded-md object-contain"
-              data-ai-hint="logo company" 
+               
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">

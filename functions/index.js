@@ -150,11 +150,11 @@ exports.aggregateToolRating = onDocumentWritten(
 
 // Định nghĩa danh sách các Logo dựa trên nhà phát triển
 const LOGOS = {
-    GOOGLE: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-gemini.webp?alt=media&token=aa09e48b-fb33-4688-b285-d9e8901f19a7",
-    OPENAI: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-open-ai.webp?alt=media&token=21377081-d120-4680-b793-4224d7977ba6",
-    XAI: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-grok.webp?alt=media&token=5d4df9ba-abf0-4b58-84a7-d77d48e453fb",
-    ALIBABA: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-qwen.webp?alt=media&token=879e5e94-ecd1-44b9-9eea-65c8140ad86f",
-    ANTHROPIC: "https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
+    GOOGLE: "/image/models%2Flogo-gemini.webp?alt=media&token=aa09e48b-fb33-4688-b285-d9e8901f19a7",
+    OPENAI: "/image/models%2Flogo-open-ai.webp?alt=media&token=21377081-d120-4680-b793-4224d7977ba6",
+    XAI: "/image/models%2Flogo-grok.webp?alt=media&token=5d4df9ba-abf0-4b58-84a7-d77d48e453fb",
+    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media&token=879e5e94-ecd1-44b9-9eea-65c8140ad86f",
+    ANTHROPIC: "/image/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
 };
 
 // --- FUNCTION CHO MODELS ---

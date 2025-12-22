@@ -189,7 +189,7 @@ export default function HomePage() {
       {/* Placeholder for Airtable-like visual if desired */}
       <section className="py-12 md:py-16 hidden"> 
         <div className="container">
-          <Image src="https://picsum.photos/1200/600" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" data-ai-hint="dashboard interface" />
+          <Image src="https://picsum.photos/1200/600" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" />
         </div>
       </section>
       
@@ -262,7 +262,7 @@ export default function HomePage() {
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="AI automation workflow" 
+                 
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function HomePage() {
                 width={600} 
                 height={450} 
                 className="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 mx-auto" 
-                data-ai-hint="AI accessibility user friendly" 
+                 
               />
             </div>
           </div>
@@ -365,7 +365,7 @@ export default function HomePage() {
               alt="Bảng xếp hạng các mô hình và công cụ AI"
               fill
               className="object-cover object-top"
-              data-ai-hint="rankings board chart"
+              
             />
             <div className="relative z-10 flex-grow flex flex-col justify-between">
               <div className="flex justify-between items-start">
