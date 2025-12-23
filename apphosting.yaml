@@ -1,0 +1,23 @@
+# Cấu hình cho Backend (trên Cloud Run).
+# Xem https://firebase.google.com/docs/app-hosting/configure#cloud-run
+kind: "framework"
+runtime: "nodejs20"
+
+runConfig:
+  minInstances: 0
+  maxInstances: 1
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+# Biến môi trường và Secrets.
+env:
+  # 1. Bắt buộc để sửa lỗi Build ERESOLVE
+  - variable: NPM_CONFIG_LEGACY_PEER_DEPS
+    value: "true"
+    availability:
+      - BUILD
+
+  # 2. Khai báo Secret để Next.js sử dụng
+  - variable: GEMINI_API_KEY
+    secret: GEMINI_API_KEY
