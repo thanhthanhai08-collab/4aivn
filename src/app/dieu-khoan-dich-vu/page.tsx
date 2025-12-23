@@ -1,8 +1,17 @@
 // src/app/terms-of-service/page.tsx
+"use client";
+
 import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from 'react';
 
 export default function TermsOfServicePage() {
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString('vi-VN'));
+  }, []);
+
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
@@ -14,7 +23,7 @@ export default function TermsOfServicePage() {
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-foreground leading-relaxed">
             <p className="text-muted-foreground text-center">
-              Lần cập nhật cuối: {new Date().toLocaleDateString('vi-VN')}
+              Lần cập nhật cuối: {lastUpdated}
             </p>
 
             <h2>1. Giới thiệu</h2>

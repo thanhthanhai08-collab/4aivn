@@ -1,8 +1,17 @@
 // src/app/ai-terms-of-use/page.tsx
+"use client";
+
 import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from 'react';
 
 export default function AiTermsOfUsePage() {
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString('vi-VN'));
+  }, []);
+
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
@@ -14,7 +23,7 @@ export default function AiTermsOfUsePage() {
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-foreground leading-relaxed">
             <p className="text-muted-foreground text-center">
-              Lần cập nhật cuối: {new Date().toLocaleDateString('vi-VN')}
+              Lần cập nhật cuối: {lastUpdated}
             </p>
 
             <h2>1. Chấp nhận Điều khoản</h2>
@@ -46,7 +55,7 @@ export default function AiTermsOfUsePage() {
 
             <h2>5. Sửa đổi và Chấm dứt</h2>
             <p>
-              Chúng tôi có quyền sửa đổi hoặc chấm dứt quyền truy cập của bạn vào các tính năng AI bất kỳ lúc nào, có hoặc không có thông báo trước, nếu chúng tôi tin rằng bạn đã vi phạm các điều khoản này.
+              Chúng tôi có thể sửa đổi hoặc chấm dứt quyền truy cập của bạn vào các tính năng AI bất kỳ lúc nào, có hoặc không có thông báo trước, nếu chúng tôi tin rằng bạn đã vi phạm các điều khoản này.
             </p>
 
             <h2>6. Liên hệ với chúng tôi</h2>
