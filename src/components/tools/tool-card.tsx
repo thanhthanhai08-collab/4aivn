@@ -1,3 +1,4 @@
+
 // src/components/tools/tool-card.tsx
 "use client";
 
@@ -52,7 +53,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
 
     try {
       await toggleToolFavorite(currentUser.uid, tool.id, isFavorite);
-      toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
+      toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
     } catch (error) {
       console.error("Failed to update favorite status:", error);
       setIsFavorite(!newFavoriteState);

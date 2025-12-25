@@ -176,7 +176,7 @@ function ToolDetailContent({ id }: { id: string }) {
 
     try {
         await toggleToolFavorite(currentUser.uid, id, isFavorite);
-        toast({ title: newFavoriteState ? "Đã thêm vào Yêu thích" : "Đã xóa khỏi Yêu thích" });
+        toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
         setIsFavorite(!newFavoriteState); 

@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
          * Ví dụ: /image/models/gemini.png -> https://firebasestorage.googleapis.com/.../o/models%2Fgemini.png
          */
         source: '/image/:path*',
-        destination: 'https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/:path*',
+        destination: 'https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/:path*?alt=media',
       },
     ];
   },
