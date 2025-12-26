@@ -545,7 +545,6 @@ function ToolDetailContent({ id }: { id: string }) {
 }
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  return <ToolDetailContent id={params.id} />;
+  const { id } = params;
+  return <ToolDetailContent id={id} />;
 }
-
-    

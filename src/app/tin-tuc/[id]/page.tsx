@@ -12,7 +12,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
-import { summarizeNewsArticle } from "@/ai/flows/ai-tool-description-generator";
+import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
 import { getComments } from "@/lib/comments-service";
@@ -188,6 +188,11 @@ function NewsDetailContent({ id }: { id: string }) {
             } as NewsArticle;
 
             setArticle(fetchedArticle);
+            
+            // Generate summary after fetching article
+            summarizeNewsArticle({ articleContent: fetchedArticle.content })
+              .then(res => setSummary(res.summary))
+              .catch(err => console.error("Error summarizing article:", err));
 
             if (currentUser) {
                 getUserProfileData(currentUser.uid).then(userData => {
