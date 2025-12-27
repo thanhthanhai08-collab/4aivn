@@ -155,7 +155,7 @@ function ToolDetailContent({ id }: { id: string }) {
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
-                getDocs(similarToolsSnapshot),
+                getDocs(similarToolsQuery),
                 getDocs(allToolsForCategoriesQuery),
                 getDocs(newsQuery),
                 getAllToolReviews(tool.id)
