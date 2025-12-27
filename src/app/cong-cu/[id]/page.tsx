@@ -122,41 +122,66 @@ function ToolDetailContent({ id }: { id: string }) {
 
     const fetchRelatedData = async () => {
         try {
-            const allToolsQuery = query(
+            // --- Queries ---
+            const allToolsForRankingQuery = query(
                 collection(db, "tools"),
                 orderBy("averageRating", "desc"),
                 orderBy("ratingCount", "desc"),
                 orderBy("__name__")
             );
-
-            // Fetch featured tools based on viewCount
             const featuredToolsQuery = query(
                 collection(db, "tools"),
                 orderBy("viewCount", "desc"),
                 orderBy("__name__", "asc"),
                 limit(4) 
             );
-
-            const [allToolsSnapshot, featuredToolsSnapshot, newsSnapshot, allReviewsData, allToolsDataForCategories] = await Promise.all([
-                getDocs(allToolsQuery),
+            const similarToolsQuery = query(
+                collection(db, "tools"),
+                where("context", "==", tool.context),
+                limit(5)
+            );
+            const allToolsForCategoriesQuery = collection(db, "tools");
+            const newsQuery = query(collection(db, "news"), where('title', '>=', tool.name), where('title', '<=', tool.name + '\uf8ff'), limit(3));
+            
+            // --- Fetching Data ---
+            const [
+                allToolsForRankingSnapshot,
+                featuredToolsSnapshot,
+                similarToolsSnapshot,
+                allToolsForCategoriesSnapshot,
+                newsSnapshot,
+                allReviewsData
+            ] = await Promise.all([
+                getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
-                getDocs(query(collection(db, "news"), where('title', '>=', tool.name), where('title', '<=', tool.name + '\uf8ff'), limit(3))),
-                getAllToolReviews(tool.id),
-                getDocs(collection(db, "tools")),
+                getDocs(similarToolsQuery),
+                getDocs(allToolsForCategoriesQuery),
+                getDocs(newsQuery),
+                getAllToolReviews(tool.id)
             ]);
 
-            const sortedTools = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            // --- Processing Data ---
+
+            // Ranking
+            const sortedTools = allToolsForRankingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
             const currentRank = sortedTools.findIndex(t => t.id === tool.id);
             setRanking(currentRank !== -1 ? currentRank + 1 : null);
 
-            const allTools = allToolsDataForCategories.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            // Categories, Similar and Complementary Tools
+            const allTools = allToolsForCategoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
             setAllCategories(Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort());
-            setSimilarTools(allTools.filter(t => t.id !== tool.id && t.context === tool.context).slice(0, 4));
             setComplementaryTools(allTools.filter(t => t.id !== tool.id && t.context !== tool.context).slice(8, 11));
             
-            // Set featured tools, excluding the current one, and limit to 3.
+            const similarData = similarToolsSnapshot.docs
+                .map(doc => ({ id: doc.id, ...doc.data() } as Tool))
+                .filter(t => t.id !== tool.id)
+                .slice(0, 4);
+            setSimilarTools(similarData);
+            
+            // Featured Tools
             setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
             
+            // News and Reviews
             setRelatedNews(newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: (doc.data().publishedAt as Timestamp).toDate().toISOString() } as NewsArticle)));
             setAllReviews(allReviewsData);
 
@@ -559,3 +584,5 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   return <ToolDetailContent id={id} />;
 }
+
+    
