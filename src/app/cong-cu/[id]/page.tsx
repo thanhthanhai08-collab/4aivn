@@ -131,13 +131,14 @@ function ToolDetailContent({ id }: { id: string }) {
             );
             const featuredToolsQuery = query(
                 collection(db, "tools"),
-                orderBy("viewCount", "desc"),
-                orderBy("__name__", "asc"),
-                limit(4) 
+                orderBy("viewCount", "desc"), 
+                orderBy("__name__", "asc"),   
+                limit(4)                      
             );
             const similarToolsQuery = query(
                 collection(db, "tools"),
                 where("context", "==", tool.context),
+                orderBy("name", "asc"),
                 limit(5)
             );
             const allToolsForCategoriesQuery = collection(db, "tools");
@@ -585,4 +586,5 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent id={id} />;
 }
 
+    
     
