@@ -129,9 +129,17 @@ function ToolDetailContent({ id }: { id: string }) {
                 orderBy("__name__")
             );
 
+            // Fetch featured tools based on viewCount
+            const featuredToolsQuery = query(
+                collection(db, "tools"),
+                orderBy("viewCount", "desc"),
+                orderBy("__name__", "asc"),
+                limit(4) 
+            );
+
             const [allToolsSnapshot, featuredToolsSnapshot, newsSnapshot, allReviewsData, allToolsDataForCategories] = await Promise.all([
                 getDocs(allToolsQuery),
-                getDocs(query(collection(db, "tools"), orderBy("viewCount", "desc"), limit(4))),
+                getDocs(featuredToolsQuery),
                 getDocs(query(collection(db, "news"), where('title', '>=', tool.name), where('title', '<=', tool.name + '\uf8ff'), limit(3))),
                 getAllToolReviews(tool.id),
                 getDocs(collection(db, "tools")),
@@ -145,7 +153,10 @@ function ToolDetailContent({ id }: { id: string }) {
             setAllCategories(Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort());
             setSimilarTools(allTools.filter(t => t.id !== tool.id && t.context === tool.context).slice(0, 4));
             setComplementaryTools(allTools.filter(t => t.id !== tool.id && t.context !== tool.context).slice(8, 11));
+            
+            // Set featured tools, excluding the current one, and limit to 3.
             setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
+            
             setRelatedNews(newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: (doc.data().publishedAt as Timestamp).toDate().toISOString() } as NewsArticle)));
             setAllReviews(allReviewsData);
 
@@ -548,3 +559,5 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   return <ToolDetailContent id={id} />;
 }
+
+    
