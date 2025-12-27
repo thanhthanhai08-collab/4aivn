@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef } from "react";
 import type { Tool, NewsArticle } from "@/lib/types";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -22,11 +22,20 @@ const TYPING_TEXTS = [
   "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
 ];
 
+interface HomepageSettings {
+  BannerAdsUrl?: string;
+  BannerAdsAlt?: string;
+  BannerRankUrl?: string;
+  BannerRankAlt?: string;
+}
+
 export default function HomePage() {
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [topTools, setTopTools] = useState<Tool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
   const [isLoadingNews, setIsLoadingNews] = useState(true);
+  const [homepageSettings, setHomepageSettings] = useState<HomepageSettings>({});
+  const [isLoadingSettings, setIsLoadingSettings] = useState(true);
 
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -94,7 +103,23 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchHomepageData = async () => {
+      // Fetch settings
+      setIsLoadingSettings(true);
+      try {
+        const settingsDocRef = doc(db, "settings", "homepage");
+        const docSnap = await getDoc(settingsDocRef);
+        if (docSnap.exists()) {
+          setHomepageSettings(docSnap.data() as HomepageSettings);
+        }
+      } catch (error) {
+        console.error("Error fetching homepage settings:", error);
+      } finally {
+        setIsLoadingSettings(false);
+      }
+
+      // Fetch news
+      setIsLoadingNews(true);
       try {
         const newsCollection = collection(db, "news");
         const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"), limit(6));
@@ -110,13 +135,9 @@ export default function HomePage() {
       } finally {
         setIsLoadingNews(false);
       }
-    };
 
-    fetchNews();
-  }, []);
-
-  useEffect(() => {
-    const fetchTopTools = async () => {
+      // Fetch top tools
+      setIsLoadingTools(true);
       try {
         const toolsQuery = query(
           collection(db, "tools"),
@@ -141,7 +162,7 @@ export default function HomePage() {
       }
     };
 
-    fetchTopTools();
+    fetchHomepageData();
   }, []);
   
   const scrollCarousel = (direction: 'left' | 'right') => {
@@ -208,13 +229,19 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
-            <Image 
-                src="/image/Banner quốc khánh.png"
-                alt="Banner kỷ niệm 80 năm quốc khánh Việt Nam"
-                width={1920}
-                height={250}
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
+            {isLoadingSettings ? (
+              <Skeleton className="w-full h-[250px] rounded-lg shadow-lg" />
+            ) : (
+              homepageSettings.BannerAdsUrl && (
+                <Image 
+                  src={homepageSettings.BannerAdsUrl}
+                  alt={homepageSettings.BannerAdsAlt || "Banner quảng cáo"}
+                  width={1920}
+                  height={250}
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              )
+            )}
         </div>
       </section>
 
@@ -360,13 +387,18 @@ export default function HomePage() {
       <section className="py-12 md:py-16">
         <div className="container">
           <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
-            <Image 
-              src="/image/Banner cho bảng xếp hạng.png"
-              alt="Bảng xếp hạng các mô hình và công cụ AI"
-              fill
-              className="object-cover object-top"
-              
-            />
+            {isLoadingSettings ? (
+              <Skeleton className="absolute inset-0" />
+            ) : (
+              homepageSettings.BannerRankUrl && (
+                <Image 
+                  src={homepageSettings.BannerRankUrl}
+                  alt={homepageSettings.BannerRankAlt || "Banner bảng xếp hạng"}
+                  fill
+                  className="object-cover object-top"
+                />
+              )
+            )}
             <div className="relative z-10 flex-grow flex flex-col justify-between">
               <div className="flex justify-between items-start">
                   <div className="text-3xl md:text-4xl font-bold text-white text-center">
