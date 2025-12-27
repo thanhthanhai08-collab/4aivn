@@ -138,7 +138,7 @@ function ToolDetailContent({ id }: { id: string }) {
             const similarToolsQuery = query(
                 collection(db, "tools"),
                 where("context", "==", tool.context),
-                orderBy("name", "asc"),
+                orderBy("__name__", "asc"),
                 limit(5)
             );
             const allToolsForCategoriesQuery = collection(db, "tools");
