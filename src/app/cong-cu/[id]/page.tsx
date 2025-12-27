@@ -138,7 +138,7 @@ function ToolDetailContent({ id }: { id: string }) {
             const similarToolsQuery = query(
                 collection(db, "tools"),
                 where("context", "==", tool.context),
-                orderBy("__name__", "asc"),
+                orderBy("name", "asc"),
                 limit(5)
             );
             const allToolsForCategoriesQuery = collection(db, "tools");
@@ -168,11 +168,33 @@ function ToolDetailContent({ id }: { id: string }) {
             const currentRank = sortedTools.findIndex(t => t.id === tool.id);
             setRanking(currentRank !== -1 ? currentRank + 1 : null);
 
-            // Categories, Similar and Complementary Tools
+            // Categories
             const allTools = allToolsForCategoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
-            setAllCategories(Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort());
-            setComplementaryTools(allTools.filter(t => t.id !== tool.id && t.context !== tool.context).slice(8, 11));
+            const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
+            setAllCategories(uniqueCategories);
             
+            // Complementary Tools (Optimized)
+            const otherCategories = uniqueCategories.filter(cat => cat !== tool.context);
+            const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
+
+            const complementaryPromises = selectedCategories.map(cat => {
+                const q = query(
+                    collection(db, "tools"),
+                    where("context", "==", cat),
+                    limit(1)
+                );
+                return getDocs(q);
+            });
+            const complementarySnapshots = await Promise.all(complementaryPromises);
+            const diverseComplementaryTools = complementarySnapshots.map(snap => {
+                if (!snap.empty) {
+                    return { id: snap.docs[0].id, ...snap.docs[0].data() } as Tool;
+                }
+                return null;
+            }).filter((t): t is Tool => t !== null);
+            setComplementaryTools(diverseComplementaryTools);
+
+            // Similar Tools
             const similarData = similarToolsSnapshot.docs
                 .map(doc => ({ id: doc.id, ...doc.data() } as Tool))
                 .filter(t => t.id !== tool.id)
