@@ -496,7 +496,7 @@ function ToolDetailContent({ id }: { id: string }) {
                        <Image src={t.logoUrl} alt={t.name} width={40} height={40} className="rounded-md"/>
                        <div>
                           <p className="font-semibold group-hover:text-primary">{t.name}</p>
-                          <p className="text-sm text-muted-foreground line-clamp-1">{t.description}</p>
+                          <p className="text-sm text-muted-foreground">{t.context}</p>
                        </div>
                     </Link>
                   ))}
@@ -559,5 +559,3 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
   return <ToolDetailContent id={id} />;
 }
-
-    
