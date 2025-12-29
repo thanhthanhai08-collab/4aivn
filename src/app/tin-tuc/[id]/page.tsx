@@ -37,7 +37,7 @@ import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-be
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
 import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const AdBanner = () => (
@@ -160,6 +160,18 @@ const renderContent = (content: string, articleId: string) => {
   });
 };
 
+async function incrementNewsViewCount(newsId: string): Promise<void> {
+  if (!newsId) return;
+  const newsDocRef = doc(db, "news", newsId);
+  try {
+    await setDoc(newsDocRef, { viewCount: increment(1) }, { merge: true });
+  } catch (error) {
+    // In a real app, you might want to log this error to a monitoring service
+    // but for the user, we fail silently as it's not a critical UI feature.
+    console.error("Failed to increment view count:", error);
+  }
+}
+
 function NewsDetailContent({ id }: { id: string }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -175,6 +187,10 @@ function NewsDetailContent({ id }: { id: string }) {
   useEffect(() => {
     const fetchArticleData = async () => {
         if (!id) return;
+        
+        // Increment view count. Do this first and don't block rendering.
+        incrementNewsViewCount(id);
+
         setIsLoading(true);
         const docRef = doc(db, "news", id);
         const docSnap = await getDoc(docRef);

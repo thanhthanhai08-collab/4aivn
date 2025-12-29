@@ -8,18 +8,21 @@ import {
   onSnapshot,
   type Unsubscribe,
   type DocumentData,
+  orderBy,
 } from "firebase/firestore";
 import type { Comment } from "./types";
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
-const COMMENTS_COLLECTION = "comments";
+const NEWS_COLLECTION = "news";
 
-// Get real-time comments for an article
+// Get real-time comments for an article from its sub-collection
 export function getComments(articleId: string, callback: (comments: Comment[]) => void): Unsubscribe {
+  // Query the 'comments' sub-collection within the specific news article document
+  const commentsColRef = collection(db, NEWS_COLLECTION, articleId, "comments");
   const q = query(
-    collection(db, COMMENTS_COLLECTION),
-    where("articleId", "==", articleId)
+    commentsColRef,
+    orderBy("createdAt", "desc") // Order by creation date, newest first
   );
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -37,18 +40,16 @@ export function getComments(articleId: string, callback: (comments: Comment[]) =
       });
     });
     
-    // Sort comments by creation date on the client-side, newest first.
-    const sortedComments = comments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-    
-    callback(sortedComments);
+    // The sorting is now handled by the Firestore query itself.
+    callback(comments);
   }, 
   // Error callback for the listener
   async (serverError) => {
     console.error("Error fetching comments in real-time: ", serverError);
     const permissionError = new FirestorePermissionError({
-      path: `/${COMMENTS_COLLECTION}`,
+      path: `/${NEWS_COLLECTION}/${articleId}/comments`,
       operation: 'list',
-      requestResourceData: { query: `articleId == ${articleId}` },
+      requestResourceData: { query: `orderBy('createdAt', 'desc')` },
     });
     errorEmitter.emit('permission-error', permissionError);
   });
