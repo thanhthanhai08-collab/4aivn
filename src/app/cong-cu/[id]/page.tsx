@@ -142,7 +142,12 @@ function ToolDetailContent({ id }: { id: string }) {
                 limit(5)
             );
             const allToolsForCategoriesQuery = collection(db, "tools");
-            const newsQuery = query(collection(db, "news"), where('title', '>=', tool.name), where('title', '<=', tool.name + '\uf8ff'), limit(3));
+             const newsQuery = query(
+                collection(db, "news"),
+                where("tag", "array-contains", tool.name),
+                orderBy("publishedAt", "desc"),
+                limit(3)
+            );
             
             // --- Fetching Data ---
             const [
