@@ -2,7 +2,7 @@
 // src/app/cong-cu/page.tsx
 "use client";
 
-import { useState, useMemo, useEffect, Suspense, useCallback, useRef } from "react";
+import { useState, useMemo, useEffect, Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
@@ -174,7 +174,6 @@ function ToolsContent() {
           </div>
           <div ref={ref} className="flex justify-center items-center py-8">
             {isMoreLoading && <Loader2 className="h-8 w-8 animate-spin text-primary" />}
-            {!hasMore && <p className="text-muted-foreground">Bạn đã xem hết tất cả công cụ.</p>}
           </div>
         </>
       ) : (
