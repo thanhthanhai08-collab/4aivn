@@ -120,7 +120,7 @@ export default function NewsPage() {
 
 
   const [featuredArticle, secondaryArticle, ...remainingArticles] = allNews;
-  const quickViewArticles = allNews.slice(0, 7);
+  const quickViewArticles = allNews.slice(2, 9);
 
   if (isLoading) {
     return (
