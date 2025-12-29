@@ -152,88 +152,86 @@ export default function NewsPage() {
             <p className="text-xl text-muted-foreground">Chưa có bài viết nào để hiển thị.</p>
           </div>
         ) : (
-          <>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Main content */}
-              <div className="lg:col-span-3 space-y-8">
-                  {featuredArticle && (
-                      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-                          <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
-                             <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[16/9] relative">
-                                  <Image
-                                      src={featuredArticle.imageUrl}
-                                      alt={featuredArticle.title}
-                                      fill
-                                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                                      priority
-                                  />
-                             </Link>
-                             <div className="p-4 bg-card flex-grow flex flex-col">
-                                  <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
-                                       <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
-                                  </h2>
-                                  <p className="text-sm text-muted-foreground mt-2">Bởi {featuredArticle.author}</p>
-                             </div>
-                          </div>
-                          
-                          {secondaryArticle && (
-                              <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
-                                  <div className="space-y-3">
-                                       <Link href={`/tin-tuc/${secondaryArticle.id}`} className="block aspect-[16/9] relative rounded-md overflow-hidden group">
-                                           <Image
-                                              src={secondaryArticle.imageUrl}
-                                              alt={secondaryArticle.title}
-                                              fill
-                                              className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                           />
-                                       </Link>
-                                      <div>
-                                          <h2 className="text-xl font-bold font-headline mb-2">
-                                              <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
-                                          </h2>
-                                          <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
-                                          <p className="text-sm text-foreground/80 line-clamp-3">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
-                                      </div>
-                                  </div>
-                                  <Button asChild variant="link" className="p-0 self-start mt-4">
-                                      <Link href={`/tin-tuc/${secondaryArticle.id}`}>Đọc thêm &rarr;</Link>
-                                  </Button>
-                              </div>
-                          )}
-                      </div>
-                  )}
-                  
-                  {/* Remaining articles list */}
-                  <div className="space-y-8 pt-8 border-t">
-                      {remainingArticles.map((article) => (
-                          <NewsListItem key={article.id} article={article} />
-                      ))}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main content */}
+            <div className="lg:col-span-3 space-y-8">
+                {featuredArticle && (
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                        <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
+                           <Link href={`/tin-tuc/${featuredArticle.id}`} className="block aspect-[16/9] relative">
+                                <Image
+                                    src={featuredArticle.imageUrl}
+                                    alt={featuredArticle.title}
+                                    fill
+                                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                                    priority
+                                />
+                           </Link>
+                           <div className="p-4 bg-card flex-grow flex flex-col">
+                                <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
+                                     <Link href={`/tin-tuc/${featuredArticle.id}`} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
+                                </h2>
+                                <p className="text-sm text-muted-foreground mt-2">Bởi {featuredArticle.author}</p>
+                           </div>
+                        </div>
+                        
+                        {secondaryArticle && (
+                            <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
+                                <div className="space-y-3">
+                                     <Link href={`/tin-tuc/${secondaryArticle.id}`} className="block aspect-[16/9] relative rounded-md overflow-hidden group">
+                                         <Image
+                                            src={secondaryArticle.imageUrl}
+                                            alt={secondaryArticle.title}
+                                            fill
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                         />
+                                     </Link>
+                                    <div>
+                                        <h2 className="text-xl font-bold font-headline mb-2">
+                                            <Link href={`/tin-tuc/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
+                                        </h2>
+                                        <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
+                                        <p className="text-sm text-foreground/80 line-clamp-3">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
+                                    </div>
+                                </div>
+                                <Button asChild variant="link" className="p-0 self-start mt-4">
+                                    <Link href={`/tin-tuc/${secondaryArticle.id}`}>Đọc thêm &rarr;</Link>
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                )}
+                
+                {/* Remaining articles list */}
+                <div className="space-y-8 pt-8 border-t">
+                    {remainingArticles.map((article) => (
+                        <NewsListItem key={article.id} article={article} />
+                    ))}
+                </div>
+
+                {hasMore && (
+                  <div className="text-center pt-4">
+                    <Button onClick={handleLoadMore} disabled={isMoreLoading} size="lg">
+                      {isMoreLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      Đọc thêm
+                    </Button>
                   </div>
-              </div>
-              {/* Sidebar */}
-              <div className="lg:col-span-1">
-                  <div className="p-6 rounded-lg bg-card border sticky top-24">
-                      <div className="flex justify-between items-center mb-4">
-                          <h3 className="text-xl font-bold font-headline">Xem nhanh</h3>
-                      </div>
-                      <div className="space-y-5">
-                          {quickViewArticles.map((article) => (
-                              <QuickViewItem key={article.id} article={article} />
-                          ))}
-                      </div>
-                  </div>
-              </div>
+                )}
             </div>
-            
-            {hasMore && (
-              <div className="text-center mt-12">
-                <Button onClick={handleLoadMore} disabled={isMoreLoading} size="lg">
-                  {isMoreLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Đọc thêm
-                </Button>
-              </div>
-            )}
-          </>
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+                <div className="p-6 rounded-lg bg-card border sticky top-24">
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-xl font-bold font-headline">Xem nhanh</h3>
+                    </div>
+                    <div className="space-y-5">
+                        {quickViewArticles.map((article) => (
+                            <QuickViewItem key={article.id} article={article} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+          </div>
         )}
       </div>
     </AppLayout>
