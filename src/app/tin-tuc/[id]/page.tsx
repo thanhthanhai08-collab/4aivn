@@ -37,7 +37,7 @@ import { AtlasSecurityBenchmarkChart } from "@/components/news/atlas-security-be
 import { Gpt5V1TokenChart } from "@/components/news/Gpt5V1TokenChart";
 import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const AdBanner = () => (
@@ -164,11 +164,16 @@ async function incrementNewsViewCount(newsId: string): Promise<void> {
   if (!newsId) return;
   const newsDocRef = doc(db, "news", newsId);
   try {
-    await setDoc(newsDocRef, { viewCount: increment(1) }, { merge: true });
+    // Use `updateDoc` to avoid creating a new document if it doesn't exist
+    await updateDoc(newsDocRef, { viewCount: increment(1) });
   } catch (error) {
-    // In a real app, you might want to log this error to a monitoring service
-    // but for the user, we fail silently as it's not a critical UI feature.
-    console.error("Failed to increment view count:", error);
+    if ((error as any).code === 'not-found') {
+        // If the document doesn't exist, create it with a view count of 1.
+        // This is a fallback, ideally the document should always exist.
+        await setDoc(newsDocRef, { viewCount: 1 }, { merge: true });
+    } else {
+        console.error("Failed to increment view count:", error);
+    }
   }
 }
 
@@ -188,7 +193,6 @@ function NewsDetailContent({ id }: { id: string }) {
     const fetchArticleData = async () => {
         if (!id) return;
         
-        // Increment view count. Do this first and don't block rendering.
         incrementNewsViewCount(id);
 
         setIsLoading(true);
@@ -205,10 +209,24 @@ function NewsDetailContent({ id }: { id: string }) {
 
             setArticle(fetchedArticle);
             
-            // Generate summary after fetching article
-            summarizeNewsArticle({ articleContent: fetchedArticle.content })
-              .then(res => setSummary(res.summary))
-              .catch(err => console.error("Error summarizing article:", err));
+            // --- OPTIMIZED SUMMARY LOGIC ---
+            if (data.summary) {
+                setSummary(data.summary); // Use existing summary
+            } else {
+                // Generate summary if it doesn't exist
+                summarizeNewsArticle({ articleContent: fetchedArticle.content })
+                  .then(async (res) => {
+                      const newSummary = res.summary;
+                      setSummary(newSummary);
+                      // Save the new summary back to Firestore
+                      try {
+                          await updateDoc(docRef, { summary: newSummary });
+                      } catch (updateError) {
+                          console.error("Failed to save summary:", updateError);
+                      }
+                  })
+                  .catch(err => console.error("Error summarizing article:", err));
+            }
 
             if (currentUser) {
                 getUserProfileData(currentUser.uid).then(userData => {
@@ -216,8 +234,7 @@ function NewsDetailContent({ id }: { id: string }) {
                 });
             }
             
-            // Fetch Latest News (for sidebar)
-             const latestNewsQuery = query(
+            const latestNewsQuery = query(
                 collection(db, "news"),
                 where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
@@ -231,7 +248,6 @@ function NewsDetailContent({ id }: { id: string }) {
             } as NewsArticle));
             setLatestNews(latestNewsData);
 
-            // Fetch Related News (for bottom section)
             let relatedQuery;
             if (fetchedArticle.tag && fetchedArticle.tag.length > 0) {
               relatedQuery = query(
@@ -242,7 +258,6 @@ function NewsDetailContent({ id }: { id: string }) {
                 limit(3)
               );
             } else {
-              // Fallback: use latest news if no tags
               relatedQuery = query(
                 collection(db, "news"),
                 where("__name__", "!=", id),
@@ -281,14 +296,14 @@ function NewsDetailContent({ id }: { id: string }) {
     }
     
     const newBookmarkState = !isBookmarked;
-    setIsBookmarked(newBookmarkState); // Optimistic UI update
+    setIsBookmarked(newBookmarkState);
 
     try {
       await toggleNewsBookmark(currentUser.uid, id, isBookmarked);
       toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
     } catch (error) {
       console.error("Failed to update bookmark:", error);
-      setIsBookmarked(!newBookmarkState); // Revert on error
+      setIsBookmarked(!newBookmarkState);
       toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
     }
   };
@@ -346,7 +361,6 @@ function NewsDetailContent({ id }: { id: string }) {
     <AppLayout>
       <div className="container py-8 md:py-12">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-8">
             <article>
               <header className="mb-8">
@@ -391,7 +405,7 @@ function NewsDetailContent({ id }: { id: string }) {
                 />
               )}
               
-              {summary && (
+              {summary ? (
                   <Card className="mb-8 bg-accent/50 border-primary/20">
                       <CardHeader>
                           <CardTitle className="text-xl font-headline">Tóm tắt nhanh</CardTitle>
@@ -400,6 +414,13 @@ function NewsDetailContent({ id }: { id: string }) {
                           <p className="text-base text-muted-foreground">{summary}</p>
                       </CardContent>
                   </Card>
+              ) : (
+                <div className="mb-8 p-6 bg-accent/50 border-primary/20 rounded-lg">
+                    <Skeleton className="h-5 w-1/3 mb-4"/>
+                    <Skeleton className="h-4 w-full mb-2"/>
+                    <Skeleton className="h-4 w-full mb-2"/>
+                    <Skeleton className="h-4 w-3/4"/>
+                </div>
               )}
 
               <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
@@ -420,7 +441,6 @@ function NewsDetailContent({ id }: { id: string }) {
               </footer>
             </article>
 
-            {/* Comments Section */}
             <Card className="mt-12">
               <CardHeader>
                 <CardTitle className="flex items-center text-2xl font-headline">
@@ -441,7 +461,6 @@ function NewsDetailContent({ id }: { id: string }) {
             </Card>
           </div>
 
-          {/* Sidebar */}
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit">
              <Card>
                 <CardHeader>
@@ -474,7 +493,6 @@ function NewsDetailContent({ id }: { id: string }) {
           </aside>
         </div>
 
-        {/* Latest Articles */}
         <section className="mt-16 pt-12 border-t">
            <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
             Các bài viết liên quan
