@@ -6,6 +6,8 @@ const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
+const { genkit } = require("genkit");
+const { googleAI } = require("@genkit-ai/google-genai");
 
 
 admin.initializeApp();
@@ -141,9 +143,6 @@ exports.aggregateToolRating = onDocumentWritten(
     },
     async (event) => {
         if (!event.data) return null;
-        // This function does not exist yet. We need to implement it based on aggregateRatings
-        // For now, let's assume a similar structure and call a generic handler.
-        // Re-using aggregateRatings for tools assuming the schema is the same.
         return aggregateRatings("tools", event.params.toolId);
     }
 );
@@ -169,7 +168,6 @@ exports.initModelStructure = onDocumentCreated(
         const dev = data.developer || "";
         const devLower = dev.toLowerCase();
 
-        // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
         let autoLogoUrl = data.logoUrl || "";
         if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
         else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
@@ -191,12 +189,11 @@ exports.initModelStructure = onDocumentCreated(
             name: data.name || event.params.id,
             type: data.type || "LLM",
             multimodal: data.multimodal || false,
-            releaseDate: data.releaseDate || admin.firestore.Timestamp.now(), // Correct way to set default timestamp
+            releaseDate: data.releaseDate || admin.firestore.Timestamp.now(),
         };
 
         await resRef.set(modelFields, { merge: true });
 
-        // Khởi tạo Sub-collection 'benchmarks'
         const benchmarks = [
             { id: "aa-lcr", name: "AA-LCR" },
             { id: "agentic-coding", name: "Agentic Coding" },
@@ -223,33 +220,84 @@ exports.initModelStructure = onDocumentCreated(
     }
 );
 
-// --- FUNCTION CHO TOOLS ---
+// --- FUNCTION CHO TOOLS (Sử dụng AI) ---
 exports.initToolStructure = onDocumentCreated(
-    { document: "tools/{id}", region: "asia-southeast1" },
+    { 
+        document: "tools/{toolId}",
+        secrets: [GEMINI_API_KEY], 
+        region: "asia-southeast1" 
+    },
     async (event) => {
         const snapshot = event.data;
         if (!snapshot) return null;
-
-        const resRef = snapshot.ref;
         const data = snapshot.data();
 
-        const toolFields = {
-            averageRating: 0,
-            ratingCount: 0,
-            context: data.context || "",
-            description: data.description || "",
-            developer: data.developer || "",
-            imageUrl: data.imageUrl || "",
-            link: data.link || "",
-            logoUrl: data.logoUrl || "",
-            longDescription: data.longDescription || "",
-            name: data.name || event.params.id,
-            pricingPlans: data.pricingPlans || [],
-            useCases: data.useCases || [],
-            whoIsItFor: data.whoIsItFor || [],
-           
-        };
+        // Initialize Genkit AI within the function
+        const ai = genkit({
+            plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
+            model: "googleai/gemini-2.5-flash",
+        });
 
-        return resRef.set(toolFields, { merge: true });
+        try {
+            const prompt = `Bạn là chuyên gia với nhiều năm kinh nghiệm phân tích các công cụ AI. Với bối cảnh mình đang tìm các trường dữ liệu của công cụ AI để đăng lên web tổng hợp các công cụ AI của mình. Hãy phân tích công cụ: "${data.name || event.params.toolId}".
+            Trả về JSON Tiếng Việt gồm:
+            - description: Mô tả ngắn (tối đa 30 từ).
+            - longDescription: Mô tả chi tiết, có thể dùng thẻ <p> và <ul><li>.
+            - whoIsItFor: Mảng đối tượng người dùng (ví dụ: ['Nhà phát triển', 'Người làm marketing']).
+            - useCases: Mảng các trường hợp sử dụng thực tế.
+            - features: Mảng 5 tính năng chính của công cụ này.
+            - link: URL trang chủ chính thức (nếu tìm thấy).
+            - pricingPlans: Mảng các gói giá (free và trả phí).
+            - context: Danh mục công nghệ hoặc lĩnh vực chính (ví dụ: 'Tạo hình ảnh', 'AI Agent').
+            - developer: Tên công ty/tổ chức phát triển.
+            
+            Đây là một ví dụ để bạn tham khảo cấu trúc:
+            {
+              "description": "Midjourney là công cụ AI tạo ảnh từ văn bản hàng đầu, nổi tiếng với khả năng tạo ra các tác phẩm nghệ thuật độc đáo và chi tiết.",
+              "longDescription": "<p>Midjourney là một phòng thí nghiệm nghiên cứu độc lập...[chi tiết hơn]</p>",
+              "whoIsItFor": ["Nghệ sĩ kỹ thuật số", "Nhà thiết kế đồ họa"],
+              "useCases": ["Sáng tạo nghệ thuật số", "Thiết kế concept art"],
+              "features": ["Tạo ảnh nghệ thuật chất lượng cao", "Hỗ trợ đa dạng phong cách"],
+              "link": "https://www.midjourney.com",
+              "pricingPlans": ["Gói Basic: $10/tháng", "Gói Standard: $30/tháng"],
+              "context": "Tạo hình ảnh",
+              "developer": "Midjourney, Inc."
+            }`;
+
+            const { output } = await ai.generate({ 
+                prompt: prompt, 
+                output: { format: 'json' } 
+            });
+            
+            const aiData = output || {};
+
+            // Merge AI data with existing data, prioritizing user-provided data
+            return snapshot.ref.set({
+                name: data.name || event.params.toolId,
+                description: data.description || aiData.description || "Đang cập nhật...",
+                longDescription: data.longDescription || aiData.longDescription || "",
+                whoIsItFor: data.whoIsItFor || aiData.whoIsItFor || [],
+                useCases: data.useCases || aiData.useCases || [],
+                features: data.features || aiData.features || [],
+                link: data.link || aiData.link || "",
+                logoUrl: data.logoUrl || "", // User must upload
+                imageUrl: data.imageUrl || "", // User must upload
+                pricingPlans: data.pricingPlans || aiData.pricingPlans || [],
+                context: data.context || aiData.context || "Chưa phân loại",
+                developer: data.developer || aiData.developer || "Đang cập nhật...",
+                averageRating: 0,
+                ratingCount: 0,
+            }, { merge: true });
+
+        } catch (e) { 
+            console.error(`Error initializing tool ${event.params.toolId} with AI:`, e);
+            // Fallback to basic initialization if AI fails
+            return snapshot.ref.set({
+                name: data.name || event.params.toolId,
+                description: data.description || "Đang cập nhật...",
+                averageRating: 0,
+                ratingCount: 0,
+            }, { merge: true });
+        }
     }
 );
