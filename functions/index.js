@@ -7,7 +7,7 @@ const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
 const { genkit } = require("genkit");
-const { googleAI } = require("@genkit-ai/googleai");
+const { googleAI, googleSearch } = require("@genkit-ai/googleai");
 
 
 admin.initializeApp();
@@ -243,7 +243,7 @@ exports.initToolStructure = onDocumentCreated(
         });
 
         try {
-            const prompt = `Bạn là chuyên gia với nhiều năm kinh nghiệm phân tích các công cụ AI. Với bối cảnh mình đang tìm các trường dữ liệu của công cụ AI để đăng lên web tổng hợp các công cụ AI của mình. Hãy phân tích công cụ: "${data.name || event.params.toolId}".
+            const prompt = `Bạn là chuyên gia với nhiều năm kinh nghiệm phân tích các công cụ AI. Với bối cảnh mình đang tìm các trường dữ liệu của công cụ AI để đăng lên web tổng hợp các công cụ AI của mình. Hãy phân tích công cụ với tên: "${data.name || event.params.toolId}"còn đây là URL của một công cụ AI cần phân tích: ${data.link}.
             Trả về JSON Tiếng Việt gồm:
             - description: Mô tả ngắn (30 từ).
             - longDescription: Mô tả chi tiết.
@@ -292,7 +292,8 @@ id: 'midjourney',
 
             const result = await ai.generate({ 
                 prompt: prompt, 
-                output: { format: 'json' } 
+                output: { format: 'json' },
+                tools: [googleSearch()]
             });
             
             const aiData = result.output;
@@ -321,3 +322,5 @@ id: 'midjourney',
         }
     }
 );
+
+    
