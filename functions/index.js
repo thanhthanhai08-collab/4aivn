@@ -6,6 +6,8 @@ const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
+const { genkit } = require("genkit");
+const { googleAI } = require("@genkit-ai/googleai");
 
 
 admin.initializeApp();
@@ -223,33 +225,99 @@ exports.initModelStructure = onDocumentCreated(
     }
 );
 
-// --- FUNCTION CHO TOOLS ---
+// --- 4. AI INIT TOOL STRUCTURE (Bổ sung đầy đủ các trường dữ liệu) ---
 exports.initToolStructure = onDocumentCreated(
-    { document: "tools/{id}", region: "asia-southeast1" },
+    { 
+        document: "tools/{toolId}", // Đổi thành toolId cho rõ ràng
+        secrets: [GEMINI_API_KEY], 
+        region: "asia-southeast1" 
+    },
     async (event) => {
         const snapshot = event.data;
         if (!snapshot) return null;
-
-        const resRef = snapshot.ref;
         const data = snapshot.data();
 
-        const toolFields = {
-            averageRating: 0,
-            ratingCount: 0,
-            context: data.context || "",
-            description: data.description || "",
-            developer: data.developer || "",
-            imageUrl: data.imageUrl || "",
-            link: data.link || "",
-            logoUrl: data.logoUrl || "",
-            longDescription: data.longDescription || "",
-            name: data.name || event.params.id,
-            pricingPlans: data.pricingPlans || [],
-            useCases: data.useCases || [],
-            whoIsItFor: data.whoIsItFor || [],
-           
-        };
+        const ai = genkit({
+            plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
+            model: "googleai/gemini-2.5-flash", 
+        });
 
-        return resRef.set(toolFields, { merge: true });
+        try {
+            const prompt = `Bạn là chuyên gia với nhiều năm kinh nghiệm phân tích các công cụ AI. Với bối cảnh mình đang tìm các trường dữ liệu của công cụ AI để đăng lên web tổng hợp các công cụ AI của mình. Hãy phân tích công cụ: "${data.name || event.params.toolId}".
+            Trả về JSON Tiếng Việt gồm:
+            - description: Mô tả ngắn (30 từ).
+            - longDescription: Mô tả chi tiết.
+            - whoIsItFor: Mảng đối tượng người dùng (đưa ra đối tượng người dùng khớp nhất với công cụ.
+            - useCases: Mảng tình huống sử dụng.
+            - features: Mảng 5 tính năng chính của công cụ này.
+            - link: URL trang chủ chính thức (nếu biết).
+            - pricingPlans: Mảng của các gói free và trả phí công cụ
+            - context: Công nghệ hoặc bối cảnh.
+Đây là một ví dụ để có thể bạn dễ điền các thông tin hơn   
+id: 'midjourney',
+    name: 'Midjourney',
+    context: 'Tạo hình ảnh',
+    developer: 'Midjourney',
+    description: 'Midjourney là một trong những công cụ AI tạo ảnh từ văn bản (text-to-image) hàng đầu, nổi tiếng với khả năng tạo ra các tác phẩm nghệ thuật độc đáo, chi tiết và có phong cách riêng biệt. Hoạt động chủ yếu trên nền tảng Discord, Midjourney được cộng đồng sáng tạo và thiết kế ưa chuộng nhờ chất lượng hình ảnh vượt trội.',
+    longDescription: '<p>Midjourney là một phòng thí nghiệm nghiên cứu độc lập và cũng là tên của công cụ AI tạo ảnh nghệ thuật từ văn bản. Ra mắt vào năm 2022, Midjourney nhanh chóng trở thành một trong những nền tảng AI tạo sinh phổ biến nhất nhờ khả năng tạo ra các hình ảnh phức tạp, chất lượng cao và có tính thẩm mỹ độc đáo.</p><p>Hoạt động hoàn toàn trên nền tảng Discord, người dùng tương tác với Midjourney thông qua các câu lệnh (prompt). Mô hình AI của Midjourney có khả năng diễn giải các mô tả tự nhiên để tạo ra bốn biến thể hình ảnh cho mỗi yêu cầu, cho phép người dùng nâng cấp (upscale) hoặc tạo thêm các biến thể từ kết quả ưng ý nhất. Với một cộng đồng sôi động và liên tục được cập nhật, Midjourney là công cụ không thể thiếu cho các nghệ sĩ, nhà thiết kế và bất kỳ ai muốn biến ý tưởng thành hình ảnh ấn tượng.</p>',
+    features: [
+      "Tạo ảnh nghệ thuật chất lượng cao từ mô tả văn bản.",
+      "Hỗ trợ đa dạng phong cách, từ siêu thực đến tả thực.",
+      "Giao diện tương tác độc đáo qua Discord.",
+      "Khả năng kết hợp hình ảnh (image blending) và tinh chỉnh prompt.",
+      "Tạo ra các biến thể và nâng cấp độ phân giải hình ảnh.",
+      "Cộng đồng người dùng lớn và năng động."
+    ],
+    useCases: [
+      'Sáng tạo nghệ thuật kỹ thuật số và tranh minh họa.',
+      'Thiết kế concept art cho game và phim ảnh.',
+      'Tạo hình ảnh cho các chiến dịch marketing và quảng cáo.',
+      'Tạo nguồn cảm hứng và ý tưởng cho các dự án sáng tạo.',
+      'Thiết kế bìa sách, poster, và các ấn phẩm đồ họa.'
+    ],
+    whoIsItFor: [
+      'Nghệ sĩ kỹ thuật số',
+      'Nhà thiết kế đồ họa',
+      'Người làm quảng cáo & marketing',
+      'Nhà phát triển game',
+      'Người sáng tạo nội dung'
+    ],
+    pricingPlans: [
+      "Gói Basic: $10/tháng, cung cấp khoảng 3.3 giờ GPU nhanh, phù hợp cho người mới bắt đầu.",
+      "Gói Standard: $30/tháng, cung cấp 15 giờ GPU nhanh, lựa chọn phổ biến nhất.",
+      "Gói Pro: $60/tháng, cung cấp 30 giờ GPU nhanh, dành cho người dùng chuyên nghiệp.",
+      "Gói Mega: $120/tháng, cung cấp 60 giờ GPU nhanh, dành cho doanh nghiệp và người dùng có nhu cầu rất cao."
+    ],
+`;
+
+            const result = await ai.generate({ 
+                prompt: prompt, 
+                output: { format: 'json' } 
+            });
+            
+            const aiData = result.output;
+
+            return snapshot.ref.set({
+                // Ưu tiên dữ liệu bạn nhập thủ công, nếu trống mới dùng AI
+                name: data.name || event.params.toolId,
+                description: data.description || aiData.description,
+                longDescription: data.longDescription || aiData.longDescription,
+                whoIsItFor: data.whoIsItFor || aiData.whoIsItFor || [],
+                useCases: data.useCases || aiData.useCases || [],
+                features: data.features || aiData.features || [],
+                link: data.link || aiData.link || "",
+                logoUrl: data.logoUrl ||  "",
+                imageUrl: data.imageUrl || "", // Thường là ảnh chụp màn hình app, bạn nên up tay
+                pricingPlans: data.pricingPlans || aiData.pricingPlans || [],
+                context: data.context || aiData.context || "",
+                averageRating: 0,
+                ratingCount: 0,
+                developer: data.developer || "Đang cập nhật...",
+            
+            }, { merge: true }); // Merge để không mất dữ liệu cũ
+
+        } catch (e) { 
+            console.error("Lỗi Init Tool:", e);
+        }
     }
 );
