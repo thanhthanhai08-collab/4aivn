@@ -7,7 +7,7 @@ const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
 const { genkit } = require("genkit");
-const { googleAI, googleSearch } = require("@genkit-ai/googleai");
+const { googleAI } = require("@genkit-ai/googleai");
 
 
 admin.initializeApp();
@@ -292,8 +292,7 @@ id: 'midjourney',
 
             const result = await ai.generate({ 
                 prompt: prompt, 
-                output: { format: 'json' },
-                tools: [googleSearch()]
+                output: { format: 'json' }
             });
             
             const aiData = result.output;
