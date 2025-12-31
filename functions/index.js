@@ -228,18 +228,6 @@ exports.initModelStructure = onDocumentCreated(
 );
 
 
-// 1. Định nghĩa Output Schema chuẩn như Flow Frontend của bạn
-const ToolOutputSchema = z.object({
-    description: z.string().describe('Mô tả ngắn gọn 30 từ về công cụ.'),
-    longDescription: z.string().describe('Mô tả chi tiết bằng HTML, lôi cuốn người dùng.'),
-    features: z.array(z.string()).describe('Danh sách 5 tính năng nổi bật.'),
-    whoIsItFor: z.array(z.string()).describe('Những ai nên dùng công cụ này.'),
-    useCases: z.array(z.string()).describe('Ví dụ thực tế khi sử dụng.'),
-    pricingPlans: z.array(z.string()).describe('Các gói giá (Free, Pro, v.v.).'),
-    context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Coding, Art, Marketing).'),
-    link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
-});
-
 // 3. Cloud Function
 exports.initToolStructure = onDocumentCreated(
     { 
@@ -255,6 +243,18 @@ exports.initToolStructure = onDocumentCreated(
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
             model: "googleai/gemini-3-flash-preview", 
+        });
+
+        // 1. Định nghĩa Output Schema chuẩn như Flow Frontend của bạn
+        const ToolOutputSchema = z.object({
+            description: z.string().describe('Mô tả ngắn gọn 30 từ về công cụ.'),
+            longDescription: z.string().describe('Mô tả chi tiết bằng HTML, lôi cuốn người dùng.'),
+            features: z.array(z.string()).describe('Danh sách 5 tính năng nổi bật.'),
+            whoIsItFor: z.array(z.string()).describe('Những ai nên dùng công cụ này.'),
+            useCases: z.array(z.string()).describe('Ví dụ thực tế khi sử dụng.'),
+            pricingPlans: z.array(z.string()).describe('Các gói giá (Free, Pro, v.v.).'),
+            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Coding, Art, Marketing).'),
+            link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
         });
 
         // 2. Định nghĩa Prompt chuyên sâu (Dùng kỹ thuật Few-shot hoặc Contextual Prompting)
@@ -274,6 +274,7 @@ Yêu cầu:
 3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
 4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
         });
+
 
         try {
             // Chạy Prompt với Schema Validation
