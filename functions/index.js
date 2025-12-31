@@ -239,27 +239,6 @@ const ToolOutputSchema = z.object({
     link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
 });
 
-const ai = genkit({
-    plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
-});
-
-// 2. Định nghĩa Prompt chuyên sâu (Dùng kỹ thuật Few-shot hoặc Contextual Prompting)
-const toolPrompt = ai.definePrompt({
-    name: 'generateAiToolDescriptionPrompt',
-    inputSchema: z.object({ name: z.string(), context: z.string(), link: z.string() }),
-    output: { schema: ToolOutputSchema, format: 'json' },
-    prompt: `Bạn là một chuyên gia phân tích phần mềm AI.
-    Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
-    - Tên: {{name}}
-    - Lĩnh vực: {{context}}
-    - URL tham khảo: {{link}}
-
-    Yêu cầu:
-    1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
-    2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
-    3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
-    4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
-});
 
 // 3. Cloud Function
 exports.initToolStructure = onDocumentCreated(
@@ -272,6 +251,30 @@ exports.initToolStructure = onDocumentCreated(
         const snapshot = event.data;
         if (!snapshot) return null;
         const data = snapshot.data();
+
+        const ai = genkit({
+            plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
+            model: "googleai/gemini-3-flash-preview", 
+        });
+
+        // 2. Định nghĩa Prompt chuyên sâu (Dùng kỹ thuật Few-shot hoặc Contextual Prompting)
+        const toolPrompt = ai.definePrompt({
+            name: 'generateAiToolDescriptionPrompt',
+            input: { schema: z.object({ name: z.string(), context: z.string(), link: z.string() }) },
+            output: { schema: ToolOutputSchema },
+            prompt: `Bạn là một chuyên gia phân tích phần mềm AI.
+            Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
+            - Tên: {{name}}
+            - Lĩnh vực: {{context}}
+            - URL tham khảo: {{link}}
+
+            Yêu cầu:
+            1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
+            2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
+            3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
+            4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
+        });
+
 
         try {
             // Chạy Prompt với Schema Validation
@@ -307,7 +310,6 @@ exports.initToolStructure = onDocumentCreated(
                 // Các trường khởi tạo
                 averageRating: 0,
                 ratingCount: 0,
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
@@ -317,4 +319,3 @@ exports.initToolStructure = onDocumentCreated(
         }
     }
 );
-```
