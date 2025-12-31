@@ -124,6 +124,7 @@ exports.aggregateModelIntelligence = onDocumentWritten(
         document: "models/{modelId}/benchmarks/{benchmarkId}",
         secrets: [GEMINI_API_KEY],
         region: 'asia-southeast1',
+        
     },
     async (event) => {
         if (!event.data) return null;
@@ -239,7 +240,6 @@ const ToolOutputSchema = z.object({
     link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
 });
 
-
 // 3. Cloud Function
 exports.initToolStructure = onDocumentCreated(
     { 
@@ -263,18 +263,17 @@ exports.initToolStructure = onDocumentCreated(
             input: { schema: z.object({ name: z.string(), context: z.string(), link: z.string() }) },
             output: { schema: ToolOutputSchema },
             prompt: `Bạn là một chuyên gia phân tích phần mềm AI.
-            Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
-            - Tên: {{name}}
-            - Lĩnh vực: {{context}}
-            - URL tham khảo: {{link}}
+Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
+- Tên: {{name}}
+- Lĩnh vực: {{context}}
+- URL tham khảo: {{link}}
 
-            Yêu cầu:
-            1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
-            2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
-            3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
-            4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
+Yêu cầu:
+1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
+2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
+3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
+4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
         });
-
 
         try {
             // Chạy Prompt với Schema Validation
