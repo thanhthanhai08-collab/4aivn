@@ -41,16 +41,21 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
             containerRef.current.innerHTML = '';
           }
 
-          // Process the string: change ';' to '\n' for xychart-beta to work on a single line.
+          // XỬ LÝ CHUỖI AN TOÀN:
+          // 1. Tách theo dấu chấm phẩy
+          // 2. Trim khoảng trắng thừa của từng dòng
+          // 3. Nối lại bằng ký tự xuống dòng thực thụ \n
           const formattedChart = chart
             .split(';')
-            .map(line => line.trim())
-            .filter(line => line.length > 0)
+            .map(part => part.trim())
+            .filter(part => part.length > 0)
             .join('\n');
+
+          console.log("Mã đã format để render:\n", formattedChart); // Dòng này để bạn kiểm tra trong F12
 
           const id = `mermaid-svg-${Math.random().toString(36).substring(2, 9)}`;
           
-          // Use the formatted string for rendering
+          // Sử dụng chuỗi đã format để render
           const { svg } = await mermaid.render(id, formattedChart);
           
           if (containerRef.current) {
