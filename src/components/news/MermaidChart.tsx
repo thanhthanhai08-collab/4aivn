@@ -2,20 +2,11 @@
 "use client";
 
 import { useEffect, useRef, useId, useState } from 'react';
-import mermaid from 'mermaid';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Skeleton } from '../ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Terminal } from 'lucide-react';
-
-// Initialize Mermaid on the client side
-if (typeof window !== 'undefined') {
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'neutral', // Use a theme with better contrast
-    securityLevel: 'loose',
-  });
-}
+import type mermaid from 'mermaid';
 
 interface MermaidChartProps {
   chart: string;
@@ -28,29 +19,51 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     if (chart && containerRef.current) {
       setIsLoading(true);
       setError(null);
-      
-      try {
-        // Asynchronously render the chart
-        mermaid.render(chartId, chart, (svg) => {
-            if (containerRef.current) {
-                containerRef.current.innerHTML = svg;
-            }
-            setIsLoading(false);
+
+      // Dynamically import mermaid only on the client-side
+      import('mermaid').then(mermaidModule => {
+        if (!isMounted) return;
+        
+        const mermaid: Mermaid = mermaidModule.default;
+        
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'neutral',
+          securityLevel: 'loose',
         });
-      } catch (e: any) {
-        console.error('Mermaid render error:', e.message || e);
-        setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
+        
+        try {
+          // Asynchronously render the chart
+          mermaid.render(chartId, chart, (svg) => {
+              if (containerRef.current && isMounted) {
+                  containerRef.current.innerHTML = svg;
+              }
+              setIsLoading(false);
+          });
+        } catch (e: any) {
+          console.error('Mermaid render error:', e.message || e);
+          setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
+          setIsLoading(false);
+        }
+      }).catch(err => {
+        console.error("Failed to load mermaid library", err);
+        setError("Không thể tải thư viện sơ đồ.");
         setIsLoading(false);
-      }
+      });
     } else {
       setIsLoading(false);
       if (!chart) {
         setError("Không có mã sơ đồ để hiển thị.");
       }
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [chart, chartId]);
 
   return (
@@ -75,8 +88,6 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
         <div 
           ref={containerRef} 
           className="mermaid-container flex justify-center min-h-[100px]"
-          // The key forces React to re-mount the div when the chart content changes,
-          // ensuring a clean state for Mermaid.
           key={chart} 
         >
           {/* Mermaid SVG will be injected here */}
