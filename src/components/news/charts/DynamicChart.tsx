@@ -9,6 +9,7 @@ import { AlertCircle } from "lucide-react";
 import { ChartBar } from "./ChartBar";
 import { ChartLine } from "./ChartLine";
 import { ChartRadar } from "./ChartRadar";
+import { ChartPie } from "./ChartPie"; // Import mới
 
 interface DynamicChartProps {
   chartConfig: any; // Nhận cấu hình thô từ Firestore
@@ -18,6 +19,7 @@ const chartComponents = {
   bar: ChartBar,
   line: ChartLine,
   radar: ChartRadar,
+  pie: ChartPie, // Đã thêm pie
 };
 
 export function DynamicChart({ chartConfig }: DynamicChartProps) {
