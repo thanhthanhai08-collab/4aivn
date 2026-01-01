@@ -162,7 +162,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 allReviewsData
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsQuery),
+                getDocs(featuredToolsSnapshot),
                 getDocs(similarToolsQuery),
                 getDocs(allToolsForCategoriesQuery),
                 getDocs(newsQuery),
@@ -614,6 +614,5 @@ function ToolDetailContent({ id }: { id: string }) {
 }
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-  return <ToolDetailContent id={id} />;
+  return <ToolDetailContent id={params.id} />;
 }
