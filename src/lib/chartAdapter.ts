@@ -9,9 +9,9 @@ import type { ChartConfig } from "@/types/chart";
  */
 export function adaptChartConfig(rawConfig: any): ChartConfig {
   return {
-    // Khớp với 'chartType' và 'chartTitle' trong ảnh Firestore của bạn
-    type: rawConfig.chartType || 'bar', 
-    title: rawConfig.chartTitle || '',
+    // Khớp với 'type' và 'title' trong Map chartConfig của bạn trên Firestore
+    type: rawConfig.type || 'bar', 
+    title: rawConfig.title || '',
     data: Array.isArray(rawConfig.data) ? rawConfig.data : [],
     colors: Array.isArray(rawConfig.colors) ? rawConfig.colors : ["#5b7ce0", "#90cd97"],
     
