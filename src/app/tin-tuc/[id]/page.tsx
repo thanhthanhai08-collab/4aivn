@@ -230,51 +230,66 @@ function NewsDetailContent({ id }: { id: string }) {
 
             if (currentUser) {
                 getUserProfileData(currentUser.uid).then(userData => {
-                setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
+                    setIsBookmarked(userData.bookmarkedNews?.includes(id) || false);
                 });
             }
             
+            // 1. QUERY TIN MỚI NHẤT (Loại bỏ bài hiện tại)
             const latestNewsQuery = query(
                 collection(db, "news"),
                 where("post", "==", true),
-                where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
-                limit(3)
+                limit(4) // Lấy dư 1 để dự phòng trường hợp trùng bài hiện tại
             );
-            const latestNewsSnapshot = await getDocs(latestNewsQuery);
-            const latestNewsData = latestNewsSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                publishedAt: doc.data().publishedAt.toDate().toISOString(),
-            } as NewsArticle));
-            setLatestNews(latestNewsData);
 
+            // 2. QUERY BÀI VIẾT LIÊN QUAN (Theo Tag)
             let relatedQuery;
             if (fetchedArticle.tag && fetchedArticle.tag.length > 0) {
-              relatedQuery = query(
-                collection(db, "news"),
-                where("post", "==", true),
-                where("tag", "array-contains-any", fetchedArticle.tag),
-                where("__name__", "!=", id),
-                orderBy("publishedAt", "desc"),
-                limit(3)
-              );
+                relatedQuery = query(
+                    collection(db, "news"),
+                    where("post", "==", true),
+                    where("tag", "array-contains-any", fetchedArticle.tag),
+                    orderBy("publishedAt", "desc"),
+                    limit(4) 
+                );
             } else {
-              relatedQuery = query(
-                collection(db, "news"),
-                where("post", "==", true),
-                where("__name__", "!=", id),
-                orderBy("publishedAt", "desc"),
-                limit(3)
-              );
+                // Nếu không có tag, lấy các bài cũ hơn bài hiện tại một chút
+                relatedQuery = query(
+                    collection(db, "news"),
+                    where("post", "==", true),
+                    orderBy("publishedAt", "desc"),
+                    limit(4)
+                );
             }
 
-            const relatedSnapshot = await getDocs(relatedQuery);
-            const relatedData = relatedSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                publishedAt: doc.data().publishedAt.toDate().toISOString(),
-            } as NewsArticle));
+            // Chạy cả 2 query cùng lúc để tăng tốc độ load trang
+            const [latestSnapshot, relatedSnapshot] = await Promise.all([
+                getDocs(latestNewsQuery),
+                getDocs(relatedQuery)
+            ]);
+
+            // Xử lý dữ liệu Tin mới nhất
+            const latestData = latestSnapshot.docs
+                .map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                } as NewsArticle))
+                .filter(item => item.id !== id) // Lọc bỏ bài đang xem
+                .slice(0, 3); // Lấy đúng 3 bài
+
+            setLatestNews(latestData);
+
+            // Xử lý dữ liệu Bài viết liên quan
+            const relatedData = relatedSnapshot.docs
+                .map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                } as NewsArticle))
+                .filter(item => item.id !== id) // Lọc bỏ bài đang xem
+                .slice(0, 3); // Lấy đúng 3 bài
+
             setRelatedNews(relatedData);
 
         } else {
