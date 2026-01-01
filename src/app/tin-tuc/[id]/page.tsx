@@ -39,7 +39,7 @@ import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import MermaidChart from "@/components/news/MermaidChart";
+import { DynamicChart } from "@/components/news/charts/DynamicChart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -56,7 +56,7 @@ const AdBanner = () => (
   </div>
 );
 
-const renderContent = (content: string, articleId: string) => {
+const renderContent = (content: string, article: NewsArticle) => {
   const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
   
   const parts = content.split(combinedRegex).filter(part => part);
@@ -87,45 +87,45 @@ const renderContent = (content: string, articleId: string) => {
       return <AiBrowserMarketGrowthChart key={`${index}-market-growth-chart`} />;
     }
     if (part === '[BENCHMARK_CHART]') {
-      if (articleId === 'openai-gpt-oss-ra-mat') {
+      if (article.id === 'openai-gpt-oss-ra-mat') {
         return <GptOssBenchmarkChart key={`${index}-chart`} />;
       }
-      if (articleId === 'ai-viet-2025-bao-cao') {
+      if (article.id === 'ai-viet-2025-bao-cao') {
         return <AiVietUsageChart key={`${index}-chart`} />;
       }
       return null;
     }
     
     if (part === '[ACTIVITIES_CHART]') {
-        if (articleId === 'ai-viet-2025-bao-cao') {
+        if (article.id === 'ai-viet-2025-bao-cao') {
             return <AiActivitiesChart key={`${index}-activities-chart`} />;
         }
         return null;
     }
     
     if (part === '[SATISFACTION_CHART]') {
-        if (articleId === 'ai-viet-2025-bao-cao') {
+        if (article.id === 'ai-viet-2025-bao-cao') {
             return <AiSatisfactionChart key={`${index}-satisfaction-chart`} />;
         }
         return null;
     }
 
     if (part === '[PROFITABILITY_CHART]') {
-        if (articleId === 'sieu-loi-nhuan-cho-nvidia-voi-may-chu-ai-nvidia-gb200-nvl72') {
+        if (article.id === 'sieu-loi-nhuan-cho-nvidia-voi-may-chu-ai-nvidia-gb200-nvl72') {
             return <ProfitabilityChart key={`${index}-profit-chart`} />;
         }
         return null;
     }
     
     if (part === '[NANO_BANANA_CHART]') {
-        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+        if (article.id === 'google-ra-mat-gemini-2-5-flash-image') {
             return <GeminiFlashImageBenchmarkChart key={`${index}-gemini-chart`} />;
         }
         return null;
     }
     
     if (part === '[IMAGE_EDITING_CHART]') {
-        if (articleId === 'google-ra-mat-gemini-2-5-flash-image') {
+        if (article.id === 'google-ra-mat-gemini-2-5-flash-image') {
             return <ImageEditingBenchmarkChart key={`${index}-image-edit-chart`} />;
         }
         return null;
@@ -447,10 +447,10 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
               )}
 
               <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
-                {renderContent(article.content, article.id)}
+                {renderContent(article.content, article)}
               </div>
 
-              {article.mermaidCode && <MermaidChart chart={article.mermaidCode} />}
+              {article.chartConfig && <DynamicChart chartConfig={article.chartConfig} />}
 
               <footer className="mt-12 pt-6 border-t">
                   {article.link && (
@@ -536,15 +536,5 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  if (!params.id) {
-    return (
-        <AppLayout>
-            <div className="container py-12 text-center">
-                <h1 className="text-2xl font-bold">Đang tải...</h1>
-            </div>
-        </AppLayout>
-    );
-  }
-
   return <NewsDetailContent params={params} />;
 }
