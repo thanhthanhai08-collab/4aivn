@@ -473,7 +473,7 @@ function NewsDetailContent({ id }: { id: string }) {
                   <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {latestNews.map(related => (
+                  {latestNews.map((related) => (
                     <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                       <div className="flex items-start space-x-4">
                         <div className="relative w-24 h-24 shrink-0">
@@ -499,16 +499,18 @@ function NewsDetailContent({ id }: { id: string }) {
           </aside>
         </div>
 
-        <section className="mt-16 pt-12 border-t">
-           <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
-            Các bài viết liên quan
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedNews.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
-          </div>
-        </section>
+        {relatedNews.length > 0 && (
+          <section className="mt-16 pt-12 border-t">
+            <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
+              Các bài viết liên quan
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedNews.map((article) => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </AppLayout>
   );
