@@ -178,7 +178,8 @@ async function incrementNewsViewCount(newsId: string): Promise<void> {
   }
 }
 
-function NewsDetailContent({ id }: { id: string }) {
+function NewsDetailContent({ params }: { params: { id: string } }) {
+  const { id } = params;
   const { currentUser } = useAuth();
   const { toast } = useToast();
   
@@ -545,5 +546,5 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
     );
   }
 
-  return <NewsDetailContent id={params.id} />;
+  return <NewsDetailContent params={params} />;
 }

@@ -38,7 +38,8 @@ const formatContextLength = (tokenValue?: number): string => {
   return String(tokenValue);
 };
 
-function ModelDetailContent({ id }: { id: string }) {
+function ModelDetailContent({ params }: { params: { id: string } }) {
+  const { id } = params;
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -393,5 +394,5 @@ function ModelDetailContent({ id }: { id: string }) {
 
 // This is the Server Component that fetches the ID and passes it to the Client Component.
 export default function ModelDetailPage({ params }: { params: { id: string } }) {
-  return <ModelDetailContent id={params.id} />;
+  return <ModelDetailContent params={params} />;
 }

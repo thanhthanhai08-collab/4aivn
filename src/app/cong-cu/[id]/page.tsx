@@ -70,7 +70,8 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
 };
 
 
-function ToolDetailContent({ id }: { id: string }) {
+function ToolDetailContent({ params }: { params: { id: string } }) {
+  const { id } = params;
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -162,7 +163,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 allReviewsData
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsSnapshot),
+                getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
                 getDocs(allToolsForCategoriesQuery),
                 getDocs(newsQuery),
@@ -614,5 +615,5 @@ function ToolDetailContent({ id }: { id: string }) {
 }
 
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  return <ToolDetailContent id={params.id} />;
+  return <ToolDetailContent params={params} />;
 }
