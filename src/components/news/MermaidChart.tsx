@@ -41,10 +41,13 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
             containerRef.current.innerHTML = '';
           }
 
-          // AN TOÀN HƠN: Chỉ thay thế dấu ; bằng ký tự xuống dòng.
-          // Cách này giữ lại tất cả các khoảng trắng và ký tự xuống dòng gốc,
-          // đảm bảo cú pháp phức tạp của xychart không bị phá vỡ.
-          const formattedChart = chart.replace(/;/g, '\n');
+          // AN TOÀN HƠN: Tách chuỗi bằng dấu chấm phẩy, trim khoảng trắng, và nối lại bằng ký tự xuống dòng.
+          // Cách này đảm bảo các lệnh được phân tách chính xác.
+          const formattedChart = chart
+            .split(';')
+            .map(part => part.trim())
+            .filter(part => part.length > 0)
+            .join('\n');
 
           // Dòng này để bạn kiểm tra trong F12
           console.log("Mã đã format để render:\n", formattedChart);
