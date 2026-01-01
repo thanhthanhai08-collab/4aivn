@@ -14,16 +14,15 @@ export function ChartBar({ config }: { config: any }) {
       <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         
-        {/* Sửa XAxis: dataKey phải là indexKey (tức là "name") */}
         <XAxis 
           dataKey={indexKey} 
           fontSize={12} 
           tickLine={false} 
           axisLine={false} 
           dy={10}
+          tick={{ fontWeight: 'bold' }}
         />
         
-        {/* Sửa YAxis: Thêm đơn vị vào nhãn số */}
         <YAxis 
           fontSize={12} 
           tickFormatter={(value) => `${value}${unit}`} 
