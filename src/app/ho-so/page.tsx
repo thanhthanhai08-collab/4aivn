@@ -67,7 +67,7 @@ export default function ProfilePage() {
             
             // --- Fetch all required data in parallel ---
             const [modelsSnapshot, toolsSnapshot] = await Promise.all([
-              getDocs(collection(db, "models")),
+              getDocs(query(collection(db, "models"), where("post", "==", true))),
               getDocs(query(
                 collection(db, "tools"),
                 where("post", "==", true),

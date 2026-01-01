@@ -56,7 +56,7 @@ function ModelDetailContent({ id }: { id: string }) {
 
     // Set up a real-time listener for the model document
     const unsubscribe = onSnapshot(modelDocRef, async (docSnap) => {
-        if (docSnap.exists()) {
+        if (docSnap.exists() && docSnap.data().post === true) {
             const data = docSnap.data();
             const releaseDateTimestamp = data.releaseDate as Timestamp;
             
@@ -103,7 +103,7 @@ function ModelDetailContent({ id }: { id: string }) {
 
             setIsLoading(false);
         } else {
-            console.error("Model not found!");
+            console.error("Model not found or not published!");
             setIsLoading(false);
             setModel(null);
         }
@@ -230,6 +230,7 @@ function ModelDetailContent({ id }: { id: string }) {
       <AppLayout>
         <div className="container py-12 text-center">
           <h1 className="text-2xl font-bold">Không tìm thấy model AI</h1>
+           <p className="text-muted-foreground">Model này có thể không tồn tại hoặc chưa được xuất bản.</p>
           <Button asChild variant="link" className="mt-4">
             <Link href="/bang-xep-hang">Quay lại Bảng xếp hạng</Link>
           </Button>

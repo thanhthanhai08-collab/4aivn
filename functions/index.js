@@ -196,6 +196,7 @@ exports.initModelStructure = onDocumentCreated(
             type: data.type || "LLM",
             multimodal: data.multimodal || false,
             releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
+            post: false, // Trường mới để kiểm soát hiển thị
         };
 
         await resRef.set(modelFields, { merge: true });

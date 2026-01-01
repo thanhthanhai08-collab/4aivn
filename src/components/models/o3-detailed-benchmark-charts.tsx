@@ -89,7 +89,7 @@ const getModelDataFromBenchmarkDoc = async (docSnap: any, modelsMap: Map<string,
     if (!modelDetails) {
         const modelDocRef = doc(db, 'models', modelId);
         const modelDocSnap = await getDoc(modelDocRef);
-        if (modelDocSnap.exists()) {
+        if (modelDocSnap.exists() && modelDocSnap.data().post === true) {
             const data = modelDocSnap.data() as Omit<AIModel, 'id'>;
             modelDetails = { id: modelId, ...data };
             modelsMap.set(modelId, modelDetails);

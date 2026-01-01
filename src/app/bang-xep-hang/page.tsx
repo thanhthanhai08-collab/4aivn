@@ -24,6 +24,7 @@ export default function RankingsPage() {
       try {
         const modelsQuery = query(
           collection(db, "models"),
+          where("post", "==", true), // Added post filter
           orderBy("intelligenceScore", "desc"),
           orderBy("contextLengthToken", "desc"),
           orderBy("pricePerMillionTokens", "asc"),
