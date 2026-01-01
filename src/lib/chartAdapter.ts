@@ -8,19 +8,27 @@ import type { ChartConfig } from "@/types/chart";
  * @returns Cấu hình đã được chuẩn hóa và an toàn để sử dụng.
  */
 export function adaptChartConfig(rawConfig: any): ChartConfig {
-  return {
-    // Khớp với 'type' và 'title' trong Map chartConfig của bạn trên Firestore
-    type: rawConfig.type || 'bar', 
-    title: rawConfig.title || '',
+  const defaults = {
+    type: rawConfig.chartType || 'bar',
+    title: rawConfig.chartTitle || '',
+    unit: rawConfig.unit || '', // Trường mới để nhận đơn vị như "%" hoặc "Điểm"
+    indexKey: 'name', // Cố định phím 'name' để khớp Firestore
     data: Array.isArray(rawConfig.data) ? rawConfig.data : [],
-    colors: Array.isArray(rawConfig.colors) ? rawConfig.colors : ["#5b7ce0", "#90cd97"],
-    
-    // Các giá trị mặc định cho UI
-    layout: rawConfig.layout || 'horizontal',
-    indexKey: 'name', // Khớp với trường 'name' bạn đã nhập
-    showGrid: true,
-    showLegend: true,
-    showTooltip: true,
-    source: rawConfig.source || '',
+    colors: rawConfig.colors || ["#5b7ce0", "#90cd97"],
+    layout: 'horizontal',
   };
+
+  const config: any = { ...defaults, ...rawConfig };
+
+  // Tự động tạo dataKeys từ các phím mô hình (GPT-4, o1)
+  if (config.data.length > 0) {
+    const keys = Object.keys(config.data[0]).filter(k => k !== 'name' && k !== 'color');
+    config.dataKeys = keys.map((key, i) => ({
+      name: key,
+      label: key,
+      color: config.colors[i] || "#8884d8"
+    }));
+  }
+
+  return config;
 }
