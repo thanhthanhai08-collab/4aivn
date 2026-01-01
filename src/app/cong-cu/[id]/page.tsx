@@ -164,7 +164,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
-                getDocs(allToolsForCategoriesSnapshot),
+                getDocs(allToolsForCategoriesQuery),
                 getDocs(newsQuery),
                 getAllToolReviews(tool.id)
             ]);
