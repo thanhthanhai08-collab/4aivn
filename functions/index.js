@@ -229,7 +229,6 @@ exports.initModelStructure = onDocumentCreated(
 );
 
 
-// 3. Cloud Function
 exports.initToolStructure = onDocumentCreated(
     { 
         document: "tools/{toolId}", 
@@ -318,6 +317,77 @@ Yêu cầu:
 
         } catch (error) {
             console.error("Lỗi thực thi Genkit Flow:", error);
+        }
+    }
+);
+
+
+exports.initNews = onDocumentCreated(
+    { 
+        document: "news/{newsId}", 
+        secrets: [GEMINI_API_KEY], 
+        region: "asia-southeast1" 
+    },
+    async (event) => {
+        const snapshot = event.data;
+        if (!snapshot) return null;
+        const data = snapshot.data();
+
+        const ai = genkit({
+            plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
+            model: "googleai/gemini-3-flash-preview", 
+        });
+
+        // Định nghĩa Output Schema cho News
+        const NewsOutputSchema = z.object({
+            title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
+            content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML chuyên nghiệp.'),
+            summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
+            tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
+            mermaidCode: z.string().optional().describe('Mã sơ đồ Mermaid (ví dụ: graph TD...) nếu nội dung có quy trình hoặc so sánh. Để trống nếu không cần thiết.')
+        });
+
+        // Định nghĩa Prompt viết bài
+        const newsPrompt = ai.definePrompt({
+            name: 'initNewsPrompt',
+            input: { schema: z.object({ dataAiHint: z.string(), source: z.string() }) },
+            output: { schema: NewsOutputSchema },
+            prompt: `Bạn là một biên tập viên tin tức công nghệ tại 4AIVN. 
+            Nhiệm vụ: Viết một bài báo chuyên sâu dựa trên thông tin sau:
+            - Gợi ý nội dung: {{dataAiHint}}
+            - Nguồn tham khảo: {{source}}
+            
+            Yêu cầu:
+            1. Văn phong chuyên nghiệp, gần gũi, lôi cuốn người đọc.
+            2. Nếu nội dung có các bước quy trình hoặc so sánh thông số, hãy tạo mã Mermaid.js để minh họa.
+            3. Trả về định dạng JSON Tiếng Việt.`
+        });
+
+        try {
+            // Chạy AI phân tích từ dữ liệu gợi ý (dataAiHint)
+            const { output } = await newsPrompt({
+                dataAiHint: data.dataAiHint || "Tin tức AI mới nhất",
+                source: data.source || "Internet"
+            });
+
+            // Ghi dữ liệu vào Firestore theo các trường bạn yêu cầu
+            const updatePayload = {
+                title: data.title || output.title,
+                content: data.content || output.content,
+                summary: data.summary || output.summary,
+                tag: (data.tag && data.tag.length > 0) ? data.tag : output.tag,
+                mermaidCode: data.mermaidCode || output.mermaidCode || "",
+                author: data.author || "Nam",
+                imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
+                source: data.source || "Tổng hợp",
+                publishedAt: data.publishedAt || admin.firestore.FieldValue.serverTimestamp(),
+                post: data.post || false
+            };
+            
+            return snapshot.ref.set(updatePayload, { merge: true });
+
+        } catch (error) {
+            console.error("Lỗi initNews:", error);
         }
     }
 );
