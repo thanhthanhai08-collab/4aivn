@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef } from "react";
 import type { Tool, NewsArticle } from "@/lib/types";
-import { collection, getDocs, limit, orderBy, query, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, doc, getDoc, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -141,6 +141,7 @@ export default function HomePage() {
       try {
         const toolsQuery = query(
           collection(db, "tools"),
+          where("post", "==", true),
           orderBy("averageRating", "desc"),
           orderBy("ratingCount", "desc"),
           orderBy("__name__"),

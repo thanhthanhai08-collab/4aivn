@@ -71,6 +71,7 @@ function ToolsContent() {
       const toolsRef = collection(db, "tools");
       let q = query(
         toolsRef,
+        where("post", "==", true),
         orderBy("averageRating", "desc"),
         orderBy("ratingCount", "desc"),
         orderBy("__name__")

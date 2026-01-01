@@ -101,7 +101,7 @@ function ToolDetailContent({ id }: { id: string }) {
 
     const toolDocRef = doc(db, "tools", id);
     const unsubscribe = onSnapshot(toolDocRef, (docSnap) => {
-      if (docSnap.exists()) {
+      if (docSnap.exists() && docSnap.data().post === true) {
         const foundTool = { id: docSnap.id, ...docSnap.data() } as Tool;
         setTool(foundTool);
       } else {
@@ -125,23 +125,26 @@ function ToolDetailContent({ id }: { id: string }) {
             // --- Queries ---
             const allToolsForRankingQuery = query(
                 collection(db, "tools"),
+                where("post", "==", true),
                 orderBy("averageRating", "desc"),
                 orderBy("ratingCount", "desc"),
                 orderBy("__name__")
             );
             const featuredToolsQuery = query(
                 collection(db, "tools"),
+                where("post", "==", true),
                 orderBy("viewCount", "desc"), 
                 orderBy("__name__", "asc"),   
                 limit(4)                      
             );
             const similarToolsQuery = query(
                 collection(db, "tools"),
+                where("post", "==", true),
                 where("context", "==", tool.context),
                 orderBy("__name__", "asc"),
                 limit(5)
             );
-            const allToolsForCategoriesQuery = collection(db, "tools");
+            const allToolsForCategoriesQuery = query(collection(db, "tools"), where("post", "==", true));
              const newsQuery = query(
                 collection(db, "news"),
                 where("tag", "array-contains", tool.name),
@@ -161,7 +164,7 @@ function ToolDetailContent({ id }: { id: string }) {
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
-                getDocs(allToolsForCategoriesQuery),
+                getDocs(allToolsForCategoriesSnapshot),
                 getDocs(newsQuery),
                 getAllToolReviews(tool.id)
             ]);
@@ -185,6 +188,7 @@ function ToolDetailContent({ id }: { id: string }) {
             const complementaryPromises = selectedCategories.map(cat => {
                 const q = query(
                     collection(db, "tools"),
+                    where("post", "==", true),
                     where("context", "==", cat),
                     limit(1)
                 );
@@ -318,6 +322,7 @@ function ToolDetailContent({ id }: { id: string }) {
       <AppLayout>
         <div className="container py-12 text-center">
           <h1 className="text-2xl font-bold">Không tìm thấy công cụ</h1>
+          <p className="text-muted-foreground">Công cụ này có thể không tồn tại hoặc chưa được xuất bản.</p>
           <Button asChild variant="link" className="mt-4">
             <Link href="/cong-cu">Quay lại trang Công cụ</Link>
           </Button>

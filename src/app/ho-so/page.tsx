@@ -70,6 +70,7 @@ export default function ProfilePage() {
               getDocs(collection(db, "models")),
               getDocs(query(
                 collection(db, "tools"),
+                where("post", "==", true),
                 orderBy("averageRating", "desc"),
                 orderBy("ratingCount", "desc"),
                 orderBy("__name__")
