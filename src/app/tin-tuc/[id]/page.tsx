@@ -39,6 +39,7 @@ import { Sima2BenchmarkChart } from "@/components/news/Sima2BenchmarkChart";
 import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import MermaidChart from "@/components/news/MermaidChart";
 
 const AdBanner = () => (
   <div className="mt-8 text-center">
@@ -447,6 +448,8 @@ function NewsDetailContent({ id }: { id: string }) {
               <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
                 {renderContent(article.content, article.id)}
               </div>
+
+              {article.mermaidCode && <MermaidChart chart={article.mermaidCode} />}
 
               <footer className="mt-12 pt-6 border-t">
                   {article.link && (
