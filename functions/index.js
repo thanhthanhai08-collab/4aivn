@@ -155,9 +155,9 @@ exports.aggregateToolRating = onDocumentWritten(
 // Định nghĩa danh sách các Logo dựa trên nhà phát triển
 const LOGOS = {
     GOOGLE: "/image/models%2Flogo-gemini.webp?alt=media",
-    OPENAI: "/image/models%2Flogo-open-ai.webp?alt=media&token=21377081-d120-4680-b793-4224d7977ba6",
-    XAI: "/image/models%2Flogo-grok.webp?alt=media&token=5d4df9ba-abf0-4b58-84a7-d77d48e453fb",
-    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media&token=879e5e94-ecd1-44b9-9eea-65c8140ad86f",
+    OPENAI: "/image/models%2Flogo-open-ai.webp?alt=media",
+    XAI: "/image/models%2Flogo-grok.webp?alt=media&token",
+    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media&token",
     ANTHROPIC: "/image/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
 };
 
@@ -338,16 +338,24 @@ exports.initNews = onDocumentCreated(
             model: "googleai/gemini-3-flash-preview", 
         });
 
-        // Định nghĩa Output Schema cho News
+        // 1. Định nghĩa Output Schema mới (Thêm chartConfig, Bỏ mermaidCode)
         const NewsOutputSchema = z.object({
             title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
             content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML chuyên nghiệp.'),
             summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
             tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
-            mermaidCode: z.string().optional().describe('Mã sơ đồ Mermaid (ví dụ: graph TD...) nếu nội dung có quy trình hoặc so sánh. Để trống nếu không cần thiết.')
+            // Cấu trúc chartConfig mới để thay thế Mermaid
+            chartConfig: z.object({
+                title: z.string().describe('Tiêu đề của biểu đồ'),
+                type: z.enum(['bar', 'pie']).describe('Loại biểu đồ: bar (cột) hoặc pie (tròn)'),
+                unit: z.string().describe('Đơn vị đo lường (ví dụ: %, điểm, triệu người)'),
+                source: z.string().describe('Nguồn dữ liệu của biểu đồ'),
+                colors: z.array(z.string()).describe('Mảng mã màu Hex cho các cột/phần (ví dụ: ["#5b7ce0", "#90cd97"])'),
+                data: z.array(z.any()).describe('Mảng dữ liệu. Ví dụ: [{"name": "GPT-4", "score": 90}, {"name": "o1", "score": 95}]')
+            }).optional()
         });
 
-        // Định nghĩa Prompt viết bài
+        // 2. Định nghĩa Prompt viết bài (Yêu cầu AI tạo dữ liệu biểu đồ thay vì mã sơ đồ)
         const newsPrompt = ai.definePrompt({
             name: 'initNewsPrompt',
             input: { schema: z.object({ dataAiHint: z.string(), source: z.string() }) },
@@ -357,31 +365,42 @@ exports.initNews = onDocumentCreated(
             - Gợi ý nội dung: {{dataAiHint}}
             - Nguồn tham khảo: {{source}}
             
-            Yêu cầu:
-            1. Văn phong chuyên nghiệp, gần gũi, lôi cuốn người đọc.
-            2. Nếu nội dung có các bước quy trình hoặc so sánh thông số, hãy tạo mã Mermaid.js để minh họa.
-            3. Trả về định dạng JSON Tiếng Việt.`
+            Yêu cầu quan trọng:
+            1. Văn phong chuyên nghiệp, lôi cuốn.
+            2. Nếu nội dung có các số liệu so sánh hoặc thống kê, nếu thấy thật sự cần thiết thì hãy tạo dữ liệu cho phần "chartConfig" để vẽ biểu đồ Recharts. 
+            3. Tránh sử dụng Mermaid, thay vào đó hãy tập trung vào cấu trúc dữ liệu JSON cho biểu đồ.
+            4. Trả về định dạng JSON Tiếng Việt.`
         });
 
         try {
-            // Chạy AI phân tích từ dữ liệu gợi ý (dataAiHint)
             const { output } = await newsPrompt({
                 dataAiHint: data.dataAiHint || "Tin tức AI mới nhất",
                 source: data.source || "Internet"
             });
 
-            // Ghi dữ liệu vào Firestore theo các trường bạn yêu cầu
+            // 3. Ghi dữ liệu vào Firestore (Map chartConfig)
             const updatePayload = {
                 title: data.title || output.title,
                 content: data.content || output.content,
                 summary: data.summary || output.summary,
                 tag: (data.tag && data.tag.length > 0) ? data.tag : output.tag,
-                mermaidCode: data.mermaidCode || output.mermaidCode || "",
+                
+                // Cấu trúc Map chartConfig được gán vào đây
+                chartConfig: data.chartConfig || output.chartConfig || {
+                    title: "Thống kê",
+                    type: "bar",
+                    unit: "%",
+                    source: "Tổng hợp",
+                    colors: ["#5b7ce0", "#90cd97"],
+                    data: []
+                },
+
                 author: data.author || "Nam",
                 imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
                 source: data.source || "Tổng hợp",
                 publishedAt: data.publishedAt || admin.firestore.FieldValue.serverTimestamp(),
                 post: data.post || false
+                // mermaidCode đã bị loại bỏ hoàn toàn
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
