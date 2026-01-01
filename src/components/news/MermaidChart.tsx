@@ -31,27 +31,17 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
     if (chart && containerRef.current) {
       setIsLoading(true);
       setError(null);
-
-      // Ensure the container is empty before rendering
-      containerRef.current.innerHTML = '';
       
       try {
         // Asynchronously render the chart
-        mermaid.render(chartId, chart)
-          .then(({ svg }) => {
+        mermaid.render(chartId, chart, (svg) => {
             if (containerRef.current) {
-              containerRef.current.innerHTML = svg;
+                containerRef.current.innerHTML = svg;
             }
-          })
-          .catch(e => {
-            console.error('Mermaid render error:', e.message || e);
-            setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
-          })
-          .finally(() => {
             setIsLoading(false);
-          });
+        });
       } catch (e: any) {
-        console.error('Mermaid syntax error:', e.message || e);
+        console.error('Mermaid render error:', e.message || e);
         setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
         setIsLoading(false);
       }
@@ -76,7 +66,7 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
             <AlertTitle>Không thể hiển thị sơ đồ</AlertTitle>
             <AlertDescription>
               Đã xảy ra lỗi khi vẽ sơ đồ. Vui lòng kiểm tra lại mã Mermaid.
-              <pre className="mt-2 text-xs bg-muted p-2 rounded">
+              <pre className="mt-2 text-xs bg-muted p-2 rounded whitespace-pre-wrap">
                 {error}
               </pre>
             </AlertDescription>
