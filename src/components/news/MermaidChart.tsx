@@ -6,10 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Skeleton } from '../ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Terminal } from 'lucide-react';
-import type mermaid from 'mermaid';
 
 interface MermaidChartProps {
   chart: string;
+}
+
+declare global {
+  interface Window {
+    mermaid?: any;
+  }
 }
 
 const MermaidChart = ({ chart }: MermaidChartProps) => {
@@ -20,47 +25,66 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
 
   useEffect(() => {
     let isMounted = true;
-    if (chart && containerRef.current) {
-      setIsLoading(true);
-      setError(null);
-
-      // Dynamically import mermaid only on the client-side
-      import('mermaid').then(mermaidModule => {
-        if (!isMounted) return;
-        
-        const mermaid: Mermaid = mermaidModule.default;
-        
-        mermaid.initialize({
-          startOnLoad: false,
-          theme: 'neutral',
-          securityLevel: 'loose',
-        });
-        
-        try {
-          // Asynchronously render the chart
-          mermaid.render(chartId, chart, (svg) => {
-              if (containerRef.current && isMounted) {
-                  containerRef.current.innerHTML = svg;
-              }
-              setIsLoading(false);
+    if (!chart || !containerRef.current) {
+        setIsLoading(false);
+        setError("Không có mã sơ đồ để hiển thị.");
+        return;
+    }
+    
+    setIsLoading(true);
+    setError(null);
+    
+    const renderChart = () => {
+      try {
+        if (window.mermaid && isMounted) {
+          window.mermaid.initialize({
+            startOnLoad: false,
+            theme: 'neutral',
+            securityLevel: 'loose',
           });
-        } catch (e: any) {
-          console.error('Mermaid render error:', e.message || e);
+
+          window.mermaid.render(chartId, chart, (svg: string) => {
+            if (containerRef.current && isMounted) {
+              containerRef.current.innerHTML = svg;
+            }
+          });
+        }
+      } catch (e: any) {
+        console.error('Mermaid render error:', e.message || e);
+        if (isMounted) {
           setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
+        }
+      } finally {
+        if (isMounted) {
+            setIsLoading(false);
+        }
+      }
+    };
+
+    if (window.mermaid) {
+      renderChart();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+      script.onload = () => {
+        renderChart();
+      };
+      script.onerror = () => {
+        if (isMounted) {
+          setError("Không thể tải thư viện sơ đồ Mermaid.");
           setIsLoading(false);
         }
-      }).catch(err => {
-        console.error("Failed to load mermaid library", err);
-        setError("Không thể tải thư viện sơ đồ.");
-        setIsLoading(false);
-      });
-    } else {
-      setIsLoading(false);
-      if (!chart) {
-        setError("Không có mã sơ đồ để hiển thị.");
+      };
+      document.body.appendChild(script);
+
+      return () => {
+        // Cleanup script if component unmounts before it loads
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
       }
     }
-
+    
     return () => {
       isMounted = false;
     };
