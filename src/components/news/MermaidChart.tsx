@@ -46,6 +46,7 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
           // đảm bảo cú pháp phức tạp của xychart không bị phá vỡ.
           const formattedChart = chart.replace(/;/g, '\n');
 
+          // Dòng này để bạn kiểm tra trong F12
           console.log("Mã đã format để render:\n", formattedChart);
 
           const id = `mermaid-svg-${Math.random().toString(36).substring(2, 9)}`;
