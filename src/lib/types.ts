@@ -21,6 +21,7 @@ export interface Tool {
   ratingCount?: number;
   viewCount?: number;
   averageRating?: number;
+  post?: boolean; // Controls visibility
 }
 
 export interface NewsArticle {
@@ -35,6 +36,7 @@ export interface NewsArticle {
   dataAiHint?: string;
   isBookmarked?: boolean;
   tag?: string[]; // Add tags for filtering related articles
+  post?: boolean; // Controls visibility
 }
 
 export interface User {
@@ -93,6 +95,7 @@ export interface AIModel {
   releaseDate?: string;
   benchmarks?: BenchmarkData[];
   averageRating?: number;
+  post?: boolean; // Controls visibility
 }
 
 export interface Comment {

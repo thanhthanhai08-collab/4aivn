@@ -122,7 +122,12 @@ export default function HomePage() {
       setIsLoadingNews(true);
       try {
         const newsCollection = collection(db, "news");
-        const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"), limit(6));
+        const newsQuery = query(
+          newsCollection, 
+          where("post", "==", true),
+          orderBy("publishedAt", "desc"), 
+          limit(6)
+        );
         const querySnapshot = await getDocs(newsQuery);
         const newsData = querySnapshot.docs.map(doc => ({
           id: doc.id,

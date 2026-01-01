@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { NewsListItem } from "@/components/news/news-list-item";
 import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
-import { collection, getDocs, orderBy, query, limit, startAfter, type QueryDocumentSnapshot } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, startAfter, where, type QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Loader2 } from "lucide-react";
 
@@ -48,7 +48,12 @@ export default function NewsPage() {
     setIsLoading(true);
     try {
       const newsCollection = collection(db, "news");
-      const newsQuery = query(newsCollection, orderBy("publishedAt", "desc"), limit(PAGE_SIZE));
+      const newsQuery = query(
+        newsCollection, 
+        where("post", "==", true),
+        orderBy("publishedAt", "desc"), 
+        limit(PAGE_SIZE)
+      );
       const querySnapshot = await getDocs(newsQuery);
       
       const newsData = querySnapshot.docs.map(doc => {
@@ -88,6 +93,7 @@ export default function NewsPage() {
         const newsCollection = collection(db, "news");
         const newsQuery = query(
             newsCollection, 
+            where("post", "==", true),
             orderBy("publishedAt", "desc"), 
             startAfter(lastDoc),
             limit(PAGE_SIZE)

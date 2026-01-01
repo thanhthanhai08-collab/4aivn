@@ -103,7 +103,11 @@ export default function ProfilePage() {
             
             const bookmarkedIds = userData.bookmarkedNews || [];
             if (bookmarkedIds.length > 0) {
-              const newsQuery = query(collection(db, "news"), where(documentId(), "in", bookmarkedIds));
+              const newsQuery = query(
+                collection(db, "news"), 
+                where("post", "==", true),
+                where(documentId(), "in", bookmarkedIds)
+              );
               const newsSnapshot = await getDocs(newsQuery);
               const userBookmarkedNews = newsSnapshot.docs.map(doc => ({
                 id: doc.id,

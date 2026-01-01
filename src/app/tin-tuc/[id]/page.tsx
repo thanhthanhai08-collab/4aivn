@@ -169,7 +169,7 @@ async function incrementNewsViewCount(newsId: string): Promise<void> {
   } catch (error) {
     if ((error as any).code === 'not-found') {
         // If the document doesn't exist, create it with a view count of 1.
-        // This is a fallback, ideally the document should always exist.
+        // This is a fallback, a an article should always exist to be viewed.
         await setDoc(newsDocRef, { viewCount: 1 }, { merge: true });
     } else {
         console.error("Failed to increment view count:", error);
@@ -199,7 +199,7 @@ function NewsDetailContent({ id }: { id: string }) {
         const docRef = doc(db, "news", id);
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
+        if (docSnap.exists() && docSnap.data().post === true) {
             const data = docSnap.data();
             const fetchedArticle = {
                 id: docSnap.id,
@@ -236,6 +236,7 @@ function NewsDetailContent({ id }: { id: string }) {
             
             const latestNewsQuery = query(
                 collection(db, "news"),
+                where("post", "==", true),
                 where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
                 limit(3)
@@ -252,6 +253,7 @@ function NewsDetailContent({ id }: { id: string }) {
             if (fetchedArticle.tag && fetchedArticle.tag.length > 0) {
               relatedQuery = query(
                 collection(db, "news"),
+                where("post", "==", true),
                 where("tag", "array-contains-any", fetchedArticle.tag),
                 where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
@@ -260,6 +262,7 @@ function NewsDetailContent({ id }: { id: string }) {
             } else {
               relatedQuery = query(
                 collection(db, "news"),
+                where("post", "==", true),
                 where("__name__", "!=", id),
                 orderBy("publishedAt", "desc"),
                 limit(3)
@@ -274,6 +277,8 @@ function NewsDetailContent({ id }: { id: string }) {
             } as NewsArticle));
             setRelatedNews(relatedData);
 
+        } else {
+          setArticle(null); // Article not found or not posted
         }
         setIsLoading(false);
     };
@@ -349,6 +354,7 @@ function NewsDetailContent({ id }: { id: string }) {
       <AppLayout>
         <div className="container py-12 text-center">
           <h1 className="text-2xl font-bold">Không tìm thấy bài viết</h1>
+          <p className="text-muted-foreground">Bài viết này có thể không tồn tại hoặc chưa được xuất bản.</p>
           <Button asChild variant="link" className="mt-4">
             <Link href="/tin-tuc">Quay lại trang Tin tức</Link>
           </Button>
