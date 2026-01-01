@@ -1,5 +1,5 @@
 // src/lib/chartAdapter.ts
-import type { ChartConfig, ChartDataItem, ChartDataKey } from "@/types/chart";
+import type { ChartConfig } from "@/types/chart";
 
 /**
  * Chuyển đổi và chuẩn hóa dữ liệu cấu hình thô từ Firestore.
@@ -8,29 +8,19 @@ import type { ChartConfig, ChartDataItem, ChartDataKey } from "@/types/chart";
  * @returns Cấu hình đã được chuẩn hóa và an toàn để sử dụng.
  */
 export function adaptChartConfig(rawConfig: any): ChartConfig {
-  // Cung cấp các giá trị mặc định "an toàn"
-  const defaults: Partial<ChartConfig> = {
-    type: 'bar',
-    layout: 'horizontal',
+  return {
+    // Khớp với 'chartType' và 'chartTitle' trong ảnh Firestore của bạn
+    type: rawConfig.chartType || 'bar', 
+    title: rawConfig.chartTitle || '',
+    data: Array.isArray(rawConfig.data) ? rawConfig.data : [],
+    colors: Array.isArray(rawConfig.colors) ? rawConfig.colors : ["#5b7ce0", "#90cd97"],
+    
+    // Các giá trị mặc định cho UI
+    layout: rawConfig.layout || 'horizontal',
+    indexKey: 'name', // Khớp với trường 'name' bạn đã nhập
+    showGrid: true,
     showLegend: true,
     showTooltip: true,
-    showGrid: true,
-    title: '',
-    description: '',
-    source: '',
-    data: [],
-    dataKeys: [],
-    indexKey: 'name',
+    source: rawConfig.source || '',
   };
-
-  const config: ChartConfig = {
-    ...defaults,
-    ...rawConfig,
-  };
-
-  // Đảm bảo data và dataKeys luôn là mảng
-  config.data = Array.isArray(rawConfig.data) ? rawConfig.data : [];
-  config.dataKeys = Array.isArray(rawConfig.dataKeys) ? rawConfig.dataKeys : [];
-
-  return config;
 }

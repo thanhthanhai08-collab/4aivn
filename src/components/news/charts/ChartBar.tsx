@@ -5,29 +5,27 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import type { ChartComponentProps } from '@/types/chart';
 
 export function ChartBar({ config }: ChartComponentProps) {
-  const { data, dataKeys, indexKey, layout, showGrid, showLegend, showTooltip } = config;
+  // Lấy các giá trị từ config
+  const { data, colors, indexKey = 'name', layout, showGrid, showLegend, showTooltip } = config;
+
+  // TỰ ĐỘNG TẠO DATAKEYS: 
+  // Lấy tất cả các key trong object đầu tiên (trừ key 'name' và 'color')
+  const autoKeys = Object.keys(data[0] || {}).filter(
+    (key) => key !== indexKey && key !== 'color'
+  );
 
   const isVerticalLayout = layout === 'vertical';
 
-  const renderLabelList = (key: string) => (
-    <LabelList 
-      dataKey={key} 
-      position={isVerticalLayout ? 'right' : 'top'} 
-      offset={8}
-      className="fill-foreground"
-      fontSize={12}
-    />
-  );
-  
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart 
         data={data} 
         layout={layout}
-        margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         {showGrid && <CartesianGrid strokeDasharray="3 3" />}
-
+        
+        {/* Cấu hình trục dựa trên Layout */}
         {isVerticalLayout ? (
           <>
             <XAxis type="number" />
@@ -35,24 +33,30 @@ export function ChartBar({ config }: ChartComponentProps) {
           </>
         ) : (
           <>
-            <XAxis dataKey={indexKey} tick={{ fontSize: 12 }} />
+            <XAxis dataKey={indexKey} tick={{ fontSize: 12 }}/>
             <YAxis />
           </>
         )}
-        
-        {showTooltip && <Tooltip 
-          cursor={{ fill: 'hsl(var(--accent))' }}
-          contentStyle={{
-            backgroundColor: 'hsl(var(--background))',
-            borderColor: 'hsl(var(--border))'
-          }}
-        />}
 
+        {showTooltip && <Tooltip 
+            cursor={{ fill: 'hsl(var(--accent))' }}
+            contentStyle={{
+                backgroundColor: 'hsl(var(--background))',
+                borderColor: 'hsl(var(--border))'
+            }}
+        />}
         {showLegend && <Legend />}
-        
-        {dataKeys.map((key) => (
-          <Bar key={key.name} dataKey={key.name} fill={key.color} name={key.label || key.name} radius={[4, 4, 0, 0]}>
-            {renderLabelList(key.name)}
+
+        {/* Vẽ các cột dựa trên autoKeys đã quét được */}
+        {autoKeys.map((key, index) => (
+          <Bar 
+            key={key} 
+            dataKey={key} 
+            fill={colors?.[index] || "#8884d8"} // Lấy màu từ mảng colors
+            name={key} 
+            radius={[4, 4, 0, 0]}
+          >
+            <LabelList dataKey={key} position="top" fontSize={12} className="fill-foreground" />
           </Bar>
         ))}
       </BarChart>
