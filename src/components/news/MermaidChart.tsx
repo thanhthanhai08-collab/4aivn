@@ -2,7 +2,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-// Import trực tiếp thay vì dùng CDN để tránh bị Tracking Prevention chặn
 import mermaid from 'mermaid';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Skeleton } from '../ui/skeleton';
@@ -15,41 +14,44 @@ interface MermaidChartProps {
 
 const MermaidChart = ({ chart }: MermaidChartProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // State để kiểm tra xem component đã "mount" vào trình duyệt chưa
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1. Chỉ khởi tạo Mermaid ở phía Client
     try {
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'neutral', // Sử dụng theme neutral dễ đọc hơn
-            securityLevel: 'loose',
-        });
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'neutral',
+        securityLevel: 'loose',
+      });
     } catch (e) {
-        console.error("Failed to initialize Mermaid:", e);
-        setError("Không thể khởi tạo thư viện Mermaid.");
+      console.error("Failed to initialize Mermaid:", e);
+      setError("Không thể khởi tạo thư viện Mermaid.");
     }
-    // Đánh dấu là component đã sẵn sàng ở client
     setIsReady(true);
   }, []);
 
   useEffect(() => {
-    // 2. Chỉ render khi đã sẵn sàng, có dữ liệu và có container
     if (isReady && chart && containerRef.current) {
       const renderChart = async () => {
         try {
           setError(null);
-          // Xóa sạch nội dung cũ để tránh lỗi render đè
+          
           if (containerRef.current) {
             containerRef.current.innerHTML = '';
           }
-          
-          // Tạo ID ngẫu nhiên mỗi lần render để tránh lỗi 'createElementNS'
+
+          // Process the string: change ';' to '\n' for xychart-beta to work on a single line.
+          const formattedChart = chart
+            .split(';')
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .join('\n');
+
           const id = `mermaid-svg-${Math.random().toString(36).substring(2, 9)}`;
           
-          const { svg } = await mermaid.render(id, chart);
+          // Use the formatted string for rendering
+          const { svg } = await mermaid.render(id, formattedChart);
           
           if (containerRef.current) {
             containerRef.current.innerHTML = svg;
@@ -60,39 +62,44 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
         }
       };
 
-      // Đưa vào hàng đợi xử lý để đảm bảo DOM đã ổn định
       const timeoutId = setTimeout(renderChart, 50);
       return () => clearTimeout(timeoutId);
     }
   }, [isReady, chart]);
 
-
   return (
-    <Card className="my-8">
-      <CardHeader>
-        <CardTitle>Sơ đồ minh họa</CardTitle>
+    <Card className="my-8 shadow-md border-t-4 border-t-primary">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg flex items-center gap-2 text-primary">
+          📊 Sơ đồ minh họa
+        </CardTitle>
       </CardHeader>
-      <CardContent className="overflow-x-auto">
+      <CardContent className="overflow-x-auto min-h-[200px] flex flex-col justify-center">
         {!isReady && <Skeleton className="h-48 w-full" />}
+        
         {isReady && error && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="my-4">
             <Terminal className="h-4 w-4" />
-            <AlertTitle>Không thể hiển thị sơ đồ</AlertTitle>
+            <AlertTitle>Lỗi định dạng biểu đồ</AlertTitle>
             <AlertDescription>
-              Đã xảy ra lỗi khi vẽ sơ đồ. Vui lòng kiểm tra lại mã Mermaid.
-              <pre className="mt-2 text-xs bg-muted p-2 rounded whitespace-pre-wrap">
+              Mã sơ đồ không hợp lệ. Vui lòng kiểm tra lại cú pháp (đặc biệt là xychart).
+              <pre className="mt-2 text-[10px] bg-black/10 p-2 rounded whitespace-pre-wrap font-mono">
                 {error}
               </pre>
             </AlertDescription>
           </Alert>
         )}
+        
         <div 
           ref={containerRef} 
-          className="mermaid-container flex justify-center min-h-[100px]"
-          key={chart} // Key thay đổi sẽ giúp React re-mount component khi chart thay đổi
-        >
-          {/* Mermaid SVG sẽ được chèn vào đây */}
-        </div>
+          className="mermaid-container flex justify-center w-full transition-all duration-300"
+        />
+        
+        {isReady && !error && (
+          <p className="text-[10px] text-muted-foreground text-center mt-4 italic">
+            * Kéo sang ngang nếu sơ đồ bị tràn khung
+          </p>
+        )}
       </CardContent>
     </Card>
   );
