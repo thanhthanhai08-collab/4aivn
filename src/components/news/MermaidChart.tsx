@@ -72,12 +72,7 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
 
   return (
     <Card className="my-8 shadow-md border-t-4 border-t-primary">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg flex items-center gap-2 text-primary">
-          📊 Sơ đồ minh họa
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="overflow-x-auto min-h-[200px] flex flex-col justify-center">
+      <CardContent className="overflow-x-auto min-h-[200px] flex flex-col justify-center pt-6">
         {!isReady && <Skeleton className="h-48 w-full" />}
         
         {isReady && error && (
@@ -98,11 +93,6 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
           className="mermaid-container flex justify-center w-full transition-all duration-300"
         />
         
-        {isReady && !error && (
-          <p className="text-[10px] text-muted-foreground text-center mt-4 italic">
-            * Kéo sang ngang nếu sơ đồ bị tràn khung
-          </p>
-        )}
       </CardContent>
     </Card>
   );
