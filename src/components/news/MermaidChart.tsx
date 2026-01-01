@@ -1,7 +1,9 @@
 // src/components/news/MermaidChart.tsx
 "use client";
 
-import { useEffect, useRef, useId, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+// Import trực tiếp thay vì dùng CDN để tránh bị Tracking Prevention chặn
+import mermaid from 'mermaid';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Skeleton } from '../ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
@@ -11,84 +13,59 @@ interface MermaidChartProps {
   chart: string;
 }
 
-declare global {
-  interface Window {
-    mermaid?: any;
-  }
-}
-
 const MermaidChart = ({ chart }: MermaidChartProps) => {
-  const chartId = `mermaid-graph-${useId()}`;
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // State để kiểm tra xem component đã "mount" vào trình duyệt chưa
+  const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-    if (!chart || !containerRef.current) {
-        setIsLoading(false);
-        setError("Không có mã sơ đồ để hiển thị.");
-        return;
-    }
-    
-    setIsLoading(true);
-    setError(null);
-    
-    const renderChart = () => {
-      try {
-        if (window.mermaid && isMounted) {
-          window.mermaid.initialize({
+    // 1. Chỉ khởi tạo Mermaid ở phía Client
+    try {
+        mermaid.initialize({
             startOnLoad: false,
-            theme: 'neutral',
+            theme: 'neutral', // Sử dụng theme neutral dễ đọc hơn
             securityLevel: 'loose',
-          });
-
-          window.mermaid.render(chartId, chart, (svg: string) => {
-            if (containerRef.current && isMounted) {
-              containerRef.current.innerHTML = svg;
-            }
-          });
-        }
-      } catch (e: any) {
-        console.error('Mermaid render error:', e.message || e);
-        if (isMounted) {
-          setError(e.message || 'Lỗi cú pháp trong mã sơ đồ.');
-        }
-      } finally {
-        if (isMounted) {
-            setIsLoading(false);
-        }
-      }
-    };
-
-    if (window.mermaid) {
-      renderChart();
-    } else {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
-      script.onload = () => {
-        renderChart();
-      };
-      script.onerror = () => {
-        if (isMounted) {
-          setError("Không thể tải thư viện sơ đồ Mermaid.");
-          setIsLoading(false);
-        }
-      };
-      document.body.appendChild(script);
-
-      return () => {
-        // Cleanup script if component unmounts before it loads
-        if (script.parentNode) {
-            script.parentNode.removeChild(script);
-        }
-      }
+        });
+    } catch (e) {
+        console.error("Failed to initialize Mermaid:", e);
+        setError("Không thể khởi tạo thư viện Mermaid.");
     }
-    
-    return () => {
-      isMounted = false;
-    };
-  }, [chart, chartId]);
+    // Đánh dấu là component đã sẵn sàng ở client
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    // 2. Chỉ render khi đã sẵn sàng, có dữ liệu và có container
+    if (isReady && chart && containerRef.current) {
+      const renderChart = async () => {
+        try {
+          setError(null);
+          // Xóa sạch nội dung cũ để tránh lỗi render đè
+          if (containerRef.current) {
+            containerRef.current.innerHTML = '';
+          }
+          
+          // Tạo ID ngẫu nhiên mỗi lần render để tránh lỗi 'createElementNS'
+          const id = `mermaid-svg-${Math.random().toString(36).substring(2, 9)}`;
+          
+          const { svg } = await mermaid.render(id, chart);
+          
+          if (containerRef.current) {
+            containerRef.current.innerHTML = svg;
+          }
+        } catch (e: any) {
+          console.error("Mermaid Render Error:", e.message || e);
+          setError(e.message || "Lỗi cú pháp trong mã sơ đồ.");
+        }
+      };
+
+      // Đưa vào hàng đợi xử lý để đảm bảo DOM đã ổn định
+      const timeoutId = setTimeout(renderChart, 50);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isReady, chart]);
+
 
   return (
     <Card className="my-8">
@@ -96,8 +73,8 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
         <CardTitle>Sơ đồ minh họa</CardTitle>
       </CardHeader>
       <CardContent className="overflow-x-auto">
-        {isLoading && <Skeleton className="h-48 w-full" />}
-        {error && !isLoading && (
+        {!isReady && <Skeleton className="h-48 w-full" />}
+        {isReady && error && (
           <Alert variant="destructive">
             <Terminal className="h-4 w-4" />
             <AlertTitle>Không thể hiển thị sơ đồ</AlertTitle>
@@ -112,9 +89,9 @@ const MermaidChart = ({ chart }: MermaidChartProps) => {
         <div 
           ref={containerRef} 
           className="mermaid-container flex justify-center min-h-[100px]"
-          key={chart} 
+          key={chart} // Key thay đổi sẽ giúp React re-mount component khi chart thay đổi
         >
-          {/* Mermaid SVG will be injected here */}
+          {/* Mermaid SVG sẽ được chèn vào đây */}
         </div>
       </CardContent>
     </Card>
