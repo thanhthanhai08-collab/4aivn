@@ -1,4 +1,4 @@
-// src/types/chart.ts
+// src/components/news/charts/chart.ts
 
 // Định nghĩa cấu trúc cho mỗi dòng dữ liệu trong biểu đồ
 export interface ChartDataItem {
@@ -15,7 +15,7 @@ export interface ChartDataKey {
 
 // Cấu hình chung cho một biểu đồ
 export interface ChartConfig {
-  type: 'bar' | 'line' | 'radar'; // Loại biểu đồ
+  type: 'bar' | 'line' | 'radar' | 'pie'; // Loại biểu đồ
   data: ChartDataItem[];          // Mảng dữ liệu để vẽ
   dataKeys: ChartDataKey[];       // Mảng các key dữ liệu sẽ được vẽ
   indexKey: string;               // Key chính trên trục X (ví dụ: 'name' hoặc 'date')
@@ -27,6 +27,8 @@ export interface ChartConfig {
   showTooltip?: boolean;          // Có hiển thị tooltip khi di chuột qua hay không
   showGrid?: boolean;             // Có hiển thị lưới nền hay không
   source?: string;                // Nguồn dữ liệu
+  colors: string[];
+  unit?: string;
 }
 
 // Props cho các component biểu đồ con

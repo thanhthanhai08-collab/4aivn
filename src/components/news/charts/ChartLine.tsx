@@ -2,7 +2,7 @@
 "use client";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import type { ChartComponentProps } from '@/types/chart';
+import type { ChartComponentProps } from '@/components/news/charts/chart';
 
 export function ChartLine({ config }: ChartComponentProps) {
   const { data, dataKeys, indexKey, showGrid, showLegend, showTooltip } = config;

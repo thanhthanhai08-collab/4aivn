@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import type { ChartComponentProps } from '@/types/chart';
+import type { ChartComponentProps } from '@/components/news/charts/chart';
 
 export function ChartPie({ config }: ChartComponentProps) {
   const { data, colors, unit = '' } = config;

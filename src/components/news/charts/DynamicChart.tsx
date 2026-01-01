@@ -2,7 +2,7 @@
 "use client";
 
 import { adaptChartConfig } from "@/lib/chartAdapter";
-import type { ChartConfig } from "@/types/chart";
+import type { ChartConfig } from "@/components/news/charts/chart";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
