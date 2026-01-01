@@ -21,20 +21,20 @@ export function ChartBar({ config }: ChartComponentProps) {
       <BarChart 
         data={data} 
         layout={layout}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }} // Tăng bottom margin để có không gian cho label
       >
         {showGrid && <CartesianGrid strokeDasharray="3 3" />}
         
         {/* Cấu hình trục dựa trên Layout */}
         {isVerticalLayout ? (
           <>
-            <XAxis type="number" />
+            <XAxis type="number" unit="%" />
             <YAxis type="category" dataKey={indexKey} width={80} tick={{ fontSize: 12 }} />
           </>
         ) : (
           <>
-            <XAxis dataKey={indexKey} tick={{ fontSize: 12 }}/>
-            <YAxis />
+            <XAxis dataKey={indexKey} tick={{ fontSize: 12 }} angle={-45} textAnchor="end" height={60} interval={0} />
+            <YAxis unit="%" />
           </>
         )}
 
