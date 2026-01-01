@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Tool, AIModel } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, type Timestamp, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, type Timestamp, query, orderBy, where } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
@@ -31,9 +31,10 @@ export default function RankingsPage() {
           orderBy("speedTokensPerSecond", "desc")
         );
 
-        // Updated tools query to use the composite index
+        // Updated tools query to use the composite index and filter by post == true
         const toolsQuery = query(
           collection(db, "tools"),
+          where("post", "==", true),
           orderBy("averageRating", "desc"),
           orderBy("ratingCount", "desc"),
           orderBy("__name__")
