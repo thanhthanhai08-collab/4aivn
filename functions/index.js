@@ -310,6 +310,7 @@ Yêu cầu:
                 // Các trường khởi tạo
                 averageRating: 0,
                 ratingCount: 0,
+                post: false, // Trường mới để kiểm soát hiển thị
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
