@@ -535,9 +535,7 @@ function NewsDetailContent({ id }: { id: string }) {
 }
 
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
-  const { id } = params;
-  
-  if (!id) {
+  if (!params.id) {
     return (
         <AppLayout>
             <div className="container py-12 text-center">
@@ -547,5 +545,5 @@ export default function NewsDetailPage({ params }: { params: { id: string } }) {
     );
   }
 
-  return <NewsDetailContent id={id} />;
+  return <NewsDetailContent id={params.id} />;
 }
