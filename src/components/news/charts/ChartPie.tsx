@@ -66,11 +66,6 @@ export function ChartPie({ config }: ChartComponentProps) {
                 </Pie>
                 
                 <Tooltip formatter={(value: any) => `${value} ${unit}`} />
-
-                {/* Text ở giữa biểu đồ */}
-                <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="fill-slate-400 font-medium text-[10px]">
-                  VS
-                </text>
               </PieChart>
             </ResponsiveContainer>
             
@@ -79,7 +74,7 @@ export function ChartPie({ config }: ChartComponentProps) {
               {pieData.map((d, i) => (
                 <div key={i} className="flex items-center gap-1">
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: colors[i % colors.length] }} />
-                  <span className="text-[10px] font-semibold text-slate-500">{d.name}</span>
+                  <span className="text-xs font-semibold text-slate-500">{d.name}</span>
                 </div>
               ))}
             </div>
