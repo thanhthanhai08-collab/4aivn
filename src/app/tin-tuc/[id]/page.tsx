@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
@@ -40,21 +40,6 @@ import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
-
-const AdBanner = () => (
-  <div className="mt-8 text-center">
-    <Link href="/tro-chuyen">
-      <Image
-        src="/image/Khám phá chatbot.gif"
-        alt="Khám phá chatbot demo"
-        width={400}
-        height={250}
-        className="mx-auto rounded-md shadow-md"
-        
-      />
-    </Link>
-  </div>
-);
 
 const renderContent = (content: string, article: NewsArticle) => {
   const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
@@ -486,7 +471,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
             </Card>
           </div>
 
-          <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit">
+          <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
              <Card>
                 <CardHeader>
                   <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
@@ -514,7 +499,13 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                   ))}
                 </CardContent>
               </Card>
-              <AdBanner />
+              <Card className="bg-accent/50 text-center p-6">
+                  <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
+                  <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
+                  <Button asChild>
+                      <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
+                  </Button>
+              </Card>
           </aside>
         </div>
 
