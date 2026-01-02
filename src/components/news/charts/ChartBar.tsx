@@ -16,7 +16,7 @@ export function ChartBar({ config }: { config: ChartConfig }) {
         
         <XAxis 
           dataKey={indexKey} 
-          fontSize={12} 
+          fontSize={16} 
           tickLine={false} 
           axisLine={false} 
           dy={10}
