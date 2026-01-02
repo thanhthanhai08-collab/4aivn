@@ -45,7 +45,7 @@ const renderContent = (article: NewsArticle) => {
   if (!article || !article.content) return null;
 
   // Regex để tìm các placeholder như [CHART_1], [IMAGE:...] và các placeholder cũ
-  const combinedRegex = /(\[CHART_(\d+)\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
+  const combinedRegex = /(\[CHART_(?:\d+)\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
 
   const parts = article.content.split(combinedRegex).filter(part => part);
 
@@ -422,7 +422,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                   height={450}
                   className="rounded-lg shadow-lg mb-8 w-full object-cover"
                   priority
-                  
+                  sizes="(max-width: 768px) 100vw, 800px"
                 />
               )}
               
