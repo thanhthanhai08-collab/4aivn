@@ -24,7 +24,7 @@ export function ChartBar({ config }: { config: ChartConfig }) {
         />
         
         <YAxis 
-          fontSize={12} 
+          fontSize={14} 
           tickFormatter={(value) => `${value}${unit}`} 
         />
 
