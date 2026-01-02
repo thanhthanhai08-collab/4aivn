@@ -2,9 +2,9 @@
 "use client";
 
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer, Tooltip } from 'recharts';
-import type { ChartComponentProps } from '@/components/news/charts/chart';
+import type { ChartConfig } from '@/components/news/charts/chart';
 
-export function ChartRadar({ config }: ChartComponentProps) {
+export function ChartRadar({ config }: { config: ChartConfig }) {
   const { data, dataKeys, indexKey, showLegend, showTooltip } = config;
   
   return (

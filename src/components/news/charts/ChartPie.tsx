@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import type { ChartComponentProps } from '@/components/news/charts/chart';
+import type { ChartConfig } from '@/components/news/charts/chart';
 
-export function ChartPie({ config }: ChartComponentProps) {
+export function ChartPie({ config }: { config: ChartConfig }) {
   const { data, colors, unit = '' } = config;
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef(null);
