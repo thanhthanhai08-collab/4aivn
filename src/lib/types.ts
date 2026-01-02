@@ -37,7 +37,7 @@ export interface NewsArticle {
   isBookmarked?: boolean;
   tag?: string[]; // Add tags for filtering related articles
   post?: boolean; // Controls visibility
-  chartConfig?: any; // To hold chart configuration from Firestore
+  charts?: any[]; // To hold chart configuration from Firestore
 }
 
 export interface User {
