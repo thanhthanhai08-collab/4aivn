@@ -540,5 +540,3 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent params={params} />;
 }
-
-    

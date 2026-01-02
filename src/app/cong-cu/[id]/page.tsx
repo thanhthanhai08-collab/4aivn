@@ -404,7 +404,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                             alt={`Ảnh giới thiệu ${tool.name}`}
                             fill
                             className="object-cover"
-                            
+                            sizes="(max-width: 768px) 100vw, 800px"
                           />
                         </div>
                       ) : null}
@@ -571,7 +571,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                   {relatedNews.map((article) => (
                       <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
-                            <Image src={article.imageUrl} alt={article.title} fill className="rounded-md object-cover"/>
+                            <Image src={article.imageUrl} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>
                          <div>
                             <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>

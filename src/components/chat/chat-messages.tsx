@@ -36,7 +36,7 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
           >
             {message.imageUrl && (
                 <div className="relative aspect-square w-full max-w-xs">
-                    <Image src={message.imageUrl} alt="Chat image" layout="fill" objectFit="cover" className={cn("rounded-t-lg", !message.text && "rounded-lg")} />
+                    <Image src={message.imageUrl} alt="Chat image" layout="fill" objectFit="cover" className={cn("rounded-t-lg", !message.text && "rounded-lg")} sizes="320px" />
                 </div>
             )}
             {message.text && (
