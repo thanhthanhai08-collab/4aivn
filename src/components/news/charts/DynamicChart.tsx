@@ -12,7 +12,7 @@ import { ChartRadar } from "./ChartRadar";
 import { ChartPie } from "./ChartPie"; // Import mới
 
 interface DynamicChartProps {
-  chartConfig: any; // Nhận cấu hình thô từ Firestore
+  config: any; // Nhận cấu hình thô từ Firestore
 }
 
 const chartComponents = {
@@ -22,13 +22,13 @@ const chartComponents = {
   pie: ChartPie, // Đã thêm pie
 };
 
-export function DynamicChart({ chartConfig }: DynamicChartProps) {
-  if (!chartConfig) {
+export function DynamicChart({ config: rawConfig }: DynamicChartProps) {
+  if (!rawConfig) {
     return <Skeleton className="h-[400px] w-full" />;
   }
 
   // Chuẩn hóa dữ liệu cấu hình
-  const config = adaptChartConfig(chartConfig);
+  const config = adaptChartConfig(rawConfig);
   const ChartComponent = chartComponents[config.type] || null;
   
   return (
@@ -53,3 +53,5 @@ export function DynamicChart({ chartConfig }: DynamicChartProps) {
     </Card>
   );
 }
+
+    

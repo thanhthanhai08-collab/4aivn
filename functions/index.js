@@ -176,7 +176,7 @@ exports.initModelStructure = onDocumentCreated(
         // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
         let autoLogoUrl = data.logoUrl || "";
         if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
-        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
+        else if (devLower === "openai") autoLogoUrl = LOG.OPENAI;
         else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
         else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
         else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
@@ -338,28 +338,32 @@ exports.initNews = onDocumentCreated(
             model: "googleai/gemini-3-flash-preview", 
         });
 
-        // 1. Định nghĩa cấu trúc cho từng phần tử trong mảng data
+        // 1. Định nghĩa cấu trúc cho từng phần tử trong mảng data của một biểu đồ
         const ChartDataItemSchema = z.object({
-            name: z.string().describe('Tên hạng mục (ví dụ: Phân tích, Tấn công AI...)'),
-        }).catchall(z.number().describe('Các giá trị số của các mô hình/đối tượng so sánh'));
+            name: z.string().describe('Tên hạng mục chính trên trục X (ví dụ: "Phân tích", "Tư duy").'),
+        }).catchall(z.number().describe('Các giá trị số của các đối tượng so sánh (ví dụ: "GPT-4": 85).'));
 
-        // 2. Áp dụng vào NewsOutputSchema
-        const NewsOutputSchema = z.object({
-            title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
-            content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML chuyên nghiệp.'),
-            summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
-            tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
-            chartConfig: z.object({
-                title: z.string().describe('Tiêu đề của biểu đồ'),
-                type: z.enum(['bar', 'pie']).describe('Loại biểu đồ: bar (cột) hoặc pie (tròn)'),
-                unit: z.string().describe('Đơn vị đo lường (ví dụ: %, điểm, triệu người)'),
-                source: z.string().describe('Nguồn dữ liệu của biểu đồ'),
-                colors: z.array(z.string()).describe('Mảng mã màu Hex cho các cột/phần (ví dụ: ["#5b7ce0", "#90cd97"])'),
-                data: z.array(ChartDataItemSchema).describe('Mảng dữ liệu biểu đồ bắt buộc có trường name và các trường số liệu')
-            }).optional()
+        // 2. Định nghĩa cấu trúc cho một biểu đồ đơn lẻ
+        const ChartConfigSchema = z.object({
+            title: z.string().describe('Tiêu đề của biểu đồ.'),
+            type: z.enum(['bar', 'pie', 'line', 'radar']).describe('Loại biểu đồ: bar, pie, line, hoặc radar.'),
+            unit: z.string().describe('Đơn vị đo lường (ví dụ: %, điểm, ms).'),
+            source: z.string().describe('Nguồn dữ liệu của biểu đồ.'),
+            colors: z.array(z.string()).describe('Mảng mã màu Hex cho các cột/phần (ví dụ: ["#5b7ce0", "#90cd97"]).'),
+            data: z.array(ChartDataItemSchema).describe('Mảng dữ liệu biểu đồ, mỗi phần tử là một object có trường "name" và các trường số liệu.')
         });
 
-        // 3. Định nghĩa Prompt viết bài
+        // 3. Áp dụng vào NewsOutputSchema: `charts` là một mảng các biểu đồ
+        const NewsOutputSchema = z.object({
+            title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
+            content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML. Nếu cần chèn biểu đồ, hãy dùng placeholder như [CHART_1], [CHART_2] trong nội dung.'),
+            summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
+            tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
+            charts: z.array(ChartConfigSchema).optional().describe('Một mảng chứa cấu hình cho các biểu đồ sẽ được hiển thị trong bài viết.')
+        });
+
+
+        // 4. Định nghĩa Prompt viết bài
         const newsPrompt = ai.definePrompt({
             name: 'initNewsPrompt',
             input: { schema: z.object({ dataAiHint: z.string(), source: z.string() }) },
@@ -371,8 +375,8 @@ exports.initNews = onDocumentCreated(
             
             Yêu cầu quan trọng:
             1. Văn phong chuyên nghiệp, lôi cuốn.
-            2. Nếu nội dung có các số liệu so sánh hoặc thống kê, nếu thấy thật sự cần thiết thì hãy tạo dữ liệu cho phần "chartConfig" để vẽ biểu đồ Recharts. 
-            3. Tránh sử dụng Mermaid, thay vào đó hãy tập trung vào cấu trúc dữ liệu JSON cho biểu đồ.
+            2. Nếu nội dung có số liệu so sánh, hãy tạo dữ liệu cho một hoặc nhiều biểu đồ trong mảng "charts" để vẽ bằng Recharts.
+            3. Trong phần "content", hãy đặt các placeholder như [CHART_1], [CHART_2] vào vị trí bạn muốn biểu đồ tương ứng xuất hiện. Index của biểu đồ trong mảng "charts" (bắt đầu từ 0) tương ứng với số trong placeholder (ví dụ: charts[0] tương ứng với [CHART_1]).
             4. Trả về định dạng JSON Tiếng Việt.`
         });
 
@@ -382,21 +386,14 @@ exports.initNews = onDocumentCreated(
                 source: data.source || "Internet"
             });
 
-            // 4. Ghi dữ liệu vào Firestore
+            // 5. Ghi dữ liệu vào Firestore
             const updatePayload = {
                 title: data.title || output.title,
                 content: data.content || output.content,
                 summary: data.summary || output.summary,
                 tag: (data.tag && data.tag.length > 0) ? data.tag : output.tag,
                 
-                chartConfig: data.chartConfig || output.chartConfig || {
-                    title: "Thống kê",
-                    type: "bar",
-                    unit: "%",
-                    source: "Tổng hợp",
-                    colors: ["#5b7ce0", "#90cd97"],
-                    data: []
-                },
+                charts: data.charts || output.charts || [],
 
                 author: data.author || "Nam",
                 imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
@@ -412,3 +409,5 @@ exports.initNews = onDocumentCreated(
         }
     }
 );
+
+    

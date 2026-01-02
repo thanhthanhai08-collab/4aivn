@@ -41,12 +41,25 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increme
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
 
-const renderContent = (content: string, article: NewsArticle) => {
-  const combinedRegex = /(\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/;
-  
-  const parts = content.split(combinedRegex).filter(part => part);
+const renderContent = (article: NewsArticle) => {
+  if (!article || !article.content) return null;
+
+  // Regex để tìm các placeholder như [CHART_1], [IMAGE:...] và các placeholder cũ
+  const combinedRegex = /(\[CHART_(\d+)\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
+
+  const parts = article.content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
+    const chartMatch = part.match(/^\[CHART_(\d+)\]$/);
+    if (chartMatch) {
+      const chartIndex = parseInt(chartMatch[1], 10) - 1; // [CHART_1] -> index 0
+      const chartConfig = article.charts?.[chartIndex];
+      if (chartConfig) {
+        return <DynamicChart key={`${article.id}-chart-${chartIndex}`} config={chartConfig} />;
+      }
+      return null;
+    }
+    
     if (part === '[GEMINI_3_BENCHMARK_CHART]') {
       return <Gemini3BenchmarkChart key={`${index}-gemini3-chart`} />;
     }
@@ -432,10 +445,8 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
               )}
 
               <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
-                {renderContent(article.content, article)}
+                {renderContent(article)}
               </div>
-
-              {article.chartConfig && <DynamicChart chartConfig={article.chartConfig} />}
 
               <footer className="mt-12 pt-6 border-t">
                   {article.link && (
@@ -529,3 +540,5 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent params={params} />;
 }
+
+    
