@@ -53,5 +53,3 @@ export function DynamicChart({ config: rawConfig }: DynamicChartProps) {
     </Card>
   );
 }
-
-    

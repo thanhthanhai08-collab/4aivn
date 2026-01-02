@@ -30,8 +30,3 @@ export interface ChartConfig {
   colors: string[];
   unit?: string;
 }
-
-// Props cho các component biểu đồ con
-export interface ChartComponentProps {
-  config: ChartConfig;
-}
