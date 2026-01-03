@@ -240,80 +240,108 @@ exports.initToolStructure = onDocumentCreated(
         if (!snapshot) return null;
         const data = snapshot.data();
 
-        // Khởi tạo Genkit với plugin Google AI
+        // 1. Khởi tạo Genkit
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
         });
 
-        // 1. Định nghĩa Output Schema để ép AI trả về JSON chuẩn
+        // 2. Định nghĩa Schema để ép kiểu dữ liệu JSON ở Bước 2
         const ToolOutputSchema = z.object({
-            description: z.string().describe('Mô tả ngắn gọn 30 từ.'),
-            longDescription: z.string().describe('Mô tả chi tiết bằng HTML.'),
-            features: z.array(z.string()).describe('5 tính năng nổi bật.'),
-            whoIsItFor: z.array(z.string()).describe('Đối tượng sử dụng.'),
-            useCases: z.array(z.string()).describe('Ví dụ thực tế.'),
-            pricingPlans: z.array(z.string()).describe('Các gói giá.'),
-            context: z.string().describe('Lĩnh vực cốt lõi.'),
-            link: z.string().url().describe('Link trang chủ chính thức.')
+            description: z.string().describe('Mô tả ngắn gọn khoảng 30 từ.'),
+            longDescription: z.string().describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp.'),
+            features: z.array(z.string()).describe('Mảng gồm 5 tính năng nổi bật nhất.'),
+            whoIsItFor: z.array(z.string()).describe('Mảng các đối tượng người dùng phù hợp.'),
+            useCases: z.array(z.string()).describe('Mảng các ví dụ thực tế sử dụng công cụ.'),
+            pricingPlans: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...).'),
+            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding).'),
+            link: z.string().url().describe('URL trang chủ chính thức.')
         });
 
         try {
-            // 2. Sử dụng ai.generate với cấu hình Native Tools
-            const { output } = await ai.generate({
-                model: "googleai/gemini-2.5-flash",
-                prompt: `Bạn là chuyên gia phân tích AI tại 4AIVN. 
-                Hãy phân tích và viết nội dung cho công cụ AI sau:
-                - Tên: ${data.name || event.params.toolId}
-                - Lĩnh vực gợi ý: ${data.context || "AI Tool"}
-                - URL tham khảo: ${data.link}
-
+            /**
+             * BƯỚC 1: RESEARCH PHASE (Giai đoạn nghiên cứu)
+             * Mục tiêu: Cho AI đi "quét" web và tìm kiếm thông tin. 
+             * KHÔNG dùng output schema ở đây để tránh lỗi 400.
+             */
+            console.log(`--- Đang nghiên cứu công cụ: ${data.name || event.params.toolId} ---`);
+            const researchResponse = await ai.generate({
+                model: "googleai/gemini-2.5-flash", // Dùng 2.5 Flash để tối ưu tốc độ và hỗ trợ Tools
+                prompt: `Bạn là một chuyên gia phân tích dữ liệu AI tại 4AIVN. 
+                Nhiệm vụ: Nghiên cứu kỹ thông tin về công cụ AI có tên là "${data.name || event.params.toolId}".
+                
                 HƯỚNG DẪN:
-                1. Sử dụng tính năng "urlContext" để truy cập trực tiếp vào link: ${data.link} và đọc nội dung và đưa ra các nội dung chính xác về features, useCases, pricingPlans, không được phép sai lệch.
-                2. Nếu thông tin trên link không đủ, hãy sử dụng tool googleSearch để tìm kiếm thêm về công cụ này.
-                3. Tổng hợp và trả về kết quả bằng Tiếng Việt.`,
-                // Cấu hình Native Tools
+                1. Sử dụng "urlContext" để truy cập và đọc nội dung trực tiếp tại: ${data.link}.
+                2. Sử dụng "googleSearch" để tìm thêm các thông tin về bảng giá (pricing), các đánh giá từ người dùng và các tính năng thực tế nếu trang chủ không ghi rõ.
+                3. Thu thập mọi dữ liệu có thể về: Tính năng, đối tượng sử dụng, ví dụ thực tế và các mức giá chính xác như ở đường link.
+                
+                Hãy tổng hợp dữ liệu tìm được một cách chi tiết nhất bằng Tiếng Việt.`,
                 config: {
                     tools: [
-                        { googleSearch: {} },
+                        { googleSearch: {} }, 
                         { urlContext: {} }
                     ]
-                },
+                }
+            });
+
+            const rawResearchData = researchResponse.text;
+            console.log("--- Đã thu thập xong dữ liệu thô ---");
+
+            /**
+             * BƯỚC 2: FORMATTING PHASE (Giai đoạn đóng gói dữ liệu)
+             * Mục tiêu: Ép dữ liệu thô vào đúng định dạng JSON để lưu Firestore.
+             * KHÔNG dùng tools ở đây.
+             */
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Dựa vào dữ liệu nghiên cứu dưới đây, hãy viết một bài giới thiệu công cụ AI chuyên nghiệp cho website AI
+                
+                DỮ LIỆU NGHIÊN CỨU:
+                ${rawResearchData}
+
+                YÊU CẦU:
+                - Ngôn ngữ: Tiếng Việt.
+                - longDescription: Viết dưới dạng HTML (sử dụng thẻ <p>) để hiển thị đẹp trên web.
+                - Trả về đúng định dạng JSON theo yêu cầu.`,
                 output: { schema: ToolOutputSchema }
             });
 
             if (!output) {
-                console.error("AI không trả về kết quả.");
-                return;
+                console.error("AI không thể format được dữ liệu.");
+                return null;
             }
 
-            // 3. Cập nhật dữ liệu vào Firestore
+            /**
+             * BƯỚC 3: CẬP NHẬT FIRESTORE
+             * Ưu tiên giữ lại dữ liệu nếu người dùng đã nhập tay trước đó.
+             */
             const updatePayload = {
-                // Các trường được AI điền
                 description: data.description || output.description,
                 longDescription: data.longDescription || output.longDescription,
-                whoIsItFor: data.whoIsItFor && data.whoIsItFor.length > 0 ? data.whoIsItFor : output.whoIsItFor,
-                useCases: data.useCases && data.useCases.length > 0 ? data.useCases : output.useCases,
-                features: data.features && data.features.length > 0 ? data.features : output.features,
-                pricingPlans: data.pricingPlans && data.pricingPlans.length > 0 ? data.pricingPlans : output.pricingPlans,
+                whoIsItFor: (data.whoIsItFor && data.whoIsItFor.length > 0) ? data.whoIsItFor : output.whoIsItFor,
+                useCases: (data.useCases && data.useCases.length > 0) ? data.useCases : output.useCases,
+                features: (data.features && data.features.length > 0) ? data.features : output.features,
+                pricingPlans: (data.pricingPlans && data.pricingPlans.length > 0) ? data.pricingPlans : output.pricingPlans,
                 context: data.context || output.context,
-                
-                // Các trường ưu tiên dữ liệu nhập tay hoặc mặc định
                 name: data.name || event.params.toolId,
                 link: data.link || output.link,
+                
+                // Các trường bổ sung
                 developer: data.developer || "Đang cập nhật...",
                 logoUrl: data.logoUrl || "",
                 imageUrl: data.imageUrl || "",
-
-                // Các trường khởi tạo
                 averageRating: 0,
                 ratingCount: 0,
-                post: false // Trường mới để kiểm soát hiển thị
+                post: false,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
+            console.log(`--- Đang lưu dữ liệu vào Firestore cho Tool: ${event.params.toolId} ---`);
             return snapshot.ref.set(updatePayload, { merge: true });
 
         } catch (error) {
-            console.error("Lỗi thực thi Genkit initToolStructure:", error);
+            console.error("Lỗi nghiêm trọng trong initToolStructure:", error);
+            // Bạn có thể thêm ghi chú lỗi vào chính document để theo dõi trên Firestore
+            return snapshot.ref.set({ aiError: error.message }, { merge: true });
         }
     }
 );
