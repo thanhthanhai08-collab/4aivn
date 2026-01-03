@@ -10,13 +10,13 @@ export function ChartBar({ config }: { config: ChartConfig }) {
   const keysToRender = dataKeys || (data[0] ? Object.keys(data[0]).filter(k => k !== indexKey && k !== 'color') : []);
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+    <ResponsiveContainer width="100%" height={360}>
+      <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         
         <XAxis 
           dataKey={indexKey} 
-          fontSize={16} 
+          fontSize={16}
           tickLine={false} 
           axisLine={false} 
           dy={10}
