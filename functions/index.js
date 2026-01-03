@@ -307,8 +307,7 @@ exports.initToolStructure = onDocumentCreated(
                 // Các trường khởi tạo
                 averageRating: 0,
                 ratingCount: 0,
-                post: false, // Trường mới để kiểm soát hiển thị
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                post: false // Trường mới để kiểm soát hiển thị
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
