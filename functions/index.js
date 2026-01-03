@@ -274,8 +274,8 @@ exports.initToolStructure = onDocumentCreated(
                 // Cấu hình Native Tools
                 config: {
                     tools: [
-                        { tool: 'urlContext' },
-                        { tool: 'googleSearch' }
+                        { googleSearch: {} },
+                        { urlContext: {} }
                     ]
                 },
                 output: { schema: ToolOutputSchema }
