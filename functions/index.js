@@ -232,7 +232,7 @@ exports.initModelStructure = onDocumentCreated(
 exports.initToolStructure = onDocumentCreated(
     { 
         document: "tools/{toolId}", 
-        secrets: ["GEMINI_API_KEY"], 
+        secrets: [GEMINI_API_KEY], 
         region: "asia-southeast1" 
     },
     async (event) => {
@@ -240,56 +240,53 @@ exports.initToolStructure = onDocumentCreated(
         if (!snapshot) return null;
         const data = snapshot.data();
 
+        // Khởi tạo Genkit với plugin Google AI
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
-            model: "googleai/gemini-3-flash-preview", 
         });
 
-        // 1. Định nghĩa Output Schema chuẩn như Flow Frontend của bạn
+        // 1. Định nghĩa Output Schema để ép AI trả về JSON chuẩn
         const ToolOutputSchema = z.object({
-            description: z.string().describe('Mô tả ngắn gọn 30 từ về công cụ.'),
-            longDescription: z.string().describe('Mô tả chi tiết bằng HTML, lôi cuốn người dùng.'),
-            features: z.array(z.string()).describe('Danh sách 5 tính năng nổi bật.'),
-            whoIsItFor: z.array(z.string()).describe('Những ai nên dùng công cụ này.'),
-            useCases: z.array(z.string()).describe('Ví dụ thực tế khi sử dụng.'),
-            pricingPlans: z.array(z.string()).describe('Các gói giá (Free, Pro, v.v.).'),
-            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Coding, Art, Marketing).'),
-            link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
+            description: z.string().describe('Mô tả ngắn gọn 30 từ.'),
+            longDescription: z.string().describe('Mô tả chi tiết bằng HTML.'),
+            features: z.array(z.string()).describe('5 tính năng nổi bật.'),
+            whoIsItFor: z.array(z.string()).describe('Đối tượng sử dụng.'),
+            useCases: z.array(z.string()).describe('Ví dụ thực tế.'),
+            pricingPlans: z.array(z.string()).describe('Các gói giá.'),
+            context: z.string().describe('Lĩnh vực cốt lõi.'),
+            link: z.string().url().describe('Link trang chủ chính thức.')
         });
-
-        // 2. Định nghĩa Prompt chuyên sâu (Dùng kỹ thuật Few-shot hoặc Contextual Prompting)
-        const toolPrompt = ai.definePrompt({
-            name: 'generateAiToolDescriptionPrompt',
-            input: { schema: z.object({ name: z.string(), context: z.string(), link: z.string() }) },
-            output: { schema: ToolOutputSchema },
-            prompt: `Bạn là một chuyên gia phân tích phần mềm AI.
-Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
-- Tên: {{name}}
-- Lĩnh vực: {{context}}
-- URL tham khảo: {{link}}
-
-Yêu cầu:
-1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
-2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
-3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
-4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
-        });
-
 
         try {
-            // Chạy Prompt với Schema Validation
-            const { output } = await toolPrompt({
-                name: data.name || event.params.toolId,
-                context: data.context || "Công cụ AI mới",
-                link: data.link || ""
+            // 2. Sử dụng ai.generate với cấu hình Native Tools
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Bạn là chuyên gia phân tích AI tại 4AIVN. 
+                Hãy phân tích và viết nội dung cho công cụ AI sau:
+                - Tên: ${data.name || event.params.toolId}
+                - Lĩnh vực gợi ý: ${data.context || "AI Tool"}
+                - URL tham khảo: ${data.link}
+
+                HƯỚNG DẪN:
+                1. Sử dụng tính năng "urlContext" để truy cập trực tiếp vào link: ${data.link} và đọc nội dung và đưa ra các nội dung chính xác về features, useCases, pricingPlans, không được phép sai lệch.
+                2. Nếu thông tin trên link không đủ, hãy sử dụng tool googleSearch để tìm kiếm thêm về công cụ này.
+                3. Tổng hợp và trả về kết quả bằng Tiếng Việt.`,
+                // Cấu hình Native Tools
+                config: {
+                    tools: [
+                        { tool: 'urlContext' },
+                        { tool: 'googleSearch' }
+                    ]
+                },
+                output: { schema: ToolOutputSchema }
             });
 
             if (!output) {
-                console.error("AI did not return a valid output.");
+                console.error("AI không trả về kết quả.");
                 return;
             }
 
-            // Cập nhật Firestore
+            // 3. Cập nhật dữ liệu vào Firestore
             const updatePayload = {
                 // Các trường được AI điền
                 description: data.description || output.description,
@@ -311,12 +308,13 @@ Yêu cầu:
                 averageRating: 0,
                 ratingCount: 0,
                 post: false, // Trường mới để kiểm soát hiển thị
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
 
         } catch (error) {
-            console.error("Lỗi thực thi Genkit Flow:", error);
+            console.error("Lỗi thực thi Genkit initToolStructure:", error);
         }
     }
 );
