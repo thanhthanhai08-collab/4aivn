@@ -7,7 +7,7 @@ import { ChatInput } from "@/components/chat/chat-input";
 import type { ChatMessage } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, MessageSquare, History, Loader2 } from "lucide-react";
+import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
 import { db, auth } from "@/lib/firebase"; 
 import { onAuthStateChanged } from "firebase/auth";
 import { 
@@ -42,6 +42,26 @@ export default function ChatPage() {
 
   const { toast } = useToast();
   const isInitialMount = useRef(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+
+  // --- HÀM TỰ ĐỘNG CUỘN XUỐNG DƯỚI ---
+  const scrollToBottom = useCallback(() => {
+    if (scrollRef.current) {
+      const { scrollHeight, clientHeight } = scrollRef.current;
+      scrollRef.current.scrollTo({
+        top: scrollHeight - clientHeight,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  // Cuộn khi có tin nhắn mới hoặc khi AI đang gõ (streaming)
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoadingAiResponse, scrollToBottom]);
+
 
   // --- LOGIC 1: MERGE HỢP NHẤT LỊCH SỬ ---
   const mergeHistory = async (anonId: string, realUid: string) => {
@@ -156,6 +176,7 @@ export default function ChatPage() {
   const handleSendMessage = async (text: string, image?: File) => {
     if (!text.trim() && !image) return;
 
+    const currentChatId = activeChatId;
     const timestamp = Date.now();
     let imageInfo = null;
     let previewUrl = "";
@@ -186,7 +207,7 @@ export default function ChatPage() {
         body: JSON.stringify({
           message: text,
           userId: currentUserId,
-          chatId: activeChatId,
+          chatId: currentChatId,
           imageBase64: imageInfo?.base64,
           mimeType: imageInfo?.mimeType,
         }),
@@ -277,10 +298,24 @@ export default function ChatPage() {
             </div>
           </header>
           
-          <div className="flex-grow overflow-hidden flex flex-col max-w-5xl mx-auto w-full">
-            <div className="flex-grow overflow-hidden relative">
+          <div className="flex-grow overflow-hidden flex flex-col max-w-5xl mx-auto w-full relative">
+             <div 
+              ref={scrollRef}
+              className="flex-grow overflow-y-auto p-4 space-y-4"
+            >
               <ChatMessages messages={messages} isLoadingAiResponse={isLoadingAiResponse} />
+              <div ref={messagesEndRef} />
             </div>
+
+            {isLoadingAiResponse && (
+              <button 
+                onClick={scrollToBottom}
+                className="absolute bottom-24 right-8 p-2 bg-primary text-primary-foreground rounded-full shadow-lg animate-bounce z-20"
+              >
+                <ArrowDown size={18} />
+              </button>
+            )}
+            
             <div className="p-4 md:p-6 bg-gradient-to-t from-background via-background to-transparent">
               <ChatInput onSendMessage={handleSendMessage} isLoading={isLoadingAiResponse} />
             </div>
