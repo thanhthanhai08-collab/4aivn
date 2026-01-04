@@ -464,7 +464,8 @@ exports.chatbot = onRequest(
     { 
         secrets: [GEMINI_API_KEY], 
         region: "asia-southeast1",
-        timeoutSeconds: 300 
+        timeoutSeconds: 300,
+        memory: "512MiB" // Khuyến nghị tăng ram nhẹ cho xử lý ảnh/AI
     }, 
     async (req, res) => {
         // 1. XỬ LÝ CORS THỦ CÔNG
@@ -608,5 +609,6 @@ exports.chatbot = onRequest(
     
 
     
+
 
 
