@@ -12,7 +12,7 @@ import { db, auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
-  writeBatch, doc 
+  writeBatch, doc, where
 } from "firebase/firestore";
 
 /**
@@ -161,6 +161,49 @@ export default function ChatPage() {
       }]);
     }
   }, [isMounted, currentUserId, fetchHistory]);
+  
+  // --- LOGIC MỚI: TẢI LẠI TIN NHẮN TỪ LỊCH SỬ ---
+  const loadSession = async (chatId: string) => {
+    if (!currentUserId || chatId === activeChatId) return;
+
+    setIsLoadingAiResponse(true); // Hiển thị loading nhẹ trong khi tải
+    setActiveChatId(chatId);
+
+    try {
+      const msgsRef = collection(db, "chatbot", currentUserId, "messages");
+      // Truy vấn tất cả tin nhắn có chatId này, sắp xếp theo thời gian
+      const q = query(
+        msgsRef,
+        where("chatId", "==", chatId),
+        orderBy("createdAt", "asc")
+      );
+
+      const querySnapshot = await getDocs(q);
+      const loadedMessages: ChatMessage[] = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          text: data.content,
+          imageUrl: data.imageUrl, // Thêm imageUrl nếu có
+          sender: data.role === "user" ? "user" : "ai",
+          timestamp: data.createdAt?.toMillis() || Date.now(),
+        };
+      });
+
+      if (loadedMessages.length > 0) {
+        setMessages(loadedMessages);
+      } else {
+        // Phòng trường hợp session cũ không có dữ liệu (legacy)
+        setMessages([{ id: "err", text: "Không tìm thấy nội dung tin nhắn cho phiên này.", sender: "ai", timestamp: Date.now() }]);
+      }
+    } catch (e) {
+      console.error("Lỗi khi tải phiên chat:", e);
+      toast({ title: "Lỗi", description: "Không thể tải lại lịch sử.", variant: "destructive" });
+    } finally {
+      setIsLoadingAiResponse(false);
+    }
+  };
+
 
   const startNewChat = () => {
     setActiveChatId(`chat_${Date.now()}`);
@@ -277,9 +320,19 @@ export default function ChatPage() {
               <div className="flex justify-center p-4"><Loader2 className="animate-spin text-muted-foreground" /></div>
             ) : (
               historySessions.map((session) => (
-                <div key={session.id} className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${activeChatId === session.id ? 'bg-accent border-border' : 'border-transparent hover:bg-accent'}`}>
-                  <MessageSquare size={16} className="text-primary shrink-0" />
-                  <span className="text-sm truncate font-medium">{session.lastMsg}</span>
+                <div 
+                  key={session.id} 
+                  onClick={() => loadSession(session.id)}
+                  className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${
+                    activeChatId === session.id 
+                      ? 'bg-accent border-primary/20 shadow-sm' 
+                      : 'border-transparent hover:bg-accent/50'
+                  }`}
+                >
+                  <MessageSquare size={16} className={activeChatId === session.id ? "text-primary" : "text-muted-foreground"} />
+                  <span className={`text-sm truncate ${activeChatId === session.id ? "font-bold" : "font-medium text-muted-foreground"}`}>
+                    {session.lastMsg}
+                  </span>
                 </div>
               ))
             )}
