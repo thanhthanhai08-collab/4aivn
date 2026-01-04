@@ -199,7 +199,10 @@ export default function ChatPage() {
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          reader.releaseLock();
+          break;
+        }
 
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split("\n\n");
