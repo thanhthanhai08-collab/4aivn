@@ -550,7 +550,7 @@ exports.chatbot = onRequest(
 
             // 7. STREAMING PHẢN HỒI
             const response = await ai.generateStream({
-                model: "googleai/gemini-2.0-flash",
+                model: "googleai/gemini-2.5-flash",
                 history: historyContext,
                 prompt: promptParts,
                 config: {
@@ -610,38 +610,3 @@ exports.chatbot = onRequest(
     
 
 
-```>
-  </change>
-  <change>
-    <file>/functions/package.json</file>
-    <content><![CDATA[{
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
-  "scripts": {
-    "lint": "eslint .",
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
-  },
-  "engines": {
-    "node": "22"
-  },
-  "main": "index.js",
-  "dependencies": {
-    "@genkit-ai/googleai": "^1.27.0",
-    "@google/generative-ai": "^0.15.0",
-    "firebase-admin": "^13.6.0",
-    "firebase-functions": "^7.0.2",
-    "genkit": "^1.27.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.5.0",
-    "eslint": "^9.5.0",
-    "eslint-config-google": "^0.14.0",
-    "firebase-functions-test": "^3.3.0",
-    "globals": "^15.6.0"
-  },
-  "private": true
-}
