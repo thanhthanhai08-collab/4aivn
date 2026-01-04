@@ -360,77 +360,95 @@ exports.initNews = onDocumentCreated(
 
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
-            model: "googleai/gemini-3-flash-preview", 
         });
 
-        // 1. Định nghĩa cấu trúc cho từng phần tử trong mảng data của một biểu đồ
+        // 1. Schemas (Giữ nguyên)
         const ChartDataItemSchema = z.object({
-            name: z.string().describe('Tên hạng mục chính trên trục X (ví dụ: "Phân tích", "Tư duy").'),
-        }).catchall(z.number().describe('Các giá trị số của các đối tượng so sánh (ví dụ: "GPT-4": 85).'));
+            name: z.string()
+        }).catchall(z.number());
 
-        // 2. Định nghĩa cấu trúc cho một biểu đồ đơn lẻ
         const ChartConfigSchema = z.object({
-            title: z.string().describe('Tiêu đề của biểu đồ.'),
-            type: z.enum(['bar', 'pie', 'line', 'radar']).describe('Loại biểu đồ: bar, pie, line, hoặc radar.'),
-            unit: z.string().describe('Đơn vị đo lường (ví dụ: %, điểm, ms).'),
-            source: z.string().describe('Nguồn dữ liệu của biểu đồ.'),
-            colors: z.array(z.string()).describe('Mảng mã màu Hex cho các cột/phần (ví dụ: ["#5b7ce0", "#90cd97"]).'),
-            data: z.array(ChartDataItemSchema).describe('Mảng dữ liệu biểu đồ, mỗi phần tử là một object có trường "name" và các trường số liệu.')
+            title: z.string(),
+            type: z.enum(['bar', 'pie', 'line', 'radar']),
+            unit: z.string(),
+            source: z.string(),
+            colors: z.array(z.string()),
+            data: z.array(ChartDataItemSchema)
         });
 
-        // 3. Áp dụng vào NewsOutputSchema: `charts` là một mảng các biểu đồ
         const NewsOutputSchema = z.object({
-            title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
-            content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML. Nếu cần chèn biểu đồ, hãy dùng placeholder như [CHART_1], [CHART_2] trong nội dung.'),
-            summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
-            tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
-            charts: z.array(ChartConfigSchema).optional().describe('Một mảng chứa cấu hình cho các biểu đồ sẽ được hiển thị trong bài viết.')
-        });
-
-
-        // 4. Định nghĩa Prompt viết bài
-        const newsPrompt = ai.definePrompt({
-            name: 'initNewsPrompt',
-            input: { schema: z.object({ dataAiHint: z.string(), source: z.string() }) },
-            output: { schema: NewsOutputSchema },
-            prompt: `Bạn là một biên tập viên tin tức công nghệ tại 4AIVN. 
-            Nhiệm vụ: Viết một bài báo chuyên sâu dựa trên thông tin sau:
-            - Gợi ý nội dung: {{dataAiHint}}
-            - Nguồn tham khảo: {{source}}
-            
-            Yêu cầu quan trọng:
-            1. Văn phong chuyên nghiệp, lôi cuốn.
-            2. Nếu nội dung có số liệu so sánh, hãy tạo dữ liệu cho một hoặc nhiều biểu đồ trong mảng "charts" để vẽ bằng Recharts.
-            3. Trong phần "content", hãy đặt các placeholder như [CHART_1], [CHART_2] vào vị trí bạn muốn biểu đồ tương ứng xuất hiện. Index của biểu đồ trong mảng "charts" (bắt đầu từ 0) tương ứng với số trong placeholder (ví dụ: charts[0] tương ứng với [CHART_1]).
-            4. Trả về định dạng JSON Tiếng Việt.`
+            title: z.string(),
+            content: z.string(),
+            summary: z.string(),
+            tag: z.array(z.string()),
+            charts: z.array(ChartConfigSchema).optional()
         });
 
         try {
-            const { output } = await newsPrompt({
-                dataAiHint: data.dataAiHint || "Tin tức AI mới nhất",
-                source: data.source || "Internet"
+            /**
+             * BƯỚC 1: RESEARCH & STYLE ANALYSIS
+             */
+            console.log(`--- Đang nghiên cứu tin tức và phân tích phong cách ---`);
+            
+            const researchResponse = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Nhiệm vụ của bạn gồm 2 phần:
+                1. Đọc nội dung tin tức từ các nguồn: ${data.source}, ${data.source1 || ''}, ${data.source2 || ''}. 
+                   Nếu thiếu thông tin hãy tìm thêm trên Google Search về: "${data.dataAiHint}".
+                
+                2. Truy cập URL: https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc
+                   Hãy phân tích 3 bài viết đầu tiên để học tập: 
+                   - Cách đặt tiêu đề (Tone of voice).
+                   - Cách trình bày HTML (Style).
+                   - Độ dài và cách dùng từ ngữ.
+
+                Hãy trả về một bản tổng hợp gồm nội dung tin tức thô và các đặc điểm phong cách viết mà bạn đã học được.`,
+                config: {
+                    tools: [{ googleSearch: {} }, { urlContext: {} }]
+                }
             });
 
-            // 5. Ghi dữ liệu vào Firestore
+            const rawContext = researchResponse.text;
+
+            /**
+             * BƯỚC 2: WRITING (JSON MODE)
+             */
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Dựa trên dữ liệu và phong cách viết bạn vừa phân tích được:
+                
+                DỮ LIỆU: 
+                ${rawContext}
+                
+                YÊU CẦU:
+                - Viết một bài báo mới hoàn chỉnh về "${data.dataAiHint}".
+                - Phải bắt chước hoàn toàn Tone of Voice và cách trình bày HTML của 4AIVN mà bạn đã thấy ở bước 1.
+                - Tiêu đề phải giật gân nhưng chuyên nghiệp.
+                - Trả về đúng cấu trúc JSON.`,
+                output: { schema: NewsOutputSchema }
+            });
+
+            if (!output) return null;
+
+            // 3. Update Firestore
             const updatePayload = {
                 title: data.title || output.title,
                 content: data.content || output.content,
                 summary: data.summary || output.summary,
-                tag: (data.tag && data.tag.length > 0) ? data.tag : output.tag,
-                
+                tag: (data.tag?.length > 0) ? data.tag : output.tag,
                 charts: data.charts || output.charts || [],
-
                 author: data.author || "Nam",
                 imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
                 source: data.source || "Tổng hợp",
                 publishedAt: data.publishedAt || admin.firestore.FieldValue.serverTimestamp(),
-                post: data.post || false
+                post: false
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
 
         } catch (error) {
             console.error("Lỗi initNews:", error);
+            return snapshot.ref.set({ aiError: error.message }, { merge: true });
         }
     }
 );
@@ -438,3 +456,4 @@ exports.initNews = onDocumentCreated(
     
 
     
+
