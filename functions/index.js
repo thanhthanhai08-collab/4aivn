@@ -554,10 +554,10 @@ exports.chatbot = onRequest(
                 model: "googleai/gemini-2.5-flash",
                 history: historyContext,
                 prompt: promptParts,
-                config: {
-                    systemInstruction: `Bạn là trợ lý AI của Clean AI Hub. 
+                systemInstruction: `Bạn là trợ lý AI của Clean AI Hub. 
                     NHIỆM VỤ: Trả lời dựa trên thông tin tại ${TARGET_URL}.
                     QUY TẮC: Sử dụng 'urlContext'. Nếu không có thông tin, báo không tìm thấy. Không bịa đặt.`,
+                config: {
                     tools: [{ urlContext: {} }]
                 }
             });
@@ -609,6 +609,7 @@ exports.chatbot = onRequest(
     
 
     
+
 
 
 
