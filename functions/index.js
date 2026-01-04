@@ -337,7 +337,6 @@ exports.initToolStructure = onDocumentCreated(
                 averageRating: 0,
                 ratingCount: 0,
                 post: false,
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
             console.log(`--- Đang lưu dữ liệu vào Firestore cho Tool: ${event.params.toolId} ---`);
@@ -564,7 +563,7 @@ exports.chatbot = onRequest(
 
             let fullAIResponse = "";
             for await (const chunk of response.stream) {
-                const chunkText = chunk.text();
+                const chunkText = chunk.text || "";
                 if (chunkText) {
                     fullAIResponse += chunkText;
                     res.write(`data: ${JSON.stringify({ text: chunkText })}\n\n`);
@@ -609,6 +608,7 @@ exports.chatbot = onRequest(
     
 
     
+
 
 
 
