@@ -3,17 +3,12 @@
  */
 
 const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
-const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
 const { genkit } = require("genkit");
 const { googleAI } = require("@genkit-ai/googleai");
 const { z } = require("zod");
-const { GoogleAIFileManager } = require("@google/generative-ai/server");
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
 
 
 admin.initializeApp();
@@ -181,7 +176,7 @@ exports.initModelStructure = onDocumentCreated(
         // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
         let autoLogoUrl = data.logoUrl || "";
         if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
-        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
+        else if (devLower === "openai") autoLogoUrl = LOG.OPENAI;
         else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
         else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
         else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
@@ -288,7 +283,7 @@ exports.initToolStructure = onDocumentCreated(
                 }
             });
 
-            const rawResearchData = researchResponse.text();
+            const rawResearchData = researchResponse.text;
             console.log("--- Đã thu thập xong dữ liệu thô ---");
 
             /**
@@ -413,7 +408,7 @@ exports.initNews = onDocumentCreated(
                 }
             });
 
-            const rawContext = researchResponse.text();
+            const rawContext = researchResponse.text;
 
             /**
              * BƯỚC 2: WRITING (JSON MODE)
@@ -458,155 +453,7 @@ exports.initNews = onDocumentCreated(
     }
 );
 
-const TARGET_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
-
-exports.chatbot = onRequest(
-    { 
-        secrets: [GEMINI_API_KEY], 
-        region: "asia-southeast1",
-        timeoutSeconds: 300 
-    }, 
-    async (req, res) => {
-        // 1. XỬ LÝ CORS THỦ CÔNG
-        res.setHeader('Access-Control-Allow-Origin', '*'); 
-        res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-        if (req.method === 'OPTIONS') {
-            res.status(204).send('');
-            return;
-        }
-
-        // 2. THIẾT LẬP HEADER SSE
-        res.setHeader('Content-Type', 'text/event-stream');
-        res.setHeader('Cache-Control', 'no-cache');
-        res.setHeader('Connection', 'keep-alive');
-
-        let tempFilePath = null;
-
-        try {
-            const { message, userId, imageBase64, mimeType } = req.body;
-            if (!message) {
-                res.write(`data: ${JSON.stringify({ error: "No message" })}\n\n`);
-                res.end();
-                return;
-            }
-
-            const apiKey = GEMINI_API_KEY.value();
-
-            // 3. XỬ LÝ UPLOAD ẢNH LÊN GOOGLE FILE API (Nếu có)
-            let imagePart = null;
-            if (imageBase64) {
-                const fileManager = new GoogleAIFileManager(apiKey);
-                
-                // Lưu tạm file vào thư mục /tmp của Cloud Function (RAM Disk)
-                const fileName = `upload_${Date.now()}`;
-                tempFilePath = path.join(os.tmpdir(), fileName);
-                
-                // Giải mã base64 và ghi file
-                const buffer = Buffer.from(imageBase64, 'base64');
-                fs.writeFileSync(tempFilePath, buffer);
-
-                // Upload lên Google server (Tồn tại 48h miễn phí)
-                const uploadResult = await fileManager.uploadFile(tempFilePath, {
-                    mimeType: mimeType || "image/jpeg",
-                    displayName: fileName,
-                });
-
-                imagePart = {
-                    fileData: {
-                        mimeType: uploadResult.file.mimeType,
-                        fileUri: uploadResult.file.uri
-                    }
-                };
-            }
-
-            // 4. KHỞI TẠO GENKIT
-            const ai = genkit({
-                plugins: [googleAI({ apiKey: apiKey })],
-            });
-
-            // 5. LẤY LỊCH SỬ CHAT
-            const historyRef = db.collection("chatbot")
-                                 .doc(userId || "anonymous")
-                                 .collection("messages")
-                                 .orderBy("createdAt", "asc")
-                                 .limitToLast(10);
-            
-            const historySnap = await historyRef.get();
-            let historyContext = [];
-            historySnap.forEach(doc => {
-                const d = doc.data();
-                historyContext.push({
-                    role: d.role === 'user' ? 'user' : 'model',
-                    content: [{ text: d.content }]
-                });
-            });
-
-            // 6. CẤU TRÚC PROMPT
-            let promptParts = [];
-            if (imagePart) promptParts.push(imagePart);
-            promptParts.push({ text: message });
-
-            // 7. STREAMING PHẢN HỒI
-            const response = await ai.generate({
-                model: "googleai/gemini-2.5-flash",
-                history: historyContext,
-                prompt: promptParts,
-                config: {
-                    tools: [{ urlContext: { url: TARGET_URL } }]
-                },
-                stream: true
-            });
-            
-
-            let fullAIResponse = "";
-            for await (const chunk of response.stream) {
-                const chunkText = chunk.text();
-                if (chunkText) {
-                    fullAIResponse += chunkText;
-                    res.write(`data: ${JSON.stringify({ text: chunkText })}\n\n`);
-                }
-            }
-
-            // 8. LƯU LỊCH SỬ
-            const msgRef = db.collection("chatbot").doc(userId || "anonymous").collection("messages");
-            const batch = db.batch();
-            batch.set(msgRef.doc(), {
-                role: "user",
-                content: message,
-                hasImage: !!imagePart,
-                createdAt: admin.firestore.FieldValue.serverTimestamp()
-            });
-            batch.set(msgRef.doc(), {
-                role: "model",
-                content: fullAIResponse,
-                createdAt: admin.firestore.FieldValue.serverTimestamp()
-            });
-            await batch.commit();
-
-            res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-            res.end();
-
-        } catch (error) {
-            console.error("Chatbot SSE Error:", error);
-            res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
-            res.end();
-        } finally {
-            // DỌN DẸP: Xóa file tạm để giải phóng RAM của Cloud Function
-            if (tempFilePath && fs.existsSync(tempFilePath)) {
-                try {
-                    fs.unlinkSync(tempFilePath);
-                } catch (e) {
-                    console.error("Lỗi khi xóa file tạm:", e);
-                }
-            }
-        }
-    }
-);
     
 
     
 
-
-```
