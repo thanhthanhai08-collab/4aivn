@@ -29,14 +29,19 @@ const fileToBase64 = (file: File): Promise<{ base64: string; mimeType: string }>
 
 export default function ChatPage() {
   // --- STATE ---
+  const [isMounted, setIsMounted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [historySessions, setHistorySessions] = useState<{ id: string; lastMsg: string }[]>([]);
-  const [activeChatId, setActiveChatId] = useState<string>(`chat_${Date.now()}`);
+  const [activeChatId, setActiveChatId] = useState<string>("");
   const [isLoadingAiResponse, setIsLoadingAiResponse] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   
   const { toast } = useToast();
   const userId = "user_demo_123"; // ID người dùng giả định
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // --- SIDEBAR LOGIC ---
   const fetchHistory = useCallback(async () => {
@@ -64,15 +69,17 @@ export default function ChatPage() {
   }, [userId]);
 
   useEffect(() => {
-    fetchHistory();
-    // Chào mừng mặc định
-    setMessages([{
-      id: "initial",
-      text: "Xin chào! Tôi có thể giúp gì cho bạn hôm nay?",
-      sender: "ai",
-      timestamp: Date.now()
-    }]);
-  }, [fetchHistory]);
+    if (isMounted) {
+      fetchHistory();
+      setActiveChatId(`chat_${Date.now()}`);
+      setMessages([{
+        id: "initial",
+        text: "Xin chào! Tôi có thể giúp gì cho bạn hôm nay?",
+        sender: "ai",
+        timestamp: Date.now()
+      }]);
+    }
+  }, [isMounted, fetchHistory]);
 
   const startNewChat = () => {
     setActiveChatId(`chat_${Date.now()}`);
@@ -191,6 +198,10 @@ export default function ChatPage() {
       if (previewUrl) setTimeout(() => URL.revokeObjectURL(previewUrl), 5000);
     }
   };
+
+  if (!isMounted) {
+    return null; // Hoặc một loading spinner đơn giản
+  }
 
   return (
     <AppLayout>
