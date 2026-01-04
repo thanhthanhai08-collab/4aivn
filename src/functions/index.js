@@ -3,12 +3,17 @@
  */
 
 const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
 const { genkit } = require("genkit");
 const { googleAI } = require("@genkit-ai/googleai");
 const { z } = require("zod");
+const { GoogleAIFileManager } = require("@google/generative-ai/server");
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
 
 
 admin.initializeApp();
@@ -176,7 +181,7 @@ exports.initModelStructure = onDocumentCreated(
         // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
         let autoLogoUrl = data.logoUrl || "";
         if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
-        else if (devLower === "openai") autoLogoUrl = LOG.OPENAI;
+        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
         else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
         else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
         else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
@@ -232,7 +237,7 @@ exports.initModelStructure = onDocumentCreated(
 exports.initToolStructure = onDocumentCreated(
     { 
         document: "tools/{toolId}", 
-        secrets: ["GEMINI_API_KEY"], 
+        secrets: [GEMINI_API_KEY], 
         region: "asia-southeast1" 
     },
     async (event) => {
@@ -240,83 +245,108 @@ exports.initToolStructure = onDocumentCreated(
         if (!snapshot) return null;
         const data = snapshot.data();
 
+        // 1. Khởi tạo Genkit
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
-            model: "googleai/gemini-3-flash-preview", 
         });
 
-        // 1. Định nghĩa Output Schema chuẩn như Flow Frontend của bạn
+        // 2. Định nghĩa Schema để ép kiểu dữ liệu JSON ở Bước 2
         const ToolOutputSchema = z.object({
-            description: z.string().describe('Mô tả ngắn gọn 30 từ về công cụ.'),
-            longDescription: z.string().describe('Mô tả chi tiết bằng HTML, lôi cuốn người dùng.'),
-            features: z.array(z.string()).describe('Danh sách 5 tính năng nổi bật.'),
-            whoIsItFor: z.array(z.string()).describe('Những ai nên dùng công cụ này.'),
-            useCases: z.array(z.string()).describe('Ví dụ thực tế khi sử dụng.'),
-            pricingPlans: z.array(z.string()).describe('Các gói giá (Free, Pro, v.v.).'),
-            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Coding, Art, Marketing).'),
-            link: z.string().url().describe('Đảm bảo link trang chủ chính xác.')
+            description: z.string().describe('Mô tả ngắn gọn khoảng 30 từ.'),
+            longDescription: z.string().describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp.'),
+            features: z.array(z.string()).describe('Mảng gồm 5 tính năng nổi bật nhất.'),
+            whoIsItFor: z.array(z.string()).describe('Mảng các đối tượng người dùng phù hợp.'),
+            useCases: z.array(z.string()).describe('Mảng các ví dụ thực tế sử dụng công cụ.'),
+            pricingPlans: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...).'),
+            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding).'),
+            link: z.string().url().describe('URL trang chủ chính thức.')
         });
-
-        // 2. Định nghĩa Prompt chuyên sâu (Dùng kỹ thuật Few-shot hoặc Contextual Prompting)
-        const toolPrompt = ai.definePrompt({
-            name: 'generateAiToolDescriptionPrompt',
-            input: { schema: z.object({ name: z.string(), context: z.string(), link: z.string() }) },
-            output: { schema: ToolOutputSchema },
-            prompt: `Bạn là một chuyên gia phân tích phần mềm AI.
-Nhiệm vụ: Phân tích và viết nội dung cho công cụ AI sau:
-- Tên: {{name}}
-- Lĩnh vực: {{context}}
-- URL tham khảo: {{link}}
-
-Yêu cầu:
-1. Nếu bạn biết về công cụ này, hãy viết dựa trên dữ liệu thật.
-2. Nếu công cụ mới, hãy suy luận từ URL và Tên để đưa ra mô tả hợp lý nhất.
-3. Trả về nội dung hoàn toàn bằng Tiếng Việt, chuyên nghiệp.
-4. Link phải được giữ nguyên hoặc sửa lại cho đúng domain chính thức.`
-        });
-
 
         try {
-            // Chạy Prompt với Schema Validation
-            const { output } = await toolPrompt({
-                name: data.name || event.params.toolId,
-                context: data.context || "Công cụ AI mới",
-                link: data.link || ""
+            /**
+             * BƯỚC 1: RESEARCH PHASE (Giai đoạn nghiên cứu)
+             * Mục tiêu: Cho AI đi "quét" web và tìm kiếm thông tin. 
+             * KHÔNG dùng output schema ở đây để tránh lỗi 400.
+             */
+            console.log(`--- Đang nghiên cứu công cụ: ${data.name || event.params.toolId} ---`);
+            const researchResponse = await ai.generate({
+                model: "googleai/gemini-2.5-flash", // Dùng 2.5 Flash để tối ưu tốc độ và hỗ trợ Tools
+                prompt: `Bạn là một chuyên gia phân tích dữ liệu AI tại 4AIVN. 
+                Nhiệm vụ: Nghiên cứu kỹ thông tin về công cụ AI có tên là "${data.name || event.params.toolId}".
+                
+                HƯỚNG DẪN:
+                1. Sử dụng "urlContext" để truy cập và đọc nội dung trực tiếp tại: ${data.link}.
+                2. Sử dụng "googleSearch" để tìm thêm các thông tin về bảng giá (pricing), các đánh giá từ người dùng và các tính năng thực tế nếu trang chủ không ghi rõ.
+                3. Thu thập mọi dữ liệu có thể về: Tính năng, đối tượng sử dụng, ví dụ thực tế và các mức giá chính xác như ở đường link.
+                
+                Hãy tổng hợp dữ liệu tìm được một cách chi tiết nhất bằng Tiếng Việt.`,
+                config: {
+                    tools: [
+                        { googleSearch: {} }, 
+                        { urlContext: {} }
+                    ]
+                }
+            });
+
+            const rawResearchData = researchResponse.text();
+            console.log("--- Đã thu thập xong dữ liệu thô ---");
+
+            /**
+             * BƯỚC 2: FORMATTING PHASE (Giai đoạn đóng gói dữ liệu)
+             * Mục tiêu: Ép dữ liệu thô vào đúng định dạng JSON để lưu Firestore.
+             * KHÔNG dùng tools ở đây.
+             */
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Dựa vào dữ liệu nghiên cứu dưới đây, hãy viết một bài giới thiệu công cụ AI chuyên nghiệp cho website AI
+                
+                DỮ LIỆU NGHIÊN CỨU:
+                ${rawResearchData}
+
+                YÊU CẦU:
+                - Ngôn ngữ: Tiếng Việt.
+                - longDescription: Viết dưới dạng HTML (sử dụng thẻ <p>) để hiển thị đẹp trên web.
+                - Trả về đúng định dạng JSON theo yêu cầu.`,
+                output: { schema: ToolOutputSchema }
             });
 
             if (!output) {
-                console.error("AI did not return a valid output.");
-                return;
+                console.error("AI không thể format được dữ liệu.");
+                return null;
             }
 
-            // Cập nhật Firestore
+            /**
+             * BƯỚC 3: CẬP NHẬT FIRESTORE
+             * Ưu tiên giữ lại dữ liệu nếu người dùng đã nhập tay trước đó.
+             */
             const updatePayload = {
-                // Các trường được AI điền
                 description: data.description || output.description,
                 longDescription: data.longDescription || output.longDescription,
-                whoIsItFor: data.whoIsItFor && data.whoIsItFor.length > 0 ? data.whoIsItFor : output.whoIsItFor,
-                useCases: data.useCases && data.useCases.length > 0 ? data.useCases : output.useCases,
-                features: data.features && data.features.length > 0 ? data.features : output.features,
-                pricingPlans: data.pricingPlans && data.pricingPlans.length > 0 ? data.pricingPlans : output.pricingPlans,
+                whoIsItFor: (data.whoIsItFor && data.whoIsItFor.length > 0) ? data.whoIsItFor : output.whoIsItFor,
+                useCases: (data.useCases && data.useCases.length > 0) ? data.useCases : output.useCases,
+                features: (data.features && data.features.length > 0) ? data.features : output.features,
+                pricingPlans: (data.pricingPlans && data.pricingPlans.length > 0) ? data.pricingPlans : output.pricingPlans,
                 context: data.context || output.context,
-                
-                // Các trường ưu tiên dữ liệu nhập tay hoặc mặc định
                 name: data.name || event.params.toolId,
                 link: data.link || output.link,
+                
+                // Các trường bổ sung
                 developer: data.developer || "Đang cập nhật...",
                 logoUrl: data.logoUrl || "",
                 imageUrl: data.imageUrl || "",
-
-                // Các trường khởi tạo
                 averageRating: 0,
                 ratingCount: 0,
-                post: false, // Trường mới để kiểm soát hiển thị
+                post: false,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
+            console.log(`--- Đang lưu dữ liệu vào Firestore cho Tool: ${event.params.toolId} ---`);
             return snapshot.ref.set(updatePayload, { merge: true });
 
         } catch (error) {
-            console.error("Lỗi thực thi Genkit Flow:", error);
+            console.error("Lỗi nghiêm trọng trong initToolStructure:", error);
+            // Bạn có thể thêm ghi chú lỗi vào chính document để theo dõi trên Firestore
+            return snapshot.ref.set({ aiError: error.message }, { merge: true });
         }
     }
 );
@@ -335,79 +365,248 @@ exports.initNews = onDocumentCreated(
 
         const ai = genkit({
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
-            model: "googleai/gemini-3-flash-preview", 
         });
 
-        // 1. Định nghĩa cấu trúc cho từng phần tử trong mảng data của một biểu đồ
+        // 1. Schemas (Giữ nguyên)
         const ChartDataItemSchema = z.object({
-            name: z.string().describe('Tên hạng mục chính trên trục X (ví dụ: "Phân tích", "Tư duy").'),
-        }).catchall(z.number().describe('Các giá trị số của các đối tượng so sánh (ví dụ: "GPT-4": 85).'));
+            name: z.string()
+        }).catchall(z.number());
 
-        // 2. Định nghĩa cấu trúc cho một biểu đồ đơn lẻ
         const ChartConfigSchema = z.object({
-            title: z.string().describe('Tiêu đề của biểu đồ.'),
-            type: z.enum(['bar', 'pie', 'line', 'radar']).describe('Loại biểu đồ: bar, pie, line, hoặc radar.'),
-            unit: z.string().describe('Đơn vị đo lường (ví dụ: %, điểm, ms).'),
-            source: z.string().describe('Nguồn dữ liệu của biểu đồ.'),
-            colors: z.array(z.string()).describe('Mảng mã màu Hex cho các cột/phần (ví dụ: ["#5b7ce0", "#90cd97"]).'),
-            data: z.array(ChartDataItemSchema).describe('Mảng dữ liệu biểu đồ, mỗi phần tử là một object có trường "name" và các trường số liệu.')
+            title: z.string(),
+            type: z.enum(['bar', 'pie', 'line', 'radar']),
+            unit: z.string(),
+            source: z.string(),
+            colors: z.array(z.string()),
+            data: z.array(ChartDataItemSchema)
         });
 
-        // 3. Áp dụng vào NewsOutputSchema: `charts` là một mảng các biểu đồ
         const NewsOutputSchema = z.object({
-            title: z.string().describe('Tiêu đề bài viết hấp dẫn, chuẩn SEO.'),
-            content: z.string().describe('Nội dung bài viết chi tiết, định dạng HTML. Nếu cần chèn biểu đồ, hãy dùng placeholder như [CHART_1], [CHART_2] trong nội dung.'),
-            summary: z.string().describe('Tóm tắt ngắn gọn bài viết (khoảng 50 từ).'),
-            tag: z.array(z.string()).describe('Mảng các từ khóa liên quan đến nội dung.'),
-            charts: z.array(ChartConfigSchema).optional().describe('Một mảng chứa cấu hình cho các biểu đồ sẽ được hiển thị trong bài viết.')
-        });
-
-
-        // 4. Định nghĩa Prompt viết bài
-        const newsPrompt = ai.definePrompt({
-            name: 'initNewsPrompt',
-            input: { schema: z.object({ dataAiHint: z.string(), source: z.string() }) },
-            output: { schema: NewsOutputSchema },
-            prompt: `Bạn là một biên tập viên tin tức công nghệ tại 4AIVN. 
-            Nhiệm vụ: Viết một bài báo chuyên sâu dựa trên thông tin sau:
-            - Gợi ý nội dung: {{dataAiHint}}
-            - Nguồn tham khảo: {{source}}
-            
-            Yêu cầu quan trọng:
-            1. Văn phong chuyên nghiệp, lôi cuốn.
-            2. Nếu nội dung có số liệu so sánh, hãy tạo dữ liệu cho một hoặc nhiều biểu đồ trong mảng "charts" để vẽ bằng Recharts.
-            3. Trong phần "content", hãy đặt các placeholder như [CHART_1], [CHART_2] vào vị trí bạn muốn biểu đồ tương ứng xuất hiện. Index của biểu đồ trong mảng "charts" (bắt đầu từ 0) tương ứng với số trong placeholder (ví dụ: charts[0] tương ứng với [CHART_1]).
-            4. Trả về định dạng JSON Tiếng Việt.`
+            title: z.string(),
+            content: z.string(),
+            summary: z.string(),
+            tag: z.array(z.string()),
+            charts: z.array(ChartConfigSchema).optional()
         });
 
         try {
-            const { output } = await newsPrompt({
-                dataAiHint: data.dataAiHint || "Tin tức AI mới nhất",
-                source: data.source || "Internet"
+            /**
+             * BƯỚC 1: RESEARCH & STYLE ANALYSIS
+             */
+            console.log(`--- Đang nghiên cứu tin tức và phân tích phong cách ---`);
+            
+            const researchResponse = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Nhiệm vụ của bạn gồm 2 phần:
+                1. Đọc nội dung tin tức từ các nguồn: ${data.source}, ${data.source1 || ''}, ${data.source2 || ''}. 
+                   Nếu thiếu thông tin hãy tìm thêm trên Google Search về: "${data.dataAiHint}".
+                
+                2. Truy cập URL: https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc
+                   Hãy phân tích 3 bài viết đầu tiên để học tập: 
+                   - Cách đặt tiêu đề (Tone of voice).
+                   - Cách trình bày HTML (Style).
+                   - Độ dài và cách dùng từ ngữ.
+
+                Hãy trả về một bản tổng hợp gồm nội dung tin tức thô và các đặc điểm phong cách viết mà bạn đã học được.`,
+                config: {
+                    tools: [{ googleSearch: {} }, { urlContext: {} }]
+                }
             });
 
-            // 5. Ghi dữ liệu vào Firestore
+            const rawContext = researchResponse.text();
+
+            /**
+             * BƯỚC 2: WRITING (JSON MODE)
+             */
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Dựa trên dữ liệu và phong cách viết bạn vừa phân tích được:
+                
+                DỮ LIỆU: 
+                ${rawContext}
+                
+                YÊU CẦU:
+                - Viết một bài báo mới hoàn chỉnh về "${data.dataAiHint}".
+                - Phải bắt chước hoàn toàn Tone of Voice và cách trình bày HTML của 4AIVN mà bạn đã thấy ở bước 1.
+                - Tiêu đề phải giật gân nhưng chuyên nghiệp.
+                - Trả về đúng cấu trúc JSON.`,
+                output: { schema: NewsOutputSchema }
+            });
+
+            if (!output) return null;
+
+            // 3. Update Firestore
             const updatePayload = {
                 title: data.title || output.title,
                 content: data.content || output.content,
                 summary: data.summary || output.summary,
-                tag: (data.tag && data.tag.length > 0) ? data.tag : output.tag,
-                
+                tag: (data.tag?.length > 0) ? data.tag : output.tag,
                 charts: data.charts || output.charts || [],
-
                 author: data.author || "Nam",
                 imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
                 source: data.source || "Tổng hợp",
                 publishedAt: data.publishedAt || admin.firestore.FieldValue.serverTimestamp(),
-                post: data.post || false
+                post: false
             };
             
             return snapshot.ref.set(updatePayload, { merge: true });
 
         } catch (error) {
             console.error("Lỗi initNews:", error);
+            return snapshot.ref.set({ aiError: error.message }, { merge: true });
         }
     }
 );
 
+const TARGET_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+
+exports.chatbot = onRequest(
+    { 
+        secrets: [GEMINI_API_KEY], 
+        region: "asia-southeast1",
+        timeoutSeconds: 300 
+    }, 
+    async (req, res) => {
+        // 1. XỬ LÝ CORS THỦ CÔNG
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
+        res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
+        }
+
+        // 2. THIẾT LẬP HEADER SSE
+        res.setHeader('Content-Type', 'text/event-stream');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.setHeader('Connection', 'keep-alive');
+
+        let tempFilePath = null;
+
+        try {
+            const { message, userId, imageBase64, mimeType } = req.body;
+            if (!message) {
+                res.write(`data: ${JSON.stringify({ error: "No message" })}\n\n`);
+                res.end();
+                return;
+            }
+
+            const apiKey = GEMINI_API_KEY.value();
+
+            // 3. XỬ LÝ UPLOAD ẢNH LÊN GOOGLE FILE API (Nếu có)
+            let imagePart = null;
+            if (imageBase64) {
+                const fileManager = new GoogleAIFileManager(apiKey);
+                
+                // Lưu tạm file vào thư mục /tmp của Cloud Function (RAM Disk)
+                const fileName = `upload_${Date.now()}`;
+                tempFilePath = path.join(os.tmpdir(), fileName);
+                
+                // Giải mã base64 và ghi file
+                const buffer = Buffer.from(imageBase64, 'base64');
+                fs.writeFileSync(tempFilePath, buffer);
+
+                // Upload lên Google server (Tồn tại 48h miễn phí)
+                const uploadResult = await fileManager.uploadFile(tempFilePath, {
+                    mimeType: mimeType || "image/jpeg",
+                    displayName: fileName,
+                });
+
+                imagePart = {
+                    fileData: {
+                        mimeType: uploadResult.file.mimeType,
+                        fileUri: uploadResult.file.uri
+                    }
+                };
+            }
+
+            // 4. KHỞI TẠO GENKIT
+            const ai = genkit({
+                plugins: [googleAI({ apiKey: apiKey })],
+            });
+
+            // 5. LẤY LỊCH SỬ CHAT
+            const historyRef = db.collection("chatbot")
+                                 .doc(userId || "anonymous")
+                                 .collection("messages")
+                                 .orderBy("createdAt", "asc")
+                                 .limitToLast(10);
+            
+            const historySnap = await historyRef.get();
+            let historyContext = [];
+            historySnap.forEach(doc => {
+                const d = doc.data();
+                historyContext.push({
+                    role: d.role === 'user' ? 'user' : 'model',
+                    content: [{ text: d.content }]
+                });
+            });
+
+            // 6. CẤU TRÚC PROMPT
+            let promptParts = [];
+            if (imagePart) promptParts.push(imagePart);
+            promptParts.push({ text: message });
+
+            // 7. STREAMING PHẢN HỒI
+            const response = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                history: historyContext,
+                prompt: promptParts,
+                config: {
+                    tools: [{ urlContext: { url: TARGET_URL } }]
+                },
+                stream: true
+            });
+            
+
+            let fullAIResponse = "";
+            for await (const chunk of response.stream) {
+                const chunkText = chunk.text();
+                if (chunkText) {
+                    fullAIResponse += chunkText;
+                    res.write(`data: ${JSON.stringify({ text: chunkText })}\n\n`);
+                }
+            }
+
+            // 8. LƯU LỊCH SỬ
+            const msgRef = db.collection("chatbot").doc(userId || "anonymous").collection("messages");
+            const batch = db.batch();
+            batch.set(msgRef.doc(), {
+                role: "user",
+                content: message,
+                hasImage: !!imagePart,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            batch.set(msgRef.doc(), {
+                role: "model",
+                content: fullAIResponse,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            await batch.commit();
+
+            res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+            res.end();
+
+        } catch (error) {
+            console.error("Chatbot SSE Error:", error);
+            res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
+            res.end();
+        } finally {
+            // DỌN DẸP: Xóa file tạm để giải phóng RAM của Cloud Function
+            if (tempFilePath && fs.existsSync(tempFilePath)) {
+                try {
+                    fs.unlinkSync(tempFilePath);
+                } catch (e) {
+                    console.error("Lỗi khi xóa file tạm:", e);
+                }
+            }
+        }
+    }
+);
     
+
+    
+
+
+```
