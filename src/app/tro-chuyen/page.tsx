@@ -256,6 +256,10 @@ export default function ChatPage() {
         }),
       });
 
+      if (response.status === 429) {
+        throw new Error("Rate limit exceeded");
+      }
+      
       if (!response.body) throw new Error("Stream error");
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -291,9 +295,19 @@ export default function ChatPage() {
         }
       }
       fetchHistory(); // Refresh sidebar sau khi chat xong
-    } catch (error) {
-      console.error(error);
-      toast({ title: "Lỗi", description: "Không thể kết nối với AI.", variant: "destructive" });
+    } catch (error: any) {
+      if (error.message === "Rate limit exceeded") {
+        toast({
+          title: "Hết hạn mức miễn phí",
+          description: "Bạn đã gửi quá nhiều tin nhắn. Vui lòng đợi một lát rồi thử lại nhé!",
+          variant: "destructive"
+        });
+        setMessages(prev => prev.slice(0, -1)); // Xóa tin nhắn AI placeholder
+      } else {
+        console.error(error);
+        toast({ title: "Lỗi", description: "Không thể kết nối với AI.", variant: "destructive" });
+        setMessages(prev => prev.slice(0, -1));
+      }
     } finally {
       setIsLoadingAiResponse(false);
       if (previewUrl) setTimeout(() => URL.revokeObjectURL(previewUrl), 5000);
@@ -345,9 +359,6 @@ export default function ChatPage() {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <h1 className="font-bold text-lg">4AIVN Assistant</h1>
-            </div>
-            <div className="text-[10px] font-mono text-muted-foreground bg-muted px-2 py-1 rounded">
-              USER: {currentUserId.substring(0, 8)}... | SESSION: {activeChatId.substring(5, 13)}
             </div>
           </header>
           
