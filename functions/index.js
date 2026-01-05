@@ -288,7 +288,7 @@ exports.initToolStructure = onDocumentCreated(
                 }
             });
 
-            const rawResearchData = researchResponse.text();
+            const rawResearchData = researchResponse.text;
             console.log("--- Đã thu thập xong dữ liệu thô ---");
 
             /**
@@ -412,7 +412,7 @@ exports.initNews = onDocumentCreated(
                 }
             });
 
-            const rawContext = researchResponse.text();
+            const rawContext = researchResponse.text;
 
             /**
              * BƯỚC 2: WRITING (JSON MODE)
@@ -457,17 +457,21 @@ exports.initNews = onDocumentCreated(
     }
 );
 
-const TARGET_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const TARGET_URLS = [
+    "https://studio--clean-ai-hub.us-central1.hosted.app/cong-cu",
+    "https://studio--clean-ai-hub.us-central1.hosted.app/bang-xep-hang",
+    "https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc"
+];
 
 exports.chatbot = onRequest(
     { 
         secrets: [GEMINI_API_KEY], 
         region: "asia-southeast1",
         timeoutSeconds: 300,
-        memory: "512MiB" // Khuyến nghị tăng ram nhẹ cho xử lý ảnh/AI
+        memory: "512MiB"
     }, 
     async (req, res) => {
-        // 1. XỬ LÝ CORS THỦ CÔNG
+        // 1. XỬ LÝ CORS
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -477,7 +481,7 @@ exports.chatbot = onRequest(
             return;
         }
 
-        // 2. THIẾT LẬP HEADER SSE
+        // 2. THIẾT LẬP SSE
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
@@ -485,29 +489,50 @@ exports.chatbot = onRequest(
         let tempFilePath = null;
 
         try {
-            const { message, userId, imageBase64, mimeType } = req.body;
-            if (!message) {
-                res.write(`data: ${JSON.stringify({ error: "No message" })}\n\n`);
+            const { message, userId, messagesId, imageBase64, mimeType } = req.body;
+            
+            if (!message || !messagesId) {
+                res.write(`data: ${JSON.stringify({ error: "Thiếu message hoặc messagesId" })}\n\n`);
                 res.end();
                 return;
             }
 
             const apiKey = GEMINI_API_KEY.value();
 
-            // 3. XỬ LÝ UPLOAD ẢNH LÊN GOOGLE FILE API (Nếu có)
+            // 3. LẤY LỊCH SỬ TỪ MẢNG (Document mang tên messagesId)
+            const docRef = db.collection("chatbot")
+                             .doc(userId || "anonymous")
+                             .collection("messages")
+                             .doc(messagesId);
+            
+            const docSnap = await docRef.get();
+            let historyContext = [];
+
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                const qs = data.questions || [];
+                const ans = data.answers || [];
+
+                // Tối ưu: Lấy 10 cặp gần nhất bằng slice (-10)
+                const recentQs = qs.slice(-10);
+                const recentAns = ans.slice(-10);
+
+                recentQs.forEach((q, i) => {
+                    historyContext.push({ role: 'user', content: [{ text: q }] });
+                    if (recentAns[i]) {
+                        historyContext.push({ role: 'model', content: [{ text: recentAns[i] }] });
+                    }
+                });
+            }
+
+            // 4. XỬ LÝ ẢNH
             let imagePart = null;
             if (imageBase64) {
                 const fileManager = new GoogleAIFileManager(apiKey);
-                
-                // Lưu tạm file vào thư mục /tmp của Cloud Function (RAM Disk)
-                const fileName = `upload_${Date.now()}`;
+                const fileName = `chat_${Date.now()}`;
                 tempFilePath = path.join(os.tmpdir(), fileName);
-                
-                // Giải mã base64 và ghi file
-                const buffer = Buffer.from(imageBase64, 'base64');
-                fs.writeFileSync(tempFilePath, buffer);
+                fs.writeFileSync(tempFilePath, Buffer.from(imageBase64, 'base64'));
 
-                // Upload lên Google server (Tồn tại 48h miễn phí)
                 const uploadResult = await fileManager.uploadFile(tempFilePath, {
                     mimeType: mimeType || "image/jpeg",
                     displayName: fileName,
@@ -521,41 +546,24 @@ exports.chatbot = onRequest(
                 };
             }
 
-            // 4. KHỞI TẠO GENKIT
+            // 5. KHỞI TẠO AI & STREAM PHẢN HỒI
             const ai = genkit({
                 plugins: [googleAI({ apiKey: apiKey })],
             });
 
-            // 5. LẤY LỊCH SỬ CHAT
-            const historyRef = db.collection("chatbot")
-                                 .doc(userId || "anonymous")
-                                 .collection("messages")
-                                 .orderBy("createdAt", "asc")
-                                 .limitToLast(10);
-            
-            const historySnap = await historyRef.get();
-            let historyContext = [];
-            historySnap.forEach(doc => {
-                const d = doc.data();
-                historyContext.push({
-                    role: d.role === 'user' ? 'user' : 'model',
-                    content: [{ text: d.content }]
-                });
-            });
-
-            // 6. CẤU TRÚC PROMPT
-            let promptParts = [];
-            if (imagePart) promptParts.push(imagePart);
-            promptParts.push({ text: message });
-
-            // 7. STREAMING PHẢN HỒI
             const response = await ai.generateStream({
                 model: "googleai/gemini-2.5-flash",
                 history: historyContext,
-                prompt: promptParts,
+                prompt: [
+                    { text: message },
+                    ...(imagePart ? [imagePart] : [])
+                ],
                 systemInstruction: `Bạn là trợ lý AI của Clean AI Hub. 
-                    NHIỆM VỤ: Trả lời dựa trên thông tin tại ${TARGET_URL}.
-                    QUY TẮC: Sử dụng 'urlContext'. Nếu không có thông tin, báo không tìm thấy. Không bịa đặt.`,
+                    NHIỆM VỤ: Trả lời dựa trên thông tin chính xác từ 3 nguồn:
+                    1. Công cụ: ${TARGET_URLS[0]}
+                    2. Bảng xếp hạng: ${TARGET_URLS[1]}
+                    3. Tin tức: ${TARGET_URLS[2]}
+                    QUY TẮC: Luôn kiểm tra 'urlContext'. Nếu không có trong dữ liệu, báo không tìm thấy. Không tự bịa thông tin.`,
                 config: {
                     tools: [{ urlContext: {} }]
                 }
@@ -570,36 +578,27 @@ exports.chatbot = onRequest(
                 }
             }
 
-            // 8. LƯU LỊCH SỬ
-            const msgRef = db.collection("chatbot").doc(userId || "anonymous").collection("messages");
-            const batch = db.batch();
-            batch.set(msgRef.doc(), {
-                role: "user",
-                content: message,
+            // 6. LƯU LỊCH SỬ DÙNG ARRAYUNION
+            await docRef.set({
+                questions: admin.firestore.FieldValue.arrayUnion(message),
+                answers: admin.firestore.FieldValue.arrayUnion(fullAIResponse),
                 hasImage: !!imagePart,
-                createdAt: admin.firestore.FieldValue.serverTimestamp()
-            });
-            batch.set(msgRef.doc(), {
-                role: "model",
-                content: fullAIResponse,
-                createdAt: admin.firestore.FieldValue.serverTimestamp()
-            });
-            await batch.commit();
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
 
             res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
             res.end();
 
         } catch (error) {
-            console.error("Chatbot SSE Error:", error);
+            console.error("Function Error:", error);
             res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
             res.end();
         } finally {
-            // DỌN DẸP: Xóa file tạm để giải phóng RAM của Cloud Function
             if (tempFilePath && fs.existsSync(tempFilePath)) {
                 try {
                     fs.unlinkSync(tempFilePath);
-                } catch (e) {
-                    console.error("Lỗi khi xóa file tạm:", e);
+                } catch(e) {
+                     console.error("Lỗi khi xóa file tạm:", e);
                 }
             }
         }
@@ -613,3 +612,5 @@ exports.chatbot = onRequest(
 
 
 
+
+```
