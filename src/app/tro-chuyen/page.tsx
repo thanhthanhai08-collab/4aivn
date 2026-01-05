@@ -136,6 +136,7 @@ export default function ChatPage() {
   const loadSession = async (mId: string) => {
     if (!currentUserId || mId === activeChatId) return;
 
+    setMessages([]);
     setActiveChatId(mId);
     setIsLoadingAiResponse(true);
 
@@ -168,29 +169,32 @@ export default function ChatPage() {
         setMessages(formattedMessages);
       }
     } catch (e) {
-      console.error("Lỗi tải tin nhắn:", e);
-      toast({ title: "Lỗi", description: "Không thể tải lịch sử phiên này.", variant: "destructive" });
+      console.error("Lỗi tải lịch sử:", e);
+      toast({ title: "Lỗi", description: "Không thể tải phiên chat này.", variant: "destructive" });
     } finally {
       setIsLoadingAiResponse(false);
     }
   };
 
-  useEffect(() => {
-    if (isMounted && currentUserId) {
-      fetchHistory();
-      if (!activeChatId) {
-        const newId = `msg_${Date.now()}`;
-        setActiveChatId(newId);
-        setMessages([{ id: "init", text: "Xin chào! Tôi có thể giúp gì cho bạn?", sender: "ai", timestamp: Date.now() }]);
-      }
-    }
-  }, [isMounted, currentUserId, fetchHistory, activeChatId]);
-
-  const startNewChat = () => {
+  const startNewChat = useCallback(() => {
     const newId = `msg_${Date.now()}`;
     setActiveChatId(newId);
-    setMessages([{ id: `greeting-${Date.now()}`, text: "Đã bắt đầu phiên chat mới.", sender: "ai", timestamp: Date.now() }]);
-  };
+    setMessages([
+      { 
+        id: `init-${newId}`, 
+        text: "Xin chào! Đây là phiên chat mới. Tôi có thể giúp gì cho bạn?", 
+        sender: "ai", 
+        timestamp: Date.now() 
+      }
+    ]);
+  }, []);
+  
+  useEffect(() => {
+    if (isMounted && currentUserId && !activeChatId) {
+      fetchHistory();
+      startNewChat();
+    }
+  }, [isMounted, currentUserId, activeChatId, startNewChat, fetchHistory]);
 
   // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
   const handleSendMessage = async (text: string, image?: File) => {
@@ -304,7 +308,7 @@ export default function ChatPage() {
                   }`}
                 >
                   <MessageSquare size={16} className={activeChatId === session.id ? "text-primary" : "text-muted-foreground"} />
-                  <span className={`text-sm truncate ${activeChatId === session.id ? "font-bold text-primary-foreground" : "font-medium text-muted-foreground"}`}>
+                  <span className={`text-sm truncate ${activeChatId === session.id ? "font-bold" : "font-medium text-muted-foreground"}`}>
                     {session.lastMsg}
                   </span>
                 </div>
@@ -324,7 +328,7 @@ export default function ChatPage() {
               <ChatMessages messages={messages} isLoadingAiResponse={isLoadingAiResponse} />
             </div>
 
-            {isLoadingAiResponse && (
+            {isLoadingAiResponse && messages.length > 5 && (
               <button 
                 onClick={scrollToBottom}
                 className="absolute bottom-24 right-8 p-2 bg-primary text-primary-foreground rounded-full shadow-lg animate-bounce z-20"
