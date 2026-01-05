@@ -1,9 +1,10 @@
 // src/components/chat/chat-messages.tsx
 import type { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bot, User } from "lucide-react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -28,7 +29,7 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
           )}
           <div
             className={cn(
-              "max-w-xs lg:max-w-md rounded-lg shadow",
+              "prose max-w-xs lg:max-w-md rounded-lg shadow",
               message.sender === "user"
                 ? "bg-primary text-primary-foreground rounded-br-none"
                 : "bg-card text-card-foreground rounded-bl-none"
@@ -40,7 +41,17 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                 </div>
             )}
             {message.text && (
-                <p className="text-sm whitespace-pre-wrap p-3">{message.text}</p>
+              <div className="p-3">
+                {message.sender === 'ai' ? (
+                  <ReactMarkdown
+                    className="prose-sm prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-li:my-0 text-foreground"
+                  >
+                    {message.text}
+                  </ReactMarkdown>
+                ) : (
+                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                )}
+              </div>
             )}
           </div>
            {message.sender === "user" && (

@@ -550,9 +550,9 @@ exports.chatbot = onRequest(
                 
                 config: {
                    tools: [
-        	{urlContext: {}},
-        	{googleSearch: {}}
-         ]
+        	        {urlContext: {}},
+        	        {googleSearch: {}}
+                    ]
                 }
             });
 
