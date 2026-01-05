@@ -12,8 +12,10 @@ import { db, auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
-  doc, getDoc, writeBatch
+  doc, getDoc, writeBatch, where
 } from "firebase/firestore";
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 /**
  * Helper: Chuyển file sang Base64
@@ -211,73 +213,98 @@ export default function ChatPage() {
     setMessages((prev) => [...prev, userMsg, aiPlaceholder]);
     setIsLoadingAiResponse(true);
 
-    try {
-      const response = await fetch("https://asia-southeast1-clean-ai-hub.cloudfunctions.net/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: text,
-          userId: currentUserId,
-          messagesId: currentMessagesId,
-          imageBase64: imageInfo?.base64,
-          mimeType: imageInfo?.mimeType,
-        }),
-      });
+    const MAX_RETRIES = 5;
+    let currentRetry = 0;
+    let waitTime = 1000;
+    let success = false;
 
-      if (response.status === 429) {
-        throw new Error("Rate limit exceeded");
-      }
+    while (currentRetry < MAX_RETRIES && !success) {
+      try {
+        const response = await fetch("https://asia-southeast1-clean-ai-hub.cloudfunctions.net/chatbot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            userId: currentUserId,
+            messagesId: currentMessagesId,
+            imageBase64: imageInfo?.base64,
+            mimeType: imageInfo?.mimeType,
+          }),
+        });
 
-      if (!response.body) throw new Error("No response body");
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let accumulatedText = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          reader.releaseLock();
-          break;
+        if (response.status === 429) {
+          throw new Error("RATE_LIMIT");
         }
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n\n");
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const jsonStr = line.replace("data: ", "").trim();
-            if (jsonStr === '{"done":true}') break;
-            try {
-              const data = JSON.parse(jsonStr);
-              if (data.text) {
-                accumulatedText += data.text;
-                setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
+        if (!response.body) throw new Error("GENERAL_ERROR");
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulatedText = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            reader.releaseLock();
+            break;
+          }
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split("\n\n");
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const jsonStr = line.replace("data: ", "").trim();
+              if (jsonStr === '{"done":true}') break;
+              try {
+                const data = JSON.parse(jsonStr);
+
+                if ((data.error && data.error.includes("429")) || (data.error && data.error.includes("Resource has been exhausted"))) {
+                  reader.cancel();
+                  throw new Error("RATE_LIMIT");
+                }
+
+                if (data.text) {
+                  accumulatedText += data.text;
+                  setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
+                }
+              } catch (e: any) {
+                 if (e.message === "RATE_LIMIT") throw e;
               }
-            } catch (e) {
-                // Ignore parsing errors which can happen with chunked data
             }
           }
         }
-      }
-      fetchHistory(); // Cập nhật lại sidebar
-    } catch (error: any) {
-        if (error.message === "Rate limit exceeded") {
+        success = true; // Thoát vòng lặp khi thành công
+        fetchHistory(); 
+
+      } catch (error: any) {
+        if (error.message === "RATE_LIMIT") {
+          currentRetry++;
+          if (currentRetry < MAX_RETRIES) {
             toast({
-            title: "Hết hạn mức miễn phí",
-            description: "Bạn đã gửi quá nhiều tin nhắn. Vui lòng đợi một lát rồi thử lại nhé!",
-            variant: "destructive"
+              title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`,
+              description: `Đang kết nối lại sau ${waitTime / 1000} giây...`,
             });
-            setMessages(prev => prev.slice(0, -1));
+            await delay(waitTime);
+            waitTime *= 2;
+            continue;
+          } else {
+            toast({
+              title: "Thông báo",
+              description: "Hệ thống đang quá tải hoặc hết hạn mức miễn phí. Vui lòng thử lại sau 1 phút.",
+              variant: "destructive"
+            });
+            setMessages(prev => prev.slice(0, -2)); // Xóa cả tin nhắn user và AI placeholder
+          }
         } else {
-            console.error(error);
-            toast({ title: "Lỗi", description: "Không thể kết nối với AI.", variant: "destructive" });
-            setMessages(prev => prev.slice(0, -1));
+          console.error(error);
+          toast({ title: "Lỗi", description: "Có lỗi xảy ra khi kết nối với AI.", variant: "destructive" });
+          setMessages(prev => prev.slice(0, -2));
+          break; 
         }
-    } finally {
-      setIsLoadingAiResponse(false);
-      if (previewUrl) {
-          URL.revokeObjectURL(previewUrl);
       }
     }
+
+    setIsLoadingAiResponse(false);
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
   };
 
   if (!isMounted) return null;
@@ -328,7 +355,7 @@ export default function ChatPage() {
               <ChatMessages messages={messages} isLoadingAiResponse={isLoadingAiResponse} />
             </div>
 
-            {isLoadingAiResponse && messages.length > 5 && (
+            {isLoadingAiResponse && messages.length > 2 && (
               <button 
                 onClick={scrollToBottom}
                 className="absolute bottom-24 right-8 p-2 bg-primary text-primary-foreground rounded-full shadow-lg animate-bounce z-20"
