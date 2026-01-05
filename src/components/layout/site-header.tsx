@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, MessageSquare, Newspaper, X, Home, TrendingUp, Search as SearchIcon, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { UserNav } from "@/components/auth/user-nav";
@@ -103,6 +103,9 @@ export function SiteHeader() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
+               <SheetHeader>
+                <SheetTitle className="sr-only">Menu chính</SheetTitle>
+              </SheetHeader>
               <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={() => setIsSheetOpen(false)}>
                 <Logo className="h-6 w-6" />
                 <span className="font-bold font-headline sm:inline-block text-lg">
