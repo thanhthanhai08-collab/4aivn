@@ -3,12 +3,17 @@
  */
 
 const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
 const { genkit } = require("genkit");
 const { googleAI } = require("@genkit-ai/googleai");
 const { z } = require("zod");
+const { GoogleAIFileManager } = require("@google/generative-ai/server");
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
 
 
 admin.initializeApp();
@@ -332,7 +337,6 @@ exports.initToolStructure = onDocumentCreated(
                 averageRating: 0,
                 ratingCount: 0,
                 post: false,
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             };
             
             console.log(`--- Đang lưu dữ liệu vào Firestore cho Tool: ${event.params.toolId} ---`);
@@ -453,7 +457,186 @@ exports.initNews = onDocumentCreated(
     }
 );
 
+const TARGET_URLS = [
+    "https://studio--clean-ai-hub.us-central1.hosted.app/cong-cu",
+    "https://studio--clean-ai-hub.us-central1.hosted.app/bang-xep-hang",
+    "https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc"
+];
+
+exports.chatbot = onRequest(
+    { 
+        secrets: [GEMINI_API_KEY], 
+        region: "asia-southeast1",
+        timeoutSeconds: 300,
+        memory: "512MiB"
+    }, 
+    async (req, res) => {
+        // --- CẤU HÌNH HEADER & SSE ---
+        res.setHeader('Access-Control-Allow-Origin', '*'); 
+        res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
+        
+        res.setHeader('Content-Type', 'text/event-stream');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.setHeader('Connection', 'keep-alive');
+
+        let tempFilePath = null;
+
+        try {
+            const { message, userId, messagesId, imageBase64, mimeType } = req.body;
+            
+            if (!message || !messagesId) {
+                res.write(`data: ${JSON.stringify({ error: "Thiếu thông tin đầu vào" })}\n\n`);
+                res.end();
+                return;
+            }
+
+            const apiKey = GEMINI_API_KEY.value();
+
+            // 2. LẤY LỊCH SỬ CHAT
+            const docRef = db.collection("chatbot").doc(userId || "anonymous").collection("messages").doc(messagesId);
+            const docSnap = await docRef.get();
+            let historyContext = [];
+
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                const qs = (data.questions || []).slice(-10);
+                const ans = (data.answers || []).slice(-10);
+                qs.forEach((q, i) => {
+                    historyContext.push({ role: 'user', content: [{ text: q }] });
+                    if (ans[i]) historyContext.push({ role: 'model', content: [{ text: ans[i] }] });
+                });
+            }
+
+            // 3. XỬ LÝ ẢNH
+            let imagePart = null;
+            if (imageBase64) {
+                const fileManager = new GoogleAIFileManager(apiKey);
+                const fileName = `upload_${Date.now()}`;
+                tempFilePath = path.join(os.tmpdir(), fileName);
+                fs.writeFileSync(tempFilePath, Buffer.from(imageBase64, 'base64'));
+
+                const uploadResult = await fileManager.uploadFile(tempFilePath, {
+                    mimeType: mimeType || "image/jpeg",
+                    displayName: fileName,
+                });
+                imagePart = { media: { url: uploadResult.file.uri, contentType: uploadResult.file.mimeType } };
+            }
+
+            // 4. KHỞI TẠO AI
+            const ai = genkit({
+                plugins: [googleAI({ apiKey: apiKey })],
+            });
+
+            // 5. GỌI AI VỚI GOOGLE SEARCH & URL CONTEXT
+            const response = await ai.generateStream({
+                model: "googleai/gemini-2.5-flash",
+                history: historyContext,
+                prompt: [
+                    { text: message },
+                    ...(imagePart ? [imagePart] : [])
+                ],
+                // KẾT HỢP URL CONTEXT VÀO SYSTEM INSTRUCTION
+                systemInstruction: `Bạn là trợ lý AI của Clean AI Hub.
+                
+                NHIỆM VỤ:
+                1. Ưu tiên tra cứu và trả lời dựa trên thông tin từ các liên kết nội bộ (Target URLs) sau:
+                   - ${TARGET_URLS[0]}
+                   - ${TARGET_URLS[1]}
+                   - ${TARGET_URLS[2]}
+                2. Sử dụng công cụ Google Search để tìm kiếm thông tin bổ sung hoặc xác thực nếu thông tin không có trong các liên kết trên.
+                3. Luôn trích dẫn nguồn nếu sử dụng thông tin từ Google Search.`,
+                
+                config: {
+                   tools: [
+        	{urlContext: {}},
+        	{googleSearch: {}}
+         ]
+                }
+            });
+
+            let fullAIResponse = "";
+
+            // 6. STREAMING
+            for await (const chunk of response.stream) {
+                const text = chunk.text || "";
+                if (text) {
+                    fullAIResponse += text;
+                    res.write(`data: ${JSON.stringify({ text })}\n\n`);
+                }
+            }
+
+            // 7. XỬ LÝ METADATA (Grounding)
+            // Lấy response gốc để truy cập metadata
+            const finalResponse = await response.response;
+            
+            // Tìm groundingMetadata (cấu trúc có thể thay đổi tùy version SDK, đây là cách duyệt an toàn)
+            const groundingMetadata = finalResponse.custom?.groundingMetadata || 
+                                      finalResponse.candidates?.[0]?.groundingMetadata;
+
+            let urlMetadataStructured = null;
+
+            if (groundingMetadata && groundingMetadata.groundingChunks) {
+                // Map dữ liệu từ Google sang cấu trúc bạn yêu cầu
+                const mappedUrls = groundingMetadata.groundingChunks
+                    .filter(chunk => chunk.web && chunk.web.uri)
+                    .map(chunk => ({
+                        retrieved_url: chunk.web.uri,
+                        url_retrieval_status: "URL_RETRIEVAL_STATUS_SUCCESS",
+                        title: chunk.web.title || "" // Lưu thêm title nếu cần
+                    }));
+
+                if (mappedUrls.length > 0) {
+                    urlMetadataStructured = {
+                        url_metadata: mappedUrls
+                    };
+                }
+            }
+
+            // 8. LƯU VÀO FIRESTORE
+            await docRef.set({
+                questions: admin.firestore.FieldValue.arrayUnion(message),
+                answers: admin.firestore.FieldValue.arrayUnion(fullAIResponse),
+                // Lưu metadata vào mảng song song. Nếu không có metadata, lưu null để giữ index khớp với câu hỏi
+                url_context_metadata: admin.firestore.FieldValue.arrayUnion(urlMetadataStructured || null),
+                hasImage: !!imagePart,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+            res.end();
+
+        } catch (error) {
+            console.error("Chatbot Error:", error);
+            
+            // Xử lý lỗi 429 - Hết hạn mức
+            if (error.status === 429 || (error.message && error.message.includes('429'))) {
+                res.write(`data: ${JSON.stringify({ 
+                    error: "QUOTA_EXCEEDED", 
+                    message: "Hệ thống đang quá tải hoặc hết hạn mức miễn phí. Vui lòng thử lại sau 1 phút.",
+                    status: 429 
+                })}\n\n`);
+            } else {
+                res.write(`data: ${JSON.stringify({ 
+                    error: "GENERAL_ERROR", 
+                    message: "Có lỗi xảy ra khi kết nối với AI." 
+                })}\n\n`);
+            }
+            res.end();
+        } finally {
+            if (tempFilePath && fs.existsSync(tempFilePath)) {
+                try { fs.unlinkSync(tempFilePath); } catch (e) {}
+            }
+        }
+    }
+);
     
 
     
+
+
+
+
+
 

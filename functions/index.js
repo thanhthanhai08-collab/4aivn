@@ -605,10 +605,3 @@ exports.chatbot = onRequest(
     }
 );
     
-
-    
-
-
-
-
-
