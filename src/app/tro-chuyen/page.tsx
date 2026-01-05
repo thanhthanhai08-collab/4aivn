@@ -12,7 +12,7 @@ import { db, auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
-  writeBatch, doc, where
+  doc, getDoc, writeBatch
 } from "firebase/firestore";
 
 /**
@@ -35,35 +35,28 @@ export default function ChatPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [historySessions, setHistorySessions] = useState<{ id: string; lastMsg: string }[]>([]);
-  const [activeChatId, setActiveChatId] = useState<string>("");
+  const [activeChatId, setActiveChatId] = useState<string>(""); // Đây đóng vai trò là messagesId
   const [isLoadingAiResponse, setIsLoadingAiResponse] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string>("");
 
   const { toast } = useToast();
-  const isInitialMount = useRef(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-
-  // --- HÀM TỰ ĐỘNG CUỘN XUỐNG DƯỚI ---
   const scrollToBottom = useCallback(() => {
     if (scrollRef.current) {
-      const { scrollHeight, clientHeight } = scrollRef.current;
       scrollRef.current.scrollTo({
-        top: scrollHeight - clientHeight,
+        top: scrollRef.current.scrollHeight,
         behavior: "smooth",
       });
     }
   }, []);
 
-  // Cuộn khi có tin nhắn mới hoặc khi AI đang gõ (streaming)
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoadingAiResponse, scrollToBottom]);
-
-
-  // --- LOGIC 1: MERGE HỢP NHẤT LỊCH SỬ ---
+  
+  // --- LOGIC AUTH & MERGE ---
   const mergeHistory = async (anonId: string, realUid: string) => {
     try {
       const anonMsgsRef = collection(db, "chatbot", anonId, "messages");
@@ -72,16 +65,13 @@ export default function ChatPage() {
       if (snapshot.empty) return;
 
       const batch = writeBatch(db);
-      const realMsgsRef = collection(db, "chatbot", realUid, "messages");
-
+      
       snapshot.docs.forEach((oldDoc) => {
-        const data = oldDoc.data();
-        const newDocRef = doc(realMsgsRef);
-        batch.set(newDocRef, {
-          ...data,
-          mergedFrom: anonId,
-          createdAt: data.createdAt,
-        });
+        // Chuyển dữ liệu từ doc cũ sang doc mới với ID cũ
+        const newDocRef = doc(db, "chatbot", realUid, "messages", oldDoc.id);
+        batch.set(newDocRef, oldDoc.data());
+        // Xóa doc cũ
+        batch.delete(oldDoc.ref);
       });
 
       await batch.commit();
@@ -93,12 +83,10 @@ export default function ChatPage() {
     }
   };
 
-  // --- LOGIC 2: THEO DÕI AUTH & USERID ---
   useEffect(() => {
     setIsMounted(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       const anonId = localStorage.getItem("anonymous_chat_id");
-
       if (user) {
         if (anonId && anonId.startsWith("demo_")) {
           await mergeHistory(anonId, user.uid);
@@ -106,7 +94,7 @@ export default function ChatPage() {
         setCurrentUserId(user.uid);
       } else {
         if (!anonId) {
-          const newAnonId = `demo_${Math.random().toString(36).substring(2, 11)}`;
+          const newAnonId = `demo_${Date.now()}`;
           localStorage.setItem("anonymous_chat_id", newAnonId);
           setCurrentUserId(newAnonId);
         } else {
@@ -117,130 +105,106 @@ export default function ChatPage() {
     return () => unsubscribe();
   }, []);
 
-  // --- LOGIC 3: LẤY LỊCH SỬ SIDEBAR ---
+  // --- LOGIC 1: LẤY DANH SÁCH PHIÊN CHAT (SIDEBAR) ---
   const fetchHistory = useCallback(async () => {
     if (!currentUserId) return;
     setIsHistoryLoading(true);
     try {
       const q = query(
         collection(db, "chatbot", currentUserId, "messages"),
-        orderBy("createdAt", "desc"),
-        limit(50)
+        orderBy("updatedAt", "desc"), // Sắp xếp theo thời gian cập nhật mới nhất
+        limit(20)
       );
       const querySnapshot = await getDocs(q);
-      const sessionsMap = new Map();
-
-      querySnapshot.docs.forEach((doc) => {
+      const sessions = querySnapshot.docs.map(doc => {
         const data = doc.data();
-        const cId = data.chatId || "legacy";
-        if (!sessionsMap.has(cId) && data.role === "user") {
-          sessionsMap.set(cId, {
-            id: cId,
-            lastMsg: data.content.substring(0, 30) + "...",
-          });
-        }
+        const lastQuestion = data.questions?.[data.questions.length - 1] || "Phiên chat mới";
+        return {
+          id: doc.id,
+          lastMsg: lastQuestion.substring(0, 30) + (lastQuestion.length > 30 ? "..." : ""),
+        };
       });
-      setHistorySessions(Array.from(sessionsMap.values()));
+      setHistorySessions(sessions);
     } catch (e) {
-      console.error("Fetch history error:", e);
+      console.error("Lỗi lấy sidebar:", e);
     } finally {
       setIsHistoryLoading(false);
     }
   }, [currentUserId]);
 
-  useEffect(() => {
-    if (isMounted && currentUserId && isInitialMount.current) {
-      isInitialMount.current = false;
-      fetchHistory();
-      setActiveChatId(`chat_${Date.now()}`);
-      setMessages([{
-        id: "initial",
-        text: "Xin chào! Tôi có thể giúp gì cho bạn hôm nay?",
-        sender: "ai",
-        timestamp: Date.now(),
-      }]);
-    }
-  }, [isMounted, currentUserId, fetchHistory]);
-  
-  // --- LOGIC MỚI: TẢI LẠI TIN NHẮN TỪ LỊCH SỬ ---
-  const loadSession = async (chatId: string) => {
-    if (!currentUserId || chatId === activeChatId) return;
+  // --- LOGIC 2: TẢI CHI TIẾT 1 PHIÊN CHAT ---
+  const loadSession = async (mId: string) => {
+    if (!currentUserId || mId === activeChatId) return;
 
-    setIsLoadingAiResponse(true); // Hiển thị loading nhẹ trong khi tải
-    setActiveChatId(chatId);
+    setActiveChatId(mId);
+    setIsLoadingAiResponse(true);
 
     try {
-      const msgsRef = collection(db, "chatbot", currentUserId, "messages");
-      // Truy vấn tất cả tin nhắn có chatId này, sắp xếp theo thời gian
-      const q = query(
-        msgsRef,
-        where("chatId", "==", chatId),
-        orderBy("createdAt", "asc")
-      );
+      const docRef = doc(db, "chatbot", currentUserId, "messages", mId);
+      const docSnap = await getDoc(docRef);
 
-      const querySnapshot = await getDocs(q);
-      const loadedMessages: ChatMessage[] = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          text: data.content,
-          imageUrl: data.imageUrl, // Thêm imageUrl nếu có
-          sender: data.role === "user" ? "user" : "ai",
-          timestamp: data.createdAt?.toMillis() || Date.now(),
-        };
-      });
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const qs = data.questions || [];
+        const ans = data.answers || [];
 
-      if (loadedMessages.length > 0) {
-        setMessages(loadedMessages);
-      } else {
-        // Phòng trường hợp session cũ không có dữ liệu (legacy)
-        setMessages([{ id: "err", text: "Không tìm thấy nội dung tin nhắn cho phiên này.", sender: "ai", timestamp: Date.now() }]);
+        const formattedMessages: ChatMessage[] = [];
+        qs.forEach((q: string, i: number) => {
+          formattedMessages.push({
+            id: `q-${mId}-${i}`,
+            text: q,
+            sender: "user",
+            timestamp: Date.now(),
+          });
+          if (ans[i]) {
+            formattedMessages.push({
+              id: `a-${mId}-${i}`,
+              text: ans[i],
+              sender: "ai",
+              timestamp: Date.now(),
+            });
+          }
+        });
+        setMessages(formattedMessages);
       }
     } catch (e) {
-      console.error("Lỗi khi tải phiên chat:", e);
-      toast({ title: "Lỗi", description: "Không thể tải lại lịch sử.", variant: "destructive" });
+      console.error("Lỗi tải tin nhắn:", e);
+      toast({ title: "Lỗi", description: "Không thể tải lịch sử phiên này.", variant: "destructive" });
     } finally {
       setIsLoadingAiResponse(false);
     }
   };
 
+  useEffect(() => {
+    if (isMounted && currentUserId) {
+      fetchHistory();
+      if (!activeChatId) {
+        const newId = `msg_${Date.now()}`;
+        setActiveChatId(newId);
+        setMessages([{ id: "init", text: "Xin chào! Tôi có thể giúp gì cho bạn?", sender: "ai", timestamp: Date.now() }]);
+      }
+    }
+  }, [isMounted, currentUserId, fetchHistory, activeChatId]);
 
   const startNewChat = () => {
-    setActiveChatId(`chat_${Date.now()}`);
-    setMessages([{
-      id: `greeting-${Date.now()}`,
-      text: "Đã bắt đầu phiên chat mới. Bạn cần hỗ trợ gì không?",
-      sender: "ai",
-      timestamp: Date.now(),
-    }]);
+    const newId = `msg_${Date.now()}`;
+    setActiveChatId(newId);
+    setMessages([{ id: `greeting-${Date.now()}`, text: "Đã bắt đầu phiên chat mới.", sender: "ai", timestamp: Date.now() }]);
   };
 
-  // --- LOGIC 4: GỬI TIN NHẮN & SSE ---
+  // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
   const handleSendMessage = async (text: string, image?: File) => {
     if (!text.trim() && !image) return;
 
-    const currentChatId = activeChatId;
-    const timestamp = Date.now();
-    let imageInfo = null;
-    let previewUrl = "";
+    const currentMessagesId = activeChatId;
+    let imageInfo = image ? await fileToBase64(image) : null;
+    const previewUrl = image ? URL.createObjectURL(image) : "";
 
-    if (image) {
-      imageInfo = await fileToBase64(image);
-      previewUrl = URL.createObjectURL(image);
-    }
-
-    const newUserMessage: ChatMessage = {
-      id: `user-${timestamp}`,
-      text,
-      imageUrl: previewUrl,
-      sender: "user",
-      timestamp,
-    };
-
+    const userMsg: ChatMessage = { id: `u-${Date.now()}`, text, imageUrl: previewUrl, sender: "user", timestamp: Date.now() };
     const aiMsgId = `ai-${Date.now()}`;
-    const newAiMessage: ChatMessage = { id: aiMsgId, text: "", sender: "ai", timestamp: Date.now() };
+    const aiPlaceholder: ChatMessage = { id: aiMsgId, text: "", sender: "ai", timestamp: Date.now() };
 
-    setMessages((prev) => [...prev, newUserMessage, newAiMessage]);
+    setMessages((prev) => [...prev, userMsg, aiPlaceholder]);
     setIsLoadingAiResponse(true);
 
     try {
@@ -250,7 +214,7 @@ export default function ChatPage() {
         body: JSON.stringify({
           message: text,
           userId: currentUserId,
-          chatId: currentChatId,
+          messagesId: currentMessagesId,
           imageBase64: imageInfo?.base64,
           mimeType: imageInfo?.mimeType,
         }),
@@ -259,8 +223,8 @@ export default function ChatPage() {
       if (response.status === 429) {
         throw new Error("Rate limit exceeded");
       }
-      
-      if (!response.body) throw new Error("Stream error");
+
+      if (!response.body) throw new Error("No response body");
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let accumulatedText = "";
@@ -274,7 +238,6 @@ export default function ChatPage() {
 
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split("\n\n");
-
         for (const line of lines) {
           if (line.startsWith("data: ")) {
             const jsonStr = line.replace("data: ", "").trim();
@@ -283,34 +246,33 @@ export default function ChatPage() {
               const data = JSON.parse(jsonStr);
               if (data.text) {
                 accumulatedText += data.text;
-                setMessages((prev) => {
-                  const newArr = [...prev];
-                  const idx = newArr.findIndex((m) => m.id === aiMsgId);
-                  if (idx !== -1) newArr[idx] = { ...newArr[idx], text: accumulatedText };
-                  return newArr;
-                });
+                setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
               }
-            } catch (e) {}
+            } catch (e) {
+                // Ignore parsing errors which can happen with chunked data
+            }
           }
         }
       }
-      fetchHistory(); // Refresh sidebar sau khi chat xong
+      fetchHistory(); // Cập nhật lại sidebar
     } catch (error: any) {
-      if (error.message === "Rate limit exceeded") {
-        toast({
-          title: "Hết hạn mức miễn phí",
-          description: "Bạn đã gửi quá nhiều tin nhắn. Vui lòng đợi một lát rồi thử lại nhé!",
-          variant: "destructive"
-        });
-        setMessages(prev => prev.slice(0, -1)); // Xóa tin nhắn AI placeholder
-      } else {
-        console.error(error);
-        toast({ title: "Lỗi", description: "Không thể kết nối với AI.", variant: "destructive" });
-        setMessages(prev => prev.slice(0, -1));
-      }
+        if (error.message === "Rate limit exceeded") {
+            toast({
+            title: "Hết hạn mức miễn phí",
+            description: "Bạn đã gửi quá nhiều tin nhắn. Vui lòng đợi một lát rồi thử lại nhé!",
+            variant: "destructive"
+            });
+            setMessages(prev => prev.slice(0, -1));
+        } else {
+            console.error(error);
+            toast({ title: "Lỗi", description: "Không thể kết nối với AI.", variant: "destructive" });
+            setMessages(prev => prev.slice(0, -1));
+        }
     } finally {
       setIsLoadingAiResponse(false);
-      if (previewUrl) setTimeout(() => URL.revokeObjectURL(previewUrl), 5000);
+      if (previewUrl) {
+          URL.revokeObjectURL(previewUrl);
+      }
     }
   };
 
@@ -322,12 +284,12 @@ export default function ChatPage() {
         {/* SIDEBAR */}
         <aside className="w-72 border-r bg-muted/20 flex-col hidden lg:flex">
           <div className="p-4 border-b">
-            <button onClick={startNewChat} className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2.5 rounded-xl hover:shadow-md transition-all font-semibold active:scale-95">
+            <button onClick={startNewChat} className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2.5 rounded-xl hover:opacity-90 transition-all font-semibold active:scale-95">
               <Plus size={20} /> Chat mới
             </button>
           </div>
-          <div className="flex-grow overflow-y-auto p-3 space-y-2">
-            <div className="flex items-center gap-2 px-2 py-2 text-muted-foreground text-xs font-bold uppercase tracking-wider">
+          <div className="flex-grow overflow-y-auto p-3 space-y-1">
+            <div className="px-2 py-2 text-muted-foreground text-xs font-bold uppercase flex items-center gap-2">
               <History size={14} /> Gần đây
             </div>
             {isHistoryLoading ? (
@@ -337,14 +299,12 @@ export default function ChatPage() {
                 <div 
                   key={session.id} 
                   onClick={() => loadSession(session.id)}
-                  className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${
-                    activeChatId === session.id 
-                      ? 'bg-accent border-primary/20 shadow-sm' 
-                      : 'border-transparent hover:bg-accent/50'
+                  className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all border ${
+                    activeChatId === session.id ? 'bg-accent border-primary/20 shadow-sm' : 'border-transparent hover:bg-accent/50'
                   }`}
                 >
                   <MessageSquare size={16} className={activeChatId === session.id ? "text-primary" : "text-muted-foreground"} />
-                  <span className={`text-sm truncate ${activeChatId === session.id ? "font-bold" : "font-medium text-muted-foreground"}`}>
+                  <span className={`text-sm truncate ${activeChatId === session.id ? "font-bold text-primary-foreground" : "font-medium text-muted-foreground"}`}>
                     {session.lastMsg}
                   </span>
                 </div>
@@ -355,20 +315,13 @@ export default function ChatPage() {
 
         {/* MAIN CHAT */}
         <main className="flex-grow flex flex-col relative w-full overflow-hidden">
-          <header className="h-14 border-b flex items-center justify-between px-6 bg-background/50 backdrop-blur-sm z-10">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <h1 className="font-bold text-lg">4AIVN Assistant</h1>
-            </div>
+          <header className="h-14 border-b flex items-center px-6 bg-background/50 backdrop-blur-sm z-10">
+              <h1 className="font-bold text-lg">AI Assistant</h1>
           </header>
           
           <div className="flex-grow overflow-hidden flex flex-col max-w-5xl mx-auto w-full relative">
-             <div 
-              ref={scrollRef}
-              className="flex-grow overflow-y-auto p-4 space-y-4"
-            >
+            <div ref={scrollRef} className="flex-grow overflow-y-auto p-4 space-y-4">
               <ChatMessages messages={messages} isLoadingAiResponse={isLoadingAiResponse} />
-              <div ref={messagesEndRef} />
             </div>
 
             {isLoadingAiResponse && (
@@ -379,8 +332,8 @@ export default function ChatPage() {
                 <ArrowDown size={18} />
               </button>
             )}
-            
-            <div className="p-4 md:p-6 bg-gradient-to-t from-background via-background to-transparent">
+
+            <div className="p-4 md:p-6 bg-background border-t">
               <ChatInput onSendMessage={handleSendMessage} isLoading={isLoadingAiResponse} />
             </div>
           </div>

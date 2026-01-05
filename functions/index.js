@@ -612,5 +612,3 @@ exports.chatbot = onRequest(
 
 
 
-
-```
