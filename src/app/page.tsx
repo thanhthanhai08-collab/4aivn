@@ -223,18 +223,6 @@ export default function HomePage() {
        {/* Independence Day Banner Section */}
       <section className="py-8 bg-background">
         <div className="container">
-            <div className="space-y-4 text-center">
-                 <div className="flex items-center justify-center space-x-4 mb-4">
-                    <div className="text-center">
-                        <div className="text-6xl font-extrabold text-red-600">80</div>
-                        <div className="text-xl font-bold text-blue-800 -mt-1">năm</div>
-                    </div>
-                    <div className="text-blue-800 flex flex-col items-start text-left">
-                        <div className="text-4xl font-bold tracking-wide">ĐỘC LẬP VÀ KHÁT VỌNG</div>
-                        <div className="text-3xl font-bold">1945 - 2025</div>
-                    </div>
-                </div>
-            </div>
             {isLoadingSettings ? (
               <Skeleton className="w-full h-[250px] rounded-lg shadow-lg" />
             ) : (
