@@ -41,11 +41,12 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                 </div>
             )}
             {message.text && (
-              <div className="p-3">
+              <div className={cn(
+                  "p-3",
+                  message.sender === 'ai' && "prose-sm prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-li:my-0 text-foreground"
+                )}>
                 {message.sender === 'ai' ? (
-                  <ReactMarkdown
-                    className="prose-sm prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-li:my-0 text-foreground"
-                  >
+                  <ReactMarkdown>
                     {message.text}
                   </ReactMarkdown>
                 ) : (
