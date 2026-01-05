@@ -1,3 +1,4 @@
+
 // src/components/layout/site-header.tsx
 "use client";
 
@@ -18,7 +19,7 @@ const navItems = [
   { href: "/cong-cu", label: "Công cụ AI", icon: LayoutGrid },
   { href: "/bang-xep-hang", label: "Bảng xếp hạng", icon: TrendingUp },
   { href: "/tin-tuc", label: "Tin tức AI", icon: Newspaper },
-  { href: "/tro-chuyen", label: "Chat Demo", icon: MessageSquare },
+  { href: "/tro-chuyen", label: "Chatbot", icon: MessageSquare },
 ];
 
 export function SiteHeader() {

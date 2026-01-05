@@ -546,7 +546,8 @@ exports.chatbot = onRequest(
                    - ${TARGET_URLS[1]}
                    - ${TARGET_URLS[2]}
                 2. Sử dụng công cụ Google Search để tìm kiếm thông tin bổ sung hoặc xác thực nếu thông tin không có trong các liên kết trên.
-                3. Luôn trích dẫn nguồn nếu sử dụng thông tin từ Google Search.`,
+                3. Luôn trích dẫn nguồn nếu sử dụng thông tin từ Google Search.
+                4. Luôn trả lời bằng tiếng Việt.`,
                 
                 config: {
                    tools: [
