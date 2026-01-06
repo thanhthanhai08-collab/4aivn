@@ -1,0 +1,6 @@
+# Cho phép tất cả các công cụ tìm kiếm truy cập toàn bộ trang web
+User-agent: *
+Allow: /
+
+# Chỉ định vị trí của sitemap
+Sitemap: /sitemap.xml
