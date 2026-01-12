@@ -14,6 +14,7 @@ const { GoogleAIFileManager } = require("@google/generative-ai/server");
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
+const { Index } = require("flexsearch");
 
 
 admin.initializeApp();
@@ -457,6 +458,106 @@ exports.initNews = onDocumentCreated(
     }
 );
 
+// --- GLOBAL VARIABLES FOR SEARCH ---
+let cache = {
+  data: [],
+  index: null,
+  timestamp: 0
+};
+
+let refreshPromise = null;
+const FRESH_DURATION = 1000 * 60 * 30; // 30 phút
+
+/**
+ * Hàm cập nhật dữ liệu: Sử dụng Singleton Promise để tối ưu chi phí Firestore
+ */
+async function refreshData() {
+  if (refreshPromise) return refreshPromise;
+
+  refreshPromise = (async () => {
+    try {
+      console.log("FIRESTORE: Đang lấy dữ liệu tin tức...");
+      const snapshot = await db.collection("news")
+        .where("post", "==", true)
+        .select("title", "summary", "createdAt") // Chỉ lấy field cần thiết
+        .get();
+
+      const newData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate().toISOString()
+      }));
+
+      const newIndex = new Index({ tokenize: "full", resolution: 9 });
+      newData.forEach(item => {
+        newIndex.add(item.id, `${item.title} ${item.summary}`);
+      });
+
+      cache = {
+        data: newData,
+        index: newIndex,
+        timestamp: Date.now()
+      };
+      console.log("CACHE: Đã cập nhật dữ liệu mới.");
+    } catch (e) {
+      console.error("Lỗi refreshData:", e);
+    } finally {
+      refreshPromise = null; // Giải phóng khóa
+    }
+  })();
+
+  return refreshPromise;
+}
+
+/**
+ * API SEARCH NEWS
+ */
+exports.searchNews = onRequest({ 
+  region: "asia-southeast1",
+  memory: "512MiB",
+  maxInstances: 10 
+}, async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
+
+  const queryParam = (req.query.q || "").trim();
+  
+  try {
+    const now = Date.now();
+    const needsInitialLoad = !cache.index;
+    const isExpired = now - cache.timestamp > FRESH_DURATION;
+
+    if (needsInitialLoad) {
+      await refreshData();
+    } else if (isExpired) {
+      refreshData(); 
+    }
+
+    if (!queryParam) {
+      res.status(200).json({ results: [] });
+      return;
+    }
+
+    if (cache.index) {
+      const resultsIds = cache.index.search(queryParam, { limit: 12 });
+      const results = cache.data.filter(item => resultsIds.includes(item.id));
+      
+      res.status(200).json({ 
+        results,
+        total: results.length,
+        cachedAt: new Date(cache.timestamp).toISOString() 
+      });
+    } else {
+      res.status(500).json({ error: "Search Index chưa sẵn sàng" });
+    }
+
+  } catch (error) {
+    console.error("Search Error:", error);
+    res.status(500).json({ error: "Lỗi máy chủ nội bộ" });
+  }
+});
+
+
 const TARGET_URLS = [
     "https://studio--clean-ai-hub.us-central1.hosted.app/cong-cu",
     "https://studio--clean-ai-hub.us-central1.hosted.app/bang-xep-hang",
@@ -632,4 +733,7 @@ exports.chatbot = onRequest(
         }
     }
 );
+    
+
+
     

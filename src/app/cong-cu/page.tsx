@@ -14,7 +14,7 @@ import { collection, getDocs, query, orderBy, limit, where, startAfter, type Que
 import { useInView } from "react-intersection-observer";
 import { Loader2 } from "lucide-react";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 100;
 
 // --- SKELETON LOADING ---
 function ToolsSkeleton() {
