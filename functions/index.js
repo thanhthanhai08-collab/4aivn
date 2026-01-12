@@ -577,7 +577,7 @@ exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
       console.log(`Phát hiện bài viết mới xuất bản: ${event.params.postId}`);
       
       // Gọi Webhook đến chính hàm searchNews để ép nạp lại cache
-      const functionUrl = `https://asia-southeast1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
+      const functionUrl = `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
       
       try {
         const response = await fetch(functionUrl);
