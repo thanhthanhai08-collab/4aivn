@@ -85,10 +85,8 @@ function SearchResultsContent() {
     <div className="container py-8 md:py-12">
       {/* ẨN THANH TÌM KIẾM TRÊN MENU */}
       <style jsx global>{`
-        header [data-search-container], 
-        header .search-trigger,
-        header form[role="search"] { 
-          display: none !important; 
+        header form[role="search"] {
+          display: none !important;
         }
       `}</style>
 
@@ -146,7 +144,7 @@ function SearchResultsContent() {
                   <Card className="rounded-xl border-primary/5 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                     <div className="flex items-center">
                       {item.imageUrl && (
-                        <div className="w-40 sm:w-48 relative aspect-video overflow-hidden shrink-0">
+                        <div className="w-40 sm:w-48 relative aspect-[16/9] overflow-hidden shrink-0">
                           <Image 
                             src={item.imageUrl} 
                             alt="" 
