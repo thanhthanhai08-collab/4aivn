@@ -514,7 +514,6 @@ async function refreshData() {
  */
 exports.searchNews = onRequest({ 
   region: "asia-southeast1",
-  memory: "512MiB",
   maxInstances: 10 
 }, async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -737,3 +736,4 @@ exports.chatbot = onRequest(
 
 
     
+```
