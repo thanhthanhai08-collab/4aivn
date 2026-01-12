@@ -2,7 +2,8 @@
  * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const { onDocumentWritten, onDocumentCreated, onDocumentUpdated, onRequest } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten, onDocumentCreated, onDocumentUpdated } = require("firebase-functions/v2/firestore");
+const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
