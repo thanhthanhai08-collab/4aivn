@@ -157,7 +157,7 @@ function SearchResultsContent() {
                   <Link href={`/cong-cu?search_query=${encodeURIComponent(query || "")}`}>
                     <Wrench className="w-4 h-4 text-primary" />
                     <div className="text-left">
-                      <div className="font-bold">Tìm trong Công cụ</div>
+                      <div className="font-bold">Tìm trong công cụ</div>
                       <div className="text-[10px] opacity-70 italic">Tìm ứng dụng, phần mềm AI</div>
                     </div>
                   </Link>
@@ -175,9 +175,6 @@ function SearchResultsContent() {
                 </Button>
               </div>
             </CardContent>
-            <CardFooter className="pt-2 border-t text-[11px] text-muted-foreground">
-              Bạn cũng có thể chat với AI ở góc màn hình để nhận gợi ý chính xác hơn.
-            </CardFooter>
           </Card>
         </div>
       </div>
