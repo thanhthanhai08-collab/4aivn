@@ -50,10 +50,8 @@ function SearchResultsContent() {
       setIsLoading(true);
       setError(false);
       try {
-        // Replace with your actual project ID from .firebaserc or Firebase console
-        const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'clean-ai-hub';
         const response = await fetch(
-          `https://asia-southeast1-${projectId}.cloudfunctions.net/searchNews?q=${encodeURIComponent(query)}`
+          `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?q=${encodeURIComponent(query)}`
         );
         if (!response.ok) throw new Error("Network error");
         const data = await response.json();

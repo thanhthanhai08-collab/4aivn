@@ -605,7 +605,8 @@ exports.chatbot = onRequest(
         secrets: [GEMINI_API_KEY], 
         region: "asia-southeast1",
         timeoutSeconds: 300,
-        memory: "512MiB"
+        memory: "512MiB",
+        maxInstances: 6
     }, 
     async (req, res) => {
         // --- CẤU HÌNH HEADER & SSE ---
