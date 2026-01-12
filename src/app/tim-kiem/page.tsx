@@ -7,6 +7,7 @@ import { useEffect, useState, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Newspaper, Wrench, BarChart3 } from "lucide-react";
 
@@ -28,7 +29,8 @@ interface SearchResult {
   id: string;
   title: string;
   summary: string;
-  createdAt: string;
+  publishedAt: string; // Changed from createdAt
+  imageUrl?: string;    // Added imageUrl
 }
 
 function SearchResultsContent() {
@@ -97,22 +99,35 @@ function SearchResultsContent() {
           ) : results.length > 0 ? (
             <div className="grid gap-4">
               {results.map((item) => (
-                <Card key={item.id} className="hover:border-primary/50 transition-colors">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg leading-tight">
-                      <Link href={`/tin-tuc/${item.id}`} className="hover:text-primary transition-colors">
-                        {item.title}
-                      </Link>
-                    </CardTitle>
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(item.createdAt).toLocaleDateString("vi-VN")}
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {item.summary}
-                    </p>
-                  </CardContent>
+                <Card key={item.id} className="hover:border-primary/50 transition-colors overflow-hidden">
+                    <div className="flex flex-col sm:flex-row">
+                        {item.imageUrl && (
+                            <div className="sm:w-1/3 md:w-1/4 relative min-h-[150px] sm:min-h-full">
+                                <Link href={`/tin-tuc/${item.id}`} className="block h-full">
+                                    <Image 
+                                        src={item.imageUrl} 
+                                        alt={item.title} 
+                                        fill 
+                                        className="object-cover" 
+                                        sizes="(max-width: 640px) 100vw, 25vw"
+                                    />
+                                </Link>
+                            </div>
+                        )}
+                        <div className="flex-1 p-4">
+                            <p className="text-xs text-muted-foreground mb-1">
+                                {new Date(item.publishedAt).toLocaleDateString("vi-VN")}
+                            </p>
+                            <CardTitle className="text-lg leading-tight mb-2">
+                                <Link href={`/tin-tuc/${item.id}`} className="hover:text-primary transition-colors">
+                                {item.title}
+                                </Link>
+                            </CardTitle>
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                                {item.summary}
+                            </p>
+                        </div>
+                    </div>
                 </Card>
               ))}
             </div>
