@@ -7,12 +7,13 @@ import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
 interface AppLayoutProps {
   children: ReactNode;
+  hideHeaderSearch?: boolean;
 }
 
-export function AppLayout({ children }: AppLayoutProps) {
+export function AppLayout({ children, hideHeaderSearch = false }: AppLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader hideSearch={hideHeaderSearch} />
       <main className="flex-1">{children}</main>
       <SiteFooter />
       <Toaster />

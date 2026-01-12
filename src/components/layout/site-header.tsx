@@ -22,7 +22,11 @@ const navItems = [
   { href: "/tro-chuyen", label: "Chatbot", icon: MessageSquare },
 ];
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  hideSearch?: boolean;
+}
+
+export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { currentUser, isLoading } = useAuth();
@@ -70,19 +74,21 @@ export function SiteHeader() {
 
         <div className="flex flex-1 items-center justify-end space-x-2 md:space-x-4">
           {/* Desktop Search */}
-          <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center relative">
-            <Input 
-              type="search" 
-              placeholder="Tìm kiếm..." 
-              className="h-9 pr-8" 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-9 w-9 text-muted-foreground">
-              <SearchIcon className="h-4 w-4" />
-              <span className="sr-only">Tìm kiếm</span>
-            </Button>
-          </form>
+          {!hideSearch && (
+            <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center relative">
+              <Input 
+                type="search" 
+                placeholder="Tìm kiếm..." 
+                className="h-9 pr-8" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-9 w-9 text-muted-foreground">
+                <SearchIcon className="h-4 w-4" />
+                <span className="sr-only">Tìm kiếm</span>
+              </Button>
+            </form>
+          )}
 
           {isClient && !isLoading && (currentUser ? (
             <UserNav user={currentUser} />
@@ -114,21 +120,23 @@ export function SiteHeader() {
               </Link>
               
               {/* Mobile Search */}
-              <form onSubmit={handleSearchSubmit} className="mb-4 px-2">
-                <div className="relative">
-                  <Input 
-                    type="search" 
-                    placeholder="Tìm kiếm..." 
-                    className="h-10 pr-10"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                   <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-10 w-10 text-muted-foreground">
-                    <SearchIcon className="h-5 w-5" />
-                    <span className="sr-only">Tìm kiếm</span>
-                  </Button>
-                </div>
-              </form>
+              {!hideSearch && (
+                <form onSubmit={handleSearchSubmit} className="mb-4 px-2">
+                  <div className="relative">
+                    <Input 
+                      type="search" 
+                      placeholder="Tìm kiếm..." 
+                      className="h-10 pr-10"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <Button type="submit" variant="ghost" size="icon" className="absolute right-0 top-0 h-10 w-10 text-muted-foreground">
+                      <SearchIcon className="h-5 w-5" />
+                      <span className="sr-only">Tìm kiếm</span>
+                    </Button>
+                  </div>
+                </form>
+              )}
 
               <div className="flex flex-col space-y-3 px-2">
                 {navItems.map((item) => (

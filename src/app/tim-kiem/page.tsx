@@ -83,13 +83,6 @@ function SearchResultsContent() {
 
   return (
     <div className="container py-8 md:py-12">
-      {/* ẨN THANH TÌM KIẾM TRÊN MENU */}
-      <style jsx global>{`
-        header form[role="search"] {
-          display: none !important;
-        }
-      `}</style>
-
       {/* Search Bar - Giao diện tròn, không dấu X, không hiệu ứng trượt */}
       <div className="mb-16 max-w-2xl mx-auto">
         <form onSubmit={handleSearchSubmit} className="relative w-full group">
@@ -218,7 +211,7 @@ function SearchResultsContent() {
 
 export default function SearchResultsPage() {
   return (
-    <AppLayout>
+    <AppLayout hideHeaderSearch={true}>
       <Suspense fallback={<SearchSkeleton />}>
         <SearchResultsContent />
       </Suspense>
