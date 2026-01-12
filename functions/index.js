@@ -2,7 +2,7 @@
  * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten, onDocumentCreated, onDocumentUpdated } = require("firebase-functions/v2/firestore");
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
@@ -458,28 +458,30 @@ exports.initNews = onDocumentCreated(
     }
 );
 
-// --- GLOBAL VARIABLES FOR SEARCH ---
+// --- CẤU HÌNH SEARCH ---
+const FRESH_DURATION = 1000 * 60 * 30; // 30 phút
+const WEBHOOK_KEY = "key_bi_mat_4aivn"; // Thay đổi mã này để bảo mật
+
+// --- BIẾN TOÀN CỤC (Lưu trên RAM) ---
 let cache = {
   data: [],
   index: null,
   timestamp: 0
 };
-
 let refreshPromise = null;
-const FRESH_DURATION = 1000 * 60 * 30; // 30 phút
 
 /**
- * Hàm cập nhật dữ liệu: Sử dụng Singleton Promise để tối ưu chi phí Firestore
+ * Helper: Cập nhật dữ liệu từ Firestore vào RAM
  */
 async function refreshData() {
   if (refreshPromise) return refreshPromise;
 
   refreshPromise = (async () => {
     try {
-      console.log("FIRESTORE: Đang lấy dữ liệu tin tức...");
+      console.log("FIRESTORE: Đang lấy dữ liệu tin tức mới nhất...");
       const snapshot = await db.collection("news")
         .where("post", "==", true)
-        .select("title", "summary", "createdAt") // Chỉ lấy field cần thiết
+        .select("title", "summary", "createdAt")
         .get();
 
       const newData = snapshot.docs.map(doc => ({
@@ -498,11 +500,11 @@ async function refreshData() {
         index: newIndex,
         timestamp: Date.now()
       };
-      console.log("CACHE: Đã cập nhật dữ liệu mới.");
+      console.log("CACHE: Đã làm mới chỉ mục tìm kiếm.");
     } catch (e) {
       console.error("Lỗi refreshData:", e);
     } finally {
-      refreshPromise = null; // Giải phóng khóa
+      refreshPromise = null;
     }
   })();
 
@@ -510,31 +512,38 @@ async function refreshData() {
 }
 
 /**
- * API SEARCH NEWS
+ * 1. API SEARCH NEWS (Có tích hợp Webhook Refresh)
  */
 exports.searchNews = onRequest({ 
   region: "asia-southeast1",
-  maxInstances: 10 
+  maxInstances: 5 
 }, async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
 
   const queryParam = (req.query.q || "").trim();
-  
+  // Kiểm tra nếu có lệnh ép làm mới từ Trigger
+  const isForceRefresh = req.query.refresh_key === WEBHOOK_KEY;
+
   try {
     const now = Date.now();
     const needsInitialLoad = !cache.index;
     const isExpired = now - cache.timestamp > FRESH_DURATION;
 
-    if (needsInitialLoad) {
+    // Nếu ép làm mới hoặc lần đầu tiên: Đợi lấy dữ liệu xong mới chạy tiếp
+    if (isForceRefresh || needsInitialLoad) {
       await refreshData();
-    } else if (isExpired) {
+      if (isForceRefresh && !queryParam) {
+        return res.status(200).json({ message: "Dữ liệu đã được cập nhật đồng bộ!" });
+      }
+    } 
+    // Nếu chỉ hết hạn 30 phút: Cập nhật ngầm, trả kết quả cũ trước
+    else if (isExpired) {
       refreshData(); 
     }
 
     if (!queryParam) {
-      res.status(200).json({ results: [] });
-      return;
+      return res.status(200).json({ results: [] });
     }
 
     if (cache.index) {
@@ -549,11 +558,39 @@ exports.searchNews = onRequest({
     } else {
       res.status(500).json({ error: "Search Index chưa sẵn sàng" });
     }
-
   } catch (error) {
     console.error("Search Error:", error);
     res.status(500).json({ error: "Lỗi máy chủ nội bộ" });
   }
+});
+
+
+/**
+ * 2. TRIGGER: Tự động phát hiện khi bài viết được chuyển từ false -> true
+ */
+exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
+    const before = event.data?.before.data();
+    const after = event.data?.after.data();
+  
+    // Kiểm tra điều kiện: trước đó false/không có, sau đó là true
+    if (before?.post !== true && after?.post === true) {
+      console.log(`Phát hiện bài viết mới xuất bản: ${event.params.postId}`);
+      
+      // Gọi Webhook đến chính hàm searchNews để ép nạp lại cache
+      const functionUrl = `https://asia-southeast1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
+      
+      try {
+        const response = await fetch(functionUrl);
+        if (response.ok) {
+          console.log("Kích hoạt làm mới cache tìm kiếm thành công.");
+        } else {
+            const errorText = await response.text();
+            console.error(`Lỗi khi kích hoạt Webhook: ${response.status}`, errorText);
+        }
+      } catch (err) {
+        console.error("Lỗi mạng khi gọi Webhook:", err);
+      }
+    }
 });
 
 
@@ -736,4 +773,3 @@ exports.chatbot = onRequest(
 
 
     
-```
