@@ -2,8 +2,7 @@
  * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const { onDocumentWritten, onDocumentCreated, onDocumentUpdated } = require("firebase-functions/v2/firestore");
-const { onRequest } = require("firebase-functions/v2/https");
+const { onDocumentWritten, onDocumentCreated, onDocumentUpdated, onRequest } = require("firebase-functions/v2/firestore");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
@@ -479,19 +478,30 @@ async function refreshData() {
   refreshPromise = (async () => {
     try {
       console.log("FIRESTORE: Đang lấy dữ liệu tin tức mới nhất...");
+      
+      // 1. CHỈNH SỬA QUERY: Thêm field 'publishedAt' và 'imageUrl'
       const snapshot = await db.collection("news")
         .where("post", "==", true)
-        .select("title", "summary", "createdAt")
+        .select("title", "summary", "publishedAt", "imageUrl") 
         .get();
 
-      const newData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate().toISOString()
-      }));
+      const newData = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+            id: doc.id,
+            title: data.title,
+            summary: data.summary,
+            imageUrl: data.imageUrl || null, // Nếu không có ảnh thì trả về null
+            // 2. XỬ LÝ NGÀY THÁNG AN TOÀN (Fix lỗi Invalid Date)
+            publishedAt: data.publishedAt 
+                ? data.publishedAt.toDate().toISOString() 
+                : new Date().toISOString() // Fallback nếu quên nhập ngày
+        };
+      });
 
       const newIndex = new Index({ tokenize: "full", resolution: 9 });
       newData.forEach(item => {
+        // Chỉ index Title và Summary để tìm kiếm (không index URL ảnh)
         newIndex.add(item.id, `${item.title} ${item.summary}`);
       });
 
