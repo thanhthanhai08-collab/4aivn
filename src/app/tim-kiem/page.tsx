@@ -195,9 +195,10 @@ function SearchResultsContent() {
           <div className="sticky top-24">
             <Card className="rounded-3xl border-primary/10 bg-gradient-to-br from-background to-primary/5 shadow-inner">
               <CardHeader>
-                <CardTitle className="text-sm uppercase tracking-[0.2em] text-primary">Danh mục khác</CardTitle>
+                <CardTitle className="text-lg">Tìm kiếm ở nơi khác?</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">Bạn đang tìm kiếm công cụ AI hay muốn trò chuyện với trợ lý ảo? Hãy thử ở đây:</p>
                 <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
                   <Link href={`/cong-cu?search_query=${encodeURIComponent(searchTerm)}`}>
                     <Wrench className="w-5 h-5" />
@@ -207,7 +208,7 @@ function SearchResultsContent() {
                 <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
                   <Link href="/tro-chuyen">
                     <MessageSquare className="w-5 h-5" />
-                    <span className="font-bold">Hỏi đáp AI</span>
+                    <span className="font-bold">Tìm với chatbot</span>
                   </Link>
                 </Button>
               </CardContent>
