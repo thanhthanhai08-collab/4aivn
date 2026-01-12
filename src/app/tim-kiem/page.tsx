@@ -13,17 +13,16 @@ import { Search, Newspaper, Wrench, MessageSquare, Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-
 // --- SKELETON LOADING ---
 function SearchSkeleton() {
   return (
     <div className="container py-8 md:py-12 space-y-6">
-      <Skeleton className="h-12 w-full max-w-lg mx-auto rounded-full" />
-      <Skeleton className="h-8 w-1/4" />
-      <div className="grid gap-4">
-        {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-32 w-full rounded-lg" />
-        ))}
+       <Skeleton className="h-14 w-full max-w-2xl mx-auto rounded-full" />
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-8">
+        <div className="lg:col-span-2 space-y-6">
+           <Skeleton className="h-40 w-full rounded-2xl" />
+           <Skeleton className="h-40 w-full rounded-2xl" />
+        </div>
       </div>
     </div>
   );
@@ -46,19 +45,12 @@ function SearchResultsContent() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(!!initialQuery);
   const [error, setError] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Effect for slide-in animation
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    // Effect to fetch search results
     if (!initialQuery) {
-        setIsLoading(false);
-        return;
+      setIsLoading(false);
+      setResults([]);
+      return;
     };
 
     const fetchResults = async () => {
@@ -91,71 +83,94 @@ function SearchResultsContent() {
 
   return (
     <div className="container py-8 md:py-12">
-      {/* Search Bar */}
-      <div className={cn(
-          "mb-12 max-w-2xl mx-auto transition-all duration-700 ease-out transform",
-          isVisible ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-      )}>
-        <form onSubmit={handleSearchSubmit} className="relative w-full shadow-lg">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Tìm kiếm tin tức, bài viết..."
-            className="h-14 pl-14 pr-28 rounded-full text-lg"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Button type="submit" className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full h-10 px-6">
-            Tìm kiếm
-          </Button>
+      {/* ẨN THANH TÌM KIẾM TRÊN MENU */}
+      <style jsx global>{`
+        header [data-search-container], 
+        header .search-trigger,
+        header form[role="search"] { 
+          display: none !important; 
+        }
+      `}</style>
+
+      {/* Search Bar - Giao diện tròn, không dấu X, không hiệu ứng trượt */}
+      <div className="mb-16 max-w-2xl mx-auto">
+        <form onSubmit={handleSearchSubmit} className="relative w-full group">
+          <div className="relative flex items-center shadow-md rounded-full overflow-hidden bg-background border-2 border-primary/10 focus-within:border-primary transition-all duration-300">
+            <Search className="absolute left-5 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+            <Input
+              type="text"
+              placeholder="Tìm kiếm tin tức, bài viết..."
+              className="h-14 pl-14 pr-36 rounded-full border-none focus-visible:ring-0 text-lg bg-transparent"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button 
+              type="submit" 
+              className="absolute right-1.5 h-11 rounded-full px-8 font-semibold shadow-sm"
+            >
+              Tìm kiếm
+            </Button>
+          </div>
         </form>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Results Column */}
-        <div className="lg:col-span-2 space-y-6">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Newspaper className="w-6 h-6 text-primary" />
-            Kết quả từ Tin tức & Bài viết
-          </h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Cột chính */}
+        <div className="lg:col-span-2 space-y-8">
+          <div className="flex items-center justify-between border-b pb-4">
+            <h1 className="text-2xl font-bold flex items-center gap-3">
+              <Newspaper className="w-6 h-6 text-primary" />
+              {initialQuery ? 'Kết quả tìm kiếm' : 'Tin tức mới nhất'}
+            </h1>
+            {initialQuery && !isLoading && (
+              <span className="text-sm font-medium text-muted-foreground bg-accent px-3 py-1 rounded-full">
+                {results.length} kết quả
+              </span>
+            )}
+          </div>
 
           {isLoading ? (
-            <div className="space-y-4">
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-32 w-full" />
+            <div className="space-y-6">
+              <Skeleton className="h-40 w-full rounded-2xl" />
+              <Skeleton className="h-40 w-full rounded-2xl" />
             </div>
           ) : error ? (
-             <div className="p-8 text-center border border-destructive/50 rounded-lg bg-destructive/10 text-destructive">
-              <p className="font-semibold">Lỗi kết nối</p>
-              <p>Không thể tải kết quả tìm kiếm. Vui lòng thử lại sau.</p>
+            <div className="p-10 text-center border-2 border-dashed border-destructive/20 rounded-2xl bg-destructive/5 text-destructive">
+              <p className="font-bold">Lỗi kết nối máy chủ</p>
+              <p className="text-sm">Vui lòng kiểm tra lại đường truyền và thử lại.</p>
             </div>
           ) : results.length > 0 ? (
             <div className="grid gap-6">
               {results.map((item) => (
                 <Link key={item.id} href={`/tin-tuc/${item.id}`} className="block group">
-                  <Card className="hover:border-primary/50 transition-colors duration-300 overflow-hidden">
-                    <div className="flex flex-col sm:flex-row">
+                  <Card className="rounded-2xl border-primary/5 hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                    <div className="flex flex-col sm:flex-row h-full">
                       {item.imageUrl && (
-                        <div className="sm:w-1/3 md:w-1/4 relative min-h-[150px] sm:min-h-full overflow-hidden">
+                        <div className="sm:w-48 relative aspect-video sm:aspect-square overflow-hidden shrink-0">
                           <Image 
                             src={item.imageUrl} 
-                            alt={item.title} 
+                            alt="" 
                             fill 
-                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" 
-                            sizes="(max-width: 640px) 100vw, 25vw"
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 200px" 
                           />
                         </div>
                       )}
-                      <div className="flex-1 p-4 flex flex-col">
-                        <CardTitle className="text-lg leading-snug mb-2 group-hover:text-primary transition-colors">
-                          {item.title}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground line-clamp-2 flex-grow">
-                          {item.summary}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-3">
-                          {new Date(item.publishedAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                        </p>
+                      <div className="flex-1 p-5 flex flex-col justify-between">
+                        <div>
+                          <CardTitle className="text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                            {item.title}
+                          </CardTitle>
+                          <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
+                            {item.summary}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                           <span className="w-2 h-2 rounded-full bg-primary/40" />
+                           <time className="text-[11px] font-bold text-muted-foreground/80 tracking-wider">
+                            {new Date(item.publishedAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                          </time>
+                        </div>
                       </div>
                     </div>
                   </Card>
@@ -163,47 +178,38 @@ function SearchResultsContent() {
               ))}
             </div>
           ) : initialQuery ? (
-            <div className="p-8 text-center border rounded-lg bg-accent/20">
-              <p className="text-muted-foreground">Không tìm thấy bài viết nào phù hợp với từ khóa này.</p>
+            <div className="py-20 text-center bg-accent/20 rounded-3xl border-2 border-dashed border-primary/10">
+              <p className="text-lg text-muted-foreground">Không tìm thấy nội dung cho "<span className="text-foreground font-semibold">{initialQuery}</span>"</p>
+              <p className="text-sm text-muted-foreground mt-1">Hãy thử tìm kiếm với các từ khóa ngắn gọn hơn.</p>
             </div>
           ) : (
-            <p className="text-muted-foreground">Nhập từ khóa để bắt đầu tìm kiếm.</p>
+            <div className="py-20 text-center opacity-40">
+               <Search className="w-16 h-16 mx-auto mb-4" />
+               <p className="text-lg">Khám phá kho tri thức AI tại 4AIVN</p>
+            </div>
           )}
         </div>
 
-        {/* Sidebar for other search options */}
+        {/* Sidebar */}
         <aside className="space-y-6">
           <div className="sticky top-24">
-            <Card className="border-primary/20 bg-primary/5">
+            <Card className="rounded-3xl border-primary/10 bg-gradient-to-br from-background to-primary/5 shadow-inner">
               <CardHeader>
-                <CardTitle className="text-lg">Tìm ở nơi khác?</CardTitle>
+                <CardTitle className="text-sm uppercase tracking-[0.2em] text-primary">Danh mục khác</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Bạn đang tìm kiếm công cụ AI hay xem thứ hạng các sản phẩm? Hãy thử các lối tắt sau:
-                </p>
-                
-                <div className="flex flex-col gap-3">
-                  <Button asChild variant="outline" className="justify-start gap-2 h-auto py-3">
-                    <Link href={`/cong-cu?search_query=${encodeURIComponent(searchTerm || "")}`}>
-                      <Wrench className="w-4 h-4 text-primary" />
-                      <div className="text-left">
-                        <div className="font-bold">Tìm trong công cụ</div>
-                        <div className="text-[10px] opacity-70 italic">Tìm ứng dụng, phần mềm AI</div>
-                      </div>
-                    </Link>
-                  </Button>
-
-                  <Button asChild variant="outline" className="justify-start gap-2 h-auto py-3">
-                    <Link href="/tro-chuyen">
-                      <MessageSquare className="w-4 h-4 text-primary" />
-                      <div className="text-left">
-                        <div className="font-bold">Tìm với chatbot</div>
-                        <div className="text-[10px] opacity-70 italic">Nhận gợi ý chính xác hơn từ AI</div>
-                      </div>
-                    </Link>
-                  </Button>
-                </div>
+                <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
+                  <Link href={`/cong-cu?search_query=${encodeURIComponent(searchTerm)}`}>
+                    <Wrench className="w-5 h-5" />
+                    <span className="font-bold">Tìm trong công cụ</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
+                  <Link href="/tro-chuyen">
+                    <MessageSquare className="w-5 h-5" />
+                    <span className="font-bold">Hỏi đáp AI</span>
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </div>
