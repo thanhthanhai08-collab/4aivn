@@ -140,34 +140,32 @@ function SearchResultsContent() {
               <p className="text-sm">Vui lòng kiểm tra lại đường truyền và thử lại.</p>
             </div>
           ) : results.length > 0 ? (
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               {results.map((item) => (
                 <Link key={item.id} href={`/tin-tuc/${item.id}`} className="block group">
-                  <Card className="rounded-2xl border-primary/5 hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                    <div className="flex flex-col sm:flex-row h-full">
+                  <Card className="rounded-xl border-primary/5 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
+                    <div className="flex items-center">
                       {item.imageUrl && (
-                        <div className="sm:w-48 relative aspect-video sm:aspect-square overflow-hidden shrink-0">
+                        <div className="w-40 sm:w-48 relative aspect-video overflow-hidden shrink-0">
                           <Image 
                             src={item.imageUrl} 
                             alt="" 
                             fill 
-                            className="object-cover transition-transform duration-700 group-hover:scale-110"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 200px" 
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            sizes="(max-width: 640px) 160px, 192px" 
                           />
                         </div>
                       )}
-                      <div className="flex-1 p-5 flex flex-col justify-between">
-                        <div>
-                          <CardTitle className="text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                      <div className="flex-1 p-4 flex flex-col justify-center">
+                          <CardTitle className="text-base sm:text-lg mb-1 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                             {item.title}
                           </CardTitle>
-                          <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
+                          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1 sm:line-clamp-2 mb-2 leading-relaxed">
                             {item.summary}
                           </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                           <span className="w-2 h-2 rounded-full bg-primary/40" />
-                           <time className="text-[11px] font-bold text-muted-foreground/80 tracking-wider">
+                        <div className="flex items-center gap-2 mt-auto">
+                           <span className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                           <time className="text-[10px] font-semibold text-muted-foreground/80 tracking-wider uppercase">
                             {new Date(item.publishedAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}
                           </time>
                         </div>
