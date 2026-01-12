@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Newspaper, Wrench, BarChart3 } from "lucide-react";
+import { Search, Newspaper, Wrench, MessageSquare } from "lucide-react";
 
 // --- SKELETON LOADING ---
 function SearchSkeleton() {
@@ -29,8 +29,8 @@ interface SearchResult {
   id: string;
   title: string;
   summary: string;
-  publishedAt: string; // Changed from createdAt
-  imageUrl?: string;    // Added imageUrl
+  publishedAt: string;
+  imageUrl?: string;
 }
 
 function SearchResultsContent() {
@@ -163,13 +163,13 @@ function SearchResultsContent() {
                   </Link>
                 </Button>
 
-                {/* NÚT SANG TRANG BẢNG XẾP HẠNG */}
+                {/* NÚT SANG TRANG CHATBOT */}
                 <Button asChild variant="outline" className="justify-start gap-2 h-auto py-3">
-                  <Link href={`/bang-xep-hang?q=${encodeURIComponent(query || "")}`}>
-                    <BarChart3 className="w-4 h-4 text-primary" />
+                  <Link href="/tro-chuyen">
+                    <MessageSquare className="w-4 h-4 text-primary" />
                     <div className="text-left">
-                      <div className="font-bold">Tìm trong Bảng xếp hạng</div>
-                      <div className="text-[10px] opacity-70 italic">So sánh thứ hạng AI tốt nhất</div>
+                      <div className="font-bold">Tìm với chatbot</div>
+                      <div className="text-[10px] opacity-70 italic">Nhận gợi ý chính xác hơn từ AI</div>
                     </div>
                   </Link>
                 </Button>
