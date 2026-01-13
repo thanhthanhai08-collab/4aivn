@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <AppLayout>
       <div className="container flex min-h-[calc(100vh-var(--header-height)-var(--footer-height)-2rem)] items-center justify-center py-12">
-        <Card className="w-full max-w-md shadow-xl bg-white/80 backdrop-blur-md">
+        <Card className="w-full max-w-md shadow-xl bg-card/90 backdrop-blur-lg">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-headline">Chào mừng đến với 4AIVN</CardTitle>
             <CardDescription>
