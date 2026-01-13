@@ -21,7 +21,7 @@ function ToolsSkeleton() {
   return (
     <div className="container py-8">
       <header className="mb-12 text-center">
-        <h1 className="text-4xl font-headline font-bold text-foreground">Thư mục Công cụ AI</h1>
+        <h1 className="text-4xl font-headline font-bold text-foreground">Tổng hợp các công cụ AI</h1>
         <p className="mt-2 text-lg text-muted-foreground">
           Khám phá và so sánh một loạt các công cụ AI.
         </p>
@@ -143,7 +143,7 @@ function ToolsContent() {
   return (
     <div className="container py-8">
       <header className="mb-12 text-center">
-        <h1 className="text-4xl font-headline font-bold text-foreground">Thư mục Công cụ AI</h1>
+        <h1 className="text-4xl font-headline font-bold text-foreground">Tổng hợp các công cụ AI</h1>
         <p className="mt-2 text-lg text-muted-foreground">
           Khám phá và so sánh một loạt các công cụ AI.
         </p>
