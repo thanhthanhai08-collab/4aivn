@@ -177,7 +177,7 @@ export function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+          <span className="bg-gradient-to-br from-background to-primary/10 text-muted-foreground px-4 py-1 rounded-full border border-primary/5">
             Hoặc tiếp tục với
           </span>
         </div>
