@@ -83,16 +83,10 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
   const [similarTools, setSimilarTools] = useState<Tool[]>([]);
   const [complementaryTools, setComplementaryTools] = useState<Tool[]>([]);
-  const [allCategories, setAllCategories] = useState<string[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
   
-  const categoryIcons: { [key: string]: string } = {
-    'Tạo hình ảnh': '🎨', 'AI Agent': '🤖', 'Tự động hóa': '⚙️', 'API truy xuất dữ liệu web': '🌐',
-    'Hỗ trợ viết': '✍️', 'Tạo video': '🎬', 'Code cho Web app': '💻', 'Model AI': '🧠',
-    'Tạo giọng nói': '🗣️', 'AI tìm kiếm': '🔍', 'Trình duyệt AI': '🌐', 'Tạo nhạc AI': '🎵',
-  };
 
   // Effect for public tool data (real-time)
   useEffect(() => {
@@ -123,7 +117,31 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
     const fetchRelatedData = async () => {
         try {
-            // --- Queries ---
+            // --- News Query via FlexSearch ---
+            const fetchNewsViaFlexSearch = async () => {
+              try {
+                const searchQuery = `${tool.name} ${tool.context}`;
+                const response = await fetch(
+                  `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?q=${encodeURIComponent(searchQuery)}`
+                );
+                
+                if (response.ok) {
+                  const data = await response.json();
+                  const latestNews = (data.results || []).sort((a: any, b: any) => {
+                    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+                  }).slice(0, 4);
+                  
+                  setRelatedNews(latestNews);
+                }
+              } catch (error) {
+                console.error("FlexSearch Error:", error);
+                setRelatedNews([]);
+              }
+            };
+            
+            fetchNewsViaFlexSearch();
+            
+            // --- Other Queries ---
             const allToolsForRankingQuery = query(
                 collection(db, "tools"),
                 where("post", "==", true),
@@ -145,28 +163,17 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 orderBy("__name__", "asc"),
                 limit(5)
             );
-            const allToolsForCategoriesQuery = query(collection(db, "tools"), where("post", "==", true));
-             const newsQuery = query(
-                collection(db, "news"),
-                where("tag", "array-contains", tool.name),
-                orderBy("publishedAt", "desc"),
-                limit(3)
-            );
             
             // --- Fetching Data ---
             const [
                 allToolsForRankingSnapshot,
                 featuredToolsSnapshot,
                 similarToolsSnapshot,
-                allToolsForCategoriesSnapshot,
-                newsSnapshot,
-                allReviewsData
+                allReviewsData,
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
-                getDocs(allToolsForCategoriesQuery),
-                getDocs(newsQuery),
                 getAllToolReviews(tool.id)
             ]);
 
@@ -176,16 +183,13 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             const sortedTools = allToolsForRankingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
             const currentRank = sortedTools.findIndex(t => t.id === tool.id);
             setRanking(currentRank !== -1 ? currentRank + 1 : null);
-
-            // Categories
-            const allTools = allToolsForCategoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
-            const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
-            setAllCategories(uniqueCategories);
             
-            // Complementary Tools (Optimized)
+            // Complementary Tools
+            const allToolsSnapshot = await getDocs(query(collection(db, "tools"), where("post", "==", true)));
+            const allTools = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
             const otherCategories = uniqueCategories.filter(cat => cat !== tool.context);
             const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
-
             const complementaryPromises = selectedCategories.map(cat => {
                 const q = query(
                     collection(db, "tools"),
@@ -214,8 +218,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             // Featured Tools
             setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
             
-            // News and Reviews
-            setRelatedNews(newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), publishedAt: (doc.data().publishedAt as Timestamp).toDate().toISOString() } as NewsArticle)));
+            // Reviews
             setAllReviews(allReviewsData);
 
         } catch (error) {
@@ -571,7 +574,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                   {relatedNews.map((article) => (
                       <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
-                            <Image src={article.imageUrl} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
+                            <Image src={article.imageUrl!} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>
                          <div>
                             <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>
@@ -582,24 +585,6 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
               </Card>
             )}
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <LayoutGrid className="mr-2 h-5 w-5 text-primary" />
-                  Danh mục công cụ AI
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                 {allCategories.map(cat => (
-                     <Button key={cat} variant="ghost" className="w-full justify-start text-base" asChild>
-                        <Link href={`/cong-cu?category=${encodeURIComponent(cat)}`}>
-                           <span className="mr-3 text-lg">{categoryIcons[cat] || '✨'}</span> {cat}
-                        </Link>
-                     </Button>
-                 ))}
-              </CardContent>
-            </Card>
-            
              <Card className="bg-accent/50 text-center p-6">
                 <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
                 <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
@@ -617,3 +602,5 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent params={params} />;
 }
+
+    
