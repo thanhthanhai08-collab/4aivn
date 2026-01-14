@@ -429,6 +429,7 @@ exports.initNews = onDocumentCreated(
                 - Viết một bài báo mới hoàn chỉnh về "${data.dataAiHint}".
                 - Phải bắt chước hoàn toàn Tone of Voice và cách trình bày HTML của 4AIVN mà bạn đã thấy ở bước 1.
                 - Tiêu đề phải giật gân nhưng chuyên nghiệp.
+                - Phần content phải trả về đúng dịnh dạng HTML với thẻ <h1>,<h2>,<h3>,<p>.
                 - Trả về đúng cấu trúc JSON.`,
                 output: { schema: NewsOutputSchema }
             });

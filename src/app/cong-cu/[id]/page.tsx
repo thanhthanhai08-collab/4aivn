@@ -1,4 +1,3 @@
-
 // src/app/cong-cu/[id]/page.tsx
 "use client";
 
@@ -347,7 +346,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             <section>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                   <div className="flex items-center space-x-4">
-                      <Image src={tool.logoUrl} alt={`${tool.name} logo`} width={64} height={64} className="rounded-lg" />
+                      <Image src={tool.logoUrl} alt={`${tool.context} ${tool.name} logo`} width={64} height={64} className="rounded-lg" priority />
                       <div>
                            <div className="flex items-center gap-3">
                             <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
@@ -404,10 +403,11 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                         <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
                           <Image
                             src={tool.imageUrl}
-                            alt={`Ảnh giới thiệu ${tool.name}`}
+                            alt={`Ảnh giới thiệu ${tool.context} ${tool.name}`}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 800px"
+                            priority
                           />
                         </div>
                       ) : null}
@@ -477,7 +477,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             <section>
                  <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl font-bold font-headline">Đánh giá & Nhận xét</CardTitle>
+                        <CardTitle asChild> <h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
@@ -519,7 +519,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
+                    <div className="mb-2 leading-snug">Đăng nhập</div>
                     <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
                     <Button variant="secondary" size="lg" asChild>
                        <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
@@ -538,7 +538,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             
             {complementaryTools.length > 0 && (
                 <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name} để tối ưu hóa quy trình làm việc của bạn</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {complementaryTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
                 </div>
@@ -586,7 +586,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             )}
 
              <Card className="bg-accent/50 text-center p-6">
-                <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
+                <div className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</div>
                 <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
                 <Button asChild>
                     <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
