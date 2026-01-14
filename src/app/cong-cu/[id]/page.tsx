@@ -171,8 +171,8 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 allReviewsData,
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsSnapshot),
-                getDocs(similarToolsSnapshot),
+                getDocs(featuredToolsQuery),
+                getDocs(similarToolsQuery),
                 getAllToolReviews(tool.id)
             ]);
 
@@ -225,7 +225,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
         }
     };
     fetchRelatedData();
-  }, [tool]);
+  }, [tool, id]);
 
   // Effect for user-specific data (favorite, my rating)
   useEffect(() => {
@@ -519,7 +519,9 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <div className="mb-2 leading-snug">Đăng nhập</div>
+                    <CardTitle asChild>
+                      <h2 className="text-2xl mb-2 leading-snug">Đăng nhập</h2>
+                    </CardTitle>
                     <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
                     <Button variant="secondary" size="lg" asChild>
                        <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
@@ -586,7 +588,9 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             )}
 
              <Card className="bg-accent/50 text-center p-6">
-                <div className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</div>
+                <CardTitle asChild>
+                  <h2 className="text-xl mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</h2>
+                </CardTitle>
                 <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
                 <Button asChild>
                     <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
