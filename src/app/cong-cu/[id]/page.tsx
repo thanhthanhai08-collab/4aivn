@@ -116,29 +116,15 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
     const fetchRelatedData = async () => {
         try {
-            // --- News Query via FlexSearch ---
-            const fetchNewsViaFlexSearch = async () => {
-              try {
-                const searchQuery = `${tool.name} ${tool.context}`;
-                const response = await fetch(
-                  `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?q=${encodeURIComponent(searchQuery)}`
-                );
-                
-                if (response.ok) {
-                  const data = await response.json();
-                  const latestNews = (data.results || []).sort((a: any, b: any) => {
-                    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-                  }).slice(0, 4);
-                  
-                  setRelatedNews(latestNews);
-                }
-              } catch (error) {
-                console.error("FlexSearch Error:", error);
-                setRelatedNews([]);
-              }
-            };
-            
-            fetchNewsViaFlexSearch();
+            // --- News Query ---
+            const newsRef = collection(db, "news");
+            const newsQuery = query(
+                newsRef,
+                where("post", "==", true),
+                where("tag", "array-contains", tool.name),
+                orderBy("publishedAt", "desc"),
+                limit(4)
+            );
             
             // --- Other Queries ---
             const allToolsForRankingQuery = query(
@@ -165,11 +151,13 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             
             // --- Fetching Data ---
             const [
+                newsSnapshot,
                 allToolsForRankingSnapshot,
                 featuredToolsSnapshot,
                 similarToolsSnapshot,
                 allReviewsData,
             ] = await Promise.all([
+                getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
@@ -177,6 +165,17 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             ]);
 
             // --- Processing Data ---
+
+            // Related News
+            const latestNews = newsSnapshot.docs.map(doc => {
+              const data = doc.data();
+              return {
+                id: doc.id,
+                ...data,
+                publishedAt: (data.publishedAt as Timestamp).toDate().toISOString()
+              } as NewsArticle
+            });
+            setRelatedNews(latestNews);
 
             // Ranking
             const sortedTools = allToolsForRankingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
@@ -477,7 +476,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             <section>
                  <Card>
                     <CardHeader>
-                        <CardTitle asChild><h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
+                        <CardTitle><h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
@@ -519,9 +518,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
             <section>
                  <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <CardTitle asChild>
-                      <h2 className="text-2xl mb-2 leading-snug">Đăng nhập</h2>
-                    </CardTitle>
+                    <CardTitle><h2 className="text-2xl mb-2 leading-snug">Đăng nhập</h2></CardTitle>
                     <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
                     <Button variant="secondary" size="lg" asChild>
                        <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
@@ -588,9 +585,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             )}
 
              <Card className="bg-accent/50 text-center p-6">
-                <CardTitle asChild>
-                  <h2 className="text-xl mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</h2>
-                </CardTitle>
+                <CardTitle><h2 className="text-xl mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</h2></CardTitle>
                 <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
                 <Button asChild>
                     <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
