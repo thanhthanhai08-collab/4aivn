@@ -171,8 +171,8 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 allReviewsData,
             ] = await Promise.all([
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsQuery),
-                getDocs(similarToolsQuery),
+                getDocs(featuredToolsSnapshot),
+                getDocs(similarToolsSnapshot),
                 getAllToolReviews(tool.id)
             ]);
 
@@ -477,7 +477,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             <section>
                  <Card>
                     <CardHeader>
-                        <CardTitle asChild> <h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
+                        <CardTitle asChild><h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
@@ -602,5 +602,3 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 export default function ToolDetailPage({ params }: { params: { id: string } }) {
   return <ToolDetailContent params={params} />;
 }
-
-    
