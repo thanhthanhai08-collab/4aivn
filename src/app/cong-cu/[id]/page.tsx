@@ -160,7 +160,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
-                getDocs(similarToolsQuery),
+                getDocs(similarToolsSnapshot),
                 getAllToolReviews(tool.id)
             ]);
 
@@ -517,13 +517,17 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             </section>
 
             <section>
-                 <Card className="bg-primary text-primary-foreground text-center p-8">
-                    <CardTitle asChild><h2 className="text-2xl mb-2 leading-snug">Đăng nhập</h2></CardTitle>
-                    <p className="mb-4 text-primary-foreground/80">Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích</p>
-                    <Button variant="secondary" size="lg" asChild>
-                       <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
-                    </Button>
-                 </Card>
+              <Card className="bg-primary text-primary-foreground text-center p-8">
+                <p className="text-2xl font-bold mb-2 leading-snug">
+                  Đăng nhập
+                </p>
+                <p className="mb-4 text-primary-foreground/80">
+                  Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích
+                </p>
+                <Button variant="secondary" size="lg" asChild>
+                  <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
+                </Button>
+              </Card>
             </section>
             
             {similarTools.length > 0 && (
@@ -549,7 +553,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
           <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle asChild><h3 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> Công cụ nổi bật</h3></CardTitle>
+                <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> Công cụ nổi bật</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                   {featuredTools.map(t => (
@@ -567,7 +571,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             {relatedNews.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle asChild><h3 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> Tin tức liên quan</h3></CardTitle>
+                  <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> Tin tức liên quan</h2>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
@@ -584,9 +588,13 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
               </Card>
             )}
 
-             <Card className="bg-accent/50 text-center p-6">
-                <CardTitle asChild><h2 className="text-xl mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</h2></CardTitle>
-                <CardDescription asChild><p className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</p></CardDescription>
+            <Card className="bg-accent/50 text-center p-6">
+                <p className="text-xl font-bold mb-2 leading-snug text-foreground">
+                    Nâng cấp quy trình làm việc của bạn
+                </p>
+                <p className="mb-4 text-sm text-muted-foreground">
+                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
+                </p>
                 <Button asChild>
                     <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
                 </Button>
