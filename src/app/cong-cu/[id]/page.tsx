@@ -161,7 +161,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
                 getDocs(featuredToolsQuery),
-                getDocs(similarToolsSnapshot),
+                getDocs(similarToolsQuery),
                 getAllToolReviews(tool.id)
             ]);
 
