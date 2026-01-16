@@ -123,6 +123,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 where("post", "==", true),
                 where("tag", "array-contains", tool.name),
                 orderBy("publishedAt", "desc"),
+                orderBy("__name__", "desc"),
                 limit(4)
             );
             
@@ -476,7 +477,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             <section>
                  <Card>
                     <CardHeader>
-                        <CardTitle asChild><h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2></CardTitle>
+                       <h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
