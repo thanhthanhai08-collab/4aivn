@@ -1,9 +1,9 @@
-
 // src/app/cong-cu/page.tsx
 "use client";
 
 import { useState, useMemo, useEffect, Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
 import type { Tool } from "@/lib/types";
@@ -142,6 +142,25 @@ function ToolsContent() {
 
   return (
     <div className="container py-8">
+      {/* BREADCRUMB CHO TRANG DANH SÁCH */}
+      <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+        <ol className="flex items-center text-muted-foreground">
+          <li className="flex items-center">
+            <Link 
+              href="/" 
+              className="hover:text-primary transition-colors flex items-center group"
+            >
+              Trang chủ
+            </Link>
+          </li>
+          <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+            <span className="text-foreground font-semibold">
+              Tất cả công cụ
+            </span>
+          </li>
+        </ol>
+      </nav>
+
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-headline font-bold text-foreground">Tổng hợp các công cụ AI</h1>
         <p className="mt-2 text-lg text-muted-foreground">
