@@ -243,6 +243,34 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+          <ol className="flex items-center text-muted-foreground">
+            <li className="flex items-center">
+              <Link 
+                href="/" 
+                className="hover:text-primary transition-colors"
+              >
+                Trang chủ
+              </Link>
+            </li>
+            
+            <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+              <Link 
+                href="/bang-xep-hang" 
+                className="hover:text-primary transition-colors"
+              >
+                Bảng xếp hạng
+              </Link>
+            </li>
+
+            <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+              <span className="text-foreground font-semibold">
+                {model.name}
+              </span>
+            </li>
+          </ol>
+        </nav>
+
           <div className="grid md:grid-cols-3 gap-8 items-start mb-8">
               <div className="md:col-span-2 space-y-8">
                   <Card>
