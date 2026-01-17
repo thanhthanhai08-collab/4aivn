@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = docSnap.data();
 
   return {
-    title: `${tool.name} - Đánh giá & Tính năng chi tiết`,
+    title: `${tool.name} - Tính năng chi tiết và đánh giá từ cộng đồng`,
     description: tool.description 
       ? tool.description.slice(0, 160) // Cắt ngắn mô tả cho chuẩn SEO
       : `Khám phá tính năng của ${tool.name}, một công cụ AI thuộc nhóm ${tool.context}.`,

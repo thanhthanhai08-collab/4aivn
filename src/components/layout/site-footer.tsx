@@ -61,7 +61,7 @@ export function SiteFooter() {
           {/* Column 2: Quick Links */}
           <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Liên Kết Nhanh
+              Liên kết nhanh
             </h4>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
@@ -99,7 +99,7 @@ export function SiteFooter() {
           {/* Column 4: Contact */}
            <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Liên Hệ
+              Liên hệ
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start">
@@ -109,10 +109,6 @@ export function SiteFooter() {
                  <li className="flex items-start">
                     <Phone className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
                     <span>Điện thoại: 0973.490.497</span>
-                </li>
-                 <li className="flex items-start">
-                    <MapPin className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Địa chỉ: Làng Vàng Cổ Bi, Xã Gia Lâm, TP. Hà Nội</span>
                 </li>
             </ul>
           </div>
