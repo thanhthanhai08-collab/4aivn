@@ -1,5 +1,5 @@
 
-// src/app/models/[id]/page.tsx
+// src/app/bang-xep-hang/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";

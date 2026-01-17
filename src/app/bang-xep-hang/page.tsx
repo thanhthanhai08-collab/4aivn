@@ -1,10 +1,9 @@
-
-// src/app/rankings/page.tsx
+// src/app/bang-xep-hang/page.tsx
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
 import { AppLayout } from "@/components/layout/app-layout";
-import { RankingsTable } from "@/components/rankings/rankings-table";
+import { RankingsDisplay } from "@/components/rankings/rankings-display";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Tool, AIModel } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -134,14 +133,14 @@ export default function RankingsPage() {
                 {isLoading ? (
                   <Skeleton className="h-[400px] w-full rounded-lg" />
                 ) : (
-                  <RankingsTable items={filteredModels} itemType="model" />
+                  <RankingsDisplay items={filteredModels} itemType="model" />
                 )}
               </TabsContent>
               <TabsContent value="tools" className="mt-6">
                  {isLoading ? (
                   <Skeleton className="h-[400px] w-full rounded-lg" />
                 ) : (
-                  <RankingsTable items={filteredTools} itemType="tool" />
+                  <RankingsDisplay items={filteredTools} itemType="tool" />
                 )}
               </TabsContent>
             </Tabs>
