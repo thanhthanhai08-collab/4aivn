@@ -143,7 +143,7 @@ function ToolsContent() {
   return (
     <div className="container py-8">
       {/* BREADCRUMB CHO TRANG DANH SÁCH */}
-      <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+      <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
         <ol className="flex items-center text-muted-foreground">
           <li className="flex items-center">
             <Link 
