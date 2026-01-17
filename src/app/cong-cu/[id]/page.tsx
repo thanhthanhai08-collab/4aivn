@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, Sparkles, LayoutGrid, Newspaper, ChevronRight } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ChevronRight } from "lucide-react";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +27,6 @@ import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp } from "firebase/firestore";
-import { NewsCard } from "@/components/news/news-card";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -341,25 +340,42 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
       <div className="container py-8 md:py-12">
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
           <ol className="flex items-center text-muted-foreground">
+            
+            {/* 1. Trang chủ - Ẩn trên UI, giữ cho SEO */}
+            <li className="hidden">
+              <Link href="/">Trang chủ</Link>
+            </li>
+
+            {/* 2. Tất cả công cụ - Hiển thị */}
             <li className="flex items-center">
               <Link 
                 href="/cong-cu" 
-                className="hover:text-primary transition-colors flex items-center"
+                className="hover:text-primary transition-colors flex items-center group"
               >
-                <ChevronRight className="h-4 w-4 mr-1 rotate-180" />
+                <ChevronRight className="h-4 w-4 mr-1 rotate-180 text-muted-foreground/60 group-hover:text-primary transition-colors" />
                 Tất cả công cụ
               </Link>
             </li>
+
+            {/* 3. Danh mục (Context) - Kết nối với Index */}
             {tool?.context && (
               <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                 <Link 
                   href={`/cong-cu?category=${encodeURIComponent(tool.context)}`} 
                   className="hover:text-primary text-foreground font-semibold text-sm"
                 >
-                  {tool.context.charAt(0).toUpperCase() + tool.context.slice(1).toLowerCase()}
+                  {tool.context}
                 </Link>
               </li>
             )}
+
+            {/* 4. Tên công cụ - Ẩn trên UI, giữ cho SEO */}
+            {tool?.name && (
+              <li className="hidden" aria-current="page">
+                <span>{tool.name}</span>
+              </li>
+            )}
+            
           </ol>
         </nav>
 
