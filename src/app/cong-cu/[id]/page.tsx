@@ -354,7 +354,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
               <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                 <Link 
                   href={`/cong-cu?category=${encodeURIComponent(tool.context)}`} 
-                  className="hover:text-primary text-foreground font-semibold text-xs"
+                  className="hover:text-primary text-foreground font-semibold text-sm"
                 >
                   {tool.context.charAt(0).toUpperCase() + tool.context.slice(1).toLowerCase()}
                 </Link>
