@@ -483,33 +483,44 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
           </div>
 
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
-             <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {latestNews.map((related) => (
-                    <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
-                      <div className="flex items-start space-x-4">
-                        <div className="relative w-24 h-24 shrink-0">
-                          <Image
-                            src={related.imageUrl}
-                            alt={related.title}
-                            fill
-                            className="object-cover rounded-md transition-transform group-hover:scale-105"
-                            sizes="96px"
-                            
-                          />
-                        </div>
-                        <div>
-                          <p className="text-xs text-primary font-semibold mb-1 uppercase">{related.source}</p>
-                          <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3">{related.title}</h4>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {latestNews.map((related) => (
+                  <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                    <div className="flex items-start space-x-4">
+                      {/* Ảnh bìa */}
+                      <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-md">
+                        <Image
+                          src={related.imageUrl}
+                          alt={related.title}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-110 duration-300"
+                          sizes="96px"
+                        />
+                      </div>
+                      
+                      <div className="flex flex-col justify-between min-h-[80px]">
+                        {/* Tiêu đề - Giới hạn 2 dòng để đều layout */}
+                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                          {related.title}
+                        </h4>
+                        
+                        {/* Ngày đăng */}
+                        <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
+                          <CalendarDays className="mr-1 h-3 w-3" />
+                          <span>
+                            {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: vi })}
+                          </span>
                         </div>
                       </div>
-                    </Link>
-                  ))}
-                </CardContent>
-              </Card>
+                    </div>
+                  </Link>
+                ))}
+              </CardContent>
+            </Card>
               <Card className="bg-accent/50 text-center p-6">
                   <CardTitle className="mb-2 leading-snug">Nâng cấp quy trình làm việc của bạn</CardTitle>
                   <CardDescription className="mb-4">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</CardDescription>
