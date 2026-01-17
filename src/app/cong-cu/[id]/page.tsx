@@ -74,6 +74,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
@@ -341,12 +342,10 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
           <ol className="flex items-center text-muted-foreground">
             
-            {/* 1. Trang chủ - Ẩn trên UI, giữ cho SEO */}
             <li className="hidden">
               <Link href="/">Trang chủ</Link>
             </li>
 
-            {/* 2. Tất cả công cụ - Hiển thị */}
             <li className="flex items-center">
               <Link 
                 href="/cong-cu" 
@@ -357,7 +356,6 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
               </Link>
             </li>
 
-            {/* 3. Danh mục (Context) - Kết nối với Index */}
             {tool?.context && (
               <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                 <Link 
@@ -369,7 +367,6 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
               </li>
             )}
 
-            {/* 4. Tên công cụ - Ẩn trên UI, giữ cho SEO */}
             {tool?.name && (
               <li className="hidden" aria-current="page">
                 <span>{tool.name}</span>
@@ -524,15 +521,25 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                                 <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
                                 <div className="flex items-center space-x-1 shrink-0">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <button key={star} onClick={() => setCurrentRating(star)} aria-label={`Rate ${star} stars`} className="group">
-                                            <Star
-                                                className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
-                                                star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
-                                                }`}
-                                            />
-                                        </button>
-                                    ))}
+                                  {[1, 2, 3, 4, 5].map((star) => (
+                                    <button
+                                      key={star}
+                                      type="button"
+                                      onClick={() => setCurrentRating(star)}
+                                      onMouseEnter={() => setHoverRating(star)}
+                                      onMouseLeave={() => setHoverRating(0)}
+                                      aria-label={`Rate ${star} stars`}
+                                      className="group outline-none"
+                                    >
+                                      <Star
+                                        className={`h-7 w-7 cursor-pointer transition-all duration-150 ${
+                                          star <= (hoverRating || currentRating)
+                                            ? "fill-amber-400 text-amber-500 scale-110" 
+                                            : "text-gray-300 scale-100"
+                                        }`}
+                                      />
+                                    </button>
+                                  ))}
                                 </div>
                             </div>
                             <Textarea 
