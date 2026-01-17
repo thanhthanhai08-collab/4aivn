@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, Sparkles, LayoutGrid, Newspaper } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, Sparkles, LayoutGrid, Newspaper, ChevronRight } from "lucide-react";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -339,6 +339,30 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+          <ol className="flex items-center text-muted-foreground">
+            <li className="flex items-center">
+              <Link 
+                href="/cong-cu" 
+                className="hover:text-primary transition-colors flex items-center"
+              >
+                <ChevronRight className="h-4 w-4 mr-1 rotate-180" />
+                Tất cả công cụ
+              </Link>
+            </li>
+            {tool?.context && (
+              <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+                <Link 
+                  href={`/cong-cu?category=${encodeURIComponent(tool.context)}`} 
+                  className="hover:text-primary text-foreground font-semibold uppercase tracking-wider text-xs"
+                >
+                  {tool.context}
+                </Link>
+              </li>
+            )}
+          </ol>
+        </nav>
+
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Main Content */}
           <div className="lg:col-span-8 space-y-10">
