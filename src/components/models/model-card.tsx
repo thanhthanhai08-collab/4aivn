@@ -31,7 +31,7 @@ export function ModelCard({ model }: ModelCardProps) {
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">
-                <Link href={`/mo-hinh/${model.id}`} className="hover:underline">
+                <Link href={`/bang-xep-hang/${model.id}`} className="hover:underline">
                   {model.name}
                 </Link>
               </CardTitle>
@@ -73,7 +73,7 @@ export function ModelCard({ model }: ModelCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/mo-hinh/${model.id}`}>
+          <Link href={`/bang-xep-hang/${model.id}`}>
             Xem chi tiết
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
