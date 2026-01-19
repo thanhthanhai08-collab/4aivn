@@ -243,7 +243,7 @@ export default function RankingsPage() {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
             <ol className="flex items-center text-muted-foreground">
             <li className="flex items-center">
                 <Link 
