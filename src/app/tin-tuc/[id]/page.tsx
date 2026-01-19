@@ -444,7 +444,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                 </div>
               )}
 
-              <div className="text-foreground text-base md:text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
+              <div className="text-foreground text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
                 {renderContent(article)}
               </div>
 
@@ -464,9 +464,9 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 
             <Card className="mt-12">
               <CardHeader>
-                <CardTitle className="flex items-center text-2xl font-headline">
+                <h2 className="flex items-center text-2xl font-headline font-bold">
                   <MessageSquare className="mr-3 h-6 w-6" /> Thảo luận ({comments.length})
-                </CardTitle>
+                </h2>
               </CardHeader>
               <CardContent className="space-y-6">
                 {currentUser ? (
@@ -503,8 +503,8 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                       </div>
                       
                       <div className="flex flex-col justify-between">
-                        {/* Tiêu đề - Giới hạn 3 dòng */}
-                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
+                        {/* Tiêu đề - Giới hạn 3 dòng để đều layout */}
+                        <h4 className="font-semibold text-lg leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
                           {related.title}
                         </h4>
                         
