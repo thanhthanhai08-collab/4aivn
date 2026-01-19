@@ -429,7 +429,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
               {summary ? (
                   <Card className="mb-8 bg-accent/50 border-primary/20">
                       <CardHeader>
-                          <CardTitle className="text-xl font-headline">Tóm tắt nhanh</CardTitle>
+                          <h2 className="text-xl font-headline font-bold">Tóm tắt nhanh</h2>
                       </CardHeader>
                       <CardContent>
                           <p className="text-base text-muted-foreground">{summary}</p>
@@ -492,7 +492,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                   <Link key={related.id} href={`/tin-tuc/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                     <div className="flex items-start space-x-4">
                       {/* Ảnh bìa */}
-                      <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-md">
+                      <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                         <Image
                           src={related.imageUrl}
                           alt={related.title}
@@ -502,9 +502,9 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                         />
                       </div>
                       
-                      <div className="flex flex-col justify-between min-h-[80px]">
-                        {/* Tiêu đề - Giới hạn 2 dòng để đều layout */}
-                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                      <div className="flex flex-col justify-between">
+                        {/* Tiêu đề - Giới hạn 3 dòng */}
+                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
                           {related.title}
                         </h4>
                         
