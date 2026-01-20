@@ -623,7 +623,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
-                      <Link key={article.id} href={`/tin-tuc/${article.id}`} className="flex items-center space-x-3 group">
+                      <Link key={article.id} href={`/${article.id}`} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
                             <Image src={article.imageUrl!} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>

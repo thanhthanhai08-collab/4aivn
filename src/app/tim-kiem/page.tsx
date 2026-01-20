@@ -133,7 +133,7 @@ function SearchResultsContent() {
           ) : results.length > 0 ? (
             <div className="grid gap-4">
               {results.map((item) => (
-                <Link key={item.id} href={`/tin-tuc/${item.id}`} className="block group">
+                <Link key={item.id} href={`/${item.id}`} className="block group">
                   <Card className="rounded-xl border-primary/5 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                     <div className="flex items-center">
                       {item.imageUrl && (
