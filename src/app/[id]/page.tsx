@@ -185,6 +185,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [categoryName, setCategoryName] = useState<string>('');
   
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -205,6 +206,24 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
             } as NewsArticle;
 
             setArticle(fetchedArticle);
+            
+            const categoryId = fetchedArticle.tag?.[0];
+            if (categoryId) {
+                try {
+                    const categoryDocRef = doc(db, "news-category", categoryId);
+                    const categoryDocSnap = await getDoc(categoryDocRef);
+                    if (categoryDocSnap.exists()) {
+                        setCategoryName(categoryDocSnap.data().name);
+                    } else {
+                        setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+                    }
+                } catch (error) {
+                    console.error("Error fetching category name:", error);
+                    setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+                }
+            } else {
+                setCategoryName('');
+            }
             
             if (data.summary) {
                 setSummary(data.summary);
@@ -282,6 +301,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 
         } else {
           setArticle(null);
+          setCategoryName('');
         }
         setIsLoading(false);
     };
@@ -369,6 +389,40 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
+        {article && (
+            <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2">
+              <ol className="flex items-center text-muted-foreground whitespace-nowrap">
+                <li className="flex items-center">
+                  <Link href="/" className="hover:text-primary transition-colors">
+                    Trang chủ
+                  </Link>
+                </li>
+                
+                <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+                  <Link href="/tin-tuc" className="hover:text-primary transition-colors">
+                    Tin tức
+                  </Link>
+                </li>
+
+                {article.tag && article.tag.length > 0 && categoryName && (
+                  <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+                    <Link 
+                      href={`/tin-tuc/${article.tag[0]}`} 
+                      className="hover:text-primary transition-colors"
+                    >
+                      {categoryName}
+                    </Link>
+                  </li>
+                )}
+
+                <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+                  <span className="text-foreground font-semibold truncate max-w-[200px] sm:max-w-md">
+                    {article.title}
+                  </span>
+                </li>
+              </ol>
+            </nav>
+        )}
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-8">
             <article>
@@ -490,7 +544,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                       </div>
                       
                       <div className="flex flex-col justify-between">
-                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
+                        <h4 className="font-semibold text-lg leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
                           {related.title}
                         </h4>
                         
