@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
@@ -473,7 +473,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <h2 className="text-2xl font-headline font-bold text-primary">Tin mới nhất</h2>
+                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestNews.map((related) => (
@@ -490,7 +490,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                       </div>
                       
                       <div className="flex flex-col justify-between">
-                        <h4 className="font-semibold text-lg leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
+                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
                           {related.title}
                         </h4>
                         
