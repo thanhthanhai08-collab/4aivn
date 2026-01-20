@@ -1,3 +1,4 @@
+
 // src/app/[id]/page.tsx
 "use client";
 
@@ -185,7 +186,6 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
-  const [categoryName, setCategoryName] = useState<string>('');
   
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -206,24 +206,6 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
             } as NewsArticle;
 
             setArticle(fetchedArticle);
-            
-            const categoryId = fetchedArticle.tag?.[0];
-            if (categoryId) {
-                try {
-                    const categoryDocRef = doc(db, "news-category", categoryId);
-                    const categoryDocSnap = await getDoc(categoryDocRef);
-                    if (categoryDocSnap.exists()) {
-                        setCategoryName(categoryDocSnap.data().name);
-                    } else {
-                        setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
-                    }
-                } catch (error) {
-                    console.error("Error fetching category name:", error);
-                    setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
-                }
-            } else {
-                setCategoryName('');
-            }
             
             if (data.summary) {
                 setSummary(data.summary);
@@ -301,7 +283,6 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 
         } else {
           setArticle(null);
-          setCategoryName('');
         }
         setIsLoading(false);
     };
@@ -404,13 +385,13 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                   </Link>
                 </li>
 
-                {article.tag && article.tag.length > 0 && categoryName && (
+                {article.tag && article.tag.length > 0 && (
                   <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                     <Link 
                       href={`/tin-tuc/${article.tag[0]}`} 
                       className="hover:text-primary transition-colors"
                     >
-                      {categoryName}
+                      {article.tag[0].replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </Link>
                   </li>
                 )}
@@ -527,7 +508,9 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                <CardTitle asChild>
+                  <h2 className="text-2xl font-headline font-bold text-primary">Tin mới nhất</h2>
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestNews.map((related) => (
@@ -544,7 +527,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                       </div>
                       
                       <div className="flex flex-col justify-between">
-                        <h4 className="font-semibold text-lg leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
+                        <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
                           {related.title}
                         </h4>
                         
@@ -590,3 +573,5 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent params={params} />;
 }
+
+    
