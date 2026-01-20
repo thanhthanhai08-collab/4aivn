@@ -36,6 +36,7 @@ export interface NewsArticle {
   dataAiHint?: string;
   isBookmarked?: boolean;
   tag?: string[]; // Add tags for filtering related articles
+  category?: { id: string; name: string; }[];
   post?: boolean; // Controls visibility
   charts?: any[]; // To hold chart configuration from Firestore
 }
@@ -119,3 +120,5 @@ export interface ToolReview extends UserToolRating {
     userName: string;
     userPhotoURL: string | null;
 }
+
+    

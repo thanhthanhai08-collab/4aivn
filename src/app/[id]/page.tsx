@@ -385,13 +385,13 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
                   </Link>
                 </li>
 
-                {article.tag && article.tag.length > 0 && (
+                {article.category && article.category.length > 0 && (
                   <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                     <Link 
-                      href={`/tin-tuc/${article.tag[0]}`} 
+                      href={`/tin-tuc/${article.category[0].id}`} 
                       className="hover:text-primary transition-colors"
                     >
-                      {article.tag[0].replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      {article.category[0].name}
                     </Link>
                   </li>
                 )}
@@ -508,9 +508,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle asChild>
-                  <h2 className="text-2xl font-headline font-bold text-primary">Tin mới nhất</h2>
-                </CardTitle>
+                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestNews.map((related) => (
@@ -573,5 +571,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent params={params} />;
 }
+
+    
 
     
