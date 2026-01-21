@@ -1,7 +1,7 @@
 // src/app/tin-tuc/[id]/page.tsx
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useCallback } from "react";
 import Link from "next/link";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -21,35 +21,44 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
     const [articles, setArticles] = useState<NewsArticle[]>([]);
     const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
     const [hasMore, setHasMore] = useState(true);
-    const [categoryName, setCategoryName] = useState('');
+    const [category, setCategory] = useState<{ id: string; name: string } | null>(null);
 
     useEffect(() => {
         const fetchInitialData = async () => {
             if (!categoryId) return;
             
             setIsLoading(true);
+            setArticles([]);
+            setLastDoc(null);
 
-            // Fetch category name
+            let currentCategory: { id: string; name: string } | null = null;
             try {
+                // Step 1: Fetch the category object
                 const categoryDocRef = doc(db, "news-category", categoryId);
                 const categoryDocSnap = await getDoc(categoryDocRef);
-                if (categoryDocSnap.exists()) {
-                    setCategoryName(categoryDocSnap.data().name);
-                } else {
-                    setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
-                }
-            } catch (e) {
-                console.error("Error fetching category name: ", e);
-                setCategoryName(categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
-            }
 
-            // Fetch articles
+                if (categoryDocSnap.exists()) {
+                    currentCategory = { id: categoryId, name: categoryDocSnap.data().name };
+                    setCategory(currentCategory);
+                } else {
+                    const fallbackName = categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    currentCategory = { id: categoryId, name: fallbackName };
+                    setCategory(currentCategory);
+                    console.warn(`Category document with ID "${categoryId}" not found.`);
+                }
+            } catch (error) {
+                console.error("Error fetching category:", error);
+                setIsLoading(false);
+                return;
+            }
+            
+            // Step 2: Fetch articles using the correct category object
             try {
                 const articlesRef = collection(db, "news");
                 const q = query(
                     articlesRef,
                     where("post", "==", true),
-                    where("tag", "array-contains", categoryId),
+                    where("category", "array-contains", currentCategory),
                     orderBy("publishedAt", "desc"),
                     limit(PAGE_SIZE)
                 );
@@ -68,6 +77,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
 
             } catch (error) {
                 console.error("Error fetching articles by category:", error);
+                setHasMore(false);
             } finally {
                 setIsLoading(false);
             }
@@ -77,7 +87,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
     }, [categoryId]);
 
     const handleLoadMore = async () => {
-        if (!lastDoc || !hasMore || isMoreLoading) return;
+        if (!lastDoc || !hasMore || isMoreLoading || !category) return;
         
         setIsMoreLoading(true);
         try {
@@ -85,7 +95,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
             const q = query(
                 articlesRef,
                 where("post", "==", true),
-                where("tag", "array-contains", categoryId),
+                where("category", "array-contains", category),
                 orderBy("publishedAt", "desc"),
                 startAfter(lastDoc),
                 limit(PAGE_SIZE)
@@ -101,7 +111,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
             setArticles(prev => [...prev, ...newData]);
             const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
             setLastDoc(lastVisible);
-            setHasMore(querySnapshot.docs.length < PAGE_SIZE);
+            setHasMore(querySnapshot.docs.length === PAGE_SIZE);
         } catch(error) {
             console.error("Error loading more articles:", error);
         } finally {
@@ -118,7 +128,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                     ) : (
                         <>
                          <p className="text-primary font-semibold mb-2">Danh mục tin tức</p>
-                         <h1 className="text-4xl font-headline font-bold text-foreground">{categoryName}</h1>
+                         <h1 className="text-4xl font-headline font-bold text-foreground">{category?.name}</h1>
                         </>
                     )}
                 </header>
