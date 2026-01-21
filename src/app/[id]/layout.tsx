@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -71,6 +72,8 @@ export default async function NewsDetailLayout({ children, params }: Props) {
 
   if (!article || !article.post) return <>{children}</>;
 
+  const hasCategory = article.category && article.category.length > 0 && article.category[0].id;
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -87,9 +90,17 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "name": "Tin tức",
         "item": `${BASE_URL}/tin-tuc`,
       },
-       {
+      ...(hasCategory ? [
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": article.category[0].name,
+          "item": `${BASE_URL}/tin-tuc/${article.category[0].id}`,
+        }
+      ] : []),
+      {
         "@type": "ListItem",
-        "position": 3,
+        "position": hasCategory ? 4 : 3,
         "name": article.title,
         "item": `${BASE_URL}/${id}`,
       },
