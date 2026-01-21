@@ -429,7 +429,8 @@ exports.initNews = onDocumentCreated(
                 - Viết một bài báo mới hoàn chỉnh về "${data.dataAiHint}".
                 - Phải bắt chước hoàn toàn Tone of Voice và cách trình bày HTML của 4AIVN mà bạn đã thấy ở bước 1.
                 - Tiêu đề phải giật gân nhưng chuyên nghiệp.
-                - Phần content phải trả về đúng dịnh dạng HTML với thẻ <h1>,<h2>,<h3>,<p>.
+                - Phần content phải trả về đúng dịnh dạng HTML với thẻ <h2>,<h3>,...<p>, <ul>.
+                - Nếu có biểu đồ thì thêm thẻ [CHART_1,[CHART_2] cho đúng thứ tự.
                 - Trả về đúng cấu trúc JSON.`,
                 output: { schema: NewsOutputSchema }
             });
@@ -437,11 +438,17 @@ exports.initNews = onDocumentCreated(
             if (!output) return null;
 
             // 3. Update Firestore
+            const defaultCategory = [{ 
+                id: "xu-huong", 
+                name: "Xu hướng" 
+            }];
+            
             const updatePayload = {
                 title: data.title || output.title,
                 content: data.content || output.content,
                 summary: data.summary || output.summary,
                 tag: (data.tag?.length > 0) ? data.tag : output.tag,
+                category: data.category || defaultCategory,
                 charts: data.charts || output.charts || [],
                 author: data.author || "Nam",
                 imageUrl: data.imageUrl || "/image/news%2Fnano-banana-pro-ra-mat.webp",
@@ -786,3 +793,4 @@ exports.chatbot = onRequest(
 
 
     
+
