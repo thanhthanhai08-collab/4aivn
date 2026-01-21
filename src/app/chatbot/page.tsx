@@ -1,4 +1,4 @@
-// src/app/chat/page.tsx
+// src/app/chatbot/page.tsx
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
