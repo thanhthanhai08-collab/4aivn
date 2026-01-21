@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview A flow for summarizing news articles.
+ * @fileOverview Summarizes news articles about AI.
  *
- * - summarizeNewsArticle - A function that generates a summary for a news article.
+ * - summarizeNewsArticle - A function that summarizes a news article.
  * - SummarizeNewsArticleInput - The input type for the summarizeNewsArticle function.
  * - SummarizeNewsArticleOutput - The return type for the summarizeNewsArticle function.
  */
@@ -11,28 +11,30 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SummarizeNewsArticleInputSchema = z.object({
-  articleContent: z.string().describe('The full content of the news article.'),
+  articleContent: z
+    .string()
+    .describe('The content of the news article to be summarized.'),
 });
 export type SummarizeNewsArticleInput = z.infer<typeof SummarizeNewsArticleInputSchema>;
 
 const SummarizeNewsArticleOutputSchema = z.object({
-  summary: z.string().describe('A concise summary of the news article, about 2-3 sentences long.'),
+  summary: z.string().describe('A short summary of the news article.'),
 });
 export type SummarizeNewsArticleOutput = z.infer<typeof SummarizeNewsArticleOutputSchema>;
 
-export async function summarizeNewsArticle(input: SummarizeNewsArticleInput): Promise<SummarizeNewsArticleOutput> {
+export async function summarizeNewsArticle(
+  input: SummarizeNewsArticleInput
+): Promise<SummarizeNewsArticleOutput> {
   return summarizeNewsArticleFlow(input);
 }
 
-const prompt = ai.definePrompt({
+const summarizeNewsArticlePrompt = ai.definePrompt({
   name: 'summarizeNewsArticlePrompt',
   input: {schema: SummarizeNewsArticleInputSchema},
   output: {schema: SummarizeNewsArticleOutputSchema},
-  prompt: `Summarize the following news article content into a concise paragraph of about 2-3 sentences. Capture the main points and the key takeaway.
+  prompt: `Tóm tắt nhanh bài viết sau đây bằng tiếng Việt. Bản tóm tắt cần ngắn gọn, súc tích và dễ hiểu:
 
-Article Content:
-{{{articleContent}}}
-`,
+{{{articleContent}}}`,
 });
 
 const summarizeNewsArticleFlow = ai.defineFlow(
@@ -42,7 +44,7 @@ const summarizeNewsArticleFlow = ai.defineFlow(
     outputSchema: SummarizeNewsArticleOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await summarizeNewsArticlePrompt(input);
     return output!;
   }
 );
