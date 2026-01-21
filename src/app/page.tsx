@@ -243,7 +243,7 @@ export default function HomePage() {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Công cụ AI Hàng đầu
+            Công cụ AI hàng đầu
           </h2>
           <p className="text-center text-muted-foreground mb-10">Danh sách tuyển chọn các công cụ AI phổ biến và có ảnh hưởng nhất.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -317,7 +317,7 @@ export default function HomePage() {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Tin tức AI Mới nhất
+            Tin tức AI mới nhất
           </h2>
           <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
           
