@@ -371,7 +371,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
     <AppLayout>
       <div className="container py-8 md:py-12">
         {article && (
-            <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2">
+            <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2 hidden">
               <ol className="flex items-center text-muted-foreground whitespace-nowrap">
                 <li className="flex items-center">
                   <Link href="/" className="hover:text-primary transition-colors">
