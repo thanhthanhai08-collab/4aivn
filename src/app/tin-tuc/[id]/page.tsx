@@ -145,6 +145,29 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
     return (
         <AppLayout>
             <div className="container py-8 md:py-12">
+                 <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2">
+                  <ol className="flex items-center text-muted-foreground whitespace-nowrap">
+                    <li className="flex items-center">
+                      <Link href="/" className="hover:text-primary transition-colors">
+                        Trang chủ
+                      </Link>
+                    </li>
+                    
+                    <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
+                      <Link href="/tin-tuc" className="hover:text-primary transition-colors">
+                        Tin tức
+                      </Link>
+                    </li>
+
+                    <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30 text-foreground font-semibold">
+                      {isLoading ? (
+                        <Skeleton className="h-4 w-24" />
+                      ) : (
+                        <span>{category?.name}</span>
+                      )}
+                    </li>
+                  </ol>
+                </nav>
                 <header className="mb-8 md:mb-12 text-center">
                     {isLoading ? (
                         <Skeleton className="h-12 w-1/2 mx-auto" />
