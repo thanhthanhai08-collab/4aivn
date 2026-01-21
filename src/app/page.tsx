@@ -204,10 +204,10 @@ export default function HomePage() {
             </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
             <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-              <Link href="/cong-cu">Khám phá Công cụ AI</Link>
+              <Link href="/cong-cu">Khám phá công cụ AI</Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="shadow-lg hover:shadow-md transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-              <Link href="/tin-tuc">Tin tức AI Mới nhất</Link>
+              <Link href="/tin-tuc">Tin tức AI mới nhất</Link>
             </Button>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function HomePage() {
           </div>
           <div className="text-center mt-12">
             <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">
-              <Link href="/cong-cu">Xem tất cả Công cụ</Link>
+              <Link href="/cong-cu">Xem tất cả công cụ</Link>
             </Button>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">
-              <Link href="/tin-tuc">Đọc thêm Tin tức</Link>
+              <Link href="/tin-tuc">Đọc thêm tin tức</Link>
             </Button>
           </div>
         </div>
