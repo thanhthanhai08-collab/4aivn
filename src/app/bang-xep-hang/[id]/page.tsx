@@ -277,7 +277,7 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
                       <CardHeader>
                           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                               <div className="flex items-center space-x-4">
-                              <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg"  />
+                              <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" priority />
                               <div>
                                   <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
                                   <p className="text-muted-foreground">{model.developer}</p>
