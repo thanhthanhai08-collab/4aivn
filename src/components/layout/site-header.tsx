@@ -19,7 +19,7 @@ const navItems = [
   { href: "/cong-cu", label: "Công cụ AI", icon: LayoutGrid },
   { href: "/bang-xep-hang", label: "Bảng xếp hạng", icon: TrendingUp },
   { href: "/tin-tuc", label: "Tin tức AI", icon: Newspaper },
-  { href: "/tro-chuyen", label: "Chatbot", icon: MessageSquare },
+  { href: "/chatbot", label: "Chatbot", icon: MessageSquare },
 ];
 
 interface SiteHeaderProps {

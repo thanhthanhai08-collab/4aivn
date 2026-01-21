@@ -261,7 +261,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                             <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Nâng cấp quy trình làm việc của bạn</h3>
                             <p className="mb-4 text-sm text-muted-foreground">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</p>
                             <Button asChild>
-                                <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
+                                <Link href="/chatbot">Khám phá chatbot AI</Link>
                             </Button>
                         </Card>
                     </aside>

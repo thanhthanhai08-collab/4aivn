@@ -195,7 +195,7 @@ function SearchResultsContent() {
                   </Link>
                 </Button>
                 <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
-                  <Link href="/tro-chuyen">
+                  <Link href="/chatbot">
                     <MessageSquare className="w-5 h-5" />
                     <span className="font-bold">Tìm với chatbot</span>
                   </Link>

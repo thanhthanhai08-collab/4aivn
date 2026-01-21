@@ -9,7 +9,7 @@ const quickLinks = [
   { href: "/cong-cu", label: "Công cụ AI" },
   { href: "/bang-xep-hang", label: "Bảng xếp hạng" },
   { href: "/tin-tuc", label: "Tin tức AI" },
-  { href: "/tro-chuyen", label: "Chatbot" },
+  { href: "/chatbot", label: "Chatbot" },
 ];
 
 const featuredTopics = [

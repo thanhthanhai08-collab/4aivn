@@ -160,8 +160,8 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             ] = await Promise.all([
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsQuery),
-                getDocs(similarToolsQuery),
+                getDocs(featuredToolsSnapshot),
+                getDocs(similarToolsSnapshot),
                 getAllToolReviews(tool.id)
             ]);
 
@@ -644,7 +644,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                     Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
                 </p>
                 <Button asChild>
-                    <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
+                    <Link href="/chatbot">Khám phá chatbot AI</Link>
                 </Button>
             </Card>
           </aside>
