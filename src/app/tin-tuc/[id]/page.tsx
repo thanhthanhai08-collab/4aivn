@@ -1,7 +1,8 @@
+
 // src/app/tin-tuc/[id]/page.tsx
 "use client";
 
-import { useState, useEffect, Suspense, useCallback } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,7 +11,11 @@ import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
 import { collection, getDocs, orderBy, query, limit, startAfter, where, doc, getDoc, type QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowLeft, CalendarDays } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import { format } from "date-fns";
+import { vi } from "date-fns/locale";
 
 const PAGE_SIZE = 12;
 
@@ -22,6 +27,7 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
     const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
     const [hasMore, setHasMore] = useState(true);
     const [category, setCategory] = useState<{ id: string; name: string } | null>(null);
+    const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -30,10 +36,10 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
             setIsLoading(true);
             setArticles([]);
             setLastDoc(null);
+            setLatestNews([]);
 
             let currentCategory: { id: string; name: string } | null = null;
             try {
-                // Step 1: Fetch the category object
                 const categoryDocRef = doc(db, "news-category", categoryId);
                 const categoryDocSnap = await getDoc(categoryDocRef);
 
@@ -52,10 +58,9 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                 return;
             }
             
-            // Step 2: Fetch articles using the correct category object
             try {
                 const articlesRef = collection(db, "news");
-                const q = query(
+                const articlesQuery = query(
                     articlesRef,
                     where("post", "==", true),
                     where("category", "array-contains", currentCategory),
@@ -63,17 +68,35 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                     limit(PAGE_SIZE)
                 );
 
-                const querySnapshot = await getDocs(q);
-                const newsData = querySnapshot.docs.map(doc => ({
+                const latestNewsQuery = query(
+                    collection(db, "news"),
+                    where("post", "==", true),
+                    orderBy("publishedAt", "desc"),
+                    limit(3)
+                );
+
+                const [articlesSnapshot, latestNewsSnapshot] = await Promise.all([
+                    getDocs(articlesQuery),
+                    getDocs(latestNewsQuery)
+                ]);
+
+                const newsData = articlesSnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
                     publishedAt: doc.data().publishedAt.toDate().toISOString(),
                 } as NewsArticle));
 
                 setArticles(newsData);
-                const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+                const lastVisible = articlesSnapshot.docs[articlesSnapshot.docs.length - 1];
                 setLastDoc(lastVisible);
-                setHasMore(querySnapshot.docs.length === PAGE_SIZE);
+                setHasMore(articlesSnapshot.docs.length === PAGE_SIZE);
+
+                const latestNewsData = latestNewsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                } as NewsArticle));
+                setLatestNews(latestNewsData);
 
             } catch (error) {
                 console.error("Error fetching articles by category:", error);
@@ -133,44 +156,93 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                     )}
                 </header>
 
-                {isLoading ? (
-                    <div className="space-y-8">
-                        {[...Array(5)].map((_, i) => (
-                            <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                                <Skeleton className="md:col-span-1 h-40 w-full rounded-lg" />
-                                <div className="md:col-span-3 space-y-3">
-                                    <Skeleton className="h-6 w-3/4" />
-                                    <Skeleton className="h-4 w-full" />
-                                    <Skeleton className="h-4 w-2/3" />
-                                    <Skeleton className="h-8 w-1/4 mt-2" />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : articles.length === 0 ? (
-                    <div className="text-center py-16">
-                        <p className="text-xl text-muted-foreground">Chưa có bài viết nào trong danh mục này.</p>
-                        <Button asChild variant="link" className="mt-4">
-                            <Link href="/tin-tuc">Xem tất cả tin tức</Link>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="lg:col-span-8">
+                        <Button variant="outline" size="sm" asChild className="mb-8">
+                            <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
                         </Button>
-                    </div>
-                ) : (
-                    <>
-                        <div className="space-y-8">
-                            {articles.map((article) => (
-                                <NewsListItem key={article.id} article={article} />
-                            ))}
-                        </div>
-                        {hasMore && (
-                            <div className="text-center pt-8 mt-8">
-                                <Button onClick={handleLoadMore} disabled={isMoreLoading} size="lg">
-                                {isMoreLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                Tải thêm
+                        {isLoading ? (
+                            <div className="space-y-8">
+                                {[...Array(5)].map((_, i) => (
+                                    <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                                        <Skeleton className="md:col-span-1 h-40 w-full rounded-lg" />
+                                        <div className="md:col-span-3 space-y-3">
+                                            <Skeleton className="h-6 w-3/4" />
+                                            <Skeleton className="h-4 w-full" />
+                                            <Skeleton className="h-4 w-2/3" />
+                                            <Skeleton className="h-8 w-1/4 mt-2" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : articles.length === 0 ? (
+                            <div className="text-center py-16">
+                                <p className="text-xl text-muted-foreground">Chưa có bài viết nào trong danh mục này.</p>
+                                <Button asChild variant="link" className="mt-4">
+                                    <Link href="/tin-tuc">Xem tất cả tin tức</Link>
                                 </Button>
                             </div>
+                        ) : (
+                            <>
+                                <div className="space-y-8">
+                                    {articles.map((article) => (
+                                        <NewsListItem key={article.id} article={article} />
+                                    ))}
+                                </div>
+                                {hasMore && (
+                                    <div className="text-center pt-8 mt-8">
+                                        <Button onClick={handleLoadMore} disabled={isMoreLoading} size="lg">
+                                        {isMoreLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                        Tải thêm
+                                        </Button>
+                                    </div>
+                                )}
+                            </>
                         )}
-                    </>
-                )}
+                    </div>
+                    <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                {latestNews.map((related) => (
+                                <Link key={related.id} href={`/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                                    <div className="flex items-start space-x-4">
+                                        <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
+                                            <Image
+                                                src={related.imageUrl}
+                                                alt={related.title}
+                                                fill
+                                                className="object-cover transition-transform group-hover:scale-110 duration-300"
+                                                sizes="96px"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col justify-between">
+                                            <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
+                                                {related.title}
+                                            </h4>
+                                            <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
+                                                <CalendarDays className="mr-1 h-3 w-3" />
+                                                <span>
+                                                    {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: vi })}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                                ))}
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-accent/50 text-center p-6">
+                            <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Nâng cấp quy trình làm việc của bạn</h3>
+                            <p className="mb-4 text-sm text-muted-foreground">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</p>
+                            <Button asChild>
+                                <Link href="/tro-chuyen">Khám phá chatbot AI</Link>
+                            </Button>
+                        </Card>
+                    </aside>
+                </div>
             </div>
         </AppLayout>
     );
