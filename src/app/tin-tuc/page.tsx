@@ -146,6 +146,26 @@ export default function NewsPage() {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
+        {/* Breadcrumb Section */}
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2">
+          <ol className="flex items-center text-muted-foreground whitespace-nowrap">
+            {/* Cấp 1: Trang chủ */}
+            <li className="flex items-center">
+              <Link href="/" className="hover:text-primary transition-colors">
+                Trang chủ
+              </Link>
+            </li>
+            
+            {/* Cấp 2: Tin tức (Cấp hiện tại) */}
+            <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30 text-foreground font-semibold">
+              {isLoading ? (
+                <Skeleton className="h-4 w-16" />
+              ) : (
+                <span>Tin tức</span>
+              )}
+            </li>
+          </ol>
+        </nav>
         <header className="mb-8 md:mb-12 text-center">
           <h1 className="text-4xl font-headline font-bold text-foreground">Tin tức & Cập nhật AI</h1>
           <p className="mt-2 text-lg text-muted-foreground">
@@ -218,7 +238,7 @@ export default function NewsPage() {
                         <span className="text-lg">Hướng dẫn</span>
                     </Link>
                     <Link href="/tin-tuc/vibe-coding" className="group flex h-24 items-center justify-center rounded-lg bg-chart-3 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
-                        <span className="text-lg">Vibe Coding</span>
+                        <span className="text-lg">Vibe coding</span>
                     </Link>
                     <Link href="/tin-tuc/xu-huong" className="group flex h-24 items-center justify-center rounded-lg bg-chart-4 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
                         <span className="text-lg">Xu hướng</span>
