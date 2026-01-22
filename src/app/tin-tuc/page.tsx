@@ -147,7 +147,7 @@ export default function NewsPage() {
     <AppLayout>
       <div className="container py-8 md:py-12">
         {/* Breadcrumb Section */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2">
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium overflow-x-auto scrollbar-hide pb-2 hidden">
           <ol className="flex items-center text-muted-foreground whitespace-nowrap">
             {/* Cấp 1: Trang chủ */}
             <li className="flex items-center">
