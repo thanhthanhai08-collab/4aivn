@@ -134,6 +134,9 @@ body {
   .prose a {
       @apply text-primary hover:underline;
   }
+  .prose div[class="my-6 lg:my-8"] + div > p {
+    @apply text-center text-sm text-muted-foreground;
+  }
 }
 
 @layer utilities {
