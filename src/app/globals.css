@@ -134,9 +134,11 @@ body {
   .prose a {
       @apply text-primary hover:underline;
   }
-  .prose .my-6 + p,
-  .prose .my-8 + p {
-    @apply text-center text-sm italic text-muted-foreground;
+  .prose figure {
+    @apply my-8 flex flex-col items-center justify-center;
+  }
+  .prose figcaption {
+    @apply mt-3 text-center text-sm text-muted-foreground italic leading-relaxed max-w-[90%];
   }
 }
 
