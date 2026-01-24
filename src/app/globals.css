@@ -134,12 +134,12 @@ body {
   .prose a {
       @apply text-primary hover:underline;
   }
-  .prose figure {
+  /*.prose figure {
     @apply my-8 flex flex-col items-center justify-center;
   }
   .prose figcaption {
-    @apply mt-3 text-center text-sm text-muted-foreground italic leading-relaxed max-w-[90%];
-  }
+    @apply mt-3 mb-4 text-center text-base text-muted-foreground italic leading-relaxed max-w-[90%];
+  }*/
 }
 
 @layer utilities {

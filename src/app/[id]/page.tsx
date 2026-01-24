@@ -134,16 +134,28 @@ const renderContent = (article: NewsArticle) => {
     if (imageMatch) {
       const [, src, alt, hint] = imageMatch;
       return (
-        <div key={`${index}-img`} className="my-6 lg:my-8">
-          <Image
-            src={src}
-            alt={alt}
-            width={750}
-            height={420}
-            className="rounded-lg shadow-lg w-full h-auto object-cover"
-            
-          />
-        </div>
+        // Thêm class 'not-prose' để đảm bảo Tailwind Typography không can thiệp linh tinh
+        <figure key={`${index}-img`} className="not-prose w-full my-6 lg:my-8
+     flex flex-col items-center justify-center">
+          
+          {/* Container cho ảnh */}
+          <div className="relative w-full max-w-[800px]"> 
+            <Image
+              src={src}
+              alt={alt}
+              width={750}
+              height={420}
+              className="rounded-lg shadow-lg w-full h-auto object-cover border border-border/50" 
+            />
+          </div>
+    
+          {/* Container cho chú thích (chỉ hiện khi có nội dung) */}
+          {hint && hint.trim() !== "" && (
+            <figcaption className="mt-4 text-center text-base text-muted-foreground italic leading-relaxed max-w-[90%] mx-auto">
+              {hint}
+            </figcaption>
+          )}
+        </figure>
       );
     }
     
@@ -571,6 +583,8 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
 export default function NewsDetailPage({ params }: { params: { id: string } }) {
   return <NewsDetailContent params={params} />;
 }
+
+    
 
     
 
