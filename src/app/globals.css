@@ -117,22 +117,22 @@ body {
     @apply text-foreground;
   }
   .prose h2 {
-      @apply text-2xl font-bold font-headline mb-4;
+    @apply text-2xl font-bold font-headline mb-4;
   }
   .prose h3 {
-      @apply text-xl font-bold font-headline mb-3;
+    @apply text-xl font-bold font-headline mb-3;
   }
   .prose p {
-      @apply mb-4 leading-relaxed;
+    @apply mb-4 leading-relaxed;
   }
   .prose ul {
-      @apply list-disc pl-6 mb-4 space-y-2;
+    @apply list-disc pl-6 mb-4 space-y-2;
   }
   .prose li {
-      @apply pl-2;
+    @apply pl-2;
   }
   .prose a {
-      @apply text-primary hover:underline;
+    @apply text-primary hover:underline;
   }
   /*.prose figure {
     @apply my-8 flex flex-col items-center justify-center;

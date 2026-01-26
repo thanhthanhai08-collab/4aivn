@@ -63,7 +63,7 @@ async function aggregateIntelligence(modelId) {
 
     // 1. Định nghĩa bảng trọng số (Tổng = 100%)
     const WEIGHTS = {
-        'gdpval-AA': 16.7,
+        'gdpval-aa': 16.7,
         'agentic-tool-use': 8.3,
         'agentic-coding': 16.7,
         'scicode': 8.3,
@@ -104,8 +104,8 @@ async function aggregateIntelligence(modelId) {
                 }
             });
 
-            // Làm tròn 2 chữ số thập phân
-            const finalScore = parseFloat(weightedScore.toFixed(2));
+            // Làm tròn thành số nguyên
+            const finalScore = Math.round(weightedScore);
 
             // Cập nhật kết quả vào model
             transaction.update(modelRef, {
@@ -179,8 +179,8 @@ exports.aggregateToolRating = onDocumentWritten(
 const LOGOS = {
     GOOGLE: "/image/models%2Flogo-gemini.webp?alt=media",
     OPENAI: "/image/models%2Flogo-open-ai.webp?alt=media",
-    XAI: "/image/models%2Flogo-grok.webp?alt=media&token",
-    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media&token",
+    XAI: "/image/models%2Flogo-grok.webp?alt=media",
+    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media",
     ANTHROPIC: "/image/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
 };
 
@@ -199,7 +199,7 @@ exports.initModelStructure = onDocumentCreated(
         // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
         let autoLogoUrl = data.logoUrl || "";
         if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
-        else if (devLower === "openai") autoLogoUrl = LOG.OPENAI;
+        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
         else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
         else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
         else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
@@ -812,3 +812,6 @@ exports.chatbot = onRequest(
     
 
 
+
+
+    
