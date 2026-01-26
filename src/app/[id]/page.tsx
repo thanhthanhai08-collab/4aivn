@@ -86,7 +86,7 @@ const renderContent = (article: NewsArticle) => {
       return <AiBrowserMarketGrowthChart key={`${index}-market-growth-chart`} />;
     }
     if (part === '[BENCHMARK_CHART]') {
-      if (article.id === 'openai-gpt-oss-ra-mat') {
+      if (article.id === 'openai-mo-cua-ai-voi-gpt-oss-ma-nguon-mo') {
         return <GptOssBenchmarkChart key={`${index}-chart`} />;
       }
       if (article.id === 'ai-viet-2025-bao-cao') {
@@ -139,7 +139,7 @@ const renderContent = (article: NewsArticle) => {
      flex flex-col items-center justify-center">
           
           {/* Container cho ảnh */}
-          <div className="relative w-full max-w-[800px]"> 
+          <div className="relative w-full"> 
             <Image
               src={src}
               alt={alt}

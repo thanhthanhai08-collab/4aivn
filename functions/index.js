@@ -56,55 +56,72 @@ async function aggregateRatings(collectionName, docId) {
     }
 }
 
-// --- HÀM MỚI: TÍNH INTELLIGENCE SCORE TỪ BENCHMARKS ---
+// --- HÀM TÍNH INTELLIGENCE SCORE THEO CÔNG THỨC TRỌNG SỐ ---
 async function aggregateIntelligence(modelId) {
     const modelRef = db.collection("models").doc(modelId);
     const benchmarksRef = modelRef.collection("benchmarks");
+
+    // 1. Định nghĩa bảng trọng số (Tổng = 100%)
+    const WEIGHTS = {
+        'gdpval-AA': 16.7,
+        'agentic-tool-use': 8.3,
+        'agentic-coding': 16.7,
+        'scicode': 8.3,
+        'aa-lcr': 6.25,
+        'aa-omniscience': 12.5,
+        'ifbench': 6.25,
+        'humanitys-last-exam': 12.5,
+        'gpqa-diamond': 6.25,
+        'critpt': 6.25
+    };
 
     try {
         await db.runTransaction(async (transaction) => {
             const snapshot = await transaction.get(benchmarksRef);
             
-            let totalScore = 0;
-            let benchmarkCount = 0;
+            let weightedScore = 0;
+            let foundBenchmarks = []; // Để log xem đã tìm thấy những bài test nào
 
             snapshot.forEach((doc) => {
                 const data = doc.data();
-                // Find a 'score' or 'value' field of type number
-                let scoreFound = false;
-                if (data.score && typeof data.score === 'number') {
-                    totalScore += data.score;
-                    benchmarkCount++;
-                    scoreFound = true;
-                } else if (data.value && typeof data.value === 'number') {
-                    totalScore += data.value;
-                    benchmarkCount++;
-                    scoreFound = true;
-                }
+                const docId = doc.id; // Giả sử Document ID là tên benchmark (ví dụ: 'gdpval-AA')
                 
-                if (!scoreFound) {
-                    // Fallback to scan all numeric fields if specific ones aren't found
-                    Object.values(data).forEach(val => {
-                        if (typeof val === 'number') {
-                            totalScore += val;
-                            benchmarkCount++;
-                        }
-                    });
+                // Chuẩn hóa key để tránh lỗi chữ hoa/thường (nếu cần)
+                // Hoặc kiểm tra thêm trường 'slug' nếu Document ID là random
+                const benchmarkKey = Object.keys(WEIGHTS).find(key => 
+                    key === docId || key === data.slug
+                );
+
+                // Chỉ tính nếu benchmark này nằm trong danh sách trọng số VÀ có điểm số hợp lệ
+                if (benchmarkKey && typeof data.score === 'number') {
+                    const weight = WEIGHTS[benchmarkKey];
+                    
+                    // Công thức: Điểm * (Phần trăm / 100)
+                    const contribution = data.score * (weight / 100);
+                    
+                    weightedScore += contribution;
+                    foundBenchmarks.push(`${benchmarkKey} (${data.score})`);
                 }
             });
 
-            const intelligenceScore = benchmarkCount > 0 ? (totalScore / benchmarkCount) : 0;
+            // Làm tròn 2 chữ số thập phân
+            const finalScore = parseFloat(weightedScore.toFixed(2));
 
-            // Cập nhật lên trường intelligenceScore trong collection models
+            // Cập nhật kết quả vào model
             transaction.update(modelRef, {
-                intelligenceScore: Math.round(intelligenceScore)
+                intelligenceScore: finalScore,
+                intelligenceDetails: foundBenchmarks, // (Tùy chọn) Lưu lại list các bài test đã tính
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
             });
         });
-        console.log(`Updated intelligenceScore for model ${modelId}`);
+        
+        console.log(`Updated Intelligence for ${modelId}: ${weightedScore}`);
+        
     } catch (error) {
         console.error(`Intelligence Aggregation Error for ${modelId}:`, error);
     }
 }
+
 
 /**
  * Trigger cho RATINGS (Models)
@@ -585,8 +602,8 @@ exports.searchNews = onRequest({
 
 
 /**
- * 2. TRIGGER: Tự động phát hiện khi bài viết được chuyển từ false -> true
- */
+ * 2. TRIGGER: Tự động phát hiện khi bài viết được chuyển từ false -> true
+ */
 exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();
@@ -793,4 +810,5 @@ exports.chatbot = onRequest(
 
 
     
+
 
