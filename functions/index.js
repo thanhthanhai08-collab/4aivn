@@ -109,9 +109,7 @@ async function aggregateIntelligence(modelId) {
 
             // Cập nhật kết quả vào model
             transaction.update(modelRef, {
-                intelligenceScore: finalScore,
-                intelligenceDetails: foundBenchmarks, // (Tùy chọn) Lưu lại list các bài test đã tính
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                intelligenceScore: finalScore
             });
         });
         
@@ -813,5 +811,7 @@ exports.chatbot = onRequest(
 
 
 
+
+    
 
     
