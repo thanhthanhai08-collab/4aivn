@@ -225,7 +225,7 @@ exports.initModelStructure = onDocumentCreated(
              */
             console.log(`--- Đang nghiên cứu Model: ${data.name || event.params.modelId} ---`);
             const researchResponse = await ai.generate({
-                model: "googleai/gemini-2.5-flash", 
+                model: "googleai/ggemini-3-flash-preview", 
                 prompt: `Bạn là chuyên gia phân tích AI. Hãy nghiên cứu model "${data.name || event.params.modelId}".
                 
                 HƯỚNG DẪN:
@@ -236,6 +236,7 @@ exports.initModelStructure = onDocumentCreated(
                 Hãy tổng hợp dữ liệu chi tiết bằng tiếng Việt còn tên các bài test vẫn giữ nguyên.`,
                 config: {
                     tools: [
+                        { googleSearch: {} }, 
                         { urlContext: {} }
                     ]
                 }
@@ -247,7 +248,7 @@ exports.initModelStructure = onDocumentCreated(
              * BƯỚC 2: FORMATTING PHASE (Đóng gói vào JSON)
              */
             const { output } = await ai.generate({
-                model: "googleai/gemini-2.5-flash",
+                model: "googleai/ggemini-3-flash-preview",
                 prompt: `Dựa vào dữ liệu dưới đây, hãy trích xuất các thông số kỹ thuật và điểm benchmark.
                 DỮ LIỆU: ${rawResearchData}
                 Lưu ý: Nếu không tìm thấy điểm của một benchmark cụ thể, hãy để giá trị là 0.`,
