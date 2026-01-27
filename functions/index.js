@@ -175,77 +175,148 @@ exports.aggregateToolRating = onDocumentWritten(
 
 // Định nghĩa danh sách các Logo dựa trên nhà phát triển
 const LOGOS = {
-    GOOGLE: "/image/models%2Flogo-gemini.webp?alt=media",
-    OPENAI: "/image/models%2Flogo-open-ai.webp?alt=media",
-    XAI: "/image/models%2Flogo-grok.webp?alt=media",
-    ALIBABA: "/image/models%2Flogo-qwen.webp?alt=media",
-    ANTHROPIC: "/image/models%2Flogo-claude-ai.webp?alt=media&token=340c61e7-bfcc-4eac-855a-90c0957f9143"
+    GOOGLE: "/image/models%2Flogo-gemini.webp",
+    OPENAI: "/image/models%2Flogo-open-ai.webp",
+    XAI: "/image/models%2Flogo-grok.webp",
+    ALIBABA: "/image/models%2Flogo-qwen.webp",
+    ANTHROPIC: "/image/models%2Flogo-claude-ai.webp"
 };
 
 // --- FUNCTION CHO MODELS ---
 exports.initModelStructure = onDocumentCreated(
-    { document: "models/{id}", region: "asia-southeast1" },
+    { 
+        document: "models/{modelId}", 
+        secrets: ["GEMINI_API_KEY"], 
+        region: "asia-southeast1" 
+    },
     async (event) => {
         const snapshot = event.data;
         if (!snapshot) return null;
-
-        const resRef = snapshot.ref;
         const data = snapshot.data();
-        const dev = data.developer || "";
-        const devLower = dev.toLowerCase();
 
-        // Logic tự động gán Logo dựa trên Developer (Thêm Anthropic)
-        let autoLogoUrl = data.logoUrl || "";
-        if (devLower === "google") autoLogoUrl = LOGOS.GOOGLE;
-        else if (devLower === "openai") autoLogoUrl = LOGOS.OPENAI;
-        else if (devLower === "xai") autoLogoUrl = LOGOS.XAI;
-        else if (devLower === "alibaba") autoLogoUrl = LOGOS.ALIBABA;
-        else if (devLower === "anthropic") autoLogoUrl = LOGOS.ANTHROPIC;
-
-        const modelFields = {
-            averageRating: 0,
-            ratingCount: 0,
-            intelligenceScore: 0,
-            contextLengthToken: 0,
-            latencyFirstChunkSeconds: 0,
-            pricePerMillionTokens: 0,
-            speedTokensPerSecond: 0,
-            description: data.description || "Đang cập nhật...",
-            developer: dev || "Đang cập nhật...",
-            logoUrl: autoLogoUrl,
-            name: data.name || event.params.id,
-            type: data.type || "LLM",
-            multimodal: data.multimodal || false,
-            releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
-            post: false, // Trường mới để kiểm soát hiển thị
-        };
-
-        await resRef.set(modelFields, { merge: true });
-
-        // Khởi tạo Sub-collection 'benchmarks'
-        const benchmarks = [
-            { id: "aa-lcr", name: "AA-LCR" },
-            { id: "agentic-coding", name: "Agentic Coding" },
-            { id: "agentic-tool-use", name: "Agentic Tool Use" },
-            { id: "aime-2025", name: "AIME 2025" },
-            { id: "gpqa-diamond", name: "GPQA Diamond" },
-            { id: "humanitys-last-exam", name: "Humanity's Last Exam" },
-            { id: "ifbench", name: "IFBench" },
-            { id: "livecodebench", name: "LiveCodeBench" },
-            { id: "mmlu-pro", name: "MMLU Pro" },
-            { id: "scicode", name: "SciCode" }
-        ];
-
-        const batch = db.batch();
-        benchmarks.forEach((bm) => {
-            const bmRef = resRef.collection("benchmarks").doc(bm.id);
-            batch.set(bmRef, {
-                name: bm.name,
-                score: 0
-            });
+        // 1. Khởi tạo Genkit
+        const ai = genkit({
+            plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
         });
 
-        return batch.commit();
+        // 2. Định nghĩa Schema để ép kiểu dữ liệu kỹ thuật và Benchmarks
+        const ModelOutputSchema = z.object({
+            contextLengthToken: z.number().describe('Độ dài ngữ cảnh tính bằng Token.'),
+            latencyFirstChunkSeconds: z.number().describe('Độ trễ phản hồi đầu tiên (giây).'),
+            pricePerMillionTokens: z.number().describe('Giá trên 1 triệu tokens (USD).'),
+            speedTokensPerSecond: z.number().describe('Tốc độ tạo nội dung (tokens/giây).'),
+            benchmarks: z.object({
+                "aa-lcr": z.number().default(0),
+                "agentic-coding": z.number().default(0),
+                "agentic-tool-use": z.number().default(0),
+                "aa-omniscience": z.number().default(0),
+                "gpqa-diamond": z.number().default(0),
+                "humanitys-last-exam": z.number().default(0),
+                "ifbench": z.number().default(0),
+                "gdpval-aa": z.number().default(0),
+                "critpt": z.number().default(0),
+                "scicode": z.number().default(0)
+            })
+        });
+
+        try {
+            /**
+             * BƯỚC 1: RESEARCH PHASE (Nghiên cứu từ nguồn tin)
+             */
+            console.log(`--- Đang nghiên cứu Model: ${data.name || event.params.modelId} ---`);
+            const researchResponse = await ai.generate({
+                model: "googleai/gemini-2.5-flash", 
+                prompt: `Bạn là chuyên gia phân tích AI. Hãy nghiên cứu model "${data.name || event.params.modelId}".
+                
+                HƯỚNG DẪN:
+                1. Truy cập trực tiếp link nguồn này để lấy thông số kỹ thuật: ${data.source}.
+                2. Nếu link nguồn thiếu thông tin, hãy để trống hoặc để bằng 0.
+                3. Đặc biệt tìm điểm benchmarks về các bài AA-LCR, Agentic Coding, Agentic Tool Use, AA-Omniscience, GPQA Diamond, Humanity's Last Exam, IFBench, GDPval-AA, CritPt, SciCode.
+                
+                Hãy tổng hợp dữ liệu chi tiết bằng tiếng Việt còn tên các bài test vẫn giữ nguyên.`,
+                config: {
+                    tools: [
+                        { urlContext: {} }
+                    ]
+                }
+            });
+
+            const rawResearchData = researchResponse.text;
+
+            /**
+             * BƯỚC 2: FORMATTING PHASE (Đóng gói vào JSON)
+             */
+            const { output } = await ai.generate({
+                model: "googleai/gemini-2.5-flash",
+                prompt: `Dựa vào dữ liệu dưới đây, hãy trích xuất các thông số kỹ thuật và điểm benchmark.
+                DỮ LIỆU: ${rawResearchData}
+                Lưu ý: Nếu không tìm thấy điểm của một benchmark cụ thể, hãy để giá trị là 0.`,
+                output: { schema: ModelOutputSchema }
+            });
+
+            if (!output) throw new Error("AI không thể định dạng dữ liệu.");
+
+            /**
+             * BƯỚC 3: CẬP NHẬT FIRESTORE (Main Document & Sub-collection)
+             */
+            const dev = data.developer || "";
+            const devLower = dev.toLowerCase();
+            let autoLogoUrl = data.logoUrl || "";
+            if (LOGOS[devLower.toUpperCase()]) {
+                autoLogoUrl = LOGOS[devLower.toUpperCase()];
+            }
+
+            const modelUpdate = {
+                name: data.name || event.params.modelId,
+                developer: data.developer || "Đang cập nhật...",
+                description: data.description || "Đang cập nhật...",
+                type: data.type || "LLM",
+                multimodal: data.multimodal || false,
+                releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
+                post: data.post === true,
+                averageRating: data.averageRating || 0,
+                ratingCount: data.ratingCount || 0,
+                totalStars: data.totalStars || 0,
+                contextLengthToken: output.contextLengthToken,
+                latencyFirstChunkSeconds: output.latencyFirstChunkSeconds,
+                pricePerMillionTokens: output.pricePerMillionTokens,
+                speedTokensPerSecond: output.speedTokensPerSecond,
+                logoUrl: autoLogoUrl,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            const batch = db.batch();
+            
+            batch.set(snapshot.ref, modelUpdate, { merge: true });
+
+            const benchmarkNames = {
+                "aa-lcr": "AA-LCR",
+                "agentic-coding": "Agentic Coding",
+                "agentic-tool-use": "Agentic Tool Use",
+                "aa-omniscience": "AA-Omniscience",
+                "gpqa-diamond": "GPQA Diamond",
+                "humanitys-last-exam": "Humanity's Last Exam",
+                "ifbench": "IFBench",
+                "gdpval-aa": "GDPval-AA",
+                "critpt": "CritPt",
+                "scicode": "SciCode"
+            };
+
+            Object.entries(output.benchmarks).forEach(([id, score]) => {
+                const bmRef = snapshot.ref.collection("benchmarks").doc(id);
+                batch.set(bmRef, {
+                    name: benchmarkNames[id] || id,
+                    score: score || 0
+                });
+            });
+
+            console.log(`--- Hoàn tất cập nhật cho Model: ${event.params.modelId} ---`);
+            return batch.commit();
+
+        } catch (error) {
+            console.error("Lỗi initModelStructure:", error);
+            return snapshot.ref.set({ aiError: error.message }, { merge: true });
+        }
     }
 );
 
