@@ -225,7 +225,7 @@ exports.initModelStructure = onDocumentCreated(
              */
             console.log(`--- Đang nghiên cứu Model: ${data.name || event.params.modelId} ---`);
             const researchResponse = await ai.generate({
-                model: "googleai/ggemini-3-flash-preview", 
+                model: "googleai/gemini-2.5-flash", 
                 prompt: `Bạn là chuyên gia phân tích AI. Hãy nghiên cứu model "${data.name || event.params.modelId}".
                 
                 HƯỚNG DẪN:
@@ -248,7 +248,7 @@ exports.initModelStructure = onDocumentCreated(
              * BƯỚC 2: FORMATTING PHASE (Đóng gói vào JSON)
              */
             const { output } = await ai.generate({
-                model: "googleai/ggemini-3-flash-preview",
+                model: "googleai/gemini-2.5-flash",
                 prompt: `Dựa vào dữ liệu dưới đây, hãy trích xuất các thông số kỹ thuật và điểm benchmark.
                 DỮ LIỆU: ${rawResearchData}
                 Lưu ý: Nếu không tìm thấy điểm của một benchmark cụ thể, hãy để giá trị là 0.`,
@@ -271,7 +271,7 @@ exports.initModelStructure = onDocumentCreated(
                 name: data.name || event.params.modelId,
                 developer: data.developer || "Đang cập nhật...",
                 description: data.description || "Đang cập nhật...",
-                type: data.type || "LLM",
+                type: data.type || "Mô hình ngôn ngữ lớn",
                 multimodal: data.multimodal || false,
                 releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
                 post: data.post === true,
@@ -887,3 +887,4 @@ exports.chatbot = onRequest(
     
 
     
+
