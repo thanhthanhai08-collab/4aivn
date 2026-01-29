@@ -13,11 +13,11 @@ import { collectionGroup, query, where, orderBy, limit, getDocs, doc, getDoc } f
 import { Skeleton } from "../ui/skeleton";
 
 const BENCHMARK_CATEGORIES = [
-  { key: 'aime-2025', title: 'Toán học', subtitle: 'AIME 2025' },
-  { key: 'livecodebench', title: 'Khả năng code', subtitle: 'LiveCodeBench' },
+  { key: 'aa-omniscience', title: 'Khả năng chống ảo giác', subtitle: 'AA-Omniscience' },
+  { key: 'critpt', title: 'Suy luận cấp cao hơn', subtitle: 'CritPt' },
   { key: 'agentic-coding', title: 'Lập trình có tính tự chủ', subtitle: 'Agentic Coding' },
   { key: 'agentic-tool-use', title: 'Sử dụng công cụ tự động', subtitle: 'Agentic Tool Use' },
-  { key: 'mmlu-pro', title: 'Kiến thức tổng hợp', subtitle: 'MMLU-Pro' },
+  { key: 'gdpval-aa', title: 'Hiệu suất khi làm việc', subtitle: 'GDPval-AA' },
   { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
   { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA Diamond' },
   { key: 'aa-lcr', title: 'Lý luận ngữ cảnh dài', subtitle: 'AA-LCR' },
