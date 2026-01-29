@@ -199,41 +199,31 @@ exports.initModelStructure = onDocumentCreated(
             plugins: [googleAI({ apiKey: GEMINI_API_KEY.value() })],
         });
 
-        // 2. Định nghĩa Schema để ép kiểu dữ liệu kỹ thuật và Benchmarks
-        const ModelOutputSchema = z.object({
-            contextLengthToken: z.number().describe('Độ dài ngữ cảnh tính bằng Token.'),
-            latencyFirstChunkSeconds: z.number().describe('Độ trễ phản hồi đầu tiên (giây).'),
-            pricePerMillionTokens: z.number().describe('Giá trên 1 triệu tokens (USD).'),
-            speedTokensPerSecond: z.number().describe('Tốc độ tạo nội dung (tokens/giây).'),
-            benchmarks: z.object({
-                "aa-lcr": z.number().default(0),
-                "agentic-coding": z.number().default(0),
-                "agentic-tool-use": z.number().default(0),
-                "aa-omniscience": z.number().default(0),
-                "gpqa-diamond": z.number().default(0),
-                "humanitys-last-exam": z.number().default(0),
-                "ifbench": z.number().default(0),
-                "gdpval-aa": z.number().default(0),
-                "critpt": z.number().default(0),
-                "scicode": z.number().default(0)
-            })
+        // 2. Định nghĩa Schema rút gọn (Chỉ lấy Description, Date, Context)
+        const SimpleModelOutputSchema = z.object({
+            description: z.string().describe('Mô tả về model khoảng 3-5 dòng, tập trung vào khả năng nổi bật.'),
+            contextLengthToken: z.number().describe('Độ dài ngữ cảnh (Context Window) tính bằng Token. Nếu không tìm thấy trả về 0.'),
+            releaseDateString: z.string().describe('Ngày ra mắt định dạng "YYYY-MM-DD". Nếu không tìm thấy trả về rỗng.')
         });
 
         try {
             /**
-             * BƯỚC 1: RESEARCH PHASE (Nghiên cứu từ nguồn tin)
+             * BƯỚC 1: RESEARCH PHASE (Chỉ tìm thông tin cơ bản)
              */
-            console.log(`--- Đang nghiên cứu Model: ${data.name || event.params.modelId} ---`);
+            console.log(`--- Đang tìm thông tin cơ bản cho Model: ${data.name || event.params.modelId} ---`);
             const researchResponse = await ai.generate({
                 model: "googleai/gemini-2.5-flash", 
-                prompt: `Bạn là chuyên gia phân tích AI. Hãy nghiên cứu model "${data.name || event.params.modelId}".
+                prompt: `Bạn là chuyên gia AI. Hãy tìm thông tin cơ bản cho model "${data.name || event.params.modelId}".
                 
                 HƯỚNG DẪN:
-                1. Truy cập trực tiếp link nguồn này để lấy thông số kỹ thuật: ${data.source}.
-                2. Nếu link nguồn thiếu thông tin, hãy để trống hoặc để bằng 0.
-                3. Đặc biệt tìm điểm benchmarks về các bài AA-LCR, Agentic Coding, Agentic Tool Use, AA-Omniscience, GPQA Diamond, Humanity's Last Exam, IFBench, GDPval-AA, CritPt, SciCode.
+                1. Truy cập link nguồn: ${data.source} nếu không có thông tin hãy tìm bên ngoài link.
+                2. Tìm 3 thông tin duy nhất: 
+                   - Mô tả ngắn (3-5 dòng).
+                   - Context Window (bao nhiêu tokens) để dạng số nguyên không có dấu chấm phẩy.
+                   - Ngày ra mắt (Release Date).
+                3. KHÔNG cần tìm điểm benchmarks hay giá tiền.
                 
-                Hãy tổng hợp dữ liệu chi tiết bằng tiếng Việt còn tên các bài test vẫn giữ nguyên.`,
+                Trả lời tất cả bằng tiếng Việt.`,
                 config: {
                     tools: [
                         { googleSearch: {} }, 
@@ -243,80 +233,103 @@ exports.initModelStructure = onDocumentCreated(
             });
 
             const rawResearchData = researchResponse.text;
+	        console.log("---------- DEBUG: DỮ LIỆU THÔ TỪ GEMINI ----------"); 
+            console.log(rawResearchData); 
 
             /**
-             * BƯỚC 2: FORMATTING PHASE (Đóng gói vào JSON)
+             * BƯỚC 2: FORMATTING PHASE
              */
             const { output } = await ai.generate({
                 model: "googleai/gemini-2.5-flash",
-                prompt: `Dựa vào dữ liệu dưới đây, hãy trích xuất các thông số kỹ thuật và điểm benchmark.
-                DỮ LIỆU: ${rawResearchData}
-                Lưu ý: Nếu không tìm thấy điểm của một benchmark cụ thể, hãy để giá trị là 0.`,
-                output: { schema: ModelOutputSchema }
+                prompt: `Trích xuất thông tin từ dữ liệu sau: ${rawResearchData}`,
+                output: { schema: SimpleModelOutputSchema }
             });
 
             if (!output) throw new Error("AI không thể định dạng dữ liệu.");
 
             /**
-             * BƯỚC 3: CẬP NHẬT FIRESTORE (Main Document & Sub-collection)
+             * BƯỚC 3: XỬ LÝ DỮ LIỆU VÀ CẬP NHẬT FIRESTORE
              */
-            const dev = data.developer || "";
-            const devLower = dev.toLowerCase();
-            let autoLogoUrl = data.logoUrl || "";
-            if (LOGOS[devLower.toUpperCase()]) {
-                autoLogoUrl = LOGOS[devLower.toUpperCase()];
+            
+            // Xử lý Ngày ra mắt (Chuyển String sang Firestore Timestamp)
+            let releaseDateTimestamp = admin.firestore.FieldValue.serverTimestamp();
+            if (output.releaseDateString) {
+                const parsedDate = new Date(output.releaseDateString);
+                if (!isNaN(parsedDate)) {
+                    releaseDateTimestamp = admin.firestore.Timestamp.fromDate(parsedDate);
+                }
             }
 
+            // Xử lý Logo
+            const dev = data.developer || "";
+            let autoLogoUrl = data.logoUrl || "";
+            if (LOGOS[dev.toUpperCase()]) autoLogoUrl = LOGOS[dev.toUpperCase()];
+
+            // Chuẩn bị dữ liệu Update (Các số liệu kỹ thuật khác auto = 0)
             const modelUpdate = {
                 name: data.name || event.params.modelId,
                 developer: data.developer || "Đang cập nhật...",
-                description: data.description || "Đang cập nhật...",
                 type: data.type || "Mô hình ngôn ngữ lớn",
                 multimodal: data.multimodal || false,
-                releaseDate: data.releaseDate || admin.firestore.FieldValue.serverTimestamp(),
-                post: data.post === true,
-                averageRating: data.averageRating || 0,
-                ratingCount: data.ratingCount || 0,
-                totalStars: data.totalStars || 0,
-                contextLengthToken: output.contextLengthToken,
-                latencyFirstChunkSeconds: output.latencyFirstChunkSeconds,
-                pricePerMillionTokens: output.pricePerMillionTokens,
-                speedTokensPerSecond: output.speedTokensPerSecond,
+                post: false, // Luôn bắt đầu với false
+                
+                // Dữ liệu từ AI
+                description: output.description || "Đang cập nhật...",
+                contextLengthToken: output.contextLengthToken || 0,
+                releaseDate: releaseDateTimestamp,
+
+                // Các chỉ số kỹ thuật mặc định là 0
+                intelligenceScore: 0,
+                latencyFirstChunkSeconds: 0,
+                pricePerMillionTokens: 0,
+                speedTokensPerSecond: 0,
+                averageRating: 0,
+                ratingCount: 0,
+                totalStars: 0,
+                
                 logoUrl: autoLogoUrl,
                 updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                
             };
 
             const batch = db.batch();
             
+            // Cập nhật Main Document
             batch.set(snapshot.ref, modelUpdate, { merge: true });
 
-            const benchmarkNames = {
-                "aa-lcr": "AA-LCR",
-                "agentic-coding": "Agentic Coding",
-                "agentic-tool-use": "Agentic Tool Use",
-                "aa-omniscience": "AA-Omniscience",
-                "gpqa-diamond": "GPQA Diamond",
-                "humanitys-last-exam": "Humanity's Last Exam",
-                "ifbench": "IFBench",
-                "gdpval-aa": "GDPval-AA",
-                "critpt": "CritPt",
-                "scicode": "SciCode"
-            };
+            // Danh sách Benchmarks (Chỉ tạo khung, điểm số = 0)
+            const benchmarkList = [
+                { id: "aa-lcr", name: "AA-LCR" },
+                { id: "agentic-coding", name: "Agentic Coding" },
+                { id: "agentic-tool-use", name: "Agentic Tool Use" },
+                { id: "aa-omniscience", name: "AA-Omniscience" },
+                { id: "gpqa-diamond", name: "GPQA Diamond" },
+                { id: "humanitys-last-exam", name: "Humanity's Last Exam" },
+                { id: "ifbench", name: "IFBench" },
+                { id: "gdpval-aa", name: "GDPval-AA" },
+                { id: "critpt", name: "CritPt" },
+                { id: "scicode", name: "SciCode" }
+            ];
 
-            Object.entries(output.benchmarks).forEach(([id, score]) => {
-                const bmRef = snapshot.ref.collection("benchmarks").doc(id);
+            // Vòng lặp tạo Sub-collection với score = 0
+            benchmarkList.forEach((bm) => {
+                const bmRef = snapshot.ref.collection("benchmarks").doc(bm.id);
                 batch.set(bmRef, {
-                    name: benchmarkNames[id] || id,
-                    score: score || 0
+                    name: bm.name,
+                    score: 0 // Mặc định là 0 theo yêu cầu
                 });
             });
 
-            console.log(`--- Hoàn tất cập nhật cho Model: ${event.params.modelId} ---`);
+            console.log(`--- Hoàn tất khởi tạo (Basic Info Only) cho Model: ${event.params.modelId} ---`);
             return batch.commit();
 
         } catch (error) {
             console.error("Lỗi initModelStructure:", error);
-            return snapshot.ref.set({ aiError: error.message }, { merge: true });
+            // Ghi lỗi vào document để debug
+            return snapshot.ref.set({ 
+                aiError: error.message,
+                description: "Lỗi khi lấy dữ liệu tự động." 
+            }, { merge: true });
         }
     }
 );
@@ -888,3 +901,6 @@ exports.chatbot = onRequest(
 
     
 
+
+
+    
