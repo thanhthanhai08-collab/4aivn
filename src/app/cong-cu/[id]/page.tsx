@@ -160,8 +160,8 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             ] = await Promise.all([
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsSnapshot),
-                getDocs(similarToolsSnapshot),
+                getDocs(featuredToolsQuery),
+                getDocs(similarToolsQuery),
                 getAllToolReviews(tool.id)
             ]);
 
