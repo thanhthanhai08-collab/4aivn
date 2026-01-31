@@ -270,7 +270,7 @@ exports.initModelStructure = onDocumentCreated(
                 name: data.name || event.params.modelId,
                 developer: data.developer || "Đang cập nhật...",
                 type: data.type || "Mô hình ngôn ngữ lớn",
-                multimodal: data.multimodal || false,
+                multimodal: data.multimodal || true,
                 post: false, // Luôn bắt đầu với false
                 
                 // Dữ liệu từ AI
