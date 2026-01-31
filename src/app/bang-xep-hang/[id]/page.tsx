@@ -440,7 +440,7 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
 
               {sameDeveloperModels.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6 text-center">Các mô hình AI khác từ {model.developer}</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Các mô hình khác từ {model.developer}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sameDeveloperModels.map((devModel) => (
                       <ModelCard key={devModel.id} model={devModel} />
