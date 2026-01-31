@@ -129,7 +129,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                         collectionGroup(db, 'benchmarks'),
                         where('name', '==', category.subtitle),
                         where('score', '>', currentModelScore),
-                        orderBy('score', 'desc'),
+                        orderBy('score', 'asc'),
                         limit(3)
                     );
                     const lowerQuery = query(
