@@ -217,12 +217,11 @@ exports.initModelStructure = onDocumentCreated(
                 
                 HƯỚNG DẪN:
                 1. Truy cập link nguồn: ${data.source} nếu không có thông tin hãy tìm bên ngoài link.
-                2. Tìm 3 thông tin duy nhất: 
+                2. Tìm 2 thông tin duy nhất: 
                    - Mô tả ngắn (3-5 dòng).
                    - Context Window (bao nhiêu tokens) để dạng số nguyên không có dấu chấm phẩy.
-                   - Ngày ra mắt (Release Date).
                 3. KHÔNG cần tìm điểm benchmarks hay giá tiền.
-                
+                4. Thông tin về ngày ra mắt (Release Date) tìm ở bên ngoài không được tìm ở link nguồn.
                 Trả lời tất cả bằng tiếng Việt.`,
                 config: {
                     tools: [

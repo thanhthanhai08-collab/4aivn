@@ -25,6 +25,7 @@ import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-bench
 import { NewsCard } from "@/components/news/news-card";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { ModelCard } from "@/components/models/model-card";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -45,6 +46,7 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [sameDeveloperModels, setSameDeveloperModels] = useState<AIModel[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -101,6 +103,27 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
                 } as NewsArticle));
                 setRelatedNews(newsData);
             }
+
+            // Fetch same developer models (only once)
+            if (sameDeveloperModels.length === 0 && data.developer) {
+                const sameDevQuery = query(
+                    collection(db, "models"),
+                    where('developer', '==', data.developer),
+                    where('post', '==', true),
+                    limit(7)
+                );
+                const devSnap = await getDocs(sameDevQuery);
+                const devModels = devSnap.docs
+                    .map(d => ({ 
+                        id: d.id, 
+                        ...d.data(),
+                        releaseDate: (d.data().releaseDate as Timestamp)?.toDate().toLocaleDateString('vi-VN'),
+                    } as AIModel))
+                    .filter(m => m.id !== id)
+                    .slice(0, 6);
+                setSameDeveloperModels(devModels);
+            }
+
 
             setIsLoading(false);
         } else {
@@ -410,6 +433,17 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {relatedNews.map((article) => (
                       <NewsCard key={article.id} article={article} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {sameDeveloperModels.length > 0 && (
+                <section>
+                  <h2 className="text-2xl font-bold font-headline mb-6 text-center">Các mô hình AI khác từ {model.developer}</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {sameDeveloperModels.map((devModel) => (
+                      <ModelCard key={devModel.id} model={devModel} />
                     ))}
                   </div>
                 </section>
