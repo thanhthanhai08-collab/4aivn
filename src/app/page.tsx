@@ -278,7 +278,7 @@ export default function HomePage() {
             </div>
             <div>
               <Image 
-                src="/image/AI_tu_dong_hoa.png" 
+                src="/image/ai-tu-dong-hoa.webp" 
                 alt="AI tự động hóa quy trình làm việc hiệu quả" 
                 width={600} 
                 height={450} 
@@ -300,7 +300,7 @@ export default function HomePage() {
             </div>
             <div className="md:order-1">
               <Image 
-                src="/image/AI_Agent_de_tiep_can.png" 
+                src="/image/ai-agent-de-tiep-can.webp" 
                 alt="AI agent dễ tiếp cận và sử dụng" 
                 width={600} 
                 height={450} 
