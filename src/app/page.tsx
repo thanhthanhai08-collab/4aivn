@@ -380,7 +380,7 @@ export default function HomePage() {
       {/* Rankings Banner Section */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col">
+          <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 h-[500px] flex flex-col shadow-2xl">
             {isLoadingSettings ? (
               <Skeleton className="absolute inset-0" />
             ) : (
