@@ -17,6 +17,8 @@ const featuredTopics = [
   { href: "/dieu-khoan-dich-vu", label: "Điều khoản dịch vụ" },
   { href: "/dieu-khoan-su-dung-ai", label: "Điều khoản sử dụng AI" },
   { href: "/chinh-sach-cookie", label: "Chính sách Cookies" },
+  { href: "/gioi-thieu", label: "Giới thiệu" },
+  { href: "/lien-he", label: "Liên hệ" },
 ];
 
 const socialMediaLinks = [
