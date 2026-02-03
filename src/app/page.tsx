@@ -14,6 +14,7 @@ import { collection, getDocs, limit, orderBy, query, doc, getDoc, where } from "
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const TYPING_TEXTS = [
   "KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI",
@@ -27,6 +28,7 @@ interface HomepageSettings {
   BannerAdsAlt?: string;
   BannerRankUrl?: string;
   BannerRankAlt?: string;
+  linkAff?: string;
 }
 
 export default function HomePage() {
@@ -220,20 +222,33 @@ export default function HomePage() {
         </div>
       </section>
       
-       {/* Independence Day Banner Section */}
+       {/* Affiliate Banner Section */}
       <section className="py-8 bg-background">
         <div className="container">
             {isLoadingSettings ? (
-              <Skeleton className="w-full h-[250px] rounded-lg shadow-lg" />
+              <Skeleton className="w-full aspect-[4/1] rounded-lg shadow-lg" />
             ) : (
               homepageSettings.BannerAdsUrl && (
-                <Image 
-                  src={homepageSettings.BannerAdsUrl}
-                  alt={homepageSettings.BannerAdsAlt || "Banner quảng cáo"}
-                  width={1920}
-                  height={250}
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
+                <Link 
+                  href={homepageSettings.linkAff || "#"} 
+                  target="_blank" 
+                  rel="noopener noreferrer sponsored" 
+                  className="relative block w-full aspect-[4/1] group overflow-hidden rounded-lg shadow-lg hover:shadow-primary/20 transition-all border"
+                >
+                  <Image
+                    src={homepageSettings.BannerAdsUrl} 
+                    alt={homepageSettings.BannerAdsAlt || "Quảng cáo tài trợ"}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 100vw, 1200px" 
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
+                      Tài trợ
+                    </Badge>
+                  </div>
+                </Link>
               )
             )}
         </div>
