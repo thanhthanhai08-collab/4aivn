@@ -26,7 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
