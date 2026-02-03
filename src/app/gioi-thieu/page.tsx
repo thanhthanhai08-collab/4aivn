@@ -1,10 +1,8 @@
 
 import { AppLayout } from "@/components/layout/app-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Users, Target, Eye } from 'lucide-react';
-
+import { Users, Target, ShieldCheck, Newspaper, Cpu, Wrench, Lightbulb } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Giới thiệu về 4AIVN | Trung tâm AI Việt Nam',
@@ -12,54 +10,114 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const services = [
+    {
+      title: "Tin tức AI cập nhật",
+      description: "Cung cấp những thông tin mới nhất về thị trường trí tuệ nhân tạo, các thương vụ công nghệ và xu hướng tương lai.",
+      icon: <Newspaper size={32} className="text-blue-600" />,
+      bgColor: "bg-blue-100 dark:bg-blue-900/50"
+    },
+    {
+      title: "Đánh giá Model AI",
+      description: "Phân tích chuyên sâu các mô hình ngôn ngữ lớn (LLM), thị giác máy tính và các kiến trúc AI mới nhất.",
+      icon: <Cpu size={32} className="text-indigo-600" />,
+      bgColor: "bg-indigo-100 dark:bg-indigo-900/50"
+    },
+    {
+      title: "Thư viện Công cụ",
+      description: "Tổng hợp và phân loại các công cụ AI hỗ trợ công việc, từ thiết kế, lập trình đến sáng tạo nội dung.",
+      icon: <Wrench size={32} className="text-purple-600" />,
+      bgColor: "bg-purple-100 dark:bg-purple-900/50"
+    },
+    {
+      title: "Hướng dẫn & Tip",
+      description: "Chia sẻ các kỹ thuật Prompt Engineering và cách ứng dụng AI vào quy trình làm việc thực tế.",
+      icon: <Lightbulb size={32} className="text-amber-600" />,
+      bgColor: "bg-amber-100 dark:bg-amber-900/50"
+    }
+  ];
+
   return (
     <AppLayout>
-      <div className="container py-8 md:py-12">
-        <Card className="max-w-4xl mx-auto shadow-lg">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl md:text-4xl font-headline">
-              Về chúng tôi
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-lg max-w-none text-foreground leading-relaxed space-y-6">
-            <p className="text-center text-xl text-muted-foreground">
-              <strong>4AIVN</strong> là nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực Trí Tuệ Nhân Tạo tại Việt Nam và thế giới.
+      <div className="bg-background text-foreground animate-in fade-in duration-700">
+        {/* Hero Section */}
+        <section className="relative py-20 bg-gradient-to-b from-blue-50 to-background dark:from-slate-900/50 overflow-hidden">
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">
+              Về Chúng Tôi
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Cổng thông tin hàng đầu về trí tuệ nhân tạo, giúp bạn cập nhật những xu hướng, 
+              công cụ và ứng dụng AI mới nhất trên toàn thế giới.
             </p>
+          </div>
+          {/* Background decoration */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-blue-400 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-indigo-400 rounded-full blur-3xl"></div>
+          </div>
+        </section>
 
-            <div className="grid md:grid-cols-2 gap-8 pt-6">
-                <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <Target className="h-10 w-10 text-primary" />
-                        <h2 className="text-2xl font-headline mt-0 mb-0">Sứ mệnh</h2>
-                    </div>
-                    <p>Sứ mệnh của chúng tôi là dân chủ hóa kiến thức về AI, giúp mọi người từ sinh viên, nhà phát triển đến các nhà quản lý doanh nghiệp có thể dễ dàng tiếp cận, hiểu và ứng dụng công nghệ AI vào công việc và cuộc sống hàng ngày.</p>
-                </div>
-                <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <Eye className="h-10 w-10 text-primary" />
-                        <h2 className="text-2xl font-headline mt-0 mb-0">Tầm nhìn</h2>
-                    </div>
-                    <p>Chúng tôi hướng tới việc trở thành cộng đồng và nền tảng AI uy tín nhất tại Việt Nam, nơi mọi người có thể khám phá các công cụ AI mới nhất, cập nhật tin tức nóng hổi và tham gia vào các cuộc thảo luận sôi nổi về tương lai của công nghệ.</p>
-                </div>
+        {/* Mission & Vision */}
+        <section className="py-16 container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-8 bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 dark:bg-blue-900/50 dark:text-blue-300">
+                <Target size={28} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Sứ mệnh</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Phổ cập kiến thức AI đến mọi người, giúp cá nhân và doanh nghiệp tối ưu hóa hiệu suất làm việc thông qua trí tuệ nhân tạo.
+              </p>
             </div>
-
-            <div>
-                <h2 className="text-center">Những gì chúng tôi cung cấp</h2>
-                <ul>
-                    <li><strong>Bảng xếp hạng AI:</strong> Đánh giá khách quan và chi tiết về các mô hình và công cụ AI hàng đầu thế giới.</li>
-                    <li><strong>Tin tức AI:</strong> Cập nhật liên tục các tin tức, phân tích và xu hướng mới nhất trong ngành AI.</li>
-                    <li><strong>Kho công cụ AI:</strong> Một danh sách tuyển chọn các công cụ AI hữu ích, được phân loại rõ ràng để bạn dễ dàng tìm kiếm.</li>
-                    <li><strong>Chatbot thông minh:</strong> Một trợ lý ảo để bạn có thể hỏi đáp và khám phá thêm về thế giới AI.</li>
-                </ul>
+            <div className="p-8 bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6 dark:bg-indigo-900/50 dark:text-indigo-300">
+                <Users size={28} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Cộng đồng</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Xây dựng mạng lưới những người yêu công nghệ, nơi chia sẻ kinh nghiệm và những phát kiến mới nhất về mô hình AI.
+              </p>
             </div>
+            <div className="p-8 bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6 dark:bg-purple-900/50 dark:text-purple-300">
+                <ShieldCheck size={28} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Uy tín</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Cung cấp những đánh giá khách quan, trung thực về các công cụ AI, giúp người dùng đưa ra lựa chọn đúng đắn nhất.
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <div className="text-center pt-4">
-                <p>Cảm ơn bạn đã ghé thăm 4AIVN. Hãy cùng chúng tôi khám phá tương lai của Trí tuệ Nhân tạo!</p>
-                <p>Để liên hệ hợp tác hoặc đóng góp ý kiến, vui lòng truy cập trang <Link href="/lien-he">Liên hệ</Link> của chúng tôi.</p>
+        {/* What We Offer Section */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">Những gì chúng tôi cung cấp</h2>
+              <div className="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
             </div>
             
-          </CardContent>
-        </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {services.map((service, index) => (
+                <div key={index} className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                  <div className={`w-16 h-16 ${service.bgColor} rounded-2xl flex items-center justify-center mb-6`}>
+                    {service.icon}
+                  </div>
+                  <h4 className="text-xl font-bold text-foreground mb-3">{service.title}</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-12 border-t border-border/50 text-center text-muted-foreground text-sm bg-background">
+          <p>Để liên hệ hợp tác hoặc đóng góp ý kiến, vui lòng truy cập trang <Link href="/lien-he" className="text-primary hover:underline font-medium">Liên hệ</Link> của chúng tôi.</p>
+        </section>
       </div>
     </AppLayout>
   );
