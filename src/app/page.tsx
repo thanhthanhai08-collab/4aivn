@@ -216,7 +216,7 @@ export default function HomePage() {
       {/* Placeholder for Airtable-like visual if desired */}
       <section className="py-12 md:py-16 hidden"> 
         <div className="container">
-          <Image src="https://picsum.photos/1200/600" alt="Airtable-like interface preview" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" />
+          <Image src="https://picsum.photos/1200/600" alt="4AIVN" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" />
         </div>
       </section>
       

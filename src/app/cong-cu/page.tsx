@@ -4,15 +4,17 @@
 import { useState, useMemo, useEffect, Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ToolCard } from "@/components/tools/tool-card";
 import { ToolFilters } from "@/components/tools/tool-filters";
 import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, query, orderBy, limit, where, startAfter, type QueryDocumentSnapshot } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit, where, startAfter, type QueryDocumentSnapshot, doc, getDoc } from "firebase/firestore";
 import { useInView } from "react-intersection-observer";
 import { Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const PAGE_SIZE = 100;
 
@@ -50,11 +52,30 @@ function ToolsContent() {
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
   const [hasMore, setHasMore] = useState(true);
+  const [adData, setAdData] = useState<{ linkAff: string; bannerAdsUrl: string } | null>(null);
 
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: false,
   });
+
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adDocRef = doc(db, "settings", "cong-cu");
+        const adSnap = await getDoc(adDocRef);
+        if (adSnap.exists()) {
+          setAdData({
+            linkAff: adSnap.data().linkAff || "",
+            bannerAdsUrl: adSnap.data().bannerAdsUrl || ""
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi lấy dữ liệu quảng cáo:", error);
+      }
+    };
+    fetchAds();
+  }, []);
 
   const fetchTools = useCallback(async (isFirstLoad = false) => {
     if (isFirstLoad) {
@@ -204,6 +225,33 @@ function ToolsContent() {
               : "Không tìm thấy công cụ nào."}
           </p>
         </div>
+      )}
+      
+      {adData?.bannerAdsUrl && (
+        <section className="mt-8">
+          <Link 
+            href={adData.linkAff || "#"} 
+            target="_blank" 
+            rel="noopener noreferrer sponsored" 
+            className="relative block w-full aspect-[4/1] group overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all border"
+          >
+            <Image
+              src={adData.bannerAdsUrl} 
+              alt="Quảng cáo tài trợ"
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 1024px) 100vw, 800px" 
+            />
+            
+            {/* Lớp phủ mờ + Nhãn quảng cáo nhỏ */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+            <div className="absolute top-2 right-2">
+              <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
+                Tài trợ
+              </Badge>
+            </div>
+          </Link>
+        </section>
       )}
     </div>
   );
