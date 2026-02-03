@@ -82,6 +82,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
   const [similarTools, setSimilarTools] = useState<Tool[]>([]);
   const [complementaryTools, setComplementaryTools] = useState<Tool[]>([]);
+  const [adData, setAdData] = useState<{ linkAff: string; bannerAdsUrl: string } | null>(null);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -109,6 +110,25 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
     return () => unsubscribe();
   }, [id]);
+
+  // Effect to fetch ad data
+  useEffect(() => {
+    const fetchAds = async () => {
+      try {
+        const adDocRef = doc(db, "settings", "cong-cu");
+        const adSnap = await getDoc(adDocRef);
+        if (adSnap.exists()) {
+          setAdData({
+            linkAff: adSnap.data().linkAff || "",
+            bannerAdsUrl: adSnap.data().bannerAdsUrl || ""
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi lấy dữ liệu quảng cáo:", error);
+      }
+    };
+    fetchAds();
+  }, []);
 
   // Effect for other data (reviews, related items, etc.) - fetched once after tool loads
   useEffect(() => {
@@ -564,19 +584,30 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
                 </Card>
             </section>
 
-            <section>
-              <Card className="bg-primary text-primary-foreground text-center p-8">
-                <p className="text-2xl font-bold mb-2 leading-snug">
-                  Đăng nhập
-                </p>
-                <p className="mb-4 text-primary-foreground/80">
-                  Đăng nhập để nhận tin tức và đánh giá bất cứ công cụ AI nào bạn yêu thích
-                </p>
-                <Button variant="secondary" size="lg" asChild>
-                  <Link href="/dang-ky">Tạo tài khoản miễn phí</Link>
-                </Button>
-              </Card>
-            </section>
+            {adData?.bannerAdsUrl && (
+              <section>
+                <Link 
+                  href={adData.linkAff || "#"} 
+                  target="_blank" 
+                  rel="noopener noreferrer sponsored" 
+                  className="relative block w-full aspect-[4/1] group overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all border"
+                >
+                  <Image
+                    src={adData.bannerAdsUrl} 
+                    alt="Quảng cáo tài trợ"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 100vw, 800px" 
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
+                      Tài trợ
+                    </Badge>
+                  </div>
+                </Link>
+              </section>
+            )}
             
             {similarTools.length > 0 && (
                 <section>
