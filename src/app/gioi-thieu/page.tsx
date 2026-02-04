@@ -2,7 +2,7 @@
 import { AppLayout } from "@/components/layout/app-layout";
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Users, Target, ShieldCheck, Newspaper, Cpu, Wrench, Lightbulb } from 'lucide-react';
+import { Users, Target, ShieldCheck, Newspaper, Cpu, Wrench, MessageSquare } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Giới thiệu về 4AIVN | Trung tâm AI Việt Nam',
@@ -18,21 +18,21 @@ export default function AboutPage() {
       bgColor: "bg-blue-100 dark:bg-blue-900/50"
     },
     {
-      title: "Đánh giá Model AI",
+      title: "Đánh giá model AI",
       description: "Phân tích chuyên sâu các mô hình ngôn ngữ lớn (LLM), thị giác máy tính và các kiến trúc AI mới nhất.",
       icon: <Cpu size={32} className="text-indigo-600" />,
       bgColor: "bg-indigo-100 dark:bg-indigo-900/50"
     },
     {
-      title: "Thư viện Công cụ",
+      title: "Thư viện công cụ",
       description: "Tổng hợp và phân loại các công cụ AI hỗ trợ công việc, từ thiết kế, lập trình đến sáng tạo nội dung.",
       icon: <Wrench size={32} className="text-purple-600" />,
       bgColor: "bg-purple-100 dark:bg-purple-900/50"
     },
     {
-      title: "Hướng dẫn & Tip",
-      description: "Chia sẻ các kỹ thuật Prompt Engineering và cách ứng dụng AI vào quy trình làm việc thực tế.",
-      icon: <Lightbulb size={32} className="text-amber-600" />,
+      title: "Chatbot",
+      description: "Chia sẻ các thông tin và cách ứng dụng AI vào quy trình làm việc thực tế.",
+      icon: <MessageSquare size={32} className="text-amber-600" />,
       bgColor: "bg-amber-100 dark:bg-amber-900/50"
     }
   ];
@@ -44,7 +44,7 @@ export default function AboutPage() {
         <section className="relative py-20 bg-gradient-to-b from-blue-50 to-background dark:from-slate-900/50 overflow-hidden">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">
-              Về Chúng Tôi
+              Giới thiệu về chúng tôi
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Cổng thông tin hàng đầu về trí tuệ nhân tạo, giúp bạn cập nhật những xu hướng, 
@@ -76,7 +76,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-bold mb-4">Cộng đồng</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Xây dựng mạng lưới những người yêu công nghệ, nơi chia sẻ kinh nghiệm và những phát kiến mới nhất về mô hình AI.
+                Xây dựng mạng lưới những người yêu công nghệ, nơi chia sẻ kinh nghiệm về các mô hình AI.
               </p>
             </div>
             <div className="p-8 bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
