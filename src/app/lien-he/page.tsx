@@ -121,7 +121,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">Địa chỉ</h4>
-                    <p className="text-muted-foreground">TP. Hồ Chí Minh, Việt Nam</p>
+                    <p className="text-muted-foreground">Hà Nội, Việt Nam</p>
                   </div>
                 </div>
               </div>
