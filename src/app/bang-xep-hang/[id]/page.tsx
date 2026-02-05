@@ -88,11 +88,12 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
             setModel(foundModel);
 
             // Fetch related news (only needs to be done once)
-            if (relatedNews.length === 0) {
+            if (relatedNews.length === 0 && foundModel.name) {
                 const newsQuery = query(
                     collection(db, "news"),
-                    where('title', '>=', foundModel.name),
-                    where('title', '<=', foundModel.name + '\uf8ff'),
+                    where("post", "==", true),
+                    where('tag', 'array-contains', foundModel.name),
+                    orderBy("publishedAt", "desc"),
                     limit(3)
                 );
                 const newsSnapshot = await getDocs(newsQuery);
