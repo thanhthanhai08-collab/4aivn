@@ -1,4 +1,3 @@
-
 // src/app/bang-xep-hang/[id]/page.tsx
 "use client";
 
