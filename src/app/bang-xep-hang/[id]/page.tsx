@@ -266,7 +266,12 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
+        <Button variant="outline" size="sm" asChild className="mb-6">
+          <Link href="/bang-xep-hang">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Quay lại Bảng xếp hạng
+          </Link>
+        </Button>
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
           <ol className="flex items-center text-muted-foreground">
             <li className="flex items-center">
               <Link 
