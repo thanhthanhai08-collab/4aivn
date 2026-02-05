@@ -22,7 +22,7 @@ import {
 } from "@/lib/user-data-service";
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
-import { NewsCard } from "@/components/news/news-card";
+import { NewsListItem } from "@/components/news/news-list-item";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
@@ -428,23 +428,23 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
                 <O3DetailedBenchmarkCharts currentModel={model} />
               </section>
 
-              {relatedNews.length > 0 && (
-                <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6 text-center">Bài viết liên quan</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {relatedNews.map((article) => (
-                      <NewsCard key={article.id} article={article} />
-                    ))}
-                  </div>
-                </section>
-              )}
-
               {sameDeveloperModels.length > 0 && (
                 <section>
                   <h2 className="text-2xl font-bold font-headline mb-6">Các mô hình khác từ {model.developer}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sameDeveloperModels.map((devModel) => (
                       <ModelCard key={devModel.id} model={devModel} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {relatedNews.length > 0 && (
+                <section>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Bài viết liên quan</h2>
+                  <div className="space-y-8">
+                    {relatedNews.map((article) => (
+                      <NewsListItem key={article.id} article={article} />
                     ))}
                   </div>
                 </section>
