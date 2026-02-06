@@ -197,11 +197,9 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
 // NEW: Form for News
 function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished: () => void }) {
     const { toast } = useToast();
-    const { register, handleSubmit, watch, formState: { isSubmitting, errors } } = useForm<NewsArticle>({
+    const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<NewsArticle>({
         defaultValues: item || { title: '', author: 'Mai', source: 'Tổng hợp', imageUrl: '', content: '' },
     });
-    
-    const watchedContent = watch('content');
 
     const onSubmit = async (data: NewsArticle) => {
         try {
@@ -214,53 +212,38 @@ function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished:
     };
     
     return (
-        <Tabs defaultValue="edit" className="flex flex-col h-full">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="edit">Chỉnh sửa</TabsTrigger>
-                <TabsTrigger value="preview">Xem trước</TabsTrigger>
-            </TabsList>
-            <div className="flex-grow overflow-hidden mt-4">
-              <form id="news-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
-                  <TabsContent value="edit" className="space-y-4 overflow-y-auto h-full pr-4 mt-0 data-[state=inactive]:h-0 data-[state=inactive]:overflow-hidden">
-                      <div className="space-y-1">
-                          <Label htmlFor="title">Tiêu đề</Label>
-                          <Input id="title" {...register('title', { required: 'Tiêu đề là bắt buộc' })} />
-                          {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
-                      </div>
-                       <div className="grid grid-cols-2 gap-4">
-                           <div className="space-y-1">
-                              <Label htmlFor="author">Tác giả</Label>
-                              <Input id="author" {...register('author')} />
-                          </div>
-                           <div className="space-y-1">
-                              <Label htmlFor="source">Nguồn</Label>
-                              <Input id="source" {...register('source')} />
-                          </div>
-                       </div>
-                       <div className="space-y-1">
-                          <Label htmlFor="imageUrl">URL ảnh bìa</Label>
-                          <Input id="imageUrl" {...register('imageUrl')} />
-                      </div>
-                       <div className="space-y-1 h-full flex flex-col">
-                          <Label htmlFor="content">Nội dung (hỗ trợ HTML và placeholders)</Label>
-                          <Textarea id="content" {...register('content')} className="min-h-[250px] flex-grow" />
-                      </div>
-                  </TabsContent>
-                  <TabsContent value="preview" className="overflow-y-auto h-full pr-4 mt-0 data-[state=inactive]:h-0 data-[state=inactive]:overflow-hidden">
-                      <div className="prose prose-lg max-w-none rounded-lg border bg-muted p-4 h-full">
-                          <div dangerouslySetInnerHTML={{ __html: watchedContent || '<p class="text-muted-foreground">Nội dung xem trước sẽ hiện ở đây...</p>' }} />
-                      </div>
-                  </TabsContent>
-              </form>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-h-[70vh] overflow-y-auto pr-4">
+            <div className="space-y-1">
+                <Label htmlFor="title">Tiêu đề</Label>
+                <Input id="title" {...register('title', { required: 'Tiêu đề là bắt buộc' })} />
+                {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
             </div>
-            <DialogFooter className="pt-4 mt-4 border-t">
+             <div className="grid grid-cols-2 gap-4">
+                 <div className="space-y-1">
+                    <Label htmlFor="author">Tác giả</Label>
+                    <Input id="author" {...register('author')} />
+                </div>
+                 <div className="space-y-1">
+                    <Label htmlFor="source">Nguồn</Label>
+                    <Input id="source" {...register('source')} />
+                </div>
+             </div>
+             <div className="space-y-1">
+                <Label htmlFor="imageUrl">URL ảnh bìa</Label>
+                <Input id="imageUrl" {...register('imageUrl')} />
+            </div>
+             <div className="space-y-1">
+                <Label htmlFor="content">Nội dung (hỗ trợ HTML và placeholders)</Label>
+                <Textarea id="content" {...register('content')} className="min-h-[250px]" />
+            </div>
+            <DialogFooter>
                 <DialogClose asChild><Button type="button" variant="ghost">Hủy</Button></DialogClose>
-                <Button type="submit" form="news-form" disabled={isSubmitting}>
+                <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Lưu
                 </Button>
             </DialogFooter>
-        </Tabs>
+        </form>
     );
 }
 
@@ -342,7 +325,7 @@ export default function AdminPage() {
             case 'model': return <PlaceholderDialog title="Chỉnh sửa Model" open={true} onOpenChange={() => setEditingItem(null)} />;
             case 'news': return (
                 <Dialog open={true} onOpenChange={() => setEditingItem(null)}>
-                  <DialogContent className="sm:max-w-4xl h-[80vh] flex flex-col">
+                  <DialogContent className="sm:max-w-[600px]">
                     <DialogHeader>
                       <DialogTitle>Chỉnh sửa Tin tức</DialogTitle>
                     </DialogHeader>
@@ -361,7 +344,7 @@ export default function AdminPage() {
             case 'model': return <PlaceholderDialog title="Thêm Model mới" open={true} onOpenChange={() => setAddingType(null)} />;
             case 'news': return (
                 <Dialog open={true} onOpenChange={() => setAddingType(null)}>
-                  <DialogContent className="sm:max-w-4xl h-[80vh] flex flex-col">
+                  <DialogContent className="sm:max-w-[600px]">
                     <DialogHeader>
                       <DialogTitle>Thêm Tin tức mới</DialogTitle>
                     </DialogHeader>
