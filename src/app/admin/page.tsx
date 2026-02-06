@@ -21,7 +21,7 @@ import { Loader2, PlusCircle, Edit, ExternalLink, RefreshCw, AlertTriangle } fro
 import { Skeleton } from '@/components/ui/skeleton';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { togglePostStatus, addOrUpdateItem } from './actions';
+import { togglePostStatus, addOrUpdateItem } from '@/app/admin/actions';
 import { useToast } from '@/hooks/use-toast';
 import type { Tool, AIModel, NewsArticle } from '@/lib/types';
 import { format } from 'date-fns';
