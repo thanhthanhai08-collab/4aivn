@@ -22,11 +22,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dropdown-menu";
 import { EditProfileForm } from "@/components/profile/edit-profile-form";
 import { getUserProfileData } from "@/lib/user-data-service";
 import { collection, getDocs, query, where, documentId, orderBy } from "firebase/firestore";
