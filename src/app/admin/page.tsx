@@ -121,7 +121,7 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                 </TableCell>
                                 <TableCell>
                                     <div className="flex flex-col items-end space-y-1">
-                                        <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
+                                        <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
                                             <Edit className="mr-2 h-3 w-3" /> Sửa
                                         </Button>
                                         <Button asChild variant="outline" size="sm">
