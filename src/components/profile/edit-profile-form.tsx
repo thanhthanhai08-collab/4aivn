@@ -31,9 +31,13 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    displayName: string;
+    photoURL: string | null;
+    bio: string;
+  }>({
     displayName: "",
-    photoURL: "",
+    photoURL: null,
     bio: "",
   });
 
@@ -41,7 +45,7 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
     if (currentUser) {
       setFormData({
         displayName: currentUser.displayName || "",
-        photoURL: currentUser.photoURL || "",
+        photoURL: currentUser.photoURL || null,
         bio: "", // Bio will be fetched from Firestore
       });
       
@@ -83,7 +87,7 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
   };
   
   const handleRemovePhoto = () => {
-    setFormData(prev => ({ ...prev, photoURL: "" }));
+    setFormData(prev => ({ ...prev, photoURL: null }));
     toast({ title: "Đã gỡ ảnh", description: "Ảnh đại diện của bạn sẽ được gỡ sau khi lưu." });
   };
 
@@ -126,7 +130,7 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
           <DropdownMenuTrigger asChild>
             <div className="relative cursor-pointer group">
               <Avatar className="h-24 w-24 border-4 border-background shadow-xl ring-2 ring-primary/20 transition group-hover:ring-primary">
-                <AvatarImage src={formData.photoURL} className="object-cover" />
+                <AvatarImage src={formData.photoURL || undefined} className="object-cover" />
                 <AvatarFallback className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/60 text-primary-foreground">
                   {getInitials(formData.displayName)}
                 </AvatarFallback>

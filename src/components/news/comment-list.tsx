@@ -29,7 +29,7 @@ export function CommentList({ comments }: CommentListProps) {
       {comments.map((comment) => (
         <div key={comment.id} className="flex items-start space-x-4">
           <Avatar className="h-10 w-10 border">
-            <AvatarImage src={comment.userPhotoURL || ""} alt={comment.userName || "User"} />
+            <AvatarImage src={comment.userPhotoURL || undefined} alt={comment.userName || "User"} />
             <AvatarFallback>{getInitials(comment.userName)}</AvatarFallback>
           </Avatar>
           <div className="flex-1">

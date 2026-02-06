@@ -25,7 +25,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   registerWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
-  updateUserProfile: (data: { displayName?: string, photoURL?: string }) => Promise<void>;
+  updateUserProfile: (data: { displayName?: string, photoURL?: string | null }) => Promise<void>;
   sendPasswordReset: (email: string) => Promise<void>;
 }
 
@@ -69,26 +69,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await sendEmailVerification(userCredential.user);
   };
 
-  const updateUserProfile = async (data: { displayName?: string, photoURL?: string }) => {
+  const updateUserProfile = async (data: { displayName?: string, photoURL?: string | null }) => {
     if (!auth.currentUser) {
       throw new Error("Không tìm thấy người dùng để cập nhật.");
     }
     
-    // Create a payload with only defined values to avoid overwriting with undefined
-    const payload: { displayName?: string; photoURL?: string } = {};
+    const payload: { displayName?: string; photoURL?: string | null } = {};
     if (data.displayName !== undefined) {
       payload.displayName = data.displayName;
     }
     if (data.photoURL !== undefined) {
-      // Firebase updateProfile handles empty string by setting it, which effectively removes the photo URL.
       payload.photoURL = data.photoURL;
     }
 
     await updateProfile(auth.currentUser, payload);
     
-    // Optimistically update the context state for immediate UI feedback.
-    // onAuthStateChanged will eventually sync with the backend for consistency.
-    setCurrentUser(prevUser => prevUser ? { ...prevUser, ...payload } : null);
+    setCurrentUser(prevUser => {
+        if (!prevUser) return null;
+        const updatedUser: User = { ...prevUser };
+        if (payload.displayName !== undefined) {
+            updatedUser.displayName = payload.displayName;
+        }
+        if (payload.photoURL !== undefined) {
+            updatedUser.photoURL = payload.photoURL;
+        }
+        return updatedUser;
+    });
   };
   
   const sendPasswordReset = async (email: string) => {

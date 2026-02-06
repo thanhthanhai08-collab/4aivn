@@ -181,7 +181,7 @@ export default function ProfilePage() {
                     <CardHeader className="bg-muted/30 p-6">
                         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                             <Avatar className="h-24 w-24 border-4 border-background ring-2 ring-primary">
-                                <AvatarImage src={currentUser.photoURL || ""} alt={currentUser.displayName || "Người dùng"} />
+                                <AvatarImage src={currentUser.photoURL || undefined} alt={currentUser.displayName || "Người dùng"} />
                                 <AvatarFallback className="text-3xl">{getInitials(currentUser.displayName)}</AvatarFallback>
                             </Avatar>
                             <div className="text-center sm:text-left">
