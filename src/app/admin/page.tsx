@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { Loader2, PlusCircle, Edit, ExternalLink, RefreshCw, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { collection, getDocs, orderBy, query, documentId } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { togglePostStatus, addOrUpdateItem } from './actions';
 import { useToast } from '@/hooks/use-toast';
@@ -280,9 +280,9 @@ export default function AdminPage() {
         setIsFetchingData(true);
         try {
             const [toolsSnapshot, modelsSnapshot, newsSnapshot] = await Promise.all([
-                getDocs(query(collection(db, "tools"), orderBy(documentId(), "desc"))),
-                getDocs(query(collection(db, "models"), orderBy(documentId(), "desc"))),
-                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"), orderBy(documentId(), "desc"))),
+                getDocs(query(collection(db, "tools"), orderBy("__name__", "desc"))),
+                getDocs(query(collection(db, "models"), orderBy("__name__", "desc"))),
+                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"), orderBy("__name__", "desc"))),
             ]);
             setTools(toolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool)));
             setModels(modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel)));
