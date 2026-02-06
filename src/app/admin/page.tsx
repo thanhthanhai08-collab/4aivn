@@ -120,15 +120,17 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                     </div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="flex flex-col items-end space-y-1">
-                                        <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
-                                            <Edit className="mr-2 h-3 w-3" /> Sửa
-                                        </Button>
-                                        <Button asChild variant="outline" size="sm">
-                                            <Link href={getPreviewLink(item)} target="_blank">
-                                               Xem trước <ExternalLink className="ml-2 h-3 w-3" />
-                                            </Link>
-                                        </Button>
+                                    <div className="flex justify-end">
+                                        <div className="flex flex-col items-stretch space-y-2 border border-border p-1 rounded-md">
+                                            <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
+                                                <Edit className="mr-2 h-3 w-3" /> Sửa
+                                            </Button>
+                                            <Button asChild variant="outline" size="sm">
+                                                <Link href={getPreviewLink(item)} target="_blank">
+                                                Xem trước <ExternalLink className="ml-2 h-3 w-3" />
+                                                </Link>
+                                            </Button>
+                                        </div>
                                     </div>
                                 </TableCell>
                             </TableRow>
@@ -150,7 +152,6 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
 
     const onSubmit = async (data: Tool) => {
         try {
-            // Create a mutable copy and remove the id if it exists, to prevent Firestore errors.
             const dataToSave: Partial<Tool> & {[key: string]: any} = { ...data };
             if (item?.id) {
                 delete dataToSave.id;
@@ -211,18 +212,11 @@ function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished:
 
     const onSubmit = async (data: NewsArticle) => {
         try {
-            // Create a mutable copy for processing
             const dataToSave: Partial<NewsArticle> & {[key: string]: any} = { ...data };
-
-            // Fix 1: Firestore doesn't allow writing the 'id' field within the document data.
-            // We remove it before sending the payload for an update.
             if (item?.id) {
                 delete dataToSave.id;
             }
     
-            // Fix 2: The 'publishedAt' field is fetched as an ISO string. 
-            // We must convert it back to a Date object for Firestore to correctly store it as a Timestamp.
-            // This is only necessary for updates, as new documents get a serverTimestamp().
             if (item?.id && typeof dataToSave.publishedAt === 'string') {
                 dataToSave.publishedAt = new Date(dataToSave.publishedAt);
             }
