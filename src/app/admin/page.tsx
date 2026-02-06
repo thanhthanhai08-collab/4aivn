@@ -85,7 +85,7 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
         switch (collectionName) {
             case 'tools': return `/cong-cu/${item.id}`;
             case 'models': return `/bang-xep-hang/${item.id}`;
-            case 'news': return `/${item.id}`;
+            case 'news': return `/admin/preview/${item.id}`;
             default: return '/';
         }
     }
