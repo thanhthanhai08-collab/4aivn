@@ -25,9 +25,10 @@ import { togglePostStatus, addOrUpdateItem } from './actions';
 import { useToast } from '@/hooks/use-toast';
 import type { Tool, AIModel, NewsArticle } from '@/lib/types';
 import { format } from 'date-fns';
+import Image from 'next/image';
 
 // IMPORTANT: Replace this with your actual Admin User ID from Firebase Authentication
-const ADMIN_UID = 'YOUR_ADMIN_UID_HERE';
+const ADMIN_UID = 'UTGM1t0AT2cx33zhboLnyK4atqI3';
 
 // Sub-component for the Overview Chart
 function OverviewDashboard({ tools, models, news }: { tools: Tool[], models: AIModel[], news: NewsArticle[] }) {
@@ -193,7 +194,76 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
     );
 }
 
-// Placeholder Dialogs
+// NEW: Form for News
+function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished: () => void }) {
+    const { toast } = useToast();
+    const { register, handleSubmit, watch, formState: { isSubmitting, errors } } = useForm<NewsArticle>({
+        defaultValues: item || { title: '', author: 'Mai', source: 'Tổng hợp', imageUrl: '', content: '' },
+    });
+    
+    const watchedContent = watch('content');
+
+    const onSubmit = async (data: NewsArticle) => {
+        try {
+            await addOrUpdateItem('news', data, item?.id);
+            toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} tin tức.` });
+            onFinished();
+        } catch (error) {
+            toast({ title: 'Lỗi', description: (error as Error).message, variant: 'destructive' });
+        }
+    };
+    
+    return (
+        <Tabs defaultValue="edit" className="flex flex-col h-full">
+            <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="edit">Chỉnh sửa</TabsTrigger>
+                <TabsTrigger value="preview">Xem trước</TabsTrigger>
+            </TabsList>
+            <div className="flex-grow overflow-hidden mt-4">
+              <form id="news-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
+                  <TabsContent value="edit" className="space-y-4 overflow-y-auto h-full pr-4 mt-0 data-[state=inactive]:h-0 data-[state=inactive]:overflow-hidden">
+                      <div className="space-y-1">
+                          <Label htmlFor="title">Tiêu đề</Label>
+                          <Input id="title" {...register('title', { required: 'Tiêu đề là bắt buộc' })} />
+                          {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
+                      </div>
+                       <div className="grid grid-cols-2 gap-4">
+                           <div className="space-y-1">
+                              <Label htmlFor="author">Tác giả</Label>
+                              <Input id="author" {...register('author')} />
+                          </div>
+                           <div className="space-y-1">
+                              <Label htmlFor="source">Nguồn</Label>
+                              <Input id="source" {...register('source')} />
+                          </div>
+                       </div>
+                       <div className="space-y-1">
+                          <Label htmlFor="imageUrl">URL ảnh bìa</Label>
+                          <Input id="imageUrl" {...register('imageUrl')} />
+                      </div>
+                       <div className="space-y-1 h-full flex flex-col">
+                          <Label htmlFor="content">Nội dung (hỗ trợ HTML và placeholders)</Label>
+                          <Textarea id="content" {...register('content')} className="min-h-[250px] flex-grow" />
+                      </div>
+                  </TabsContent>
+                  <TabsContent value="preview" className="overflow-y-auto h-full pr-4 mt-0 data-[state=inactive]:h-0 data-[state=inactive]:overflow-hidden">
+                      <div className="prose prose-lg max-w-none rounded-lg border bg-muted p-4 h-full">
+                          <div dangerouslySetInnerHTML={{ __html: watchedContent || '<p class="text-muted-foreground">Nội dung xem trước sẽ hiện ở đây...</p>' }} />
+                      </div>
+                  </TabsContent>
+              </form>
+            </div>
+            <DialogFooter className="pt-4 mt-4 border-t">
+                <DialogClose asChild><Button type="button" variant="ghost">Hủy</Button></DialogClose>
+                <Button type="submit" form="news-form" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Lưu
+                </Button>
+            </DialogFooter>
+        </Tabs>
+    );
+}
+
 function PlaceholderDialog({ title, open, onOpenChange }: { title: string, open: boolean, onOpenChange: (open: boolean) => void }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -270,7 +340,16 @@ export default function AdminPage() {
         switch (editingItem.type) {
             case 'tool': return <Dialog open={true} onOpenChange={() => setEditingItem(null)}><DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>Chỉnh sửa Công cụ</DialogTitle></DialogHeader><ToolForm item={editingItem.data} onFinished={handleOnFinish} /></DialogContent></Dialog>;
             case 'model': return <PlaceholderDialog title="Chỉnh sửa Model" open={true} onOpenChange={() => setEditingItem(null)} />;
-            case 'news': return <PlaceholderDialog title="Chỉnh sửa Tin tức" open={true} onOpenChange={() => setEditingItem(null)} />;
+            case 'news': return (
+                <Dialog open={true} onOpenChange={() => setEditingItem(null)}>
+                  <DialogContent className="sm:max-w-4xl h-[80vh] flex flex-col">
+                    <DialogHeader>
+                      <DialogTitle>Chỉnh sửa Tin tức</DialogTitle>
+                    </DialogHeader>
+                    <NewsForm item={editingItem.data} onFinished={handleOnFinish} />
+                  </DialogContent>
+                </Dialog>
+              );
             default: return null;
         }
     }
@@ -280,7 +359,16 @@ export default function AdminPage() {
         switch (addingType) {
             case 'tool': return <Dialog open={true} onOpenChange={() => setAddingType(null)}><DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>Thêm Công cụ mới</DialogTitle></DialogHeader><ToolForm onFinished={handleOnFinish} /></DialogContent></Dialog>;
             case 'model': return <PlaceholderDialog title="Thêm Model mới" open={true} onOpenChange={() => setAddingType(null)} />;
-            case 'news': return <PlaceholderDialog title="Thêm Tin tức mới" open={true} onOpenChange={() => setAddingType(null)} />;
+            case 'news': return (
+                <Dialog open={true} onOpenChange={() => setAddingType(null)}>
+                  <DialogContent className="sm:max-w-4xl h-[80vh] flex flex-col">
+                    <DialogHeader>
+                      <DialogTitle>Thêm Tin tức mới</DialogTitle>
+                    </DialogHeader>
+                    <NewsForm onFinished={handleOnFinish} />
+                  </DialogContent>
+                </Dialog>
+              );
             default: return null;
         }
     }

@@ -8,7 +8,7 @@ import { auth } from '@/contexts/auth-context'; // Assuming auth is exported fro
                                                // In a real app, you'd get the session from headers/cookies.
 
 // IMPORTANT: Replace this with your actual Admin User ID
-const ADMIN_UID = 'YOUR_ADMIN_UID_HERE';
+const ADMIN_UID = 'UTGM1t0AT2cx33zhboLnyK4atqI3';
 
 // A server-side check would be more complex, involving session management.
 // For this prototype, we'll rely on the client-side check before calling the action.
