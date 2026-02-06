@@ -36,21 +36,26 @@ export async function togglePostStatus(collectionName: string, docId: string, cu
 export async function addOrUpdateItem(collectionName: string, data: any, itemId?: string) {
     await verifyAdmin();
     try {
-        const dataToSave: Partial<any> & {[key: string]: any} = { ...data };
-        
+        // Create a mutable copy to avoid modifying the original form data
+        const dataToSave = { ...data };
+
         if (itemId) {
-            // Update existing item
+            // This is an UPDATE operation
             const docRef = doc(db, collectionName, itemId);
-            // Ensure server-side data like Timestamps are handled correctly
-            if (dataToSave.publishedAt && typeof dataToSave.publishedAt === 'string') {
-                dataToSave.publishedAt = new Date(dataToSave.publishedAt);
-            }
-            if(dataToSave.id) {
+            
+            // 1. Remove the 'id' field if it exists
+            if (dataToSave.id) {
                 delete dataToSave.id;
             }
+
+            // 2. Convert 'publishedAt' string back to a Date object for Firestore
+            if (collectionName === 'news' && dataToSave.publishedAt && typeof dataToSave.publishedAt === 'string') {
+                dataToSave.publishedAt = new Date(dataToSave.publishedAt);
+            }
+            
             await updateDoc(docRef, dataToSave);
         } else {
-            // Add new item
+            // This is a CREATE operation
             const payload: any = {
                 ...dataToSave,
                 post: false, // Always start as draft

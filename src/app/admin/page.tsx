@@ -120,17 +120,15 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                     </div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="flex justify-end">
-                                        <div className="flex flex-col items-stretch space-y-2">
-                                            <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
-                                                <Edit className="mr-2 h-3 w-3" /> Sửa
-                                            </Button>
-                                            <Button asChild variant="outline" size="sm">
-                                                <Link href={getPreviewLink(item)} target="_blank">
-                                                Xem trước <ExternalLink className="ml-2 h-3 w-3" />
-                                                </Link>
-                                            </Button>
-                                        </div>
+                                    <div className="flex justify-end space-x-2">
+                                        <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
+                                            <Edit className="mr-2 h-3 w-3" /> Sửa
+                                        </Button>
+                                        <Button asChild variant="outline" size="sm">
+                                            <Link href={getPreviewLink(item)} target="_blank">
+                                            Xem trước <ExternalLink className="ml-2 h-3 w-3" />
+                                            </Link>
+                                        </Button>
                                     </div>
                                 </TableCell>
                             </TableRow>
@@ -152,12 +150,7 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
 
     const onSubmit = async (data: Tool) => {
         try {
-            const dataToSave: Partial<Tool> & {[key: string]: any} = { ...data };
-            if (item?.id) {
-                delete dataToSave.id;
-            }
-    
-            await addOrUpdateItem('tools', dataToSave, item?.id);
+            await addOrUpdateItem('tools', data, item?.id);
             toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} công cụ.` });
             onFinished();
         } catch (error) {
@@ -212,16 +205,7 @@ function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished:
 
     const onSubmit = async (data: NewsArticle) => {
         try {
-            const dataToSave: Partial<NewsArticle> & {[key: string]: any} = { ...data };
-            if (item?.id) {
-                delete dataToSave.id;
-            }
-    
-            if (item?.id && typeof dataToSave.publishedAt === 'string') {
-                dataToSave.publishedAt = new Date(dataToSave.publishedAt);
-            }
-    
-            await addOrUpdateItem('news', dataToSave, item?.id);
+            await addOrUpdateItem('news', data, item?.id);
             toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} tin tức.` });
             onFinished();
         } catch (error) {
