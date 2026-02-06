@@ -83,7 +83,7 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
     
     const getPreviewLink = (item: any) => {
         switch (collectionName) {
-            case 'tools': return `/cong-cu/${item.id}`;
+            case 'tools': return `/admin/preview/tool/${item.id}`;
             case 'models': return `/admin/preview/model/${item.id}`;
             case 'news': return `/admin/preview/${item.id}`;
             default: return '/';
