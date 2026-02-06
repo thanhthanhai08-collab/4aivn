@@ -58,6 +58,7 @@ export interface UserProfileData {
   favoriteModels?: string[];
   displayName?: string;
   photoURL?: string | null;
+  bio?: string;
 }
 
 
@@ -120,5 +121,3 @@ export interface ToolReview extends UserToolRating {
     userName: string;
     userPhotoURL: string | null;
 }
-
-    

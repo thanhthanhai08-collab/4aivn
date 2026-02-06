@@ -25,7 +25,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   registerWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
-  updateUserProfile: (data: { displayName: string }) => Promise<void>;
+  updateUserProfile: (data: { displayName?: string, photoURL?: string }) => Promise<void>;
   sendPasswordReset: (email: string) => Promise<void>;
 }
 
@@ -69,13 +69,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await sendEmailVerification(userCredential.user);
   };
 
-  const updateUserProfile = async (data: { displayName: string }) => {
+  const updateUserProfile = async (data: { displayName?: string, photoURL?: string }) => {
     if (!auth.currentUser) {
       throw new Error("Không tìm thấy người dùng để cập nhật.");
     }
-    await updateProfile(auth.currentUser, { displayName: data.displayName });
-    // Refresh user state to get the latest profile info
-    setCurrentUser(prevUser => prevUser ? { ...prevUser, displayName: data.displayName } : null);
+    
+    // Create a payload with only defined values to avoid overwriting with undefined
+    const payload: { displayName?: string; photoURL?: string } = {};
+    if (data.displayName !== undefined) {
+      payload.displayName = data.displayName;
+    }
+    if (data.photoURL !== undefined) {
+      // Firebase updateProfile handles empty string by setting it, which effectively removes the photo URL.
+      payload.photoURL = data.photoURL;
+    }
+
+    await updateProfile(auth.currentUser, payload);
+    
+    // Optimistically update the context state for immediate UI feedback.
+    // onAuthStateChanged will eventually sync with the backend for consistency.
+    setCurrentUser(prevUser => prevUser ? { ...prevUser, ...payload } : null);
   };
   
   const sendPasswordReset = async (email: string) => {
