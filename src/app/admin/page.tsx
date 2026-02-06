@@ -280,9 +280,9 @@ export default function AdminPage() {
         setIsFetchingData(true);
         try {
             const [toolsSnapshot, modelsSnapshot, newsSnapshot] = await Promise.all([
-                getDocs(query(collection(db, "tools"), orderBy("__name__", "desc"))),
-                getDocs(query(collection(db, "models"), orderBy("__name__", "desc"))),
-                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"), orderBy("__name__", "desc"))),
+                getDocs(query(collection(db, "tools"), orderBy("name"))),
+                getDocs(query(collection(db, "models"), orderBy("name"))),
+                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"))),
             ]);
             setTools(toolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool)));
             setModels(modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel)));
