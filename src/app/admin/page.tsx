@@ -121,7 +121,7 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                 </TableCell>
                                 <TableCell>
                                     <div className="flex justify-end">
-                                        <div className="flex flex-col items-stretch space-y-2 border border-border p-1 rounded-md">
+                                        <div className="flex flex-col items-stretch space-y-2">
                                             <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
                                                 <Edit className="mr-2 h-3 w-3" /> Sửa
                                             </Button>
