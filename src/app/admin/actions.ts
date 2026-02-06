@@ -1,5 +1,11 @@
 'use server';
 
-// Re-export the functions from the new location.
-// This file now only acts as the "server action" boundary.
-export { togglePostStatus, addOrUpdateItem } from '@/lib/admin-actions';
+import { togglePostStatus as logicTogglePostStatus, addOrUpdateItem as logicAddOrUpdateItem } from '@/lib/admin-actions';
+
+export async function togglePostStatus(collectionName: string, docId: string, currentStatus: boolean) {
+  return logicTogglePostStatus(collectionName, docId, currentStatus);
+}
+
+export async function addOrUpdateItem(collectionName: string, data: any, itemId?: string) {
+  return logicAddOrUpdateItem(collectionName, data, itemId);
+}
