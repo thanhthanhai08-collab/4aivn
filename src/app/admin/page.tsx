@@ -150,7 +150,13 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
 
     const onSubmit = async (data: Tool) => {
         try {
-            await addOrUpdateItem('tools', data, item?.id);
+            // Create a mutable copy and remove the id if it exists, to prevent Firestore errors.
+            const dataToSave: Partial<Tool> & {[key: string]: any} = { ...data };
+            if (item?.id) {
+                delete dataToSave.id;
+            }
+    
+            await addOrUpdateItem('tools', dataToSave, item?.id);
             toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} công cụ.` });
             onFinished();
         } catch (error) {
@@ -205,7 +211,23 @@ function NewsForm({ item, onFinished }: { item?: NewsArticle | null, onFinished:
 
     const onSubmit = async (data: NewsArticle) => {
         try {
-            await addOrUpdateItem('news', data, item?.id);
+            // Create a mutable copy for processing
+            const dataToSave: Partial<NewsArticle> & {[key: string]: any} = { ...data };
+
+            // Fix 1: Firestore doesn't allow writing the 'id' field within the document data.
+            // We remove it before sending the payload for an update.
+            if (item?.id) {
+                delete dataToSave.id;
+            }
+    
+            // Fix 2: The 'publishedAt' field is fetched as an ISO string. 
+            // We must convert it back to a Date object for Firestore to correctly store it as a Timestamp.
+            // This is only necessary for updates, as new documents get a serverTimestamp().
+            if (item?.id && typeof dataToSave.publishedAt === 'string') {
+                dataToSave.publishedAt = new Date(dataToSave.publishedAt);
+            }
+    
+            await addOrUpdateItem('news', dataToSave, item?.id);
             toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} tin tức.` });
             onFinished();
         } catch (error) {
