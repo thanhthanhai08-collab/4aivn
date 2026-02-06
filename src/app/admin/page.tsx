@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { Loader2, PlusCircle, Edit, ExternalLink, RefreshCw, AlertTriangle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, documentId } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { togglePostStatus, addOrUpdateItem } from './actions';
 import { useToast } from '@/hooks/use-toast';
@@ -121,7 +121,7 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                 </TableCell>
                                 <TableCell>
                                     <div className="flex flex-col items-end space-y-1">
-                                        <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
+                                        <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
                                             <Edit className="mr-2 h-3 w-3" /> Sửa
                                         </Button>
                                         <Button asChild variant="outline" size="sm">
@@ -280,9 +280,9 @@ export default function AdminPage() {
         setIsFetchingData(true);
         try {
             const [toolsSnapshot, modelsSnapshot, newsSnapshot] = await Promise.all([
-                getDocs(query(collection(db, "tools"), orderBy("name"))),
-                getDocs(query(collection(db, "models"), orderBy("name"))),
-                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"))),
+                getDocs(query(collection(db, "tools"), orderBy(documentId(), "desc"))),
+                getDocs(query(collection(db, "models"), orderBy(documentId(), "desc"))),
+                getDocs(query(collection(db, "news"), orderBy("publishedAt", "desc"), orderBy(documentId(), "desc"))),
             ]);
             setTools(toolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool)));
             setModels(modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel)));
