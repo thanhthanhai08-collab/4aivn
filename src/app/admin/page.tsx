@@ -119,15 +119,17 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
                                         <span className="text-xs text-muted-foreground mt-1">{item.post ? 'Đã đăng' : 'Bản nháp'}</span>
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-right space-x-2">
-                                    <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
-                                        <Edit className="mr-2 h-3 w-3" /> Sửa
-                                    </Button>
-                                    <Button asChild variant="secondary" size="sm">
-                                        <Link href={getPreviewLink(item)} target="_blank">
-                                           Xem trước <ExternalLink className="ml-2 h-3 w-3" />
-                                        </Link>
-                                    </Button>
+                                <TableCell>
+                                    <div className="flex flex-col items-end space-y-1">
+                                        <Button variant="outline" size="sm" onClick={() => onEdit(item)}>
+                                            <Edit className="mr-2 h-3 w-3" /> Sửa
+                                        </Button>
+                                        <Button asChild variant="outline" size="sm">
+                                            <Link href={getPreviewLink(item)} target="_blank">
+                                               Xem trước <ExternalLink className="ml-2 h-3 w-3" />
+                                            </Link>
+                                        </Button>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         ))}
