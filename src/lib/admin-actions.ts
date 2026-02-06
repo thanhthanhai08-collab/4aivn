@@ -1,14 +1,11 @@
+'use server';
+
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, collection, addDoc, serverTimestamp, getDoc } from 'firebase/firestore';
-import { auth } from '@/contexts/auth-context'; // Assuming auth is exported from a client context which is not ideal for server.
-                                               // In a real app, you'd get the session from headers/cookies.
-
-// IMPORTANT: Replace this with your actual Admin User ID
-const ADMIN_UID = 'UTGM1t0AT2cx33zhboLnyK4atqI3';
 
 // A server-side check would be more complex, involving session management.
-// For this prototype, we'll rely on the client-side check before calling the action.
+// For this prototype, we'll rely on the client-side guard before calling the action.
 async function verifyAdmin() {
     // This is a placeholder. A robust implementation would validate the user session.
     // For now, we trust the client-side guard.
@@ -39,14 +36,23 @@ export async function togglePostStatus(collectionName: string, docId: string, cu
 export async function addOrUpdateItem(collectionName: string, data: any, itemId?: string) {
     await verifyAdmin();
     try {
+        const dataToSave: Partial<any> & {[key: string]: any} = { ...data };
+        
         if (itemId) {
             // Update existing item
             const docRef = doc(db, collectionName, itemId);
-            await updateDoc(docRef, data);
+            // Ensure server-side data like Timestamps are handled correctly
+            if (dataToSave.publishedAt && typeof dataToSave.publishedAt === 'string') {
+                dataToSave.publishedAt = new Date(dataToSave.publishedAt);
+            }
+            if(dataToSave.id) {
+                delete dataToSave.id;
+            }
+            await updateDoc(docRef, dataToSave);
         } else {
             // Add new item
             const payload: any = {
-                ...data,
+                ...dataToSave,
                 post: false, // Always start as draft
             };
             if (collectionName === 'news') {
