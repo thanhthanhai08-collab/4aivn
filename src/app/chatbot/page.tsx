@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
 import { db, auth, storage } from "@/lib/firebase"; 
 import { ref, uploadBytes } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
   doc, getDoc, writeBatch, where
@@ -38,45 +38,7 @@ export default function ChatPage() {
       });
     }
   }, []);
-
-  const mergeHistory = useCallback(async (anonId: string, newUserId: string) => {
-    try {
-      const anonMessagesRef = collection(db, "chatbot", anonId, "messages");
-      const anonMessagesSnap = await getDocs(anonMessagesRef);
-
-      if (anonMessagesSnap.empty) {
-        localStorage.removeItem("anonymous_chat_id");
-        return;
-      };
-
-      const batch = writeBatch(db);
-
-      for (const messageDoc of anonMessagesSnap.docs) {
-        const messageId = messageDoc.id;
-        const messageData = messageDoc.data();
-        const newUserMessageRef = doc(db, "chatbot", newUserId, "messages", messageId);
-        batch.set(newUserMessageRef, messageData);
-
-        const anonHistoryRef = collection(messageDoc.ref, "history");
-        const anonHistorySnap = await getDocs(anonHistoryRef);
-        anonHistorySnap.forEach(historyDoc => {
-          const newHistoryRef = doc(collection(newUserMessageRef, "history"), historyDoc.id);
-          batch.set(newHistoryRef, historyDoc.data());
-          batch.delete(historyDoc.ref);
-        });
-
-        batch.delete(messageDoc.ref);
-      }
-
-      await batch.commit();
-      localStorage.removeItem("anonymous_chat_id");
-      toast({ title: "Lịch sử trò chuyện đã được đồng bộ." });
-    } catch (error) {
-      console.error("Lỗi khi đồng bộ lịch sử chat:", error);
-      toast({ title: "Lỗi đồng bộ", description: "Không thể đồng bộ lịch sử chat của bạn.", variant: "destructive" });
-    }
-  }, [toast]);
-
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoadingAiResponse, scrollToBottom]);
@@ -84,24 +46,28 @@ export default function ChatPage() {
   useEffect(() => {
     setIsMounted(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const anonId = localStorage.getItem("anonymous_chat_id");
       if (user) {
-        if (anonId) {
-          await mergeHistory(anonId, user.uid);
-        }
+        // User is signed in (either permanently or anonymously)
         setCurrentUserId(user.uid);
       } else {
-        if (anonId) {
-          setCurrentUserId(anonId);
-        } else {
-          const newAnonId = `guest_${Date.now()}`;
-          localStorage.setItem("anonymous_chat_id", newAnonId);
-          setCurrentUserId(newAnonId);
+        // No user is signed in, so sign in anonymously.
+        // This will trigger onAuthStateChanged again with the new anonymous user.
+        try {
+          await signInAnonymously(auth);
+        } catch (error) {
+          console.error("Anonymous sign-in failed:", error);
+          toast({
+            title: "Lỗi kết nối",
+            description: "Không thể bắt đầu phiên chat. Vui lòng làm mới trang.",
+            variant: "destructive",
+          });
         }
       }
     });
+
     return () => unsubscribe();
-  }, [mergeHistory]);
+  }, [toast]);
+
 
   // --- LOGIC 1: LẤY DANH SÁCH PHIÊN CHAT (SIDEBAR) ---
   const fetchHistory = useCallback(async () => {
@@ -190,6 +156,14 @@ export default function ChatPage() {
 
   // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
   const handleSendMessage = async (text: string, file?: File) => {
+    if (!currentUserId) {
+      toast({
+        title: "Phiên chưa sẵn sàng",
+        description: "Vui lòng chờ một chút và thử lại.",
+        variant: "destructive"
+      });
+      return;
+    }
     if (!text.trim() && !file) return;
 
     const currentMessagesId = activeChatId;
@@ -364,7 +338,7 @@ export default function ChatPage() {
             )}
 
             <div className="p-4 md:p-6 bg-background border-t">
-              <ChatInput onSendMessage={handleSendMessage} isLoading={isLoadingAiResponse} />
+              <ChatInput onSendMessage={handleSendMessage} isLoading={isLoadingAiResponse || !currentUserId} />
             </div>
           </div>
         </main>
