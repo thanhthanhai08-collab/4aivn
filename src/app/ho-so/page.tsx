@@ -135,13 +135,9 @@ export default function ProfilePage() {
     router.push("/");
   };
                     
-  const getInitials = (name: string | null | undefined) => {
-    if (!name) return "N";
-    const names = name.split(' ');
-    if (names.length > 1) {
-      return names[0][0] + names[names.length - 1][0];
-    }
-    return name.substring(0, 2);
+  const getInitials = (email: string | null | undefined) => {
+    if (!email) return "?";
+    return email.charAt(0).toUpperCase();
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,7 +213,7 @@ export default function ProfilePage() {
                                 <Avatar className="h-24 w-24 border-4 border-background shadow-xl ring-2 ring-primary/20 transition group-hover:ring-primary">
                                     <AvatarImage src={currentUser.photoURL || undefined} className="object-cover" />
                                     <AvatarFallback className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/60 text-primary-foreground">
-                                    {getInitials(currentUser.displayName)}
+                                    {getInitials(currentUser.email)}
                                     </AvatarFallback>
                                 </Avatar>
                                 

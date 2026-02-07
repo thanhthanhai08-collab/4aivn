@@ -34,6 +34,7 @@ export function getComments(articleId: string, callback: (comments: Comment[]) =
         articleId: data.articleId,
         userId: data.userId,
         userName: data.userName,
+        userEmail: data.userEmail || null,
         userPhotoURL: data.userPhotoURL,
         text: data.text,
         createdAt: data.createdAt?.toDate() || new Date(), // Convert Firestore Timestamp to Date

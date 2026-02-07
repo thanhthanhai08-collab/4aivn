@@ -25,6 +25,7 @@ export async function addComment(articleId: string, user: User, text: string): P
     articleId: articleId, // Keep for potential denormalization or cross-collection queries if needed
     userId: user.uid,
     userName: user.displayName,
+    userEmail: user.email,
     userPhotoURL: user.photoURL,
     text: text,
     createdAt: serverTimestamp(),

@@ -31,13 +31,9 @@ export function UserNav({ user }: UserNavProps) {
     router.push("/"); 
   };
   
-  const getInitials = (name: string | null | undefined) => {
-    if (!name) return "N"; // Người dùng
-    const names = name.split(' ');
-    if (names.length > 1) {
-      return names[0][0] + names[names.length - 1][0];
-    }
-    return name.substring(0, 2);
+  const getInitials = (email: string | null | undefined) => {
+    if (!email) return "?";
+    return email.charAt(0).toUpperCase();
   };
 
   return (
@@ -46,7 +42,7 @@ export function UserNav({ user }: UserNavProps) {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8 ring-2 ring-primary/50">
             <AvatarImage src={user.photoURL || undefined} alt={user.displayName || "Người dùng"} />
-            <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+            <AvatarFallback>{getInitials(user.email)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

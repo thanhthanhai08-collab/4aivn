@@ -11,13 +11,10 @@ interface CommentListProps {
 }
 
 export function CommentList({ comments }: CommentListProps) {
-  const getInitials = (name: string | null | undefined) => {
-    if (!name) return "";
-    const names = name.split(' ');
-    if (names.length > 1) {
-      return names[0][0] + names[names.length - 1][0];
-    }
-    return name.substring(0, 2);
+  const getInitials = (email: string | null | undefined, name: string | null | undefined) => {
+    if (email) return email.charAt(0).toUpperCase();
+    if (name) return name.charAt(0).toUpperCase();
+    return "?";
   };
   
   if (comments.length === 0) {
@@ -30,7 +27,7 @@ export function CommentList({ comments }: CommentListProps) {
         <div key={comment.id} className="flex items-start space-x-4">
           <Avatar className="h-10 w-10 border">
             <AvatarImage src={comment.userPhotoURL || undefined} alt={comment.userName || "User"} />
-            <AvatarFallback>{getInitials(comment.userName)}</AvatarFallback>
+            <AvatarFallback>{getInitials(comment.userEmail, comment.userName)}</AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center space-x-2">

@@ -22,13 +22,9 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   
-  const getInitials = (name: string | null | undefined) => {
-    if (!name) return "";
-    const names = name.split(' ');
-    if (names.length > 1) {
-      return names[0][0] + names[names.length - 1][0];
-    }
-    return name.substring(0, 2);
+  const getInitials = (email: string | null | undefined) => {
+    if (!email) return "?";
+    return email.charAt(0).toUpperCase();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,6 +40,7 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
       articleId,
       userId: currentUser.uid,
       userName: currentUser.displayName,
+      userEmail: currentUser.email,
       userPhotoURL: currentUser.photoURL,
       text: trimmedText,
       createdAt: new Date(), // Use client-side date for immediate display
@@ -79,8 +76,8 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
   return (
     <form onSubmit={handleSubmit} className="flex items-start space-x-4">
       <Avatar className="h-10 w-10 border">
-        <AvatarImage src={currentUser.photoURL || ""} alt={currentUser.displayName || ""} />
-        <AvatarFallback>{getInitials(currentUser.displayName)}</AvatarFallback>
+        <AvatarImage src={currentUser.photoURL || undefined} alt={currentUser.displayName || ""} />
+        <AvatarFallback>{getInitials(currentUser.email)}</AvatarFallback>
       </Avatar>
       <div className="w-full">
         <Textarea

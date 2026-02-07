@@ -106,6 +106,7 @@ export interface Comment {
   articleId: string;
   userId: string;
   userName: string | null;
+  userEmail: string | null;
   userPhotoURL: string | null;
   text: string;
   createdAt: Date;
