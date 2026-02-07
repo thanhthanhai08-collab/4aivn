@@ -46,7 +46,6 @@ export default function ProfilePage() {
   const [bookmarkedNews, setBookmarkedNews] = useState<NewsArticle[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isFetchingData, setIsFetchingData] = useState(true);
-  const [bio, setBio] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -56,7 +55,6 @@ export default function ProfilePage() {
     setIsFetchingData(true);
     try {
         const userData = await getUserProfileData(currentUser.uid);
-        setBio(userData.bio || "");
         
         const [modelsSnapshot, toolsSnapshot] = await Promise.all([
             getDocs(query(collection(db, "models"), where("post", "==", true))),
@@ -153,7 +151,6 @@ export default function ProfilePage() {
       await updateUserProfile({ photoURL: url });
       
       toast({ title: "Đã cập nhật ảnh đại diện." });
-      fetchAllData();
     } catch (error) {
       console.error("Upload error: ", error);
       toast({ title: "Lỗi tải lên", description: "Không thể tải ảnh lên. Vui lòng thử lại.", variant: "destructive" });
@@ -168,7 +165,6 @@ export default function ProfilePage() {
     try {
         await updateUserProfile({ photoURL: null });
         toast({ title: "Đã gỡ ảnh đại diện." });
-        fetchAllData();
     } catch(error) {
         console.error("Remove photo error: ", error);
         toast({ title: "Lỗi", description: "Không thể gỡ ảnh đại diện.", variant: "destructive"});
@@ -258,7 +254,7 @@ export default function ProfilePage() {
                         <div className="text-center sm:text-left">
                             <CardTitle className="text-3xl font-headline">{currentUser.displayName}</CardTitle>
                             <CardDescription className="text-lg">{currentUser.email}</CardDescription>
-                            {bio && <p className="text-base text-muted-foreground mt-2 text-center sm:text-left">{bio}</p>}
+                            {currentUser.bio && <p className="text-base text-muted-foreground mt-2 text-center sm:text-left">{currentUser.bio}</p>}
                         </div>
                         <div className="sm:ml-auto flex flex-col sm:items-end space-y-2">
                             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
@@ -273,7 +269,7 @@ export default function ProfilePage() {
                                     </DialogHeader>
                                     <EditProfileForm onSuccess={() => {
                                         setIsEditDialogOpen(false);
-                                        fetchAllData(); // Refetch data on success
+                                        // No need to call fetchAllData for profile info, context handles it.
                                     }} />
                                 </DialogContent>
                             </Dialog>

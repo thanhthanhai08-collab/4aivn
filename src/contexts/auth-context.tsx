@@ -13,10 +13,11 @@ import {
   updateProfile,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import type { User } from "@/lib/types";
-import { auth } from "@/lib/firebase";
+import type { User, UserProfileData } from "@/lib/types";
+import { auth, db } from "@/lib/firebase";
 import React, { createContext, useState, useContext, useEffect, type ReactNode } from "react";
 import { FirebaseError } from "firebase/app";
+import { onSnapshot, doc, setDoc } from "firebase/firestore";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -25,7 +26,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   registerWithEmail: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
-  updateUserProfile: (data: { displayName?: string, photoURL?: string | null }) => Promise<void>;
+  updateUserProfile: (data: { displayName?: string, photoURL?: string | null, bio?: string }) => Promise<void>;
   sendPasswordReset: (email: string) => Promise<void>;
 }
 
@@ -36,23 +37,54 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    let unsubscribeProfile: () => void = () => {};
+
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      // Unsubscribe from previous profile listener
+      unsubscribeProfile();
+
       if (user) {
-        const formattedUser: User = {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          emailVerified: user.emailVerified,
-        };
-        setCurrentUser(formattedUser);
+        // Set up a real-time listener for the user's profile data in Firestore
+        const userDocRef = doc(db, "user-data", user.uid);
+        unsubscribeProfile = onSnapshot(userDocRef, (docSnap) => {
+          const profileData = docSnap.data() as UserProfileData | undefined;
+          
+          // Combine Auth data with Firestore data
+          const formattedUser: User = {
+            uid: user.uid,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            // Prioritize data from Firestore, then Auth, then null
+            displayName: profileData?.displayName || user.displayName,
+            photoURL: profileData?.photoURL !== undefined ? profileData.photoURL : user.photoURL,
+            // Add bio from firestore
+            bio: profileData?.bio,
+          };
+          setCurrentUser(formattedUser);
+          setIsLoading(false);
+        }, (error) => {
+            console.error("Error listening to user profile:", error);
+            // If listener fails, fallback to just auth data
+            const fallbackUser: User = {
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                emailVerified: user.emailVerified,
+            };
+            setCurrentUser(fallbackUser);
+            setIsLoading(false);
+        });
       } else {
         setCurrentUser(null);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAuth();
+      unsubscribeProfile();
+    };
   }, []);
 
   const loginWithGoogle = async () => {
@@ -69,32 +101,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await sendEmailVerification(userCredential.user);
   };
 
-  const updateUserProfile = async (data: { displayName?: string, photoURL?: string | null }) => {
-    if (!auth.currentUser) {
+  const updateUserProfile = async (data: { displayName?: string, photoURL?: string | null, bio?: string }) => {
+    const authUser = auth.currentUser;
+    if (!authUser) {
       throw new Error("Không tìm thấy người dùng để cập nhật.");
     }
     
-    const payload: { displayName?: string; photoURL?: string | null } = {};
+    // Prepare payloads
+    const authUpdatePayload: { displayName?: string; photoURL?: string | null } = {};
+    const firestoreUpdatePayload: { displayName?: string; photoURL?: string | null; bio?: string } = {};
+
     if (data.displayName !== undefined) {
-      payload.displayName = data.displayName;
+      authUpdatePayload.displayName = data.displayName;
+      firestoreUpdatePayload.displayName = data.displayName;
     }
     if (data.photoURL !== undefined) {
-      payload.photoURL = data.photoURL;
+      authUpdatePayload.photoURL = data.photoURL;
+      firestoreUpdatePayload.photoURL = data.photoURL;
+    }
+    if (data.bio !== undefined) {
+      firestoreUpdatePayload.bio = data.bio;
     }
 
-    await updateProfile(auth.currentUser, payload);
+    // Update Firestore first as the source of truth
+    const userDocRef = doc(db, "user-data", authUser.uid);
+    await setDoc(userDocRef, firestoreUpdatePayload, { merge: true });
+
+    // Then, update Firebase Auth profile for consistency
+    if (Object.keys(authUpdatePayload).length > 0) {
+        await updateProfile(authUser, authUpdatePayload);
+    }
     
-    setCurrentUser(prevUser => {
-        if (!prevUser) return null;
-        const updatedUser: User = { ...prevUser };
-        if (payload.displayName !== undefined) {
-            updatedUser.displayName = payload.displayName;
-        }
-        if (payload.photoURL !== undefined) {
-            updatedUser.photoURL = payload.photoURL;
-        }
-        return updatedUser;
-    });
+    // The onSnapshot listener will automatically update the currentUser state in the context.
   };
   
   const sendPasswordReset = async (email: string) => {

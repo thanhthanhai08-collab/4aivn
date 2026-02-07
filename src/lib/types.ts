@@ -48,6 +48,7 @@ export interface User {
   photoURL: string | null;
   emailVerified: boolean;
   isAnonymous?: boolean;
+  bio?: string;
 }
 
 export interface UserProfileData {

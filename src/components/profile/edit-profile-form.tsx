@@ -2,8 +2,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -33,14 +31,7 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
     if (currentUser) {
       setFormData({
         displayName: currentUser.displayName || "",
-        bio: "",
-      });
-      
-      const userDocRef = doc(db, "user-data", currentUser.uid);
-      getDoc(userDocRef).then(snap => {
-        if (snap.exists() && snap.data().bio) {
-          setFormData(prev => ({ ...prev, bio: snap.data().bio }));
-        }
+        bio: currentUser.bio || "",
       });
     }
   }, [currentUser]);
@@ -56,15 +47,10 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
 
     setIsSubmitting(true);
     try {
-      // Update displayName in Auth
       await updateUserProfile({ 
         displayName: formData.displayName, 
+        bio: formData.bio,
       });
-
-      // Update bio in Firestore
-      await setDoc(doc(db, "user-data", currentUser.uid), { 
-        bio: formData.bio 
-      }, { merge: true });
       
       toast({ title: "Đã lưu thay đổi" });
       onSuccess();
