@@ -862,10 +862,11 @@ exports.chatbot = onRequest(
 
             // Lưu vào sub-collection
             try {
+                const now = Date.now();
                 const userHistoryDoc = {
                     role: 'user',
                     parts: promptParts.filter(p => p.text), // Chỉ lưu phần text, loại bỏ object media không thể tuần tự hóa
-                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                    timestamp: admin.firestore.Timestamp.fromMillis(now),
                 };
     
                 if (attachmentForFirestore) {
@@ -879,16 +880,23 @@ exports.chatbot = onRequest(
                     role: 'model',
                     parts: [{ text: fullAIResponse }],
                     url_context_metadata: urlMetadataStructured || null,
-                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                    timestamp: admin.firestore.Timestamp.fromMillis(now + 100),
                 };
     
                 const messagesDocRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId);
                 const batch = db.batch();
-                batch.set(historyRef.doc(), userHistoryDoc);
-                batch.set(historyRef.doc(), modelHistoryDoc);
-                batch.set(messagesDocRef, { updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
-                
+
+                // Sử dụng ID tự tạo dựa trên thời gian để Firestore sắp xếp mặc định theo ID luôn
+                batch.set(historyRef.doc(`${now}_user`), userHistoryDoc);
+                batch.set(historyRef.doc(`${now + 100}_model`), modelHistoryDoc);
+
+                // Cập nhật Document cha (cái này vẫn dùng serverTimestamp để biết lần cuối tương tác)
+                batch.set(messagesDocRef, { 
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp() 
+                }, { merge: true });
+
                 await batch.commit();
+
             } catch (dbError) {
                 console.error("Firestore batch commit failed:", dbError);
                 // Không cần gửi lỗi lại cho client vì họ đã nhận được phản hồi AI
