@@ -869,11 +869,9 @@ exports.chatbot = onRequest(
                 };
     
                 if (attachmentForFirestore) {
-                    const [signedUrl] = await bucket.file(attachmentForFirestore.path).getSignedUrl({
-                        action: 'read',
-                        expires: '03-09-2491'
-                    });
-                    attachmentForFirestore.url = signedUrl;
+                    const bucketName = "clean-ai-hub.firebasestorage.app";
+                    const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(attachmentForFirestore.path)}?alt=media`;
+                    attachmentForFirestore.url = publicUrl;
                     userHistoryDoc.attachments = [attachmentForFirestore];
                 }
     
