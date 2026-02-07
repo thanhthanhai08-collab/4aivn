@@ -224,7 +224,7 @@ export default function ChatPage() {
             message: text,
             userId: currentUserId,
             messagesId: currentMessagesId,
-            imageBase64: fileInfo?.base64,
+            fileBase64: fileInfo?.base64,
             mimeType: fileInfo?.mimeType,
             fileName: fileInfo?.fileName,
           }),
@@ -245,10 +245,14 @@ export default function ChatPage() {
           
           for (const line of lines) {
             if (line.startsWith("data: ")) {
-              const jsonStr = line.replace("data: ", "").trim();
-              if (jsonStr === '{"done":true}') continue;
+              const jsonStr = line.substring(5).trim();
+              if (!jsonStr) continue; // Skip empty data lines
+
               try {
                 const data = JSON.parse(jsonStr);
+                
+                if (data.done === true) continue;
+
                 if ((data.error && data.error === "QUOTA_EXCEEDED")) {
                     throw new Error("RATE_LIMIT");
                 }
@@ -258,6 +262,8 @@ export default function ChatPage() {
                 }
               } catch (e: any) {
                  if (e.message === "RATE_LIMIT") throw e;
+                 // Ignore JSON parsing errors for incomplete chunks
+                 console.warn("SSE JSON parsing error:", e);
               }
             }
           }
