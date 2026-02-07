@@ -718,6 +718,9 @@ const TARGET_URLS = [
 ];
 const GREETINGS = ['chào', 'hi', 'hello', 'chào bạn', 'xin chào'];
 
+// Khởi tạo một lần để tái sử dụng
+let chatbotAI;
+
 exports.chatbot = onRequest(
     { 
         secrets: [GEMINI_API_KEY], 
@@ -738,17 +741,17 @@ exports.chatbot = onRequest(
         res.setHeader('Connection', 'keep-alive');
 
         try {
-            let { message, userId, messagesId, imageBase64, mimeType, fileName } = req.body;
+            let { message, userId, messagesId, fileBase64, mimeType, fileName } = req.body;
             
-            if (!message && !imageBase64) {
+            if (!message && !fileBase64) {
                 res.write(`data: ${JSON.stringify({ error: "Thiếu thông tin đầu vào" })}\n\n`);
                 res.end();
                 return;
             }
-             if (!message) message = "Mô tả hình ảnh này."; // Default message if only image is sent
+             if (!message) message = "Mô tả hình ảnh này."; // Default message if only file is sent
 
             // --- LỌC CHÀO HỎI ---
-            if (GREETINGS.includes(message.toLowerCase().trim()) && !imageBase64) {
+            if (GREETINGS.includes(message.toLowerCase().trim()) && !fileBase64) {
                  res.write(`data: ${JSON.stringify({ text: "Chào bạn, tôi có thể giúp gì cho bạn?" })}\n\n`);
                  res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
                  res.end();
@@ -759,7 +762,7 @@ exports.chatbot = onRequest(
 
             // --- LẤY LỊCH SỬ CHAT ---
             const historyRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId).collection("history");
-            const historySnapshot = await historyRef.orderBy("timestamp", "asc").limit(20).get();
+            const historySnapshot = await historyRef.orderBy("timestamp", "asc").limit(10).get();
             const historyContext = historySnapshot.docs.map(doc => ({
                 role: doc.data().role,
                 parts: doc.data().parts
@@ -769,20 +772,20 @@ exports.chatbot = onRequest(
             let attachmentForFirestore = null;
             const promptParts = [{ text: message }];
 
-            if (imageBase64 && mimeType) {
-                const fileBuffer = Buffer.from(imageBase64, 'base64');
+            if (fileBase64 && mimeType) {
+                const fileBuffer = Buffer.from(fileBase64, 'base64');
                 const bucket = storage.bucket("gs://clean-ai-hub.firebasestorage.app");
                 const uniqueFileName = `${Date.now()}_${fileName || 'upload'}`;
                 const filePath = `chatbot/${userId}/${messagesId}/${uniqueFileName}`;
                 const file = bucket.file(filePath);
                 
-                const uploadPromise = file.save(fileBuffer, { metadata: { contentType: mimeType } });
+                await file.save(fileBuffer, { metadata: { contentType: mimeType } });
 
                 if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
                     const { value } = await mammoth.extractRawText({ buffer: fileBuffer });
                     promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value}`;
                 } else {
-                    promptParts.push({ inlineData: { data: imageBase64, mimeType: mimeType } });
+                    promptParts.push({ inlineData: { data: fileBase64, mimeType: mimeType } });
                 }
                 
                 attachmentForFirestore = {
@@ -793,9 +796,11 @@ exports.chatbot = onRequest(
             }
             
             // --- KHỞI TẠO VÀ GỌI AI ---
-            const ai = genkit({ plugins: [googleAI({ apiKey: apiKey })] });
+            if (!chatbotAI) {
+                chatbotAI = genkit({ plugins: [googleAI({ apiKey })] });
+            }
             
-            const response = await ai.generateStream({
+            const response = await chatbotAI.generateStream({
                 model: "googleai/gemini-2.5-flash",
                 history: historyContext,
                 prompt: promptParts,
@@ -840,7 +845,6 @@ exports.chatbot = onRequest(
             };
 
             if (attachmentForFirestore) {
-                await uploadPromise;
                 const [signedUrl] = await bucket.file(attachmentForFirestore.path).getSignedUrl({
                     action: 'read',
                     expires: '03-09-2491'
