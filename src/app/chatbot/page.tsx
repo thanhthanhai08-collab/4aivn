@@ -56,7 +56,7 @@ export default function ChatPage() {
   }, [messages, isLoadingAiResponse, scrollToBottom]);
   
   // --- LOGIC AUTH & MERGE ---
-  const mergeHistory = async (anonId: string, realUid: string) => {
+  const mergeHistory = useCallback(async (anonId: string, realUid: string) => {
     try {
       const anonMsgsRef = collection(db, "chatbot", anonId, "messages");
       const snapshot = await getDocs(anonMsgsRef);
@@ -87,7 +87,7 @@ export default function ChatPage() {
     } catch (e) {
       console.error("Lỗi Merge:", e);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -109,7 +109,7 @@ export default function ChatPage() {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [mergeHistory]);
 
   // --- LOGIC 1: LẤY DANH SÁCH PHIÊN CHAT (SIDEBAR) ---
   const fetchHistory = useCallback(async () => {
