@@ -10,10 +10,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
 import { db, auth, storage } from "@/lib/firebase"; 
 import { ref, uploadBytes } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, type User as FirebaseUser } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
-  doc, writeBatch, where, getDoc
+  doc, where
 } from "firebase/firestore";
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -71,58 +71,16 @@ export default function ChatPage() {
     }
   }, []);
 
-  const mergeHistory = useCallback(async (guestId: string, userId: string) => {
-    console.log(`Bắt đầu gộp lịch sử từ ${guestId} sang ${userId}`);
-    const guestMessagesRef = collection(db, "chatbot", guestId, "messages");
-    const guestMessagesSnapshot = await getDocs(guestMessagesRef);
-
-    if (guestMessagesSnapshot.empty) {
-        console.log("Không có lịch sử khách để gộp.");
-        return;
-    }
-
-    const copyBatch = writeBatch(db);
-    const deleteBatch = writeBatch(db);
-
-    for (const guestMsgDoc of guestMessagesSnapshot.docs) {
-        const guestMsgData = guestMsgDoc.data();
-        const newMsgRef = doc(db, "chatbot", userId, "messages", guestMsgDoc.id);
-
-        // Sao chép tài liệu cha
-        copyBatch.set(newMsgRef, guestMsgData);
-        deleteBatch.delete(guestMsgDoc.ref); // Thêm vào batch xóa
-
-        // Sao chép sub-collection 'history'
-        const guestHistoryRef = collection(guestMsgDoc.ref, "history");
-        const guestHistorySnapshot = await getDocs(guestHistoryRef);
-        
-        for (const historyDoc of guestHistorySnapshot.docs) {
-            const newHistoryRef = doc(newMsgRef, "history", historyDoc.id);
-            copyBatch.set(newHistoryRef, historyDoc.data());
-            deleteBatch.delete(historyDoc.ref); // Thêm vào batch xóa
-        }
-    }
-
-    try {
-        await copyBatch.commit();
-        console.log("Gộp lịch sử thành công.");
-        await deleteBatch.commit();
-        console.log("Xóa dữ liệu khách thành công.");
-        localStorage.removeItem("guest_chat_id");
-    } catch (error) {
-        console.error("Lỗi khi gộp hoặc xóa lịch sử:", error);
-    }
-  }, []);
-
-  const loadSession = async (mId: string) => {
-    if (!currentUserId || mId === activeChatId) return;
+  const loadSession = useCallback(async (mId: string, userId?: string) => {
+    const finalUserId = userId || currentUserId;
+    if (!finalUserId || mId === activeChatId) return;
 
     setMessages([]);
     setActiveChatId(mId);
     setIsLoadingAiResponse(true);
 
     try {
-        const historyRef = collection(db, "chatbot", currentUserId, "messages", mId, "history");
+        const historyRef = collection(db, "chatbot", finalUserId, "messages", mId, "history");
         const q = query(historyRef, orderBy("timestamp", "asc"));
         const querySnapshot = await getDocs(q);
         
@@ -145,7 +103,7 @@ export default function ChatPage() {
     } finally {
       setIsLoadingAiResponse(false);
     }
-  };
+  }, [activeChatId, currentUserId, toast]);
 
   const startNewChat = useCallback(() => {
     const newId = `msg_${Date.now()}`;
@@ -162,48 +120,39 @@ export default function ChatPage() {
   
   useEffect(() => {
     setIsMounted(true);
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        const guestId = localStorage.getItem("guest_chat_id");
-        if (user) { // Người dùng đã đăng nhập
-            if (guestId) {
-                await mergeHistory(guestId, user.uid);
-            }
-            setCurrentUserId(user.uid);
-            await fetchHistory(user.uid);
-            // Nếu không có phiên chat nào hoặc muốn bắt đầu mới, gọi startNewChat
-            const userMessagesRef = collection(db, "chatbot", user.uid, "messages");
-            const userMessagesSnap = await getDocs(query(userMessagesRef, limit(1)));
-            if (userMessagesSnap.empty) {
-                startNewChat();
-            } else {
-                 // Tải phiên gần nhất nếu có
-                const q = query(collection(db, "chatbot", user.uid, "messages"), orderBy("updatedAt", "desc"), limit(1));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    loadSession(querySnapshot.docs[0].id);
-                } else {
-                    startNewChat();
-                }
-            }
-
-        } else { // Người dùng chưa đăng nhập (khách)
-            let currentGuestId = guestId;
-            if (!currentGuestId) {
-                currentGuestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-                localStorage.setItem("guest_chat_id", currentGuestId);
-            }
-            setCurrentUserId(currentGuestId);
-            fetchHistory(currentGuestId);
-             if (!activeChatId || !historySessions.some(s => s.id === activeChatId)) {
-                startNewChat();
-            }
+    const handleUserChange = async (user: FirebaseUser | null) => {
+      let idToUse = "";
+      if (user) {
+        // User is logged in
+        idToUse = user.uid;
+        setCurrentUserId(idToUse);
+        await fetchHistory(idToUse);
+      } else {
+        // User is a guest
+        let guestId = localStorage.getItem("guest_chat_id");
+        if (!guestId) {
+          guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+          localStorage.setItem("guest_chat_id", guestId);
         }
-    });
+        idToUse = guestId;
+        setCurrentUserId(idToUse);
+        await fetchHistory(idToUse);
+      }
+
+      // After setting the user and fetching history, load the most recent session or start a new one.
+      const q = query(collection(db, "chatbot", idToUse, "messages"), orderBy("updatedAt", "desc"), limit(1));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        await loadSession(querySnapshot.docs[0].id, idToUse);
+      } else {
+        startNewChat();
+      }
+    };
+    
+    const unsubscribe = onAuthStateChanged(auth, handleUserChange);
 
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [fetchHistory, loadSession, startNewChat]);
 
   // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
   const handleSendMessage = async (text: string, file?: File) => {
@@ -305,7 +254,7 @@ export default function ChatPage() {
             if (error.message === "RATE_LIMIT") {
               currentRetry++;
               if (currentRetry < MAX_RETRIES) {
-                toast({ title: `Hệ thống bận (Lần thử ${'${currentRetry}'}/${'${MAX_RETRIES}'})`, description: `Đang kết nối lại sau ${'${waitTime}' / 1000} giây...`});
+                toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
                 await delay(waitTime);
                 waitTime *= 2;
               } else {
