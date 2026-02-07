@@ -2,10 +2,15 @@
 import type { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, User, FileText } from "lucide-react";
+import { Bot, User, Download, FileText } from "lucide-react"; // Import Download
 import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"; // Import Dialog components
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -46,15 +51,29 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                   
                   if (isImage) {
                     return (
-                      <div key={index} className="relative aspect-video w-full">
-                        <Image 
-                          src={att.url} 
-                          alt={att.name} 
-                          fill
-                          sizes="(max-width: 768px) 100vw, 320px"
-                          className="object-cover" 
-                        />
-                      </div>
+                      <Dialog key={index}>
+                        <DialogTrigger asChild>
+                          <div className="relative aspect-video w-full cursor-pointer bg-black/10">
+                            <Image 
+                              src={att.url} 
+                              alt={att.name} 
+                              fill
+                              sizes="(max-width: 768px) 100vw, 320px"
+                              className="object-contain" // Changed to object-contain
+                            />
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-4xl h-auto p-2 bg-transparent border-none">
+                           <div className="relative w-full h-[80vh]">
+                            <Image 
+                                src={att.url} 
+                                alt={att.name}
+                                fill
+                                className="object-contain"
+                            />
+                           </div>
+                        </DialogContent>
+                      </Dialog>
                     );
                   } else { // Handle other file types like PDF/DOCX
                     return (
@@ -63,6 +82,7 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                           href={att.url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
+                          download={att.name} // Added download attribute
                           className={cn(
                             "flex items-center gap-2 no-underline hover:underline",
                             message.sender === 'user' 
@@ -70,7 +90,7 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                               : 'text-primary'
                           )}
                         >
-                          <FileText className="h-5 w-5 flex-shrink-0" />
+                          <Download className="h-5 w-5 flex-shrink-0" /> {/* Changed icon */}
                           <span className="truncate text-sm font-medium">{att.name}</span>
                         </Link>
                       </div>
