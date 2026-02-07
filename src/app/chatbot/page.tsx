@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
 import { db, auth, storage } from "@/lib/firebase"; 
 import { ref, uploadBytes } from "firebase/storage";
-import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
   doc, getDoc, writeBatch, where
@@ -39,6 +39,44 @@ export default function ChatPage() {
     }
   }, []);
 
+  const mergeHistory = useCallback(async (anonId: string, newUserId: string) => {
+    try {
+      const anonMessagesRef = collection(db, "chatbot", anonId, "messages");
+      const anonMessagesSnap = await getDocs(anonMessagesRef);
+
+      if (anonMessagesSnap.empty) {
+        localStorage.removeItem("anonymous_chat_id");
+        return;
+      };
+
+      const batch = writeBatch(db);
+
+      for (const messageDoc of anonMessagesSnap.docs) {
+        const messageId = messageDoc.id;
+        const messageData = messageDoc.data();
+        const newUserMessageRef = doc(db, "chatbot", newUserId, "messages", messageId);
+        batch.set(newUserMessageRef, messageData);
+
+        const anonHistoryRef = collection(messageDoc.ref, "history");
+        const anonHistorySnap = await getDocs(anonHistoryRef);
+        anonHistorySnap.forEach(historyDoc => {
+          const newHistoryRef = doc(collection(newUserMessageRef, "history"), historyDoc.id);
+          batch.set(newHistoryRef, historyDoc.data());
+          batch.delete(historyDoc.ref);
+        });
+
+        batch.delete(messageDoc.ref);
+      }
+
+      await batch.commit();
+      localStorage.removeItem("anonymous_chat_id");
+      toast({ title: "Lịch sử trò chuyện đã được đồng bộ." });
+    } catch (error) {
+      console.error("Lỗi khi đồng bộ lịch sử chat:", error);
+      toast({ title: "Lỗi đồng bộ", description: "Không thể đồng bộ lịch sử chat của bạn.", variant: "destructive" });
+    }
+  }, [toast]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoadingAiResponse, scrollToBottom]);
@@ -46,20 +84,24 @@ export default function ChatPage() {
   useEffect(() => {
     setIsMounted(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      const anonId = localStorage.getItem("anonymous_chat_id");
       if (user) {
+        if (anonId) {
+          await mergeHistory(anonId, user.uid);
+        }
         setCurrentUserId(user.uid);
       } else {
-        try {
-            const { user: anonUser } = await signInAnonymously(auth);
-            setCurrentUserId(anonUser.uid);
-        } catch (error) {
-            console.error("Lỗi đăng nhập ẩn danh:", error);
-            toast({ title: "Lỗi kết nối", description: "Không thể bắt đầu phiên chat.", variant: "destructive"});
+        if (anonId) {
+          setCurrentUserId(anonId);
+        } else {
+          const newAnonId = `guest_${Date.now()}`;
+          localStorage.setItem("anonymous_chat_id", newAnonId);
+          setCurrentUserId(newAnonId);
         }
       }
     });
     return () => unsubscribe();
-  }, [toast]);
+  }, [mergeHistory]);
 
   // --- LOGIC 1: LẤY DANH SÁCH PHIÊN CHAT (SIDEBAR) ---
   const fetchHistory = useCallback(async () => {
@@ -138,9 +180,11 @@ export default function ChatPage() {
   }, []);
   
   useEffect(() => {
-    if (isMounted && currentUserId && !activeChatId) {
-      fetchHistory();
-      startNewChat();
+    if (isMounted && currentUserId) {
+        fetchHistory();
+        if (!activeChatId) {
+            startNewChat();
+        }
     }
   }, [isMounted, currentUserId, activeChatId, startNewChat, fetchHistory]);
 
@@ -236,7 +280,7 @@ export default function ChatPage() {
             if (error.message === "RATE_LIMIT") {
               currentRetry++;
               if (currentRetry < MAX_RETRIES) {
-                toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
+                toast({ title: `Hệ thống bận (Lần thử ${'${currentRetry}'}/${'${MAX_RETRIES}'})`, description: `Đang kết nối lại sau ${'${waitTime}' / 1000} giây...`});
                 await delay(waitTime);
                 waitTime *= 2;
               } else {
