@@ -741,17 +741,17 @@ exports.chatbot = onRequest(
         res.setHeader('Connection', 'keep-alive');
 
         try {
-            let { message, userId, messagesId, fileBase64, mimeType, fileName } = req.body;
+            const { message, userId, messagesId, attachment } = req.body;
             
-            if (!message && !fileBase64) {
+            if (!message && !attachment) {
                 res.write(`data: ${JSON.stringify({ error: "Thiếu thông tin đầu vào" })}\n\n`);
                 res.end();
                 return;
             }
-             if (!message) message = "Mô tả hình ảnh này."; // Default message if only file is sent
+            const userMessage = message || "Mô tả tệp đính kèm này.";
 
             // --- LỌC CHÀO HỎI ---
-            if (GREETINGS.includes(message.toLowerCase().trim()) && !fileBase64) {
+            if (GREETINGS.includes(userMessage.toLowerCase().trim()) && !attachment) {
                  res.write(`data: ${JSON.stringify({ text: "Chào bạn, tôi có thể giúp gì cho bạn?" })}\n\n`);
                  res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
                  res.end();
@@ -770,28 +770,25 @@ exports.chatbot = onRequest(
 
             // --- XỬ LÝ FILE ---
             let attachmentForFirestore = null;
-            const promptParts = [{ text: message }];
+            const promptParts = [{ text: userMessage }];
+            const bucket = storage.bucket("gs://clean-ai-hub.firebasestorage.app");
 
-            if (fileBase64 && mimeType) {
-                const fileBuffer = Buffer.from(fileBase64, 'base64');
-                const bucket = storage.bucket("gs://clean-ai-hub.firebasestorage.app");
-                const uniqueFileName = `${Date.now()}_${fileName || 'upload'}`;
-                const filePath = `chatbot/${userId}/${messagesId}/${uniqueFileName}`;
-                const file = bucket.file(filePath);
-                
-                await file.save(fileBuffer, { metadata: { contentType: mimeType } });
+            if (attachment && attachment.path && attachment.mimeType) {
+                const file = bucket.file(attachment.path);
+                const [fileBuffer] = await file.download();
 
-                if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                if (attachment.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
                     const { value } = await mammoth.extractRawText({ buffer: fileBuffer });
                     promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value}`;
                 } else {
-                    promptParts.push({ inlineData: { data: fileBase64, mimeType: mimeType } });
+                    const fileBase64 = fileBuffer.toString('base64');
+                    promptParts.push({ inlineData: { data: fileBase64, mimeType: attachment.mimeType } });
                 }
                 
                 attachmentForFirestore = {
-                    name: fileName || 'upload',
-                    mimeType: mimeType,
-                    path: filePath,
+                    name: attachment.fileName || 'upload',
+                    mimeType: attachment.mimeType,
+                    path: attachment.path,
                 };
             }
             

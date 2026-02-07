@@ -8,27 +8,15 @@ import type { ChatMessage, ChatAttachment } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
-import { db, auth } from "@/lib/firebase"; 
-import { onAuthStateChanged } from "firebase/auth";
+import { db, auth, storage } from "@/lib/firebase"; 
+import { ref, uploadBytes } from "firebase/storage";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
   doc, getDoc, writeBatch, where
 } from "firebase/firestore";
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-
-const fileToBase64 = (file: File): Promise<{ base64: string; mimeType: string; fileName: string }> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const result = reader.result as string;
-      const base64 = result.split(",")[1];
-      resolve({ base64, mimeType: file.type, fileName: file.name });
-    };
-    reader.onerror = (error) => reject(error);
-  });
-};
 
 export default function ChatPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -55,61 +43,23 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages, isLoadingAiResponse, scrollToBottom]);
   
-  // --- LOGIC AUTH & MERGE ---
-  const mergeHistory = useCallback(async (anonId: string, realUid: string) => {
-    try {
-      const anonMsgsRef = collection(db, "chatbot", anonId, "messages");
-      const snapshot = await getDocs(anonMsgsRef);
-
-      if (snapshot.empty) return;
-
-      const batch = writeBatch(db);
-      
-      for (const oldDoc of snapshot.docs) {
-          const newDocRef = doc(db, "chatbot", realUid, "messages", oldDoc.id);
-          batch.set(newDocRef, oldDoc.data());
-          
-          const oldHistoryRef = collection(oldDoc.ref, "history");
-          const historySnapshot = await getDocs(oldHistoryRef);
-          historySnapshot.forEach(historyDoc => {
-              const newHistoryDocRef = doc(newDocRef, "history", historyDoc.id);
-              batch.set(newHistoryDocRef, historyDoc.data());
-              batch.delete(historyDoc.ref);
-          });
-
-          batch.delete(oldDoc.ref);
-      }
-
-      await batch.commit();
-      localStorage.removeItem("anonymous_chat_id");
-      
-      toast({ title: "Đã đồng bộ lịch sử chat vào tài khoản của bạn." });
-    } catch (e) {
-      console.error("Lỗi Merge:", e);
-    }
-  }, [toast]);
-
   useEffect(() => {
     setIsMounted(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const anonId = localStorage.getItem("anonymous_chat_id");
       if (user) {
-        if (anonId && anonId.startsWith("demo_")) {
-          await mergeHistory(anonId, user.uid);
-        }
         setCurrentUserId(user.uid);
       } else {
-        if (!anonId) {
-          const newAnonId = `demo_${Date.now()}`;
-          localStorage.setItem("anonymous_chat_id", newAnonId);
-          setCurrentUserId(newAnonId);
-        } else {
-          setCurrentUserId(anonId);
+        try {
+            const { user: anonUser } = await signInAnonymously(auth);
+            setCurrentUserId(anonUser.uid);
+        } catch (error) {
+            console.error("Lỗi đăng nhập ẩn danh:", error);
+            toast({ title: "Lỗi kết nối", description: "Không thể bắt đầu phiên chat.", variant: "destructive"});
         }
       }
     });
     return () => unsubscribe();
-  }, [mergeHistory]);
+  }, [toast]);
 
   // --- LOGIC 1: LẤY DANH SÁCH PHIÊN CHAT (SIDEBAR) ---
   const fetchHistory = useCallback(async () => {
@@ -195,105 +145,121 @@ export default function ChatPage() {
   }, [isMounted, currentUserId, activeChatId, startNewChat, fetchHistory]);
 
   // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
-  const handleSendMessage = async (text: string, image?: File) => {
-    if (!text.trim() && !image) return;
+  const handleSendMessage = async (text: string, file?: File) => {
+    if (!text.trim() && !file) return;
 
     const currentMessagesId = activeChatId;
-    let fileInfo = image ? await fileToBase64(image) : null;
-    const previewUrl = image ? URL.createObjectURL(image) : "";
-    const attachments: ChatAttachment[] = fileInfo ? [{ name: fileInfo.fileName, mimeType: fileInfo.mimeType, url: previewUrl }] : [];
-
-    const userMsg: ChatMessage = { id: `u-${Date.now()}`, text, sender: "user", timestamp: Date.now(), attachments };
+    
+    // Show user message with local preview immediately
+    const previewUrl = file ? URL.createObjectURL(file) : "";
+    const userAttachments: ChatAttachment[] = file ? [{ name: file.name, mimeType: file.type, url: previewUrl }] : [];
+    const userMsg: ChatMessage = { id: `u-${Date.now()}`, text, sender: "user", timestamp: Date.now(), attachments: userAttachments };
+    
     const aiMsgId = `ai-${Date.now()}`;
     const aiPlaceholder: ChatMessage = { id: aiMsgId, text: "", sender: "ai", timestamp: Date.now() };
 
     setMessages((prev) => [...prev, userMsg, aiPlaceholder]);
     setIsLoadingAiResponse(true);
 
-    const MAX_RETRIES = 5;
-    let currentRetry = 0;
-    let waitTime = 1000;
-    let success = false;
+    let attachmentPayload: { path: string, mimeType: string, fileName: string } | null = null;
+    
+    try {
+        if (file) {
+            // Upload file to Firebase Storage
+            const uniqueFileName = `${Date.now()}_${file.name || 'upload'}`;
+            const filePath = `chatbot/${currentUserId}/${currentMessagesId}/${uniqueFileName}`;
+            const storageRef = ref(storage, filePath);
+            await uploadBytes(storageRef, file);
+            attachmentPayload = { path: filePath, mimeType: file.type, fileName: file.name };
+        }
 
-    while (currentRetry < MAX_RETRIES && !success) {
-      try {
-        const response = await fetch("https://asia-southeast1-clean-ai-hub.cloudfunctions.net/chatbot", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: text,
-            userId: currentUserId,
-            messagesId: currentMessagesId,
-            fileBase64: fileInfo?.base64,
-            mimeType: fileInfo?.mimeType,
-            fileName: fileInfo?.fileName,
-          }),
-        });
+        const MAX_RETRIES = 5;
+        let currentRetry = 0;
+        let waitTime = 1000;
+        let success = false;
 
-        if (response.status === 429) throw new Error("RATE_LIMIT");
-        if (!response.body) throw new Error("GENERAL_ERROR");
+        while (currentRetry < MAX_RETRIES && !success) {
+          try {
+            const response = await fetch("https://asia-southeast1-clean-ai-hub.cloudfunctions.net/chatbot", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                message: text,
+                userId: currentUserId,
+                messagesId: currentMessagesId,
+                attachment: attachmentPayload,
+              }),
+            });
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let accumulatedText = "";
+            if (response.status === 429) throw new Error("RATE_LIMIT");
+            if (!response.body) throw new Error("GENERAL_ERROR");
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split("\n\n");
-          
-          for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const jsonStr = line.substring(5).trim();
-              if (!jsonStr) continue; // Skip empty data lines
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let accumulatedText = "";
 
-              try {
-                const data = JSON.parse(jsonStr);
-                
-                if (data.done === true) continue;
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              const chunk = decoder.decode(value, { stream: true });
+              const lines = chunk.split("\n\n");
+              
+              for (const line of lines) {
+                if (line.startsWith("data: ")) {
+                  const jsonStr = line.substring(5).trim();
+                  if (!jsonStr) continue; // Skip empty data lines
 
-                if ((data.error && data.error === "QUOTA_EXCEEDED")) {
-                    throw new Error("RATE_LIMIT");
+                  try {
+                    const data = JSON.parse(jsonStr);
+                    
+                    if (data.done === true) continue;
+
+                    if ((data.error && data.error === "QUOTA_EXCEEDED")) {
+                        throw new Error("RATE_LIMIT");
+                    }
+                    if (data.text) {
+                      accumulatedText += data.text;
+                      setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
+                    }
+                  } catch (e: any) {
+                     if (e.message === "RATE_LIMIT") throw e;
+                     // Ignore JSON parsing errors for incomplete chunks
+                     console.warn("SSE JSON parsing error:", e);
+                  }
                 }
-                if (data.text) {
-                  accumulatedText += data.text;
-                  setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
-                }
-              } catch (e: any) {
-                 if (e.message === "RATE_LIMIT") throw e;
-                 // Ignore JSON parsing errors for incomplete chunks
-                 console.warn("SSE JSON parsing error:", e);
               }
+            }
+            success = true;
+            fetchHistory(); 
+
+          } catch (error: any) {
+            if (error.message === "RATE_LIMIT") {
+              currentRetry++;
+              if (currentRetry < MAX_RETRIES) {
+                toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
+                await delay(waitTime);
+                waitTime *= 2;
+              } else {
+                toast({ title: "Thông báo", description: "Hệ thống đang quá tải hoặc hết hạn mức. Vui lòng thử lại sau 1 phút.", variant: "destructive"});
+                setMessages(prev => prev.slice(0, -2)); 
+                break;
+              }
+            } else {
+              console.error(error);
+              toast({ title: "Lỗi", description: "Có lỗi xảy ra khi kết nối với AI.", variant: "destructive" });
+              setMessages(prev => prev.slice(0, -2));
+              break; 
             }
           }
         }
-        success = true;
-        fetchHistory(); 
-
-      } catch (error: any) {
-        if (error.message === "RATE_LIMIT") {
-          currentRetry++;
-          if (currentRetry < MAX_RETRIES) {
-            toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
-            await delay(waitTime);
-            waitTime *= 2;
-          } else {
-            toast({ title: "Thông báo", description: "Hệ thống đang quá tải hoặc hết hạn mức. Vui lòng thử lại sau 1 phút.", variant: "destructive"});
-            setMessages(prev => prev.slice(0, -2)); 
-            break;
-          }
-        } else {
-          console.error(error);
-          toast({ title: "Lỗi", description: "Có lỗi xảy ra khi kết nối với AI.", variant: "destructive" });
-          setMessages(prev => prev.slice(0, -2));
-          break; 
-        }
-      }
+    } catch(uploadError) {
+        console.error("File upload error:", uploadError);
+        toast({ title: "Lỗi", description: "Không thể tải tệp lên.", variant: "destructive" });
+        setMessages(prev => prev.slice(0, -2)); // Remove user message and AI placeholder
+    } finally {
+        setIsLoadingAiResponse(false);
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
     }
-
-    setIsLoadingAiResponse(false);
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
   };
 
   if (!isMounted) return null;
