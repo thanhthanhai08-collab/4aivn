@@ -861,34 +861,40 @@ exports.chatbot = onRequest(
             }
 
             // Lưu vào sub-collection
-            const userHistoryDoc = {
-                role: 'user',
-                parts: promptParts.filter(p => p.text), // Chỉ lưu phần text
-                timestamp: admin.firestore.FieldValue.serverTimestamp()
-            };
-
-            if (attachmentForFirestore) {
-                const [signedUrl] = await bucket.file(attachmentForFirestore.path).getSignedUrl({
-                    action: 'read',
-                    expires: '03-09-2491'
-                });
-                attachmentForFirestore.url = signedUrl;
-                userHistoryDoc.attachments = [attachmentForFirestore];
+            try {
+                const userHistoryDoc = {
+                    role: 'user',
+                    parts: promptParts.filter(p => p.text), // Chỉ lưu phần text, loại bỏ object media không thể tuần tự hóa
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                };
+    
+                if (attachmentForFirestore) {
+                    const [signedUrl] = await bucket.file(attachmentForFirestore.path).getSignedUrl({
+                        action: 'read',
+                        expires: '03-09-2491'
+                    });
+                    attachmentForFirestore.url = signedUrl;
+                    userHistoryDoc.attachments = [attachmentForFirestore];
+                }
+    
+                 const modelHistoryDoc = {
+                    role: 'model',
+                    parts: [{ text: fullAIResponse }],
+                    url_context_metadata: urlMetadataStructured || null,
+                    timestamp: admin.firestore.FieldValue.serverTimestamp()
+                };
+    
+                const messagesDocRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId);
+                const batch = db.batch();
+                batch.set(historyRef.doc(), userHistoryDoc);
+                batch.set(historyRef.doc(), modelHistoryDoc);
+                batch.set(messagesDocRef, { updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+                
+                await batch.commit();
+            } catch (dbError) {
+                console.error("Firestore batch commit failed:", dbError);
+                // Không cần gửi lỗi lại cho client vì họ đã nhận được phản hồi AI
             }
-             const modelHistoryDoc = {
-                role: 'model',
-                parts: [{ text: fullAIResponse }],
-                url_context_metadata: urlMetadataStructured || null,
-                timestamp: admin.firestore.FieldValue.serverTimestamp()
-            };
-
-            const messagesDocRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId);
-            const batch = db.batch();
-            batch.set(historyRef.doc(), userHistoryDoc);
-            batch.set(historyRef.doc(), modelHistoryDoc);
-            batch.set(messagesDocRef, { updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
-            
-            await batch.commit();
 
             res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
             res.end();
@@ -916,6 +922,8 @@ exports.chatbot = onRequest(
     
 
 
+
+    
 
     
 
