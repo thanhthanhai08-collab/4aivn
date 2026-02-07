@@ -118,9 +118,13 @@ export default function ChatPage() {
     ]);
   }, []);
   
-  // This effect runs once on mount to set the component as mounted and to set up the auth state listener.
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       let idToUse = "";
       if (user) {
@@ -137,9 +141,8 @@ export default function ChatPage() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isMounted]);
 
-  // This effect runs whenever the currentUserId changes (e.g., on initial load, or on login/logout).
   useEffect(() => {
     if (!currentUserId || !isMounted) return;
 
@@ -148,7 +151,7 @@ export default function ChatPage() {
       const q = query(collection(db, "chatbot", currentUserId, "messages"), orderBy("updatedAt", "desc"), limit(1));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        await loadSession(querySnapshot.docs[0].id, currentUserId);
+        loadSession(querySnapshot.docs[0].id, currentUserId);
       } else {
         startNewChat();
       }
@@ -275,7 +278,15 @@ export default function ChatPage() {
         }
     } catch(uploadError) {
         console.error("File upload error:", uploadError);
-        toast({ title: "Lỗi", description: "Không thể tải tệp lên.", variant: "destructive" });
+        if (currentUserId.startsWith('guest_')) {
+            toast({
+                title: "Lỗi",
+                description: "Bạn muốn tải tệp lên, vui lòng đăng nhập mới sử dụng được tính năng này",
+                variant: "destructive"
+            });
+        } else {
+            toast({ title: "Lỗi", description: "Không thể tải tệp lên. Vui lòng thử lại.", variant: "destructive" });
+        }
         setMessages(prev => prev.slice(0, -2)); // Remove user message and AI placeholder
     } finally {
         setIsLoadingAiResponse(false);
