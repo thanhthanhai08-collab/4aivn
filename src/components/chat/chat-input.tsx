@@ -15,30 +15,34 @@ interface ChatInputProps {
 
 export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [inputValue, setInputValue] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 4 * 1024 * 1024) { // 4MB limit for Gemini
+      if (file.size > 4 * 1024 * 1024) { // 4MB limit
         toast({
-          title: "Ảnh quá lớn",
-          description: "Vui lòng chọn ảnh có dung lượng nhỏ hơn 4MB.",
+          title: "File quá lớn",
+          description: "Vui lòng chọn file có dung lượng nhỏ hơn 4MB.",
           variant: "destructive",
         });
         return;
       }
-      setSelectedImage(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setSelectedFile(file);
+      if (file.type.startsWith("image/")) {
+        setPreviewUrl(URL.createObjectURL(file));
+      } else {
+        setPreviewUrl(null); // No preview for non-image files
+      }
     }
   };
 
-  const handleRemoveImage = () => {
+  const handleRemoveFile = () => {
     if(previewUrl) URL.revokeObjectURL(previewUrl);
-    setSelectedImage(null);
+    setSelectedFile(null);
     setPreviewUrl(null);
     if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -47,20 +51,30 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim() || selectedImage) {
-      onSendMessage(inputValue.trim(), selectedImage || undefined);
+    if (inputValue.trim() || selectedFile) {
+      onSendMessage(inputValue.trim(), selectedFile || undefined);
       setInputValue("");
-      handleRemoveImage();
+      handleRemoveFile();
     }
   };
 
   return (
-    <div className="p-4 border-t space-y-2">
-        {previewUrl && (
-            <div className="relative w-24 h-24 mb-2 group">
-                <Image src={previewUrl} alt="Xem trước ảnh" layout="fill" objectFit="cover" className="rounded-md border" />
-                <Button variant="ghost" size="icon" className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-destructive/80 text-destructive-foreground hover:bg-destructive" onClick={handleRemoveImage}>
-                    <X className="h-4 w-4" />
+    <div className="space-y-2">
+        {selectedFile && (
+            <div className="relative w-full p-2 border rounded-md flex items-center justify-between group bg-muted/50">
+                {previewUrl ? (
+                     <div className="flex items-center gap-2 overflow-hidden">
+                        <Image src={previewUrl} alt="Xem trước ảnh" width={40} height={40} objectFit="cover" className="rounded-md border" />
+                         <span className="text-sm text-muted-foreground truncate">{selectedFile.name}</span>
+                    </div>
+                ) : (
+                    <div className="flex items-center gap-2 overflow-hidden">
+                        <Paperclip className="h-5 w-5 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground truncate">{selectedFile.name}</span>
+                    </div>
+                )}
+                <Button variant="ghost" size="icon" className="h-6 w-6 rounded-full bg-background/80 hover:bg-destructive/20" onClick={handleRemoveFile}>
+                    <X className="h-4 w-4 text-muted-foreground hover:text-destructive" />
                 </Button>
             </div>
         )}
@@ -71,16 +85,16 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
                 size="icon"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isLoading}
-                aria-label="Đính kèm ảnh"
+                aria-label="Đính kèm file"
             >
                 <Paperclip className="h-5 w-5" />
             </Button>
             <Input
                 type="file"
                 ref={fileInputRef}
-                onChange={handleImageChange}
+                onChange={handleFileChange}
                 className="hidden"
-                accept="image/*"
+                accept="image/*,application/pdf,.docx"
             />
             <Input
                 type="text"
@@ -88,10 +102,10 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 disabled={isLoading}
-                className="flex-grow"
+                className="flex-grow h-11"
                 aria-label="Ô nhập tin nhắn chat"
             />
-            <Button type="submit" disabled={isLoading || (!inputValue.trim() && !selectedImage)} aria-label="Gửi tin nhắn">
+            <Button type="submit" disabled={isLoading || (!inputValue.trim() && !selectedFile)} aria-label="Gửi tin nhắn" size="icon" className="h-11 w-11 shrink-0">
                 <Send className="h-5 w-5" />
             </Button>
         </form>

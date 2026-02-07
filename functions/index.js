@@ -7,18 +7,17 @@ const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 const { getFirestore } = require("firebase-admin/firestore");
+const { getStorage } = require("firebase-admin/storage");
 const { genkit } = require("genkit");
 const { googleAI } = require("@genkit-ai/googleai");
 const { z } = require("zod");
-const { GoogleAIFileManager } = require("@google/generative-ai/server");
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
 const { Index } = require("flexsearch");
+const mammoth = require("mammoth");
 
 
 admin.initializeApp();
 const db = getFirestore();
+const storage = getStorage();
 
 const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
 
@@ -717,6 +716,7 @@ const TARGET_URLS = [
     "https://studio--clean-ai-hub.us-central1.hosted.app/bang-xep-hang",
     "https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc"
 ];
+const GREETINGS = ['chào', 'hi', 'hello', 'chào bạn', 'xin chào'];
 
 exports.chatbot = onRequest(
     { 
@@ -737,85 +737,79 @@ exports.chatbot = onRequest(
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
-        let tempFilePath = null;
-
         try {
-            const { message, userId, messagesId, imageBase64, mimeType } = req.body;
+            let { message, userId, messagesId, imageBase64, mimeType, fileName } = req.body;
             
-            if (!message || !messagesId) {
+            if (!message && !imageBase64) {
                 res.write(`data: ${JSON.stringify({ error: "Thiếu thông tin đầu vào" })}\n\n`);
                 res.end();
                 return;
             }
+             if (!message) message = "Mô tả hình ảnh này."; // Default message if only image is sent
+
+            // --- LỌC CHÀO HỎI ---
+            if (GREETINGS.includes(message.toLowerCase().trim()) && !imageBase64) {
+                 res.write(`data: ${JSON.stringify({ text: "Chào bạn, tôi có thể giúp gì cho bạn?" })}\n\n`);
+                 res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+                 res.end();
+                 return;
+            }
 
             const apiKey = GEMINI_API_KEY.value();
 
-            // 2. LẤY LỊCH SỬ CHAT
-            const docRef = db.collection("chatbot").doc(userId || "anonymous").collection("messages").doc(messagesId);
-            const docSnap = await docRef.get();
-            let historyContext = [];
+            // --- LẤY LỊCH SỬ CHAT ---
+            const historyRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId).collection("history");
+            const historySnapshot = await historyRef.orderBy("timestamp", "asc").limit(20).get();
+            const historyContext = historySnapshot.docs.map(doc => ({
+                role: doc.data().role,
+                parts: doc.data().parts
+            }));
 
-            if (docSnap.exists) {
-                const data = docSnap.data();
-                const qs = (data.questions || []).slice(-10);
-                const ans = (data.answers || []).slice(-10);
-                qs.forEach((q, i) => {
-                    historyContext.push({ role: 'user', content: [{ text: q }] });
-                    if (ans[i]) historyContext.push({ role: 'model', content: [{ text: ans[i] }] });
-                });
+            // --- XỬ LÝ FILE ---
+            let attachmentForFirestore = null;
+            const promptParts = [{ text: message }];
+
+            if (imageBase64 && mimeType) {
+                const fileBuffer = Buffer.from(imageBase64, 'base64');
+                const bucket = storage.bucket("gs://clean-ai-hub.firebasestorage.app");
+                const uniqueFileName = `${Date.now()}_${fileName || 'upload'}`;
+                const filePath = `chatbot/${userId}/${messagesId}/${uniqueFileName}`;
+                const file = bucket.file(filePath);
+                
+                const uploadPromise = file.save(fileBuffer, { metadata: { contentType: mimeType } });
+
+                if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    const { value } = await mammoth.extractRawText({ buffer: fileBuffer });
+                    promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value}`;
+                } else {
+                    promptParts.push({ inlineData: { data: imageBase64, mimeType: mimeType } });
+                }
+                
+                attachmentForFirestore = {
+                    name: fileName || 'upload',
+                    mimeType: mimeType,
+                    path: filePath,
+                };
             }
-
-            // 3. XỬ LÝ ẢNH
-            let imagePart = null;
-            if (imageBase64) {
-                const fileManager = new GoogleAIFileManager(apiKey);
-                const fileName = `upload_${Date.now()}`;
-                tempFilePath = path.join(os.tmpdir(), fileName);
-                fs.writeFileSync(tempFilePath, Buffer.from(imageBase64, 'base64'));
-
-                const uploadResult = await fileManager.uploadFile(tempFilePath, {
-                    mimeType: mimeType || "image/jpeg",
-                    displayName: fileName,
-                });
-                imagePart = { media: { url: uploadResult.file.uri, contentType: uploadResult.file.mimeType } };
-            }
-
-            // 4. KHỞI TẠO AI
-            const ai = genkit({
-                plugins: [googleAI({ apiKey: apiKey })],
-            });
-
-            // 5. GỌI AI VỚI GOOGLE SEARCH & URL CONTEXT
+            
+            // --- KHỞI TẠO VÀ GỌI AI ---
+            const ai = genkit({ plugins: [googleAI({ apiKey: apiKey })] });
+            
             const response = await ai.generateStream({
                 model: "googleai/gemini-2.5-flash",
                 history: historyContext,
-                prompt: [
-                    { text: message },
-                    ...(imagePart ? [imagePart] : [])
-                ],
-                // KẾT HỢP URL CONTEXT VÀO SYSTEM INSTRUCTION
-                systemInstruction: `Bạn là trợ lý AI của Clean AI Hub.
-                
-                NHIỆM VỤ:
-                1. Ưu tiên tra cứu và trả lời dựa trên thông tin từ các liên kết nội bộ (Target URLs) sau:
-                   - ${TARGET_URLS[0]}
-                   - ${TARGET_URLS[1]}
-                   - ${TARGET_URLS[2]}
-                2. Sử dụng công cụ Google Search để tìm kiếm thông tin bổ sung hoặc xác thực nếu thông tin không có trong các liên kết trên.
-                3. Luôn trích dẫn nguồn nếu sử dụng thông tin từ Google Search.
-                4. Luôn trả lời bằng tiếng Việt.`,
-                
-                config: {
-                   tools: [
-        	        {urlContext: {}},
-        	        {googleSearch: {}}
-                    ]
-                }
+                prompt: promptParts,
+                systemInstruction: `Bạn là trợ lý AI của Clean AI Hub. 
+                  Nhiệm vụ:
+                  1. Ưu tiên tra cứu và trả lời dựa trên thông tin từ các liên kết nội bộ sau: ${TARGET_URLS.join(', ')}.
+                  2. Nếu câu hỏi không liên quan đến AI, công nghệ, hoặc nội dung trên các trang web đó, hãy lịch sự trả lời "Câu hỏi này không liên quan đến chuyên môn của tôi." và không sử dụng các công cụ khác.
+                  3. Với các câu hỏi khác, sử dụng Google Search để tìm thông tin bổ sung. Luôn trích dẫn nguồn nếu dùng Google Search.
+                  4. Luôn trả lời bằng tiếng Việt.`,
+                config: { tools: [{ urlContext: {} }, { googleSearch: {} }] }
             });
 
+            // --- STREAMING & LƯU TRỮ ---
             let fullAIResponse = "";
-
-            // 6. STREAMING
             for await (const chunk of response.stream) {
                 const text = chunk.text || "";
                 if (text) {
@@ -824,67 +818,61 @@ exports.chatbot = onRequest(
                 }
             }
 
-            // 7. XỬ LÝ METADATA (Grounding)
-            // Lấy response gốc để truy cập metadata
             const finalResponse = await response.response;
-            
-            // Tìm groundingMetadata (cấu trúc có thể thay đổi tùy version SDK, đây là cách duyệt an toàn)
-            const groundingMetadata = finalResponse.custom?.groundingMetadata || 
-                                      finalResponse.candidates?.[0]?.groundingMetadata;
-
+            const groundingMetadata = finalResponse.custom?.groundingMetadata || finalResponse.candidates?.[0]?.groundingMetadata;
             let urlMetadataStructured = null;
-
-            if (groundingMetadata && groundingMetadata.groundingChunks) {
-                // Map dữ liệu từ Google sang cấu trúc bạn yêu cầu
+             if (groundingMetadata && groundingMetadata.groundingChunks) {
                 const mappedUrls = groundingMetadata.groundingChunks
                     .filter(chunk => chunk.web && chunk.web.uri)
                     .map(chunk => ({
                         retrieved_url: chunk.web.uri,
                         url_retrieval_status: "URL_RETRIEVAL_STATUS_SUCCESS",
-                        title: chunk.web.title || "" // Lưu thêm title nếu cần
+                        title: chunk.web.title || ""
                     }));
-
-                if (mappedUrls.length > 0) {
-                    urlMetadataStructured = {
-                        url_metadata: mappedUrls
-                    };
-                }
+                if (mappedUrls.length > 0) urlMetadataStructured = { url_metadata: mappedUrls };
             }
 
-            // 8. LƯU VÀO FIRESTORE
-            await docRef.set({
-                questions: admin.firestore.FieldValue.arrayUnion(message),
-                answers: admin.firestore.FieldValue.arrayUnion(fullAIResponse),
-                // Lưu metadata vào mảng song song. Nếu không có metadata, lưu null để giữ index khớp với câu hỏi
-                url_context_metadata: admin.firestore.FieldValue.arrayUnion(urlMetadataStructured || null),
-                hasImage: !!imagePart,
-                updatedAt: admin.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
+            // Lưu vào sub-collection
+            const userHistoryDoc = {
+                role: 'user',
+                parts: promptParts.filter(p => p.text), // Chỉ lưu phần text
+                timestamp: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (attachmentForFirestore) {
+                await uploadPromise;
+                const [signedUrl] = await bucket.file(attachmentForFirestore.path).getSignedUrl({
+                    action: 'read',
+                    expires: '03-09-2491'
+                });
+                attachmentForFirestore.url = signedUrl;
+                userHistoryDoc.attachments = [attachmentForFirestore];
+            }
+             const modelHistoryDoc = {
+                role: 'model',
+                parts: [{ text: fullAIResponse }],
+                url_context_metadata: urlMetadataStructured || null,
+                timestamp: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            const messagesDocRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId);
+            const batch = db.batch();
+            batch.set(historyRef.doc(), userHistoryDoc);
+            batch.set(historyRef.doc(), modelHistoryDoc);
+            batch.set(messagesDocRef, { updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+            
+            await batch.commit();
 
             res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
             res.end();
 
         } catch (error) {
             console.error("Chatbot Error:", error);
-            
-            // Xử lý lỗi 429 - Hết hạn mức
-            if (error.status === 429 || (error.message && error.message.includes('429'))) {
-                res.write(`data: ${JSON.stringify({ 
-                    error: "QUOTA_EXCEEDED", 
-                    message: "Hệ thống đang quá tải hoặc hết hạn mức miễn phí. Vui lòng thử lại sau 1 phút.",
-                    status: 429 
-                })}\n\n`);
-            } else {
-                res.write(`data: ${JSON.stringify({ 
-                    error: "GENERAL_ERROR", 
-                    message: "Có lỗi xảy ra khi kết nối với AI." 
-                })}\n\n`);
-            }
+            const errorMessage = (error.status === 429 || (error.message && error.message.includes('429')))
+                ? { error: "QUOTA_EXCEEDED", message: "Hệ thống đang quá tải. Vui lòng thử lại sau 1 phút.", status: 429 }
+                : { error: "GENERAL_ERROR", message: "Có lỗi xảy ra khi kết nối với AI." };
+            res.write(`data: ${JSON.stringify(errorMessage)}\n\n`);
             res.end();
-        } finally {
-            if (tempFilePath && fs.existsSync(tempFilePath)) {
-                try { fs.unlinkSync(tempFilePath); } catch (e) {}
-            }
         }
     }
 );

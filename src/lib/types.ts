@@ -62,11 +62,17 @@ export interface UserProfileData {
   bio?: string;
 }
 
+export interface ChatAttachment {
+  name: string;
+  mimeType: string;
+  url: string; 
+}
 
 export interface ChatMessage {
   id: string;
   text: string;
   imageUrl?: string;
+  attachments?: ChatAttachment[];
   sender: 'user' | 'ai';
   timestamp: number;
 }

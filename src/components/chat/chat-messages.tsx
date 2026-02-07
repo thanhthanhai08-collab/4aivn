@@ -2,8 +2,9 @@
 import type { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, User } from "lucide-react";
+import { Bot, User, FileText } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 
 interface ChatMessagesProps {
@@ -35,11 +36,24 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
                 : "bg-card text-card-foreground rounded-bl-none"
             )}
           >
-            {message.imageUrl && (
-                <div className="relative aspect-square w-full max-w-xs">
-                    <Image src={message.imageUrl} alt="Chat image" layout="fill" objectFit="cover" className={cn("rounded-t-lg", !message.text && "rounded-lg")} sizes="320px" />
-                </div>
-            )}
+             {message.attachments && message.attachments.map((att, index) => {
+                const isImage = att.mimeType.startsWith("image/");
+                if (isImage) {
+                    return (
+                        <div key={index} className="relative aspect-square w-full max-w-xs">
+                             <Image src={att.url} alt={att.name} layout="fill" objectFit="cover" className={cn("rounded-t-lg", !message.text && "rounded-lg")} sizes="320px" />
+                        </div>
+                    )
+                }
+                return (
+                    <div key={index} className="p-3 border-b border-primary/20">
+                         <Link href={att.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary-foreground no-underline hover:underline">
+                            <FileText className="h-5 w-5" />
+                            <span className="truncate text-sm font-medium">{att.name}</span>
+                         </Link>
+                    </div>
+                )
+             })}
             {message.text && (
               <div className={cn(
                   "p-3",

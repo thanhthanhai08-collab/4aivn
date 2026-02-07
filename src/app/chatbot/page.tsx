@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
-import type { ChatMessage } from "@/lib/types";
+import type { ChatMessage, ChatAttachment } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
@@ -17,17 +17,14 @@ import {
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-/**
- * Helper: Chuyển file sang Base64
- */
-const fileToBase64 = (file: File): Promise<{ base64: string; mimeType: string }> => {
+const fileToBase64 = (file: File): Promise<{ base64: string; mimeType: string; fileName: string }> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       const result = reader.result as string;
       const base64 = result.split(",")[1];
-      resolve({ base64, mimeType: file.type });
+      resolve({ base64, mimeType: file.type, fileName: file.name });
     };
     reader.onerror = (error) => reject(error);
   });
@@ -37,7 +34,7 @@ export default function ChatPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [historySessions, setHistorySessions] = useState<{ id: string; lastMsg: string }[]>([]);
-  const [activeChatId, setActiveChatId] = useState<string>(""); // Đây đóng vai trò là messagesId
+  const [activeChatId, setActiveChatId] = useState<string>(""); 
   const [isLoadingAiResponse, setIsLoadingAiResponse] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string>("");
@@ -68,13 +65,20 @@ export default function ChatPage() {
 
       const batch = writeBatch(db);
       
-      snapshot.docs.forEach((oldDoc) => {
-        // Chuyển dữ liệu từ doc cũ sang doc mới với ID cũ
-        const newDocRef = doc(db, "chatbot", realUid, "messages", oldDoc.id);
-        batch.set(newDocRef, oldDoc.data());
-        // Xóa doc cũ
-        batch.delete(oldDoc.ref);
-      });
+      for (const oldDoc of snapshot.docs) {
+          const newDocRef = doc(db, "chatbot", realUid, "messages", oldDoc.id);
+          batch.set(newDocRef, oldDoc.data());
+          
+          const oldHistoryRef = collection(oldDoc.ref, "history");
+          const historySnapshot = await getDocs(oldHistoryRef);
+          historySnapshot.forEach(historyDoc => {
+              const newHistoryDocRef = doc(newDocRef, "history", historyDoc.id);
+              batch.set(newHistoryDocRef, historyDoc.data());
+              batch.delete(historyDoc.ref);
+          });
+
+          batch.delete(oldDoc.ref);
+      }
 
       await batch.commit();
       localStorage.removeItem("anonymous_chat_id");
@@ -114,18 +118,20 @@ export default function ChatPage() {
     try {
       const q = query(
         collection(db, "chatbot", currentUserId, "messages"),
-        orderBy("updatedAt", "desc"), // Sắp xếp theo thời gian cập nhật mới nhất
+        orderBy("updatedAt", "desc"), 
         limit(20)
       );
       const querySnapshot = await getDocs(q);
-      const sessions = querySnapshot.docs.map(doc => {
-        const data = doc.data();
-        const lastQuestion = data.questions?.[data.questions.length - 1] || "Phiên chat mới";
-        return {
-          id: doc.id,
-          lastMsg: lastQuestion.substring(0, 30) + (lastQuestion.length > 30 ? "..." : ""),
-        };
+      const sessionPromises = querySnapshot.docs.map(async (doc) => {
+          const historyQuery = query(collection(doc.ref, 'history'), where('role', '==', 'user'), orderBy('timestamp', 'desc'), limit(1));
+          const historySnapshot = await getDocs(historyQuery);
+          const lastQuestion = historySnapshot.docs[0]?.data().parts[0]?.text || "Phiên chat mới";
+          return {
+            id: doc.id,
+            lastMsg: lastQuestion.substring(0, 30) + (lastQuestion.length > 30 ? "..." : ""),
+          };
       });
+      const sessions = await Promise.all(sessionPromises);
       setHistorySessions(sessions);
     } catch (e) {
       console.error("Lỗi lấy sidebar:", e);
@@ -143,33 +149,23 @@ export default function ChatPage() {
     setIsLoadingAiResponse(true);
 
     try {
-      const docRef = doc(db, "chatbot", currentUserId, "messages", mId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        const qs = data.questions || [];
-        const ans = data.answers || [];
-
+        const historyRef = collection(db, "chatbot", currentUserId, "messages", mId, "history");
+        const q = query(historyRef, orderBy("timestamp", "asc"));
+        const querySnapshot = await getDocs(q);
+        
         const formattedMessages: ChatMessage[] = [];
-        qs.forEach((q: string, i: number) => {
-          formattedMessages.push({
-            id: `q-${mId}-${i}`,
-            text: q,
-            sender: "user",
-            timestamp: Date.now(),
-          });
-          if (ans[i]) {
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
             formattedMessages.push({
-              id: `a-${mId}-${i}`,
-              text: ans[i],
-              sender: "ai",
-              timestamp: Date.now(),
+                id: doc.id,
+                text: data.parts[0]?.text || '',
+                sender: data.role === 'user' ? 'user' : 'ai',
+                timestamp: data.timestamp?.toDate()?.getTime() || Date.now(),
+                attachments: data.attachments || [],
             });
-          }
         });
         setMessages(formattedMessages);
-      }
+      
     } catch (e) {
       console.error("Lỗi tải lịch sử:", e);
       toast({ title: "Lỗi", description: "Không thể tải phiên chat này.", variant: "destructive" });
@@ -184,7 +180,7 @@ export default function ChatPage() {
     setMessages([
       { 
         id: `init-${newId}`, 
-        text: "Xin chào! Đây là phiên chat mới. Tôi có thể giúp gì cho bạn?", 
+        text: "Xin chào! Tôi là trợ lý AI của 4AIVN. Tôi có thể giúp gì cho bạn?", 
         sender: "ai", 
         timestamp: Date.now() 
       }
@@ -203,10 +199,11 @@ export default function ChatPage() {
     if (!text.trim() && !image) return;
 
     const currentMessagesId = activeChatId;
-    let imageInfo = image ? await fileToBase64(image) : null;
+    let fileInfo = image ? await fileToBase64(image) : null;
     const previewUrl = image ? URL.createObjectURL(image) : "";
+    const attachments: ChatAttachment[] = fileInfo ? [{ name: fileInfo.fileName, mimeType: fileInfo.mimeType, url: previewUrl }] : [];
 
-    const userMsg: ChatMessage = { id: `u-${Date.now()}`, text, imageUrl: previewUrl, sender: "user", timestamp: Date.now() };
+    const userMsg: ChatMessage = { id: `u-${Date.now()}`, text, sender: "user", timestamp: Date.now(), attachments };
     const aiMsgId = `ai-${Date.now()}`;
     const aiPlaceholder: ChatMessage = { id: aiMsgId, text: "", sender: "ai", timestamp: Date.now() };
 
@@ -227,41 +224,34 @@ export default function ChatPage() {
             message: text,
             userId: currentUserId,
             messagesId: currentMessagesId,
-            imageBase64: imageInfo?.base64,
-            mimeType: imageInfo?.mimeType,
+            imageBase64: fileInfo?.base64,
+            mimeType: fileInfo?.mimeType,
+            fileName: fileInfo?.fileName,
           }),
         });
 
-        if (response.status === 429) {
-          throw new Error("RATE_LIMIT");
-        }
-
+        if (response.status === 429) throw new Error("RATE_LIMIT");
         if (!response.body) throw new Error("GENERAL_ERROR");
+
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let accumulatedText = "";
 
         while (true) {
           const { done, value } = await reader.read();
-          if (done) {
-            reader.releaseLock();
-            break;
-          }
-
+          if (done) break;
           const chunk = decoder.decode(value, { stream: true });
           const lines = chunk.split("\n\n");
+          
           for (const line of lines) {
             if (line.startsWith("data: ")) {
               const jsonStr = line.replace("data: ", "").trim();
-              if (jsonStr === '{"done":true}') break;
+              if (jsonStr === '{"done":true}') continue;
               try {
                 const data = JSON.parse(jsonStr);
-
-                if ((data.error && data.error.includes("429")) || (data.error && data.error.includes("Resource has been exhausted"))) {
-                  reader.cancel();
-                  throw new Error("RATE_LIMIT");
+                if ((data.error && data.error === "QUOTA_EXCEEDED")) {
+                    throw new Error("RATE_LIMIT");
                 }
-
                 if (data.text) {
                   accumulatedText += data.text;
                   setMessages((prev) => prev.map(m => m.id === aiMsgId ? { ...m, text: accumulatedText } : m));
@@ -272,27 +262,20 @@ export default function ChatPage() {
             }
           }
         }
-        success = true; // Thoát vòng lặp khi thành công
+        success = true;
         fetchHistory(); 
 
       } catch (error: any) {
         if (error.message === "RATE_LIMIT") {
           currentRetry++;
           if (currentRetry < MAX_RETRIES) {
-            toast({
-              title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`,
-              description: `Đang kết nối lại sau ${waitTime / 1000} giây...`,
-            });
+            toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
             await delay(waitTime);
             waitTime *= 2;
-            continue;
           } else {
-            toast({
-              title: "Thông báo",
-              description: "Hệ thống đang quá tải hoặc hết hạn mức miễn phí. Vui lòng thử lại sau 1 phút.",
-              variant: "destructive"
-            });
-            setMessages(prev => prev.slice(0, -2)); // Xóa cả tin nhắn user và AI placeholder
+            toast({ title: "Thông báo", description: "Hệ thống đang quá tải hoặc hết hạn mức. Vui lòng thử lại sau 1 phút.", variant: "destructive"});
+            setMessages(prev => prev.slice(0, -2)); 
+            break;
           }
         } else {
           console.error(error);
