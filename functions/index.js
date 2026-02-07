@@ -13,6 +13,10 @@ const { googleAI } = require("@genkit-ai/googleai");
 const { z } = require("zod");
 const { Index } = require("flexsearch");
 const mammoth = require("mammoth");
+const { GoogleAIFileManager } = require("@google/generative-ai/server");
+const os = require("os");
+const fs = require("fs").promises;
+const path = require("path");
 
 
 admin.initializeApp();
@@ -720,6 +724,7 @@ const GREETINGS = ['chào', 'hi', 'hello', 'chào bạn', 'xin chào'];
 
 // Khởi tạo một lần để tái sử dụng
 let chatbotAI;
+let fileManager;
 
 exports.chatbot = onRequest(
     { 
@@ -760,6 +765,14 @@ exports.chatbot = onRequest(
 
             const apiKey = GEMINI_API_KEY.value();
 
+            // --- KHỞI TẠO API (CACHE) ---
+            if (!chatbotAI) {
+                chatbotAI = genkit({ plugins: [googleAI({ apiKey })] });
+            }
+            if (!fileManager) {
+                fileManager = new GoogleAIFileManager(apiKey);
+            }
+
             // --- LẤY LỊCH SỬ CHAT ---
             const historyRef = db.collection("chatbot").doc(userId).collection("messages").doc(messagesId).collection("history");
             const historySnapshot = await historyRef.orderBy("timestamp", "asc").limit(10).get();
@@ -778,11 +791,28 @@ exports.chatbot = onRequest(
                 const [fileBuffer] = await file.download();
 
                 if (attachment.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    // Xử lý DOCX với mammoth
                     const { value } = await mammoth.extractRawText({ buffer: fileBuffer });
                     promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value}`;
                 } else {
-                    const fileBase64 = fileBuffer.toString('base64');
-                    promptParts.push({ inlineData: { data: fileBase64, mimeType: attachment.mimeType } });
+                    // Xử lý Ảnh/PDF với Gemini File API
+                    const tempFilePath = path.join(os.tmpdir(), attachment.fileName || 'upload');
+                    await fs.writeFile(tempFilePath, fileBuffer);
+                    
+                    const uploadResult = await fileManager.uploadFile(tempFilePath, {
+                        mimeType: attachment.mimeType,
+                        displayName: attachment.fileName,
+                    });
+
+                    await fs.unlink(tempFilePath); // Dọn dẹp file tạm
+
+                    // Đính kèm file đã upload vào prompt
+                    promptParts.push({ 
+                        media: { 
+                            url: uploadResult.file.uri, 
+                            contentType: attachment.mimeType 
+                        } 
+                    });
                 }
                 
                 attachmentForFirestore = {
@@ -792,11 +822,7 @@ exports.chatbot = onRequest(
                 };
             }
             
-            // --- KHỞI TẠO VÀ GỌI AI ---
-            if (!chatbotAI) {
-                chatbotAI = genkit({ plugins: [googleAI({ apiKey })] });
-            }
-            
+            // --- GỌI AI ---
             const response = await chatbotAI.generateStream({
                 model: "googleai/gemini-2.5-flash",
                 history: historyContext,
@@ -890,5 +916,7 @@ exports.chatbot = onRequest(
     
 
 
+
+    
 
     
