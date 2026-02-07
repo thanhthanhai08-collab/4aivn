@@ -73,7 +73,7 @@ export default function ChatPage() {
 
   const loadSession = useCallback(async (mId: string, userId?: string) => {
     const finalUserId = userId || currentUserId;
-    if (!finalUserId || mId === activeChatId) return;
+    if (!finalUserId) return;
 
     setMessages([]);
     setActiveChatId(mId);
@@ -103,7 +103,7 @@ export default function ChatPage() {
     } finally {
       setIsLoadingAiResponse(false);
     }
-  }, [activeChatId, currentUserId, toast]);
+  }, [currentUserId, toast]);
 
   const startNewChat = useCallback(() => {
     const newId = `msg_${Date.now()}`;
@@ -118,41 +118,44 @@ export default function ChatPage() {
     ]);
   }, []);
   
+  // This effect runs once on mount to set the component as mounted and to set up the auth state listener.
   useEffect(() => {
     setIsMounted(true);
-    const handleUserChange = async (user: FirebaseUser | null) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       let idToUse = "";
       if (user) {
-        // User is logged in
         idToUse = user.uid;
-        setCurrentUserId(idToUse);
-        await fetchHistory(idToUse);
       } else {
-        // User is a guest
         let guestId = localStorage.getItem("guest_chat_id");
         if (!guestId) {
           guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
           localStorage.setItem("guest_chat_id", guestId);
         }
         idToUse = guestId;
-        setCurrentUserId(idToUse);
-        await fetchHistory(idToUse);
       }
+      setCurrentUserId(idToUse);
+    });
 
-      // After setting the user and fetching history, load the most recent session or start a new one.
-      const q = query(collection(db, "chatbot", idToUse, "messages"), orderBy("updatedAt", "desc"), limit(1));
+    return () => unsubscribe();
+  }, []);
+
+  // This effect runs whenever the currentUserId changes (e.g., on initial load, or on login/logout).
+  useEffect(() => {
+    if (!currentUserId || !isMounted) return;
+
+    const initializeSession = async () => {
+      await fetchHistory(currentUserId);
+      const q = query(collection(db, "chatbot", currentUserId, "messages"), orderBy("updatedAt", "desc"), limit(1));
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
-        await loadSession(querySnapshot.docs[0].id, idToUse);
+        await loadSession(querySnapshot.docs[0].id, currentUserId);
       } else {
         startNewChat();
       }
     };
-    
-    const unsubscribe = onAuthStateChanged(auth, handleUserChange);
 
-    return () => unsubscribe();
-  }, [fetchHistory, loadSession, startNewChat]);
+    initializeSession();
+  }, [currentUserId, isMounted, fetchHistory, loadSession, startNewChat]);
 
   // --- LOGIC 3: GỬI TIN NHẮN (SSE) ---
   const handleSendMessage = async (text: string, file?: File) => {
