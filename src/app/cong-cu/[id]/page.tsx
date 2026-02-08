@@ -669,13 +669,13 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
             <Card className="bg-accent/50 text-center p-6">
                 <p className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Nâng cấp quy trình làm việc của bạn
+                    Khám phá bảng xếp hạng
                 </p>
                 <p className="mb-4 text-sm text-muted-foreground">
-                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
+                    Giúp bạn so sánh các model, công cụ AI trực quan nhất
                 </p>
                 <Button asChild>
-                    <Link href="/chatbot">Khám phá chatbot AI</Link>
+                    <Link href="/bang-xep-hang">Khám phá</Link>
                 </Button>
             </Card>
           </aside>
