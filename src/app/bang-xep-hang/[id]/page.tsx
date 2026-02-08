@@ -44,6 +44,7 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [sameDeveloperModels, setSameDeveloperModels] = useState<AIModel[]>([]);
   
@@ -333,16 +334,24 @@ function ModelDetailContent({ params }: { params: { id: string } }) {
                           <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                       </CardHeader>
                       <CardContent>
-                          <div className="flex items-center space-x-1 mb-2">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                              <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
-                              <Star
-                                  className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
-                                  star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
-                                  }`}
-                              />
-                              </button>
-                          ))}
+                          <div className="flex items-center space-x-1 mb-2" onMouseLeave={() => setHoverRating(0)}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <button 
+                                    key={star} 
+                                    onClick={() => handleRating(star)} 
+                                    onMouseEnter={() => setHoverRating(star)}
+                                    aria-label={`Đánh giá ${star} sao`} 
+                                    className="group outline-none"
+                                >
+                                <Star
+                                    className={`h-7 w-7 cursor-pointer transition-all duration-150 ${
+                                    star <= (hoverRating || currentRating) 
+                                    ? "fill-amber-400 text-amber-500 scale-110" 
+                                    : "text-gray-300"
+                                    }`}
+                                />
+                                </button>
+                            ))}
                           </div>
                            <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
                           {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {(model.averageRating ?? 0).toFixed(1)} sao ({model.ratingCount || 0} đánh giá)</p>}
