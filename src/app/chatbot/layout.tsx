@@ -5,7 +5,7 @@ interface Props {
 }
 
 // Định nghĩa BASE_URL để đồng bộ với toàn bộ hệ thống
-const BASE_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const BASE_URL = "https://4aivn.com";
 
 // 1. Cấu hình Metadata đồng bộ (SEO alternates, OpenGraph, Canonical)
 export const metadata: Metadata = {

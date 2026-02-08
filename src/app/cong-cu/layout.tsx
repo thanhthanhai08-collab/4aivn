@@ -25,13 +25,13 @@ export default function ToolsLayout({
         "@type": "ListItem",
         "position": 1,
         "name": "Trang chủ",
-        "item": "https://studio--clean-ai-hub.us-central1.hosted.app",
+        "item": "https://4aivn.com",
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Tất cả công cụ",
-        "item": "https://studio--clean-ai-hub.us-central1.hosted.app/cong-cu",
+        "item": "https://4aivn.com/cong-cu",
       },
     ],
   };

@@ -50,7 +50,7 @@ export default async function ToolDetailLayout({ children, params }: Props) {
   if (!tool) return <>{children}</>;
 
   // Thay thế bằng domain thực tế của bạn
-  const appDomain = "https://studio--clean-ai-hub.us-central1.hosted.app";
+  const appDomain = "https://4aivn.com";
 
   // --- CẤU HÌNH SCHEMA JSON-LD ---
   

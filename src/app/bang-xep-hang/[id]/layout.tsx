@@ -8,7 +8,7 @@ type Props = {
 };
 
 // Thay đổi URL này thành domain thật của bạn
-const BASE_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const BASE_URL = "https://4aivn.com";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;

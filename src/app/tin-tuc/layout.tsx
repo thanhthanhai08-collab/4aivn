@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const BASE_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const BASE_URL = "https://4aivn.com";
 
 export const metadata: Metadata = {
   title: "Tin tức AI & Cập nhật mới nhất | 4AIVN",

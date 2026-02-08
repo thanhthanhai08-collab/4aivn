@@ -9,7 +9,7 @@ type Props = {
 };
 
 // This should be your actual domain
-const BASE_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const BASE_URL = "https://4aivn.com";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;

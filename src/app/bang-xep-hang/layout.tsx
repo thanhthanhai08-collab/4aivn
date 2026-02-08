@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 // Thay đổi URL này thành tên miền chính thức của bạn
-const BASE_URL = "https://studio--clean-ai-hub.us-central1.hosted.app";
+const BASE_URL = "https://4aivn.com";
 
 export const metadata: Metadata = {
   title: "Bảng xếp hạng các công cụ AI tốt nhất hiện nay",

@@ -503,7 +503,7 @@ exports.initNews = onDocumentCreated(
                 1. Đọc nội dung tin tức từ các nguồn: ${data.source}, ${data.source1 || ''}, ${data.source2 || ''}. 
                    Nếu thiếu thông tin hãy tìm thêm trên Google Search về: "${data.dataAiHint}".
                 
-                2. Truy cập URL: https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc
+                2. Truy cập URL: https://4aivn.com/tin-tuc
                    Hãy phân tích 3 bài viết đầu tiên để học tập: 
                    - Cách đặt tiêu đề (Tone of voice).
                    - Cách trình bày HTML (Style).
@@ -716,9 +716,9 @@ exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
 
 
 const TARGET_URLS = [
-    "https://studio--clean-ai-hub.us-central1.hosted.app/cong-cu",
-    "https://studio--clean-ai-hub.us-central1.hosted.app/bang-xep-hang",
-    "https://studio--clean-ai-hub.us-central1.hosted.app/tin-tuc"
+    "https://4aivn.com/cong-cu",
+    "https://4aivn.com/bang-xep-hang",
+    "https://4aivn.com/tin-tuc"
 ];
 const GREETINGS = ['chào', 'hi', 'hello', 'chào bạn', 'xin chào'];
 
