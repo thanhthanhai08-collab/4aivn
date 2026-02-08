@@ -1,4 +1,3 @@
-
 // src/app/tin-tuc/[id]/page.tsx
 "use client";
 
@@ -258,10 +257,10 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
                             </CardContent>
                         </Card>
                         <Card className="bg-accent/50 text-center p-6">
-                            <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Nâng cấp quy trình làm việc của bạn</h3>
-                            <p className="mb-4 text-sm text-muted-foreground">Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn</p>
+                            <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Khám phá bảng xếp hạng</h3>
+                            <p className="mb-4 text-sm text-muted-foreground">Giúp bạn so sánh các model, công cụ AI trực quan nhất</p>
                             <Button asChild>
-                                <Link href="/chatbot">Khám phá chatbot AI</Link>
+                                <Link href="/bang-xep-hang">Khám phá</Link>
                             </Button>
                         </Card>
                     </aside>
