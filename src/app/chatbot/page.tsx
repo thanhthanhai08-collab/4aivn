@@ -189,6 +189,14 @@ export default function ChatPage() {
     
     try {
         if (file) {
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                toast({
+                  title: "File quá lớn",
+                  description: "Vui lòng chọn file nhỏ hơn 5MB để tiếp tục.",
+                  variant: "destructive",
+                });
+                throw new Error("FILE_TOO_LARGE");
+            }
             // Upload file to Firebase Storage
             const uniqueFileName = `${Date.now()}_${file.name || 'upload'}`;
             const filePath = `chatbot/${currentUserId}/${currentMessagesId}/${uniqueFileName}`;
@@ -276,9 +284,11 @@ export default function ChatPage() {
             }
           }
         }
-    } catch(uploadError) {
+    } catch(uploadError: any) {
         console.error("File upload error:", uploadError);
-        if (currentUserId.startsWith('guest_')) {
+        if (uploadError.message === 'FILE_TOO_LARGE') {
+          // The toast is already displayed by the validation check. We just clean up the UI.
+        } else if (currentUserId.startsWith('guest_')) {
             toast({
                 title: "Lỗi",
                 description: "Bạn muốn tải tệp lên, vui lòng đăng nhập mới sử dụng được tính năng này",

@@ -23,12 +23,15 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 4 * 1024 * 1024) { // 4MB limit
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
           title: "File quá lớn",
-          description: "Vui lòng chọn file có dung lượng nhỏ hơn 4MB.",
+          description: "Vui lòng chọn file nhỏ hơn 5MB để tiếp tục.",
           variant: "destructive",
         });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
         return;
       }
       setSelectedFile(file);
