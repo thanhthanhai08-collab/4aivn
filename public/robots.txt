@@ -1,6 +1,8 @@
-# Cho phép tất cả các công cụ tìm kiếm truy cập toàn bộ trang web
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /ho-so/
+Disallow: /auth-action/
+Disallow: /admin/preview/
 
-# Chỉ định vị trí của sitemap
-Sitemap: /sitemap.xml
+Sitemap: https://4aivn.com/sitemap.xml
