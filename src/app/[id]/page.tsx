@@ -421,7 +421,7 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
               <header className="mb-8">
                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                     <Button variant="outline" size="sm" asChild>
-                        <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Tin tức</Link>
+                        <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang tin tức</Link>
                     </Button>
                     <div className="flex items-center space-x-2">
                         <Button variant="outline" onClick={handleBookmarkToggle}>

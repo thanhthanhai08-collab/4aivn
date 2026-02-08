@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ChevronRight } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ArrowLeft } from "lucide-react";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -359,42 +359,9 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium">
-          <ol className="flex items-center text-muted-foreground">
-            
-            <li className="hidden">
-              <Link href="/">Trang chủ</Link>
-            </li>
-
-            <li className="flex items-center">
-              <Link 
-                href="/cong-cu" 
-                className="hover:text-primary transition-colors flex items-center group"
-              >
-                <ChevronRight className="h-4 w-4 mr-1 rotate-180 text-muted-foreground/60 group-hover:text-primary transition-colors" />
-                Tất cả công cụ
-              </Link>
-            </li>
-
-            {tool?.context && (
-              <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
-                <Link 
-                  href={`/cong-cu?category=${encodeURIComponent(tool.context)}`} 
-                  className="hover:text-primary text-foreground font-semibold text-sm"
-                >
-                  {tool.context}
-                </Link>
-              </li>
-            )}
-
-            {tool?.name && (
-              <li className="hidden" aria-current="page">
-                <span>{tool.name}</span>
-              </li>
-            )}
-            
-          </ol>
-        </nav>
+        <Button variant="outline" size="sm" asChild className="mb-6">
+            <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang công cụ</Link>
+        </Button>
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Main Content */}
@@ -668,12 +635,8 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             )}
 
             <Card className="bg-accent/50 text-center p-6">
-                <p className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Khám phá bảng xếp hạng
-                </p>
-                <p className="mb-4 text-sm text-muted-foreground">
-                    Giúp bạn so sánh các model, công cụ AI trực quan nhất
-                </p>
+                <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Khám phá bảng xếp hạng</h3>
+                <p className="mb-4 text-sm text-muted-foreground">Giúp bạn so sánh các model, công cụ AI trực quan nhất</p>
                 <Button asChild>
                     <Link href="/bang-xep-hang">Khám phá</Link>
                 </Button>
