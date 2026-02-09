@@ -27,6 +27,7 @@ import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
+import { useParams } from "next/navigation";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -613,10 +614,10 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
 
             <Card className="bg-accent/50 text-center p-6">
                 <p className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Nâng cấp quy trình làm việc của bạn
+                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
                 </p>
                 <p className="mb-4 text-sm text-muted-foreground">
-                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
+                    Nâng cấp quy trình làm việc của bạn
                 </p>
                 <Button asChild>
                     <Link href="/chatbot">Khám phá chatbot AI</Link>

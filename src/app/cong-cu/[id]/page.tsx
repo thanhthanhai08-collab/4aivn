@@ -182,7 +182,7 @@ function ToolDetailContent() {
             ] = await Promise.all([
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsSnapshot),
+                getDocs(featuredToolsQuery),
                 getDocs(similarToolsQuery),
                 getAllToolReviews(tool.id)
             ]);
@@ -637,8 +637,12 @@ function ToolDetailContent() {
             )}
 
             <Card className="bg-accent/50 text-center p-6">
-                <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Khám phá bảng xếp hạng</h3>
-                <p className="mb-4 text-sm text-muted-foreground">Giúp bạn so sánh các model, công cụ AI trực quan nhất</p>
+                <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">
+                    Khám phá bảng xếp hạng
+                </h3>
+                <p className="mb-4 text-sm text-muted-foreground">
+                    Giúp bạn so sánh các model, công cụ AI trực quan nhất
+                </p>
                 <Button asChild>
                     <Link href="/bang-xep-hang">Khám phá</Link>
                 </Button>
