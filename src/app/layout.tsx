@@ -2,15 +2,15 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/contexts/auth-context';
-import { AppLayout } from '@/components/layout/app-layout';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-  description: 'Trung tâm của bạn về xếp hạng công cụ AI, tin tức AI mới nhất và trải nghiệm chatbot demo.',
+  description: 'Luôn cập nhật tin tức AI và các model công cụ AI mới nhất ngoài ra còn có trải nghiệm chatbot cho người dùng.',
   icons: {
-    icon: '/favicon.ico', // Assuming a favicon might be added later
+    icon: '/favicon.ico',
   }
 };
 
@@ -30,6 +30,9 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
+
+      
+        <GoogleAnalytics gaId="G-CS448T4W5H" /> 
       </body>
     </html>
   );
