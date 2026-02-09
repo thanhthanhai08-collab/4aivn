@@ -27,6 +27,7 @@ import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
+import { useParams } from "next/navigation";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -68,8 +69,9 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
 };
 
 
-function ToolDetailContent({ params }: { params: { id: string } }) {
-  const { id } = params;
+function ToolDetailContent() {
+  const params = useParams();
+  const id = params.id as string;
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -180,7 +182,7 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             ] = await Promise.all([
                 getDocs(newsQuery),
                 getDocs(allToolsForRankingQuery),
-                getDocs(featuredToolsQuery),
+                getDocs(featuredToolsSnapshot),
                 getDocs(similarToolsQuery),
                 getAllToolReviews(tool.id)
             ]);
@@ -648,6 +650,6 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   );
 }
 
-export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  return <ToolDetailContent params={params} />;
+export default function ToolDetailPage() {
+  return <ToolDetailContent />;
 }
