@@ -12,6 +12,12 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;
   
+  if (!id) {
+    return {
+      title: "Công cụ không tồn tại",
+    };
+  }
+
   const docRef = doc(db, "tools", id);
   const docSnap = await getDoc(docRef);
   
@@ -40,6 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // 2. Component Layout chính (Server Component)
 export default async function ToolDetailLayout({ children, params }: Props) {
   const { id } = params;
+
+  if (!id) return <>{children}</>;
 
   // Fetch dữ liệu trên Server để tạo Schema
   const docRef = doc(db, "tools", id);
