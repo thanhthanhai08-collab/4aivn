@@ -40,6 +40,7 @@ import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
+import { useParams } from "next/navigation";
 
 const renderContent = (article: NewsArticle) => {
   if (!article || !article.content) return null;
@@ -168,8 +169,9 @@ const renderContent = (article: NewsArticle) => {
   });
 };
 
-function NewsDetailContent({ params }: { params: { id: string } }) {
-  const { id } = params;
+function NewsDetailContent() {
+  const params = useParams();
+  const id = params.id as string;
   const { currentUser } = useAuth();
   const { toast } = useToast();
   
@@ -525,6 +527,6 @@ function NewsDetailContent({ params }: { params: { id: string } }) {
   );
 }
 
-export default function NewsPreviewPage({ params }: { params: { id: string } }) {
-  return <NewsDetailContent params={params} />;
+export default function NewsPreviewPage() {
+  return <NewsDetailContent />;
 }

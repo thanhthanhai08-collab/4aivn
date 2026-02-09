@@ -25,6 +25,7 @@ import { NewsListItem } from "@/components/news/news-list-item";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
+import { useParams } from "next/navigation";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -38,8 +39,9 @@ const formatContextLength = (tokenValue?: number): string => {
   return String(tokenValue);
 };
 
-function ModelPreviewContent({ params }: { params: { id: string } }) {
-  const { id } = params;
+function ModelPreviewContent() {
+  const params = useParams();
+  const id = params.id as string;
   const [model, setModel] = useState<AIModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -373,6 +375,6 @@ function ModelPreviewContent({ params }: { params: { id: string } }) {
   );
 }
 
-export default function ModelPreviewPage({ params }: { params: { id: string } }) {
-  return <ModelPreviewContent params={params} />;
+export default function ModelPreviewPage() {
+  return <ModelPreviewContent />;
 }

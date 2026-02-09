@@ -69,8 +69,9 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
 };
 
 
-function ToolDetailContent({ params }: { params: { id: string } }) {
-  const { id } = params;
+function ToolDetailContent() {
+  const params = useParams();
+  const id = params.id as string;
   const [tool, setTool] = useState<Tool | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -613,9 +614,9 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
             )}
 
             <Card className="bg-accent/50 text-center p-6">
-                <p className="text-xl font-bold mb-2 leading-snug text-foreground">
+                <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">
                     Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
-                </p>
+                </h3>
                 <p className="mb-4 text-sm text-muted-foreground">
                     Nâng cấp quy trình làm việc của bạn
                 </p>
@@ -630,6 +631,6 @@ function ToolDetailContent({ params }: { params: { id: string } }) {
   );
 }
 
-export default function ToolPreviewPage({ params }: { params: { id: string } }) {
-  return <ToolDetailContent params={params} />;
+export default function ToolPreviewPage() {
+  return <ToolDetailContent />;
 }
