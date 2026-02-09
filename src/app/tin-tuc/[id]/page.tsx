@@ -15,11 +15,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { useParams } from "next/navigation";
 
 const PAGE_SIZE = 12;
 
-function NewsCategoryContent({ params }: { params: { id: string }}) {
-    const { id: categoryId } = params;
+function NewsCategoryContent() {
+    const params = useParams();
+    const categoryId = params.id as string;
     const [isLoading, setIsLoading] = useState(true);
     const [isMoreLoading, setIsMoreLoading] = useState(false);
     const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -270,11 +272,11 @@ function NewsCategoryContent({ params }: { params: { id: string }}) {
     );
 }
 
-export default function NewsCategoryPage({ params }: { params: { id: string } }) {
+export default function NewsCategoryPage() {
     // Suspense Boundary is good practice for pages using useSearchParams or other client hooks
     return (
         <Suspense fallback={<div className="w-full h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
-            <NewsCategoryContent params={params} />
+            <NewsCategoryContent />
         </Suspense>
     )
 }
