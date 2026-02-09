@@ -44,7 +44,7 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div className="md:col-span-2">
           <label htmlFor="search-tools" className="block text-sm font-medium text-muted-foreground mb-1">
-            Tìm kiếm Công cụ
+            Tìm kiếm công cụ
           </label>
           <div className="relative">
             <Input

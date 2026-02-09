@@ -716,7 +716,7 @@ exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
 
 
 const TARGET_URLS = [
-    "https://4aivn.com/cong-cu",
+    "https://4aivn.com",
     "https://4aivn.com/bang-xep-hang",
     "https://4aivn.com/tin-tuc"
 ];
