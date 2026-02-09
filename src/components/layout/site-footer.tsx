@@ -42,7 +42,7 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực Trí Tuệ Nhân Tạo.
+              Nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực trí tuệ nhân tạo.
             </p>
             <div className="flex space-x-4 pt-2">
               {socialMediaLinks.map((item) => (
