@@ -22,7 +22,7 @@ const featuredTopics = [
 ];
 
 const socialMediaLinks = [
-  { href: "#", label: "Facebook", icon: Facebook },
+  { href: "https://www.facebook.com/4aivn", label: "Facebook", icon: Facebook },
   { href: "#", label: "Twitter", icon: Twitter },
   { href: "#", label: "LinkedIn", icon: Linkedin },
   { href: "#", label: "YouTube", icon: Youtube },
