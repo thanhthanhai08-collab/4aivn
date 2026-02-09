@@ -12,6 +12,8 @@ const BASE_URL = "https://4aivn.com";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;
+  if (!id) return { title: "Model không tồn tại" };
+  
   const docRef = doc(db, "models", id);
   const docSnap = await getDoc(docRef);
   const model = docSnap.exists() ? docSnap.data() : null;
@@ -37,6 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ModelDetailLayout({ children, params }: Props) {
   const { id } = params;
+  if (!id) return <>{children}</>;
+
   const docRef = doc(db, "models", id);
   const docSnap = await getDoc(docRef);
   const model = docSnap.exists() ? docSnap.data() : null;
