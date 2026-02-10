@@ -42,11 +42,30 @@ import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
 import { useParams } from "next/navigation";
 
+// Helper function to extract YouTube ID
+function getYouTubeId(urlOrId: string): string {
+  if (!urlOrId) return '';
+  const url = urlOrId.trim();
+  
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  
+  if (match) {
+    return match[1];
+  }
+  
+  if (url.length === 11) {
+    return url;
+  }
+
+  return '';
+}
+
 const renderContent = (article: NewsArticle) => {
   if (!article || !article.content) return null;
 
   // Regex to find placeholders like [CHART_1], [IMAGE:...] and legacy placeholders
-  const combinedRegex = /(\[CHART_(?:\d+)\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
+  const combinedRegex = /(\[CHART_(?:\d+)\]|\[VIDEO:.*?\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
 
   const parts = article.content.split(combinedRegex).filter(part => part);
 
@@ -128,6 +147,36 @@ const renderContent = (article: NewsArticle) => {
             return <ImageEditingBenchmarkChart key={`${index}-image-edit-chart`} />;
         }
         return null;
+    }
+
+    // --- XỬ LÝ VIDEO 3 THÀNH PHẦN: [VIDEO:ID|Title|Caption] ---
+    const videoMatch = part.match(/^\[VIDEO:(.*?)\|(.*?)\|(.*?)\]$/);
+    if (videoMatch) {
+      const [, rawId, videoTitle, videoHint] = videoMatch;
+      const videoId = getYouTubeId(rawId);
+
+      return (
+        <figure key={`video-${index}`} className="not-prose w-full my-8 flex flex-col items-center">
+          {/* Khung chứa Iframe tỉ lệ 16:9 */}
+          <div className="relative w-full pb-[56.25%] rounded-2xl overflow-hidden shadow-2xl border border-border bg-black transition-transform hover:scale-[1.01] duration-300">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1`}
+              title={videoTitle.trim() || `Video: ${article.title}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+          
+          {/* Chú thích Video (Thành phần thứ 3) */}
+          {videoHint && videoHint.trim() !== "" && (
+            <figcaption className="mt-4 text-center text-sm md:text-base text-muted-foreground italic max-w-[90%]">
+              {videoHint.trim()}
+            </figcaption>
+          )}
+        </figure>
+      );
     }
 
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
