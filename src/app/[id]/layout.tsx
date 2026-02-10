@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-export const dynamic = 'force-dynamic';
-
 type Props = {
   children: React.ReactNode;
   params: { id: string };
