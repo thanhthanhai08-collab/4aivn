@@ -21,3 +21,18 @@ env:
   # 2. Khai báo Secret để Next.js sử dụng
   - variable: GEMINI_API_KEY
     secret: GEMINI_API_KEY
+  
+  # 3. BỔ SUNG CÁC BIẾN FIREBASE (Quan trọng nhất)
+  # Bạn có thể dán trực tiếp giá trị vào đây vì đây là các Public Key
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyBEV5I4r5kHJ7k_29zXQ2e2jSeYcB20amc"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "clean-ai-hub.firebaseapp.com"
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "clean-ai-hub"
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "clean-ai-hub.firebasestorage.app"
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "162139044610"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:162139044610:web:87979fa53580459915a01b"
