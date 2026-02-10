@@ -1,6 +1,8 @@
 // src/app/[id]/page.tsx
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
