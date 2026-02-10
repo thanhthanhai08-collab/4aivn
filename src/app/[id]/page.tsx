@@ -201,9 +201,12 @@ function NewsDetailContent() {
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   
   useEffect(() => {
+    if (typeof window === 'undefined' || !id) {
+        setIsLoading(false);
+        return;
+    }
+
     const fetchArticleData = async () => {
-        if (!id) return;
-        
         incrementNewsViewCount(id);
 
         setIsLoading(true);
