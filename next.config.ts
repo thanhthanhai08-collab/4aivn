@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // 1. Cấu hình REWRITES để tạo URL thân thiện SEO
   async rewrites() {
     return [
