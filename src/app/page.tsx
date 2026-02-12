@@ -47,6 +47,7 @@ export default function HomePage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const isHoveringRef = useRef(false);
+  const isInteractingRef = useRef(false);
 
   useEffect(() => {
     const typingSpeed = 2;
@@ -79,7 +80,7 @@ export default function HomePage() {
   const startScrolling = () => {
     if (scrollIntervalRef.current) return;
     scrollIntervalRef.current = setInterval(() => {
-      if (carouselRef.current && !isHoveringRef.current) {
+      if (carouselRef.current && !isHoveringRef.current && !isInteractingRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
         const totalContentWidth = scrollWidth / 2;
         
@@ -343,7 +344,9 @@ export default function HomePage() {
             >
             <div 
               ref={carouselRef}
-              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
+              className="flex overflow-x-auto scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
+              onTouchStart={() => { isInteractingRef.current = true; }}
+              onTouchEnd={() => { isInteractingRef.current = false; }}
             >
                 {isLoadingNews ? (
                   [...Array(6)].map((_, i) => (
