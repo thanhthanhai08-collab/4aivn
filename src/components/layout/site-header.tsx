@@ -108,7 +108,11 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                 <span className="sr-only">Mở/Đóng Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="pr-0">
+            <SheetContent 
+              side="left" 
+              className="pr-0" 
+              onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                <SheetHeader>
                 <SheetTitle className="sr-only">Menu chính</SheetTitle>
               </SheetHeader>
