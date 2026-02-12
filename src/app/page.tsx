@@ -343,7 +343,7 @@ export default function HomePage() {
             >
             <div 
               ref={carouselRef}
-              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-y"
+              className="flex overflow-x-auto scroll-smooth scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
             >
                 {isLoadingNews ? (
                   [...Array(6)].map((_, i) => (
@@ -366,7 +366,7 @@ export default function HomePage() {
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex"
               onClick={() => scrollCarousel('left')}
               aria-label="Cuộn sang trái"
             >
@@ -375,7 +375,7 @@ export default function HomePage() {
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex"
               onClick={() => scrollCarousel('right')}
               aria-label="Cuộn sang phải"
             >
