@@ -308,14 +308,14 @@ function NewsDetailContent() {
                     where("post", "==", true),
                     where("tag", "array-contains-any", fetchedArticle.tag),
                     orderBy("publishedAt", "desc"),
-                    limit(4) 
+                    limit(5) 
                 );
             } else {
                 relatedQuery = query(
                     collection(db, "news"),
                     where("post", "==", true),
                     orderBy("publishedAt", "desc"),
-                    limit(4)
+                    limit(5)
                 );
             }
 
@@ -335,14 +335,25 @@ function NewsDetailContent() {
 
             setLatestNews(latestData);
 
+            const primaryTag = fetchedArticle.tag?.[0]; // Tag chính để ưu tiên
             const relatedData = relatedSnapshot.docs
                 .map(doc => ({
                     id: doc.id,
                     ...doc.data(),
                     publishedAt: doc.data().publishedAt.toDate().toISOString(),
                 } as NewsArticle))
-                .filter(item => item.id !== id)
-                .slice(0, 3);
+                .filter(item => item.id !== id) 
+                .sort((a, b) => {
+                    const aHasPrimary = a.tag?.includes(primaryTag!) ? 1 : 0;
+                    const bHasPrimary = b.tag?.includes(primaryTag!) ? 1 : 0;
+            
+                    if (aHasPrimary !== bHasPrimary) {
+                        return bHasPrimary - aHasPrimary;
+                    }
+            
+                    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+                })
+                .slice(0, 4); 
 
             setRelatedNews(relatedData);
 
