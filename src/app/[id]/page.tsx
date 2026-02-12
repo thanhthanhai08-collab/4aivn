@@ -335,25 +335,38 @@ function NewsDetailContent() {
 
             setLatestNews(latestData);
 
-            const primaryTag = fetchedArticle.tag?.[0]; // Tag chính để ưu tiên
             const relatedData = relatedSnapshot.docs
                 .map(doc => ({
                     id: doc.id,
                     ...doc.data(),
                     publishedAt: doc.data().publishedAt.toDate().toISOString(),
                 } as NewsArticle))
-                .filter(item => item.id !== id) 
+                .filter(item => item.id !== id)
                 .sort((a, b) => {
-                    const aHasPrimary = a.tag?.includes(primaryTag!) ? 1 : 0;
-                    const bHasPrimary = b.tag?.includes(primaryTag!) ? 1 : 0;
-            
-                    if (aHasPrimary !== bHasPrimary) {
-                        return bHasPrimary - aHasPrimary;
+                    const calculateScore = (article: NewsArticle) => {
+                        let score = 0;
+                        if (!article.tag || !fetchedArticle.tag) return 0;
+
+                        // TRỌNG TÂM: Chỉ chấm điểm cho 2 tag đầu tiên
+                        // Khớp Tag 0: 3 điểm
+                        if (article.tag.includes(fetchedArticle.tag[0])) score += 3;
+                        
+                        // Khớp Tag 1: 2 điểm
+                        if (fetchedArticle.tag[1] && article.tag.includes(fetchedArticle.tag[1])) score += 2;
+
+                        return score;
+                    };
+
+                    const scoreA = calculateScore(a);
+                    const scoreB = calculateScore(b);
+
+                    if (scoreB !== scoreA) {
+                        return scoreB - scoreA;
                     }
-            
+
                     return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
                 })
-                .slice(0, 4); 
+                .slice(0, 4); // Lấy 4 bài hiển thị ngang hàng
 
             setRelatedNews(relatedData);
 
@@ -632,7 +645,7 @@ function NewsDetailContent() {
             <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
               Các bài viết liên quan
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {relatedNews.map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}
