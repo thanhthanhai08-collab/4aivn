@@ -10,19 +10,21 @@ export const metadata: Metadata = {
   title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
   description: 'Luôn cập nhật tin tức AI và các model công cụ AI mới nhất ngoài ra còn có trải nghiệm chatbot cho người dùng.',
   
-  // Chỉ sử dụng ICO và PNG để đảm bảo hiển thị 100%
+  // manifest: '/manifest.json', // Kết nối file manifest
+
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
+      // { url: '/favicon.svg', type: 'image/svg+xml' }, // Thêm favicon SVG chuẩn SEO
+      // { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }, 
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }, //
     ],
   },
 
-  // Cấu hình Mạng xã hội sử dụng icon-512
   openGraph: {
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
     description: 'Cập nhật tin tức và công cụ AI mới nhất.',
@@ -48,7 +50,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -57,6 +58,9 @@ export default function RootLayout({
   return (
     <html lang="vi" className={inter.variable} suppressHydrationWarning>
       <head>
+        {/* Ưu tiên khai báo icon Apple trực tiếp để các trình duyệt cũ nhận diện tốt hơn */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,8 +69,6 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
-
-      
         <GoogleAnalytics gaId="G-CS448T4W5H" /> 
       </body>
     </html>
