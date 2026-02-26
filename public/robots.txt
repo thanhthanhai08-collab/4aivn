@@ -1,6 +1,11 @@
 # 1. QUY TẮC CHUNG CHO TẤT CẢ CÁC BOT (Google, Bing, Yahoo...)
 User-agent: *
 Allow: /
+# Chặn các trang hệ thống
+Disallow: /admin/
+Disallow: /ho-so/
+Disallow: /auth-action/
+Disallow: /admin/preview/
 
 # 2. CÁC ỨNG DỤNG NHẮN TIN (Zalo, Telegram, WhatsApp, Slack...)
 # Giúp hiện ảnh thumbnail (preview) to và rõ khi gửi link qua tin nhắn
