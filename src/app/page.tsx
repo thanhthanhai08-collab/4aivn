@@ -90,7 +90,7 @@ export default function HomePage() {
             carouselRef.current.scrollLeft += 1;
         }
       }
-    }, 15); 
+    }, 30); 
   };
 
   const stopScrolling = () => {
@@ -216,13 +216,6 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Placeholder for Airtable-like visual if desired */}
-      <section className="py-12 md:py-16 hidden"> 
-        <div className="container">
-          <Image src="https://picsum.photos/1200/600" alt="4AIVN" width={1200} height={600} className="rounded-lg shadow-2xl mx-auto" />
-        </div>
-      </section>
-      
        {/* Affiliate Banner Section */}
       <section className="py-8 bg-background">
         <div className="container">
@@ -345,8 +338,8 @@ export default function HomePage() {
             <div 
               ref={carouselRef}
               className="flex overflow-x-auto scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
-              onTouchStart={() => { isInteractingRef.current = true; }}
-              onTouchEnd={() => { isInteractingRef.current = false; }}
+              onTouchStart={() => { isInteractingRef.current = true; stopScrolling(); }}
+              onTouchEnd={() => { isInteractingRef.current = false; startScrolling(); }}
             >
                 {isLoadingNews ? (
                   [...Array(6)].map((_, i) => (
