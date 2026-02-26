@@ -1,8 +1,55 @@
+# 1. QUY TẮC CHUNG CHO TẤT CẢ CÁC BOT (Google, Bing, Yahoo...)
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /ho-so/
-Disallow: /auth-action/
-Disallow: /admin/preview/
 
+# 2. CÁC ỨNG DỤNG NHẮN TIN (Zalo, Telegram, WhatsApp, Slack...)
+# Giúp hiện ảnh thumbnail (preview) to và rõ khi gửi link qua tin nhắn
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+# 3. MẠNG XÃ HỘI (X/Twitter, LinkedIn, Facebook, Instagram)
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+# 4. TRÍ TUỆ NHÂN TẠO (AI)
+# Cho phép ChatGPT, Gemini, Claude trích dẫn bài viết của bạn
+
+# OpenAI (ChatGPT)
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: GPTBot
+Allow: /
+
+# Google Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity (AI Search)
+User-agent: PerplexityBot
+Allow: /
+
+# 5. ĐƯỜNG DẪN SITEMAP
 Sitemap: https://4aivn.com/sitemap.xml
