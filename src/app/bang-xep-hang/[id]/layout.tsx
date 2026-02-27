@@ -25,9 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!model) return { title: "Model không tồn tại" };
 
+    const imageUrl = model.logoUrl ? (model.logoUrl.startsWith('http') ? model.logoUrl : `${BASE_URL}${model.logoUrl}`) : undefined;
+    const title = `${model.name} - Thông số & Đánh giá hiệu năng`;
+    const description = model.description?.slice(0, 160) || `Xem chi tiết đánh giá model AI ${model.name}.`;
+
     return {
-      title: `${model.name} - Thông số & Đánh giá hiệu năng`,
-      description: model.description?.slice(0, 160) || `Xem chi tiết đánh giá model AI ${model.name}.`,
+      title: title,
+      description: description,
       alternates: {
         canonical: `${BASE_URL}/bang-xep-hang/${id}`,
       },
@@ -36,8 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: model.description?.slice(0, 160),
         url: `${BASE_URL}/bang-xep-hang/${id}`,
         siteName: "4AIVN",
-        images: model.logoUrl ? [{ url: model.logoUrl }] : [],
+        images: imageUrl ? [{ url: imageUrl }] : [],
         type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        images: imageUrl ? [imageUrl] : [],
       },
     };
   } catch (error) {

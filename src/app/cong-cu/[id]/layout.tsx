@@ -33,17 +33,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const tool = docSnap.data();
+    const imageUrl = tool.imageUrl ? (tool.imageUrl.startsWith('http') ? tool.imageUrl : `${BASE_URL}${tool.imageUrl}`) : undefined;
+    const title = `${tool.name} - Tính năng chi tiết và đánh giá từ cộng đồng`;
+    const description = tool.description 
+        ? tool.description.slice(0, 160) // Cắt ngắn mô tả cho chuẩn SEO
+        : `Khám phá tính năng của ${tool.name}, một công cụ AI thuộc nhóm ${tool.context}.`;
+
 
     return {
-      title: `${tool.name} - Tính năng chi tiết và đánh giá từ cộng đồng`,
-      description: tool.description 
-        ? tool.description.slice(0, 160) // Cắt ngắn mô tả cho chuẩn SEO
-        : `Khám phá tính năng của ${tool.name}, một công cụ AI thuộc nhóm ${tool.context}.`,
+      title: title,
+      description: description,
       openGraph: {
         title: tool.name,
         description: tool.description,
-        images: tool.imageUrl ? [tool.imageUrl] : [], // Sử dụng imageUrl
+        images: imageUrl ? [{ url: imageUrl }] : [], // Sử dụng imageUrl
       },
+      twitter: {
+        card: 'summary_large_image',
+        title: title,
+        description: description,
+        images: imageUrl ? [imageUrl] : [],
+      }
     };
   } catch (error) {
       console.error(`Error generating metadata for tool: ${id}`, error);

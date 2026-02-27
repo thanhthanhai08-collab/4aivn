@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const article = docSnap.data();
     const description = article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160);
+    const imageUrl = article.imageUrl ? (article.imageUrl.startsWith('http') ? article.imageUrl : `${BASE_URL}${article.imageUrl}`) : undefined;
 
     return {
       title: article.title,
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: description,
         url: `${BASE_URL}/${id}`,
         siteName: "4AIVN",
-        images: article.imageUrl ? [{ url: article.imageUrl }] : [],
+        images: imageUrl ? [{ url: imageUrl }] : [],
         type: "article",
         publishedTime: article.publishedAt?.toDate ? article.publishedAt.toDate().toISOString() : new Date().toISOString(),
         authors: [article.author || "4AIVN"],
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         card: "summary_large_image",
         title: article.title,
         description: description,
-        images: article.imageUrl ? [article.imageUrl] : [],
+        images: imageUrl ? [imageUrl] : [],
       },
     };
   } catch (error) {
