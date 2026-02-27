@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: '4AIVN',
     images: [
       {
-        url: '/icon-512.png',
+        url: 'https://4aivn.com/icon-512.png',
         width: 512,
         height: 512,
         alt: '4AIVN Logo',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: 'summary', 
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
     description: 'Cập nhật tin tức và công cụ AI mới nhất.',
-    images: ['/icon-512.png'],
+    images: ['https://4aivn.com/icon-512.png'],
   },
 };
 
