@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-  description: 'Luôn cập nhật tin tức AI và các model công cụ AI mới nhất ngoài ra còn có trải nghiệm chatbot cho người dùng.',
+  description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
   
   manifest: '/manifest.json', // Kết nối file manifest
 
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: 'Cập nhật tin tức và công cụ AI mới nhất.',
+    description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
     url: 'https://4aivn.com',
     siteName: '4AIVN',
     images: [
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary', 
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: 'Cập nhật tin tức và công cụ AI mới nhất.',
+    description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
     images: ['https://4aivn.com/icon-512.png'],
   },
 };
