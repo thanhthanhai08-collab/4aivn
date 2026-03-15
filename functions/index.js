@@ -689,28 +689,33 @@ exports.searchNews = onRequest({
 /**
  * 2. TRIGGER: Tự động phát hiện khi bài viết được chuyển từ false -> true
  */
-exports.onNewsPublished = onDocumentUpdated("news/{postId}", async (event) => {
+exports.onNewsPublished = onDocumentUpdated({
+    document: "news/{postId}",
+    region: "asia-southeast1",
+}, async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();
   
-    // Kiểm tra điều kiện: trước đó false/không có, sau đó là true
-    if (before?.post !== true && after?.post === true) {
-      console.log(`Phát hiện bài viết mới xuất bản: ${event.params.postId}`);
+    // ✅ Chỉ chạy khi post thay đổi từ false/null → true
+    // Mọi thay đổi khác (viewCount, rating...) đều bỏ qua
+    const postJustPublished = before?.post !== true && after?.post === true;
+    if (!postJustPublished) return null;  // ← thoát ngay, không tốn tiền
+    
+    console.log(`Phát hiện bài viết mới xuất bản: ${event.params.postId}`);
       
-      // Gọi Webhook đến chính hàm searchNews để ép nạp lại cache
-      const functionUrl = `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
+    // Gọi Webhook đến chính hàm searchNews để ép nạp lại cache
+    const functionUrl = `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
       
-      try {
-        const response = await fetch(functionUrl);
-        if (response.ok) {
-          console.log("Kích hoạt làm mới cache tìm kiếm thành công.");
-        } else {
-            const errorText = await response.text();
-            console.error(`Lỗi khi kích hoạt Webhook: ${response.status}`, errorText);
-        }
-      } catch (err) {
-        console.error("Lỗi mạng khi gọi Webhook:", err);
+    try {
+      const response = await fetch(functionUrl);
+      if (response.ok) {
+        console.log("Kích hoạt làm mới cache tìm kiếm thành công.");
+      } else {
+          const errorText = await response.text();
+          console.error(`Lỗi khi kích hoạt Webhook: ${response.status}`, errorText);
       }
+    } catch (err) {
+      console.error("Lỗi mạng khi gọi Webhook:", err);
     }
 });
 
