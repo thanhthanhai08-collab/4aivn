@@ -206,7 +206,7 @@ export default function HomePage() {
           </div>
 
             <p className="max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl">
-              Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.
+              Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4aivn chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.
             </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
             <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
