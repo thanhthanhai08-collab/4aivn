@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-export const revalidate = 3600; // ← thêm dòng này, tự làm mới mỗi 1 tiếng
+export const revalidate = 86400; // 24 tiếng — tiết kiệm hơn
 
 const BASE_URL = "https://4aivn.com";
 
