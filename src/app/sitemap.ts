@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         dynamicUrls.push({
           url: `${BASE_URL}/${doc.id}`,
           lastModified: data.publishedAt?.toDate?.() || new Date(),
-          changeFrequency: 'weekly',
+          changeFrequency: 'daily',
           priority: 0.8,
         });
       }
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       dynamicUrls.push({
         url: `${BASE_URL}/tin-tuc/${doc.id}`,
         lastModified: new Date(),
-        changeFrequency: 'daily',
+        changeFrequency: 'monthly',
         priority: 0.7,
       });
     });
@@ -39,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       dynamicUrls.push({
         url: `${BASE_URL}/cong-cu/${doc.id}`,
         lastModified: new Date(),
-        changeFrequency: 'monthly',
+        changeFrequency: 'weekly',
         priority: 0.7,
       });
     });
@@ -50,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       dynamicUrls.push({
         url: `${BASE_URL}/bang-xep-hang/${doc.id}`,
         lastModified: new Date(),
-        changeFrequency: 'daily',
+        changeFrequency: 'weekly',
         priority: 0.9,
       });
     });
