@@ -48,6 +48,9 @@ export default function HomePage() {
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const isHoveringRef = useRef(false);
   const isInteractingRef = useRef(false);
+  const touchStartXRef = useRef<number>(0);
+  const touchStartYRef = useRef<number>(0);
+  const isHorizontalSwipeRef = useRef<boolean | null>(null);
 
   useEffect(() => {
     const typingSpeed = 2;
@@ -338,8 +341,35 @@ export default function HomePage() {
             <div 
               ref={carouselRef}
               className="flex overflow-x-auto scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
-              onTouchStart={() => { isInteractingRef.current = true; stopScrolling(); }}
-              onTouchEnd={() => { isInteractingRef.current = false; startScrolling(); }}
+              onTouchStart={(e) => {
+                // Ghi lại điểm bắt đầu chạm
+                touchStartXRef.current = e.touches[0].clientX;
+                touchStartYRef.current = e.touches[0].clientY;
+                isHorizontalSwipeRef.current = null; // chưa xác định hướng
+              }}
+              onTouchMove={(e) => {
+                if (isHorizontalSwipeRef.current === null) {
+                  const deltaX = Math.abs(e.touches[0].clientX - touchStartXRef.current);
+                  const deltaY = Math.abs(e.touches[0].clientY - touchStartYRef.current);
+
+                  // Xác định hướng vuốt sau khi di chuyển đủ 5px
+                  if (deltaX > 5 || deltaY > 5) {
+                    isHorizontalSwipeRef.current = deltaX > deltaY;
+                  }
+                }
+
+                // Chỉ dừng auto-scroll nếu vuốt ngang
+                if (isHorizontalSwipeRef.current === true) {
+                  isInteractingRef.current = true;
+                  stopScrolling();
+                }
+                // Vuốt dọc → không làm gì, để browser xử lý scroll trang bình thường
+              }}
+              onTouchEnd={() => {
+                isInteractingRef.current = false;
+                isHorizontalSwipeRef.current = null;
+                startScrolling();
+              }}
             >
                 {isLoadingNews ? (
                   [...Array(6)].map((_, i) => (

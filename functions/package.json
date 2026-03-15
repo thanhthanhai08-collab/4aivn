@@ -17,7 +17,7 @@
     "@genkit-ai/googleai": "^1.27.0",
     "@google/generative-ai": "^0.24.1",
     "firebase-admin": "^13.6.0",
-    "firebase-functions": "^7.0.5",
+    "firebase-functions": "^7.1.1",
     "flexsearch": "^0.8.212",
     "genkit": "^1.27.0",
     "mammoth": "^1.11.0",
