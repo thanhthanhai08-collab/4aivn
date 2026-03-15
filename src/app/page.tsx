@@ -340,7 +340,7 @@ export default function HomePage() {
             >
             <div 
               ref={carouselRef}
-              className="flex overflow-x-auto scrollbar-hide py-4 -mx-4 px-4 touch-pan-x"
+              className="flex overflow-x-auto scrollbar-hide py-4 -mx-4 px-4"
               onTouchStart={(e) => {
                 // Ghi lại điểm bắt đầu chạm
                 touchStartXRef.current = e.touches[0].clientX;
