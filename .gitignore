@@ -38,8 +38,13 @@ yarn-error.log*
 next-env.d.ts
 
 .genkit/*
+.env.local*
 .env*
 
 # firebase
 firebase-debug.log
 firestore-debug.log
+# custom scripts
+scripts/add_news.ts
+scripts/add_news_admin.ts
+serviceAccountKey.json

@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-  description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
-  
+  description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
+
   manifest: '/manifest.json', // Kết nối file manifest
 
   icons: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
+    description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
     url: 'https://4aivn.com',
     siteName: '4AIVN',
     images: [
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
     locale: 'vi_VN',
     type: 'website',
   },
-  
+
   twitter: {
-    card: 'summary', 
+    card: 'summary',
     title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: "Khám phá, xếp hạng và cập nhật các công cụ AI mới nhất và tin tức tiên tiến. 4AIVN là người hướng dẫn đáng tin cậy của bạn trong bối cảnh trí tuệ nhân tạo không ngừng phát triển.",
+    description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
     images: ['https://4aivn.com/icon-512.png'],
   },
 };
@@ -60,7 +60,7 @@ export default function RootLayout({
       <head>
         {/* Ưu tiên khai báo icon Apple trực tiếp để các trình duyệt cũ nhận diện tốt hơn */}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -69,7 +69,7 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
-        <GoogleAnalytics gaId="G-CS448T4W5H" /> 
+        <GoogleAnalytics gaId="G-CS448T4W5H" />
       </body>
     </html>
   );
