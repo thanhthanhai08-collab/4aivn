@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "name": "TechCrunch",
+      "rssUrl": "https://techcrunch.com/feed/",
+      "language": "en"
+    },
+    {
+      "name": "The Verge",
+      "rssUrl": "https://www.theverge.com/rss/index.xml",
+      "language": "en"
+    },
+    {
+      "name": "VnExpress",
+      "rssUrl": "https://vnexpress.net/rss/so-hoa.rss",
+      "language": "vi"
+    },
+    {
+      "name": "VietnamNet",
+      "rssUrl": "https://vietnamnet.vn/rss/cong-nghe.rss",
+      "language": "vi"
+    }
+  ],
+  "filterKeywords": [
+    "AI", "artificial intelligence", "trí tuệ nhân tạo",
+    "machine learning", "học máy", "deep learning",
+    "GPT", "Gemini", "Claude", "LLM", "chatbot",
+    "neural network", "mạng nơ-ron", "generative AI",
+    "OpenAI", "Google AI", "Anthropic", "Meta AI",
+    "computer vision", "NLP", "xử lý ngôn ngữ tự nhiên",
+    "robot", "automation", "tự động hóa"
+  ]
+}

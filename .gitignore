@@ -48,3 +48,6 @@ firestore-debug.log
 scripts/add_news.ts
 scripts/add_news_admin.ts
 serviceAccountKey.json
+
+# agent skill data
+news-data/

@@ -1,0 +1,16 @@
+{
+  "title": "Google ra mắt Gemini 2.5 Pro: Mô hình AI mạnh nhất từ trước đến nay",
+  "summary": "Google vừa giới thiệu Gemini 2.5 Pro với khả năng suy luận vượt trội, đạt điểm cao nhất trên nhiều bảng xếp hạng AI.",
+  "content": "<h2>Gemini 2.5 Pro — Bước nhảy vọt của Google</h2><p>Google vừa chính thức ra mắt Gemini 2.5 Pro, mô hình ngôn ngữ lớn thế hệ mới với khả năng suy luận (reasoning) được cải thiện đáng kể so với phiên bản tiền nhiệm.</p><h3>Điểm nổi bật</h3><ul><li>Context window lên tới 1 triệu token</li><li>Đạt điểm cao nhất trên GPQA Diamond và Humanity's Last Exam</li><li>Hỗ trợ multimodal: text, image, audio, video</li></ul><h2>So sánh với đối thủ</h2><p>Gemini 2.5 Pro vượt qua cả GPT-4o và Claude 3.5 Sonnet trên nhiều benchmark quan trọng, đặc biệt trong các bài test về coding và reasoning.</p><h2>Ý nghĩa với cộng đồng AI</h2><p>Đây là tín hiệu cho thấy cuộc đua AI giữa các big tech đang nóng hơn bao giờ hết. Người dùng có thể trải nghiệm Gemini 2.5 Pro miễn phí trên Google AI Studio.</p>",
+  "tags": ["Gemini", "Google AI", "LLM", "AI", "Gemini 2.5 Pro", "benchmark"],
+  "category": [{"id": "xu-huong", "name": "Xu hướng"}],
+  "imagePrompt": "A futuristic AI brain made of glowing circuits and neural networks, floating in a dark space with Google colors (blue, red, yellow, green) as accent lights, digital art style, 16:9",
+  "slug": "google-ra-mat-gemini-2-5-pro",
+  "source": "https://techcrunch.com/example",
+  "author": "Nam",
+  "post": false,
+  "viewCount": 0,
+  "charts": [],
+  "imageUrl": "news-data/google-ra-mat-gemini-2-5-pro.webp",
+  "publishedAt": "2026-03-21T00:00:00.000Z"
+}
