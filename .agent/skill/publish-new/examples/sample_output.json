@@ -1,16 +1,30 @@
 {
-  "title": "Google ra mắt Gemini 2.5 Pro: Mô hình AI mạnh nhất từ trước đến nay",
-  "summary": "Google vừa giới thiệu Gemini 2.5 Pro với khả năng suy luận vượt trội, đạt điểm cao nhất trên nhiều bảng xếp hạng AI.",
-  "content": "<h2>Gemini 2.5 Pro — Bước nhảy vọt của Google</h2><p>Google vừa chính thức ra mắt Gemini 2.5 Pro, mô hình ngôn ngữ lớn thế hệ mới với khả năng suy luận (reasoning) được cải thiện đáng kể so với phiên bản tiền nhiệm.</p><h3>Điểm nổi bật</h3><ul><li>Context window lên tới 1 triệu token</li><li>Đạt điểm cao nhất trên GPQA Diamond và Humanity's Last Exam</li><li>Hỗ trợ multimodal: text, image, audio, video</li></ul><h2>So sánh với đối thủ</h2><p>Gemini 2.5 Pro vượt qua cả GPT-4o và Claude 3.5 Sonnet trên nhiều benchmark quan trọng, đặc biệt trong các bài test về coding và reasoning.</p><h2>Ý nghĩa với cộng đồng AI</h2><p>Đây là tín hiệu cho thấy cuộc đua AI giữa các big tech đang nóng hơn bao giờ hết. Người dùng có thể trải nghiệm Gemini 2.5 Pro miễn phí trên Google AI Studio.</p>",
-  "tags": ["Gemini", "Google AI", "LLM", "AI", "Gemini 2.5 Pro", "benchmark"],
-  "category": [{"id": "xu-huong", "name": "Xu hướng"}],
-  "imagePrompt": "A futuristic AI brain made of glowing circuits and neural networks, floating in a dark space with Google colors (blue, red, yellow, green) as accent lights, digital art style, 16:9",
-  "slug": "google-ra-mat-gemini-2-5-pro",
+  "title": "Nvidia ra mắt NemoClaw nền tảng AI bảo mật cho doanh nghiệp",
+  "summary": "Nvidia giới thiệu NemoClaw giúp khắc phục rủi ro của OpenClaw. Nền tảng này rất phù hợp cho doanh nghiệp cần bảo vệ dữ liệu nhờ dùng OpenShell an toàn.",
+  "content": "<p>Đối với những bạn mới làm quen với AI, có lẽ bảo mật luôn là nỗi lo lớn nhất. Việc cài đặt OpenClaw trên máy tính công ty thường bị ngăn cấm do khó kiểm soát luồng thông tin. Nhưng hiện tại, Nvidia đã mang đến một giải pháp hoàn hảo mang tên NemoClaw.</p><h2>NemoClaw bảo vệ dữ liệu như thế nào?</h2>\n\n<p>Nếu bạn chưa biết nhiều về công nghệ này, hiểu đơn giản OpenClaw giúp tạo ra các trợ lý ảo tự động. Vấn đề là dữ liệu có nguy cơ rò rỉ rất cao. NemoClaw ra đời giải quyết trọn vẹn rắc rối này. Cùng với <a href=\"https://www.eweek.com/news/meet-paperclip-openclaw-ai-company-tool/\" target=\"_blank\" rel=\"noopener\">công ty thu nhỏ</a> này, AI sẽ vận hành hiệu quả và kín kẽ nhất.</p>\n\n<p>đây là mẫu [IMAGE:/image/news%2Fdashboard-paperclip-ai.webp|Dashboard của Paperclip AI|Dashboard của Paperclip AI]</p>\n\n<ul>\n<li>Dễ dàng nắm quyền kiểm soát dữ liệu</li>\n<li>Có thể dùng nhiều mô hình AI linh hoạt</li>\n<li>Hoạt động trên nền tảng sẵn có mà không đổi cấu trúc</li>\n</ul>",
+  "tags": [
+    "Nvidia",
+    "NemoClaw",
+    "OpenClaw",
+    "AI Agent",
+    "Bảo mật an toàn",
+    "Tin tức AI",
+    "4aivn"
+  ],
+  "category": [
+    {
+      "id": "xu-huong",
+      "name": "Xu hướng"
+    }
+  ],
+  "imagePrompt": "A highly secure floating vault containing a glowing artificial intelligence brain core, digital art style, vivid colors, 16:9",
+  "slug": "nvidia-ra-mat-nemoclaw-lop-bao-mat-cho-openclaw",
+  "id": "nvidia-ra-mat-nemoclaw-lop-bao-mat-cho-openclaw",
   "source": "https://techcrunch.com/example",
   "author": "Nam",
   "post": false,
   "viewCount": 0,
   "charts": [],
-  "imageUrl": "news-data/google-ra-mat-gemini-2-5-pro.webp",
+  "imageUrl": "news-data/nvidia-ra-mat-nemoclaw-lop-bao-mat-cho-openclaw.webp",
   "publishedAt": "2026-03-21T00:00:00.000Z"
 }

@@ -94,6 +94,10 @@ ${styleGuide}
 YÊU CẦU:
 - Tiêu đề giật gân nhưng chuyên nghiệp
 - Content là HTML thuần (h2, h3, p, ul, li)
+- KHÔNG ĐƯỢC DÙNG DẤU GẠCH NGANG (-) trong toàn bộ bài viết.
+- Hình ảnh nếu có phải theo format [IMAGE:url|alt|caption]
+- Nếu chèn link, dùng thẻ <a href="..." target="_blank" rel="noopener">text</a> (ưu tiên internal link)
+- Viết cho người mới tiếp cận AI, dùng từ ngữ dễ hiểu
 - 600-1000 từ
 - Danh mục mặc định: [{id: "xu-huong", name: "Xu hướng"}]
 - Tags: 5-8 từ khóa
@@ -116,6 +120,7 @@ YÊU CẦU:
     // Thêm metadata
     const fullOutput = {
       ...output,
+      id: slug,
       slug,
       source: sourceUrl,
       author: 'Nam',

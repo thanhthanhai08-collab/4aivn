@@ -60,7 +60,9 @@ async function main() {
   };
 
   try {
-    const docRef = await db.collection('news').add(newsDoc);
+    const slug = data.slug || path.basename(inputPath, '.json');
+    await db.collection('news').doc(slug).set(newsDoc);
+    const docRef = db.collection('news').doc(slug);
     console.log(`\n✅ Đã đăng thành công!`);
     console.log(`   Document ID: ${docRef.id}`);
     console.log(`   post: false (cần chuyển true để xuất bản)`);
