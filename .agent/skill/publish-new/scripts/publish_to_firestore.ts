@@ -1,8 +1,6 @@
 /**
- * Bước 5: Đăng lên Firestore
- * Tạo document đầy đủ schema trong collection "news"
- *
- * Usage: npx tsx .agent/skill/publish-new/scripts/publish_to_firestore.ts --input "news-data/slug.json"
+ * Bước 4: Đăng lên Firestore và dọn dẹp thư mục
+ * Usage: npx tsx .agent/skill/publish-new/scripts/publish_to_firestore.ts --slug "slug"
  */
 import * as admin from 'firebase-admin';
 import * as fs from 'fs';
@@ -11,18 +9,30 @@ import * as dotenv from 'dotenv';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
-// Parse args
 const args = process.argv.slice(2);
-const inputIdx = args.indexOf('--input');
-const inputPath = inputIdx !== -1 ? args[inputIdx + 1] : '';
+const slugIdx = args.indexOf('--slug');
+const slug = slugIdx !== -1 ? args[slugIdx + 1] : '';
 
-if (!inputPath) {
-  console.error('❌ Thiếu --input. Usage: npx tsx publish_to_firestore.ts --input "news-data/slug.json"');
+if (!slug) {
+  console.error('❌ Thiếu --slug. Usage: npx tsx publish_to_firestore.ts --slug "slug"');
   process.exit(1);
 }
 
-// Init Firebase Admin
-const serviceAccount = require(path.resolve(process.cwd(), 'serviceAccountKey.json'));
+const dirPath = path.resolve(process.cwd(), `news-data/${slug}`);
+const fullPath = path.join(dirPath, `${slug}.json`);
+
+if (!fs.existsSync(fullPath)) {
+  console.error(`❌ File không tồn tại: ${fullPath}`);
+  process.exit(1);
+}
+
+const serviceAccountPath = path.resolve(process.cwd(), 'serviceAccountKey.json');
+if (!fs.existsSync(serviceAccountPath)) {
+  console.error('❌ Thiếu file serviceAccountKey.json ở thư mục gốc');
+  process.exit(1);
+}
+
+const serviceAccount = require(serviceAccountPath);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || serviceAccount.project_id
@@ -30,25 +40,19 @@ admin.initializeApp({
 const db = admin.firestore();
 
 async function main() {
-  const fullPath = path.resolve(process.cwd(), inputPath);
-  if (!fs.existsSync(fullPath)) {
-    console.error(`❌ File không tồn tại: ${fullPath}`);
-    process.exit(1);
-  }
-
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
 
   console.log('🚀 Đăng bài lên Firestore...');
   console.log(`   Tiêu đề: ${data.title}`);
 
-  // Chuẩn bị document theo schema đầy đủ
   const newsDoc = {
     author: data.author || 'Nam',
     category: data.category || [{ id: 'xu-huong', name: 'Xu hướng' }],
     charts: data.charts || [],
     content: data.content || '',
-    imageUrl: data.imageUrl || '',
-    post: false,
+    // Lấy ảnh bìa 16:9 từ storage
+    imageUrl: `/image/news%2F${slug}.webp`,
+    post: false, // Để rà soát duyệt nội dung
     publishedAt: data.publishedAt
       ? admin.firestore.Timestamp.fromDate(new Date(data.publishedAt))
       : admin.firestore.FieldValue.serverTimestamp(),
@@ -60,17 +64,30 @@ async function main() {
   };
 
   try {
-    const slug = data.slug || path.basename(inputPath, '.json');
-    await db.collection('news').doc(slug).set(newsDoc);
-    const docRef = db.collection('news').doc(slug);
+    const docSlug = data.slug || slug;
+    const docRef = db.collection('news').doc(docSlug);
+    await docRef.set(newsDoc);
+
     console.log(`\n✅ Đã đăng thành công!`);
     console.log(`   Document ID: ${docRef.id}`);
-    console.log(`   post: false (cần chuyển true để xuất bản)`);
+    console.log(`   post: false`);
 
-    // Cập nhật document ID vào file JSON
+    // Ghi nhận firestoreId
     data.firestoreId = docRef.id;
     fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), 'utf-8');
 
+    // Dọn dẹp các file JSON không cần thiết
+    console.log('🧹 Dọn dẹp thư mục:');
+    const filesToRemove = ['crawl.json', 'analyze.json', 'outline.json', 'write.html'];
+    filesToRemove.forEach(f => {
+      const p = path.join(dirPath, f);
+      if (fs.existsSync(p)) {
+        fs.unlinkSync(p);
+        console.log(`   Đã xoá: ${f}`);
+      }
+    });
+
+    console.log(`\n🎉 Hoàn tất quy trình! Thư mục news-data/${slug}/ giờ chỉ còn ${slug}.json và ảnh bìa.`);
     process.exit(0);
   } catch (err: any) {
     console.error('❌ Lỗi Firestore:', err.message);

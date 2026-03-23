@@ -1,8 +1,7 @@
 /**
- * Bước 2+3: Sắp xếp keyword + Viết lại bài theo phong cách 4AIVN + Tạo image prompt
- * Gộp 1 lần gọi Gemini duy nhất → tiết kiệm token
- *
- * Usage: npx tsx .agent/skill/publish-new/scripts/rewrite_article.ts --url "https://..." --hint "mô tả ngắn"
+ * Bước 3: Metadata, Check chính tả & Chèn Link
+ * Khác với bản cũ, bản này đọc HTML đã viết sẵn, KIÊN QUYẾT KHÔNG ĐỔI NỘI DUNG
+ * Usage: npx tsx .agent/skill/publish-new/scripts/rewrite_article.ts --slug "slug"
  */
 import * as fs from 'fs';
 import * as path from 'path';
@@ -11,59 +10,46 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
-// Parse args
 const args = process.argv.slice(2);
-const urlIdx = args.indexOf('--url');
-const hintIdx = args.indexOf('--hint');
-const sourceUrl = urlIdx !== -1 ? args[urlIdx + 1] : '';
-const hint = hintIdx !== -1 ? args[hintIdx + 1] : '';
+const slugIdx = args.indexOf('--slug');
+const slug = slugIdx !== -1 ? args[slugIdx + 1] : '';
 
-if (!sourceUrl) {
-  console.error('❌ Thiếu --url. Usage: npx tsx rewrite_article.ts --url "https://..." --hint "mô tả"');
+if (!slug) {
+  console.error('❌ Thiếu --slug. Usage: npx tsx rewrite_article.ts --slug "slug"');
   process.exit(1);
 }
 
-// Load style guide
-const styleGuide = fs.readFileSync(
-  path.resolve(__dirname, '../resources/writing_style_guide.md'), 'utf-8'
-);
+const dirPath = path.resolve(process.cwd(), `news-data/${slug}`);
+const htmlPath = path.join(dirPath, 'write.html');
+
+if (!fs.existsSync(htmlPath)) {
+  console.error(`❌ File write.html không tồn tại ở: ${htmlPath}`);
+  process.exit(1);
+}
 
 const OUTPUT_SCHEMA = {
   type: "object" as const,
   properties: {
-    title: { type: "string" as const, description: "Tiêu đề bài viết tiếng Việt" },
-    summary: { type: "string" as const, description: "Tóm tắt 1-2 câu, dưới 50 từ" },
-    content: { type: "string" as const, description: "Nội dung HTML với h2, h3, p, ul" },
+    title: { type: "string" as const, description: "Tiêu đề bài viết tiếng Việt (giật tít chuyên nghiệp)" },
+    summary: { type: "string" as const, description: "Tóm tắt 1-2 câu ngắn gọn" },
+    content: { type: "string" as const, description: "HTML y hệt bản gốc, chỉ sửa chính tả và chèn <a>" },
     tags: {
       type: "array" as const,
       items: { type: "string" as const },
       description: "5-8 từ khóa liên quan"
     },
-    category: {
-      type: "array" as const,
-      items: {
-        type: "object" as const,
-        properties: {
-          id: { type: "string" as const },
-          name: { type: "string" as const }
-        },
-        required: ["id", "name"]
-      },
-      description: "Danh mục bài viết"
-    },
-    imagePrompt: { type: "string" as const, description: "Prompt tiếng Anh để sinh ảnh bìa" }
+    imagePrompt: { type: "string" as const, description: "Prompt tiếng Anh sinh ảnh bìa tỷ lệ 16:9" }
   },
-  required: ["title", "summary", "content", "tags", "category", "imagePrompt"]
+  required: ["title", "summary", "content", "tags", "imagePrompt"]
 };
 
 async function main() {
-  console.log('📝 Bắt đầu viết lại bài...');
-  console.log(`   URL: ${sourceUrl}`);
-  console.log(`   Hint: ${hint || '(không có)'}\n`);
+  console.log(`🧩 Đang chạy Metadata & Spell Check cho: ${slug}`);
+  const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.error('❌ Thiếu GEMINI_API_KEY trong .env.local');
+    console.error('❌ Thiếu GEMINI_API_KEY');
     process.exit(1);
   }
 
@@ -76,53 +62,31 @@ async function main() {
     } as any
   });
 
-  // Gộp tất cả vào 1 prompt duy nhất
-  const prompt = `Bạn là nhà báo công nghệ AI tại 4AIVN.
+  const prompt = `Nhiệm vụ: Duyệt lại bài viết HTML và sinh Metadata.
+Nội dung bài gốc (HTML format):
+${htmlContent}
 
-NHIỆM VỤ (thực hiện tuần tự, trả về 1 JSON duy nhất):
-1. Đọc bài gốc tại: ${sourceUrl}
-2. Trích xuất từ khóa chính, sắp xếp theo độ quan trọng
-3. Viết dàn ý 3-5 phần chính
-4. Viết bài hoàn chỉnh theo phong cách dưới đây
-5. Tạo image prompt (tiếng Anh) cho ảnh bìa
-
-${hint ? `GỢI Ý NỘI DUNG: ${hint}` : ''}
-
-PHONG CÁCH VIẾT:
-${styleGuide}
-
-YÊU CẦU:
-- Tiêu đề giật gân nhưng chuyên nghiệp
-- Content là HTML thuần (h2, h3, p, ul, li)
-- KHÔNG ĐƯỢC DÙNG DẤU GẠCH NGANG (-) trong toàn bộ bài viết.
-- Hình ảnh nếu có phải theo format [IMAGE:url|alt|caption]
-- Nếu chèn link, dùng thẻ <a href="..." target="_blank" rel="noopener">text</a> (ưu tiên internal link)
-- Viết cho người mới tiếp cận AI, dùng từ ngữ dễ hiểu
-- 600-1000 từ
-- Danh mục mặc định: [{id: "xu-huong", name: "Xu hướng"}]
-- Tags: 5-8 từ khóa
-- Image prompt: mô tả scene chi tiết, digital art style, không có text`;
+Yêu cầu BẮT BUỘC:
+1. Sinh tiêu đề (title), tóm tắt (summary), từ khoá (tags), và image prompt (chi tiết, tiếng Anh, không chứa text).
+2. TRẢ LẠI 100% nội dung HTML ở trường \`content\`. TUYỆT ĐỐI KHÔNG ĐƯỢC THAY ĐỔI câu chữ của bài viết gốc đã viết ở bước trước.
+3. Trong trường \`content\`, bạn CHỈ ĐƯỢC PHÉP:
+   - Chữa lỗi chính tả (nếu có).
+   - Chèn thêm anchor text (thẻ <a>) nếu thấy từ khóa phù hợp. Ưu tiên internal link về trang https://4aivn.com/ (nếu liên quan khóa học/kiến thức AI) hoặc link ngoài tham khảo.
+   
+Nếu bạn thay đổi nội dung (văn phong, cấu trúc câu), bài viết sẽ bị từ chối!`;
 
   try {
     const result = await model.generateContent(prompt);
     const text = result.response.text();
     const output = JSON.parse(text);
 
-    // Tạo slug từ title
-    const slug = output.title
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '')
-      .substring(0, 60);
-
-    // Thêm metadata
+    // Bổ sung metadata
     const fullOutput = {
       ...output,
+      category: [{ id: "xu-huong", name: "Xu hướng" }], // mặc định
       id: slug,
       slug,
-      source: sourceUrl,
+      source: '', // Sẽ bỏ trống hoặc tự bổ sung sau
       author: 'Nam',
       post: false,
       viewCount: 0,
@@ -131,18 +95,14 @@ YÊU CẦU:
       publishedAt: new Date().toISOString()
     };
 
-    // Lưu file
-    const outDir = path.resolve(process.cwd(), 'news-data');
-    if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-
-    const outPath = path.join(outDir, `${slug}.json`);
+    const outPath = path.join(dirPath, `${slug}.json`);
     fs.writeFileSync(outPath, JSON.stringify(fullOutput, null, 2), 'utf-8');
 
-    console.log('✅ Hoàn tất!');
+    console.log('✅ Hoàn tất Metadata!');
     console.log(`   Tiêu đề: ${output.title}`);
-    console.log(`   Tags: ${output.tags.join(', ')}`);
-    console.log(`   Image prompt: ${output.imagePrompt.substring(0, 80)}...`);
+    console.log(`   Image prompt: ${output.imagePrompt}`);
     console.log(`\n💾 Đã lưu: ${outPath}`);
+    console.log(`\n=> HÃY COPY IMAGE PROMPT ĐỂ SINH ẢNH BÌA, LƯU VÀO news-data/${slug}/${slug}.webp, SAU ĐÓ CHẠY BƯỚC 4.`);
   } catch (err: any) {
     console.error('❌ Lỗi:', err.message);
     process.exit(1);

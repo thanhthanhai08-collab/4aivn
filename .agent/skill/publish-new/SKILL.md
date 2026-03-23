@@ -1,11 +1,11 @@
 ---
 name: publish-new
-description: Crawl RSS, lọc bài AI, viết lại theo phong cách 4AIVN, render ảnh bìa, đăng Firestore
+description: Vận hành quy trình tự động đăng tin tức AI và báo cáo kết quả
 ---
 
 # Publish News — Agent Skill
 
-Pipeline 5 bước tự động hoá quy trình đăng tin tức AI cho 4AIVN.
+Bạn là một biên tập viên cao cấp của 4aivn. Nhiệm vụ của bạn là vận hành Pipeline đăng bài tự động sau đó báo kết quả cho tôi.
 
 ## Yêu cầu
 
@@ -14,56 +14,19 @@ Pipeline 5 bước tự động hoá quy trình đăng tin tức AI cho 4AIVN.
 - File `.env.local` chứa `GEMINI_API_KEY`
 - Đã cài dependencies: `npm install`
 
-## Pipeline
+## Quy trình Pipeline (Tổng quan)
 
-### Bước 1 — Crawl RSS & Lọc bài AI
+Quy trình sẽ thực hiện các bước tuần tự được định nghĩa trong `workflows/publish_news.md`:
+- **Bước 1 (Lấy dữ liệu):** Fetch từ URL được cung cấp hoặc tự động crawl RSS lọc 3 bài AI mới nhất. (0 token)
+- **Bước 2a (Phân tích chuyên sâu):** Đọc nội dung thô kết hợp với file `resources/analyze.md` để fact-check và phân tích góc nhìn sâu sắc. (1 token)
+- **Bước 2b (Lập dàn ý):** Đề xuất Sapo và cấu trúc tiêu đề H2, H3. (1 token)
+- **Bước 2c (Viết bài):** Dựa trên dàn ý, xuất ra nội dung HTML mang đậm chất hành văn 4AIVN. (1 token)
+- **Bước 3 (Metadata, Spell check & Links):** Sinh title, summary, tags, và imagePrompt. Rà soát lỗi chính tả và chèn thêm thẻ link (tuyệt đối không thay đổi câu từ). (1 token)
+- **Bước 4 (Đăng lên Firestore & Dọn dẹp):** Push JSON lên Database với mode `post: false`. Clean-up dọn dẹp các file trung gian sinh ra trong quá trình làm việc, chỉ để lại `{slug}.json` và `{slug}.webp`. (0 token)
 
-Chạy `scripts/crawl_rss.ts` để:
-1. Fetch RSS từ 4 nguồn (xem `resources/rss_sources.json`)
-2. Lọc bài liên quan AI bằng keyword matching (không gọi LLM)
-3. Agent chọn bài phù hợp nhất từ danh sách kết quả
+**LƯU Ý:** Agent (bạn) sẽ trực tiếp sinh ảnh bìa tỷ lệ 16:9 ngay trên khung chat dựa vào `imagePrompt` ở Bước 3.
 
-**Lệnh:** 
-```bash
-npx tsx .agent/skill/publish-new/scripts/crawl_rss.ts
-```
-
-### Bước 2+3 — Viết lại bài (gộp 1 lần gọi Gemini)
-
-Chạy `scripts/rewrite_article.ts` với URL bài gốc:
-1. Đọc nội dung bài gốc
-2. Sắp xếp từ khóa + viết dàn ý
-3. Viết bài HTML theo phong cách 4AIVN (xem `resources/writing_style_guide.md`)
-4. Tạo image prompt cho ảnh bìa
-5. Output lưu vào `news-data/<slug>.json`
-
-**Lệnh:**
-```bash
-npx tsx .agent/skill/publish-new/scripts/rewrite_article.ts --url "https://..." --hint "mô tả ngắn"
-```
-
-### Bước 4 — Render ảnh bìa
-
-Chạy `scripts/generate_cover.ts`:
-1. Đọc image prompt từ file JSON ở bước trước
-2. Gọi Gemini API (Nano Banana 2) sinh ảnh
-3. Lưu ảnh vào `news-data/<slug>.webp`
-
-**Lệnh:**
-```bash
-npx tsx .agent/skill/publish-new/scripts/generate_cover.ts --input "news-data/<slug>.json"
-```
-
-### Bước 5 — Đăng lên Firestore
-
-Chạy `scripts/publish_to_firestore.ts`:
-1. Đọc JSON + ảnh từ `news-data/`
-2. Tạo document trong Firestore collection `news` với schema đầy đủ
-
-**Lệnh:**
-```bash
-npx tsx .agent/skill/publish-new/scripts/publish_to_firestore.ts --input "news-data/<slug>.json"
-```
+Sau khi hoàn tất chạy xong Script Bước 4, bạn KIÊN QUYẾT phải báo cáo lại với người dùng các thông số: Tiêu đề, Tags, Image Prompt và xác nhận việc dọn dẹp đã hoàn tất.
 
 ## Schema Firestore (collection `news`)
 
@@ -86,8 +49,10 @@ npx tsx .agent/skill/publish-new/scripts/publish_to_firestore.ts --input "news-d
 
 ## Tối ưu Token
 
-- Bước 1: 0 token (keyword matching thuần)
-- Bước 2+3: 1 lần gọi duy nhất (gộp outline + rewrite + image prompt)
-- Bước 4: 1 lần gọi image generation
-- Bước 5: 0 token (chỉ ghi Firestore)
-- **Tổng: 2 lần gọi Gemini API / bài viết**
+- Bước 1: 0 token
+- Bước 2a: 1 token
+- Bước 2b: 1 token
+- Bước 2c: 1 token
+- Bước 3: 1 token
+- Bước 4: 0 token
+- **Tổng cộng: 4 lần gọi Gemini API / bài viết**
