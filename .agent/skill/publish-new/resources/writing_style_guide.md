@@ -27,14 +27,14 @@ Tránh viết câu ngắn cụt liên tiếp. Dùng từ nối để tạo mạc
 ## Cấu trúc HTML
 
 ## Sapo (bắt buộc — viết trước h2 đầu tiên)
-- Độ dài: 2–4 câu, đặt trong thẻ `<p class="sapo">`
+- Độ dài: 2–4 câu, đặt trong thẻ `<p>....</p>`
 - Mục tiêu: móc người đọc bằng sự thật bất ngờ, con số ấn tượng, hoặc câu hỏi kích thích tư duy.
 - KHÔNG bắt đầu bằng định nghĩa hoặc giới thiệu chung chung.
-- **Ví dụ đúng:** `<p class="sapo">Chỉ trong 2 tháng, Claude Code đã đạt 2,5 tỷ đô doanh thu — con số khiến nhiều đối thủ phải nhìn lại chiến lược của mình.</p>`
-- **Ví dụ sai:** `<p class="sapo">Trí tuệ nhân tạo là công nghệ đang phát triển mạnh mẽ hiện nay...</p>`
+- **Ví dụ đúng:** `<p>Chỉ trong 2 tháng, Claude Code đã đạt 2,5 tỷ đô doanh thu — con số khiến nhiều đối thủ phải nhìn lại chiến lược của mình.</p>`
+- **Ví dụ sai:** `<p>Trí tuệ nhân tạo là công nghệ đang phát triển mạnh mẽ hiện nay...</p>`
 
 ```html
-<p class="sapo">Đoạn Sapo hấp dẫn...</p>
+<p>Đoạn Sapo hấp dẫn...</p>
 
 <h2>Phần chính 1</h2>
 <p>Đoạn mở đầu giới thiệu vấn đề...</p>
@@ -62,7 +62,7 @@ Tránh viết câu ngắn cụt liên tiếp. Dùng từ nối để tạo mạc
 1. Mỗi bài 600–1000 từ.
 2. Chia thành 3–5 phần `<h2>`.
 3. Mỗi đoạn `<p>` tối đa 3–4 câu.
-4. Dùng `<ul>` khi liệt kê từ 3 mục trở lên.
+4. Dùng `<ul>` khi liệt kê từ 2 mục trở lên.
 5. Không dùng `<h1>` (title riêng biệt).
 6. Không dùng markdown, chỉ HTML.
 7. Tóm tắt (summary) 1–2 câu, dưới 50 từ.
