@@ -57,6 +57,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
 
+    // 5. Lấy Tác giả (Collection: authors)
+    const authorsSnap = await getDocs(collection(db, "authors"));
+    authorsSnap.forEach((doc) => {
+      dynamicUrls.push({
+        url: `${BASE_URL}/tac-gia/${doc.id}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      });
+    });
+
   } catch (error) {
     console.error("Lỗi khi tạo sitemap động:", error);
   }

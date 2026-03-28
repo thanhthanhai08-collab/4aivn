@@ -29,7 +29,10 @@ export interface NewsArticle {
   title: string;
   source: string; // Publisher or source name
   author?: string;
+  authorId?: string;
   content: string; // Full content or summary
+  summary?: string;
+  viewCount?: number;
   publishedAt: string; // ISO date string
   imageUrl: string;
   link?: string;
@@ -128,4 +131,12 @@ export interface ToolReview extends UserToolRating {
     userId: string;
     userName: string;
     userPhotoURL: string | null;
+}
+
+export interface Author {
+  id: string;
+  name: string;
+  bio: string;
+  avatarUrl: string;
+  createdAt: string; // ISO date string
 }

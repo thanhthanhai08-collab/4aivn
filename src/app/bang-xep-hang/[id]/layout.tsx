@@ -1,72 +1,68 @@
-
-import type { Metadata } from "next";
-import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { getModel } from "@/lib/get-model";
+import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-// Thay đổi URL này thành domain thật của bạn
 const BASE_URL = "https://4aivn.com";
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   
-  try {
-    if (!id || id.includes('.')) {
-      return { title: "Model không tồn tại" };
-    }
-  
-    const docRef = doc(db, "models", id);
-    const docSnap = await getDoc(docRef);
-    const model = docSnap.exists() ? docSnap.data() : null;
+  if (!id || id.includes('.')) {
+      return { title: 'Không tìm thấy model' };
+  }
 
-    if (!model) return { title: "Model không tồn tại" };
+  const model = await getModel(id);
 
-    const imageUrl = model.logoUrl ? (model.logoUrl.startsWith('http') ? model.logoUrl : `${BASE_URL}${model.logoUrl}`) : undefined;
-    const title = `${model.name} - Thông số & Đánh giá hiệu năng`;
-    const description = model.description?.slice(0, 160) || `Xem chi tiết đánh giá model AI ${model.name}.`;
+  if (!model) {
+      return {
+          title: 'Không tìm thấy mô hình AI',
+          description: 'Mô hình AI bạn tìm kiếm không tồn tại hoặc đã bị xóa.',
+      };
+  }
 
-    return {
-      title: title,
-      description: description,
-      alternates: {
-        canonical: `${BASE_URL}/bang-xep-hang/${id}`,
-      },
+  return {
+      title: `${model.name} - Thông số và Đánh giá`,
+      description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và hiệu năng của mô hình AI ${model.name}.`,
       openGraph: {
-        title: `${model.name} - Thông số và đánh giá hiệu năng`,
-        description: model.description?.slice(0, 160),
-        url: `${BASE_URL}/bang-xep-hang/${id}`,
-        siteName: "4AIVN",
-        images: imageUrl ? [{ url: imageUrl }] : [],
-        type: "article",
+          title: `${model.name} - Thông số và Đánh giá | 4AIVN`,
+          description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và điểm chuẩn của mô hình AI ${model.name}.`,
+          type: 'article',
+          images: [
+              {
+                  url: model.logoUrl || '/og-image.jpg',
+                  width: 1200,
+                  height: 630,
+                  alt: model.name,
+              },
+          ],
       },
       twitter: {
-        card: "summary_large_image",
-        title: title,
-        description: description,
-        images: imageUrl ? [imageUrl] : [],
+          card: 'summary_large_image',
+          title: `${model.name} - Thông số và Đánh giá | 4AIVN`,
+          description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và hiệu năng của mô hình AI ${model.name}.`,
+          images: [model.logoUrl || '/og-image.jpg'],
       },
-    };
-  } catch (error) {
-      console.error(`Error generating metadata for model: ${id}`, error);
-      return { title: "Lỗi tải dữ liệu" };
-  }
+  };
 }
 
 export default async function ModelDetailLayout({ children, params }: Props) {
-  const { id } = params;
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
   try {
     if (!id || id.includes('.')) {
       return <>{children}</>;
     }
 
-    const docRef = doc(db, "models", id);
-    const docSnap = await getDoc(docRef);
-    const model = docSnap.exists() ? docSnap.data() : null;
+    const model = await getModel(id);
 
     if (!model) return <>{children}</>;
 
@@ -91,12 +87,12 @@ export default async function ModelDetailLayout({ children, params }: Props) {
           "@type": "ListItem",
           "position": 3,
           "name": model.name,
-          "item": `${BASE_URL}/bang-xep-hang/${id}`, // Thêm URL trang hiện tại để chuẩn SEO
+          "item": `${BASE_URL}/bang-xep-hang/${id}`,
         },
       ],
     };
 
-    // 2. Schema SoftwareApplication (Để hiện sao đánh giá trên kết quả tìm kiếm)
+    // 2. Schema SoftwareApplication
     const productSchema = {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -107,7 +103,7 @@ export default async function ModelDetailLayout({ children, params }: Props) {
       "image": model.logoUrl,
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": model.averageRating || "5", // Fallback nếu chưa có review
+        "ratingValue": model.averageRating || "5",
         "reviewCount": model.ratingCount || "1",
         "bestRating": "5",
         "worstRating": "1"

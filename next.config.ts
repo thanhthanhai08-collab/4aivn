@@ -13,7 +13,18 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  // 1. Cấu hình REWRITES để tạo URL thân thiện SEO
+  // 1. Redirect 308 từ URL tác giả cũ sang mới (giữ SEO)
+  async redirects() {
+    return [
+      {
+        source: '/tin-tuc/tac-gia/:id',
+        destination: '/tac-gia/:id',
+        permanent: true,
+      },
+    ];
+  },
+
+  // 2. Cấu hình REWRITES để tạo URL thân thiện SEO
   async rewrites() {
     return [
       {

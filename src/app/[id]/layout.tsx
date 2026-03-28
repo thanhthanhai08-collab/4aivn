@@ -1,18 +1,17 @@
 
 import type { Metadata } from "next";
-import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { getArticle } from "@/lib/get-article";
 
 type Props = {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 // This should be your actual domain
 const BASE_URL = "https://4aivn.com";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     if (!id || id.includes('.')) {
@@ -22,17 +21,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       };
     }
 
-    const docRef = doc(db, "news", id);
-    const docSnap = await getDoc(docRef);
+    const article = await getArticle(id);
 
-    if (!docSnap.exists() || !docSnap.data().post) {
+    if (!article) {
       return {
         title: "Bài viết không tồn tại",
         robots: "noindex, nofollow",
       };
     }
 
-    const article = docSnap.data();
+
     const description = article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160);
     const imageUrl = article.imageUrl ? (article.imageUrl.startsWith('http') ? article.imageUrl : `${BASE_URL}${article.imageUrl}`) : undefined;
 
@@ -49,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         siteName: "4AIVN",
         images: imageUrl ? [{ url: imageUrl }] : [],
         type: "article",
-        publishedTime: article.publishedAt?.toDate ? article.publishedAt.toDate().toISOString() : new Date().toISOString(),
+        publishedTime: article.publishedAt,
         authors: [article.author || "4AIVN"],
       },
       twitter: {
@@ -69,18 +67,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NewsDetailLayout({ children, params }: Props) {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     if (!id || id.includes('.')) {
       return <>{children}</>;
     }
   
-    const docRef = doc(db, "news", id);
-    const docSnap = await getDoc(docRef);
-    const article = docSnap.exists() ? docSnap.data() : null;
+    const article = await getArticle(id);
 
-    if (!article || !article.post) return <>{children}</>;
+    if (!article) return <>{children}</>;
 
     const hasCategory = article.category && article.category.length > 0 && article.category[0].id;
 
@@ -104,8 +100,8 @@ export default async function NewsDetailLayout({ children, params }: Props) {
           {
             "@type": "ListItem",
             "position": 3,
-            "name": article.category[0].name,
-            "item": `${BASE_URL}/tin-tuc/${article.category[0].id}`,
+            "name": article.category![0].name,
+            "item": `${BASE_URL}/tin-tuc/${article.category![0].id}`,
           }
         ] : []),
         {
@@ -122,7 +118,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "@type": "NewsArticle",
         "headline": article.title,
         "image": [article.imageUrl],
-        "datePublished": article.publishedAt?.toDate ? article.publishedAt.toDate().toISOString() : new Date().toISOString(),
+        "datePublished": article.publishedAt,
         "author": [{
           "@type": "Person",
           "name": article.author || "4AIVN",
