@@ -115,7 +115,7 @@ export function NewsCard({ article }: NewsCardProps) {
             )}
             <div className="flex items-center space-x-1">
                 <CalendarDays className="h-3 w-3" />
-                <span>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</span>
+                <span suppressHydrationWarning>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</span>
             </div>
         </div>
         <div className="flex items-center space-x-1">

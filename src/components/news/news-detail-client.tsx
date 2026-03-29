@@ -406,7 +406,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                     )}
                    <div className="flex items-center">
                      <CalendarDays className="mr-2 h-4 w-4" />
-                     <span>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                     <span suppressHydrationWarning>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
                    </div>
                 </div>
               </header>
@@ -505,7 +505,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                         
                         <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
                           <CalendarDays className="mr-1 h-3 w-3" />
-                          <span>
+                          <span suppressHydrationWarning>
                             {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: vi })}
                           </span>
                         </div>

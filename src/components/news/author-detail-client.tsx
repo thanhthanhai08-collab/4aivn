@@ -43,10 +43,14 @@ export function AuthorDetailClient({ author, initialArticles }: Props) {
                     <User className="mr-2 h-4 w-4" />
                     <span>Tác giả tại 4AIVN</span>
                   </div>
-                  <div className="flex items-center">
-                    <CalendarDays className="mr-2 h-4 w-4" />
-                    <span>Tham gia từ {format(new Date(author.createdAt), "MMMM yyyy", { locale: vi })}</span>
-                  </div>
+                  {author.createdAt && (
+                    <div className="flex items-center">
+                      <CalendarDays className="mr-2 h-4 w-4" />
+                      <span suppressHydrationWarning>
+                        Tham gia từ {format(new Date(author.createdAt), "MMMM yyyy", { locale: vi })}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex items-center">
                     <BookOpen className="mr-2 h-4 w-4" />
                     <span>{initialArticles.length} bài viết</span>
