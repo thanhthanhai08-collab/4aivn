@@ -20,13 +20,17 @@ export function AuthorDetailClient({ author, initialArticles }: Props) {
       <Card className="mb-12 overflow-hidden border-none shadow-xl bg-gradient-to-br from-primary/5 to-background">
         <CardContent className="p-8 md:p-12">
           <div className="flex flex-col md:flex-row items-center md:items-startGap-8 gap-8">
-            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-lg shrink-0">
-              <Image
-                src={author.avatarUrl || "/og-image.jpg"}
-                alt={author.name}
-                fill
-                className="object-cover"
-              />
+            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-lg shrink-0 flex items-center justify-center bg-blue-600 text-white font-bold text-4xl md:text-6xl">
+              {author.avatarUrl ? (
+                <Image
+                  src={author.avatarUrl}
+                  alt={author.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                author.name.charAt(0).toUpperCase()
+              )}
             </div>
             
             <div className="flex-grow text-center md:text-left space-y-4">

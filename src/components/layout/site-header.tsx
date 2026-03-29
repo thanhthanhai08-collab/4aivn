@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { UserNav } from "@/components/auth/user-nav";
 import { useAuth } from "@/contexts/auth-context";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, useId, type FormEvent } from "react";
 import { Logo } from "@/components/logo";
 
 const navItems = [
@@ -33,6 +33,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const menuId = useId();
 
   useEffect(() => {
     setIsClient(true);
@@ -102,7 +103,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
           )}
 
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild>
+            <SheetTrigger asChild aria-controls={menuId}>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Mở/Đóng Menu</span>
@@ -111,6 +112,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
             <SheetContent 
               side="left" 
               className="pr-0" 
+              id={menuId}
               onOpenAutoFocus={(e) => e.preventDefault()}
             >
                <SheetHeader>
