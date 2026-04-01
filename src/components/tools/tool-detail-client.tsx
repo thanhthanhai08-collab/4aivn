@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ArrowLeft } from "lucide-react";
-import type { Tool, NewsArticle } from "@/lib/types";
+import type { Tool, NewsArticle, ToolReview } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -18,7 +18,6 @@ import {
   getUserProfileData,
   getAllToolReviews,
   incrementToolViewCount,
-  type ToolReview,
 } from "@/lib/user-data-service";
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";

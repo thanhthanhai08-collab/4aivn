@@ -118,13 +118,13 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                   <TableCell className="text-center">{formatContextLength((item as AIModel).contextLengthToken as number)}</TableCell>
                   <TableCell className="text-center">{(item as AIModel).intelligenceScore !== undefined ? (item as AIModel).intelligenceScore : '-'}</TableCell>
                   <TableCell className="text-center">
-                    {(item as AIModel).pricePerMillionTokens !== undefined ? `$${(item as AIModel).pricePerMillionTokens.toFixed(2)}` : '-'}
+                    {typeof (item as AIModel).pricePerMillionTokens === 'number' ? `$${(item as AIModel).pricePerMillionTokens!.toFixed(2)}` : '-'}
                   </TableCell>
                   <TableCell className="text-center">
-                    {(item as AIModel).speedTokensPerSecond !== undefined ? (item as AIModel).speedTokensPerSecond.toFixed(1) : '-'}
+                    {typeof (item as AIModel).speedTokensPerSecond === 'number' ? (item as AIModel).speedTokensPerSecond!.toFixed(1) : '-'}
                   </TableCell>
                   <TableCell className="text-center">
-                    {(item as AIModel).latencyFirstChunkSeconds !== undefined ? (item as AIModel).latencyFirstChunkSeconds.toFixed(2) : '-'}
+                    {typeof (item as AIModel).latencyFirstChunkSeconds === 'number' ? (item as AIModel).latencyFirstChunkSeconds!.toFixed(2) : '-'}
                   </TableCell>
                 </>
               )}

@@ -5,13 +5,13 @@ import { doc, getDoc } from "firebase/firestore";
 
 type Props = {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 const BASE_URL = "https://4aivn.com";
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
   
   try {
     if (!id || id.includes('.')) {
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NewsCategoryLayout({ children, params }: Props) {
-    const { id } = params;
+    const { id } = await params;
     
     try {
         if (!id || id.includes('.')) {

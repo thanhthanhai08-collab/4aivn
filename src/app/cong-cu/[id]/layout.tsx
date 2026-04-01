@@ -4,7 +4,7 @@ import { getTool } from "@/lib/get-tool";
 // Định nghĩa kiểu dữ liệu cho props
 type Props = {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 const BASE_URL = "https://4aivn.com";
@@ -14,7 +14,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
   
   if (!id || id.includes('.')) {
     return {
@@ -57,7 +57,7 @@ export async function generateMetadata(
 
 // 2. Component Layout chính (Server Component)
 export default async function ToolDetailLayout({ children, params }: Props) {
-  const { id } = params;
+  const { id } = await params;
 
   if (!id || id.includes('.')) {
       return <>{children}</>;

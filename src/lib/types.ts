@@ -35,6 +35,7 @@ export interface NewsArticle {
   viewCount?: number;
   publishedAt: string; // ISO date string
   imageUrl: string;
+  authorImageUrl?: string;
   link?: string;
   dataAiHint?: string;
   isBookmarked?: boolean;
