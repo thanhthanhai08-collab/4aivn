@@ -140,6 +140,18 @@ body {
   .prose figcaption {
     @apply mt-3 mb-4 text-center text-base text-muted-foreground italic leading-relaxed max-w-[90%];
   }*/
+  .prose aside {
+    @apply my-6 p-5 bg-zinc-100/80 dark:bg-zinc-900/50 rounded-xl border-l-[6px] border-l-zinc-300 dark:border-l-zinc-700;
+  }
+  .prose aside.callout--warning {
+    border-left-color: #E84731;
+  }
+  .prose aside.callout--tip {
+    border-left-color: #22C55E;
+  }
+  .prose aside.callout--info {
+    border-left-color: #00BFFF;
+  }
 }
 
 @layer utilities {
