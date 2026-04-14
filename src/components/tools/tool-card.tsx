@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ExternalLink, Star, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -103,7 +103,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">
-                <Link href={`/cong-cu/${tool.id}`} className="hover:underline">
+                <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }} className="hover:underline">
                   {tool.name}
                 </Link>
               </CardTitle>

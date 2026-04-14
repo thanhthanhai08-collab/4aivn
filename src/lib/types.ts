@@ -24,8 +24,11 @@ export interface Tool {
   post?: boolean; // Controls visibility
 }
 
+import { LocalizedField } from "./i18n-helpers";
+
 export interface NewsArticle {
   id: string;
+  slug?: LocalizedField;
   title: string;
   source: string; // Publisher or source name
   author?: string;

@@ -1,6 +1,6 @@
 
 // src/components/layout/site-footer.tsx
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Logo } from "@/components/logo";
 
@@ -69,7 +69,7 @@ export function SiteFooter() {
               {quickLinks.map((item) => (
                 <li key={item.label}>
                   <Link
-                    href={item.href}
+                    href={item.href as any}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline"
                   >
                     {item.label}
@@ -88,7 +88,7 @@ export function SiteFooter() {
               {featuredTopics.map((item) => (
                 <li key={item.label}>
                   <Link
-                    href={item.href}
+                    href={item.href as any}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline"
                   >
                     {item.label}

@@ -1,6 +1,6 @@
 // src/components/tools/tool-card-small.tsx
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +17,7 @@ export function ToolCardSmall({ tool }: ToolCardSmallProps) {
 
   return (
     <Card className="shadow-none border-0 hover:bg-accent transition-colors">
-      <Link href={`/cong-cu/${tool.id}`} className="flex items-center space-x-4 p-3">
+      <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }} className="flex items-center space-x-4 p-3">
         <Image 
           src={tool.logoUrl} 
           alt={`Logo ${tool.name}`} 

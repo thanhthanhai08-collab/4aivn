@@ -2,8 +2,9 @@ import { cache } from 'react';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/lib/types';
+import { getLocalized } from './i18n-helpers';
 
-export const getArticle = cache(async (id: string) => {
+export const getArticle = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
   try {
@@ -15,6 +16,10 @@ export const getArticle = cache(async (id: string) => {
       const article = {
         id: docSnap.id,
         ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
+        slug: data.slug, // Keep raw slug for alternates
         publishedAt: data.publishedAt.toDate().toISOString(),
       } as NewsArticle;
       
@@ -27,7 +32,49 @@ export const getArticle = cache(async (id: string) => {
   }
 });
 
-export const getLatestNews = cache(async (excludeId: string) => {
+export const getArticleBySlug = cache(async (slug: string, locale: string = 'vi') => {
+  if (!slug || slug.includes('.')) return null;
+
+  try {
+    // Try as document ID first (legacy)
+    let articleDoc = await getDoc(doc(db, 'news', slug));
+
+    // If not found, try querying by localized slug
+    if (!articleDoc.exists() || articleDoc.data()?.post !== true) {
+      const q = query(
+        collection(db, 'news'),
+        where(`slug.${locale}`, '==', slug),
+        where('post', '==', true),
+        limit(1)
+      );
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        articleDoc = snapshot.docs[0];
+      }
+    }
+
+    if (articleDoc.exists() && articleDoc.data()?.post === true) {
+      const data = articleDoc.data();
+      const article = {
+        id: articleDoc.id,
+        ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
+        slug: data.slug, // Keep raw slug for alternates
+        publishedAt: data.publishedAt.toDate().toISOString(),
+      } as NewsArticle;
+      return article;
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error fetching article by slug ${slug}:`, error);
+    return null;
+  }
+});
+
+// A localized version for Latest News etc to also get correct string formats
+export const getLatestNews = cache(async (excludeId: string, locale: string = 'vi') => {
   try {
     const latestNewsQuery = query(
       collection(db, "news"),
@@ -50,7 +97,7 @@ export const getLatestNews = cache(async (excludeId: string) => {
   }
 });
 
-export const getRelatedNews = cache(async (article: NewsArticle) => {
+export const getRelatedNews = cache(async (article: NewsArticle, locale: string = 'vi') => {
   try {
     const excludeId = article.id;
     let relatedQuery;
@@ -74,11 +121,17 @@ export const getRelatedNews = cache(async (article: NewsArticle) => {
 
     const relatedSnapshot = await getDocs(relatedQuery);
     return relatedSnapshot.docs
-      .map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        publishedAt: doc.data().publishedAt.toDate().toISOString(),
-      } as NewsArticle))
+      .map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          title: getLocalized(data.title, locale),
+          content: getLocalized(data.content, locale),
+          summary: getLocalized(data.summary, locale),
+          publishedAt: data.publishedAt.toDate().toISOString(),
+        } as NewsArticle;
+      })
       .filter(item => item.id !== excludeId)
       .sort((a, b) => {
         const calculateScore = (art: NewsArticle) => {

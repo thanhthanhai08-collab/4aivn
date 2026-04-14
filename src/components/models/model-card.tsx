@@ -1,6 +1,6 @@
 // src/components/models/model-card.tsx
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Star, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ export function ModelCard({ model }: ModelCardProps) {
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">
-                <Link href={`/bang-xep-hang/${model.id}`} className="hover:underline">
+                <Link href={{ pathname: '/bang-xep-hang/[id]', params: { id: model.id } }} className="hover:underline">
                   {model.name}
                 </Link>
               </CardTitle>

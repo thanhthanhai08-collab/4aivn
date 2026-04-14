@@ -1,0 +1,88 @@
+{
+  "common": {
+    "home": "Home",
+    "news": "News",
+    "login": "Login",
+    "search": "Search...",
+    "aiTools": "AI Tools",
+    "rankings": "Rankings",
+    "newsAI": "AI News",
+    "chatbot": "Chatbot",
+    "openCloseMenu": "Open/Close Menu",
+    "mainMenu": "Main Menu"
+  },
+  "news": {
+    "title": "AI News & Updates",
+    "subtitle": "Stay up to date with the latest developments in the world of AI.",
+    "loadMore": "Load more",
+    "readMore": "Read more",
+    "quickView": "Quick View",
+    "empty": "No articles to display.",
+    "noArticlesInCategory": "No articles in this category yet.",
+    "viewAllNews": "View all news",
+    "newsCategory": "News Category",
+    "backToNews": "Back to News",
+    "backToNewsList": "Back to News",
+    "byAuthor": "By {author}",
+    "latestNews": "Latest News",
+    "loadMoreBtn": "Load more",
+    "categories": {
+      "review": "Reviews",
+      "guide": "Guides",
+      "vibeCoding": "Vibe coding",
+      "trending": "Trending"
+    }
+  },
+  "newsDetail": {
+    "backToNews": "Back to News",
+    "quickSummary": "Quick Summary",
+    "discussion": "Discussion",
+    "loginToComment": "Log in",
+    "loginToCommentSuffix": " to join the discussion.",
+    "source": "Source:",
+    "publishedAt": "Published on {date}",
+    "share": "Share",
+    "bookmark": "Bookmark",
+    "bookmarked": "Bookmarked",
+    "relatedArticles": "Related Articles",
+    "articleNotFound": "Article not found",
+    "articleNotFoundDesc": "This article may not exist or has not been published yet.",
+    "copiedLink": "Link copied",
+    "copiedLinkDesc": "The link to this page has been copied to the clipboard.",
+    "copyError": "Could not copy the link.",
+    "loginRequired": "Login required",
+    "loginRequiredDesc": "Please log in to bookmark this article.",
+    "bookmarkSuccess": "Article bookmarked successfully",
+    "bookmarkRemoved": "Removed from bookmarks",
+    "bookmarkError": "Could not update bookmarks.",
+    "error": "Error",
+    "exploreRankings": "Explore AI Rankings",
+    "exploreRankingsDesc": "Compare AI models and tools with the most intuitive visualizations",
+    "exploreBtn": "Explore"
+  },
+  "languageSwitcher": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "switchTo": "Switch to {language}"
+  },
+  "footer": {
+    "description": "Your leading source for breakthroughs, trends, and in-depth analysis in the field of artificial intelligence.",
+    "quickLinks": "Quick Links",
+    "information": "Information",
+    "contact": "Contact",
+    "copyright": "© {year} 4AIVN. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "aiTerms": "AI Usage Terms",
+    "cookiePolicy": "Cookie Policy",
+    "about": "About Us",
+    "contactUs": "Contact Us"
+  },
+  "preview": {
+    "previewMode": "Preview Mode",
+    "notFound": "Article preview not found",
+    "notFoundDesc": "This article may have been deleted or does not exist.",
+    "backToAdmin": "Back to Admin",
+    "switchLang": "View {lang} version"
+  }
+}

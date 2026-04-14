@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -486,7 +486,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestNews.map((related) => (
-                  <Link key={related.id} href={`/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                  <Link key={related.id} href={{ pathname: '/tin-tuc/[id]', params: { id: related.id } }} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                     <div className="flex items-start space-x-4">
                       <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                         <Image

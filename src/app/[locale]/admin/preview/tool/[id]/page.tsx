@@ -1,16 +1,18 @@
+// src/app/admin/preview/tool/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ArrowLeft } from "lucide-react";
+import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ChevronRight, ArrowLeft } from "lucide-react";
 import type { Tool, NewsArticle, ToolReview } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
   setToolRating,
@@ -22,6 +24,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
+import { useParams } from "next/navigation";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     if (reviews.length === 0) {
@@ -62,62 +67,186 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     );
 };
 
-interface Props {
-  tool: Tool;
-  adData: { linkAff: string; bannerAdsUrl: string } | null;
-  relatedNews: NewsArticle[];
-  ranking: number | null;
-  complementaryTools: Tool[];
-  similarTools: Tool[];
-  featuredTools: Tool[];
-  initialReviews: ToolReview[];
-}
 
-export function ToolDetailClient({
-  tool,
-  adData,
-  relatedNews,
-  ranking,
-  complementaryTools,
-  similarTools,
-  featuredTools,
-  initialReviews
-}: Props) {
+function ToolDetailContent() {
+  const params = useParams();
+  const id = params.id as string;
+  const [tool, setTool] = useState<Tool | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  const [allReviews, setAllReviews] = useState<ToolReview[]>(initialReviews);
+  const [allReviews, setAllReviews] = useState<ToolReview[]>([]);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [ranking, setRanking] = useState<number | null>(null);
+  const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
+  const [similarTools, setSimilarTools] = useState<Tool[]>([]);
+  const [complementaryTools, setComplementaryTools] = useState<Tool[]>([]);
+  const [adData, setAdData] = useState<{ linkAff: string; bannerAdsUrl: string } | null>(null);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  
+
+  // Effect for public tool data (real-time)
+  useEffect(() => {
+    if (!id) return;
+    setIsLoading(true);
+
+    const toolDocRef = doc(db, "tools", id);
+    const unsubscribe = onSnapshot(toolDocRef, (docSnap) => {
+      // Don't check for post === true in preview mode
+      if (docSnap.exists()) {
+        const foundTool = { id: docSnap.id, ...docSnap.data() } as Tool;
+        setTool(foundTool);
+      } else {
+        setTool(null);
+      }
+      setIsLoading(false);
+    }, (error) => {
+        console.error("Error fetching tool data for preview:", error);
+        setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [id]);
+
+  // Other effects remain the same to provide a full preview experience...
+  useEffect(() => {
+    if (!tool) return;
+
+    const fetchRelatedData = async () => {
+        try {
+            // --- News Query ---
+            const newsRef = collection(db, "news");
+            const newsQuery = query(
+                newsRef,
+                where("post", "==", true),
+                where("tag", "array-contains", tool.name),
+                orderBy("publishedAt", "desc"),
+                orderBy("__name__", "desc"),
+                limit(4)
+            );
+            
+            // --- Other Queries ---
+            const allToolsForRankingQuery = query(
+                collection(db, "tools"),
+                where("post", "==", true),
+                orderBy("averageRating", "desc"),
+                orderBy("ratingCount", "desc"),
+                orderBy("__name__")
+            );
+            const featuredToolsQuery = query(
+                collection(db, "tools"),
+                where("post", "==", true),
+                orderBy("viewCount", "desc"), 
+                orderBy("__name__", "asc"),   
+                limit(4)                      
+            );
+            const similarToolsQuery = query(
+                collection(db, "tools"),
+                where("post", "==", true),
+                where("context", "==", tool.context),
+                orderBy("__name__", "asc"),
+                limit(5)
+            );
+            
+            // --- Fetching Data ---
+            const [
+                newsSnapshot,
+                allToolsForRankingSnapshot,
+                featuredToolsSnapshot,
+                similarToolsSnapshot,
+                allReviewsData,
+            ] = await Promise.all([
+                getDocs(newsQuery),
+                getDocs(allToolsForRankingQuery),
+                getDocs(featuredToolsQuery),
+                getDocs(similarToolsQuery),
+                getAllToolReviews(tool.id)
+            ]);
+
+            // --- Processing Data ---
+
+            // Related News
+            const latestNews = newsSnapshot.docs.map(doc => {
+              const data = doc.data();
+              return {
+                id: doc.id,
+                ...data,
+                publishedAt: (data.publishedAt as Timestamp).toDate().toISOString()
+              } as NewsArticle
+            });
+            setRelatedNews(latestNews);
+
+            // Ranking
+            const sortedTools = allToolsForRankingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            const currentRank = sortedTools.findIndex(t => t.id === tool.id);
+            setRanking(currentRank !== -1 ? currentRank + 1 : null);
+            
+            // Complementary Tools
+            const allToolsSnapshot = await getDocs(query(collection(db, "tools"), where("post", "==", true)));
+            const allTools = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
+            const otherCategories = uniqueCategories.filter(cat => cat !== tool.context);
+            const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
+            const complementaryPromises = selectedCategories.map(cat => {
+                const q = query(
+                    collection(db, "tools"),
+                    where("post", "==", true),
+                    where("context", "==", cat),
+                    limit(1)
+                );
+                return getDocs(q);
+            });
+            const complementarySnapshots = await Promise.all(complementaryPromises);
+            const diverseComplementaryTools = complementarySnapshots.map(snap => {
+                if (!snap.empty) {
+                    return { id: snap.docs[0].id, ...snap.docs[0].data() } as Tool;
+                }
+                return null;
+            }).filter((t): t is Tool => t !== null);
+            setComplementaryTools(diverseComplementaryTools);
+
+            // Similar Tools
+            const similarData = similarToolsSnapshot.docs
+                .map(doc => ({ id: doc.id, ...doc.data() } as Tool))
+                .filter(t => t.id !== tool.id)
+                .slice(0, 4);
+            setSimilarTools(similarData);
+            
+            // Featured Tools
+            setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
+            
+            // Reviews
+            setAllReviews(allReviewsData);
+
+        } catch (error) {
+            console.error("Error fetching related data for tool preview:", error);
+        }
+    };
+    fetchRelatedData();
+  }, [tool, id]);
 
   useEffect(() => {
-    if (tool.id) {
-        incrementToolViewCount(tool.id);
-    }
-  }, [tool.id]);
-
-  // Effect for user-specific data (favorite, my rating)
-  useEffect(() => {
-    if (!currentUser || !tool.id) {
+    if (!currentUser || !id) {
         setIsFavorite(false);
         return;
     }
     const fetchUserData = async () => {
         try {
             const userData = await getUserProfileData(currentUser.uid);
-            setIsFavorite(userData.favoriteTools?.includes(tool.id) || false);
+            setIsFavorite(userData.favoriteTools?.includes(id) || false);
         } catch (error) {
             console.error("Failed to fetch user data for tool page:", error);
         }
     };
     fetchUserData();
-  }, [tool.id, currentUser]);
-
+  }, [id, currentUser]);
 
   const handleFavoriteToggle = async () => {
-    if (!currentUser || !tool.id) {
+    if (!currentUser) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
       return;
     }
@@ -126,7 +255,7 @@ export function ToolDetailClient({
     setIsFavorite(newFavoriteState); 
 
     try {
-        await toggleToolFavorite(currentUser.uid, tool.id, isFavorite);
+        await toggleToolFavorite(currentUser.uid, id, isFavorite);
         toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
@@ -136,7 +265,7 @@ export function ToolDetailClient({
   };
 
   const handleSubmitReview = async () => {
-    if (!currentUser || !tool.id) {
+    if (!currentUser || !tool) {
       toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
       return;
     }
@@ -157,7 +286,7 @@ export function ToolDetailClient({
       toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
 
       // Manually refetch reviews list after submission.
-      getAllToolReviews(tool.id).then(setAllReviews);
+      getAllToolReviews(id).then(setAllReviews);
       
       // Reset review input after successful submission
       setCurrentRating(0);
@@ -169,23 +298,61 @@ export function ToolDetailClient({
     }
   };
 
+
+  if (isLoading) {
+    return (
+      <AppLayout>
+        <div className="container py-8">
+          <Skeleton className="h-8 w-1/4 mb-4" />
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <Skeleton className="h-16 w-3/4 mb-2" />
+              <Skeleton className="h-6 w-1/2 mb-6" />
+              <Skeleton className="h-48 w-full mb-6" />
+              <Skeleton className="h-32 w-full" />
+            </div>
+            <div>
+              <Skeleton className="h-64 w-full" />
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  if (!tool) {
+    return (
+      <AppLayout>
+        <div className="container py-12 text-center">
+          <h1 className="text-2xl font-bold">Không tìm thấy công cụ để xem trước</h1>
+          <p className="text-muted-foreground">Công cụ này có thể đã bị xóa hoặc không tồn tại.</p>
+          <Button asChild variant="link" className="mt-4">
+            <Link href="/admin">Quay lại trang Quản trị</Link>
+          </Button>
+        </div>
+      </AppLayout>
+    );
+  }
+
   const averageRating = tool.averageRating || 0;
 
   return (
     <AppLayout>
-      <div className="container py-8 md:py-12">
+      <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold">
+        Chế độ xem trước
+      </div>
+      <div className="container py-8 md:py-12 mt-10">
         <Button variant="outline" size="sm" asChild className="mb-6">
-            <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang công cụ</Link>
+            <Link href="/admin"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Quản trị</Link>
         </Button>
-
+        
+        {/* Rest of the UI is the same as the public page */}
         <div className="grid lg:grid-cols-12 gap-12 items-start">
-          {/* Main Content */}
           <div className="lg:col-span-8 space-y-10">
-            {/* Header section */}
             <section>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                   <div className="flex items-center space-x-4">
-                      <Image src={tool.logoUrl || ''} alt={`${tool.context} ${tool.name} logo`} width={64} height={64} className="rounded-lg" priority />
+                      <Image src={tool.logoUrl} alt={`${tool.context} ${tool.name} logo`} width={64} height={64} className="rounded-lg" priority />
                       <div>
                            <div className="flex items-center gap-3">
                             <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
@@ -205,7 +372,6 @@ export function ToolDetailClient({
                       </Button>
                   </div>
               </div>
-
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-6">
                 <div className="flex items-center gap-1">
                   <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
@@ -218,7 +384,6 @@ export function ToolDetailClient({
                     </div>
                 )}
               </div>
-
               <div className="space-y-4">
                   <p className="text-lg text-foreground/80 whitespace-pre-line">{tool.description}</p>
               </div>
@@ -409,8 +574,6 @@ export function ToolDetailClient({
                 </section>
             )}
           </div>
-
-          {/* Sidebar */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
@@ -418,8 +581,8 @@ export function ToolDetailClient({
               </CardHeader>
               <CardContent className="space-y-4">
                   {featuredTools.map(t => (
-                    <Link key={t.id} href={{ pathname: '/cong-cu/[id]', params: { id: t.id } }} className="flex items-center space-x-3 group">
-                       <Image src={t.logoUrl || ''} alt={t.name} width={40} height={40} className="rounded-md"/>
+                    <Link key={t.id} href={`/cong-cu/${t.id}`} className="flex items-center space-x-3 group">
+                       <Image src={t.logoUrl} alt={t.name} width={40} height={40} className="rounded-md"/>
                        <div>
                           <p className="font-semibold group-hover:text-primary">{t.name}</p>
                           <p className="text-sm text-muted-foreground">{t.context}</p>
@@ -436,9 +599,9 @@ export function ToolDetailClient({
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
-                      <Link key={article.id} href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="flex items-center space-x-3 group">
+                      <Link key={article.id} href={`/${article.id}`} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
-                            <Image src={article.imageUrl || ''} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
+                            <Image src={article.imageUrl!} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>
                          <div>
                             <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>
@@ -451,13 +614,13 @@ export function ToolDetailClient({
 
             <Card className="bg-accent/50 text-center p-6">
                 <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Khám phá bảng xếp hạng
+                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
                 </h3>
                 <p className="mb-4 text-sm text-muted-foreground">
-                    Giúp bạn so sánh các model, công cụ AI trực quan nhất
+                    Nâng cấp quy trình làm việc của bạn
                 </p>
                 <Button asChild>
-                    <Link href="/bang-xep-hang">Khám phá</Link>
+                    <Link href="/chatbot">Khám phá chatbot AI</Link>
                 </Button>
             </Card>
           </aside>
@@ -465,4 +628,8 @@ export function ToolDetailClient({
       </div>
     </AppLayout>
   );
+}
+
+export default function ToolPreviewPage() {
+  return <ToolDetailContent />;
 }

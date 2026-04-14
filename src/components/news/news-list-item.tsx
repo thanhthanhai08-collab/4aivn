@@ -2,7 +2,7 @@
 // src/components/news/news-list-item.tsx
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import type { NewsArticle } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,6 +15,9 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocalizedSlug } from "@/lib/i18n-helpers";
+import { enUS } from "date-fns/locale/en-US";
 
 const getAuthorInitials = (name?: string) => {
   if (!name) return "";
@@ -29,6 +32,8 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const locale = useLocale();
+  const tNewsDetail = useTranslations("newsDetail");
 
   useEffect(() => {
     if (currentUser) {
@@ -46,8 +51,8 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
 
     if (!currentUser) {
       toast({
-        title: "Yêu cầu đăng nhập",
-        description: "Vui lòng đăng nhập để lưu tin tức.",
+        title: tNewsDetail("loginRequired"),
+        description: tNewsDetail("loginRequiredDesc"),
         variant: "destructive",
       });
       return;
@@ -58,11 +63,11 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
 
     try {
       await toggleNewsBookmark(currentUser.uid, article.id, isBookmarked);
-      toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
+      toast({ title: newBookmarkState ? tNewsDetail("bookmarkSuccess") : tNewsDetail("bookmarkRemoved") });
     } catch (error) {
       console.error("Failed to update bookmark:", error);
       setIsBookmarked(!newBookmarkState);
-      toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
+      toast({ title: tNewsDetail("error"), description: tNewsDetail("bookmarkError"), variant: "destructive" });
     }
   };
 
@@ -70,10 +75,12 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
     .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
     .replace(/&nbsp;/g, " ")
     .trim();
+    
+  const slug = getLocalizedSlug(article.slug || article.id, locale) || article.id;
 
   return (
     <article className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center group">
-      <Link href={`/${article.id}`} className="md:col-span-1 block overflow-hidden rounded-lg">
+      <Link href={`/${slug}`} className="md:col-span-1 block overflow-hidden rounded-lg">
         <Image
           src={article.imageUrl}
           alt={article.title}
@@ -85,7 +92,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
       </Link>
       <div className="md:col-span-3">
         <h2 className="text-xl font-bold font-headline mb-2 leading-tight">
-          <Link href={`/${article.id}`} className="hover:text-primary transition-colors">
+          <Link href={`/${slug}`} className="hover:text-primary transition-colors">
             {article.title}
           </Link>
         </h2>
@@ -103,11 +110,11 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
                 <span className="text-gray-400">•</span>
                 <div className="flex items-center space-x-1">
                     <CalendarDays className="h-4 w-4" />
-                    <span suppressHydrationWarning>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</span>
+                    <span suppressHydrationWarning>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: locale === 'en' ? enUS : vi })}</span>
                 </div>
             </div>
           </div>
-           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label="Lưu tin tức">
+           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label={tNewsDetail("bookmark")}>
             <Bookmark className={cn("h-5 w-5 text-muted-foreground", isBookmarked && "fill-primary text-primary")} />
           </Button>
         </div>

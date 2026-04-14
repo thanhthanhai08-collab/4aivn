@@ -2,8 +2,8 @@
 // src/components/layout/site-header.tsx
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { Link } from "@/i18n/routing";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { Menu, MessageSquare, Newspaper, X, Home, TrendingUp, Search as SearchIcon, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
@@ -13,6 +13,7 @@ import { UserNav } from "@/components/auth/user-nav";
 import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState, useId, type FormEvent } from "react";
 import { Logo } from "@/components/logo";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 const navItems = [
   { href: "/", label: "Trang chủ", icon: Home },
@@ -62,7 +63,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
           {navItems.map((item) => (
             <Link
               key={item.href}
-              href={item.href}
+              href={item.href as any}
               className={cn(
                 "transition-colors hover:text-foreground/80 font-medium",
                 pathname === item.href ? "text-primary font-semibold" : "text-foreground/60"
@@ -90,6 +91,10 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
               </Button>
             </form>
           )}
+
+          <div className="mx-2 hidden md:block">
+             <LanguageSwitcher />
+          </div>
 
           {isClient && !isLoading && (currentUser ? (
             <UserNav user={currentUser} />
@@ -144,11 +149,15 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                 </form>
               )}
 
+              <div className="mb-4 px-2 block md:hidden">
+                <LanguageSwitcher />
+              </div>
+
               <div className="flex flex-col space-y-3 px-2">
                 {navItems.map((item) => (
                   <SheetClose asChild key={item.href}>
                     <Link
-                      href={item.href}
+                      href={item.href as any}
                        onClick={() => setIsSheetOpen(false)}
                       className={cn(
                         "flex items-center space-x-2 p-2 rounded-md hover:bg-accent font-medium",

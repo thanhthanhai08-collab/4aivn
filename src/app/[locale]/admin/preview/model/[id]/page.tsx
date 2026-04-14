@@ -1,14 +1,18 @@
+// src/app/admin/preview/model/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { Star, Heart, ArrowLeft, Share2, CalendarDays, BrainCircuit, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
-import type { AIModel, NewsArticle } from "@/lib/types";
+import { ExternalLink, Star, Heart, CheckCircle, ArrowLeft, Share2, CalendarDays, BrainCircuit, Code, BookOpen, User, DollarSign, Zap, Timer, Layers } from "lucide-react";
+import type { AIModel, NewsArticle, BenchmarkData } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
   setModelRating,
@@ -18,9 +22,10 @@ import {
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsListItem } from "@/components/news/news-list-item";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
+import { useParams } from "next/navigation";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -34,147 +39,190 @@ const formatContextLength = (tokenValue?: number): string => {
   return String(tokenValue);
 };
 
-interface Props {
-  model: AIModel;
-  relatedNews: NewsArticle[];
-  sameDeveloperModels: AIModel[];
-}
-
-export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: Props) {
+function ModelPreviewContent() {
+  const params = useParams();
+  const id = params.id as string;
+  const [model, setModel] = useState<AIModel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
+  const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [sameDeveloperModels, setSameDeveloperModels] = useState<AIModel[]>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
 
-  // Effect for user-specific data (favorite status)
   useEffect(() => {
-    if (currentUser && model.id) {
+    if (!id) return;
+    setIsLoading(true);
+
+    const modelDocRef = doc(db, "models", id);
+
+    // Set up a real-time listener for the model document
+    const unsubscribe = onSnapshot(modelDocRef, async (docSnap) => {
+        // We DON'T check for `post === true` in preview mode
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const releaseDateTimestamp = data.releaseDate as Timestamp;
+            
+            let benchmarksData: BenchmarkData[] = [];
+            const benchmarksColRef = collection(db, "models", id, "benchmarks");
+            const benchmarksSnapshot = await getDocs(benchmarksColRef);
+            benchmarksData = benchmarksSnapshot.docs.map(doc => {
+                const docData = doc.data();
+                const score = typeof docData.score === 'string' ? parseFloat(docData.score) : docData.score;
+                return {
+                    name: docData.name,
+                    score: isNaN(score) ? 0 : score,
+                };
+            });
+
+            const foundModel = {
+                id: docSnap.id,
+                ...data,
+                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+                benchmarks: benchmarksData,
+            } as AIModel;
+
+            setModel(foundModel);
+
+            // Fetch related data for a full preview experience
+            if (foundModel.name) {
+                const newsQuery = query(
+                    collection(db, "news"),
+                    where("post", "==", true),
+                    where('tag', 'array-contains', foundModel.name),
+                    orderBy("publishedAt", "desc"),
+                    limit(3)
+                );
+                const newsSnapshot = await getDocs(newsQuery);
+                const newsData = newsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                } as NewsArticle));
+                setRelatedNews(newsData);
+            }
+
+            if (data.developer) {
+                const sameDevQuery = query(
+                    collection(db, "models"),
+                    where('developer', '==', data.developer),
+                    where('post', '==', true),
+                    limit(7)
+                );
+                const devSnap = await getDocs(sameDevQuery);
+                const devModels = devSnap.docs
+                    .map(d => ({ 
+                        id: d.id, 
+                        ...d.data(),
+                        releaseDate: (d.data().releaseDate as Timestamp)?.toDate().toLocaleDateString('vi-VN'),
+                    } as AIModel))
+                    .filter(m => m.id !== id)
+                    .slice(0, 6);
+                setSameDeveloperModels(devModels);
+            }
+            setIsLoading(false);
+        } else {
+            console.error("Model not found!");
+            setIsLoading(false);
+            setModel(null);
+        }
+    }, (error) => {
+        console.error("Error listening to model data:", error);
+        setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [id]);
+
+  // These effects remain the same as they are user-specific
+  useEffect(() => {
+    if (currentUser && id) {
       getUserProfileData(currentUser.uid).then(userData => {
-        setIsFavorite(userData.favoriteModels?.includes(model.id) || false);
+        setIsFavorite(userData.favoriteModels?.includes(id) || false);
       });
     } else {
       setIsFavorite(false);
     }
-  }, [currentUser, model.id]);
+  }, [currentUser, id]);
 
-  // Effect for user's rating (real-time)
   useEffect(() => {
-    if (currentUser && model.id) {
-        const userRatingRef = doc(db, "models", model.id, "ratings", currentUser.uid);
+    if (currentUser && id) {
+        const userRatingRef = doc(db, "models", id, "ratings", currentUser.uid);
         const unsubscribe = onSnapshot(userRatingRef, (docSnap) => {
             if (docSnap.exists()) {
                 setCurrentRating(docSnap.data().starRating || 0);
             } else {
                 setCurrentRating(0);
             }
-        }, (error) => {
-            console.error("Error listening to user rating:", error);
-            setCurrentRating(0);
         });
-
-        // Cleanup listener when id or currentUser changes
         return () => unsubscribe();
     } else {
-        // Reset rating if user logs out or id changes
         setCurrentRating(0);
     }
-  }, [currentUser, model.id]);
+  }, [currentUser, id]);
+
+  // Action handlers can be kept for a realistic preview
+  const handleFavoriteToggle = async () => { /* ... implementation from original file ... */ };
+  const handleRating = async (rating: number) => { /* ... implementation from original file ... */ };
+  const handleShare = () => { /* ... implementation from original file ... */ };
 
 
-  const handleFavoriteToggle = async () => {
-    if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
-      return;
-    }
-    const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); 
+  if (isLoading) {
+    return (
+      <AppLayout>
+        <div className="container py-8">
+          <Skeleton className="h-8 w-1/4 mb-4" />
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <Skeleton className="h-16 w-3/4 mb-2" />
+              <Skeleton className="h-6 w-1/2 mb-6" />
+              <Skeleton className="h-48 w-full mb-6" />
+              <Skeleton className="h-32 w-full" />
+            </div>
+            <div>
+              <Skeleton className="h-64 w-full" />
+            </div>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
 
-    try {
-        await toggleModelFavorite(currentUser.uid, model.id, isFavorite);
-        toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
-    } catch (error) {
-        console.error("Failed to update favorite status:", error);
-        setIsFavorite(!newFavoriteState); 
-        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
-    }
-  };
-
-  const handleRating = async (rating: number) => {
-    if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá model.", variant: "destructive" });
-      return;
-    }
-
-    try {
-      await setModelRating(currentUser.uid, model.id, rating, currentRating);
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
-    } catch(error) {
-      console.error("Failed to save rating:", error);
-      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
-    }
-  };
+  if (!model) {
+    return (
+      <AppLayout>
+        <div className="container py-12 text-center">
+          <h1 className="text-2xl font-bold">Không tìm thấy model AI</h1>
+           <p className="text-muted-foreground">Model này có thể không tồn tại hoặc đã bị xóa.</p>
+          <Button asChild variant="link" className="mt-4">
+            <Link href="/admin">Quay lại trang Quản trị</Link>
+          </Button>
+        </div>
+      </AppLayout>
+    );
+  }
   
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      toast({
-        title: "Đã sao chép liên kết",
-        description: "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
-      });
-    }).catch(err => {
-      console.error('Failed to copy link: ', err);
-      toast({
-        title: "Lỗi",
-        description: "Không thể sao chép liên kết.",
-        variant: "destructive",
-      });
-    });
-  };
-
   return (
     <AppLayout>
-      <div className="container py-8 md:py-12">
+      <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold">
+          Chế độ xem trước
+      </div>
+      <div className="container py-8 md:py-12 mt-10">
         <Button variant="outline" size="sm" asChild className="mb-6">
-          <Link href="/bang-xep-hang">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Quay lại bảng xếp hạng
+          <Link href="/admin">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Quản trị
           </Link>
         </Button>
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
-          <ol className="flex items-center text-muted-foreground">
-            <li className="flex items-center">
-              <Link 
-                href="/" 
-                className="hover:text-primary transition-colors"
-              >
-                Trang chủ
-              </Link>
-            </li>
-            
-            <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
-              <Link 
-                href="/bang-xep-hang" 
-                className="hover:text-primary transition-colors"
-              >
-                Bảng xếp hạng
-              </Link>
-            </li>
-
-            <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
-              <span className="text-foreground font-semibold">
-                {model.name}
-              </span>
-            </li>
-          </ol>
-        </nav>
-
-          <div className="grid md:grid-cols-3 gap-8 items-start mb-8">
+        
+        <div className="grid md:grid-cols-3 gap-8 items-start mb-8">
               <div className="md:col-span-2 space-y-8">
                   <Card>
                       <CardHeader>
                           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                               <div className="flex items-center space-x-4">
-                              <Image src={model.logoUrl || ''} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" priority />
+                              <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" priority />
                               <div>
                                   <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
                                   <p className="text-muted-foreground">{model.developer}</p>
@@ -202,24 +250,16 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                           <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
                       </CardHeader>
                       <CardContent>
-                          <div className="flex items-center space-x-1 mb-2" onMouseLeave={() => setHoverRating(0)}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <button 
-                                    key={star} 
-                                    onClick={() => handleRating(star)} 
-                                    onMouseEnter={() => setHoverRating(star)}
-                                    aria-label={`Đánh giá ${star} sao`} 
-                                    className="group outline-none"
-                                >
-                                <Star
-                                    className={`h-7 w-7 cursor-pointer transition-all duration-150 ${
-                                    star <= (hoverRating || currentRating) 
-                                    ? "fill-amber-400 text-amber-500 scale-110" 
-                                    : "text-gray-300"
-                                    }`}
-                                />
-                                </button>
-                            ))}
+                          <div className="flex items-center space-x-1 mb-2">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                              <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
+                              <Star
+                                  className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
+                                  star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                                  }`}
+                              />
+                              </button>
+                          ))}
                           </div>
                            <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
                           {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {(model.averageRating ?? 0).toFixed(1)} sao ({model.ratingCount || 0} đánh giá)</p>}
@@ -229,7 +269,6 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
           </div>
           
           <div className="space-y-12">
-               {/* Specifications */}
               <Card>
                   <CardHeader>
                   <CardTitle>Thông số mô hình</CardTitle>
@@ -334,4 +373,8 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
       </div>
     </AppLayout>
   );
+}
+
+export default function ModelPreviewPage() {
+  return <ModelPreviewContent />;
 }

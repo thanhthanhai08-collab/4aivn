@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { CalendarDays, ArrowRight, Bookmark, User } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -80,7 +80,7 @@ export function NewsCard({ article }: NewsCardProps) {
 
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden group hover:-translate-y-1">
-      <Link href={`/${article.id}`} className="block">
+      <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="block">
         {article.imageUrl && (
           <div className="relative w-full h-48 overflow-hidden">
             <Image 
@@ -96,7 +96,7 @@ export function NewsCard({ article }: NewsCardProps) {
       </Link>
       <CardHeader className="p-4">
         <CardTitle className="text-lg font-headline line-clamp-2">
-           <Link href={`/${article.id}`} className="hover:text-primary transition-colors">
+           <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="hover:text-primary transition-colors">
             {article.title}
           </Link>
         </CardTitle>
@@ -123,7 +123,7 @@ export function NewsCard({ article }: NewsCardProps) {
             <Bookmark className={cn("h-5 w-5", isBookmarked && "fill-primary text-primary")} />
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/${article.id}`}>
+            <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }}>
               Đọc thêm <ArrowRight className="ml-2 h-3 w-3" />
             </Link>
           </Button>

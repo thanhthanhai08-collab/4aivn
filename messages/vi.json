@@ -1,0 +1,88 @@
+{
+  "common": {
+    "home": "Trang chủ",
+    "news": "Tin tức",
+    "login": "Đăng nhập",
+    "search": "Tìm kiếm...",
+    "aiTools": "Công cụ AI",
+    "rankings": "Bảng xếp hạng",
+    "newsAI": "Tin tức AI",
+    "chatbot": "Chatbot",
+    "openCloseMenu": "Mở/Đóng Menu",
+    "mainMenu": "Menu chính"
+  },
+  "news": {
+    "title": "Tin tức & Cập nhật AI",
+    "subtitle": "Luôn cập nhật những diễn biến mới nhất trong thế giới AI.",
+    "loadMore": "Đọc thêm",
+    "readMore": "Đọc thêm",
+    "quickView": "Xem nhanh",
+    "empty": "Chưa có bài viết nào để hiển thị.",
+    "noArticlesInCategory": "Chưa có bài viết nào trong danh mục này.",
+    "viewAllNews": "Xem tất cả tin tức",
+    "newsCategory": "Danh mục tin tức",
+    "backToNews": "Quay lại trang tin tức",
+    "backToNewsList": "Quay lại trang Tin tức",
+    "byAuthor": "Bởi {author}",
+    "latestNews": "Tin mới nhất",
+    "loadMoreBtn": "Tải thêm",
+    "categories": {
+      "review": "Đánh giá",
+      "guide": "Hướng dẫn",
+      "vibeCoding": "Vibe coding",
+      "trending": "Xu hướng"
+    }
+  },
+  "newsDetail": {
+    "backToNews": "Quay lại trang tin tức",
+    "quickSummary": "Tóm tắt nhanh",
+    "discussion": "Thảo luận",
+    "loginToComment": "Đăng nhập",
+    "loginToCommentSuffix": " để tham gia thảo luận.",
+    "source": "Nguồn:",
+    "publishedAt": "Xuất bản vào {date}",
+    "share": "Chia sẻ",
+    "bookmark": "Lưu tin tức",
+    "bookmarked": "Đã lưu",
+    "relatedArticles": "Các bài viết liên quan",
+    "articleNotFound": "Không tìm thấy bài viết",
+    "articleNotFoundDesc": "Bài viết này có thể không tồn tại hoặc chưa được xuất bản.",
+    "copiedLink": "Đã sao chép liên kết",
+    "copiedLinkDesc": "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
+    "copyError": "Không thể sao chép liên kết.",
+    "loginRequired": "Yêu cầu đăng nhập",
+    "loginRequiredDesc": "Vui lòng đăng nhập để lưu tin tức.",
+    "bookmarkSuccess": "Đã lưu tin tức thành công",
+    "bookmarkRemoved": "Đã xóa khỏi tin tức đã lưu",
+    "bookmarkError": "Không thể cập nhật tin tức đã lưu.",
+    "error": "Lỗi",
+    "exploreRankings": "Khám phá bảng xếp hạng",
+    "exploreRankingsDesc": "Giúp bạn so sánh các model, công cụ AI trực quan nhất",
+    "exploreBtn": "Khám phá"
+  },
+  "languageSwitcher": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "switchTo": "Chuyển sang {language}"
+  },
+  "footer": {
+    "description": "Nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực trí tuệ nhân tạo.",
+    "quickLinks": "Liên kết nhanh",
+    "information": "Thông tin",
+    "contact": "Liên hệ",
+    "copyright": "© {year} 4AIVN. Mọi quyền được bảo lưu.",
+    "privacyPolicy": "Chính sách quyền riêng tư",
+    "termsOfService": "Điều khoản dịch vụ",
+    "aiTerms": "Điều khoản sử dụng AI",
+    "cookiePolicy": "Chính sách Cookies",
+    "about": "Giới thiệu",
+    "contactUs": "Liên hệ"
+  },
+  "preview": {
+    "previewMode": "Chế độ xem trước",
+    "notFound": "Không tìm thấy bài viết để xem trước",
+    "notFoundDesc": "Bài viết này có thể đã bị xóa hoặc không tồn tại.",
+    "backToAdmin": "Quay lại trang Quản trị",
+    "switchLang": "Xem bản tiếng {lang}"
+  }
+}
