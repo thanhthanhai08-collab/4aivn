@@ -2,16 +2,17 @@
 "use client";
 
 import { AppLayout } from "@/components/layout/app-layout";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { Link, useRouter } from "@/i18n/routing";
 import { useEffect, useState, Suspense, type FormEvent } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Newspaper, Wrench, MessageSquare, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 // --- SKELETON LOADING ---
 function SearchSkeleton() {
@@ -40,6 +41,7 @@ function SearchResultsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialQuery = searchParams.get("q") || "";
+  const t = useTranslations("search");
 
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -77,7 +79,7 @@ function SearchResultsContent() {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      router.push(`/tim-kiem?q=${encodeURIComponent(searchTerm.trim())}`);
+      router.push(`/tim-kiem?q=${encodeURIComponent(searchTerm.trim())}` as any);
     }
   };
 
@@ -90,7 +92,7 @@ function SearchResultsContent() {
             <Search className="absolute left-5 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
               type="text"
-              placeholder="Tìm kiếm tin tức, bài viết..."
+              placeholder={t("search_placeholder")}
               className="h-14 pl-14 pr-36 rounded-full border-none focus-visible:ring-0 text-lg bg-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -99,7 +101,7 @@ function SearchResultsContent() {
               type="submit" 
               className="absolute right-1.5 h-11 rounded-full px-8 font-semibold shadow-sm"
             >
-              Tìm kiếm
+              {t("btn_search")}
             </Button>
           </div>
         </form>
@@ -111,11 +113,11 @@ function SearchResultsContent() {
           <div className="flex items-center justify-between border-b pb-4">
             <h1 className="text-2xl font-bold flex items-center gap-3">
               <Newspaper className="w-6 h-6 text-primary" />
-              {initialQuery ? 'Kết quả tìm kiếm' : 'Tin tức mới nhất'}
+              {initialQuery ? t("search_results") : t("latest_news")}
             </h1>
             {initialQuery && !isLoading && (
               <span className="text-sm font-medium text-muted-foreground bg-accent px-3 py-1 rounded-full">
-                {results.length} kết quả
+                {t("results_count", { count: results.length })}
               </span>
             )}
           </div>
@@ -127,13 +129,13 @@ function SearchResultsContent() {
             </div>
           ) : error ? (
             <div className="p-10 text-center border-2 border-dashed border-destructive/20 rounded-2xl bg-destructive/5 text-destructive">
-              <p className="font-bold">Lỗi kết nối máy chủ</p>
-              <p className="text-sm">Vui lòng kiểm tra lại đường truyền và thử lại.</p>
+              <p className="font-bold">{t("connection_error")}</p>
+              <p className="text-sm">{t("connection_error_desc")}</p>
             </div>
           ) : results.length > 0 ? (
             <div className="grid gap-4">
               {results.map((item) => (
-                <Link key={item.id} href={`/${item.id}`} className="block group">
+                <Link key={item.id} href={`/${item.id}` as any} className="block group">
                   <Card className="rounded-xl border-primary/5 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                     <div className="flex items-center">
                       {item.imageUrl && (
@@ -168,13 +170,13 @@ function SearchResultsContent() {
             </div>
           ) : initialQuery ? (
             <div className="py-20 text-center bg-accent/20 rounded-3xl border-2 border-dashed border-primary/10">
-              <p className="text-lg text-muted-foreground">Không tìm thấy nội dung cho "<span className="text-foreground font-semibold">{initialQuery}</span>"</p>
-              <p className="text-sm text-muted-foreground mt-1">Hãy thử tìm kiếm với các từ khóa ngắn gọn hơn.</p>
+              <p className="text-lg text-muted-foreground">{t("not_found")} "<span className="text-foreground font-semibold">{initialQuery}</span>"</p>
+              <p className="text-sm text-muted-foreground mt-1">{t("try_shorter")}</p>
             </div>
           ) : (
             <div className="py-20 text-center opacity-40">
                <Search className="w-16 h-16 mx-auto mb-4" />
-               <p className="text-lg">Khám phá kho tri thức AI tại 4AIVN</p>
+               <p className="text-lg">{t("explore_knowledge")}</p>
             </div>
           )}
         </div>
@@ -184,20 +186,20 @@ function SearchResultsContent() {
           <div className="sticky top-24">
             <Card className="rounded-3xl border-primary/10 bg-gradient-to-br from-background to-primary/5 shadow-inner">
               <CardHeader>
-                <CardTitle className="text-lg">Tìm kiếm ở nơi khác?</CardTitle>
+                <CardTitle className="text-lg">{t("search_elsewhere")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">Bạn đang tìm kiếm công cụ AI hay muốn trò chuyện với trợ lý ảo? Hãy thử ở đây:</p>
+                <p className="text-sm text-muted-foreground">{t("search_elsewhere_desc")}</p>
                 <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
-                  <Link href={`/cong-cu?search_query=${encodeURIComponent(searchTerm)}`}>
+                  <Link href={`/cong-cu?search_query=${encodeURIComponent(searchTerm)}` as any}>
                     <Wrench className="w-5 h-5" />
-                    <span className="font-bold">Tìm trong công cụ</span>
+                    <span className="font-bold">{t("search_in_tools")}</span>
                   </Link>
                 </Button>
                 <Button asChild variant="secondary" className="w-full justify-start gap-3 rounded-xl h-14 hover:bg-primary hover:text-white transition-all shadow-sm">
                   <Link href="/chatbot">
                     <MessageSquare className="w-5 h-5" />
-                    <span className="font-bold">Tìm với chatbot</span>
+                    <span className="font-bold">{t("search_with_chatbot")}</span>
                   </Link>
                 </Button>
               </CardContent>

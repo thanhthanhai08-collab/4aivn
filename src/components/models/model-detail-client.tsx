@@ -21,6 +21,7 @@ import { NewsListItem } from "@/components/news/news-list-item";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
+import { useTranslations } from "next-intl";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -44,6 +45,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const t = useTranslations("modelDetail");
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -85,7 +87,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
 
   const handleFavoriteToggle = async () => {
     if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
+      toast({ title: t("loginToFav"), description: t("loginToFavDesc"), variant: "destructive" });
       return;
     }
     const newFavoriteState = !isFavorite;
@@ -93,40 +95,40 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
 
     try {
         await toggleModelFavorite(currentUser.uid, model.id, isFavorite);
-        toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
+        toast({ title: newFavoriteState ? t("favAdded") : t("favRemoved") });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
         setIsFavorite(!newFavoriteState); 
-        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+        toast({ title: t("error"), description: t("favError"), variant: "destructive" });
     }
   };
 
   const handleRating = async (rating: number) => {
     if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá model.", variant: "destructive" });
+      toast({ title: t("loginToReview"), description: t("loginToReviewDesc"), variant: "destructive" });
       return;
     }
 
     try {
       await setModelRating(currentUser.uid, model.id, rating, currentRating);
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${model.name} ${rating} sao.` });
+      toast({ title: t("reviewSent"), description: t("reviewSentDesc", { name: model.name, rating }) });
     } catch(error) {
       console.error("Failed to save rating:", error);
-      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
+      toast({ title: t("error"), description: t("reviewError"), variant: "destructive" });
     }
   };
   
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       toast({
-        title: "Đã sao chép liên kết",
-        description: "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
+        title: t("copiedLink"),
+        description: t("copiedLinkDesc"),
       });
     }).catch(err => {
       console.error('Failed to copy link: ', err);
       toast({
-        title: "Lỗi",
-        description: "Không thể sao chép liên kết.",
+        title: t("error"),
+        description: t("copyError"),
         variant: "destructive",
       });
     });
@@ -137,7 +139,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
       <div className="container py-8 md:py-12">
         <Button variant="outline" size="sm" asChild className="mb-6">
           <Link href="/bang-xep-hang">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Quay lại bảng xếp hạng
+            <ArrowLeft className="mr-2 h-4 w-4" /> {t("backToRankings")}
           </Link>
         </Button>
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
@@ -147,7 +149,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                 href="/" 
                 className="hover:text-primary transition-colors"
               >
-                Trang chủ
+                {t("home")}
               </Link>
             </li>
             
@@ -156,7 +158,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                 href="/bang-xep-hang" 
                 className="hover:text-primary transition-colors"
               >
-                Bảng xếp hạng
+                {t("rankings")}
               </Link>
             </li>
 
@@ -183,10 +185,10 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                               <div className="flex items-center space-x-2">
                               <Button variant="outline" onClick={handleFavoriteToggle}>
                                   <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                                  {isFavorite ? "Đã thích" : "Yêu thích"}
+                                  {isFavorite ? t("favorited") : t("favorite")}
                               </Button>
                               <Button variant="outline" onClick={handleShare}>
-                                  <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+                                  <Share2 className="mr-2 h-4 w-4" /> {t("share")}
                               </Button>
                               </div>
                           </div>
@@ -199,7 +201,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
               <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
                   <Card>
                       <CardHeader>
-                          <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
+                          <CardTitle className="text-xl font-headline">{t("rateModel")}</CardTitle>
                       </CardHeader>
                       <CardContent>
                           <div className="flex items-center space-x-1 mb-2" onMouseLeave={() => setHoverRating(0)}>
@@ -221,8 +223,8 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                                 </button>
                             ))}
                           </div>
-                           <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                          {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {(model.averageRating ?? 0).toFixed(1)} sao ({model.ratingCount || 0} đánh giá)</p>}
+                           <p className="text-sm text-muted-foreground">{t("yourRating")} {currentRating > 0 ? `${currentRating} sao` : t("notRated")}</p>
+                          {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">{t("averageRating", { avg: (model.averageRating ?? 0).toFixed(1), count: model.ratingCount || 0 })}</p>}
                       </CardContent>
                   </Card>
               </div>
@@ -232,64 +234,64 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
                {/* Specifications */}
               <Card>
                   <CardHeader>
-                  <CardTitle>Thông số mô hình</CardTitle>
-                  <CardDescription>Thông tin kỹ thuật và phiên bản được phát hành.</CardDescription>
+                  <CardTitle>{t("specs")}</CardTitle>
+                  <CardDescription>{t("specsDesc")}</CardDescription>
                   </CardHeader>
                   <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm">
                       <div className="flex items-start space-x-3">
                           <User className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Nhà phát triển</p>
+                              <p className="font-semibold">{t("developer")}</p>
                               <p className="text-muted-foreground">{model.developer}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <Layers className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                              <p className="text-muted-foreground">{model.multimodal ? 'Có' : 'Không'}</p>
+                              <p className="font-semibold">{t("multimodal")}</p>
+                              <p className="text-muted-foreground">{model.multimodal ? t("yes") : t("no")}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Chỉ số thông minh</p>
+                              <p className="font-semibold">{t("intelligenceScore")}</p>
                               <p className="text-muted-foreground">{model.intelligenceScore}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <BookOpen className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
+                              <p className="font-semibold">{t("contextWindow")}</p>
                               <p className="text-muted-foreground">{formatContextLength(model.contextLengthToken as number)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <DollarSign className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Giá trung bình (USD/1M token)</p>
+                              <p className="font-semibold">{t("pricePer1M")}</p>
                               <p className="text-muted-foreground">${model.pricePerMillionTokens?.toFixed(2)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <Zap className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Tốc độ (token/s)</p>
-                              <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1) || 'N/A'}</p>
+                              <p className="font-semibold">{t("speed")}</p>
+                              <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1) || t("na")}</p>
                           </div>
                       </div>
                        <div className="flex items-start space-x-3">
                           <Timer className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Độ trễ (s)</p>
-                              <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2) || 'N/A'}</p>
+                              <p className="font-semibold">{t("latency")}</p>
+                              <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2) || t("na")}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Ngày phát hành</p>
-                              <p className="text-muted-foreground">{model.releaseDate || 'N/A'}</p>
+                              <p className="font-semibold">{t("releaseDate")}</p>
+                              <p className="text-muted-foreground">{model.releaseDate || t("na")}</p>
                           </div>
                       </div>
                   </CardContent>
@@ -297,21 +299,21 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
               
                {model.benchmarks && model.benchmarks.length > 0 && (
                   <section>
-                      <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                      <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                      <h2 className="text-2xl font-bold font-headline mb-2">{t("stats")}</h2>
+                      <p className="text-muted-foreground mb-6">{t("statsDesc")}</p>
                       <O3PerformanceInsightsChart benchmarkData={model.benchmarks} />
                   </section>
                )}
               
               <section>
-                <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
-                <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+                <h2 className="text-2xl font-bold font-headline mb-2">{t("benchmarks")}</h2>
+                <p className="text-muted-foreground mb-6">{t("benchmarksDesc", { name: model.name })}</p>
                 <O3DetailedBenchmarkCharts currentModel={model} />
               </section>
 
               {sameDeveloperModels.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6">Các mô hình khác từ {model.developer}</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-6">{t("otherModels", { developer: model.developer })}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sameDeveloperModels.map((devModel) => (
                       <ModelCard key={devModel.id} model={devModel} />
@@ -322,7 +324,7 @@ export function ModelDetailClient({ model, relatedNews, sameDeveloperModels }: P
 
               {relatedNews.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6">Bài viết liên quan</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-6">{t("relatedArticles")}</h2>
                   <div className="space-y-8">
                     {relatedNews.map((article) => (
                       <NewsListItem key={article.id} article={article} />

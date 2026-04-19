@@ -3,22 +3,23 @@
 import { Link } from "@/i18n/routing";
 import { Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { useTranslations } from "next-intl";
 
 const quickLinks = [
-  { href: "/", label: "Trang chủ" },
-  { href: "/cong-cu", label: "Công cụ AI" },
-  { href: "/bang-xep-hang", label: "Bảng xếp hạng" },
-  { href: "/tin-tuc", label: "Tin tức AI" },
-  { href: "/chatbot", label: "Chatbot" },
+  { href: "/", label: "home" },
+  { href: "/cong-cu", label: "aiTools" },
+  { href: "/bang-xep-hang", label: "rankings" },
+  { href: "/tin-tuc", label: "newsAI" },
+  { href: "/chatbot", label: "chatbot" },
 ];
 
 const featuredTopics = [
-  { href: "/chinh-sach-quyen-rieng-tu", label: "Chính sách quyền riêng tư" },
-  { href: "/dieu-khoan-dich-vu", label: "Điều khoản dịch vụ" },
-  { href: "/dieu-khoan-su-dung-ai", label: "Điều khoản sử dụng AI" },
-  { href: "/chinh-sach-cookie", label: "Chính sách Cookies" },
-  { href: "/gioi-thieu", label: "Giới thiệu" },
-  { href: "/lien-he", label: "Liên hệ" },
+  { href: "/chinh-sach-quyen-rieng-tu", label: "privacyPolicy" },
+  { href: "/dieu-khoan-dich-vu", label: "termsOfService" },
+  { href: "/dieu-khoan-su-dung-ai", label: "aiTerms" },
+  { href: "/chinh-sach-cookie", label: "cookiePolicy" },
+  { href: "/gioi-thieu", label: "about" },
+  { href: "/lien-he", label: "contactUs" },
 ];
 
 const socialMediaLinks = [
@@ -29,6 +30,8 @@ const socialMediaLinks = [
 ];
 
 export function SiteFooter() {
+  const t = useTranslations("footer");
+  const tCommon = useTranslations("common");
   return (
     <footer className="bg-background border-t border-border/60 py-12 md:py-16">
       <div className="container mx-auto">
@@ -42,7 +45,7 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Nguồn thông tin hàng đầu của bạn về những đột phá, xu hướng và phân tích chuyên sâu trong lĩnh vực trí tuệ nhân tạo.
+              {t("description")}
             </p>
             <div className="flex space-x-4 pt-2">
               {socialMediaLinks.map((item) => (
@@ -63,7 +66,7 @@ export function SiteFooter() {
           {/* Column 2: Quick Links */}
           <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Liên kết nhanh
+              {t("quickLinks")}
             </h4>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
@@ -72,7 +75,7 @@ export function SiteFooter() {
                     href={item.href as any}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline"
                   >
-                    {item.label}
+                    {tCommon(item.label as any)}
                   </Link>
                 </li>
               ))}
@@ -82,7 +85,7 @@ export function SiteFooter() {
           {/* Column 3: Information */}
           <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Thông tin
+              {t("information")}
             </h4>
             <ul className="space-y-3">
               {featuredTopics.map((item) => (
@@ -91,7 +94,7 @@ export function SiteFooter() {
                     href={item.href as any}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors hover:underline"
                   >
-                    {item.label}
+                    {t(item.label as any)}
                   </Link>
                 </li>
               ))}
@@ -101,7 +104,7 @@ export function SiteFooter() {
           {/* Column 4: Contact */}
            <div>
             <h4 className="text-base font-semibold text-foreground mb-5">
-              Liên hệ
+              {t("contact")}
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start">
@@ -119,7 +122,7 @@ export function SiteFooter() {
 
         <div className="mt-12 pt-8 border-t border-border/60 text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} 4AIVN. Mọi quyền được bảo lưu.
+            {t("copyright", { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

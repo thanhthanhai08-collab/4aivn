@@ -14,13 +14,14 @@ import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState, useId, type FormEvent } from "react";
 import { Logo } from "@/components/logo";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { useTranslations } from "next-intl";
 
 const navItems = [
-  { href: "/", label: "Trang chủ", icon: Home },
-  { href: "/cong-cu", label: "Công cụ AI", icon: LayoutGrid },
-  { href: "/bang-xep-hang", label: "Bảng xếp hạng", icon: TrendingUp },
-  { href: "/tin-tuc", label: "Tin tức AI", icon: Newspaper },
-  { href: "/chatbot", label: "Chatbot", icon: MessageSquare },
+  { href: "/", label: "home", icon: Home },
+  { href: "/cong-cu", label: "aiTools", icon: LayoutGrid },
+  { href: "/bang-xep-hang", label: "rankings", icon: TrendingUp },
+  { href: "/tin-tuc", label: "newsAI", icon: Newspaper },
+  { href: "/chatbot", label: "chatbot", icon: MessageSquare },
 ];
 
 interface SiteHeaderProps {
@@ -35,6 +36,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
   const [isClient, setIsClient] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const menuId = useId();
+  const tCommon = useTranslations("common");
 
   useEffect(() => {
     setIsClient(true);
@@ -43,7 +45,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      router.push(`/tim-kiem?q=${encodeURIComponent(searchTerm.trim())}`);
+      router.push(`/tim-kiem?q=${encodeURIComponent(searchTerm.trim())}` as any);
       setSearchTerm(""); // Clear search term after navigation
       if (isSheetOpen) setIsSheetOpen(false); // Close sheet on mobile after search
     }
@@ -69,7 +71,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                 pathname === item.href ? "text-primary font-semibold" : "text-foreground/60"
               )}
             >
-              {item.label}
+              {tCommon(item.label as any)}
             </Link>
           ))}
         </nav>
@@ -80,7 +82,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
             <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center relative">
               <Input 
                 type="search" 
-                placeholder="Tìm kiếm..." 
+                placeholder={tCommon("search")}
                 className="h-9 pr-8" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -100,7 +102,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
             <UserNav user={currentUser} />
           ) : (
             <Button asChild size="sm">
-              <Link href="/dang-nhap">Đăng nhập</Link>
+              <Link href="/dang-nhap">{tCommon("login")}</Link>
             </Button>
           ))}
           {isClient && isLoading && (
@@ -111,7 +113,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
             <SheetTrigger asChild aria-controls={menuId}>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Mở/Đóng Menu</span>
+                <span className="sr-only">{tCommon("openCloseMenu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent 
@@ -121,7 +123,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
               onOpenAutoFocus={(e) => e.preventDefault()}
             >
                <SheetHeader>
-                <SheetTitle className="sr-only">Menu chính</SheetTitle>
+                <SheetTitle className="sr-only">{tCommon("mainMenu")}</SheetTitle>
               </SheetHeader>
               <Link href="/" className="mr-6 flex items-center space-x-2 mb-6" onClick={() => setIsSheetOpen(false)}>
                 <Logo className="h-6 w-6" />
@@ -136,7 +138,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                   <div className="relative">
                     <Input 
                       type="search" 
-                      placeholder="Tìm kiếm..." 
+                      placeholder={tCommon("search")} 
                       className="h-10 pr-10"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
@@ -165,7 +167,7 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                       )}
                     >
                       <item.icon className="h-5 w-5" />
-                      <span>{item.label}</span>
+                      <span>{tCommon(item.label as any)}</span>
                     </Link>
                   </SheetClose>
                 ))}

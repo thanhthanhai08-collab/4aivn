@@ -22,10 +22,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useTranslations } from "next-intl";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
+    const t = useTranslations("toolDetail");
     if (reviews.length === 0) {
-        return <p className="text-muted-foreground text-center py-4">Chưa có bài đánh giá nào có nội dung.</p>;
+        return <p className="text-muted-foreground text-center py-4">{t("noReviews")}</p>;
     }
 
     const getInitials = (name: string | null | undefined) => {
@@ -47,7 +49,7 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
                     </Avatar>
                     <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
-                            <p className="font-semibold">{review.userName || 'Người dùng ẩn danh'}</p>
+                            <p className="font-semibold">{review.userName || t("anonymousUser")}</p>
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-500 fill-amber-400' : 'text-gray-300'}`} />
@@ -88,6 +90,7 @@ export function ToolDetailClient({
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>(initialReviews);
+  const t = useTranslations("toolDetail");
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -118,7 +121,7 @@ export function ToolDetailClient({
 
   const handleFavoriteToggle = async () => {
     if (!currentUser || !tool.id) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
+      toast({ title: t("loginToFav"), description: t("loginToFavDesc"), variant: "destructive" });
       return;
     }
     
@@ -127,21 +130,21 @@ export function ToolDetailClient({
 
     try {
         await toggleToolFavorite(currentUser.uid, tool.id, isFavorite);
-        toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
+        toast({ title: newFavoriteState ? t("favAdded") : t("favRemoved") });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
         setIsFavorite(!newFavoriteState); 
-        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+        toast({ title: t("error"), description: t("favError"), variant: "destructive" });
     }
   };
 
   const handleSubmitReview = async () => {
     if (!currentUser || !tool.id) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
+      toast({ title: t("loginToReview"), description: t("loginToReviewDesc"), variant: "destructive" });
       return;
     }
     if (currentRating === 0) {
-      toast({ title: "Thiếu đánh giá", description: "Vui lòng chọn số sao để đánh giá.", variant: "destructive" });
+      toast({ title: t("missingRating"), description: t("missingRatingDesc"), variant: "destructive" });
       return;
     }
 
@@ -154,7 +157,7 @@ export function ToolDetailClient({
         currentUser.displayName, 
         currentUser.photoURL
       );
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
+      toast({ title: t("reviewSent"), description: t("reviewSentDesc", { name: tool.name, rating: currentRating }) });
 
       // Manually refetch reviews list after submission.
       getAllToolReviews(tool.id).then(setAllReviews);
@@ -165,7 +168,7 @@ export function ToolDetailClient({
 
     } catch(error) {
       console.error("Failed to save rating:", error);
-      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
+      toast({ title: t("error"), description: t("reviewError"), variant: "destructive" });
     }
   };
 
@@ -175,7 +178,7 @@ export function ToolDetailClient({
     <AppLayout>
       <div className="container py-8 md:py-12">
         <Button variant="outline" size="sm" asChild className="mb-6">
-            <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang công cụ</Link>
+            <Link href="/cong-cu"><ArrowLeft className="mr-2 h-4 w-4" /> {t("backToTools")}</Link>
         </Button>
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
@@ -196,11 +199,11 @@ export function ToolDetailClient({
                   <div className="flex items-center space-x-2 shrink-0">
                       <Button variant="outline" onClick={handleFavoriteToggle}>
                          <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                         {isFavorite ? "Đã thích" : "Yêu thích"}
+                         {isFavorite ? t("favorited") : t("favorite")}
                       </Button>
                       <Button asChild>
                          <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
+                          {t("visitPage")} <ExternalLink className="ml-2 h-4 w-4" />
                          </a>
                       </Button>
                   </div>
@@ -209,12 +212,12 @@ export function ToolDetailClient({
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-6">
                 <div className="flex items-center gap-1">
                   <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
-                  <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
-                  <span>({tool.ratingCount || 0} đánh giá)</span>
+                  <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : t("noRating")}</span>
+                  <span>{t("reviewCount", { count: tool.ratingCount || 0 })}</span>
                 </div>
                  {ranking && (
                     <div className="flex items-center gap-1">
-                        <span className="font-semibold text-foreground">Xếp hạng: #{ranking}</span>
+                        <span className="font-semibold text-foreground">{t("ranking", { rank: ranking })}</span>
                     </div>
                 )}
               </div>
@@ -368,7 +371,7 @@ export function ToolDetailClient({
 
             {adData?.bannerAdsUrl && (
               <section>
-                <Link 
+                <a 
                   href={adData.linkAff || "#"} 
                   target="_blank" 
                   rel="noopener noreferrer sponsored" 
@@ -387,7 +390,7 @@ export function ToolDetailClient({
                       Tài trợ
                     </Badge>
                   </div>
-                </Link>
+                </a>
               </section>
             )}
             

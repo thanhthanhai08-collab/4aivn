@@ -356,7 +356,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                 {article.category && article.category.length > 0 && (
                   <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                     <Link 
-                      href={`/tin-tuc/${article.category[0].id}`} 
+                      href={{ pathname: '/tin-tuc/[id]', params: { id: article.category[0].id } }} 
                       className="hover:text-primary transition-colors"
                     >
                       {article.category[0].name}
@@ -396,7 +396,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                       <div className="flex items-center">
                         <User className="mr-1.5 h-4 w-4" />
                         {article.authorId ? (
-                          <Link href={`/tac-gia/${article.authorId}`} className="hover:text-primary transition-colors">
+                          <Link href={(`/tac-gia/${article.authorId}`) as any} className="hover:text-primary transition-colors">
                             {article.author}
                           </Link>
                         ) : (

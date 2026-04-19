@@ -383,10 +383,10 @@ function NewsDetailContent() {
             <span>{tPreview("previewMode")}</span>
             <div className="flex bg-white/50 rounded-md p-0.5 ml-4">
                 <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'vi' ? "bg-white shadow-sm" : "")}>
-                   <Link href={`/admin/preview/${id}`}>{tPreview("switchLang", {lang: "Việt"})}</Link>
+                   <Link href={{ pathname: '/admin/preview/[id]', params: { id } }} locale="vi">{tPreview("switchLang", {lang: "Việt"})}</Link>
                 </Button>
                 <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'en' ? "bg-white shadow-sm" : "")}>
-                   <Link href={`/en/admin/preview/${id}`}>{tPreview("switchLang", {lang: "Anh"})}</Link>
+                   <Link href={{ pathname: '/admin/preview/[id]', params: { id } }} locale="en">{tPreview("switchLang", {lang: "Anh"})}</Link>
                 </Button>
             </div>
         </div>
@@ -499,7 +499,7 @@ function NewsDetailContent() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {latestNews.map((related) => (
-                        <Link key={related.id} href={`/${related.id}`} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                        <Link key={related.id} href={{ pathname: '/tin-tuc/[id]', params: { id: related.id } }} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                             <div className="flex items-start space-x-4">
                             <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                                 <Image

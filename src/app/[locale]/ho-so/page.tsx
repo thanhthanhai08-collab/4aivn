@@ -34,6 +34,7 @@ import { getUserProfileData } from "@/lib/user-data-service";
 import { collection, getDocs, query, where, documentId, orderBy } from "firebase/firestore";
 import { db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
   const { currentUser, isLoading, logout, updateUserProfile } = useAuth();
@@ -48,6 +49,7 @@ export default function ProfilePage() {
   const [isFetchingData, setIsFetchingData] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations("profile");
 
   const fetchAllData = useCallback(async () => {
     if (!currentUser) return;
@@ -110,7 +112,7 @@ export default function ProfilePage() {
     } catch (error) {
         console.error("Failed to fetch user profile data:", error);
         toast({
-            title: "Lỗi tải dữ liệu",
+            title: t("photoRemoveError"),
             description: "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
             variant: "destructive"
         });
@@ -129,7 +131,7 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     await logout();
-    toast({ title: "Đã đăng xuất", description: "Bạn đã đăng xuất thành công." });
+    toast({ title: t("loggedOut"), description: t("logoutSuccess") });
     router.push("/");
   };
                     
@@ -150,10 +152,10 @@ export default function ProfilePage() {
       
       await updateUserProfile({ photoURL: url });
       
-      toast({ title: "Đã cập nhật ảnh đại diện." });
+      toast({ title: t("photoUpdated") });
     } catch (error) {
       console.error("Upload error: ", error);
-      toast({ title: "Lỗi tải lên", description: "Không thể tải ảnh lên. Vui lòng thử lại.", variant: "destructive" });
+      toast({ title: t("photoUpdateError"), description: t("photoUpdateErrorDesc"), variant: "destructive" });
     } finally {
       setIsUploading(false);
     }
@@ -164,10 +166,10 @@ export default function ProfilePage() {
     setIsUploading(true);
     try {
         await updateUserProfile({ photoURL: null });
-        toast({ title: "Đã gỡ ảnh đại diện." });
+        toast({ title: t("photoRemoved") });
     } catch(error) {
         console.error("Remove photo error: ", error);
-        toast({ title: "Lỗi", description: "Không thể gỡ ảnh đại diện.", variant: "destructive"});
+        toast({ title: t("photoRemoveError"), description: t("photoRemoveErrorDesc"), variant: "destructive"});
     } finally {
         setIsUploading(false);
     }
@@ -228,7 +230,7 @@ export default function ProfilePage() {
                             <DropdownMenuContent align="center" className="w-56">
                                 <DropdownMenuItem onSelect={(e) => e.preventDefault()} onClick={() => fileInputRef.current?.click()}>
                                 <Upload className="mr-2 h-4 w-4" />
-                                Tải ảnh mới lên
+                                {t("uploadNewPhoto")}
                                 </DropdownMenuItem>
                                 
                                 {currentUser.photoURL && (
@@ -237,7 +239,7 @@ export default function ProfilePage() {
                                     className="text-destructive focus:text-destructive"
                                 >
                                     <Trash2 className="mr-2 h-4 w-4" />
-                                    Gỡ ảnh hiện tại
+                                    {t("removeCurrentPhoto")}
                                 </DropdownMenuItem>
                                 )}
                             </DropdownMenuContent>
@@ -260,12 +262,12 @@ export default function ProfilePage() {
                             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                                 <DialogTrigger asChild>
                                     <Button variant="outline" size="sm">
-                                        <Edit3 className="mr-2 h-4 w-4" /> Chỉnh sửa Hồ sơ
+                                        <Edit3 className="mr-2 h-4 w-4" /> {t("editProfile")}
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[425px]">
                                     <DialogHeader>
-                                        <DialogTitle>Chỉnh sửa hồ sơ</DialogTitle>
+                                        <DialogTitle>{t("editProfileTitle")}</DialogTitle>
                                     </DialogHeader>
                                     <EditProfileForm onSuccess={() => {
                                         setIsEditDialogOpen(false);
@@ -274,14 +276,14 @@ export default function ProfilePage() {
                                 </DialogContent>
                             </Dialog>
                             <Button variant="destructive" size="sm" onClick={handleLogout}>
-                                <LogOut className="mr-2 h-4 w-4" /> Đăng xuất
+                                <LogOut className="mr-2 h-4 w-4" /> {t("logout")}
                             </Button>
                         </div>
                     </div>
                 </CardHeader>
                 <CardContent className="p-6 space-y-8">
                     <section>
-                        <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ yêu thích</h2>
+                        <h2 className="text-2xl font-semibold font-headline mb-4">{t("favTools")}</h2>
                         {favoriteTools.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {favoriteTools.map((tool, index) => (
@@ -289,12 +291,12 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-muted-foreground">Bạn chưa yêu thích công cụ nào.</p>
+                            <p className="text-muted-foreground">{t("noFavTools")}</p>
                         )}
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold font-headline mb-4">Model AI yêu thích</h2>
+                        <h2 className="text-2xl font-semibold font-headline mb-4">{t("favModels")}</h2>
                         {favoriteModels.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {favoriteModels.map((model) => (
@@ -302,12 +304,12 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-muted-foreground">Bạn chưa yêu thích model AI nào.</p>
+                            <p className="text-muted-foreground">{t("noFavModels")}</p>
                         )}
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold font-headline mb-4">Công cụ AI đã đánh giá</h2>
+                        <h2 className="text-2xl font-semibold font-headline mb-4">{t("ratedTools")}</h2>
                         {ratedTools.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {ratedTools.map((tool, index) => (
@@ -315,12 +317,12 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-muted-foreground">Bạn chưa đánh giá công cụ AI nào.</p>
+                            <p className="text-muted-foreground">{t("noRatedTools")}</p>
                         )}
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold font-headline mb-4">Model AI đã đánh giá</h2>
+                        <h2 className="text-2xl font-semibold font-headline mb-4">{t("ratedModels")}</h2>
                         {ratedModels.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {ratedModels.map((model) => (
@@ -328,12 +330,12 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-muted-foreground">Bạn chưa đánh giá model AI nào.</p>
+                            <p className="text-muted-foreground">{t("noRatedModels")}</p>
                         )}
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold font-headline mb-4">Tin tức đã lưu</h2>
+                        <h2 className="text-2xl font-semibold font-headline mb-4">{t("bookmarkedNews")}</h2>
                         {bookmarkedNews.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {bookmarkedNews.map((article) => (
@@ -341,7 +343,7 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-muted-foreground">Bạn chưa lưu tin tức nào.</p>
+                            <p className="text-muted-foreground">{t("noBookmarkedNews")}</p>
                         )}
                     </section>
                 </CardContent>

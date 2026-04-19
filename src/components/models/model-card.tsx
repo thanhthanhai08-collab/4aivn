@@ -73,7 +73,7 @@ export function ModelCard({ model }: ModelCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/bang-xep-hang/${model.id}`}>
+          <Link href={{ pathname: '/bang-xep-hang/[id]', params: { id: model.id } }}>
             Xem chi tiết
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>

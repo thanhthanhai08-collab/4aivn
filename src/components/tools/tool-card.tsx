@@ -145,7 +145,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/cong-cu/${tool.id}`}>
+          <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }}>
             Xem chi tiết
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>

@@ -6,7 +6,8 @@ import { NewsCard } from "@/components/news/news-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, CalendarDays, BookOpen } from "lucide-react";
 import { format } from "date-fns";
-import { vi } from "date-fns/locale";
+import { vi, enUS } from "date-fns/locale";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Props {
   author: Author;
@@ -14,6 +15,10 @@ interface Props {
 }
 
 export function AuthorDetailClient({ author, initialArticles }: Props) {
+  const t = useTranslations("authorDetail");
+  const locale = useLocale();
+  const dateLocale = locale === 'en' ? enUS : vi;
+
   return (
     <div className="container py-8 md:py-12">
       {/* Author Profile Header */}
@@ -41,19 +46,19 @@ export function AuthorDetailClient({ author, initialArticles }: Props) {
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center">
                     <User className="mr-2 h-4 w-4" />
-                    <span>Tác giả tại 4AIVN</span>
+                    <span>{t("authorAt")}</span>
                   </div>
                   {author.createdAt && (
                     <div className="flex items-center">
                       <CalendarDays className="mr-2 h-4 w-4" />
                       <span suppressHydrationWarning>
-                        Tham gia từ {format(new Date(author.createdAt), "MMMM yyyy", { locale: vi })}
+                        {t("joinedFrom", { date: format(new Date(author.createdAt), "MMMM yyyy", { locale: dateLocale }) })}
                       </span>
                     </div>
                   )}
                   <div className="flex items-center">
                     <BookOpen className="mr-2 h-4 w-4" />
-                    <span>{initialArticles.length} bài viết</span>
+                    <span>{t("articleCount", { count: initialArticles.length })}</span>
                   </div>
                 </div>
               </div>
@@ -69,7 +74,7 @@ export function AuthorDetailClient({ author, initialArticles }: Props) {
       {/* Author's Articles */}
       <section>
         <h2 className="text-2xl md:text-3xl font-headline font-bold mb-8 text-foreground pb-2 border-b">
-          Tất cả bài viết của {author.name}
+          {t("allArticles", { name: author.name })}
         </h2>
         
         {initialArticles.length > 0 ? (
@@ -80,7 +85,7 @@ export function AuthorDetailClient({ author, initialArticles }: Props) {
           </div>
         ) : (
           <div className="text-center py-20 bg-muted/30 rounded-lg">
-            <p className="text-muted-foreground text-lg">Tác giả này chưa có bài viết nào được đăng tải.</p>
+            <p className="text-muted-foreground text-lg">{t("noArticles")}</p>
           </div>
         )}
       </section>

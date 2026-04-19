@@ -1,21 +1,25 @@
 import { getAuthor, getAuthorArticles } from "@/lib/get-author";
 import { AuthorDetailClient } from "@/components/news/author-detail-client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 
-export default async function AuthorPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AuthorPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
   const resolvedParams = await params;
   const authorId = resolvedParams.id;
+  const locale = resolvedParams.locale;
+  
+  const t = await getTranslations({ locale, namespace: "authorDetail" });
 
   const author = await getAuthor(authorId);
 
   if (!author) {
     return (
       <div className="container py-12 text-center">
-        <h1 className="text-2xl font-bold">Tác giả không tìm thấy</h1>
-        <p className="text-muted-foreground">Tác giả này có thể không tồn tại hoặc đã bị xóa.</p>
+        <h1 className="text-2xl font-bold">{t("authorNotFound")}</h1>
+        <p className="text-muted-foreground">{t("authorNotFoundDesc")}</p>
         <Button asChild variant="link" className="mt-4">
-          <Link href="/tin-tuc">Quay lại trang Tin tức</Link>
+          <Link href="/tin-tuc">{t("backToNews")}</Link>
         </Button>
       </div>
     );

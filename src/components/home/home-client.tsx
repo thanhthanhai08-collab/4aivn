@@ -12,12 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { HomepageSettings } from "@/lib/get-home-data";
 
-const TYPING_TEXTS = [
-  "KHÁM PHÁ THẾ GIỚI TRÍ TUỆ NHÂN TẠO AI",
-  "CẬP NHẬT TIN TỨC VỀ TRÍ TUỆ NHÂN TẠO AI",
-  "KHÁM PHÁ BẢNG XẾP HẠNG CÁC CÔNG CỤ AI",
-  "KHÁM PHÁ BẢNG XẾP HẠNG MODEL AI",
-];
+import { useTranslations } from "next-intl";
 
 interface Props {
   latestNews: NewsArticle[];
@@ -26,6 +21,14 @@ interface Props {
 }
 
 export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
+  const t = useTranslations("home");
+  
+  const TYPING_TEXTS = [
+    t("typing_text_0"),
+    t("typing_text_1"),
+    t("typing_text_2"),
+    t("typing_text_3"),
+  ];
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
@@ -123,14 +126,14 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
           </div>
 
             <p className="max-w-3xl mx-auto text-lg text-foreground/80 sm:text-xl">
-              Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4aivn chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.
+              {t("home_desc")}
             </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
             <Button size="lg" asChild className="shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-              <Link href="/cong-cu">Khám phá công cụ AI</Link>
+              <Link href="/cong-cu">{t("explore_tools")}</Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="shadow-lg hover:shadow-md transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-              <Link href="/tin-tuc">Tin tức AI mới nhất</Link>
+              <Link href="/tin-tuc">{t("latest_news_btn")}</Link>
             </Button>
           </div>
         </div>
@@ -140,7 +143,7 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
       <section className="py-8 bg-background">
         <div className="container">
             {homepageSettings.BannerAdsUrl && (
-              <Link 
+              <a 
                 href={homepageSettings.linkAff || "#"} 
                 target="_blank" 
                 rel="noopener noreferrer sponsored" 
@@ -156,10 +159,10 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                 <div className="absolute top-2 right-2">
                   <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
-                    Tài trợ
+                    {t("sponsored")}
                   </Badge>
                 </div>
-              </Link>
+              </a>
             )}
         </div>
       </section>
@@ -168,9 +171,9 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Công cụ AI hàng đầu
+            {t("top_tools")}
           </h2>
-          <p className="text-center text-muted-foreground mb-10">Danh sách tuyển chọn các công cụ AI phổ biến và có ảnh hưởng nhất.</p>
+          <p className="text-center text-muted-foreground mb-10">{t("top_tools_desc")}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {topTools.map((tool, index) => (
               <ToolCard key={tool.id} tool={tool} rank={index + 1} />
@@ -178,7 +181,7 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
           </div>
           <div className="text-center mt-12">
             <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">
-              <Link href="/cong-cu">Xem tất cả công cụ</Link>
+              <Link href="/cong-cu">{t("view_all_tools")}</Link>
             </Button>
           </div>
         </div>
@@ -191,10 +194,10 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
             <div className="space-y-4">
               <h2 className="text-4xl font-headline font-bold text-foreground leading-tight">
-                Giờ đây bạn có thể làm việc một cách <span className="text-primary">nhanh chóng</span> hơn, <span className="text-primary">tiện lợi</span> hơn với sự trợ giúp của AI.
+                {t.rich("ai_assistance", { primary: (chunks) => <span className="text-primary">{chunks}</span> })}
               </h2>
               <p className="text-lg text-muted-foreground">
-                AI giúp tự động hóa các tác vụ lặp đi lặp lại, phân tích dữ liệu phức tạp và cung cấp thông tin chi tiết để bạn đưa ra quyết định tốt hơn và tập trung vào những gì thực sự quan trọng.
+                {t("ai_assistance_desc")}
               </p>
             </div>
             <div>
@@ -212,10 +215,10 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="md:order-2 space-y-4">
               <h2 className="text-4xl font-headline font-bold text-foreground leading-tight">
-                AI Agent sẽ trở nên ngày càng dễ <span className="text-primary">sử dụng</span> và <span className="text-primary">tiếp cận</span>.
+                {t.rich("ai_agent", { primary: (chunks) => <span className="text-primary">{chunks}</span> })}
               </h2>
               <p className="text-lg text-muted-foreground">
-                AI Agent đang ngày càng dễ tiếp cận với người dùng không chuyên về lập trình và có khả năng sử dụng dữ liệu, tri thức cụ thể do người dùng cung cấp để hỗ trợ công việc một cách chính xác theo mong muốn.
+                {t("ai_agent_desc")}
               </p>
             </div>
             <div className="md:order-1">
@@ -236,9 +239,9 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
       <section className="py-16 bg-background">
         <div className="container">
           <h2 className="text-3xl font-headline font-bold text-center mb-2 text-foreground">
-            Tin tức AI mới nhất
+            {t("latest_news")}
           </h2>
-          <p className="text-center text-muted-foreground mb-10">Luôn cập nhật những tiến bộ và thảo luận mới nhất về AI.</p>
+          <p className="text-center text-muted-foreground mb-10">{t("latest_news_desc")}</p>
           
            <div 
               className="relative group"
@@ -305,7 +308,7 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
 
           <div className="text-center mt-12">
             <Button asChild variant="default" size="lg" className="shadow-lg hover:shadow-primary/30 transition-shadow">
-              <Link href="/tin-tuc">Đọc thêm tin tức</Link>
+              <Link href="/tin-tuc">{t("read_more_news")}</Link>
             </Button>
           </div>
         </div>
@@ -326,12 +329,12 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
             <div className="relative z-10 flex-grow flex flex-col justify-between">
               <div className="flex justify-between items-start">
                   <div className="text-3xl md:text-4xl font-bold text-white text-center">
-                      <div className="mb-2">LỰA CHỌN CÁC</div>
-                      <div>MODEL PHÙ HỢP</div>
+                      <div className="mb-2">{t("choose_model1")}</div>
+                      <div>{t("choose_model2")}</div>
                   </div>
                   <div className="text-3xl md:text-4xl font-bold text-white text-center">
-                      <div className="mb-2">THÔNG QUA</div>
-                      <div>BẢNG XẾP HẠNG</div>
+                      <div className="mb-2">{t("through_ranking1")}</div>
+                      <div>{t("through_ranking2")}</div>
                   </div>
               </div>
               <div className="flex justify-end">
@@ -340,7 +343,7 @@ export function HomeClient({ latestNews, topTools, homepageSettings }: Props) {
                   asChild 
                   className="bg-gray-900 text-white hover:bg-gray-700 transition-all duration-300 hover:scale-105 shadow-lg"
                 >
-                  <Link href="/bang-xep-hang">Khám phá</Link>
+                  <Link href="/bang-xep-hang">{t("explore")}</Link>
                 </Button>
               </div>
             </div>

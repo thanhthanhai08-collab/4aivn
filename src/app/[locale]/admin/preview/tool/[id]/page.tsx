@@ -533,7 +533,7 @@ function ToolDetailContent() {
 
             {adData?.bannerAdsUrl && (
               <section>
-                <Link 
+                <a 
                   href={adData.linkAff || "#"} 
                   target="_blank" 
                   rel="noopener noreferrer sponsored" 
@@ -552,7 +552,7 @@ function ToolDetailContent() {
                       Tài trợ
                     </Badge>
                   </div>
-                </Link>
+                </a>
               </section>
             )}
             
@@ -581,7 +581,7 @@ function ToolDetailContent() {
               </CardHeader>
               <CardContent className="space-y-4">
                   {featuredTools.map(t => (
-                    <Link key={t.id} href={`/cong-cu/${t.id}`} className="flex items-center space-x-3 group">
+                    <Link key={t.id} href={{ pathname: '/cong-cu/[id]', params: { id: t.id } }} className="flex items-center space-x-3 group">
                        <Image src={t.logoUrl} alt={t.name} width={40} height={40} className="rounded-md"/>
                        <div>
                           <p className="font-semibold group-hover:text-primary">{t.name}</p>
@@ -599,7 +599,7 @@ function ToolDetailContent() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
-                      <Link key={article.id} href={`/${article.id}`} className="flex items-center space-x-3 group">
+                      <Link key={article.id} href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
                             <Image src={article.imageUrl!} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>

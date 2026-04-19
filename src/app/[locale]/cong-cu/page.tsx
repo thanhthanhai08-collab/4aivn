@@ -1,7 +1,7 @@
 // src/app/cong-cu/page.tsx
 "use client";
 
-import { useState, useMemo, useEffect, Suspense, useCallback } from "react";
+import React, { useState, useMemo, useEffect, Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
@@ -21,6 +21,7 @@ const PAGE_SIZE = 100;
 
 // --- SKELETON LOADING ---
 function ToolsSkeleton() {
+  const locale = useLocale();
   return (
     <div className="container py-8">
       <header className="mb-12 text-center">
@@ -52,24 +53,28 @@ function ToolsContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const [allTools, setAllTools] = useState<Tool[]>([]);
-  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
-  const [hasMore, setHasMore] = useState(true);
+  const lastDocRef = React.useRef<QueryDocumentSnapshot | null>(null);
+  const isMoreLoadingRef = React.useRef(false);
+  const hasMoreRef = React.useRef(true);
 
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: false,
   });
 
-  const fetchTools = useCallback(async (isFirstLoad = false) => {
+  const fetchTools = useCallback(async (isFirstLoad = false, category = "all") => {
     if (isFirstLoad) {
       setIsLoading(true);
-      setLastDoc(null);
+      lastDocRef.current = null;
       setAllTools([]);
-    } else if (isMoreLoading || !hasMore) {
+      hasMoreRef.current = true;
+    } else if (isMoreLoadingRef.current || !hasMoreRef.current) {
       return;
     } else {
       setIsMoreLoading(true);
     }
+    
+    isMoreLoadingRef.current = true;
   
     try {
       const toolsRef = collection(db, "tools");
@@ -81,14 +86,14 @@ function ToolsContent() {
         orderBy("__name__")
       );
   
-      if (selectedCategory !== "all") {
-        q = query(q, where("context", "==", selectedCategory));
+      if (category !== "all") {
+        q = query(q, where("context", "==", category));
       }
       
       if (isFirstLoad) {
          q = query(q, limit(PAGE_SIZE));
-      } else if (lastDoc) {
-         q = query(q, startAfter(lastDoc), limit(PAGE_SIZE));
+      } else if (lastDocRef.current) {
+         q = query(q, startAfter(lastDocRef.current), limit(PAGE_SIZE));
       }
   
       const snapshot = await getDocs(q);
@@ -97,32 +102,37 @@ function ToolsContent() {
       if (isFirstLoad) {
         setAllTools(newTools);
       } else {
-        setAllTools(prev => [...prev, ...newTools]);
+        setAllTools(prev => {
+          const existingIds = new Set(prev.map(t => t.id));
+          const uniqueNewTools = newTools.filter(t => !existingIds.has(t.id));
+          return [...prev, ...uniqueNewTools];
+        });
       }
   
       const newLastDoc = snapshot.docs[snapshot.docs.length - 1];
-      setLastDoc(newLastDoc);
-      setHasMore(snapshot.docs.length === PAGE_SIZE);
+      lastDocRef.current = newLastDoc || null;
+      hasMoreRef.current = snapshot.docs.length === PAGE_SIZE;
 
     } catch (error) {
       console.error("Error fetching tools:", error);
     } finally {
       if (isFirstLoad) setIsLoading(false);
       setIsMoreLoading(false);
+      isMoreLoadingRef.current = false;
     }
-  }, [selectedCategory, lastDoc, isMoreLoading, hasMore]);
+  }, []);
   
   // Effect for initial load and filter changes
   useEffect(() => {
-    fetchTools(true);
-  }, [selectedCategory]); // Re-fetch when category changes. Search is client-side.
+    fetchTools(true, selectedCategory);
+  }, [selectedCategory, fetchTools]); // Re-fetch when category changes. Search is client-side.
 
   // Effect for infinite scroll
   useEffect(() => {
-    if (inView && !isMoreLoading && hasMore) {
-      fetchTools(false);
+    if (inView) {
+      fetchTools(false, selectedCategory);
     }
-  }, [inView, fetchTools, isMoreLoading, hasMore]);
+  }, [inView, fetchTools, selectedCategory]);
   
   useEffect(() => { setSearchTerm(initialSearchQuery); }, [initialSearchQuery]);
   useEffect(() => { setSelectedCategory(initialCategory); }, [initialCategory]);
