@@ -21,9 +21,9 @@ const QuickViewItem = ({ article, locale }: { article: NewsArticle, locale: stri
     <div className="flex items-center space-x-4 group">
         <span className="flex-shrink-0 w-2 h-2 bg-primary rounded-full"></span>
         <div className="flex-grow">
-            <Link href={{ pathname: '/tin-tuc/[id]', params: { id: slug } }} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{article.title}</Link>
+            <Link href={`/${slug}` as any} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{article.title}</Link>
         </div>
-        <Link href={{ pathname: '/tin-tuc/[id]', params: { id: slug } }} className="flex-shrink-0 w-24">
+        <Link href={`/${slug}` as any} className="flex-shrink-0 w-24">
             <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden">
                 <Image
                     src={article.imageUrl}
@@ -169,7 +169,7 @@ export default function NewsPage() {
             {/* Cấp 1: Trang chủ */}
             <li className="flex items-center">
               <Link href="/" className="hover:text-primary transition-colors">
-                Trang chủ
+                {tCommon("home")}
               </Link>
             </li>
             
@@ -201,7 +201,7 @@ export default function NewsPage() {
                 {featuredArticle && (
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                         <div className="group relative rounded-lg overflow-hidden shadow-lg flex flex-col md:col-span-3">
-                           <Link href={{ pathname: '/tin-tuc/[id]', params: { id: getLocalizedSlug(featuredArticle.slug || featuredArticle.id, locale) || featuredArticle.id } }} className="block aspect-[16/9] relative">
+                           <Link href={`/${getLocalizedSlug(featuredArticle.slug || featuredArticle.id, locale) || featuredArticle.id}` as any} className="block aspect-[16/9] relative">
                                 <Image
                                     src={featuredArticle.imageUrl}
                                     alt={featuredArticle.title}
@@ -213,7 +213,7 @@ export default function NewsPage() {
                            </Link>
                            <div className="p-4 bg-card flex-grow flex flex-col">
                                 <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
-                                     <Link href={{ pathname: '/tin-tuc/[id]', params: { id: getLocalizedSlug(featuredArticle.slug || featuredArticle.id, locale) || featuredArticle.id } }} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
+                                     <Link href={`/${getLocalizedSlug(featuredArticle.slug || featuredArticle.id, locale) || featuredArticle.id}` as any} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
                                 </h2>
                                 <p className="text-sm text-muted-foreground mt-2">{t("byAuthor", { author: featuredArticle.author || '' })}</p>
                            </div>
@@ -222,7 +222,7 @@ export default function NewsPage() {
                         {secondaryArticle && (
                             <div className="p-4 rounded-lg bg-card border flex flex-col justify-between md:col-span-2">
                                 <div className="space-y-3">
-                                     <Link href={{ pathname: '/tin-tuc/[id]', params: { id: getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id } }} className="block aspect-[16/9] relative rounded-md overflow-hidden group">
+                                     <Link href={`/${getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id}` as any} className="block aspect-[16/9] relative rounded-md overflow-hidden group">
                                          <Image
                                             src={secondaryArticle.imageUrl}
                                             alt={secondaryArticle.title}
@@ -234,14 +234,14 @@ export default function NewsPage() {
                                      </Link>
                                     <div>
                                         <h2 className="text-xl font-bold font-headline mb-2">
-                                            <Link href={{ pathname: '/tin-tuc/[id]', params: { id: getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id } }} className="hover:text-primary">{secondaryArticle.title}</Link>
+                                            <Link href={`/${getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id}` as any} className="hover:text-primary">{secondaryArticle.title}</Link>
                                         </h2>
                                         <p className="text-sm text-muted-foreground mb-1">{t("byAuthor", { author: secondaryArticle.author || '' })}</p>
                                         <p className="text-sm text-foreground/80 line-clamp-3">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
                                     </div>
                                 </div>
                                 <Button asChild variant="link" className="p-0 self-start mt-4">
-                                    <Link href={{ pathname: '/tin-tuc/[id]', params: { id: getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id } }}>{t("readMore")} &rarr;</Link>
+                                    <Link href={`/${getLocalizedSlug(secondaryArticle.slug || secondaryArticle.id, locale) || secondaryArticle.id}` as any}>{t("readMore")} &rarr;</Link>
                                 </Button>
                             </div>
                         )}

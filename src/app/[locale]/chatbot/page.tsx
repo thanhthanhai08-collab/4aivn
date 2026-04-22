@@ -15,6 +15,7 @@ import {
   collection, query, orderBy, getDocs, limit, 
   doc, where
 } from "firebase/firestore";
+import { useTranslations } from "next-intl";
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
@@ -29,6 +30,7 @@ export default function ChatPage() {
 
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("chatbot");
 
   const scrollToBottom = useCallback(() => {
     if (scrollRef.current) {
@@ -56,7 +58,7 @@ export default function ChatPage() {
       const sessionPromises = querySnapshot.docs.map(async (doc) => {
           const historyQuery = query(collection(doc.ref, 'history'), where('role', '==', 'user'), orderBy('timestamp', 'desc'), limit(1));
           const historySnapshot = await getDocs(historyQuery);
-          const lastQuestion = historySnapshot.docs[0]?.data().parts[0]?.text || "Phiên chat mới";
+          const lastQuestion = historySnapshot.docs[0]?.data().parts[0]?.text || t("newSession");
           return {
             id: doc.id,
             lastMsg: lastQuestion.substring(0, 30) + (lastQuestion.length > 30 ? "..." : ""),
@@ -65,11 +67,11 @@ export default function ChatPage() {
       const sessions = await Promise.all(sessionPromises);
       setHistorySessions(sessions);
     } catch (e) {
-      console.error("Lỗi lấy sidebar:", e);
+      console.error("Error fetching sidebar:", e);
     } finally {
       setIsHistoryLoading(false);
     }
-  }, []);
+  }, [t]);
 
   const loadSession = useCallback(async (mId: string, userId?: string) => {
     const finalUserId = userId || currentUserId;
@@ -98,12 +100,12 @@ export default function ChatPage() {
         setMessages(formattedMessages);
       
     } catch (e) {
-      console.error("Lỗi tải lịch sử:", e);
-      toast({ title: "Lỗi", description: "Không thể tải phiên chat này.", variant: "destructive" });
+      console.error("Error loading history:", e);
+      toast({ title: t("loadError"), description: t("loadErrorDesc"), variant: "destructive" });
     } finally {
       setIsLoadingAiResponse(false);
     }
-  }, [currentUserId, toast]);
+  }, [currentUserId, toast, t]);
 
   const startNewChat = useCallback(() => {
     const newId = `msg_${Date.now()}`;
@@ -111,12 +113,12 @@ export default function ChatPage() {
     setMessages([
       { 
         id: `init-${newId}`, 
-        text: "Xin chào! Tôi là trợ lý AI của 4AIVN. Tôi có thể giúp gì cho bạn?", 
+        text: t("greeting"), 
         sender: "ai", 
         timestamp: Date.now() 
       }
     ]);
-  }, []);
+  }, [t]);
   
   useEffect(() => {
     setIsMounted(true);
@@ -164,8 +166,8 @@ export default function ChatPage() {
   const handleSendMessage = async (text: string, file?: File) => {
     if (!currentUserId) {
       toast({
-        title: "Phiên chưa sẵn sàng",
-        description: "Vui lòng chờ một chút và thử lại.",
+        title: t("sessionNotReady"),
+        description: t("sessionNotReadyDesc"),
         variant: "destructive"
       });
       return;
@@ -191,8 +193,8 @@ export default function ChatPage() {
         if (file) {
             if (file.size > 5 * 1024 * 1024) { // 5MB limit
                 toast({
-                  title: "File quá lớn",
-                  description: "Vui lòng chọn file nhỏ hơn 5MB để tiếp tục.",
+                  title: t("fileTooLarge"),
+                  description: t("fileTooLargeDesc"),
                   variant: "destructive",
                 });
                 throw new Error("FILE_TOO_LARGE");
@@ -268,17 +270,17 @@ export default function ChatPage() {
             if (error.message === "RATE_LIMIT") {
               currentRetry++;
               if (currentRetry < MAX_RETRIES) {
-                toast({ title: `Hệ thống bận (Lần thử ${currentRetry}/${MAX_RETRIES})`, description: `Đang kết nối lại sau ${waitTime / 1000} giây...`});
+                toast({ title: t("systemBusy", { retry: currentRetry, max: MAX_RETRIES }), description: t("systemBusyDesc", { seconds: waitTime / 1000 })});
                 await delay(waitTime);
                 waitTime *= 2;
               } else {
-                toast({ title: "Thông báo", description: "Hệ thống đang quá tải hoặc hết hạn mức. Vui lòng thử lại sau 1 phút.", variant: "destructive"});
+                toast({ title: t("systemOverload"), description: t("systemOverloadDesc"), variant: "destructive"});
                 setMessages(prev => prev.slice(0, -2)); 
                 break;
               }
             } else {
               console.error(error);
-              toast({ title: "Lỗi", description: "Có lỗi xảy ra khi kết nối với AI.", variant: "destructive" });
+              toast({ title: t("connectionError"), description: t("connectionErrorDesc"), variant: "destructive" });
               setMessages(prev => prev.slice(0, -2));
               break; 
             }
@@ -290,12 +292,12 @@ export default function ChatPage() {
           // The toast is already displayed by the validation check. We just clean up the UI.
         } else if (currentUserId.startsWith('guest_')) {
             toast({
-                title: "Lỗi",
-                description: "Bạn muốn tải tệp lên, vui lòng đăng nhập mới sử dụng được tính năng này",
+                title: t("uploadError"),
+                description: t("uploadLoginRequired"),
                 variant: "destructive"
             });
         } else {
-            toast({ title: "Lỗi", description: "Không thể tải tệp lên. Vui lòng thử lại.", variant: "destructive" });
+            toast({ title: t("uploadError"), description: t("uploadFailed"), variant: "destructive" });
         }
         setMessages(prev => prev.slice(0, -2)); // Remove user message and AI placeholder
     } finally {
@@ -313,12 +315,12 @@ export default function ChatPage() {
         <aside className="w-72 border-r bg-muted/20 flex-col hidden lg:flex">
           <div className="p-4 border-b">
             <button onClick={startNewChat} className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2.5 rounded-xl hover:opacity-90 transition-all font-semibold active:scale-95">
-              <Plus size={20} /> Chat mới
+              <Plus size={20} /> {t("newChat")}
             </button>
           </div>
           <div className="flex-grow overflow-y-auto p-3 space-y-1">
             <div className="px-2 py-2 text-muted-foreground text-xs font-bold uppercase flex items-center gap-2">
-              <History size={14} /> Gần đây
+              <History size={14} /> {t("recent")}
             </div>
             {isHistoryLoading ? (
               <div className="flex justify-center p-4"><Loader2 className="animate-spin text-muted-foreground" /></div>

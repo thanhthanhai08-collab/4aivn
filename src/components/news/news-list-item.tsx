@@ -80,7 +80,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
 
   return (
     <article className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center group">
-      <Link href={{ pathname: '/tin-tuc/[id]', params: { id: slug } }} className="md:col-span-1 block overflow-hidden rounded-lg">
+      <Link href={`/${slug}` as any} className="md:col-span-1 block overflow-hidden rounded-lg">
         <Image
           src={article.imageUrl}
           alt={article.title}
@@ -92,7 +92,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
       </Link>
       <div className="md:col-span-3">
         <h2 className="text-xl font-bold font-headline mb-2 leading-tight">
-          <Link href={{ pathname: '/tin-tuc/[id]', params: { id: slug } }} className="hover:text-primary transition-colors">
+          <Link href={`/${slug}` as any} className="hover:text-primary transition-colors">
             {article.title}
           </Link>
         </h2>

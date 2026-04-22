@@ -15,14 +15,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { enUS } from "date-fns/locale/en-US";
 import { useParams } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocalizedSlug } from "@/lib/i18n-helpers";
 
 const PAGE_SIZE = 12;
 
 function NewsCategoryContent() {
     const params = useParams();
     const locale = useLocale();
+    const t = useTranslations("news");
+    const tCommon = useTranslations("common");
+    const tNewsDetail = useTranslations("newsDetail");
     const categoryId = params.id as string;
     const [isLoading, setIsLoading] = useState(true);
     const [isMoreLoading, setIsMoreLoading] = useState(false);
@@ -167,13 +172,13 @@ function NewsCategoryContent() {
                   <ol className="flex items-center text-muted-foreground whitespace-nowrap">
                     <li className="flex items-center">
                       <Link href="/" className="hover:text-primary transition-colors">
-                        {locale === 'en' ? 'Home' : 'Trang chủ'}
+                        {tCommon('home')}
                       </Link>
                     </li>
                     
                     <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                       <Link href="/tin-tuc" className="hover:text-primary transition-colors">
-                        {locale === 'en' ? 'News' : 'Tin tức'}
+                        {tCommon('news')}
                       </Link>
                     </li>
 
@@ -191,7 +196,7 @@ function NewsCategoryContent() {
                         <Skeleton className="h-12 w-1/2 mx-auto" />
                     ) : (
                         <>
-                         <p className="text-primary font-semibold mb-2">{locale === 'en' ? 'News Category' : 'Danh mục tin tức'}</p>
+                         <p className="text-primary font-semibold mb-2">{t('newsCategory')}</p>
                          <h1 className="text-4xl font-headline font-bold text-foreground">{category?.name}</h1>
                         </>
                     )}
@@ -200,7 +205,7 @@ function NewsCategoryContent() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-8">
                         <Button variant="outline" size="sm" asChild className="mb-8">
-                            <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> {locale === 'en' ? 'Back to News' : 'Quay lại trang Tin tức'}</Link>
+                            <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> {t('backToNewsList')}</Link>
                         </Button>
                         {isLoading ? (
                             <div className="space-y-8">
@@ -218,9 +223,9 @@ function NewsCategoryContent() {
                             </div>
                         ) : articles.length === 0 ? (
                             <div className="text-center py-16">
-                                <p className="text-xl text-muted-foreground">{locale === 'en' ? 'No articles found in this category.' : 'Chưa có bài viết nào trong danh mục này.'}</p>
+                                <p className="text-xl text-muted-foreground">{t('noArticlesInCategory')}</p>
                                 <Button asChild variant="link" className="mt-4">
-                                    <Link href="/tin-tuc">{locale === 'en' ? 'View all news' : 'Xem tất cả tin tức'}</Link>
+                                    <Link href="/tin-tuc">{t('viewAllNews')}</Link>
                                 </Button>
                             </div>
                         ) : (
@@ -234,7 +239,7 @@ function NewsCategoryContent() {
                                     <div className="text-center pt-8 mt-8">
                                         <Button onClick={handleLoadMore} disabled={isMoreLoading} size="lg">
                                         {isMoreLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        {locale === 'en' ? 'Load more' : 'Tải thêm'}
+                                        {t('loadMoreBtn')}
                                         </Button>
                                     </div>
                                 )}
@@ -244,11 +249,11 @@ function NewsCategoryContent() {
                     <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-2xl font-headline font-bold text-primary">{locale === 'en' ? 'Latest News' : 'Tin mới nhất'}</CardTitle>
+                                <CardTitle className="text-2xl font-headline font-bold text-primary">{t('latestNews')}</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {latestNews.map((related) => (
-                                <Link key={related.id} href={{ pathname: '/tin-tuc/[id]', params: { id: related.id } }} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                                <Link key={related.id} href={`/${getLocalizedSlug(related.slug || related.id, locale) || related.id}` as any} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                                     <div className="flex items-start space-x-4">
                                         <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                                             <Image
@@ -266,7 +271,7 @@ function NewsCategoryContent() {
                                             <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
                                                 <CalendarDays className="mr-1 h-3 w-3" />
                                                 <span>
-                                                    {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: vi })}
+                                                    {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: locale === 'en' ? enUS : vi })}
                                                 </span>
                                             </div>
                                         </div>
@@ -276,10 +281,10 @@ function NewsCategoryContent() {
                             </CardContent>
                         </Card>
                         <Card className="bg-accent/50 text-center p-6">
-                            <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{locale === 'en' ? 'Explore Rankings' : 'Khám phá bảng xếp hạng'}</h3>
-                            <p className="mb-4 text-sm text-muted-foreground">{locale === 'en' ? 'Compare AI models and tools visually' : 'Giúp bạn so sánh các model, công cụ AI trực quan nhất'}</p>
+                            <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{tNewsDetail('exploreRankings')}</h3>
+                            <p className="mb-4 text-sm text-muted-foreground">{tNewsDetail('exploreRankingsDesc')}</p>
                             <Button asChild>
-                                <Link href="/bang-xep-hang">{locale === 'en' ? 'Explore' : 'Khám phá'}</Link>
+                                <Link href="/bang-xep-hang">{tNewsDetail('exploreBtn')}</Link>
                             </Button>
                         </Card>
                     </aside>

@@ -10,12 +10,15 @@ import { Button } from "@/components/ui/button";
 import type { NewsArticle } from "@/lib/types";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale/en-US';
 import { useState, useEffect, type MouseEvent } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocalizedSlug } from "@/lib/i18n-helpers";
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -34,6 +37,9 @@ export function NewsCard({ article }: NewsCardProps) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const locale = useLocale();
+  const tNewsDetail = useTranslations("newsDetail");
+  const tNews = useTranslations("news");
 
   useEffect(() => {
     // Sync with Firestore on mount and when article.id or user changes
@@ -52,8 +58,8 @@ export function NewsCard({ article }: NewsCardProps) {
 
     if (!currentUser) {
       toast({
-        title: "Yêu cầu đăng nhập",
-        description: "Vui lòng đăng nhập để lưu tin tức.",
+        title: tNewsDetail("loginRequired"),
+        description: tNewsDetail("loginRequiredDesc"),
         variant: "destructive",
       });
       return;
@@ -64,11 +70,11 @@ export function NewsCard({ article }: NewsCardProps) {
 
     try {
       await toggleNewsBookmark(currentUser.uid, article.id, isBookmarked);
-      toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
+      toast({ title: newBookmarkState ? tNewsDetail("bookmarkSuccess") : tNewsDetail("bookmarkRemoved") });
     } catch (error) {
       console.error("Failed to update bookmark:", error);
       setIsBookmarked(!newBookmarkState); // Revert on error
-      toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
+      toast({ title: tNewsDetail("error"), description: tNewsDetail("bookmarkError"), variant: "destructive" });
     }
   };
   
@@ -78,9 +84,11 @@ export function NewsCard({ article }: NewsCardProps) {
     .replace(/&nbsp;/g, " ")
     .trim();
 
+  const slug = getLocalizedSlug(article.slug || article.id, locale) || article.id;
+
   return (
     <Card className="flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden group hover:-translate-y-1">
-      <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="block">
+      <Link href={`/${slug}` as any} className="block">
         {article.imageUrl && (
           <div className="relative w-full h-48 overflow-hidden">
             <Image 
@@ -96,7 +104,7 @@ export function NewsCard({ article }: NewsCardProps) {
       </Link>
       <CardHeader className="p-4">
         <CardTitle className="text-lg font-headline line-clamp-2">
-           <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="hover:text-primary transition-colors">
+           <Link href={`/${slug}` as any} className="hover:text-primary transition-colors">
             {article.title}
           </Link>
         </CardTitle>
@@ -115,16 +123,16 @@ export function NewsCard({ article }: NewsCardProps) {
             )}
             <div className="flex items-center space-x-1">
                 <CalendarDays className="h-3 w-3" />
-                <span suppressHydrationWarning>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: vi })}</span>
+                <span suppressHydrationWarning>{format(new Date(article.publishedAt), "d MMM, yyyy", { locale: locale === 'en' ? enUS : vi })}</span>
             </div>
         </div>
         <div className="flex items-center space-x-1">
-          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label="Lưu tin tức">
+          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={handleBookmarkToggle} aria-label={tNewsDetail("bookmark")}>
             <Bookmark className={cn("h-5 w-5", isBookmarked && "fill-primary text-primary")} />
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <Link href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }}>
-              Đọc thêm <ArrowRight className="ml-2 h-3 w-3" />
+            <Link href={`/${slug}` as any}>
+              {tNews("readMore")} <ArrowRight className="ml-2 h-3 w-3" />
             </Link>
           </Button>
         </div>

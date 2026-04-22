@@ -12,14 +12,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle } from "lucide-react";
-import type { Metadata } from 'next';
-
-// Metadata can be defined in a layout file if needed for a client component.
-// For this page, we focus on the form functionality.
+import { useTranslations } from 'next-intl';
 
 export default function ContactPage() {
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  const t = useTranslations('contact');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -54,14 +52,14 @@ export default function ContactPage() {
     if (result.success) {
       setStatus('success');
       toast({
-        title: "Gửi thành công!",
-        description: "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm nhất có thể.",
+        title: t("sendSuccess"),
+        description: t("sendSuccessDesc"),
       });
     } else {
       setStatus('error');
       toast({
-        title: "Gửi thất bại",
-        description: result.error || "Đã có lỗi xảy ra. Vui lòng thử lại.",
+        title: t("sendFailed"),
+        description: result.error || t("sendFailedDesc"),
         variant: "destructive",
       });
       setStatus('idle'); // Reset to idle after showing error
@@ -88,10 +86,9 @@ export default function ContactPage() {
             
             {/* Contact Info */}
             <div className="p-8 bg-muted/30">
-              <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">Liên hệ</h1>
+              <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{t('title')}</h1>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Bạn có thắc mắc, yêu cầu hợp tác hoặc muốn đóng góp ý kiến? 
-                Hãy gửi tin nhắn cho chúng tôi, đội ngũ hỗ trợ sẽ phản hồi bạn sớm nhất có thể.
+                {t('description')}
               </p>
 
               <div className="space-y-6">
@@ -110,7 +107,7 @@ export default function ContactPage() {
                     <Phone size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground">Điện thoại</h4>
+                    <h4 className="font-semibold text-foreground">{t('phone')}</h4>
                     <a href="tel:0973490497" className="text-muted-foreground hover:text-primary transition-colors">0973.490.497</a>
                   </div>
                 </div>
@@ -120,8 +117,8 @@ export default function ContactPage() {
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground">Địa chỉ</h4>
-                    <p className="text-muted-foreground">Hà Nội, Việt Nam</p>
+                    <h4 className="font-semibold text-foreground">{t('address')}</h4>
+                    <p className="text-muted-foreground">{t('addressValue')}</p>
                   </div>
                 </div>
               </div>
@@ -134,26 +131,26 @@ export default function ContactPage() {
                   <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                     <CheckCircle size={32} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2">Gửi thành công!</h3>
-                  <p className="text-muted-foreground mb-6">Cảm ơn bạn đã liên hệ. Chúng tôi sẽ trả lời sớm.</p>
+                  <h3 className="text-2xl font-bold mb-2">{t('successTitle')}</h3>
+                  <p className="text-muted-foreground mb-6">{t('successDesc')}</p>
                   <Button 
                     onClick={handleSendAnother}
                     variant="outline"
                   >
-                    Gửi tin nhắn mới
+                    {t('sendAnother')}
                   </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="name">Tên của bạn</Label>
+                      <Label htmlFor="name">{t('yourName')}</Label>
                       <Input 
                         id="name"
                         name="name"
                         required
                         type="text" 
-                        placeholder="Nguyễn Văn A" 
+                        placeholder={t('namePlaceholder')} 
                         value={formData.name}
                         onChange={handleChange}
                         disabled={status === 'loading'}
@@ -174,26 +171,26 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="subject">Chủ đề</Label>
+                    <Label htmlFor="subject">{t('subject')}</Label>
                     <Input 
                       id="subject"
                       name="subject"
                       required
                       type="text" 
-                      placeholder="Hợp tác, báo lỗi..." 
+                      placeholder={t('subjectPlaceholder')} 
                       value={formData.subject}
                       onChange={handleChange}
                       disabled={status === 'loading'}
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="message">Nội dung</Label>
+                    <Label htmlFor="message">{t('message')}</Label>
                     <Textarea 
                       id="message"
                       name="message"
                       required
                       rows={5}
-                      placeholder="Nhập tin nhắn của bạn..." 
+                      placeholder={t('messagePlaceholder')} 
                       value={formData.message}
                       onChange={handleChange}
                       disabled={status === 'loading'}
@@ -209,7 +206,7 @@ export default function ContactPage() {
                     ) : (
                       <Send className="mr-2 h-4 w-4" />
                     )}
-                    Gửi tin nhắn
+                    {t('sendMessage')}
                   </Button>
                 </form>
               )}

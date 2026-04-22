@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { FirebaseError } from "firebase/app";
+import { useTranslations } from "next-intl";
 
 // Simple SVG for Google icon
 const GoogleIcon = () => (
@@ -43,6 +44,7 @@ export function LoginForm() {
   const { loginWithEmail, loginWithGoogle, sendPasswordReset, currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations("login");
 
   useEffect(() => {
     // Redirect if user is already logged in
@@ -59,14 +61,14 @@ export function LoginForm() {
       // Successful login will trigger onAuthStateChanged, which will handle the redirect.
     } catch (error) {
       console.error("Email login error:", error);
-      let description = "Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.";
+      let description = t("loginFailedDesc");
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-          description = "Email hoặc mật khẩu không chính xác. Vui lòng thử lại.";
+          description = t("invalidCredential");
         }
       }
       toast({ 
-        title: "Đăng nhập thất bại", 
+        title: t("loginFailed"), 
         description: description, 
         variant: "destructive" 
       });
@@ -88,8 +90,8 @@ export function LoginForm() {
       } else {
         console.error("Google login error:", error);
         toast({
-          title: "Đăng nhập Google thất bại",
-          description: "Không thể bắt đầu quá trình đăng nhập bằng Google. Vui lòng thử lại.",
+          title: t("googleLoginFailed"),
+          description: t("googleLoginFailedDesc"),
           variant: "destructive",
         });
       }
@@ -101,8 +103,8 @@ export function LoginForm() {
   const handlePasswordReset = async () => {
     if (!email) {
       toast({
-        title: "Yêu cầu Email",
-        description: "Vui lòng nhập địa chỉ email của bạn để đặt lại mật khẩu.",
+        title: t("emailRequired"),
+        description: t("emailRequiredDesc"),
         variant: "destructive",
       });
       return;
@@ -110,14 +112,14 @@ export function LoginForm() {
     try {
       await sendPasswordReset(email);
       toast({
-        title: "Đã gửi Email đặt lại mật khẩu",
-        description: "Vui lòng kiểm tra hộp thư đến của bạn để làm theo hướng dẫn.",
+        title: t("resetEmailSent"),
+        description: t("resetEmailSentDesc"),
       });
     } catch (error) {
       console.error("Password reset error:", error);
       toast({
-        title: "Lỗi",
-        description: (error as Error).message || "Không thể gửi email đặt lại mật khẩu.",
+        title: t("resetError"),
+        description: (error as Error).message || t("resetErrorDesc"),
         variant: "destructive",
       });
     }
@@ -132,7 +134,7 @@ export function LoginForm() {
     <div className="space-y-6">
       <form onSubmit={handleEmailLogin} className="space-y-4">
         <div>
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input
             id="email"
             type="email"
@@ -144,7 +146,7 @@ export function LoginForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Mật khẩu</Label>
+          <Label htmlFor="password">{t("password")}</Label>
           <Input
             id="password"
             type="password"
@@ -162,13 +164,13 @@ export function LoginForm() {
               onClick={handlePasswordReset}
               disabled={isEmailLoading || isGoogleLoading}
             >
-              Quên mật khẩu?
+              {t("forgotPassword")}
             </Button>
           </div>
         </div>
         <Button type="submit" className="w-full" disabled={isEmailLoading || isGoogleLoading}>
           {isEmailLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Đăng nhập bằng Email
+          {t("loginWithEmail")}
         </Button>
       </form>
 
@@ -178,7 +180,7 @@ export function LoginForm() {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-gradient-to-br from-background to-primary/10 text-foreground px-4 py-1">
-            Hoặc tiếp tục với
+            {t("orContinueWith")}
           </span>
         </div>
       </div>

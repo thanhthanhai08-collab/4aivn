@@ -4,13 +4,16 @@
 import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function PrivacyPolicyPage() {
   const [lastUpdated, setLastUpdated] = useState('');
+  const t = useTranslations('privacyPolicy');
+  const locale = useLocale();
 
   useEffect(() => {
-    setLastUpdated(new Date().toLocaleDateString('vi-VN'));
-  }, []);
+    setLastUpdated(new Date().toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN'));
+  }, [locale]);
 
   return (
     <AppLayout>
@@ -18,44 +21,34 @@ export default function PrivacyPolicyPage() {
         <Card className="max-w-4xl mx-auto">
           <CardHeader>
             <CardTitle className="text-3xl md:text-4xl font-headline text-center">
-              Chính sách quyền riêng tư
+              {t('title')}
             </CardTitle>
           </CardHeader>
           <CardContent className="prose prose-lg max-w-none text-foreground leading-relaxed">
             <p className="text-muted-foreground text-center">
-              Lần cập nhật cuối: {lastUpdated}
+              {t('lastUpdated', { date: lastUpdated })}
             </p>
 
-            <h2>1. Thu thập thông tin</h2>
-            <p>
-              Chúng tôi thu thập thông tin từ bạn khi bạn đăng ký trên trang web của chúng tôi, đăng nhập vào tài khoản của bạn, và/hoặc khi bạn đăng xuất. Thông tin được thu thập bao gồm tên, địa chỉ email, và trong một số trường hợp, ảnh đại diện của bạn.
-            </p>
+            <h2>{t('section1Title')}</h2>
+            <p>{t('section1Content')}</p>
 
-            <h2>2. Sử dụng thông tin</h2>
-            <p>
-              Bất kỳ thông tin nào chúng tôi thu thập từ bạn có thể được sử dụng để:
-            </p>
+            <h2>{t('section2Title')}</h2>
+            <p>{t('section2Content')}</p>
             <ul>
-              <li>Cá nhân hóa trải nghiệm của bạn và đáp ứng nhu cầu cá nhân của bạn.</li>
-              <li>Cải thiện trang web của chúng tôi.</li>
-              <li>Cải thiện dịch vụ khách hàng và nhu cầu hỗ trợ của bạn.</li>
-              <li>Liên hệ với bạn qua email.</li>
+              <li>{t('section2Item1')}</li>
+              <li>{t('section2Item2')}</li>
+              <li>{t('section2Item3')}</li>
+              <li>{t('section2Item4')}</li>
             </ul>
 
-            <h2>3. Bảo mật thông tin</h2>
-            <p>
-              Chúng tôi thực hiện nhiều biện pháp bảo mật để duy trì sự an toàn cho thông tin cá nhân của bạn. Chúng tôi sử dụng mã hóa tiên tiến để bảo vệ thông tin nhạy cảm được truyền trực tuyến.
-            </p>
+            <h2>{t('section3Title')}</h2>
+            <p>{t('section3Content')}</p>
 
-            <h2>4. Tiết lộ cho bên thứ ba</h2>
-            <p>
-              Chúng tôi không bán, trao đổi, hoặc chuyển giao thông tin cá nhân của bạn cho các bên bên ngoài. Điều này không bao gồm các bên thứ ba đáng tin cậy giúp chúng tôi vận hành trang web của mình hoặc tiến hành kinh doanh của chúng tôi, miễn là các bên đó đồng ý giữ bí mật thông tin này.
-            </p>
+            <h2>{t('section4Title')}</h2>
+            <p>{t('section4Content')}</p>
 
-             <h2>5. Liên hệ với chúng tôi</h2>
-            <p>
-              Nếu bạn có bất kỳ câu hỏi nào về chính sách quyền riêng tư này vui lòng liên hệ với chúng tôi tại: 4aivn@gmail.com.
-            </p>
+             <h2>{t('section5Title')}</h2>
+            <p>{t('section5Content')}</p>
           </CardContent>
         </Card>
       </div>
