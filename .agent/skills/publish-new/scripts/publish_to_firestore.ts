@@ -58,7 +58,7 @@ async function main() {
       : admin.firestore.FieldValue.serverTimestamp(),
     source: data.source || 'Tổng hợp',
     summary: data.summary || '',
-    tags: data.tags || [],
+    tags: data.tag || [],
     title: data.title || '',
     viewCount: data.viewCount || 0
   };

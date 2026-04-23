@@ -25,25 +25,19 @@ npx tsx .agent/skill/publish-new/scripts/analyze.ts --slug "{slug}"
 ```
 *Output: `news-data/{slug}/analyze.json`*
 
-### Bước 2b — Lập dàn ý (1 token)
-Tạo dàn ý H2/H3 và đoạn sapo (mở bài).
-```bash
-npx tsx .agent/skill/publish-new/scripts/outline.ts --slug "{slug}"
-```
+### Bước 2b — Lập dàn ý
+Tạo dàn ý H2/H3 và đoạn sapo (mở bài) dựa trên `scripts/outline.md`.
+*Agent: Đọc `analyze.json` và `crawl.json`, thực hiện theo hướng dẫn trong `scripts/outline.md`.*
 *Output: `news-data/{slug}/outline.json`*
 
-### Bước 2c — Viết bài (1 token)
-Viết HTML hoàn chỉnh theo văn phong `writing_style_guide.md`.
-```bash
-npx tsx .agent/skill/publish-new/scripts/write.ts --slug "{slug}"
-```
+### Bước 2c — Viết bài
+Viết HTML hoàn chỉnh theo văn phong `writing_style_guide.md` dựa trên `scripts/write.md`.
+*Agent: Đọc `analyze.json` và `outline.json`, thực hiện theo hướng dẫn trong `scripts/write.md`.*
 *Output: `news-data/{slug}/write.html`*
 
-### Bước 3 — Metadata & Link (1 token)
-Tạo title, tags, summary, và image prompt. Sửa lỗi chính tả và thêm internal link (không thay đổi nội dung).
-```bash
-npx tsx .agent/skill/publish-new/scripts/rewrite_article.ts --slug "{slug}"
-```
+### Bước 3 — Metadata & Link
+Tạo title, tags, summary, và image prompt. Sửa lỗi chính tả và thêm internal link dựa trên `scripts/rewrite_article.md`.
+*Agent: Đọc `write.html` và `crawl.json`, thực hiện theo hướng dẫn trong `scripts/rewrite_article.md`.*
 *Output: `news-data/{slug}/{slug}.json`*
 
 > **Lưu ý Ảnh bìa:** Sau bước 3, bạn sẽ có `imagePrompt`. Hãy copy prompt đó và dùng AI sinh ảnh trực tiếp ngay trong khung chat Antigravity với tỷ lệ 16:9, sau đó lưu ảnh vào `news-data/{slug}/{slug}.webp` (hoặc upload trực tiếp lên Storage).
