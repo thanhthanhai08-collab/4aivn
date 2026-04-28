@@ -47,6 +47,7 @@ async function main() {
 
   const newsDoc = {
     author: data.author || 'Nam',
+    authorId: data.authorId || 'nam',
     category: data.category || [{ id: 'xu-huong', name: 'Xu hướng' }],
     charts: data.charts || [],
     content: data.content || '',
@@ -58,7 +59,7 @@ async function main() {
       : admin.firestore.FieldValue.serverTimestamp(),
     source: data.source || 'Tổng hợp',
     summary: data.summary || '',
-    tags: data.tag || [],
+    tag: data.tag || [],
     title: data.title || '',
     viewCount: data.viewCount || 0
   };
