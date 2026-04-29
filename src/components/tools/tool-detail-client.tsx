@@ -235,7 +235,7 @@ export function ToolDetailClient({
                       {tool.videoUrl ? (
                           <iframe
                            src={tool.videoUrl}
-                           title={`Video giới thiệu ${tool.name}`}
+                           title={t("videoIntro", { name: tool.name })}
                            frameBorder="0"
                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                            allowFullScreen
@@ -245,7 +245,7 @@ export function ToolDetailClient({
                         <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
                           <Image
                             src={tool.imageUrl}
-                            alt={`Ảnh giới thiệu ${tool.context} ${tool.name}`}
+                            alt={t("imageIntro", { context: tool.context, name: tool.name })}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 800px"
@@ -259,14 +259,14 @@ export function ToolDetailClient({
             
              {tool.longDescription && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">{tool.name} là gì?</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("whatIs", { name: tool.name })}</h2>
                     <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
                 </section>
             )}
 
             {tool.features && tool.features.length > 0 && (
               <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Tính năng chính</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("keyFeatures")}</h2>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                   {tool.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
@@ -280,7 +280,7 @@ export function ToolDetailClient({
             
              {tool.useCases && tool.useCases.length > 0 && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Trường hợp sử dụng</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("useCases")}</h2>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                       {tool.useCases.map((useCase, index) => (
                         <li key={index} className="flex items-start">
@@ -294,7 +294,7 @@ export function ToolDetailClient({
             
              {tool.whoIsItFor && tool.whoIsItFor.length > 0 && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Đối tượng phù hợp</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("whoIsItFor")}</h2>
                     <div className="flex flex-wrap gap-2">
                       {tool.whoIsItFor.map((target, index) => (
                         <Badge key={index} variant="outline" className="text-base py-1">{target}</Badge>
@@ -305,7 +305,7 @@ export function ToolDetailClient({
             
             {tool.pricingPlans && tool.pricingPlans.length > 0 && (
               <section>
-                  <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-4">{t("pricingPlans")}</h2>
                   <div className="prose max-w-none">
                       <ul>
                           {tool.pricingPlans.map((plan, index) => (
@@ -319,12 +319,12 @@ export function ToolDetailClient({
             <section>
                  <Card>
                     <CardHeader>
-                       <h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2>
+                       <h2 className="text-2xl font-bold font-headline">{t("reviewsAndComments")}</h2>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-                                <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
+                                <h3 className="text-lg font-semibold">{t("howDoYouRate", { name: tool.name })}</h3>
                                 <div className="flex items-center space-x-1 shrink-0">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                     <button
@@ -348,13 +348,13 @@ export function ToolDetailClient({
                                 </div>
                             </div>
                             <Textarea 
-                                placeholder="Viết đánh giá của bạn (tùy chọn)"
+                                placeholder={t("writeReviewPlaceholder")}
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
                             />
                             <div className="flex justify-end mt-4">
                                 <Button onClick={handleSubmitReview}>
-                                    Gửi đánh giá
+                                    {t("submitReview")}
                                 </Button>
                             </div>
                         </div>
@@ -362,7 +362,7 @@ export function ToolDetailClient({
                         <Separator />
 
                         <div>
-                             <h3 className="text-2xl font-bold font-headline mb-4">Tất cả bài đánh giá</h3>
+                             <h3 className="text-2xl font-bold font-headline mb-4">{t("allReviews")}</h3>
                              <ReviewsList reviews={allReviews} />
                         </div>
                     </CardContent>
@@ -379,7 +379,7 @@ export function ToolDetailClient({
                 >
                   <Image
                     src={adData.bannerAdsUrl} 
-                    alt="Quảng cáo tài trợ"
+                    alt={t("sponsoredAd")}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 800px" 
@@ -387,7 +387,7 @@ export function ToolDetailClient({
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                   <div className="absolute top-2 right-2">
                     <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
-                      Tài trợ
+                      {t("sponsored")}
                     </Badge>
                   </div>
                 </a>
@@ -396,7 +396,7 @@ export function ToolDetailClient({
             
             {similarTools.length > 0 && (
                 <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Công cụ tương tự {tool.name}</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("similarTools", { name: tool.name })}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {similarTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
                 </div>
@@ -405,7 +405,7 @@ export function ToolDetailClient({
             
             {complementaryTools.length > 0 && (
                 <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name}</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("complementaryTools", { name: tool.name })}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {complementaryTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
                 </div>
@@ -417,15 +417,15 @@ export function ToolDetailClient({
           <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> Công cụ nổi bật</h2>
+                <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> {t("featuredTools")}</h2>
               </CardHeader>
               <CardContent className="space-y-4">
-                  {featuredTools.map(t => (
-                    <Link key={t.id} href={{ pathname: '/cong-cu/[id]', params: { id: t.id } }} className="flex items-center space-x-3 group">
-                       <Image src={t.logoUrl || ''} alt={t.name} width={40} height={40} className="rounded-md"/>
+                  {featuredTools.map(ft => (
+                    <Link key={ft.id} href={{ pathname: '/cong-cu/[id]', params: { id: ft.id } }} className="flex items-center space-x-3 group">
+                       <Image src={ft.logoUrl || ''} alt={ft.name} width={40} height={40} className="rounded-md"/>
                        <div>
-                          <p className="font-semibold group-hover:text-primary">{t.name}</p>
-                          <p className="text-sm text-muted-foreground">{t.context}</p>
+                          <p className="font-semibold group-hover:text-primary">{ft.name}</p>
+                          <p className="text-sm text-muted-foreground">{ft.context}</p>
                        </div>
                     </Link>
                   ))}
@@ -435,7 +435,7 @@ export function ToolDetailClient({
             {relatedNews.length > 0 && (
               <Card>
                 <CardHeader>
-                  <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> Tin tức liên quan</h2>
+                  <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> {t("relatedNews")}</h2>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
@@ -454,13 +454,13 @@ export function ToolDetailClient({
 
             <Card className="bg-accent/50 text-center p-6">
                 <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Khám phá bảng xếp hạng
+                    {t("exploreRankings")}
                 </h3>
                 <p className="mb-4 text-sm text-muted-foreground">
-                    Giúp bạn so sánh các model, công cụ AI trực quan nhất
+                    {t("exploreRankingsDesc")}
                 </p>
                 <Button asChild>
-                    <Link href="/bang-xep-hang">Khám phá</Link>
+                    <Link href="/bang-xep-hang">{t("explore")}</Link>
                 </Button>
             </Card>
           </aside>

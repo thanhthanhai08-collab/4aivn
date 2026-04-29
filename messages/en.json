@@ -101,6 +101,34 @@
     "explore": "Explore",
     "sponsored": "Sponsored"
   },
+  "modelCard": {
+    "yourRating": "Your rating: {rating} stars",
+    "viewDetail": "View details"
+  },
+  "toolCard": {
+    "loginRequired": "Login Required",
+    "loginRequiredDesc": "Please log in to save to favorites.",
+    "favAdded": "Added to favorites",
+    "favRemoved": "Removed from favorites",
+    "error": "Error",
+    "favError": "Could not update favorites.",
+    "yourRating": "Your rating: {rating} stars",
+    "viewDetail": "View details",
+    "favorite": "Favorite",
+    "free": "Free"
+  },
+  "benchmarks": {
+    "antiHallucination": "Anti-Hallucination",
+    "higherReasoning": "Higher-Order Reasoning",
+    "agenticCoding": "Agentic Coding",
+    "agenticToolUse": "Agentic Tool Use",
+    "workPerformance": "Work Performance",
+    "promptCompliance": "Prompt Compliance",
+    "advancedReasoning": "Advanced Reasoning",
+    "longContextReasoning": "Long Context Reasoning",
+    "benchmarkDataTitle": "Detailed Benchmark Data",
+    "noBenchmarkData": "This model does not have benchmark comparison data for the selected categories."
+  },
   "toolDetail": {
     "noReviews": "There are no detailed reviews yet.",
     "anonymousUser": "Anonymous User",
@@ -123,7 +151,28 @@
     "visitPage": "Visit Site",
     "noRating": "No rating",
     "reviewCount": "({count} reviews)",
-    "ranking": "Rank: #{rank}"
+    "ranking": "Rank: #{rank}",
+    "videoIntro": "Introduction video for {name}",
+    "imageIntro": "Introduction image for {context} {name}",
+    "whatIs": "What is {name}?",
+    "keyFeatures": "Key Features",
+    "useCases": "Use Cases",
+    "whoIsItFor": "Who Is It For",
+    "pricingPlans": "Pricing Plans",
+    "reviewsAndComments": "Reviews & Comments",
+    "howDoYouRate": "How do you rate {name}?",
+    "writeReviewPlaceholder": "Write your review (optional)",
+    "submitReview": "Submit Review",
+    "allReviews": "All Reviews",
+    "sponsoredAd": "Sponsored ad",
+    "sponsored": "Sponsored",
+    "similarTools": "Tools similar to {name}",
+    "complementaryTools": "Discover complementary tools that work with {name}",
+    "featuredTools": "Featured Tools",
+    "relatedNews": "Related News",
+    "exploreRankings": "Explore AI Rankings",
+    "exploreRankingsDesc": "Compare AI models and tools with the most intuitive visualizations",
+    "explore": "Explore"
   },
   "modelDetail": {
     "backToRankings": "Back to Rankings",

@@ -3,7 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; locale: string }>;
 };
 
 const BASE_URL = "https://4aivn.com";
@@ -12,28 +12,57 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const resolvedParams = await params;
-  const id = resolvedParams.id;
+  const { id, locale } = await params;
+  const isEn = locale === 'en';
   
   if (!id || id.includes('.')) {
-      return { title: 'Không tìm thấy model' };
+      return { title: isEn ? 'Model not found' : 'Không tìm thấy model' };
   }
 
   const model = await getModel(id);
 
   if (!model) {
       return {
-          title: 'Không tìm thấy mô hình AI',
-          description: 'Mô hình AI bạn tìm kiếm không tồn tại hoặc đã bị xóa.',
+          title: isEn ? 'AI model not found' : 'Không tìm thấy mô hình AI',
+          description: isEn
+            ? 'The AI model you are looking for does not exist or has been removed.'
+            : 'Mô hình AI bạn tìm kiếm không tồn tại hoặc đã bị xóa.',
       };
   }
 
+  const title = isEn
+    ? `${model.name} - Specs & Reviews`
+    : `${model.name} - Thông số và Đánh giá`;
+
+  const description = model.description || (isEn
+    ? `Detailed review, specifications, and performance of the ${model.name} AI model.`
+    : `Đánh giá chi tiết, thông số kỹ thuật và hiệu năng của mô hình AI ${model.name}.`);
+
+  const ogTitle = isEn
+    ? `${model.name} - Specs & Reviews | 4AIVN`
+    : `${model.name} - Thông số và Đánh giá | 4AIVN`;
+
+  const ogDescription = model.description || (isEn
+    ? `Detailed review, specifications, and benchmarks of the ${model.name} AI model.`
+    : `Đánh giá chi tiết, thông số kỹ thuật và điểm chuẩn của mô hình AI ${model.name}.`);
+
+  const canonicalUrl = isEn ? `${BASE_URL}/en/rankings/${id}` : `${BASE_URL}/bang-xep-hang/${id}`;
+
   return {
-      title: `${model.name} - Thông số và Đánh giá`,
-      description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và hiệu năng của mô hình AI ${model.name}.`,
+      title,
+      description,
+      alternates: {
+        canonical: canonicalUrl,
+        languages: {
+          'vi': `${BASE_URL}/bang-xep-hang/${id}`,
+          'en': `${BASE_URL}/en/rankings/${id}`,
+        }
+      },
       openGraph: {
-          title: `${model.name} - Thông số và Đánh giá | 4AIVN`,
-          description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và điểm chuẩn của mô hình AI ${model.name}.`,
+          title: ogTitle,
+          description: ogDescription,
+          url: canonicalUrl,
+          siteName: "4AIVN",
           type: 'article',
           images: [
               {
@@ -46,16 +75,16 @@ export async function generateMetadata(
       },
       twitter: {
           card: 'summary_large_image',
-          title: `${model.name} - Thông số và Đánh giá | 4AIVN`,
-          description: model.description || `Đánh giá chi tiết, thông số kỹ thuật và hiệu năng của mô hình AI ${model.name}.`,
+          title: ogTitle,
+          description: ogDescription,
           images: [model.logoUrl || '/og-image.jpg'],
       },
   };
 }
 
 export default async function ModelDetailLayout({ children, params }: Props) {
-  const resolvedParams = await params;
-  const id = resolvedParams.id;
+  const { id, locale } = await params;
+  const isEn = locale === 'en';
 
   try {
     if (!id || id.includes('.')) {
@@ -74,20 +103,20 @@ export default async function ModelDetailLayout({ children, params }: Props) {
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Trang chủ",
-          "item": `${BASE_URL}/`,
+          "name": isEn ? "Home" : "Trang chủ",
+          "item": isEn ? `${BASE_URL}/en` : `${BASE_URL}/`,
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Bảng xếp hạng AI",
-          "item": `${BASE_URL}/bang-xep-hang`,
+          "name": isEn ? "AI Rankings" : "Bảng xếp hạng AI",
+          "item": isEn ? `${BASE_URL}/en/rankings` : `${BASE_URL}/bang-xep-hang`,
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": model.name,
-          "item": `${BASE_URL}/bang-xep-hang/${id}`,
+          "item": isEn ? `${BASE_URL}/en/rankings/${id}` : `${BASE_URL}/bang-xep-hang/${id}`,
         },
       ],
     };

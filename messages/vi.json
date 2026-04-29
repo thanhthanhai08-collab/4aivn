@@ -101,6 +101,34 @@
     "explore": "Khám phá",
     "sponsored": "Tài trợ"
   },
+  "modelCard": {
+    "yourRating": "Đánh giá của bạn: {rating} sao",
+    "viewDetail": "Xem chi tiết"
+  },
+  "toolCard": {
+    "loginRequired": "Yêu cầu đăng nhập",
+    "loginRequiredDesc": "Vui lòng đăng nhập để lưu mục yêu thích.",
+    "favAdded": "Đã thêm vào mục yêu thích",
+    "favRemoved": "Đã xóa khỏi mục yêu thích",
+    "error": "Lỗi",
+    "favError": "Không thể cập nhật mục yêu thích.",
+    "yourRating": "Đánh giá của bạn: {rating} sao",
+    "viewDetail": "Xem chi tiết",
+    "favorite": "Yêu thích",
+    "free": "Miễn phí"
+  },
+  "benchmarks": {
+    "antiHallucination": "Khả năng chống ảo giác",
+    "higherReasoning": "Suy luận cấp cao hơn",
+    "agenticCoding": "Lập trình có tính tự chủ",
+    "agenticToolUse": "Sử dụng công cụ tự động",
+    "workPerformance": "Hiệu suất khi làm việc",
+    "promptCompliance": "Khả năng tuân thủ prompt",
+    "advancedReasoning": "Lý luận nâng cao",
+    "longContextReasoning": "Lý luận ngữ cảnh dài",
+    "benchmarkDataTitle": "Dữ liệu Benchmark Chi tiết",
+    "noBenchmarkData": "Mô hình này chưa có điểm chuẩn so sánh cho các hạng mục đã chọn."
+  },
   "toolDetail": {
     "noReviews": "Chưa có bài đánh giá nào có nội dung.",
     "anonymousUser": "Người dùng ẩn danh",
@@ -123,7 +151,28 @@
     "visitPage": "Truy cập trang",
     "noRating": "Chưa có",
     "reviewCount": "({count} đánh giá)",
-    "ranking": "Xếp hạng: #{rank}"
+    "ranking": "Xếp hạng: #{rank}",
+    "videoIntro": "Video giới thiệu {name}",
+    "imageIntro": "Ảnh giới thiệu {context} {name}",
+    "whatIs": "{name} là gì?",
+    "keyFeatures": "Tính năng chính",
+    "useCases": "Trường hợp sử dụng",
+    "whoIsItFor": "Đối tượng phù hợp",
+    "pricingPlans": "Các gói dịch vụ",
+    "reviewsAndComments": "Đánh giá & nhận xét",
+    "howDoYouRate": "Bạn đánh giá {name} như thế nào?",
+    "writeReviewPlaceholder": "Viết đánh giá của bạn (tùy chọn)",
+    "submitReview": "Gửi đánh giá",
+    "allReviews": "Tất cả bài đánh giá",
+    "sponsoredAd": "Quảng cáo tài trợ",
+    "sponsored": "Tài trợ",
+    "similarTools": "Công cụ tương tự {name}",
+    "complementaryTools": "Khám phá các công cụ bổ sung hoạt động cùng với {name}",
+    "featuredTools": "Công cụ nổi bật",
+    "relatedNews": "Tin tức liên quan",
+    "exploreRankings": "Khám phá bảng xếp hạng",
+    "exploreRankingsDesc": "Giúp bạn so sánh các model, công cụ AI trực quan nhất",
+    "explore": "Khám phá"
   },
   "modelDetail": {
     "backToRankings": "Quay lại bảng xếp hạng",

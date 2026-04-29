@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     if (!id || id.includes('.')) {
       return {
-        title: "Bài viết không tồn tại",
+        title: locale === 'en' ? "Article not found" : "Bài viết không tồn tại",
         robots: "noindex, nofollow",
       };
     }
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!article) {
       return {
-        title: "Bài viết không tồn tại",
+        title: locale === 'en' ? "Article not found" : "Bài viết không tồn tại",
         robots: "noindex, nofollow",
       };
     }
@@ -68,8 +68,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch (error) {
     console.error("Error generating metadata for news article:", error);
     return {
-      title: "Lỗi",
-      description: "Không thể tải dữ liệu cho bài viết này."
+      title: locale === 'en' ? "Error" : "Lỗi",
+      description: locale === 'en' ? "Could not load data for this article." : "Không thể tải dữ liệu cho bài viết này."
     };
   }
 }
@@ -88,6 +88,8 @@ export default async function NewsDetailLayout({ children, params }: Props) {
 
     const hasCategory = article.category && article.category.length > 0 && article.category[0].id;
 
+    const isEn = locale === 'en';
+
     const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -95,28 +97,28 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Trang chủ",
-          "item": BASE_URL,
+          "name": isEn ? "Home" : "Trang chủ",
+          "item": isEn ? `${BASE_URL}/en` : BASE_URL,
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Tin tức",
-          "item": `${BASE_URL}/tin-tuc`,
+          "name": isEn ? "News" : "Tin tức",
+          "item": isEn ? `${BASE_URL}/en/news` : `${BASE_URL}/tin-tuc`,
         },
         ...(hasCategory ? [
           {
             "@type": "ListItem",
             "position": 3,
             "name": article.category![0].name,
-            "item": `${BASE_URL}/tin-tuc/${article.category![0].id}`,
+            "item": isEn ? `${BASE_URL}/en/news/${article.category![0].id}` : `${BASE_URL}/tin-tuc/${article.category![0].id}`,
           }
         ] : []),
         {
           "@type": "ListItem",
           "position": hasCategory ? 4 : 3,
           "name": article.title,
-          "item": locale === 'en' ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
+          "item": isEn ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
         },
       ],
     };

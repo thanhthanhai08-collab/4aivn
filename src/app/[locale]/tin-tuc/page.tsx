@@ -249,16 +249,16 @@ export default function NewsPage() {
                 )}
                 
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                    <Link href={"/tin-tuc/danh-gia" as any} className="group flex h-24 items-center justify-center rounded-lg bg-chart-1 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
+                    <Link href={{ pathname: '/tin-tuc/[id]', params: { id: 'danh-gia' } }} className="group flex h-24 items-center justify-center rounded-lg bg-chart-1 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
                         <span className="text-lg">{t("categories.review")}</span>
                     </Link>
-                    <Link href={"/tin-tuc/huong-dan" as any} className="group flex h-24 items-center justify-center rounded-lg bg-chart-2 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
+                    <Link href={{ pathname: '/tin-tuc/[id]', params: { id: 'huong-dan' } }} className="group flex h-24 items-center justify-center rounded-lg bg-chart-2 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
                         <span className="text-lg">{t("categories.guide")}</span>
                     </Link>
-                    <Link href={"/tin-tuc/vibe-coding" as any} className="group flex h-24 items-center justify-center rounded-lg bg-chart-3 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
+                    <Link href={{ pathname: '/tin-tuc/[id]', params: { id: 'vibe-coding' } }} className="group flex h-24 items-center justify-center rounded-lg bg-chart-3 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
                         <span className="text-lg">{t("categories.vibeCoding")}</span>
                     </Link>
-                    <Link href={"/tin-tuc/xu-huong" as any} className="group flex h-24 items-center justify-center rounded-lg bg-chart-4 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
+                    <Link href={{ pathname: '/tin-tuc/[id]', params: { id: 'xu-huong' } }} className="group flex h-24 items-center justify-center rounded-lg bg-chart-4 text-center font-bold text-white shadow-lg transition-transform hover:-translate-y-1">
                         <span className="text-lg">{t("categories.trending")}</span>
                     </Link>
                 </div>

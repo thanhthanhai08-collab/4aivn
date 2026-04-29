@@ -1,4 +1,6 @@
 // src/components/models/model-card.tsx
+"use client";
+
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Star, ExternalLink } from "lucide-react";
@@ -6,12 +8,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { AIModel } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface ModelCardProps {
   model: AIModel;
 }
 
 export function ModelCard({ model }: ModelCardProps) {
+  const t = useTranslations("modelCard");
   const averageRating = model.ratingCount && model.ratingCount > 0 
     ? (model.totalStars || 0) / model.ratingCount 
     : model.userRating || 0;
@@ -60,7 +64,7 @@ export function ModelCard({ model }: ModelCardProps) {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Đánh giá của bạn: {model.myRating} sao
+                {t("yourRating", { rating: model.myRating })}
               </p>
             </div>
           ) : averageRating > 0 ? (
@@ -74,7 +78,7 @@ export function ModelCard({ model }: ModelCardProps) {
         </div>
         <Button variant="ghost" size="sm" asChild>
           <Link href={{ pathname: '/bang-xep-hang/[id]', params: { id: model.id } }}>
-            Xem chi tiết
+            {t("viewDetail")}
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
         </Button>
