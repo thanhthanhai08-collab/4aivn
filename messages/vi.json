@@ -58,7 +58,8 @@
     "error": "Lỗi",
     "exploreRankings": "Khám phá bảng xếp hạng",
     "exploreRankingsDesc": "Giúp bạn so sánh các model, công cụ AI trực quan nhất",
-    "exploreBtn": "Khám phá"
+    "exploreBtn": "Khám phá",
+    "latestNews": "Tin mới nhất"
   },
   "search": {
     "search_placeholder": "Tìm kiếm tin tức, bài viết...",
@@ -277,7 +278,8 @@
     "aiTerms": "Điều khoản sử dụng AI",
     "cookiePolicy": "Chính sách Cookies",
     "about": "Giới thiệu",
-    "contactUs": "Liên hệ"
+    "contactUs": "Liên hệ",
+    "phone": "Điện thoại"
   },
   "preview": {
     "previewMode": "Chế độ xem trước",

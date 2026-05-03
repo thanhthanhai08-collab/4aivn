@@ -113,7 +113,7 @@ export function SiteFooter() {
                 </li>
                  <li className="flex items-start">
                     <Phone className="h-4 w-4 mr-2 mt-0.5 shrink-0 text-primary/80" />
-                    <span>Điện thoại: 0973.490.497</span>
+                    <span>{t("phone")}: 0973.490.497</span>
                 </li>
             </ul>
           </div>

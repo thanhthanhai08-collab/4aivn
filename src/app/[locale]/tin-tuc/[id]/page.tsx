@@ -34,7 +34,7 @@ function NewsCategoryContent() {
     const [articles, setArticles] = useState<NewsArticle[]>([]);
     const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
     const [hasMore, setHasMore] = useState(true);
-    const [category, setCategory] = useState<{ id: string; name: string } | null>(null);
+    const [category, setCategory] = useState<{ id: string; name: string; dbName?: string } | null>(null);
     const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ function NewsCategoryContent() {
             setLastDoc(null);
             setLatestNews([]);
 
-            let currentCategory: { id: string; name: string } | null = null;
+            let currentCategory: { id: string; name: string; dbName?: string } | null = null;
             let queryCategoryObj: any = null;
             try {
                 let q = query(collection(db, "news-category"), where(`slug.${locale}`, "==", categoryId));
@@ -62,15 +62,18 @@ function NewsCategoryContent() {
                     const catDoc = categoryDocs.docs[0];
                     const catData = catDoc.data();
                     let locName = categoryId;
+                    let dbName = categoryId;
+                    
                     if (catData.name) {
                         locName = typeof catData.name === 'string' ? catData.name : (catData.name[locale] || catData.name['vi']);
+                        dbName = typeof catData.name === 'string' ? catData.name : catData.name['vi'];
                     }
-                    currentCategory = { id: catDoc.id, name: locName };
+                    currentCategory = { id: catDoc.id, name: locName, dbName: dbName };
                     setCategory(currentCategory);
-                    queryCategoryObj = currentCategory;
+                    queryCategoryObj = { id: catDoc.id, name: dbName };
                 } else {
                     const fallbackName = categoryId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    currentCategory = { id: categoryId, name: fallbackName };
+                    currentCategory = { id: categoryId, name: fallbackName, dbName: fallbackName };
                     setCategory(currentCategory);
                     queryCategoryObj = currentCategory;
                     console.warn(`Category document with slug "${categoryId}" not found.`);
@@ -141,7 +144,7 @@ function NewsCategoryContent() {
             const q = query(
                 articlesRef,
                 where("post", "==", true),
-                where("category", "array-contains", category),
+                where("category", "array-contains", { id: category.id, name: category.dbName || category.name }),
                 orderBy("publishedAt", "desc"),
                 startAfter(lastDoc),
                 limit(PAGE_SIZE)

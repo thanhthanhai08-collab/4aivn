@@ -11,6 +11,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale/en-US';
+import { useTranslations, useLocale } from "next-intl";
 import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
@@ -239,6 +241,10 @@ interface Props {
 export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  const t = useTranslations("newsDetail");
+  const tCommon = useTranslations("common");
+  const locale = useLocale();
+  const dateLocale = locale === 'en' ? enUS : vi;
   
   const [summary, setSummary] = useState<string | null>(article?.summary || null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -284,7 +290,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
   
   const handleBookmarkToggle = async () => {
     if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu tin tức.", variant: "destructive" });
+      toast({ title: t("loginRequired"), description: t("loginRequiredDesc"), variant: "destructive" });
       return;
     }
     
@@ -293,25 +299,25 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
 
     try {
       await toggleNewsBookmark(currentUser.uid, article.id, isBookmarked);
-      toast({ title: newBookmarkState ? "Đã lưu tin tức thành công" : "Đã xóa khỏi tin tức đã lưu" });
+      toast({ title: newBookmarkState ? t("bookmarkSuccess") : t("bookmarkRemoved") });
     } catch (error) {
       console.error("Failed to update bookmark:", error);
       setIsBookmarked(!newBookmarkState);
-      toast({ title: "Lỗi", description: "Không thể cập nhật tin tức đã lưu.", variant: "destructive" });
+      toast({ title: t("error"), description: t("bookmarkError"), variant: "destructive" });
     }
   };
   
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       toast({
-        title: "Đã sao chép liên kết",
-        description: "Liên kết đến trang này đã được sao chép vào bộ nhớ tạm.",
+        title: t("copiedLink"),
+        description: t("copiedLinkDesc"),
       });
     }).catch(err => {
       console.error('Failed to copy link: ', err);
       toast({
-        title: "Lỗi",
-        description: "Không thể sao chép liên kết.",
+        title: t("error"),
+        description: t("copyError"),
         variant: "destructive",
       });
     });
@@ -325,10 +331,10 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
     return (
       <AppLayout>
         <div className="container py-12 text-center">
-          <h1 className="text-2xl font-bold">Không tìm thấy bài viết</h1>
-          <p className="text-muted-foreground">Bài viết này có thể không tồn tại hoặc chưa được xuất bản.</p>
+          <h1 className="text-2xl font-bold">{t("articleNotFound")}</h1>
+          <p className="text-muted-foreground">{t("articleNotFoundDesc")}</p>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/tin-tuc">Quay lại trang Tin tức</Link>
+            <Link href="/tin-tuc">{t("backToNews")}</Link>
           </Button>
         </div>
       </AppLayout>
@@ -343,13 +349,13 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               <ol className="flex items-center text-muted-foreground whitespace-nowrap">
                 <li className="flex items-center">
                   <Link href="/" className="hover:text-primary transition-colors">
-                    Trang chủ
+                    {tCommon("home")}
                   </Link>
                 </li>
                 
                 <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                   <Link href="/tin-tuc" className="hover:text-primary transition-colors">
-                    Tin tức
+                    {tCommon("news")}
                   </Link>
                 </li>
 
@@ -378,15 +384,15 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               <header className="mb-8">
                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                     <Button variant="outline" size="sm" asChild>
-                        <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang tin tức</Link>
+                        <Link href="/tin-tuc"><ArrowLeft className="mr-2 h-4 w-4" /> {t("backToNews")}</Link>
                     </Button>
                     <div className="flex items-center space-x-2">
                         <Button variant="outline" onClick={handleBookmarkToggle}>
                             <Bookmark className={cn("mr-2 h-4 w-4", isBookmarked && "fill-primary text-primary")} />
-                            {isBookmarked ? "Đã lưu" : "Lưu tin tức"}
+                            {isBookmarked ? t("bookmarked") : t("bookmark")}
                         </Button>
                         <Button variant="outline" onClick={handleShare}>
-                            <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+                            <Share2 className="mr-2 h-4 w-4" /> {t("share")}
                         </Button>
                     </div>
                  </div>
@@ -406,7 +412,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                     )}
                    <div className="flex items-center">
                      <CalendarDays className="mr-2 h-4 w-4" />
-                     <span suppressHydrationWarning>Xuất bản vào {format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: vi })}</span>
+                     <span suppressHydrationWarning>{t("publishedAt", { date: format(new Date(article.publishedAt), "d MMMM, yyyy", { locale: dateLocale }) })}</span>
                    </div>
                 </div>
               </header>
@@ -426,7 +432,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               {summary ? (
                   <Card className="mb-8 bg-accent/50 border-primary/20">
                       <CardHeader>
-                          <h2 className="text-2xl font-headline font-bold">Tóm tắt nhanh</h2>
+                          <h2 className="text-2xl font-headline font-bold">{t("quickSummary")}</h2>
                       </CardHeader>
                       <CardContent>
                           <p className="text-lg text-muted-foreground">{summary}</p>
@@ -448,7 +454,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               <footer className="mt-12 pt-6 border-t">
                   {article.link && (
                     <div className="flex items-center space-x-1">
-                      <p className="text-sm text-muted-foreground">Nguồn:</p>
+                      <p className="text-sm text-muted-foreground">{t("source")}</p>
                       <Button asChild variant="link" className="p-0 h-auto text-base">
                         <a href={article.link} target="_blank" rel="noopener noreferrer">
                             {article.source} <Globe className="ml-2 h-4 w-4" />
@@ -462,7 +468,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
             <Card className="mt-12">
               <CardHeader>
                 <h2 className="flex items-center text-2xl font-headline font-bold">
-                  <MessageSquare className="mr-3 h-6 w-6" /> Thảo luận ({comments.length})
+                  <MessageSquare className="mr-3 h-6 w-6" /> {t("discussion")} ({comments.length})
                 </h2>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -470,7 +476,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                   <CommentForm articleId={article.id} onCommentAdded={handleCommentAdded} />
                 ) : (
                   <div className="text-center text-sm text-muted-foreground bg-muted/50 p-4 rounded-md">
-                    <Link href="/dang-nhap" className="font-semibold text-primary hover:underline">Đăng nhập</Link> để tham gia thảo luận.
+                    <Link href="/dang-nhap" className="font-semibold text-primary hover:underline">{t("loginToComment")}</Link>{t("loginToCommentSuffix")}
                   </div>
                 )}
                 <Separator />
@@ -482,7 +488,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
           <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                <CardTitle className="text-2xl font-headline font-bold text-primary">{t("latestNews")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestNews.map((related) => (
@@ -506,7 +512,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                         <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
                           <CalendarDays className="mr-1 h-3 w-3" />
                           <span suppressHydrationWarning>
-                            {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: vi })}
+                            {format(new Date(related.publishedAt), "dd/MM/yyyy", { locale: dateLocale })}
                           </span>
                         </div>
                       </div>
@@ -516,10 +522,10 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               </CardContent>
             </Card>
               <Card className="bg-accent/50 text-center p-6">
-                  <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Khám phá bảng xếp hạng</h3>
-                  <p className="mb-4 text-sm text-muted-foreground">Giúp bạn so sánh các model, công cụ AI trực quan nhất</p>
+                  <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{t("exploreRankings")}</h3>
+                  <p className="mb-4 text-sm text-muted-foreground">{t("exploreRankingsDesc")}</p>
                   <Button asChild>
-                      <Link href="/bang-xep-hang">Khám phá</Link>
+                      <Link href="/bang-xep-hang">{t("exploreBtn")}</Link>
                   </Button>
               </Card>
           </aside>
@@ -528,7 +534,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
         {relatedNews.length > 0 && (
           <section className="mt-16 pt-12 border-t">
             <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
-              Các bài viết liên quan
+              {t("relatedArticles")}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {relatedNews.map((related) => (
