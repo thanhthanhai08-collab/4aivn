@@ -59,7 +59,8 @@
     "exploreRankings": "Khám phá bảng xếp hạng",
     "exploreRankingsDesc": "Giúp bạn so sánh các model, công cụ AI trực quan nhất",
     "exploreBtn": "Khám phá",
-    "latestNews": "Tin mới nhất"
+    "latestNews": "Tin mới nhất",
+    "emptyComments": "Chưa có bình luận nào. Hãy là người đầu tiên!"
   },
   "search": {
     "search_placeholder": "Tìm kiếm tin tức, bài viết...",

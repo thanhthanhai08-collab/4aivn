@@ -59,7 +59,8 @@
     "exploreRankings": "Explore AI Rankings",
     "exploreRankingsDesc": "Compare AI models and tools with the most intuitive visualizations",
     "exploreBtn": "Explore",
-    "latestNews": "Latest News"
+    "latestNews": "Latest News",
+    "emptyComments": "No comments yet. Be the first!"
   },
   "search": {
     "search_placeholder": "Search news, articles...",
