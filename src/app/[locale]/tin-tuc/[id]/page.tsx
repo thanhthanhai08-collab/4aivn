@@ -49,25 +49,34 @@ function NewsCategoryContent() {
             let currentCategory: { id: string; name: string; dbName?: string } | null = null;
             let queryCategoryObj: any = null;
             try {
-                let q = query(collection(db, "news-category"), where(`slug.${locale}`, "==", categoryId));
-                let categoryDocs = await getDocs(q);
+                const docRef = doc(db, "news-category", categoryId);
+                const catDoc = await getDoc(docRef);
 
-                if (categoryDocs.empty) {
-                    const otherLocale = locale === 'en' ? 'vi' : 'en';
-                    const fallbackQ = query(collection(db, "news-category"), where(`slug.${otherLocale}`, "==", categoryId));
-                    categoryDocs = await getDocs(fallbackQ);
-                }
-
-                if (!categoryDocs.empty) {
-                    const catDoc = categoryDocs.docs[0];
+                if (catDoc.exists()) {
                     const catData = catDoc.data();
                     let locName = categoryId;
                     let dbName = categoryId;
                     
                     if (catData.name) {
-                        locName = typeof catData.name === 'string' ? catData.name : (catData.name[locale] || catData.name['vi']);
-                        dbName = typeof catData.name === 'string' ? catData.name : catData.name['vi'];
+                        dbName = catData.name;
+                        locName = catData.name;
                     }
+
+                    const categoryMapping: Record<string, string> = {
+                        'danh-gia': 'review',
+                        'huong-dan': 'guide',
+                        'vibe-coding': 'vibeCoding',
+                        'xu-huong': 'trending'
+                    };
+
+                    try {
+                        if (categoryMapping[categoryId]) {
+                            locName = t(`categories.${categoryMapping[categoryId]}` as any);
+                        }
+                    } catch (e) {
+                        // fallback to db name
+                    }
+
                     currentCategory = { id: catDoc.id, name: locName, dbName: dbName };
                     setCategory(currentCategory);
                     queryCategoryObj = { id: catDoc.id, name: dbName };

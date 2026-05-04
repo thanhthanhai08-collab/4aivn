@@ -113,6 +113,7 @@ export interface AIModel {
   benchmarks?: BenchmarkData[];
   averageRating?: number;
   post?: boolean; // Controls visibility
+  rank?: number; // Computed ranking order
 }
 
 export interface Comment {

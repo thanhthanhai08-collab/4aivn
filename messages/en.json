@@ -104,7 +104,8 @@
   },
   "modelCard": {
     "yourRating": "Your rating: {rating} stars",
-    "viewDetail": "View details"
+    "viewDetail": "View details",
+    "rank": "Rank {rank}"
   },
   "toolCard": {
     "loginRequired": "Login Required",

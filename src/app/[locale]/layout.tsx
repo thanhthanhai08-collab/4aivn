@@ -10,48 +10,66 @@ import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-export const metadata: Metadata = {
-  title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-  description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  
+  const isEn = locale === 'en';
+  const title = isEn 
+    ? '4AIVN - Discover AI Models and Tools Rankings' 
+    : '4AIVN - Khám phá bảng xếp hạng model và công cụ AI';
+  const description = isEn
+    ? 'Explore AI rankings, updates on the latest AI tools and news. 4AIVN shares what is truly useful to help you use AI more effectively in your daily work.'
+    : 'Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.';
+  
+  const url = isEn ? 'https://4aivn.com/en' : 'https://4aivn.com';
 
-  manifest: '/manifest.json',
-
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
-
-  openGraph: {
-    title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
-    url: 'https://4aivn.com',
-    siteName: '4AIVN',
-    images: [
-      {
-        url: 'https://4aivn.com/icon-512.png',
-        width: 512,
-        height: 512,
-        alt: '4AIVN Logo',
+  return {
+    metadataBase: new URL('https://4aivn.com'),
+    title,
+    description,
+    manifest: '/manifest.json',
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+    alternates: {
+      canonical: url,
+      languages: {
+        vi: 'https://4aivn.com',
+        en: 'https://4aivn.com/en',
       },
-    ],
-    locale: 'vi_VN',
-    type: 'website',
-  },
-
-  twitter: {
-    card: 'summary',
-    title: '4AIVN - Khám phá bảng xếp hạng model và công cụ AI',
-    description: "Khám phá bảng xếp hạng AI, cập nhật công cụ và tin tức AI mới nhất. 4AIVN chia sẻ những gì thực sự hữu ích để bạn dùng AI hiệu quả hơn trong công việc hàng ngày.",
-    images: ['https://4aivn.com/icon-512.png'],
-  },
-};
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: '4AIVN',
+      images: [
+        {
+          url: 'https://4aivn.com/icon-512.png',
+          width: 512,
+          height: 512,
+          alt: '4AIVN Logo',
+        },
+      ],
+      locale: isEn ? 'en_US' : 'vi_VN',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+      images: ['https://4aivn.com/icon-512.png'],
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

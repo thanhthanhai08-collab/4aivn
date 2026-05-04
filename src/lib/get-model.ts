@@ -44,6 +44,29 @@ export const getModel = cache(async (id: string) => {
   }
 });
 
+export const getAllModelsRanked = cache(async () => {
+    try {
+        const modelsQuery = query(
+          collection(db, "models"),
+          where("post", "==", true),
+          orderBy("intelligenceScore", "desc"),
+          orderBy("contextLengthToken", "desc"),
+          orderBy("pricePerMillionTokens", "asc"),
+          orderBy("latencyFirstChunkSeconds", "asc"),
+          orderBy("speedTokensPerSecond", "desc")
+        );
+        const snapshot = await getDocs(modelsQuery);
+        const ranks = new Map<string, number>();
+        snapshot.docs.forEach((doc, index) => {
+            ranks.set(doc.id, index + 1);
+        });
+        return ranks;
+    } catch(e) {
+        console.error("Error fetching model ranks:", e);
+        return new Map<string, number>();
+    }
+});
+
 export const getRelatedNewsForModel = cache(async (modelName: string) => {
     if (!modelName) return [];
     try {
@@ -76,6 +99,8 @@ export const getSameDeveloperModels = cache(async (developer: string, excludeId:
             limit(7)
         );
         const devSnap = await getDocs(sameDevQuery);
+        const ranks = await getAllModelsRanked();
+        
         return devSnap.docs
             .map(d => {
                 const data = d.data();
@@ -83,6 +108,7 @@ export const getSameDeveloperModels = cache(async (developer: string, excludeId:
                     id: d.id, 
                     ...data,
                     releaseDate: (data.releaseDate as Timestamp)?.toDate?.()?.toLocaleDateString('vi-VN'),
+                    rank: ranks.get(d.id)
                 };
                 if (m.updatedAt?.toDate) m.updatedAt = m.updatedAt.toDate().toISOString();
                 if (m.createdAt?.toDate) m.createdAt = m.createdAt.toDate().toISOString();

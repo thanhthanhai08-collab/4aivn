@@ -1,7 +1,25 @@
 
 // src/components/layout/site-footer.tsx
 import { Link } from "@/i18n/routing";
-import { Facebook, Twitter, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+
+const ThreadsIcon = (props: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M19.29 17.25c-1.05 1.39-2.73 2.33-4.63 2.58-3.23.42-6.24-1.37-7.39-4.38-.57-1.49-.6-3.08-.1-4.57.85-2.52 3.14-4.22 5.79-4.22 1.57 0 3.01.61 4.09 1.63.85.8 1.41 1.86 1.6 3.04.18 1.1-.01 2.21-.54 3.19-.54 1-1.42 1.76-2.48 2.14-.8.29-1.68.32-2.5.09-1.04-.3-1.87-1.04-2.28-2.03-.31-.76-.36-1.59-.15-2.39.27-1.05.95-1.93 1.89-2.43.7-.37 1.49-.53 2.28-.46 1.05.09 1.99.59 2.59 1.39.31.41.53.88.65 1.37" />
+  </svg>
+);
+
 import { Logo } from "@/components/logo";
 import { useTranslations } from "next-intl";
 
@@ -24,8 +42,8 @@ const featuredTopics = [
 
 const socialMediaLinks = [
   { href: "https://www.facebook.com/4aivn", label: "Facebook", icon: Facebook },
-  { href: "#", label: "Twitter", icon: Twitter },
-  { href: "#", label: "LinkedIn", icon: Linkedin },
+  { href: "https://www.instagram.com/4aivn/", label: "Instagram", icon: Instagram },
+  { href: "https://www.threads.com/@4aivn", label: "Threads", icon: ThreadsIcon },
   { href: "#", label: "YouTube", icon: Youtube },
 ];
 

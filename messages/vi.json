@@ -104,7 +104,8 @@
   },
   "modelCard": {
     "yourRating": "Đánh giá của bạn: {rating} sao",
-    "viewDetail": "Xem chi tiết"
+    "viewDetail": "Xem chi tiết",
+    "rank": "Hạng {rank}"
   },
   "toolCard": {
     "loginRequired": "Yêu cầu đăng nhập",

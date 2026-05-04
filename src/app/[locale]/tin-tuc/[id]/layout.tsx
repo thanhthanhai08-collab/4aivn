@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { db } from "@/lib/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   children: React.ReactNode;
@@ -18,28 +19,36 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       return { title: "Danh mục không tồn tại" };
     }
 
-    let q = query(collection(db, "news-category"), where(`slug.${locale}`, "==", id));
-    let querySnapshot = await getDocs(q);
+    const docRef = doc(db, "news-category", id);
+    const docSnap = await getDoc(docRef);
     
-    if (querySnapshot.empty) {
-      // Fallback: check if they used the other locale's slug
-      const otherLocale = locale === 'en' ? 'vi' : 'en';
-      const fallbackQ = query(collection(db, "news-category"), where(`slug.${otherLocale}`, "==", id));
-      querySnapshot = await getDocs(fallbackQ);
-    }
-    
-    let category = null;
     let categoryName = id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     let categoryDesc = locale === 'en' ? `Latest articles and news about ${categoryName}. Continuously updated at 4AIVN.` : `Tổng hợp các bài viết, tin tức mới nhất về ${categoryName}. Cập nhật liên tục tại 4AIVN.`;
 
-    if (!querySnapshot.empty) {
-      category = querySnapshot.docs[0].data();
+    const categoryMapping: Record<string, string> = {
+        'danh-gia': 'review',
+        'huong-dan': 'guide',
+        'vibe-coding': 'vibeCoding',
+        'xu-huong': 'trending'
+    };
+
+    if (docSnap.exists()) {
+      const category = docSnap.data();
       if (category.name) {
-        categoryName = typeof category.name === 'string' ? category.name : (category.name[locale] || category.name['vi']);
+        categoryName = category.name;
       }
       if (category.description) {
-        categoryDesc = typeof category.description === 'string' ? category.description : (category.description[locale] || category.description['vi']);
+        categoryDesc = category.description;
       }
+    }
+
+    try {
+        const t = await getTranslations({ locale, namespace: 'news.categories' });
+        if (categoryMapping[id]) {
+            categoryName = t(categoryMapping[id] as any);
+        }
+    } catch (e) {
+        // fallback to db name
     }
 
     return {
@@ -73,30 +82,32 @@ export default async function NewsCategoryLayout({ children, params }: Props) {
             return <>{children}</>;
         }
     
-        let categoryName = id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-    
-        let q = query(collection(db, "news-category"), where(`slug.${locale}`, "==", id));
-        let querySnapshot = await getDocs(q);
+        const docRef = doc(db, "news-category", id);
+        const docSnap = await getDoc(docRef);
         
-        if (querySnapshot.empty) {
-            const otherLocale = locale === 'en' ? 'vi' : 'en';
-            const fallbackQ = query(collection(db, "news-category"), where(`slug.${otherLocale}`, "==", id));
-            querySnapshot = await getDocs(fallbackQ);
+        let categoryName = id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
-            if (!querySnapshot.empty) {
-                const docData = querySnapshot.docs[0].data();
-                const correctSlug = docData.slug?.[locale];
-                if (correctSlug && correctSlug !== id) {
-                    redirect(`/${locale === 'en' ? 'en/news' : 'tin-tuc'}/${correctSlug}`);
-                }
+        if (docSnap.exists()) {
+            const category = docSnap.data();
+            if(category.name) {
+                categoryName = category.name;
             }
         }
 
-        if (!querySnapshot.empty) {
-            const category = querySnapshot.docs[0].data();
-            if(category.name) {
-                categoryName = typeof category.name === 'string' ? category.name : (category.name[locale] || category.name['vi']);
+        const categoryMapping: Record<string, string> = {
+            'danh-gia': 'review',
+            'huong-dan': 'guide',
+            'vibe-coding': 'vibeCoding',
+            'xu-huong': 'trending'
+        };
+
+        try {
+            const t = await getTranslations({ locale, namespace: 'news.categories' });
+            if (categoryMapping[id]) {
+                categoryName = t(categoryMapping[id] as any);
             }
+        } catch (e) {
+            // fallback to db name
         }
 
         const breadcrumbSchema = {

@@ -39,7 +39,9 @@ export function ModelCard({ model }: ModelCardProps) {
                   {model.name}
                 </Link>
               </CardTitle>
-              <Badge variant="outline" className="mt-1">{model.type}</Badge>
+              <Badge variant="outline" className="mt-1">
+                {model.rank ? t("rank", { rank: model.rank }) : model.type}
+              </Badge>
             </div>
           </div>
         </div>
