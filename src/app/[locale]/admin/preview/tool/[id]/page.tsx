@@ -27,10 +27,13 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
 import { useParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
+    const t = useTranslations("toolDetail");
     if (reviews.length === 0) {
-        return <p className="text-muted-foreground text-center py-4">Chưa có bài đánh giá nào có nội dung.</p>;
+        return <p className="text-muted-foreground text-center py-4">{t("noReviews")}</p>;
     }
 
     const getInitials = (name: string | null | undefined) => {
@@ -52,7 +55,7 @@ const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
                     </Avatar>
                     <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
-                            <p className="font-semibold">{review.userName || 'Người dùng ẩn danh'}</p>
+                            <p className="font-semibold">{review.userName || t("anonymousUser")}</p>
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'text-amber-500 fill-amber-400' : 'text-gray-300'}`} />
@@ -87,6 +90,9 @@ function ToolDetailContent() {
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  const locale = useLocale();
+  const tPreview = useTranslations("preview");
+  const t = useTranslations("toolDetail");
   
 
   // Effect for public tool data (real-time)
@@ -247,7 +253,7 @@ function ToolDetailContent() {
 
   const handleFavoriteToggle = async () => {
     if (!currentUser) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để lưu mục yêu thích.", variant: "destructive" });
+      toast({ title: t("loginToFav"), description: t("loginToFavDesc"), variant: "destructive" });
       return;
     }
     
@@ -256,21 +262,21 @@ function ToolDetailContent() {
 
     try {
         await toggleToolFavorite(currentUser.uid, id, isFavorite);
-        toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
+        toast({ title: newFavoriteState ? t("favAdded") : t("favRemoved") });
     } catch (error) {
         console.error("Failed to update favorite status:", error);
         setIsFavorite(!newFavoriteState); 
-        toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+        toast({ title: t("error"), description: t("favError"), variant: "destructive" });
     }
   };
 
   const handleSubmitReview = async () => {
     if (!currentUser || !tool) {
-      toast({ title: "Yêu cầu đăng nhập", description: "Vui lòng đăng nhập để đánh giá công cụ.", variant: "destructive" });
+      toast({ title: t("loginToReview"), description: t("loginToReviewDesc"), variant: "destructive" });
       return;
     }
     if (currentRating === 0) {
-      toast({ title: "Thiếu đánh giá", description: "Vui lòng chọn số sao để đánh giá.", variant: "destructive" });
+      toast({ title: t("missingRating"), description: t("missingRatingDesc"), variant: "destructive" });
       return;
     }
 
@@ -283,7 +289,7 @@ function ToolDetailContent() {
         currentUser.displayName, 
         currentUser.photoURL
       );
-      toast({ title: "Đã gửi đánh giá", description: `Bạn đã đánh giá ${tool.name} ${currentRating} sao.` });
+      toast({ title: t("reviewSent"), description: t("reviewSentDesc", { name: tool.name, rating: currentRating }) });
 
       // Manually refetch reviews list after submission.
       getAllToolReviews(id).then(setAllReviews);
@@ -294,7 +300,7 @@ function ToolDetailContent() {
 
     } catch(error) {
       console.error("Failed to save rating:", error);
-      toast({ title: "Lỗi", description: "Không thể lưu đánh giá của bạn.", variant: "destructive" });
+      toast({ title: t("error"), description: t("reviewError"), variant: "destructive" });
     }
   };
 
@@ -324,10 +330,10 @@ function ToolDetailContent() {
     return (
       <AppLayout>
         <div className="container py-12 text-center">
-          <h1 className="text-2xl font-bold">Không tìm thấy công cụ để xem trước</h1>
-          <p className="text-muted-foreground">Công cụ này có thể đã bị xóa hoặc không tồn tại.</p>
+          <h1 className="text-2xl font-bold">{tPreview("notFound")}</h1>
+          <p className="text-muted-foreground">{tPreview("notFoundDesc")}</p>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/admin">Quay lại trang Quản trị</Link>
+            <Link href="/admin">{tPreview("backToAdmin")}</Link>
           </Button>
         </div>
       </AppLayout>
@@ -338,12 +344,20 @@ function ToolDetailContent() {
 
   return (
     <AppLayout>
-      <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold">
-        Chế độ xem trước
-      </div>
+        <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold flex justify-center items-center gap-4">
+            <span>{tPreview("previewMode")}</span>
+            <div className="flex bg-white/50 rounded-md p-0.5 ml-4">
+                <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'vi' ? "bg-white shadow-sm" : "")}>
+                   <Link href={{ pathname: '/admin/preview/tool/[id]', params: { id } }} locale="vi">{tPreview("switchLang", {lang: "Việt"})}</Link>
+                </Button>
+                <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'en' ? "bg-white shadow-sm" : "")}>
+                   <Link href={{ pathname: '/admin/preview/tool/[id]', params: { id } }} locale="en">{tPreview("switchLang", {lang: "Anh"})}</Link>
+                </Button>
+            </div>
+        </div>
       <div className="container py-8 md:py-12 mt-10">
         <Button variant="outline" size="sm" asChild className="mb-6">
-            <Link href="/admin"><ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Quản trị</Link>
+            <Link href="/admin"><ArrowLeft className="mr-2 h-4 w-4" /> {tPreview("backToAdmin")}</Link>
         </Button>
         
         {/* Rest of the UI is the same as the public page */}
@@ -363,11 +377,11 @@ function ToolDetailContent() {
                   <div className="flex items-center space-x-2 shrink-0">
                       <Button variant="outline" onClick={handleFavoriteToggle}>
                          <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                         {isFavorite ? "Đã thích" : "Yêu thích"}
+                         {isFavorite ? t("favorited") : t("favorite")}
                       </Button>
                       <Button asChild>
                          <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                          Truy cập trang <ExternalLink className="ml-2 h-4 w-4" />
+                          {t("visitPage")} <ExternalLink className="ml-2 h-4 w-4" />
                          </a>
                       </Button>
                   </div>
@@ -375,12 +389,12 @@ function ToolDetailContent() {
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-6">
                 <div className="flex items-center gap-1">
                   <Star className={`h-4 w-4 ${averageRating > 0 ? 'text-amber-500 fill-amber-400' : 'text-gray-400'}`} />
-                  <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : 'Chưa có'}</span>
-                  <span>({tool.ratingCount || 0} đánh giá)</span>
+                  <span className="font-semibold text-foreground">{averageRating > 0 ? averageRating.toFixed(1) : t("noRating")}</span>
+                  <span>{t("reviewCount", { count: tool.ratingCount || 0 })}</span>
                 </div>
                  {ranking && (
                     <div className="flex items-center gap-1">
-                        <span className="font-semibold text-foreground">Xếp hạng: #{ranking}</span>
+                        <span className="font-semibold text-foreground">{t("ranking", { rank: ranking })}</span>
                     </div>
                 )}
               </div>
@@ -397,7 +411,7 @@ function ToolDetailContent() {
                       {tool.videoUrl ? (
                           <iframe
                            src={tool.videoUrl}
-                           title={`Video giới thiệu ${tool.name}`}
+                           title={t("videoIntro", { name: tool.name })}
                            frameBorder="0"
                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                            allowFullScreen
@@ -407,7 +421,7 @@ function ToolDetailContent() {
                         <div className="relative w-full aspect-video overflow-hidden rounded-lg shadow-lg">
                           <Image
                             src={tool.imageUrl}
-                            alt={`Ảnh giới thiệu ${tool.context} ${tool.name}`}
+                            alt={t("imageIntro", { context: tool.context, name: tool.name })}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 800px"
@@ -421,14 +435,14 @@ function ToolDetailContent() {
             
              {tool.longDescription && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">{tool.name} là gì?</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("whatIs", { name: tool.name })}</h2>
                     <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
                 </section>
             )}
 
             {tool.features && tool.features.length > 0 && (
               <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Tính năng chính</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("keyFeatures")}</h2>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                   {tool.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
@@ -442,7 +456,7 @@ function ToolDetailContent() {
             
              {tool.useCases && tool.useCases.length > 0 && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Trường hợp sử dụng</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("useCases")}</h2>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
                       {tool.useCases.map((useCase, index) => (
                         <li key={index} className="flex items-start">
@@ -456,7 +470,7 @@ function ToolDetailContent() {
             
              {tool.whoIsItFor && tool.whoIsItFor.length > 0 && (
                 <section>
-                    <h2 className="text-2xl font-bold font-headline mb-4">Đối tượng phù hợp</h2>
+                    <h2 className="text-2xl font-bold font-headline mb-4">{t("whoIsItFor")}</h2>
                     <div className="flex flex-wrap gap-2">
                       {tool.whoIsItFor.map((target, index) => (
                         <Badge key={index} variant="outline" className="text-base py-1">{target}</Badge>
@@ -467,7 +481,7 @@ function ToolDetailContent() {
             
             {tool.pricingPlans && tool.pricingPlans.length > 0 && (
               <section>
-                  <h2 className="text-2xl font-bold font-headline mb-4">Các gói dịch vụ</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-4">{t("pricingPlans")}</h2>
                   <div className="prose max-w-none">
                       <ul>
                           {tool.pricingPlans.map((plan, index) => (
@@ -481,12 +495,12 @@ function ToolDetailContent() {
             <section>
                  <Card>
                     <CardHeader>
-                       <h2 className="text-2xl font-bold font-headline">Đánh giá & nhận xét</h2>
+                       <h2 className="text-2xl font-bold font-headline">{t("reviewsAndComments")}</h2>
                     </CardHeader>
                     <CardContent className="space-y-8">
                         <div className="bg-muted/30 p-6 rounded-lg">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-                                <h3 className="text-lg font-semibold">Bạn đánh giá {tool.name} như thế nào?</h3>
+                                <h3 className="text-lg font-semibold">{t("howDoYouRate", { name: tool.name })}</h3>
                                 <div className="flex items-center space-x-1 shrink-0">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                     <button
@@ -510,13 +524,13 @@ function ToolDetailContent() {
                                 </div>
                             </div>
                             <Textarea 
-                                placeholder="Viết đánh giá của bạn (tùy chọn)"
+                                placeholder={t("writeReviewPlaceholder")}
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
                             />
                             <div className="flex justify-end mt-4">
                                 <Button onClick={handleSubmitReview}>
-                                    Gửi đánh giá
+                                    {t("submitReview")}
                                 </Button>
                             </div>
                         </div>
@@ -524,7 +538,7 @@ function ToolDetailContent() {
                         <Separator />
 
                         <div>
-                             <h3 className="text-2xl font-bold font-headline mb-4">Tất cả bài đánh giá</h3>
+                             <h3 className="text-2xl font-bold font-headline mb-4">{t("allReviews")}</h3>
                              <ReviewsList reviews={allReviews} />
                         </div>
                     </CardContent>
@@ -541,7 +555,7 @@ function ToolDetailContent() {
                 >
                   <Image
                     src={adData.bannerAdsUrl} 
-                    alt="Quảng cáo tài trợ"
+                    alt={t("sponsoredAd")}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 800px" 
@@ -549,7 +563,7 @@ function ToolDetailContent() {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                   <div className="absolute top-2 right-2">
                     <Badge variant="secondary" className="text-[10px] opacity-70 bg-white/50 backdrop-blur-sm">
-                      Tài trợ
+                      {t("sponsored")}
                     </Badge>
                   </div>
                 </a>
@@ -558,7 +572,7 @@ function ToolDetailContent() {
             
             {similarTools.length > 0 && (
                 <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Công cụ tương tự {tool.name}</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("similarTools", { name: tool.name })}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {similarTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
                 </div>
@@ -567,7 +581,7 @@ function ToolDetailContent() {
             
             {complementaryTools.length > 0 && (
                 <section>
-                <h2 className="text-2xl font-bold font-headline mb-4">Khám phá các công cụ bổ sung hoạt động cùng với {tool.name}</h2>
+                <h2 className="text-2xl font-bold font-headline mb-4">{t("complementaryTools", { name: tool.name })}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {complementaryTools.map(t => <ToolCardSmall key={t.id} tool={t} />)}
                 </div>
@@ -577,7 +591,7 @@ function ToolDetailContent() {
           <aside className="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-8">
             <Card>
               <CardHeader>
-                <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> Công cụ nổi bật</h2>
+                <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> {t("featuredTools")}</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                   {featuredTools.map(t => (
@@ -595,7 +609,7 @@ function ToolDetailContent() {
             {relatedNews.length > 0 && (
               <Card>
                 <CardHeader>
-                  <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> Tin tức liên quan</h2>
+                  <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> {t("relatedNews")}</h2>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {relatedNews.map((article) => (
@@ -614,13 +628,13 @@ function ToolDetailContent() {
 
             <Card className="bg-accent/50 text-center p-6">
                 <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">
-                    Khám phá chatbot AI có thể cung cấp các công cụ AI phù hợp cho bạn
+                    {t("exploreRankings")}
                 </h3>
                 <p className="mb-4 text-sm text-muted-foreground">
-                    Nâng cấp quy trình làm việc của bạn
+                    {t("exploreRankingsDesc")}
                 </p>
                 <Button asChild>
-                    <Link href="/chatbot">Khám phá chatbot AI</Link>
+                    <Link href="/bang-xep-hang">{t("explore")}</Link>
                 </Button>
             </Card>
           </aside>

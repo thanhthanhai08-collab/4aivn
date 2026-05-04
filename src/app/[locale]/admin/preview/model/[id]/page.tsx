@@ -26,6 +26,8 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Ti
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
 import { useParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -51,6 +53,9 @@ function ModelPreviewContent() {
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  const locale = useLocale();
+  const tPreview = useTranslations("preview");
+  const t = useTranslations("modelDetail");
 
   useEffect(() => {
     if (!id) return;
@@ -194,10 +199,10 @@ function ModelPreviewContent() {
     return (
       <AppLayout>
         <div className="container py-12 text-center">
-          <h1 className="text-2xl font-bold">Không tìm thấy model AI</h1>
-           <p className="text-muted-foreground">Model này có thể không tồn tại hoặc đã bị xóa.</p>
+          <h1 className="text-2xl font-bold">{tPreview("notFound")}</h1>
+           <p className="text-muted-foreground">{tPreview("notFoundDesc")}</p>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/admin">Quay lại trang Quản trị</Link>
+            <Link href="/admin">{tPreview("backToAdmin")}</Link>
           </Button>
         </div>
       </AppLayout>
@@ -206,13 +211,21 @@ function ModelPreviewContent() {
   
   return (
     <AppLayout>
-      <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold">
-          Chế độ xem trước
+      <div className="fixed top-0 left-0 w-full bg-yellow-400 text-yellow-900 text-center p-2 z-[101] font-semibold flex justify-center items-center gap-4">
+          <span>{tPreview("previewMode")}</span>
+          <div className="flex bg-white/50 rounded-md p-0.5 ml-4">
+              <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'vi' ? "bg-white shadow-sm" : "")}>
+                  <Link href={{ pathname: '/admin/preview/model/[id]', params: { id } }} locale="vi">{tPreview("switchLang", {lang: "Việt"})}</Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild className={cn("h-7 px-2 text-xs", locale === 'en' ? "bg-white shadow-sm" : "")}>
+                  <Link href={{ pathname: '/admin/preview/model/[id]', params: { id } }} locale="en">{tPreview("switchLang", {lang: "Anh"})}</Link>
+              </Button>
+          </div>
       </div>
       <div className="container py-8 md:py-12 mt-10">
         <Button variant="outline" size="sm" asChild className="mb-6">
           <Link href="/admin">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Quay lại trang Quản trị
+            <ArrowLeft className="mr-2 h-4 w-4" /> {tPreview("backToAdmin")}
           </Link>
         </Button>
         
@@ -231,10 +244,10 @@ function ModelPreviewContent() {
                               <div className="flex items-center space-x-2">
                               <Button variant="outline" onClick={handleFavoriteToggle}>
                                   <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
-                                  {isFavorite ? "Đã thích" : "Yêu thích"}
+                                  {isFavorite ? t("favorited") : t("favorite")}
                               </Button>
                               <Button variant="outline" onClick={handleShare}>
-                                  <Share2 className="mr-2 h-4 w-4" /> Chia sẻ
+                                  <Share2 className="mr-2 h-4 w-4" /> {t("share")}
                               </Button>
                               </div>
                           </div>
@@ -247,7 +260,7 @@ function ModelPreviewContent() {
               <div className="md:col-span-1 space-y-6 md:sticky md:top-24">
                   <Card>
                       <CardHeader>
-                          <CardTitle className="text-xl font-headline">Đánh giá model này</CardTitle>
+                          <CardTitle className="text-xl font-headline">{t("rateModel")}</CardTitle>
                       </CardHeader>
                       <CardContent>
                           <div className="flex items-center space-x-1 mb-2">
@@ -261,8 +274,8 @@ function ModelPreviewContent() {
                               </button>
                           ))}
                           </div>
-                           <p className="text-sm text-muted-foreground">Đánh giá của bạn: {currentRating > 0 ? `${currentRating} sao` : "Chưa đánh giá"}</p>
-                          {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">Trung bình: {(model.averageRating ?? 0).toFixed(1)} sao ({model.ratingCount || 0} đánh giá)</p>}
+                           <p className="text-sm text-muted-foreground">{t("yourRating")} {currentRating > 0 ? `${currentRating} sao` : t("notRated")}</p>
+                          {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">{t("averageRating", { avg: (model.averageRating ?? 0).toFixed(1), count: model.ratingCount || 0 })}</p>}
                       </CardContent>
                   </Card>
               </div>
@@ -271,64 +284,64 @@ function ModelPreviewContent() {
           <div className="space-y-12">
               <Card>
                   <CardHeader>
-                  <CardTitle>Thông số mô hình</CardTitle>
-                  <CardDescription>Thông tin kỹ thuật và phiên bản được phát hành.</CardDescription>
+                  <CardTitle>{t("specs")}</CardTitle>
+                  <CardDescription>{t("specsDesc")}</CardDescription>
                   </CardHeader>
                   <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm">
                       <div className="flex items-start space-x-3">
                           <User className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Nhà phát triển</p>
+                              <p className="font-semibold">{t("developer")}</p>
                               <p className="text-muted-foreground">{model.developer}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <Layers className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Hỗ trợ đa phương thức</p>
-                              <p className="text-muted-foreground">{model.multimodal ? 'Có' : 'Không'}</p>
+                              <p className="font-semibold">{t("multimodal")}</p>
+                              <p className="text-muted-foreground">{model.multimodal ? t("yes") : t("no")}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <BrainCircuit className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Chỉ số thông minh</p>
+                              <p className="font-semibold">{t("intelligenceScore")}</p>
                               <p className="text-muted-foreground">{model.intelligenceScore}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <BookOpen className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Độ dài ngữ cảnh (Context window)</p>
+                              <p className="font-semibold">{t("contextWindow")}</p>
                               <p className="text-muted-foreground">{formatContextLength(model.contextLengthToken as number)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <DollarSign className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Giá trung bình (USD/1M token)</p>
+                              <p className="font-semibold">{t("pricePer1M")}</p>
                               <p className="text-muted-foreground">${model.pricePerMillionTokens?.toFixed(2)}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <Zap className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Tốc độ (token/s)</p>
-                              <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1) || 'N/A'}</p>
+                              <p className="font-semibold">{t("speed")}</p>
+                              <p className="text-muted-foreground">{model.speedTokensPerSecond?.toFixed(1) || t("na")}</p>
                           </div>
                       </div>
                        <div className="flex items-start space-x-3">
                           <Timer className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Độ trễ (s)</p>
-                              <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2) || 'N/A'}</p>
+                              <p className="font-semibold">{t("latency")}</p>
+                              <p className="text-muted-foreground">{model.latencyFirstChunkSeconds?.toFixed(2) || t("na")}</p>
                           </div>
                       </div>
                       <div className="flex items-start space-x-3">
                           <CalendarDays className="h-5 w-5 mt-1 text-primary" />
                           <div>
-                              <p className="font-semibold">Ngày phát hành</p>
-                              <p className="text-muted-foreground">{model.releaseDate || 'N/A'}</p>
+                              <p className="font-semibold">{t("releaseDate")}</p>
+                              <p className="text-muted-foreground">{model.releaseDate || t("na")}</p>
                           </div>
                       </div>
                   </CardContent>
@@ -336,21 +349,21 @@ function ModelPreviewContent() {
               
                {model.benchmarks && model.benchmarks.length > 0 && (
                   <section>
-                      <h2 className="text-2xl font-bold font-headline mb-2">Thống kê hiệu suất</h2>
-                      <p className="text-muted-foreground mb-6">Chỉ số thông minh của model sẽ được tính trung bình của các điểm benchmark này</p>
+                      <h2 className="text-2xl font-bold font-headline mb-2">{t("stats")}</h2>
+                      <p className="text-muted-foreground mb-6">{t("statsDesc")}</p>
                       <O3PerformanceInsightsChart benchmarkData={model.benchmarks} />
                   </section>
                )}
               
               <section>
-                <h2 className="text-2xl font-bold font-headline mb-2">Điểm chuẩn chi tiết</h2>
-                <p className="text-muted-foreground mb-6">So sánh {model.name} với các mô hình hàng đầu khác trong các lĩnh vực cụ thể.</p>
+                <h2 className="text-2xl font-bold font-headline mb-2">{t("benchmarks")}</h2>
+                <p className="text-muted-foreground mb-6">{t("benchmarksDesc", { name: model.name })}</p>
                 <O3DetailedBenchmarkCharts currentModel={model} />
               </section>
 
               {sameDeveloperModels.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6">Các mô hình khác từ {model.developer}</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-6">{t("otherModels", { developer: model.developer })}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {sameDeveloperModels.map((devModel) => (
                       <ModelCard key={devModel.id} model={devModel} />
@@ -361,7 +374,7 @@ function ModelPreviewContent() {
 
               {relatedNews.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-bold font-headline mb-6">Bài viết liên quan</h2>
+                  <h2 className="text-2xl font-bold font-headline mb-6">{t("relatedArticles")}</h2>
                   <div className="space-y-8">
                     {relatedNews.map((article) => (
                       <NewsListItem key={article.id} article={article} />

@@ -439,7 +439,7 @@ function NewsDetailContent() {
                     {summary ? (
                         <Card className="mb-8 bg-accent/50 border-primary/20">
                             <CardHeader>
-                                <h2 className="text-2xl font-headline font-bold">Tóm tắt nhanh</h2>
+                                <h2 className="text-2xl font-headline font-bold">{tNewsDetail("quickSummary")}</h2>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-lg text-muted-foreground">{summary}</p>
@@ -495,7 +495,7 @@ function NewsDetailContent() {
                 <aside className="lg:col-span-4 mt-8 lg:mt-0 lg:sticky lg:top-24 h-fit space-y-8">
                     <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl font-headline font-bold text-primary">Tin mới nhất</CardTitle>
+                        <CardTitle className="text-2xl font-headline font-bold text-primary">{tNewsDetail("latestNews")}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {latestNews.map((related) => (
@@ -529,10 +529,10 @@ function NewsDetailContent() {
                     </CardContent>
                     </Card>
                     <Card className="bg-accent/50 text-center p-6">
-                        <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">Khám phá bảng xếp hạng</h3>
-                        <p className="mb-4 text-sm text-muted-foreground">Giúp bạn so sánh các model, công cụ AI trực quan nhất</p>
+                        <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{tNewsDetail("exploreRankings")}</h3>
+                        <p className="mb-4 text-sm text-muted-foreground">{tNewsDetail("exploreRankingsDesc")}</p>
                         <Button asChild>
-                            <Link href="/bang-xep-hang">Khám phá</Link>
+                            <Link href="/bang-xep-hang">{tNewsDetail("exploreBtn")}</Link>
                         </Button>
                     </Card>
                 </aside>
@@ -541,7 +541,7 @@ function NewsDetailContent() {
             {relatedNews.length > 0 && (
             <section className="mt-16 pt-12 border-t">
                 <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
-                Các bài viết liên quan
+                {tNewsDetail("relatedArticles")}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {relatedNews.map((article) => (
