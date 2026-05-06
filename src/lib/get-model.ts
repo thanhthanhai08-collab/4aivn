@@ -2,8 +2,9 @@ import { cache } from 'react';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { AIModel, NewsArticle, BenchmarkData } from '@/lib/types';
+import { getLocalized } from './i18n-helpers';
 
-export const getModel = cache(async (id: string) => {
+export const getModel = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
   try {
@@ -28,6 +29,7 @@ export const getModel = cache(async (id: string) => {
       const model: any = {
           id: docSnap.id,
           ...data,
+          description: getLocalized(data.description, locale),
           releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
           benchmarks: benchmarksData,
       };

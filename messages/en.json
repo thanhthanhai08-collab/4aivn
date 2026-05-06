@@ -60,7 +60,11 @@
     "exploreRankingsDesc": "Compare AI models and tools with the most intuitive visualizations",
     "exploreBtn": "Explore",
     "latestNews": "Latest News",
-    "emptyComments": "No comments yet. Be the first!"
+    "emptyComments": "No comments yet. Be the first!",
+    "anonymousUser": "Anonymous User",
+    "commentPlaceholder": "Write your comment...",
+    "postComment": "Post Comment",
+    "commentError": "Could not post comment. Please try again."
   },
   "search": {
     "search_placeholder": "Search news, articles...",

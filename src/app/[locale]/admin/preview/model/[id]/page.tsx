@@ -28,6 +28,7 @@ import { ModelCard } from "@/components/models/model-card";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { getLocalized } from "@/lib/i18n-helpers";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -85,6 +86,7 @@ function ModelPreviewContent() {
             const foundModel = {
                 id: docSnap.id,
                 ...data,
+                description: getLocalized(data.description, locale),
                 releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
                 benchmarks: benchmarksData,
             } as AIModel;
@@ -139,7 +141,7 @@ function ModelPreviewContent() {
     });
 
     return () => unsubscribe();
-  }, [id]);
+  }, [id, locale]);
 
   // These effects remain the same as they are user-specific
   useEffect(() => {

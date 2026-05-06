@@ -19,7 +19,7 @@ export async function generateMetadata(
       return { title: isEn ? 'Model not found' : 'Không tìm thấy model' };
   }
 
-  const model = await getModel(id);
+  const model = await getModel(id, locale);
 
   if (!model) {
       return {
@@ -91,7 +91,7 @@ export default async function ModelDetailLayout({ children, params }: Props) {
       return <>{children}</>;
     }
 
-    const model = await getModel(id);
+    const model = await getModel(id, locale);
 
     if (!model) return <>{children}</>;
 

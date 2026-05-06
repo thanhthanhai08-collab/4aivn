@@ -36,7 +36,7 @@ export function CommentList({ comments }: CommentListProps) {
           </Avatar>
           <div className="flex-1">
             <div className="flex items-center space-x-2">
-              <p className="font-semibold text-sm">{comment.userName || "Người dùng ẩn danh"}</p>
+              <p className="font-semibold text-sm">{comment.userName || t('anonymousUser')}</p>
               <p className="text-xs text-muted-foreground">
                 {formatDistanceToNow(comment.createdAt, { addSuffix: true, locale: dateLocale })}
               </p>

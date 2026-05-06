@@ -3,15 +3,17 @@ import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timesta
 import { db } from '@/lib/firebase';
 import type { Tool, NewsArticle, ToolReview } from '@/lib/types';
 import { getAllToolReviews } from '@/lib/user-data-service';
+import { getLocalized } from './i18n-helpers';
 
-function serializeTool(id: string, data: any): Tool {
+function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     const tool: any = { id, ...data };
+    tool.description = getLocalized(data.description, locale);
     if (tool.updatedAt?.toDate) tool.updatedAt = tool.updatedAt.toDate().toISOString();
     if (tool.createdAt?.toDate) tool.createdAt = tool.createdAt.toDate().toISOString();
     return tool as Tool;
 }
 
-export const getTool = cache(async (id: string) => {
+export const getTool = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
   try {
@@ -19,7 +21,7 @@ export const getTool = cache(async (id: string) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && docSnap.data().post === true) {
-      return serializeTool(docSnap.id, docSnap.data());
+      return serializeTool(docSnap.id, docSnap.data(), locale);
     }
     return null;
   } catch (error) {

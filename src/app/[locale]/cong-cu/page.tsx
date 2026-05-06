@@ -16,6 +16,7 @@ import { useInView } from "react-intersection-observer";
 import { Loader2 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { Badge } from "@/components/ui/badge";
+import { getLocalized } from "@/lib/i18n-helpers";
 
 const PAGE_SIZE = 100;
 
@@ -97,7 +98,14 @@ function ToolsContent() {
       }
   
       const snapshot = await getDocs(q);
-      const newTools = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+      const newTools = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          description: getLocalized(data.description, locale),
+        } as Tool;
+      });
   
       if (isFirstLoad) {
         setAllTools(newTools);

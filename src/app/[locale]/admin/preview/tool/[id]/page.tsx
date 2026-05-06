@@ -29,6 +29,7 @@ import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, typ
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { getLocalized } from "@/lib/i18n-helpers";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -104,7 +105,12 @@ function ToolDetailContent() {
     const unsubscribe = onSnapshot(toolDocRef, (docSnap) => {
       // Don't check for post === true in preview mode
       if (docSnap.exists()) {
-        const foundTool = { id: docSnap.id, ...docSnap.data() } as Tool;
+        const data = docSnap.data();
+        const foundTool = {
+          id: docSnap.id,
+          ...data,
+          description: getLocalized(data.description, locale),
+        } as Tool;
         setTool(foundTool);
       } else {
         setTool(null);
@@ -116,7 +122,7 @@ function ToolDetailContent() {
     });
 
     return () => unsubscribe();
-  }, [id]);
+  }, [id, locale]);
 
   // Other effects remain the same to provide a full preview experience...
   useEffect(() => {

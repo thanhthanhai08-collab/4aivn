@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import type { Comment } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface CommentFormProps {
   articleId: string;
@@ -21,6 +22,7 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
   const [commentText, setCommentText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const t = useTranslations('newsDetail');
   
   const getInitials = (email: string | null | undefined) => {
     if (!email) return "?";
@@ -59,8 +61,8 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
     } catch (error) {
       console.error("Error adding comment:", error);
       toast({
-        title: "Lỗi",
-        description: "Không thể đăng bình luận. Vui lòng thử lại.",
+        title: t("error"),
+        description: t("commentError"),
         variant: "destructive",
       });
       // A more advanced implementation might remove the optimistic comment on error.
@@ -81,7 +83,7 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
       </Avatar>
       <div className="w-full">
         <Textarea
-          placeholder="Viết bình luận của bạn..."
+          placeholder={t('commentPlaceholder')}
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           disabled={isSubmitting}
@@ -91,7 +93,7 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting || !commentText.trim()}>
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Đăng bình luận
+            {t('postComment')}
           </Button>
         </div>
       </div>

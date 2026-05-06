@@ -23,7 +23,7 @@ export async function generateMetadata(
     };
   }
 
-  const tool = await getTool(id);
+  const tool = await getTool(id, locale);
 
   if (!tool) {
     return {
@@ -82,7 +82,7 @@ export default async function ToolDetailLayout({ children, params }: Props) {
   }
 
   // Fetch dữ liệu trên Server để tạo Schema bằng react.cache helper
-  const tool = await getTool(id);
+  const tool = await getTool(id, locale);
 
   // Nếu không có dữ liệu thì chỉ render children (để page.tsx xử lý lỗi 404 sau)
   if (!tool) return <>{children}</>;

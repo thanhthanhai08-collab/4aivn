@@ -4,11 +4,12 @@ import { AppLayout } from '@/components/layout/app-layout';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 
-export default async function ToolDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ToolDetailPage({ params }: { params: Promise<{ id: string; locale: string }> }) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
+  const locale = resolvedParams.locale;
   
-  const tool = await getTool(id);
+  const tool = await getTool(id, locale);
 
   if (!tool) {
     return (

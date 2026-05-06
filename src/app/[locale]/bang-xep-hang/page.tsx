@@ -16,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useLocale } from "next-intl";
+import { getLocalized } from "@/lib/i18n-helpers";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -205,14 +206,19 @@ export default function RankingsPage() {
             return { 
                 id: doc.id, 
                 ...data,
+                description: getLocalized(data.description, locale),
                 releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
             } as AIModel
         });
         
-        const dbTools = toolsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        } as Tool));
+        const dbTools = toolsSnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                ...data,
+                description: getLocalized(data.description, locale),
+            } as Tool;
+        });
 
         setAllTools(dbTools);
         setAllModels(dbModels);
