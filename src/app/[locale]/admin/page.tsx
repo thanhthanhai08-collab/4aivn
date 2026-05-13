@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -145,49 +146,190 @@ function ItemTable({ title, items, collectionName, onEdit, onAddNew }: { title: 
 }
 
 // Form Component for Editing/Adding a Tool
+// Helper to extract value from LocalizedField
+function extractLocalized(field: any, lang: 'vi' | 'en'): string {
+    if (!field) return '';
+    if (typeof field === 'string') return lang === 'vi' ? field : '';
+    if (typeof field === 'object' && field !== null) return field[lang] || '';
+    return '';
+}
+
+// Helper to extract value from LocalizedArrayField → join as lines
+function extractLocalizedArray(field: any, lang: 'vi' | 'en'): string {
+    if (!field) return '';
+    if (Array.isArray(field)) return lang === 'vi' ? field.join('\n') : '';
+    if (typeof field === 'object' && field !== null) {
+        const arr = field[lang];
+        return Array.isArray(arr) ? arr.join('\n') : '';
+    }
+    return '';
+}
+
 function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => void }) {
     const { toast } = useToast();
-    const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<Tool>({
-        defaultValues: item || { name: '', context: '', description: '', link: '', logoUrl: '', imageUrl: '' },
-    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [activeTab, setActiveTab] = useState('vi');
 
-    const onSubmit = async (data: Tool) => {
+    // Common fields
+    const [name, setName] = useState(item?.name || '');
+    const [context, setContext] = useState(item?.context || '');
+    const [link, setLink] = useState(item?.link || '');
+    const [logoUrl, setLogoUrl] = useState(item?.logoUrl || '');
+    const [imageUrl, setImageUrl] = useState(item?.imageUrl || '');
+    const [videoUrl, setVideoUrl] = useState(item?.videoUrl || '');
+    const [developer, setDeveloper] = useState(item?.developer || '');
+
+    // Bilingual fields — Vietnamese
+    const [descVi, setDescVi] = useState(extractLocalized(item?.description, 'vi'));
+    const [longDescVi, setLongDescVi] = useState(extractLocalized(item?.longDescription, 'vi'));
+    const [featuresVi, setFeaturesVi] = useState(extractLocalizedArray(item?.features, 'vi'));
+    const [useCasesVi, setUseCasesVi] = useState(extractLocalizedArray(item?.useCases, 'vi'));
+    const [whoIsItForVi, setWhoIsItForVi] = useState(extractLocalizedArray(item?.whoIsItFor, 'vi'));
+    const [pricingPlansVi, setPricingPlansVi] = useState(extractLocalizedArray(item?.pricingPlans, 'vi'));
+
+    // Bilingual fields — English
+    const [descEn, setDescEn] = useState(extractLocalized(item?.description, 'en'));
+    const [longDescEn, setLongDescEn] = useState(extractLocalized(item?.longDescription, 'en'));
+    const [featuresEn, setFeaturesEn] = useState(extractLocalizedArray(item?.features, 'en'));
+    const [useCasesEn, setUseCasesEn] = useState(extractLocalizedArray(item?.useCases, 'en'));
+    const [whoIsItForEn, setWhoIsItForEn] = useState(extractLocalizedArray(item?.whoIsItFor, 'en'));
+    const [pricingPlansEn, setPricingPlansEn] = useState(extractLocalizedArray(item?.pricingPlans, 'en'));
+
+    // Convert textarea lines to string array (filter empty lines)
+    const linesToArray = (text: string): string[] => text.split('\n').map(l => l.trim()).filter(Boolean);
+
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!name.trim()) {
+            toast({ title: 'Lỗi', description: 'Tên công cụ là bắt buộc', variant: 'destructive' });
+            return;
+        }
+        setIsSubmitting(true);
         try {
-            await addOrUpdateItem('tools', data, item?.id);
+            const payload: any = {
+                name,
+                context,
+                link,
+                logoUrl,
+                imageUrl,
+                videoUrl,
+                developer,
+                // Bilingual Map fields
+                description: { vi: descVi, en: descEn },
+                longDescription: { vi: longDescVi, en: longDescEn },
+                features: { vi: linesToArray(featuresVi), en: linesToArray(featuresEn) },
+                useCases: { vi: linesToArray(useCasesVi), en: linesToArray(useCasesEn) },
+                whoIsItFor: { vi: linesToArray(whoIsItForVi), en: linesToArray(whoIsItForEn) },
+                pricingPlans: { vi: linesToArray(pricingPlansVi), en: linesToArray(pricingPlansEn) },
+            };
+            await addOrUpdateItem('tools', payload, item?.id);
             toast({ title: 'Thành công', description: `Đã ${item ? 'cập nhật' : 'thêm'} công cụ.` });
             onFinished();
         } catch (error) {
             toast({ title: 'Lỗi', description: (error as Error).message, variant: 'destructive' });
+        } finally {
+            setIsSubmitting(false);
         }
     };
     
+    // Render bilingual content fields for a given language
+    const renderLangFields = (lang: 'vi' | 'en') => {
+        const labelPrefix = lang === 'vi' ? '🇻🇳' : '🇬🇧';
+        const desc = lang === 'vi' ? descVi : descEn;
+        const setDesc = lang === 'vi' ? setDescVi : setDescEn;
+        const longDesc = lang === 'vi' ? longDescVi : longDescEn;
+        const setLongDesc = lang === 'vi' ? setLongDescVi : setLongDescEn;
+        const feat = lang === 'vi' ? featuresVi : featuresEn;
+        const setFeat = lang === 'vi' ? setFeaturesVi : setFeaturesEn;
+        const uc = lang === 'vi' ? useCasesVi : useCasesEn;
+        const setUc = lang === 'vi' ? setUseCasesVi : setUseCasesEn;
+        const who = lang === 'vi' ? whoIsItForVi : whoIsItForEn;
+        const setWho = lang === 'vi' ? setWhoIsItForVi : setWhoIsItForEn;
+        const pricing = lang === 'vi' ? pricingPlansVi : pricingPlansEn;
+        const setPricing = lang === 'vi' ? setPricingPlansVi : setPricingPlansEn;
+        
+        return (
+            <div className="space-y-3">
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Mô tả ngắn</Label>
+                    <Textarea value={desc} onChange={e => setDesc(e.target.value)} placeholder={lang === 'vi' ? 'Mô tả bằng tiếng Việt...' : 'Description in English...'} />
+                </div>
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Mô tả chi tiết (HTML)</Label>
+                    <Textarea value={longDesc} onChange={e => setLongDesc(e.target.value)} className="min-h-[120px]" placeholder={lang === 'vi' ? 'Mô tả chi tiết (HTML)...' : 'Long description (HTML)...'} />
+                </div>
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Tính năng <span className="text-xs text-muted-foreground">(mỗi dòng 1 tính năng)</span></Label>
+                    <Textarea value={feat} onChange={e => setFeat(e.target.value)} className="min-h-[80px]" placeholder={lang === 'vi' ? 'Tính năng 1\nTính năng 2' : 'Feature 1\nFeature 2'} />
+                </div>
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Trường hợp sử dụng <span className="text-xs text-muted-foreground">(mỗi dòng 1 mục)</span></Label>
+                    <Textarea value={uc} onChange={e => setUc(e.target.value)} className="min-h-[80px]" placeholder={lang === 'vi' ? 'Trường hợp 1\nTrường hợp 2' : 'Use case 1\nUse case 2'} />
+                </div>
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Đối tượng phù hợp <span className="text-xs text-muted-foreground">(mỗi dòng 1 mục)</span></Label>
+                    <Textarea value={who} onChange={e => setWho(e.target.value)} className="min-h-[60px]" placeholder={lang === 'vi' ? 'Lập trình viên\nNhà thiết kế' : 'Developers\nDesigners'} />
+                </div>
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Gói giá <span className="text-xs text-muted-foreground">(mỗi dòng 1 gói)</span></Label>
+                    <Textarea value={pricing} onChange={e => setPricing(e.target.value)} className="min-h-[60px]" placeholder={lang === 'vi' ? 'Miễn phí\nPro: $10/tháng' : 'Free\nPro: $10/month'} />
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-h-[70vh] overflow-y-auto pr-4">
+        <form onSubmit={onSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-4">
+            {/* Common fields */}
             <div className="space-y-1">
                 <Label htmlFor="name">Tên công cụ</Label>
-                <Input id="name" {...register('name', { required: 'Tên là bắt buộc' })} />
-                {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+                <Input id="name" value={name} onChange={e => setName(e.target.value)} required />
             </div>
-             <div className="space-y-1">
-                <Label htmlFor="context">Hạng mục</Label>
-                <Input id="context" {...register('context')} />
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                    <Label htmlFor="context">Hạng mục</Label>
+                    <Input id="context" value={context} onChange={e => setContext(e.target.value)} />
+                </div>
+                <div className="space-y-1">
+                    <Label htmlFor="developer">Nhà phát triển</Label>
+                    <Input id="developer" value={developer} onChange={e => setDeveloper(e.target.value)} />
+                </div>
             </div>
-             <div className="space-y-1">
-                <Label htmlFor="description">Mô tả ngắn</Label>
-                <Textarea id="description" {...register('description')} />
-            </div>
-             <div className="space-y-1">
+            <div className="space-y-1">
                 <Label htmlFor="link">Link trang web</Label>
-                <Input id="link" {...register('link')} />
+                <Input id="link" value={link} onChange={e => setLink(e.target.value)} />
             </div>
-             <div className="space-y-1">
-                <Label htmlFor="logoUrl">URL logo</Label>
-                <Input id="logoUrl" {...register('logoUrl')} />
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                    <Label htmlFor="logoUrl">URL logo</Label>
+                    <Input id="logoUrl" value={logoUrl} onChange={e => setLogoUrl(e.target.value)} />
+                </div>
+                <div className="space-y-1">
+                    <Label htmlFor="imageUrl">URL ảnh bìa</Label>
+                    <Input id="imageUrl" value={imageUrl} onChange={e => setImageUrl(e.target.value)} />
+                </div>
             </div>
-             <div className="space-y-1">
-                <Label htmlFor="imageUrl">URL ảnh bìa</Label>
-                <Input id="imageUrl" {...register('imageUrl')} />
+            <div className="space-y-1">
+                <Label htmlFor="videoUrl">URL video</Label>
+                <Input id="videoUrl" value={videoUrl} onChange={e => setVideoUrl(e.target.value)} />
             </div>
+
+            {/* Bilingual content tabs */}
+            <Separator />
+            <h3 className="font-semibold text-sm text-muted-foreground">NỘI DUNG SONG NGỮ</h3>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+                <TabsList className="w-full">
+                    <TabsTrigger value="vi" className="flex-1">🇻🇳 Tiếng Việt</TabsTrigger>
+                    <TabsTrigger value="en" className="flex-1">🇬🇧 English</TabsTrigger>
+                </TabsList>
+                <TabsContent value="vi" className="mt-3">
+                    {renderLangFields('vi')}
+                </TabsContent>
+                <TabsContent value="en" className="mt-3">
+                    {renderLangFields('en')}
+                </TabsContent>
+            </Tabs>
+
             <DialogFooter>
                 <DialogClose asChild><Button type="button" variant="ghost">Hủy</Button></DialogClose>
                 <Button type="submit" disabled={isSubmitting}>

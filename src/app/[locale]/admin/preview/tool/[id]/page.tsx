@@ -29,7 +29,7 @@ import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, typ
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { getLocalized } from "@/lib/i18n-helpers";
+import { getLocalized, getLocalizedArray } from "@/lib/i18n-helpers";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -110,6 +110,11 @@ function ToolDetailContent() {
           id: docSnap.id,
           ...data,
           description: getLocalized(data.description, locale),
+          longDescription: getLocalized(data.longDescription, locale),
+          features: getLocalizedArray(data.features, locale),
+          pricingPlans: getLocalizedArray(data.pricingPlans, locale),
+          useCases: getLocalizedArray(data.useCases, locale),
+          whoIsItFor: getLocalizedArray(data.whoIsItFor, locale),
         } as Tool;
         setTool(foundTool);
       } else {

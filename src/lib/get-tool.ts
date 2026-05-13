@@ -3,11 +3,16 @@ import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timesta
 import { db } from '@/lib/firebase';
 import type { Tool, NewsArticle, ToolReview } from '@/lib/types';
 import { getAllToolReviews } from '@/lib/user-data-service';
-import { getLocalized } from './i18n-helpers';
+import { getLocalized, getLocalizedArray } from './i18n-helpers';
 
 function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     const tool: any = { id, ...data };
     tool.description = getLocalized(data.description, locale);
+    tool.longDescription = getLocalized(data.longDescription, locale);
+    tool.features = getLocalizedArray(data.features, locale);
+    tool.pricingPlans = getLocalizedArray(data.pricingPlans, locale);
+    tool.useCases = getLocalizedArray(data.useCases, locale);
+    tool.whoIsItFor = getLocalizedArray(data.whoIsItFor, locale);
     if (tool.updatedAt?.toDate) tool.updatedAt = tool.updatedAt.toDate().toISOString();
     if (tool.createdAt?.toDate) tool.createdAt = tool.createdAt.toDate().toISOString();
     return tool as Tool;

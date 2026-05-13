@@ -42,3 +42,26 @@ export function getLocalizedSlug(
 export function isLocalizedMap(field: LocalizedField | undefined | null): field is { vi: string; en: string } {
   return typeof field === 'object' && field !== null && 'vi' in field;
 }
+
+/**
+ * Kiểu dữ liệu cho trường mảng song ngữ.
+ * Bài cũ: string[] (chỉ tiếng Việt)
+ * Bài mới: Map { vi: string[], en: string[] }
+ */
+export type LocalizedArrayField = string[] | { vi: string[]; en: string[] };
+
+/**
+ * Trích xuất giá trị đã localize từ Map hoặc string[] thuần.
+ * - Nếu field là Map → trả về value theo locale
+ * - Nếu field là string[] thuần (bài cũ) → trả về array đó
+ * - Fallback: locale → vi → en → []
+ */
+export function getLocalizedArray(
+  field: LocalizedArrayField | undefined | null,
+  locale: string
+): string[] {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  const loc = locale as 'vi' | 'en';
+  return field[loc] || field['vi'] || field['en'] || [];
+}
