@@ -27,7 +27,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
 
   const [adData, relatedData] = await Promise.all([
       getToolAdSettings(),
-      getToolRelatedData(tool.id || '', tool.name, tool.context || '')
+      getToolRelatedData(tool.id || '', tool.name, tool.contextKey || '')
   ]);
 
   return (

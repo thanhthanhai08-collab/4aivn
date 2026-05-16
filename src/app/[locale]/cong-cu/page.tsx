@@ -88,7 +88,8 @@ function ToolsContent() {
       );
   
       if (category !== "all") {
-        q = query(q, where("context", "==", category));
+        // category value is the raw Vietnamese contextKey for Firestore query
+        q = query(q, where("context.vi", "==", category));
       }
       
       if (isFirstLoad) {
@@ -103,6 +104,8 @@ function ToolsContent() {
         return {
           id: doc.id,
           ...data,
+          contextKey: getLocalized(data.context, 'vi'),
+          context: getLocalized(data.context, locale),
           description: getLocalized(data.description, locale),
         } as Tool;
       });
@@ -145,12 +148,17 @@ function ToolsContent() {
   useEffect(() => { setSearchTerm(initialSearchQuery); }, [initialSearchQuery]);
   useEffect(() => { setSelectedCategory(initialCategory); }, [initialCategory]);
 
+  // Build category list: { key (Vietnamese for query), label (localized for display) }
   const categories = useMemo(() => {
-    // Note: This won't have all categories until all tools are loaded.
-    // For a full category list, it's better to fetch them from a separate 'categories' collection in Firestore.
-    // However, for this implementation, we'll build it from the loaded tools.
-    const toolCategories = new Set(allTools.map(tool => tool.context).filter(Boolean));
-    return Array.from(toolCategories).sort((a, b) => a.localeCompare(b));
+    const seen = new Map<string, string>(); // contextKey → localized context
+    allTools.forEach(tool => {
+      if (tool.contextKey && !seen.has(tool.contextKey)) {
+        seen.set(tool.contextKey, tool.context);
+      }
+    });
+    return Array.from(seen.entries())
+      .map(([key, label]) => ({ key, label }))
+      .sort((a, b) => a.label.localeCompare(b.label));
   }, [allTools]);
 
   const filteredTools = useMemo(() => {

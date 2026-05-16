@@ -1,7 +1,8 @@
 export interface Tool {
   id: string;
   name: string;
-  context: string; // Category like 'Chatbot', 'Image Generation'
+  context: string; // Localized category for display
+  contextKey?: string; // Raw context key for Firestore queries (always Vietnamese)
   developer: string;
   ranking?: number; // Optional: current rank, might be dynamically calculated
   description: string;

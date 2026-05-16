@@ -8,10 +8,15 @@ import { useTranslations } from "next-intl";
 import { Search, FilterX } from "lucide-react";
 import { useState, useEffect } from "react";
 
+interface CategoryItem {
+  key: string;   // raw value for Firestore query
+  label: string; // localized display text
+}
+
 interface ToolFiltersProps {
   onSearchChange: (searchTerm: string) => void;
   onCategoryChange: (category: string) => void;
-  categories: string[];
+  categories: CategoryItem[];
   initialSearchTerm?: string;
 }
 
@@ -70,9 +75,9 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all_categories")}</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
+              {categories.map((cat) => (
+                <SelectItem key={cat.key} value={cat.key}>
+                  {cat.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -87,3 +92,4 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
     </div>
   );
 }
+

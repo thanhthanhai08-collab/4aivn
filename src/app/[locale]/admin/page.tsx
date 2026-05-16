@@ -172,7 +172,6 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
 
     // Common fields
     const [name, setName] = useState(item?.name || '');
-    const [context, setContext] = useState(item?.context || '');
     const [link, setLink] = useState(item?.link || '');
     const [logoUrl, setLogoUrl] = useState(item?.logoUrl || '');
     const [imageUrl, setImageUrl] = useState(item?.imageUrl || '');
@@ -180,6 +179,7 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
     const [developer, setDeveloper] = useState(item?.developer || '');
 
     // Bilingual fields — Vietnamese
+    const [contextVi, setContextVi] = useState(extractLocalized(item?.context, 'vi'));
     const [descVi, setDescVi] = useState(extractLocalized(item?.description, 'vi'));
     const [longDescVi, setLongDescVi] = useState(extractLocalized(item?.longDescription, 'vi'));
     const [featuresVi, setFeaturesVi] = useState(extractLocalizedArray(item?.features, 'vi'));
@@ -188,6 +188,7 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
     const [pricingPlansVi, setPricingPlansVi] = useState(extractLocalizedArray(item?.pricingPlans, 'vi'));
 
     // Bilingual fields — English
+    const [contextEn, setContextEn] = useState(extractLocalized(item?.context, 'en'));
     const [descEn, setDescEn] = useState(extractLocalized(item?.description, 'en'));
     const [longDescEn, setLongDescEn] = useState(extractLocalized(item?.longDescription, 'en'));
     const [featuresEn, setFeaturesEn] = useState(extractLocalizedArray(item?.features, 'en'));
@@ -208,13 +209,13 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
         try {
             const payload: any = {
                 name,
-                context,
                 link,
                 logoUrl,
                 imageUrl,
                 videoUrl,
                 developer,
                 // Bilingual Map fields
+                context: { vi: contextVi, en: contextEn },
                 description: { vi: descVi, en: descEn },
                 longDescription: { vi: longDescVi, en: longDescEn },
                 features: { vi: linesToArray(featuresVi), en: linesToArray(featuresEn) },
@@ -235,6 +236,8 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
     // Render bilingual content fields for a given language
     const renderLangFields = (lang: 'vi' | 'en') => {
         const labelPrefix = lang === 'vi' ? '🇻🇳' : '🇬🇧';
+        const ctx = lang === 'vi' ? contextVi : contextEn;
+        const setCtx = lang === 'vi' ? setContextVi : setContextEn;
         const desc = lang === 'vi' ? descVi : descEn;
         const setDesc = lang === 'vi' ? setDescVi : setDescEn;
         const longDesc = lang === 'vi' ? longDescVi : longDescEn;
@@ -250,6 +253,10 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
         
         return (
             <div className="space-y-3">
+                <div className="space-y-1">
+                    <Label>{labelPrefix} Hạng mục</Label>
+                    <Input value={ctx} onChange={e => setCtx(e.target.value)} placeholder={lang === 'vi' ? 'VD: Tạo video AI' : 'E.g. AI Video Generation'} />
+                </div>
                 <div className="space-y-1">
                     <Label>{labelPrefix} Mô tả ngắn</Label>
                     <Textarea value={desc} onChange={e => setDesc(e.target.value)} placeholder={lang === 'vi' ? 'Mô tả bằng tiếng Việt...' : 'Description in English...'} />
@@ -285,15 +292,9 @@ function ToolForm({ item, onFinished }: { item?: Tool | null, onFinished: () => 
                 <Label htmlFor="name">Tên công cụ</Label>
                 <Input id="name" value={name} onChange={e => setName(e.target.value)} required />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                    <Label htmlFor="context">Hạng mục</Label>
-                    <Input id="context" value={context} onChange={e => setContext(e.target.value)} />
-                </div>
-                <div className="space-y-1">
-                    <Label htmlFor="developer">Nhà phát triển</Label>
-                    <Input id="developer" value={developer} onChange={e => setDeveloper(e.target.value)} />
-                </div>
+            <div className="space-y-1">
+                <Label htmlFor="developer">Nhà phát triển</Label>
+                <Input id="developer" value={developer} onChange={e => setDeveloper(e.target.value)} />
             </div>
             <div className="space-y-1">
                 <Label htmlFor="link">Link trang web</Label>

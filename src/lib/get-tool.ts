@@ -7,6 +7,10 @@ import { getLocalized, getLocalizedArray } from './i18n-helpers';
 
 function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     const tool: any = { id, ...data };
+    // contextKey: always the Vietnamese value (for Firestore queries)
+    tool.contextKey = getLocalized(data.context, 'vi');
+    // context: localized for display
+    tool.context = getLocalized(data.context, locale);
     tool.description = getLocalized(data.description, locale);
     tool.longDescription = getLocalized(data.longDescription, locale);
     tool.features = getLocalizedArray(data.features, locale);
@@ -83,7 +87,7 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
         const similarToolsQuery = query(
             collection(db, "tools"),
             where("post", "==", true),
-            where("context", "==", toolContext),
+            where("context.vi", "==", toolContext),
             orderBy("__name__", "asc"),
             limit(5)
         );
@@ -132,7 +136,7 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
             const q = query(
                 collection(db, "tools"),
                 where("post", "==", true),
-                where("context", "==", cat),
+                where("context.vi", "==", cat),
                 limit(1)
             );
             return getDocs(q);

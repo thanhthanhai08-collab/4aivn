@@ -111,8 +111,8 @@ export default async function ToolDetailLayout({ children, params }: Props) {
         "position": 3,
         "name": tool.context,
         "item": isEn
-          ? `${BASE_URL}/en/tools?category=${encodeURIComponent(tool.context)}`
-          : `${BASE_URL}/cong-cu?category=${encodeURIComponent(tool.context)}`,
+          ? `${BASE_URL}/en/tools?category=${encodeURIComponent(tool.contextKey || tool.context)}`
+          : `${BASE_URL}/cong-cu?category=${encodeURIComponent(tool.contextKey || tool.context)}`,
       },
       {
         "@type": "ListItem",

@@ -109,6 +109,8 @@ function ToolDetailContent() {
         const foundTool = {
           id: docSnap.id,
           ...data,
+          contextKey: getLocalized(data.context, 'vi'),
+          context: getLocalized(data.context, locale),
           description: getLocalized(data.description, locale),
           longDescription: getLocalized(data.longDescription, locale),
           features: getLocalizedArray(data.features, locale),
@@ -164,7 +166,7 @@ function ToolDetailContent() {
             const similarToolsQuery = query(
                 collection(db, "tools"),
                 where("post", "==", true),
-                where("context", "==", tool.context),
+                where("context.vi", "==", tool.contextKey || tool.context),
                 orderBy("__name__", "asc"),
                 limit(5)
             );
@@ -206,13 +208,13 @@ function ToolDetailContent() {
             const allToolsSnapshot = await getDocs(query(collection(db, "tools"), where("post", "==", true)));
             const allTools = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
             const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
-            const otherCategories = uniqueCategories.filter(cat => cat !== tool.context);
+            const otherCategories = uniqueCategories.filter(cat => cat !== (tool.contextKey || tool.context));
             const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
             const complementaryPromises = selectedCategories.map(cat => {
                 const q = query(
                     collection(db, "tools"),
                     where("post", "==", true),
-                    where("context", "==", cat),
+                    where("context.vi", "==", cat),
                     limit(1)
                 );
                 return getDocs(q);
