@@ -1,23 +1,27 @@
 // src/components/tools/tool-card-small.tsx
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Tool } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface ToolCardSmallProps {
   tool: Tool;
 }
 
 export function ToolCardSmall({ tool }: ToolCardSmallProps) {
+  const t = useTranslations("toolCard");
   const averageRating = tool.ratingCount && tool.ratingCount > 0 
     ? (tool.totalStars || 0) / tool.ratingCount 
     : 0;
 
   return (
     <Card className="shadow-none border-0 hover:bg-accent transition-colors">
-      <Link href={`/cong-cu/${tool.id}`} className="flex items-center space-x-4 p-3">
+      <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }} className="flex items-center space-x-4 p-3">
         <Image 
           src={tool.logoUrl} 
           alt={`Logo ${tool.name}`} 
@@ -39,7 +43,7 @@ export function ToolCardSmall({ tool }: ToolCardSmallProps) {
              <span>{tool.context}</span>
           </div>
         </div>
-        <Badge variant="outline">Free</Badge>
+        <Badge variant="outline">{t("free")}</Badge>
       </Link>
     </Card>
   );

@@ -4,17 +4,24 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 import { Search, FilterX } from "lucide-react";
 import { useState, useEffect } from "react";
+
+interface CategoryItem {
+  key: string;   // raw value for Firestore query
+  label: string; // localized display text
+}
 
 interface ToolFiltersProps {
   onSearchChange: (searchTerm: string) => void;
   onCategoryChange: (category: string) => void;
-  categories: string[];
+  categories: CategoryItem[];
   initialSearchTerm?: string;
 }
 
 export function ToolFilters({ onSearchChange, onCategoryChange, categories, initialSearchTerm = "" }: ToolFiltersProps) {
+  const t = useTranslations("tool_filters");
   const [currentSearchTerm, setCurrentSearchTerm] = useState(initialSearchTerm);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -44,13 +51,13 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div className="md:col-span-2">
           <label htmlFor="search-tools" className="block text-sm font-medium text-muted-foreground mb-1">
-            Tìm kiếm công cụ
+            {t("search_label")}
           </label>
           <div className="relative">
             <Input
               id="search-tools"
               type="text"
-              placeholder="Tìm theo tên hoặc từ khóa..."
+              placeholder={t("search_placeholder")}
               value={currentSearchTerm}
               onChange={handleSearchInputChange}
               className="pl-10"
@@ -60,17 +67,17 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
         </div>
         <div>
           <label htmlFor="category-select" className="block text-sm font-medium text-muted-foreground mb-1">
-            Danh mục
+            {t("category_label")}
           </label>
           <Select value={selectedCategory} onValueChange={handleCategorySelect}>
             <SelectTrigger id="category-select">
-              <SelectValue placeholder="Tất cả Danh mục" />
+              <SelectValue placeholder={t("all_categories")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tất cả Danh mục</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
+              <SelectItem value="all">{t("all_categories")}</SelectItem>
+              {categories.map((cat) => (
+                <SelectItem key={cat.key} value={cat.key}>
+                  {cat.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -78,10 +85,11 @@ export function ToolFilters({ onSearchChange, onCategoryChange, categories, init
         </div>
         <div className="md:col-start-3 flex justify-end">
            <Button variant="ghost" onClick={clearFilters} className="w-full md:w-auto">
-            <FilterX className="mr-2 h-4 w-4" /> Xóa bộ lọc
+            <FilterX className="mr-2 h-4 w-4" /> {t("clear_filters")}
           </Button>
         </div>
       </div>
     </div>
   );
 }
+

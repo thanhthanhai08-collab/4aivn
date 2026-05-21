@@ -1,7 +1,8 @@
 export interface Tool {
   id: string;
   name: string;
-  context: string; // Category like 'Chatbot', 'Image Generation'
+  context: string; // Localized category for display
+  contextKey?: string; // Raw context key for Firestore queries (always Vietnamese)
   developer: string;
   ranking?: number; // Optional: current rank, might be dynamically calculated
   description: string;
@@ -24,8 +25,11 @@ export interface Tool {
   post?: boolean; // Controls visibility
 }
 
+import { LocalizedField } from "./i18n-helpers";
+
 export interface NewsArticle {
   id: string;
+  slug?: LocalizedField;
   title: string;
   source: string; // Publisher or source name
   author?: string;
@@ -110,6 +114,7 @@ export interface AIModel {
   benchmarks?: BenchmarkData[];
   averageRating?: number;
   post?: boolean; // Controls visibility
+  rank?: number; // Computed ranking order
 }
 
 export interface Comment {
