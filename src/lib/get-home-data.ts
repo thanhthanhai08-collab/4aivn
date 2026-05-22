@@ -2,6 +2,7 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "
 import { db } from "@/lib/firebase";
 import type { Tool, NewsArticle } from "@/lib/types";
 import { cache } from "react";
+import { getLocalized, getLocalizedArray } from "./i18n-helpers";
 
 export interface HomepageSettings {
   BannerAdsUrl?: string;
@@ -25,7 +26,7 @@ export const getHomepageSettings = cache(async (): Promise<HomepageSettings> => 
   }
 });
 
-export const getLatestNews = cache(async (): Promise<NewsArticle[]> => {
+export const getLatestNews = cache(async (locale: string = 'vi'): Promise<NewsArticle[]> => {
   try {
     const newsCollection = collection(db, "news");
     const newsQuery = query(
@@ -40,6 +41,9 @@ export const getLatestNews = cache(async (): Promise<NewsArticle[]> => {
       return {
         id: doc.id,
         ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
         publishedAt: data.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       } as NewsArticle;
     });
@@ -49,16 +53,24 @@ export const getLatestNews = cache(async (): Promise<NewsArticle[]> => {
   }
 });
 
-function serializeTool(id: string, data: any): Tool {
+function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
   return {
     id,
     ...data,
+    contextKey: getLocalized(data.context, 'vi'),
+    context: getLocalized(data.context, locale),
+    description: getLocalized(data.description, locale),
+    longDescription: getLocalized(data.longDescription, locale),
+    features: getLocalizedArray(data.features, locale),
+    pricingPlans: getLocalizedArray(data.pricingPlans, locale),
+    useCases: getLocalizedArray(data.useCases, locale),
+    whoIsItFor: getLocalizedArray(data.whoIsItFor, locale),
     releaseDate: data.releaseDate?.toDate?.()?.toISOString() || data.releaseDate || null,
     updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || null,
   } as Tool;
 }
 
-export const getTopTools = cache(async (): Promise<Tool[]> => {
+export const getTopTools = cache(async (locale: string = 'vi'): Promise<Tool[]> => {
   try {
     const toolsQuery = query(
       collection(db, "tools"),
@@ -70,7 +82,7 @@ export const getTopTools = cache(async (): Promise<Tool[]> => {
     );
 
     const toolsSnapshot = await getDocs(toolsQuery);
-    return toolsSnapshot.docs.map(doc => serializeTool(doc.id, doc.data()));
+    return toolsSnapshot.docs.map(doc => serializeTool(doc.id, doc.data(), locale));
   } catch (error) {
     console.error("Error fetching top tools for homepage:", error);
     return [];

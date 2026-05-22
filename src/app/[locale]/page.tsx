@@ -1,11 +1,12 @@
 import { HomeClient } from "@/components/home/home-client";
 import { getHomepageSettings, getLatestNews, getTopTools } from "@/lib/get-home-data";
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const [settings, news, tools] = await Promise.all([
     getHomepageSettings(),
-    getLatestNews(),
-    getTopTools()
+    getLatestNews(locale),
+    getTopTools(locale)
   ]);
 
   return (
@@ -16,3 +17,4 @@ export default async function HomePage() {
     />
   );
 }
+
