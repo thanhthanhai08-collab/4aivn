@@ -4,6 +4,35 @@ import { db } from '@/lib/firebase';
 import type { AIModel, NewsArticle, BenchmarkData } from '@/lib/types';
 import { getLocalized } from './i18n-helpers';
 
+function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+    return {
+        id,
+        ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
+        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+    } as NewsArticle;
+}
+
+function serializeModel(id: string, data: any, locale: string = 'vi', rank?: number): AIModel {
+    const releaseDateTimestamp = data.releaseDate as Timestamp | undefined;
+    const model: any = {
+        id,
+        ...data,
+        description: getLocalized(data.description, locale),
+        releaseDate: releaseDateTimestamp?.toDate?.()
+            ? releaseDateTimestamp.toDate().toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN')
+            : data.releaseDate,
+        rank,
+    };
+
+    if (model.updatedAt?.toDate) model.updatedAt = model.updatedAt.toDate().toISOString();
+    if (model.createdAt?.toDate) model.createdAt = model.createdAt.toDate().toISOString();
+
+    return model as AIModel;
+}
+
 export const getModel = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
@@ -13,7 +42,6 @@ export const getModel = cache(async (id: string, locale: string = 'vi') => {
 
     if (docSnap.exists() && docSnap.data().post === true) {
       const data = docSnap.data();
-      const releaseDateTimestamp = data.releaseDate as Timestamp;
       
       const benchmarksColRef = collection(db, "models", id, "benchmarks");
       const benchmarksSnapshot = await getDocs(benchmarksColRef);
@@ -26,18 +54,10 @@ export const getModel = cache(async (id: string, locale: string = 'vi') => {
           } as BenchmarkData;
       });
 
-      const model: any = {
-          id: docSnap.id,
-          ...data,
-          description: getLocalized(data.description, locale),
-          releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+      return {
+          ...serializeModel(docSnap.id, data, locale),
           benchmarks: benchmarksData,
-      };
-      
-      if (model.updatedAt?.toDate) model.updatedAt = model.updatedAt.toDate().toISOString();
-      if (model.createdAt?.toDate) model.createdAt = model.createdAt.toDate().toISOString();
-      
-      return model as AIModel;
+      } as AIModel;
     }
     return null;
   } catch (error) {
@@ -69,7 +89,7 @@ export const getAllModelsRanked = cache(async () => {
     }
 });
 
-export const getRelatedNewsForModel = cache(async (modelName: string) => {
+export const getRelatedNewsForModel = cache(async (modelName: string, locale: string = 'vi') => {
     if (!modelName) return [];
     try {
         const newsQuery = query(
@@ -80,18 +100,14 @@ export const getRelatedNewsForModel = cache(async (modelName: string) => {
             limit(3)
         );
         const newsSnapshot = await getDocs(newsQuery);
-        return newsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            publishedAt: doc.data().publishedAt.toDate().toISOString(),
-        } as NewsArticle));
+        return newsSnapshot.docs.map(doc => serializeNewsArticle(doc.id, doc.data(), locale));
     } catch (error) {
         console.error("Error fetching related news for model:", error);
         return [];
     }
 });
 
-export const getSameDeveloperModels = cache(async (developer: string, excludeId: string) => {
+export const getSameDeveloperModels = cache(async (developer: string, excludeId: string, locale: string = 'vi') => {
     if (!developer) return [];
     try {
         const sameDevQuery = query(
@@ -105,16 +121,7 @@ export const getSameDeveloperModels = cache(async (developer: string, excludeId:
         
         return devSnap.docs
             .map(d => {
-                const data = d.data();
-                const m: any = { 
-                    id: d.id, 
-                    ...data,
-                    releaseDate: (data.releaseDate as Timestamp)?.toDate?.()?.toLocaleDateString('vi-VN'),
-                    rank: ranks.get(d.id)
-                };
-                if (m.updatedAt?.toDate) m.updatedAt = m.updatedAt.toDate().toISOString();
-                if (m.createdAt?.toDate) m.createdAt = m.createdAt.toDate().toISOString();
-                return m as AIModel;
+                return serializeModel(d.id, d.data(), locale, ranks.get(d.id));
             })
             .filter(m => m.id !== excludeId)
             .slice(0, 6);

@@ -26,8 +26,8 @@ export default async function ModelDetailPage({ params }: { params: Promise<{ id
     );
   }
 
-  const relatedNews = await getRelatedNewsForModel(model.name);
-  const sameDeveloperModels = await getSameDeveloperModels(model.developer, model.id || '');
+  const relatedNews = await getRelatedNewsForModel(model.name, locale);
+  const sameDeveloperModels = await getSameDeveloperModels(model.developer, model.id || '', locale);
 
   return <ModelDetailClient model={model} relatedNews={relatedNews} sameDeveloperModels={sameDeveloperModels} />;
 }

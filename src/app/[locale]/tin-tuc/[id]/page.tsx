@@ -18,7 +18,7 @@ import { vi } from "date-fns/locale";
 import { enUS } from "date-fns/locale/en-US";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { getLocalizedSlug } from "@/lib/i18n-helpers";
+import { getLocalized, getLocalizedSlug } from "@/lib/i18n-helpers";
 
 const PAGE_SIZE = 12;
 
@@ -58,8 +58,8 @@ function NewsCategoryContent() {
                     let dbName = categoryId;
                     
                     if (catData.name) {
-                        dbName = catData.name;
-                        locName = catData.name;
+                        dbName = getLocalized(catData.name, 'vi');
+                        locName = getLocalized(catData.name, locale);
                     }
 
                     const categoryMapping: Record<string, string> = {
@@ -115,22 +115,34 @@ function NewsCategoryContent() {
                     getDocs(latestNewsQuery)
                 ]);
 
-                const newsData = articlesSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data(),
-                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
-                } as NewsArticle));
+                const newsData = articlesSnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        ...data,
+                        title: getLocalized(data.title, locale),
+                        content: getLocalized(data.content, locale),
+                        summary: getLocalized(data.summary, locale),
+                        publishedAt: data.publishedAt.toDate().toISOString(),
+                    } as NewsArticle;
+                });
 
                 setArticles(newsData);
                 const lastVisible = articlesSnapshot.docs[articlesSnapshot.docs.length - 1];
                 setLastDoc(lastVisible);
                 setHasMore(articlesSnapshot.docs.length === PAGE_SIZE);
 
-                const latestNewsData = latestNewsSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data(),
-                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
-                } as NewsArticle));
+                const latestNewsData = latestNewsSnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        ...data,
+                        title: getLocalized(data.title, locale),
+                        content: getLocalized(data.content, locale),
+                        summary: getLocalized(data.summary, locale),
+                        publishedAt: data.publishedAt.toDate().toISOString(),
+                    } as NewsArticle;
+                });
                 setLatestNews(latestNewsData);
 
             } catch (error) {
@@ -142,7 +154,7 @@ function NewsCategoryContent() {
         };
 
         fetchInitialData();
-    }, [categoryId]);
+    }, [categoryId, locale]);
 
     const handleLoadMore = async () => {
         if (!lastDoc || !hasMore || isMoreLoading || !category) return;
@@ -160,11 +172,17 @@ function NewsCategoryContent() {
             );
 
             const querySnapshot = await getDocs(q);
-            const newData = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                publishedAt: doc.data().publishedAt.toDate().toISOString(),
-            } as NewsArticle));
+            const newData = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    ...data,
+                    title: getLocalized(data.title, locale),
+                    content: getLocalized(data.content, locale),
+                    summary: getLocalized(data.summary, locale),
+                    publishedAt: data.publishedAt.toDate().toISOString(),
+                } as NewsArticle;
+            });
 
             setArticles(prev => [...prev, ...newData]);
             const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];

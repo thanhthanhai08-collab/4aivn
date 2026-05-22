@@ -4,6 +4,18 @@ import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/lib/types';
 import { getLocalized } from './i18n-helpers';
 
+function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+  return {
+    id,
+    ...data,
+    title: getLocalized(data.title, locale),
+    content: getLocalized(data.content, locale),
+    summary: getLocalized(data.summary, locale),
+    slug: data.slug,
+    publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+  } as NewsArticle;
+}
+
 export const getArticle = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
@@ -12,18 +24,7 @@ export const getArticle = cache(async (id: string, locale: string = 'vi') => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && docSnap.data().post === true) {
-      const data = docSnap.data();
-      const article = {
-        id: docSnap.id,
-        ...data,
-        title: getLocalized(data.title, locale),
-        content: getLocalized(data.content, locale),
-        summary: getLocalized(data.summary, locale),
-        slug: data.slug, // Keep raw slug for alternates
-        publishedAt: data.publishedAt.toDate().toISOString(),
-      } as NewsArticle;
-      
-      return article;
+      return serializeArticle(docSnap.id, docSnap.data(), locale);
     }
     return null;
   } catch (error) {
@@ -53,18 +54,27 @@ export const getArticleBySlug = cache(async (slug: string, locale: string = 'vi'
       }
     }
 
+    // Allow language switching to keep the current slug while still rendering
+    // the requested locale. Canonical metadata will point to the localized slug.
+    if (!articleDoc.exists() || articleDoc.data()?.post !== true) {
+      for (const slugLocale of ['vi', 'en'] as const) {
+        if (slugLocale === locale) continue;
+        const q = query(
+          collection(db, 'news'),
+          where(`slug.${slugLocale}`, '==', slug),
+          where('post', '==', true),
+          limit(1)
+        );
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          articleDoc = snapshot.docs[0];
+          break;
+        }
+      }
+    }
+
     if (articleDoc.exists() && articleDoc.data()?.post === true) {
-      const data = articleDoc.data();
-      const article = {
-        id: articleDoc.id,
-        ...data,
-        title: getLocalized(data.title, locale),
-        content: getLocalized(data.content, locale),
-        summary: getLocalized(data.summary, locale),
-        slug: data.slug, // Keep raw slug for alternates
-        publishedAt: data.publishedAt.toDate().toISOString(),
-      } as NewsArticle;
-      return article;
+      return serializeArticle(articleDoc.id, articleDoc.data(), locale);
     }
     return null;
   } catch (error) {
@@ -84,11 +94,7 @@ export const getLatestNews = cache(async (excludeId: string, locale: string = 'v
     );
     const latestSnapshot = await getDocs(latestNewsQuery);
     return latestSnapshot.docs
-      .map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        publishedAt: doc.data().publishedAt.toDate().toISOString(),
-      } as NewsArticle))
+      .map(doc => serializeArticle(doc.id, doc.data(), locale))
       .filter(item => item.id !== excludeId)
       .slice(0, 3);
   } catch (error) {
@@ -121,17 +127,7 @@ export const getRelatedNews = cache(async (article: NewsArticle, locale: string 
 
     const relatedSnapshot = await getDocs(relatedQuery);
     return relatedSnapshot.docs
-      .map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          title: getLocalized(data.title, locale),
-          content: getLocalized(data.content, locale),
-          summary: getLocalized(data.summary, locale),
-          publishedAt: data.publishedAt.toDate().toISOString(),
-        } as NewsArticle;
-      })
+      .map(doc => serializeArticle(doc.id, doc.data(), locale))
       .filter(item => item.id !== excludeId)
       .sort((a, b) => {
         const calculateScore = (art: NewsArticle) => {

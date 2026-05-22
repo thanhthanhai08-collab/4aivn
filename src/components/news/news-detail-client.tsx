@@ -41,6 +41,7 @@ import { Gemini3BenchmarkChart } from "@/components/news/Gemini3BenchmarkChart";
 import { doc, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
+import { getLocalizedSlug } from "@/lib/i18n-helpers";
 
 // Helper function to extract YouTube ID
 function getYouTubeId(urlOrId: string): string {
@@ -265,7 +266,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               const newSummary = res.summary;
               setSummary(newSummary);
               try {
-                  await updateDoc(docRef, { summary: newSummary });
+                  await updateDoc(docRef, { [`summary.${locale}`]: newSummary });
               } catch (updateError) {
                   console.error("Failed to save summary:", updateError);
               }
@@ -491,8 +492,10 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                 <CardTitle className="text-2xl font-headline font-bold text-primary">{t("latestNews")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {latestNews.map((related) => (
-                  <Link key={related.id} href={{ pathname: '/tin-tuc/[id]', params: { id: related.id } }} className="block group border-b pb-4 last:border-b-0 last:pb-0">
+                {latestNews.map((related) => {
+                  const slug = getLocalizedSlug(related.slug || related.id, locale) || related.id;
+                  return (
+                  <Link key={related.id} href={`/${slug}` as any} className="block group border-b pb-4 last:border-b-0 last:pb-0">
                     <div className="flex items-start space-x-4">
                       <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                         <Image
@@ -518,7 +521,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
                       </div>
                     </div>
                   </Link>
-                ))}
+                )})}
               </CardContent>
             </Card>
               <Card className="bg-accent/50 text-center p-6">
