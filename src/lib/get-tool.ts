@@ -3,15 +3,26 @@ import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timesta
 import { db } from '@/lib/firebase';
 import type { Tool, NewsArticle, ToolReview } from '@/lib/types';
 import { getAllToolReviews } from '@/lib/user-data-service';
+import { getLocalized, getLocalizedArray } from './i18n-helpers';
 
-function serializeTool(id: string, data: any): Tool {
+function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     const tool: any = { id, ...data };
+    // contextKey: always the Vietnamese value (for Firestore queries)
+    tool.contextKey = getLocalized(data.context, 'vi');
+    // context: localized for display
+    tool.context = getLocalized(data.context, locale);
+    tool.description = getLocalized(data.description, locale);
+    tool.longDescription = getLocalized(data.longDescription, locale);
+    tool.features = getLocalizedArray(data.features, locale);
+    tool.pricingPlans = getLocalizedArray(data.pricingPlans, locale);
+    tool.useCases = getLocalizedArray(data.useCases, locale);
+    tool.whoIsItFor = getLocalizedArray(data.whoIsItFor, locale);
     if (tool.updatedAt?.toDate) tool.updatedAt = tool.updatedAt.toDate().toISOString();
     if (tool.createdAt?.toDate) tool.createdAt = tool.createdAt.toDate().toISOString();
     return tool as Tool;
 }
 
-export const getTool = cache(async (id: string) => {
+export const getTool = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;
 
   try {
@@ -19,7 +30,7 @@ export const getTool = cache(async (id: string) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && docSnap.data().post === true) {
-      return serializeTool(docSnap.id, docSnap.data());
+      return serializeTool(docSnap.id, docSnap.data(), locale);
     }
     return null;
   } catch (error) {
@@ -76,7 +87,7 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
         const similarToolsQuery = query(
             collection(db, "tools"),
             where("post", "==", true),
-            where("context", "==", toolContext),
+            where("context.vi", "==", toolContext),
             orderBy("__name__", "asc"),
             limit(5)
         );
@@ -125,7 +136,7 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
             const q = query(
                 collection(db, "tools"),
                 where("post", "==", true),
-                where("context", "==", cat),
+                where("context.vi", "==", cat),
                 limit(1)
             );
             return getDocs(q);

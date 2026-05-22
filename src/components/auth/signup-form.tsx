@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { FirebaseError } from "firebase/app";
+import { useTranslations } from "next-intl";
 
 export function SignupForm() {
   const [email, setEmail] = useState("");
@@ -19,13 +20,14 @@ export function SignupForm() {
   const { registerWithEmail } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations("signup");
 
   const handleEmailSignup = async (e: FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast({
-        title: "Đăng ký thất bại",
-        description: "Mật khẩu và xác nhận mật khẩu không khớp.",
+        title: t("signupFailed"),
+        description: t("passwordMismatch"),
         variant: "destructive",
       });
       return;
@@ -34,28 +36,28 @@ export function SignupForm() {
     try {
       await registerWithEmail(email, password);
       toast({
-        title: "Đăng ký Thành công!",
-        description: "Vui lòng kiểm tra email của bạn để hoàn tất quá trình xác minh.",
+        title: t("signupSuccess"),
+        description: t("signupSuccessDesc"),
         duration: 7000,
       });
       router.push("/dang-nhap"); 
     } catch (error) {
       console.error("Email signup error:", error);
-      let description = "Đã có lỗi xảy ra. Vui lòng thử lại.";
+      let description = t("genericError");
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/email-already-in-use') {
-          description = "Email này đã được sử dụng. Vui lòng sử dụng một email khác.";
+          description = t("emailInUse");
         } else if (error.code === 'auth/weak-password') {
-          description = "Mật khẩu quá yếu. Vui lòng chọn mật khẩu khác mạnh hơn."
+          description = t("weakPassword");
         }
         else {
-          description = "Lỗi đăng ký. Vui lòng kiểm tra lại thông tin của bạn.";
+          description = t("registrationError");
         }
       } else if (error instanceof Error) {
         description = error.message;
       }
       toast({
-        title: "Đăng ký thất bại",
+        title: t("signupFailed"),
         description: description,
         variant: "destructive",
       });
@@ -67,7 +69,7 @@ export function SignupForm() {
   return (
     <form onSubmit={handleEmailSignup} className="space-y-4">
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t("email")}</Label>
         <Input
           id="email"
           type="email"
@@ -79,7 +81,7 @@ export function SignupForm() {
         />
       </div>
       <div>
-        <Label htmlFor="password">Mật khẩu</Label>
+        <Label htmlFor="password">{t("password")}</Label>
         <Input
           id="password"
           type="password"
@@ -92,7 +94,7 @@ export function SignupForm() {
         />
       </div>
       <div>
-        <Label htmlFor="confirm-password">Xác nhận Mật khẩu</Label>
+        <Label htmlFor="confirm-password">{t("confirmPassword")}</Label>
         <Input
           id="confirm-password"
           type="password"
@@ -106,7 +108,7 @@ export function SignupForm() {
       </div>
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Đăng ký
+        {t("signupBtn")}
       </Button>
     </form>
   );

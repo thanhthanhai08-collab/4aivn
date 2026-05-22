@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ExternalLink, Star, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleToolFavorite, getUserProfileData } from "@/lib/user-data-service";
+import { useTranslations } from "next-intl";
 
 interface ToolCardProps {
   tool: Tool;
@@ -24,6 +25,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const [isFavorite, setIsFavorite] = useState(false);
+  const t = useTranslations("toolCard");
 
   useEffect(() => {
     if (currentUser) {
@@ -41,8 +43,8 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
 
     if (!currentUser) {
       toast({
-        title: "Yêu cầu đăng nhập",
-        description: "Vui lòng đăng nhập để lưu mục yêu thích.",
+        title: t("loginRequired"),
+        description: t("loginRequiredDesc"),
         variant: "destructive",
       });
       return;
@@ -53,11 +55,11 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
 
     try {
       await toggleToolFavorite(currentUser.uid, tool.id, isFavorite);
-      toast({ title: newFavoriteState ? "Đã thêm vào mục yêu thích" : "Đã xóa khỏi mục yêu thích" });
+      toast({ title: newFavoriteState ? t("favAdded") : t("favRemoved") });
     } catch (error) {
       console.error("Failed to update favorite status:", error);
       setIsFavorite(!newFavoriteState);
-      toast({ title: "Lỗi", description: "Không thể cập nhật mục yêu thích.", variant: "destructive" });
+      toast({ title: t("error"), description: t("favError"), variant: "destructive" });
     }
   };
 
@@ -73,7 +75,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
               size="icon"
               onClick={handleFavoriteToggle}
               className="h-8 w-8 rounded-full bg-background/60 backdrop-blur-sm transition-opacity"
-              aria-label="Yêu thích"
+              aria-label={t("favorite")}
             >
               <Heart className={cn("h-5 w-5", isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground")} />
             </Button>
@@ -103,7 +105,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
             />
             <div>
               <CardTitle className="text-xl font-headline group-hover:text-primary">
-                <Link href={`/cong-cu/${tool.id}`} className="hover:underline">
+                <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }} className="hover:underline">
                   {tool.name}
                 </Link>
               </CardTitle>
@@ -132,7 +134,7 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Đánh giá của bạn: {tool.myRating} sao
+                {t("yourRating", { rating: tool.myRating })}
               </p>
             </div>
           ) : averageRating > 0 ? (
@@ -145,8 +147,8 @@ export function ToolCard({ tool, rank }: ToolCardProps) {
           )}
         </div>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/cong-cu/${tool.id}`}>
-            Xem chi tiết
+          <Link href={{ pathname: '/cong-cu/[id]', params: { id: tool.id } }}>
+            {t("viewDetail")}
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
         </Button>

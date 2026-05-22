@@ -11,16 +11,17 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { db } from "@/lib/firebase";
 import { collectionGroup, query, where, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
 import { Skeleton } from "../ui/skeleton";
+import { useTranslations } from "next-intl";
 
-const BENCHMARK_CATEGORIES = [
-  { key: 'aa-omniscience', title: 'Khả năng chống ảo giác', subtitle: 'AA-Omniscience' },
-  { key: 'critpt', title: 'Suy luận cấp cao hơn', subtitle: 'CritPt' },
-  { key: 'agentic-coding', title: 'Lập trình có tính tự chủ', subtitle: 'Agentic Coding' },
-  { key: 'agentic-tool-use', title: 'Sử dụng công cụ tự động', subtitle: 'Agentic Tool Use' },
-  { key: 'gdpval-aa', title: 'Hiệu suất khi làm việc', subtitle: 'GDPval-AA' },
-  { key: 'ifbench', title: 'Khả năng tuân thủ prompt', subtitle: 'IFBench' },
-  { key: 'gpqa-diamond', title: 'Lý luận nâng cao', subtitle: 'GPQA Diamond' },
-  { key: 'aa-lcr', title: 'Lý luận ngữ cảnh dài', subtitle: 'AA-LCR' },
+const BENCHMARK_CATEGORIES_KEYS = [
+  { key: 'aa-omniscience', titleKey: 'antiHallucination', subtitle: 'AA-Omniscience' },
+  { key: 'critpt', titleKey: 'higherReasoning', subtitle: 'CritPt' },
+  { key: 'agentic-coding', titleKey: 'agenticCoding', subtitle: 'Agentic Coding' },
+  { key: 'agentic-tool-use', titleKey: 'agenticToolUse', subtitle: 'Agentic Tool Use' },
+  { key: 'gdpval-aa', titleKey: 'workPerformance', subtitle: 'GDPval-AA' },
+  { key: 'ifbench', titleKey: 'promptCompliance', subtitle: 'IFBench' },
+  { key: 'gpqa-diamond', titleKey: 'advancedReasoning', subtitle: 'GPQA Diamond' },
+  { key: 'aa-lcr', titleKey: 'longContextReasoning', subtitle: 'AA-LCR' },
 ];
 
 const BenchmarkChart = ({ title, subtitle, data }: { title: string; subtitle: string; data: (AIModel & { benchmarkScore: number; isCurrent?: boolean })[] }) => {
@@ -108,6 +109,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     const [comparisonData, setComparisonData] = useState<CategoryComparisonData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [missingBenchmarks, setMissingBenchmarks] = useState<string[]>([]);
+    const t = useTranslations("benchmarks");
 
     useEffect(() => {
         const fetchAllComparisonData = async () => {
@@ -116,7 +118,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
             const foundBenchmarkSubtitles = new Set<string>();
             const modelsMap = new Map<string, AIModel>([[currentModel.id, currentModel]]);
 
-            for (const category of BENCHMARK_CATEGORIES) {
+            for (const category of BENCHMARK_CATEGORIES_KEYS) {
                 const currentModelScore = currentModel.benchmarks?.find(b => b.name === category.subtitle)?.score;
 
                 if (currentModelScore === undefined) {
@@ -164,11 +166,11 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
                        allData.push({ categoryKey: category.key, data: combined });
                    }
                 } catch (error) {
-                    console.error(`Error fetching comparison data for ${category.title}:`, error);
+                    console.error(`Error fetching comparison data for ${category.titleKey}:`, error);
                 }
             }
 
-            const missing = BENCHMARK_CATEGORIES
+            const missing = BENCHMARK_CATEGORIES_KEYS
                 .filter(cat => !foundBenchmarkSubtitles.has(cat.subtitle))
                 .map(cat => cat.subtitle);
             setMissingBenchmarks(missing);
@@ -182,14 +184,14 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
         }
     }, [currentModel]);
     
-    const renderedCharts = BENCHMARK_CATEGORIES.map(category => {
+    const renderedCharts = BENCHMARK_CATEGORIES_KEYS.map(category => {
         const chartData = comparisonData.find(d => d.categoryKey === category.key);
         if (!chartData || chartData.data.length === 0) return null;
         
         return (
             <BenchmarkChart 
                 key={category.key}
-                title={category.title} 
+                title={t(category.titleKey)} 
                 subtitle={category.subtitle} 
                 data={chartData.data} 
             />
@@ -200,7 +202,7 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     if (isLoading) {
         return (
              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {BENCHMARK_CATEGORIES.map(category => <ChartSkeleton key={category.key} />)}
+                {BENCHMARK_CATEGORIES_KEYS.map(category => <ChartSkeleton key={category.key} />)}
             </div>
         )
     }
@@ -208,8 +210,8 @@ export function O3DetailedBenchmarkCharts({ currentModel }: { currentModel: AIMo
     if (renderedCharts.length === 0) {
         return (
             <div className="text-center py-4 space-y-4 bg-muted/30 rounded-lg">
-                <p className="font-semibold text-xl">Dữ liệu Benchmark Chi tiết</p>
-                <p className="text-muted-foreground">Mô hình này chưa có điểm chuẩn so sánh cho các hạng mục đã chọn.</p>
+                <p className="font-semibold text-xl">{t("benchmarkDataTitle")}</p>
+                <p className="text-muted-foreground">{t("noBenchmarkData")}</p>
             </div>
         );
     }
