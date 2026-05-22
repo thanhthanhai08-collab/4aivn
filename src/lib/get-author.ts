@@ -2,8 +2,21 @@ import { cache } from 'react';
 import { doc, getDoc, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Author, NewsArticle } from '@/lib/types';
+import { getLocalized } from './i18n-helpers';
 
-export const getAuthor = cache(async (id: string): Promise<Author | null> => {
+function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+  return {
+    id,
+    ...data,
+    title: getLocalized(data.title, locale),
+    content: getLocalized(data.content, locale),
+    summary: getLocalized(data.summary, locale),
+    author: getLocalized(data.author, locale),
+    publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+  } as NewsArticle;
+}
+
+export const getAuthor = cache(async (id: string, locale: string = 'vi'): Promise<Author | null> => {
   if (!id || id.includes('.')) return null;
 
   try {
@@ -14,8 +27,8 @@ export const getAuthor = cache(async (id: string): Promise<Author | null> => {
       const data = docSnap.data();
       return {
         id: docSnap.id,
-        name: data.name || '',
-        bio: data.bio || '',
+        name: getLocalized(data.name, locale),
+        bio: getLocalized(data.bio, locale),
         avatarUrl: data.avatarUrl || '',
         createdAt: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       };
@@ -27,7 +40,7 @@ export const getAuthor = cache(async (id: string): Promise<Author | null> => {
   }
 });
 
-export const getAuthorArticles = cache(async (authorId: string): Promise<NewsArticle[]> => {
+export const getAuthorArticles = cache(async (authorId: string, locale: string = 'vi'): Promise<NewsArticle[]> => {
   try {
     // Current articles in Firestore have authorId field
     const articlesQuery = query(
@@ -38,14 +51,7 @@ export const getAuthorArticles = cache(async (authorId: string): Promise<NewsArt
     );
     
     const snapshot = await getDocs(articlesQuery);
-    return snapshot.docs.map(doc => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
-      } as NewsArticle;
-    });
+    return snapshot.docs.map(doc => serializeArticle(doc.id, doc.data(), locale));
   } catch (error) {
     console.error(`Error fetching articles for author ${authorId}:`, error);
     return [];

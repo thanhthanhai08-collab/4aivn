@@ -11,6 +11,7 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
     title: getLocalized(data.title, locale),
     content: getLocalized(data.content, locale),
     summary: getLocalized(data.summary, locale),
+    author: getLocalized(data.author, locale),
     slug: data.slug,
     publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
   } as NewsArticle;

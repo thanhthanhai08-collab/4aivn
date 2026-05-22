@@ -26,7 +26,7 @@ export async function generateMetadata(
     return { title: t("authorNotFound") };
   }
 
-  const author = await getAuthor(authorId);
+  const author = await getAuthor(authorId, locale);
 
   if (!author) {
     return {
@@ -94,7 +94,7 @@ export default async function AuthorDetailLayout({ children, params }: Props) {
 
   try {
     if (authorId && !authorId.includes('.')) {
-      author = await getAuthor(authorId);
+      author = await getAuthor(authorId, locale);
     }
 
     if (author) {

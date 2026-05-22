@@ -580,6 +580,26 @@ let cache = {
 };
 let refreshPromise = null;
 
+function localizedValue(field, locale = "vi") {
+  if (!field) return "";
+  if (typeof field === "string") return field;
+  if (typeof field === "object") {
+    return field[locale] || field.vi || field.en || "";
+  }
+  return String(field);
+}
+
+function bilingualSearchText(...fields) {
+  return fields
+    .flatMap((field) => {
+      if (!field) return [];
+      if (typeof field === "string") return [field];
+      if (typeof field === "object") return [field.vi, field.en].filter(Boolean);
+      return [String(field)];
+    })
+    .join(" ");
+}
+
 /**
  * Helper: Cập nhật dữ liệu từ Firestore vào RAM
  */
@@ -593,18 +613,27 @@ async function refreshData() {
       // 1. CHỈNH SỬA QUERY: Thêm field 'publishedAt' và 'imageUrl'
       const snapshot = await db.collection("news")
         .where("post", "==", true)
-        .select("title", "summary", "publishedAt", "imageUrl") 
+        .select("title", "summary", "slug", "publishedAt", "imageUrl") 
         .get();
 
       const newData = snapshot.docs.map(doc => {
         const data = doc.data();
+        if (!data.publishedAt?.toDate) {
+            const dateValue = data.publishedAt || Date.now();
+            data.publishedAt = { toDate: () => new Date(dateValue) };
+        }
+        const publishedAt = data.publishedAt?.toDate
+            ? data.publishedAt.toDate().toISOString()
+            : data.publishedAt || new Date().toISOString();
         return {
             id: doc.id,
             title: data.title,
             summary: data.summary,
+            slug: data.slug,
+            searchText: bilingualSearchText(data.title, data.summary),
             imageUrl: data.imageUrl || null, // Nếu không có ảnh thì trả về null
             // 2. XỬ LÝ NGÀY THÁNG AN TOÀN (Fix lỗi Invalid Date)
-            publishedAt: data.publishedAt 
+            publishedAt: publishedAt 
                 ? data.publishedAt.toDate().toISOString() 
                 : new Date().toISOString() // Fallback nếu quên nhập ngày
         };
@@ -613,7 +642,7 @@ async function refreshData() {
       const newIndex = new Index({ tokenize: "full", resolution: 9 });
       newData.forEach(item => {
         // Chỉ index Title và Summary để tìm kiếm (không index URL ảnh)
-        newIndex.add(item.id, `${item.title} ${item.summary}`);
+        newIndex.add(item.id, item.searchText);
       });
 
       cache = {
@@ -643,6 +672,7 @@ exports.searchNews = onRequest({
   if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
 
   const queryParam = (req.query.q || "").trim();
+  const locale = req.query.locale === "en" || req.query.lang === "en" ? "en" : "vi";
   // Kiểm tra nếu có lệnh ép làm mới từ Trigger
   const isForceRefresh = req.query.refresh_key === WEBHOOK_KEY;
 
@@ -669,7 +699,16 @@ exports.searchNews = onRequest({
 
     if (cache.index) {
       const resultsIds = cache.index.search(queryParam, { limit: 12 });
-      const results = cache.data.filter(item => resultsIds.includes(item.id));
+      const results = cache.data
+        .filter(item => resultsIds.includes(item.id))
+        .map(item => ({
+          id: item.id,
+          title: localizedValue(item.title, locale),
+          summary: localizedValue(item.summary, locale),
+          slug: localizedValue(item.slug, locale) || item.id,
+          imageUrl: item.imageUrl,
+          publishedAt: item.publishedAt,
+        }));
       
       res.status(200).json({ 
         results,

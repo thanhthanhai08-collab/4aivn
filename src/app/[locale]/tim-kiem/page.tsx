@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Newspaper, Wrench, MessageSquare, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // --- SKELETON LOADING ---
 function SearchSkeleton() {
@@ -35,12 +35,14 @@ interface SearchResult {
   summary: string;
   publishedAt: string;
   imageUrl?: string;
+  slug?: string;
 }
 
 function SearchResultsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialQuery = searchParams.get("q") || "";
+  const locale = useLocale();
   const t = useTranslations("search");
 
   const [searchTerm, setSearchTerm] = useState(initialQuery);
@@ -60,7 +62,7 @@ function SearchResultsContent() {
       setError(false);
       try {
         const response = await fetch(
-          `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?q=${encodeURIComponent(initialQuery)}`
+          `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?q=${encodeURIComponent(initialQuery)}&locale=${locale}`
         );
         if (!response.ok) throw new Error("Network error");
         const data = await response.json();
@@ -74,7 +76,7 @@ function SearchResultsContent() {
     };
 
     fetchResults();
-  }, [initialQuery]);
+  }, [initialQuery, locale]);
 
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -135,7 +137,7 @@ function SearchResultsContent() {
           ) : results.length > 0 ? (
             <div className="grid gap-4">
               {results.map((item) => (
-                <Link key={item.id} href={`/${item.id}` as any} className="block group">
+                <Link key={item.id} href={`/${item.slug || item.id}` as any} className="block group">
                   <Card className="rounded-xl border-primary/5 hover:border-primary/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
                     <div className="flex items-center">
                       {item.imageUrl && (

@@ -11,7 +11,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ id: str
   
   const t = await getTranslations({ locale, namespace: "authorDetail" });
 
-  const author = await getAuthor(authorId);
+  const author = await getAuthor(authorId, locale);
 
   if (!author) {
     return (
@@ -25,7 +25,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ id: str
     );
   }
 
-  const initialArticles = await getAuthorArticles(authorId);
+  const initialArticles = await getAuthorArticles(authorId, locale);
 
   return <AuthorDetailClient author={author} initialArticles={initialArticles} />;
 }
