@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timestamp } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Tool, NewsArticle, ToolReview } from '@/lib/types';
 import { getAllToolReviews } from '@/lib/user-data-service';
@@ -20,6 +20,18 @@ function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     if (tool.updatedAt?.toDate) tool.updatedAt = tool.updatedAt.toDate().toISOString();
     if (tool.createdAt?.toDate) tool.createdAt = tool.createdAt.toDate().toISOString();
     return tool as Tool;
+}
+
+function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+    return {
+        id,
+        ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
+        author: getLocalized(data.author, locale),
+        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+    } as NewsArticle;
 }
 
 export const getTool = cache(async (id: string, locale: string = 'vi') => {
@@ -56,7 +68,7 @@ export const getToolAdSettings = cache(async () => {
     }
 });
 
-export const getToolRelatedData = cache(async (toolId: string, toolName: string, toolContext: string) => {
+export const getToolRelatedData = cache(async (toolId: string, toolName: string, toolContext: string, locale: string = 'vi') => {
     try {
         // --- News Query ---
         const newsRef = collection(db, "news");
@@ -112,14 +124,7 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
         // --- Processing Data ---
 
         // Related News
-        const relatedNews = newsSnapshot.docs.map(d => {
-            const data = d.data();
-            return {
-                id: d.id,
-                ...data,
-                publishedAt: (data.publishedAt as Timestamp).toDate().toISOString()
-            } as NewsArticle
-        });
+        const relatedNews = newsSnapshot.docs.map(d => serializeNewsArticle(d.id, d.data(), locale));
 
         // Ranking
         const sortedTools = allToolsForRankingSnapshot.docs.map(d => serializeTool(d.id, d.data()));
@@ -127,8 +132,8 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
         const ranking = currentRank !== -1 ? currentRank + 1 : null;
         
         // Complementary Tools
-        const allTools = allToolsSnapshot.docs.map(d => serializeTool(d.id, d.data()));
-        const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
+        const allToolsForCategories = allToolsSnapshot.docs.map(d => serializeTool(d.id, d.data(), 'vi'));
+        const uniqueCategories = Array.from(new Set(allToolsForCategories.map(t => t.contextKey).filter(Boolean))).sort();
         const otherCategories = uniqueCategories.filter(cat => cat !== toolContext);
         // Randomly pick 3 categories.
         const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -144,20 +149,20 @@ export const getToolRelatedData = cache(async (toolId: string, toolName: string,
         const complementarySnapshots = await Promise.all(complementaryPromises);
         const complementaryTools = complementarySnapshots.map(snap => {
             if (!snap.empty) {
-                return serializeTool(snap.docs[0].id, snap.docs[0].data());
+                return serializeTool(snap.docs[0].id, snap.docs[0].data(), locale);
             }
             return null;
         }).filter((t): t is Tool => t !== null);
 
         // Similar Tools
         const similarTools = similarToolsSnapshot.docs
-            .map(d => serializeTool(d.id, d.data()))
+            .map(d => serializeTool(d.id, d.data(), locale))
             .filter(t => t.id !== toolId)
             .slice(0, 4);
         
         // Featured Tools
         const featuredTools = featuredToolsSnapshot.docs
-            .map(d => serializeTool(d.id, d.data()))
+            .map(d => serializeTool(d.id, d.data(), locale))
             .filter(t => t.id !== toolId)
             .slice(0, 3);
         

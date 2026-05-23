@@ -3,7 +3,6 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Edit3, Camera, Upload, Trash2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ModelCard } from "@/components/models/model-card";
-import type { AIModel, Tool, NewsArticle, UserProfileData } from "@/lib/types";
+import type { AIModel, Tool, NewsArticle } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -34,12 +33,50 @@ import { getUserProfileData } from "@/lib/user-data-service";
 import { collection, getDocs, query, where, documentId, orderBy } from "firebase/firestore";
 import { db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocalized, getLocalizedArray } from "@/lib/i18n-helpers";
+
+function serializeTool(id: string, data: any, locale: string): Tool {
+    return {
+        id,
+        ...data,
+        contextKey: getLocalized(data.context, "vi"),
+        context: getLocalized(data.context, locale),
+        description: getLocalized(data.description, locale),
+        longDescription: getLocalized(data.longDescription, locale),
+        features: getLocalizedArray(data.features, locale),
+        pricingPlans: getLocalizedArray(data.pricingPlans, locale),
+        useCases: getLocalizedArray(data.useCases, locale),
+        whoIsItFor: getLocalizedArray(data.whoIsItFor, locale),
+    } as Tool;
+}
+
+function serializeModel(id: string, data: any, locale: string): AIModel {
+    return {
+        id,
+        ...data,
+        description: getLocalized(data.description, locale),
+        releaseDate: data.releaseDate?.toDate?.()?.toISOString() || data.releaseDate,
+    } as AIModel;
+}
+
+function serializeArticle(id: string, data: any, locale: string): NewsArticle {
+    return {
+        id,
+        ...data,
+        title: getLocalized(data.title, locale),
+        content: getLocalized(data.content, locale),
+        summary: getLocalized(data.summary, locale),
+        author: getLocalized(data.author, locale),
+        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+    } as NewsArticle;
+}
 
 export default function ProfilePage() {
   const { currentUser, isLoading, logout, updateUserProfile } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const locale = useLocale();
   const [ratedModels, setRatedModels] = useState<AIModel[]>([]);
   const [ratedTools, setRatedTools] = useState<Tool[]>([]);
   const [favoriteTools, setFavoriteTools] = useState<Tool[]>([]);
@@ -69,8 +106,8 @@ export default function ProfilePage() {
             )),
         ]);
 
-        const allDbModels = modelsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIModel));
-        const allDbTools = toolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+        const allDbModels = modelsSnapshot.docs.map(doc => serializeModel(doc.id, doc.data(), locale));
+        const allDbTools = toolsSnapshot.docs.map(doc => serializeTool(doc.id, doc.data(), locale));
 
         const ratedModelIds = Object.keys(userData.ratedModels || {});
         setRatedModels(
@@ -100,11 +137,7 @@ export default function ProfilePage() {
                 where(documentId(), "in", bookmarkedIds)
             );
             const newsSnapshot = await getDocs(newsQuery);
-            const userBookmarkedNews = newsSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                publishedAt: doc.data().publishedAt.toDate().toISOString(),
-            } as NewsArticle));
+            const userBookmarkedNews = newsSnapshot.docs.map(doc => serializeArticle(doc.id, doc.data(), locale));
             setBookmarkedNews(userBookmarkedNews);
         } else {
             setBookmarkedNews([]);
@@ -113,13 +146,13 @@ export default function ProfilePage() {
         console.error("Failed to fetch user profile data:", error);
         toast({
             title: t("photoRemoveError"),
-            description: "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
+            description: locale === "en" ? "Failed to load your profile data. Please try again." : "Không thể tải dữ liệu hồ sơ của bạn. Vui lòng thử lại.",
             variant: "destructive"
         });
     } finally {
         setIsFetchingData(false);
     }
-  }, [currentUser, toast]);
+  }, [currentUser, locale, toast, t]);
   
   useEffect(() => {
     if (!isLoading && !currentUser) {
@@ -256,7 +289,7 @@ export default function ProfilePage() {
                         <div className="text-center sm:text-left">
                             <CardTitle className="text-3xl font-headline">{currentUser.displayName}</CardTitle>
                             <CardDescription className="text-lg">{currentUser.email}</CardDescription>
-                            {currentUser.bio && <p className="text-base text-muted-foreground mt-2 text-center sm:text-left">{currentUser.bio}</p>}
+                            {currentUser.bio && <p className="text-base text-muted-foreground mt-2 text-center sm:text-left">{getLocalized(currentUser.bio as any, locale)}</p>}
                         </div>
                         <div className="sm:ml-auto flex flex-col sm:items-end space-y-2">
                             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>

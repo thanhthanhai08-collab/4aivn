@@ -22,7 +22,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocalizedSlug } from "@/lib/i18n-helpers";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -91,6 +92,7 @@ export function ToolDetailClient({
   const [reviewText, setReviewText] = useState("");
   const [allReviews, setAllReviews] = useState<ToolReview[]>(initialReviews);
   const t = useTranslations("toolDetail");
+  const locale = useLocale();
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -438,8 +440,10 @@ export function ToolDetailClient({
                   <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> {t("relatedNews")}</h2>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {relatedNews.map((article) => (
-                      <Link key={article.id} href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="flex items-center space-x-3 group">
+                  {relatedNews.map((article) => {
+                    const slug = getLocalizedSlug(article.slug || article.id, locale) || article.id;
+                    return (
+                      <Link key={article.id} href={`/${slug}` as any} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
                             <Image src={article.imageUrl || ''} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>
@@ -447,7 +451,8 @@ export function ToolDetailClient({
                             <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>
                          </div>
                       </Link>
-                  ))}
+                    );
+                  })}
                 </CardContent>
               </Card>
             )}

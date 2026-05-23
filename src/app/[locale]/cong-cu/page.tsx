@@ -131,12 +131,12 @@ function ToolsContent() {
       setIsMoreLoading(false);
       isMoreLoadingRef.current = false;
     }
-  }, []);
+  }, [locale]);
   
   // Effect for initial load and filter changes
   useEffect(() => {
     fetchTools(true, selectedCategory);
-  }, [selectedCategory, fetchTools]); // Re-fetch when category changes. Search is client-side.
+  }, [selectedCategory, fetchTools]); // Re-fetch when category or locale changes. Search is client-side.
 
   // Effect for infinite scroll
   useEffect(() => {
@@ -204,7 +204,7 @@ function ToolsContent() {
         onCategoryChange={(category) => {
           setSelectedCategory(category);
           // When category changes, we trigger a full reload.
-          fetchTools(true);
+          fetchTools(true, category);
         }}
         initialSearchTerm={searchTerm}
       />

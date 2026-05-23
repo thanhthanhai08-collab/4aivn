@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { useLocale } from "next-intl";
 
 interface EditProfileFormProps {
   onSuccess: () => void;
@@ -17,7 +18,9 @@ interface EditProfileFormProps {
 export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
   const { currentUser, updateUserProfile } = useAuth();
   const { toast } = useToast();
-  
+  const locale = useLocale();
+  const isEn = locale === "en";
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<{
     displayName: string;
@@ -39,24 +42,32 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) return;
-    
+
     if (!formData.displayName.trim()) {
-        toast({ title: "Tên không hợp lệ", description: "Tên hiển thị không được để trống.", variant: "destructive"});
-        return;
+      toast({
+        title: isEn ? "Invalid name" : "Tên không hợp lệ",
+        description: isEn ? "Display name cannot be empty." : "Tên hiển thị không được để trống.",
+        variant: "destructive",
+      });
+      return;
     }
 
     setIsSubmitting(true);
     try {
-      await updateUserProfile({ 
-        displayName: formData.displayName, 
+      await updateUserProfile({
+        displayName: formData.displayName,
         bio: formData.bio,
       });
-      
-      toast({ title: "Đã lưu thay đổi" });
+
+      toast({ title: isEn ? "Changes saved" : "Đã lưu thay đổi" });
       onSuccess();
     } catch (error) {
       console.error("Profile update error: ", error);
-      toast({ title: "Lỗi khi lưu", description: "Không thể cập nhật hồ sơ của bạn.", variant: "destructive" });
+      toast({
+        title: isEn ? "Save error" : "Lỗi khi lưu",
+        description: isEn ? "Failed to update your profile." : "Không thể cập nhật hồ sơ của bạn.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -66,22 +77,22 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="displayName">Tên của bạn</Label>
-          <Input 
+          <Label htmlFor="displayName">{isEn ? "Your name" : "Tên của bạn"}</Label>
+          <Input
             id="displayName"
-            value={formData.displayName} 
-            onChange={e => setFormData(p => ({ ...p, displayName: e.target.value }))}
-            placeholder="Ví dụ: Hoàng"
+            value={formData.displayName}
+            onChange={(e) => setFormData((p) => ({ ...p, displayName: e.target.value }))}
+            placeholder={isEn ? "Example: Alex" : "Ví dụ: Hoàng"}
             disabled={isSubmitting}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="bio">Tiểu sử</Label>
-          <Textarea 
+          <Label htmlFor="bio">{isEn ? "Bio" : "Tiểu sử"}</Label>
+          <Textarea
             id="bio"
-            value={formData.bio} 
-            onChange={e => setFormData(p => ({ ...p, bio: e.target.value }))}
-            placeholder="Một chút về bản thân..."
+            value={formData.bio}
+            onChange={(e) => setFormData((p) => ({ ...p, bio: e.target.value }))}
+            placeholder={isEn ? "A little about yourself..." : "Một chút về bản thân..."}
             className="resize-none h-24"
             disabled={isSubmitting}
           />
@@ -90,7 +101,7 @@ export function EditProfileForm({ onSuccess }: EditProfileFormProps) {
 
       <Button type="submit" className="w-full font-bold" disabled={isSubmitting}>
         {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-        Lưu thay đổi
+        {isEn ? "Save changes" : "Lưu thay đổi"}
       </Button>
     </form>
   );
