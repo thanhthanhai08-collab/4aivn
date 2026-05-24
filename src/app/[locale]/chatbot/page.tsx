@@ -15,7 +15,7 @@ import {
   collection, query, orderBy, getDocs, limit, 
   doc, where
 } from "firebase/firestore";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
@@ -31,6 +31,8 @@ export default function ChatPage() {
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("chatbot");
+  const locale = useLocale();
+  const isEn = locale === "en";
 
   const scrollToBottom = useCallback(() => {
     if (scrollRef.current) {
@@ -346,7 +348,7 @@ export default function ChatPage() {
         {/* MAIN CHAT */}
         <main className="flex-grow flex flex-col relative w-full overflow-hidden">
           <header className="h-14 border-b flex items-center px-6 bg-background/50 backdrop-blur-sm z-10">
-              <h1 className="font-bold text-lg">AI Assistant</h1>
+              <h1 className="font-bold text-lg">{isEn ? "AI Assistant" : "Trợ lý AI"}</h1>
           </header>
           
           <div className="flex-grow overflow-hidden flex flex-col max-w-5xl mx-auto w-full relative">

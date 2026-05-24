@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Send, Paperclip, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLocale, useTranslations } from "next-intl";
 
 interface ChatInputProps {
   onSendMessage: (message: string, image?: File) => void;
@@ -19,14 +20,17 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const t = useTranslations("chatbot");
+  const locale = useLocale();
+  const isEn = locale === "en";
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
-          title: "File quá lớn",
-          description: "Vui lòng chọn file nhỏ hơn 5MB để tiếp tục.",
+          title: t("fileTooLarge"),
+          description: t("fileTooLargeDesc"),
           variant: "destructive",
         });
         if (fileInputRef.current) {
@@ -67,7 +71,7 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
             <div className="relative w-full p-2 border rounded-md flex items-center justify-between group bg-muted/50">
                 {previewUrl ? (
                      <div className="flex items-center gap-2 overflow-hidden">
-                        <Image src={previewUrl} alt="Xem trước ảnh" width={40} height={40} objectFit="cover" className="rounded-md border" />
+                        <Image src={previewUrl} alt={isEn ? "Image preview" : "Xem trước ảnh"} width={40} height={40} className="rounded-md border object-cover" />
                          <span className="text-sm text-muted-foreground truncate">{selectedFile.name}</span>
                     </div>
                 ) : (
@@ -88,7 +92,7 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
                 size="icon"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isLoading}
-                aria-label="Đính kèm file"
+                aria-label={isEn ? "Attach file" : "Đính kèm file"}
             >
                 <Paperclip className="h-5 w-5" />
             </Button>
@@ -101,14 +105,14 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
             />
             <Input
                 type="text"
-                placeholder="Nhập tin nhắn của bạn..."
+                placeholder={isEn ? "Type your message..." : "Nhập tin nhắn của bạn..."}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 disabled={isLoading}
                 className="flex-grow h-11"
-                aria-label="Ô nhập tin nhắn chat"
+                aria-label={isEn ? "Chat input field" : "Ô nhập tin nhắn chat"}
             />
-            <Button type="submit" disabled={isLoading || (!inputValue.trim() && !selectedFile)} aria-label="Gửi tin nhắn" size="icon" className="h-11 w-11 shrink-0">
+            <Button type="submit" disabled={isLoading || (!inputValue.trim() && !selectedFile)} aria-label={isEn ? "Send message" : "Gửi tin nhắn"} size="icon" className="h-11 w-11 shrink-0">
                 <Send className="h-5 w-5" />
             </Button>
         </form>

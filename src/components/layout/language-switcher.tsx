@@ -53,6 +53,7 @@ export function LanguageSwitcher() {
         >
           <Globe className="h-4 w-4" />
           <span className="hidden sm:inline">{currentLocale.label}</span>
+          <span className="sm:hidden">vi/en</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[140px]">
