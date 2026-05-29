@@ -26,10 +26,12 @@ export interface Tool {
 
 export interface NewsArticle {
   id: string;
-  title: string;
+  title: string | { vi?: string; en?: string };
   source: string; // Publisher or source name
   author?: string;
-  content: string; // Full content or summary
+  authorImageUrl?: string;
+  summary?: string | { vi?: string; en?: string };
+  content: string | { vi?: string; en?: string }; // Full content or summary
   publishedAt: string; // ISO date string
   imageUrl: string;
   link?: string;

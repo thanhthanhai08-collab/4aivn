@@ -41,6 +41,7 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, increme
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
 import { useParams } from "next/navigation";
+import { getLocalizedNews, hasLocalizedNews, type NewsLanguage } from "@/lib/news-localization";
 
 // Helper function to extract YouTube ID
 function getYouTubeId(urlOrId: string): string {
@@ -61,13 +62,13 @@ function getYouTubeId(urlOrId: string): string {
   return '';
 }
 
-const renderContent = (article: NewsArticle) => {
-  if (!article || !article.content) return null;
+const renderContent = (article: NewsArticle, content = getLocalizedNews(article).content) => {
+  if (!article || !content) return null;
 
   // Regex to find placeholders like [CHART_1], [IMAGE:...] and legacy placeholders
   const combinedRegex = /(\[CHART_(?:\d+)\]|\[VIDEO:.*?\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
 
-  const parts = article.content.split(combinedRegex).filter(part => part);
+  const parts = content.split(combinedRegex).filter(part => part);
 
   return parts.map((part, index) => {
     const chartMatch = part.match(/^\[CHART_(\d+)\]$/);
@@ -162,7 +163,7 @@ const renderContent = (article: NewsArticle) => {
             <iframe
               className="absolute top-0 left-0 w-full h-full"
               src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1`}
-              title={videoTitle.trim() || `Video: ${article.title}`}
+              title={videoTitle.trim() || `Video: ${getLocalizedNews(article).title}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               loading="lazy"
@@ -248,6 +249,7 @@ function NewsDetailContent() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [language, setLanguage] = useState<NewsLanguage>("vi");
   
   useEffect(() => {
     if (typeof window === 'undefined' || !id) {
@@ -271,11 +273,14 @@ function NewsDetailContent() {
             } as NewsArticle;
 
             setArticle(fetchedArticle);
+            setLanguage("vi");
             
-            if (data.summary) {
-                setSummary(data.summary);
+            const fetchedLocalizedArticle = getLocalizedNews(fetchedArticle);
+
+            if (fetchedLocalizedArticle.summary) {
+                setSummary(fetchedLocalizedArticle.summary);
             } else {
-                summarizeNewsArticle({ articleContent: fetchedArticle.content })
+                summarizeNewsArticle({ articleContent: fetchedLocalizedArticle.content })
                   .then(async (res) => {
                       const newSummary = res.summary;
                       setSummary(newSummary);
@@ -456,6 +461,10 @@ function NewsDetailContent() {
     );
   }
 
+  const localizedArticle = getLocalizedNews(article, language);
+  const displaySummary = localizedArticle.summary || summary;
+  const bilingual = hasLocalizedNews(article);
+
   return (
     <AppLayout>
       <div className="container py-8 md:py-12">
@@ -487,7 +496,7 @@ function NewsDetailContent() {
 
                 <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
                   <span className="text-foreground font-semibold truncate max-w-[200px] sm:max-w-md">
-                    {article.title}
+                    {localizedArticle.title}
                   </span>
                 </li>
               </ol>
@@ -511,7 +520,29 @@ function NewsDetailContent() {
                         </Button>
                     </div>
                  </div>
-                <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{article.title}</h1>
+                {bilingual && (
+                  <div className="mb-4 inline-flex rounded-md border bg-background p-1">
+                    <Button
+                      type="button"
+                      variant={language === "vi" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-8"
+                      onClick={() => setLanguage("vi")}
+                    >
+                      Tiếng Việt
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={language === "en" ? "default" : "ghost"}
+                      size="sm"
+                      className="h-8"
+                      onClick={() => setLanguage("en")}
+                    >
+                      English
+                    </Button>
+                  </div>
+                )}
+                <h1 className="text-3xl md:text-4xl font-headline font-bold text-foreground mb-4">{localizedArticle.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                     {article.author && (
                       <div className="flex items-center">
@@ -529,7 +560,7 @@ function NewsDetailContent() {
               {article.imageUrl && (
                 <Image
                   src={article.imageUrl}
-                  alt={article.title}
+                  alt={localizedArticle.title}
                   width={800}
                   height={450}
                   className="rounded-lg shadow-lg mb-8 w-full object-cover"
@@ -538,13 +569,13 @@ function NewsDetailContent() {
                 />
               )}
               
-              {summary ? (
+              {displaySummary ? (
                   <Card className="mb-8 bg-accent/50 border-primary/20">
                       <CardHeader>
-                          <h2 className="text-2xl font-headline font-bold">Tóm tắt nhanh</h2>
+                          <h2 className="text-2xl font-headline font-bold">{language === "en" ? "Quick Summary" : "Tóm tắt nhanh"}</h2>
                       </CardHeader>
                       <CardContent>
-                          <p className="text-lg text-muted-foreground">{summary}</p>
+                          <p className="text-lg text-muted-foreground">{displaySummary}</p>
                       </CardContent>
                   </Card>
               ) : (
@@ -557,7 +588,7 @@ function NewsDetailContent() {
               )}
 
               <div className="text-foreground text-lg leading-relaxed space-y-6 prose prose-lg max-w-none">
-                {renderContent(article)}
+                {renderContent(article, localizedArticle.content)}
               </div>
 
               <footer className="mt-12 pt-6 border-t">
@@ -606,7 +637,7 @@ function NewsDetailContent() {
                       <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                         <Image
                           src={related.imageUrl}
-                          alt={related.title}
+                          alt={getLocalizedNews(related).title}
                           fill
                           className="object-cover transition-transform group-hover:scale-110 duration-300"
                           sizes="96px"
@@ -615,7 +646,7 @@ function NewsDetailContent() {
                       
                       <div className="flex flex-col justify-between">
                         <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
-                          {related.title}
+                          {getLocalizedNews(related).title}
                         </h4>
                         
                         <div className="flex items-center text-[11px] text-muted-foreground mt-auto">

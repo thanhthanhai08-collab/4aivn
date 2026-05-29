@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { getLocalizedNews } from "@/lib/news-localization";
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -34,6 +35,7 @@ export function NewsCard({ article }: NewsCardProps) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const localizedArticle = getLocalizedNews(article);
 
   useEffect(() => {
     // Sync with Firestore on mount and when article.id or user changes
@@ -73,7 +75,7 @@ export function NewsCard({ article }: NewsCardProps) {
   };
   
   // Remove HTML and [IMAGE:...] tags for the summary display
-  const descriptionText = article.content
+  const descriptionText = localizedArticle.content
     .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
     .replace(/&nbsp;/g, " ")
     .trim();
@@ -85,7 +87,7 @@ export function NewsCard({ article }: NewsCardProps) {
           <div className="relative w-full h-48 overflow-hidden">
             <Image 
               src={article.imageUrl} 
-              alt={article.title} 
+              alt={localizedArticle.title} 
               fill
               className="object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -97,7 +99,7 @@ export function NewsCard({ article }: NewsCardProps) {
       <CardHeader className="p-4">
         <CardTitle className="text-lg font-headline line-clamp-2">
            <Link href={`/${article.id}`} className="hover:text-primary transition-colors">
-            {article.title}
+            {localizedArticle.title}
           </Link>
         </CardTitle>
       </CardHeader>

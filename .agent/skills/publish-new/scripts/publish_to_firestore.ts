@@ -1,6 +1,9 @@
 /**
- * Bước 4: Đăng lên Firestore và dọn dẹp thư mục
- * Usage: npx tsx .agent/skill/publish-new/scripts/publish_to_firestore.ts --slug "slug"
+ * Bước 4: Đăng bài song ngữ lên Firestore và dọn dẹp thư mục.
+ * Format song ngữ dùng đúng schema hiện có:
+ * title: { vi, en }, summary: { vi, en }, content: { vi, en }
+ *
+ * Usage: npx tsx .agent/skills/publish-new/scripts/publish_to_firestore.ts --slug "slug"
  */
 import * as admin from 'firebase-admin';
 import * as fs from 'fs';
@@ -14,7 +17,7 @@ const slugIdx = args.indexOf('--slug');
 const slug = slugIdx !== -1 ? args[slugIdx + 1] : '';
 
 if (!slug) {
-  console.error('❌ Thiếu --slug. Usage: npx tsx publish_to_firestore.ts --slug "slug"');
+  console.error('Thiếu --slug. Usage: npx tsx publish_to_firestore.ts --slug "slug"');
   process.exit(1);
 }
 
@@ -22,13 +25,13 @@ const dirPath = path.resolve(process.cwd(), `news-data/${slug}`);
 const fullPath = path.join(dirPath, `${slug}.json`);
 
 if (!fs.existsSync(fullPath)) {
-  console.error(`❌ File không tồn tại: ${fullPath}`);
+  console.error(`File không tồn tại: ${fullPath}`);
   process.exit(1);
 }
 
 const serviceAccountPath = path.resolve(process.cwd(), 'serviceAccountKey.json');
 if (!fs.existsSync(serviceAccountPath)) {
-  console.error('❌ Thiếu file serviceAccountKey.json ở thư mục gốc');
+  console.error('Thiếu file serviceAccountKey.json ở thư mục gốc');
   process.exit(1);
 }
 
@@ -39,28 +42,48 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
+type LocalizedField = string | { vi?: string; en?: string };
+
+function toLocalizedField(field: LocalizedField | undefined, viFallback = '', enFallback = '') {
+  if (typeof field === 'object' && field !== null) {
+    return {
+      vi: field.vi || viFallback,
+      en: field.en || enFallback || field.vi || viFallback
+    };
+  }
+
+  return {
+    vi: field || viFallback,
+    en: enFallback || field || viFallback
+  };
+}
+
 async function main() {
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+  const title = toLocalizedField(data.title, data.titleVi, data.titleEn);
+  const summary = toLocalizedField(data.summary, data.summaryVi, data.summaryEn);
+  const content = toLocalizedField(data.content, data.contentVi, data.contentEn);
 
-  console.log('🚀 Đăng bài lên Firestore...');
-  console.log(`   Tiêu đề: ${data.title}`);
+  console.log('Đăng bài song ngữ lên Firestore...');
+  console.log(`   VI: ${title.vi}`);
+  console.log(`   EN: ${title.en}`);
 
   const newsDoc = {
     author: data.author || 'Nam',
     authorId: data.authorId || 'nam',
     category: data.category || [{ id: 'xu-huong', name: 'Xu hướng' }],
     charts: data.charts || [],
-    content: data.content || '',
-    // Lấy ảnh bìa 16:9 từ storage
+    content,
     imageUrl: `/image/news%2F${slug}.webp`,
-    post: false, // Để rà soát duyệt nội dung
+    post: false,
     publishedAt: data.publishedAt
       ? admin.firestore.Timestamp.fromDate(new Date(data.publishedAt))
       : admin.firestore.FieldValue.serverTimestamp(),
-    source: data.source || 'Tổng hợp',
-    summary: data.summary || '',
+    slug: data.slug || slug,
+    source: data.source || data.link || 'Tổng hợp',
+    summary,
     tag: data.tag || [],
-    title: data.title || '',
+    title,
     viewCount: data.viewCount || 0
   };
 
@@ -69,16 +92,14 @@ async function main() {
     const docRef = db.collection('news').doc(docSlug);
     await docRef.set(newsDoc);
 
-    console.log(`\n✅ Đã đăng thành công!`);
+    console.log('\nĐã đăng thành công.');
     console.log(`   Document ID: ${docRef.id}`);
-    console.log(`   post: false`);
+    console.log('   post: false');
 
-    // Ghi nhận firestoreId
     data.firestoreId = docRef.id;
     fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), 'utf-8');
 
-    // Dọn dẹp các file JSON không cần thiết
-    console.log('🧹 Dọn dẹp thư mục:');
+    console.log('Dọn dẹp thư mục:');
     const filesToRemove = ['crawl.json', 'analyze.json', 'outline.json', 'write.html'];
     filesToRemove.forEach(f => {
       const p = path.join(dirPath, f);
@@ -88,10 +109,10 @@ async function main() {
       }
     });
 
-    console.log(`\n🎉 Hoàn tất quy trình! Thư mục news-data/${slug}/ giờ chỉ còn ${slug}.json và ảnh bìa.`);
+    console.log(`\nHoàn tất. Thư mục news-data/${slug}/ giờ chỉ còn ${slug}.json và ảnh bìa.`);
     process.exit(0);
   } catch (err: any) {
-    console.error('❌ Lỗi Firestore:', err.message);
+    console.error('Lỗi Firestore:', err.message);
     process.exit(1);
   }
 }

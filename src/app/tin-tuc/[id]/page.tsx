@@ -16,6 +16,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { useParams } from "next/navigation";
+import { getLocalizedNews } from "@/lib/news-localization";
 
 const PAGE_SIZE = 12;
 
@@ -236,7 +237,7 @@ function NewsCategoryContent() {
                                         <div className="relative w-24 aspect-video shrink-0 overflow-hidden rounded-md">
                                             <Image
                                                 src={related.imageUrl}
-                                                alt={related.title}
+                                                alt={getLocalizedNews(related).title}
                                                 fill
                                                 className="object-cover transition-transform group-hover:scale-110 duration-300"
                                                 sizes="96px"
@@ -244,7 +245,7 @@ function NewsCategoryContent() {
                                         </div>
                                         <div className="flex flex-col justify-between">
                                             <h4 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-3 mb-2">
-                                                {related.title}
+                                                {getLocalizedNews(related).title}
                                             </h4>
                                             <div className="flex items-center text-[11px] text-muted-foreground mt-auto">
                                                 <CalendarDays className="mr-1 h-3 w-3" />

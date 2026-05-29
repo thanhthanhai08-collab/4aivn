@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { getLocalizedField } from "@/lib/news-localization";
 
 type Props = {
   children: React.ReactNode;
@@ -33,17 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const article = docSnap.data();
-    const description = article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160);
+    const title = getLocalizedField(article.title);
+    const summary = getLocalizedField(article.summary);
+    const content = getLocalizedField(article.content);
+    const description = summary?.slice(0, 160) || content?.replace(/<[^>]*>/g, "").slice(0, 160);
     const imageUrl = article.imageUrl ? (article.imageUrl.startsWith('http') ? article.imageUrl : `${BASE_URL}${article.imageUrl}`) : undefined;
 
     return {
-      title: article.title,
+      title,
       description: description,
       alternates: {
         canonical: `${BASE_URL}/${id}`,
       },
       openGraph: {
-        title: article.title,
+        title,
         description: description,
         url: `${BASE_URL}/${id}`,
         siteName: "4AIVN",
@@ -54,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       twitter: {
         card: "summary_large_image",
-        title: article.title,
+        title,
         description: description,
         images: imageUrl ? [imageUrl] : [],
       },
@@ -111,7 +115,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         {
           "@type": "ListItem",
           "position": hasCategory ? 4 : 3,
-          "name": article.title,
+          "name": getLocalizedField(article.title),
           "item": `${BASE_URL}/${id}`,
         },
       ],
@@ -120,7 +124,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
     const articleSchema = {
         "@context": "https://schema.org",
         "@type": "NewsArticle",
-        "headline": article.title,
+        "headline": getLocalizedField(article.title),
         "image": [article.imageUrl],
         "datePublished": article.publishedAt?.toDate ? article.publishedAt.toDate().toISOString() : new Date().toISOString(),
         "author": [{
@@ -135,7 +139,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
                 "url": `${BASE_URL}/logo.png`
             }
         },
-        "description": article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160)
+        "description": getLocalizedField(article.summary)?.slice(0, 160) || getLocalizedField(article.content)?.replace(/<[^>]*>/g, "").slice(0, 160)
     };
 
     return (

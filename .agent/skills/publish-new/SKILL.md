@@ -1,11 +1,11 @@
 ---
 name: publish-new
-description: Vận hành quy trình tự động đăng tin tức AI và báo cáo kết quả
+description: Vận hành quy trình tự động đăng tin tức AI song ngữ và báo cáo kết quả
 ---
 
-# Publish News — Agent Skill
+# Publish News - Agent Skill
 
-Bạn là một biên tập viên cao cấp của 4aivn. Nhiệm vụ của bạn là vận hành Pipeline đăng bài tự động sau đó báo kết quả cho tôi.
+Bạn là biên tập viên cao cấp của 4AIVN. Nhiệm vụ là vận hành pipeline đăng bài tin tức AI song ngữ Việt Anh, sau đó báo cáo kết quả cho người dùng.
 
 ## Yêu cầu
 
@@ -14,45 +14,56 @@ Bạn là một biên tập viên cao cấp của 4aivn. Nhiệm vụ của bạ
 - File `.env.local` chứa `GEMINI_API_KEY`
 - Đã cài dependencies: `npm install`
 
-## Quy trình Pipeline (Tổng quan)
+## Quy trình
 
-Quy trình sẽ thực hiện các bước tuần tự được định nghĩa trong `workflows/publish_news.md`:
-- **Bước 1 (Lấy dữ liệu):** Fetch từ URL được cung cấp hoặc tự động crawl RSS lọc 3 bài AI mới nhất. (0 token)
-- **Bước 2a (Phân tích chuyên sâu):** Đọc nội dung thô kết hợp với file `resources/analyze.md` để fact-check và phân tích góc nhìn sâu sắc. (1 token)
-- **Bước 2b (Lập dàn ý):** Đề xuất Sapo và cấu trúc tiêu đề H2, H3. (1 token)
-- **Bước 2c (Viết bài):** Dựa trên dàn ý, xuất ra nội dung HTML mang đậm chất hành văn 4AIVN. (1 token)
-- **Bước 3 (Metadata, Spell check & Links):** Sinh title, summary, tags, và imagePrompt. Rà soát lỗi chính tả và chèn thêm thẻ link (tuyệt đối không thay đổi câu từ). (1 token)
-- **Bước 4 (Đăng lên Firestore & Dọn dẹp):** Push JSON lên Database với mode `post: false`. Clean-up dọn dẹp các file trung gian sinh ra trong quá trình làm việc, chỉ để lại `{slug}.json` và `{slug}.webp`. (0 token)
+Thực hiện theo `workflows/publish_news.md`:
 
-**LƯU Ý:** Agent (bạn) sẽ trực tiếp sinh ảnh bìa tỷ lệ 16:9 ngay trên khung chat dựa vào `imagePrompt` ở Bước 3.
+- Bước 1: fetch dữ liệu từ URL nguồn.
+- Bước 2a: phân tích và fact check.
+- Bước 2b: lập dàn ý.
+- Bước 2c: viết bài tiếng Việt trong `write.html`.
+- Bước 3: tạo JSON song ngữ với root fields tiếng Việt và object `vi`, `en`.
+- Bước 4: tạo ảnh bìa 16:9.
+- Bước 5: publish lên Firestore bằng `scripts/publish_to_firestore.ts`.
 
-Sau khi hoàn tất chạy xong Script Bước 4, bạn KIÊN QUYẾT phải báo cáo lại với người dùng các thông số: Tiêu đề, Tags, Image Prompt và xác nhận việc dọn dẹp đã hoàn tất.
-
-## Schema Firestore (collection `news`)
+## Schema Firestore collection `news`
 
 ```json
 {
   "author": "Nam",
-  "category": [{"id": "xu-huong", "name": "Xu hướng"}],
+  "authorId": "nam",
+  "category": [{ "id": "xu-huong", "name": "Xu hướng" }],
   "charts": [],
-  "content": "<h2>...</h2><p>...</p>",
-  "imageUrl": "news-data/slug.webp",
+  "content": "<p>Nội dung tiếng Việt...</p>",
+  "vi": {
+    "title": "Tiêu đề tiếng Việt",
+    "summary": "Tóm tắt tiếng Việt",
+    "content": "<p>Nội dung tiếng Việt...</p>"
+  },
+  "en": {
+    "title": "English title",
+    "summary": "English summary",
+    "content": "<p>English content...</p>"
+  },
+  "imageUrl": "/image/news%2Fslug.webp",
+  "language": "vi",
+  "languages": ["vi", "en"],
+  "link": "https://...",
   "post": false,
   "publishedAt": "Timestamp",
   "source": "https://...",
-  "summary": "Tóm tắt ngắn...",
-  "tags": ["AI", "keyword2"],
-  "title": "Tiêu đề bài viết",
+  "summary": "Tóm tắt tiếng Việt",
+  "tag": ["AI", "keyword2"],
+  "title": "Tiêu đề tiếng Việt",
   "viewCount": 0
 }
 ```
 
-## Tối ưu Token
+## Báo cáo sau khi hoàn tất
 
-- Bước 1: 0 token
-- Bước 2a: 1 token
-- Bước 2b: 1 token
-- Bước 2c: 1 token
-- Bước 3: 1 token
-- Bước 4: 0 token
-- **Tổng cộng: 4 lần gọi Gemini API / bài viết**
+Luôn báo lại:
+- Tiêu đề tiếng Việt và tiếng Anh
+- Document ID
+- Trạng thái `post`
+- Đường dẫn ảnh bìa
+- Xác nhận Firestore đã có `vi` và `en`

@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { toggleNewsBookmark, getUserProfileData } from "@/lib/user-data-service";
+import { getLocalizedNews } from "@/lib/news-localization";
 
 const getAuthorInitials = (name?: string) => {
   if (!name) return "";
@@ -29,6 +30,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const localizedArticle = getLocalizedNews(article);
 
   useEffect(() => {
     if (currentUser) {
@@ -66,7 +68,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
     }
   };
 
-  const descriptionText = article.content
+  const descriptionText = localizedArticle.content
     .replace(/<[^>]*>|\[IMAGE:.*?\]/g, "")
     .replace(/&nbsp;/g, " ")
     .trim();
@@ -76,7 +78,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
       <Link href={`/${article.id}`} className="md:col-span-1 block overflow-hidden rounded-lg">
         <Image
           src={article.imageUrl}
-          alt={article.title}
+          alt={localizedArticle.title}
           width={400}
           height={250}
           className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
@@ -86,7 +88,7 @@ export function NewsListItem({ article }: { article: NewsArticle }) {
       <div className="md:col-span-3">
         <h2 className="text-xl font-bold font-headline mb-2 leading-tight">
           <Link href={`/${article.id}`} className="hover:text-primary transition-colors">
-            {article.title}
+            {localizedArticle.title}
           </Link>
         </h2>
         <p className="text-muted-foreground text-sm line-clamp-2 mb-3">

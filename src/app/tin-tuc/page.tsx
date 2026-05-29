@@ -12,18 +12,22 @@ import type { NewsArticle } from "@/lib/types";
 import { collection, getDocs, orderBy, query, limit, startAfter, where, type QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Loader2 } from "lucide-react";
+import { getLocalizedNews } from "@/lib/news-localization";
 
-const QuickViewItem = ({ article }: { article: NewsArticle }) => (
+const QuickViewItem = ({ article }: { article: NewsArticle }) => {
+  const localizedArticle = getLocalizedNews(article);
+
+  return (
     <div className="flex items-center space-x-4 group">
         <span className="flex-shrink-0 w-2 h-2 bg-primary rounded-full"></span>
         <div className="flex-grow">
-            <Link href={`/${article.id}`} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{article.title}</Link>
+            <Link href={`/${article.id}`} className="font-semibold text-sm text-foreground hover:text-primary transition-colors line-clamp-2">{localizedArticle.title}</Link>
         </div>
         <Link href={`/${article.id}`} className="flex-shrink-0 w-24">
             <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden">
                 <Image
                     src={article.imageUrl}
-                    alt={article.title}
+                    alt={localizedArticle.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                     sizes="96px"
@@ -32,7 +36,8 @@ const QuickViewItem = ({ article }: { article: NewsArticle }) => (
             </div>
         </Link>
     </div>
-);
+  );
+};
 
 const PAGE_SIZE = 15;
 
@@ -127,6 +132,8 @@ export default function NewsPage() {
 
   const [featuredArticle, secondaryArticle, ...remainingArticles] = allNews;
   const quickViewArticles = allNews.slice(2, 9);
+  const localizedFeaturedArticle = featuredArticle ? getLocalizedNews(featuredArticle) : null;
+  const localizedSecondaryArticle = secondaryArticle ? getLocalizedNews(secondaryArticle) : null;
 
   if (isLoading) {
     return (
@@ -187,7 +194,7 @@ export default function NewsPage() {
                            <Link href={`/${featuredArticle.id}`} className="block aspect-[16/9] relative">
                                 <Image
                                     src={featuredArticle.imageUrl}
-                                    alt={featuredArticle.title}
+                                    alt={localizedFeaturedArticle?.title || ""}
                                     fill
                                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                     priority
@@ -196,7 +203,7 @@ export default function NewsPage() {
                            </Link>
                            <div className="p-4 bg-card flex-grow flex flex-col">
                                 <h2 className="text-2xl font-bold font-headline text-foreground leading-tight flex-grow">
-                                     <Link href={`/${featuredArticle.id}`} className="hover:text-primary transition-colors">{featuredArticle.title}</Link>
+                                     <Link href={`/${featuredArticle.id}`} className="hover:text-primary transition-colors">{localizedFeaturedArticle?.title}</Link>
                                 </h2>
                                 <p className="text-sm text-muted-foreground mt-2">Bởi {featuredArticle.author}</p>
                            </div>
@@ -208,7 +215,7 @@ export default function NewsPage() {
                                      <Link href={`/${secondaryArticle.id}`} className="block aspect-[16/9] relative rounded-md overflow-hidden group">
                                          <Image
                                             src={secondaryArticle.imageUrl}
-                                            alt={secondaryArticle.title}
+                                            alt={localizedSecondaryArticle?.title || ""}
                                             fill
                                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                                             priority // Thêm thuộc tính này vào đây
@@ -217,10 +224,10 @@ export default function NewsPage() {
                                      </Link>
                                     <div>
                                         <h2 className="text-xl font-bold font-headline mb-2">
-                                            <Link href={`/${secondaryArticle.id}`} className="hover:text-primary">{secondaryArticle.title}</Link>
+                                            <Link href={`/${secondaryArticle.id}`} className="hover:text-primary">{localizedSecondaryArticle?.title}</Link>
                                         </h2>
                                         <p className="text-sm text-muted-foreground mb-1">Bởi {secondaryArticle.author}</p>
-                                        <p className="text-sm text-foreground/80 line-clamp-3">{secondaryArticle.content.replace(/<[^>]*>/g, "")}</p>
+                                        <p className="text-sm text-foreground/80 line-clamp-3">{localizedSecondaryArticle?.content.replace(/<[^>]*>/g, "")}</p>
                                     </div>
                                 </div>
                                 <Button asChild variant="link" className="p-0 self-start mt-4">

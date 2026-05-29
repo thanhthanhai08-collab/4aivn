@@ -1,29 +1,42 @@
-# Step 3: Metadata & Spell Check
+# Step 3: Metadata song ngữ & Spell Check
 
-Nhiệm vụ cuối cùng là duyệt lại bài viết HTML, sửa lỗi chính tả và sinh Metadata hoàn chỉnh cho hệ thống 4AIVN.
+Nhiệm vụ cuối cùng là duyệt lại bài viết HTML, sửa lỗi chính tả và sinh metadata hoàn chỉnh cho hệ thống 4AIVN theo đúng schema song ngữ hiện có.
 
 ## Dữ liệu đầu vào
-- `write.html`: Nội dung bài viết đã soạn thảo.
-- `crawl.json`: Chứa URL nguồn và tiêu đề gốc.
+- `write.html`: nội dung bài viết tiếng Việt đã soạn thảo.
+- `crawl.json`: URL nguồn và tiêu đề gốc.
 
 ## Quy tắc thực hiện
-1. **Tiêu đề**: Tạo tiêu đề bài viết hấp dẫn, chứa từ khóa quan trọng.
-2. **Tóm tắt (Summary)**: Viết 1 câu tóm tắt giá trị lớn nhất của bài viết.
-3. **Tags**: Lựa chọn 5-8 tag liên quan đến công nghệ, AI, và các công cụ được nhắc đến.
-4. **Image Prompt**: Tạo prompt tiếng Anh để sinh ảnh 16:9 cinematic, hyper-detailed, không có chữ.
-5. **Kiểm tra chính tả**: Rà soát và sửa các lỗi gõ máy trong file HTML.
-6. **Internal Links**: Thêm link `<a href="https://4aivn.com/" target="_blank">tác nhân</a>` hoặc các từ khóa liên quan đến 4AIVN.
+1. `title`, `summary`, `content` phải là object song ngữ `{ "vi": "...", "en": "..." }`.
+2. Không dùng schema `vi: { title, summary, content }` và `en: { title, summary, content }`.
+3. Bản tiếng Việt bám theo `write.html`, được sửa chính tả và thêm internal link khi tự nhiên.
+4. Bản tiếng Anh là bản biên tập tự nhiên, không dịch máy móc từng chữ.
+5. `content.vi` và `content.en` đều là HTML hợp lệ, dùng các thẻ `<p>`, `<h2>`, `<h3>`, `<ul>`, `<li>`.
+6. Nếu có ảnh/video trong bài, dùng cùng placeholder `[IMAGE:url|Alt Text|Caption]` hoặc `[VIDEO:id|Title|Caption]` ở cả hai ngôn ngữ, dịch Alt/Caption tương ứng.
+7. Tags dùng chung cho cả bài, gồm 5-8 tag liên quan đến công nghệ, AI và công cụ được nhắc đến.
+8. `imagePrompt` viết bằng tiếng Anh cho ảnh bìa 16:9.
 
-## Cấu trúc đầu ra (JSON)
+## Cấu trúc đầu ra JSON
 Lưu kết quả vào file `{slug}.json` với cấu trúc:
+
 ```json
 {
-  "title": "Tiêu đề bài viết",
-  "summary": "Tóm tắt ngắn gọn",
-  "content": "Nội dung HTML đã được chỉnh sửa",
+  "slug": "{slug}",
+  "title": {
+    "vi": "Tiêu đề tiếng Việt",
+    "en": "English title"
+  },
+  "summary": {
+    "vi": "Tóm tắt tiếng Việt",
+    "en": "English summary"
+  },
+  "content": {
+    "vi": "Nội dung HTML tiếng Việt",
+    "en": "English HTML content"
+  },
   "tag": ["Tag1", "Tag2"],
   "imagePrompt": "English prompt for cover image",
-  "category": [{"id": "xu-huong", "name": "Xu hướng"}],
+  "category": [{ "id": "xu-huong", "name": "Xu hướng" }],
   "source": "URL nguồn",
   "author": "Nam",
   "authorId": "nam",
