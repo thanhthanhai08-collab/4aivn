@@ -156,6 +156,10 @@ function NewsCategoryContent() {
         fetchInitialData();
     }, [categoryId, locale]);
 
+    const handleExplore = () => {
+        window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+    };
+
     const handleLoadMore = async () => {
         if (!lastDoc || !hasMore || isMoreLoading || !category) return;
         
@@ -313,7 +317,7 @@ function NewsCategoryContent() {
                         <Card className="bg-accent/50 text-center p-6">
                             <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{tNewsDetail('exploreRankings')}</h3>
                             <p className="mb-4 text-sm text-muted-foreground">{tNewsDetail('exploreRankingsDesc')}</p>
-                            <Button asChild>
+                            <Button asChild onClick={handleExplore}>
                                 <Link href="/bang-xep-hang">{tNewsDetail('exploreBtn')}</Link>
                             </Button>
                         </Card>
