@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -245,6 +245,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
   const t = useTranslations("newsDetail");
   const tCommon = useTranslations("common");
   const locale = useLocale();
+  const router = useRouter();
   const dateLocale = locale === 'en' ? enUS : vi;
   
   const [summary, setSummary] = useState<string | null>(article?.summary || null);
@@ -330,6 +331,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
 
   const handleExplore = () => {
     window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+    router.push("/bang-xep-hang");
   };
 
   if (!article) {
@@ -531,8 +533,8 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
               <Card className="bg-accent/50 text-center p-6">
                   <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{t("exploreRankings")}</h3>
                   <p className="mb-4 text-sm text-muted-foreground">{t("exploreRankingsDesc")}</p>
-                  <Button asChild onClick={handleExplore}>
-                      <Link href="/bang-xep-hang">{t("exploreBtn")}</Link>
+                  <Button onClick={handleExplore}>
+                      {t("exploreBtn")}
                   </Button>
               </Card>
           </aside>

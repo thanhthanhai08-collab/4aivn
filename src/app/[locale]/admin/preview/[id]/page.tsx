@@ -3,7 +3,7 @@
 
 import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { ArrowLeft, CalendarDays, Globe, MessageSquare, User, Bookmark, Share2 } from "lucide-react";
 import type { NewsArticle, Comment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -180,6 +180,7 @@ function NewsDetailContent() {
   const locale = useLocale();
   const tPreview = useTranslations("preview");
   const tNewsDetail = useTranslations("newsDetail");
+  const router = useRouter();
   
   const [article, setArticle] = useState<NewsArticle | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -349,6 +350,7 @@ function NewsDetailContent() {
 
   const handleExplore = () => {
     window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+    router.push("/bang-xep-hang");
   };
 
   if (isLoading) {
@@ -535,8 +537,8 @@ function NewsDetailContent() {
                     <Card className="bg-accent/50 text-center p-6">
                         <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{tNewsDetail("exploreRankings")}</h3>
                         <p className="mb-4 text-sm text-muted-foreground">{tNewsDetail("exploreRankingsDesc")}</p>
-                        <Button asChild onClick={handleExplore}>
-                            <Link href="/bang-xep-hang">{tNewsDetail("exploreBtn")}</Link>
+                        <Button onClick={handleExplore}>
+                            {tNewsDetail("exploreBtn")}
                         </Button>
                     </Card>
                 </aside>

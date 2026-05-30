@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { AppLayout } from "@/components/layout/app-layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsListItem } from "@/components/news/news-list-item";
@@ -25,6 +25,7 @@ const PAGE_SIZE = 12;
 function NewsCategoryContent() {
     const params = useParams();
     const locale = useLocale();
+    const router = useRouter();
     const t = useTranslations("news");
     const tCommon = useTranslations("common");
     const tNewsDetail = useTranslations("newsDetail");
@@ -158,6 +159,7 @@ function NewsCategoryContent() {
 
     const handleExplore = () => {
         window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+        router.push("/bang-xep-hang");
     };
 
     const handleLoadMore = async () => {
@@ -317,8 +319,8 @@ function NewsCategoryContent() {
                         <Card className="bg-accent/50 text-center p-6">
                             <h3 className="text-xl font-bold mb-2 leading-snug text-foreground">{tNewsDetail('exploreRankings')}</h3>
                             <p className="mb-4 text-sm text-muted-foreground">{tNewsDetail('exploreRankingsDesc')}</p>
-                            <Button asChild onClick={handleExplore}>
-                                <Link href="/bang-xep-hang">{tNewsDetail('exploreBtn')}</Link>
+                            <Button onClick={handleExplore}>
+                                {tNewsDetail('exploreBtn')}
                             </Button>
                         </Card>
                     </aside>
