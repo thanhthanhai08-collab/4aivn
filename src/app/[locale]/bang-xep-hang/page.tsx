@@ -217,6 +217,7 @@ export default function RankingsPage() {
                 id: doc.id,
                 ...data,
                 description: getLocalized(data.description, locale),
+                context: getLocalized(data.context, locale),
             } as Tool;
         });
 

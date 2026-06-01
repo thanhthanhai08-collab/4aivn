@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ArrowLeft } from "lucide-react";
 import type { Tool, NewsArticle, ToolReview } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -96,6 +96,12 @@ export function ToolDetailClient({
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
+  const router = useRouter();
+
+  const handleExplore = () => {
+    window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+    router.push("/bang-xep-hang");
+  };
 
   useEffect(() => {
     if (tool.id) {
@@ -464,9 +470,9 @@ export function ToolDetailClient({
                 <p className="mb-4 text-sm text-muted-foreground">
                     {t("exploreRankingsDesc")}
                 </p>
-                <Button asChild>
-                    <Link href="/bang-xep-hang">{t("explore")}</Link>
-                </Button>
+                 <Button onClick={handleExplore}>
+                     {t("explore")}
+                 </Button>
             </Card>
           </aside>
         </div>
