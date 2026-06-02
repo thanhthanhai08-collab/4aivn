@@ -80,6 +80,7 @@ async function main() {
       ? admin.firestore.Timestamp.fromDate(new Date(data.publishedAt))
       : admin.firestore.FieldValue.serverTimestamp(),
     slug: data.slug || slug,
+    slugEn: data.slugEn || '',
     source: data.source || data.link || 'Tổng hợp',
     summary,
     tag: data.tag || [],
