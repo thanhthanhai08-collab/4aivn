@@ -73,6 +73,8 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
               ? item.averageRating || ((item.totalStars || 0) / item.ratingCount)
               : 0;
            
+            const rank = item.rank ?? index + 1;
+
             return (
             <TableRow
                 key={item.id}
@@ -83,7 +85,7 @@ export function RankingsTable<T extends Tool | AIModel>({ items, itemType }: Ran
                 )}
             >
               <TableCell className="text-center font-medium">
-                {index + 1}
+                {rank}
               </TableCell>
               <TableCell>
                 <div className="flex items-center space-x-3">
@@ -236,20 +238,34 @@ export default function RankingsPage() {
     fetchData();
   }, []);
 
+  const rankedModels = useMemo(() => {
+    return allModels.map((model, index) => ({
+      ...model,
+      rank: index + 1,
+    }));
+  }, [allModels]);
+
+  const rankedTools = useMemo(() => {
+    return allTools.map((tool, index) => ({
+      ...tool,
+      rank: index + 1,
+    }));
+  }, [allTools]);
+
   const filteredModels = useMemo(() => {
-    return allModels.filter(model => 
+    return rankedModels.filter(model => 
       (model.name && model.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (model.description && model.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-  }, [allModels, searchTerm]);
+  }, [rankedModels, searchTerm]);
 
   const filteredTools = useMemo(() => {
     // Data is already sorted by Firestore. We just need to filter by search term.
-    return allTools.filter(tool => 
+    return rankedTools.filter(tool => 
       (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-  }, [allTools, searchTerm]);
+  }, [rankedTools, searchTerm]);
 
   return (
     <AppLayout>

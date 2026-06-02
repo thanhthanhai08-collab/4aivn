@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { getLocalized } from "@/lib/i18n-helpers";
 
 const PAGE_SIZE = 100;
+type RankedTool = Tool & { rank: number };
 
 // --- SKELETON LOADING ---
 function ToolsSkeleton() {
@@ -161,14 +162,21 @@ function ToolsContent() {
       .sort((a, b) => a.label.localeCompare(b.label));
   }, [allTools]);
 
+  const rankedTools = useMemo<RankedTool[]>(() => {
+    return allTools.map((tool, index) => ({
+      ...tool,
+      rank: index + 1,
+    }));
+  }, [allTools]);
+
   const filteredTools = useMemo(() => {
     // Search term filtering is done on the client-side after data is fetched.
-    return allTools.filter((tool) => {
+    return rankedTools.filter((tool) => {
       return searchTerm === "" || 
              (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
              (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()));
     });
-  }, [searchTerm, allTools]);
+  }, [searchTerm, rankedTools]);
 
   return (
     <div className="container py-8">
@@ -218,8 +226,8 @@ function ToolsContent() {
       ) : filteredTools.length > 0 ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTools.map((tool, index) => (
-              <ToolCard key={tool.id} tool={tool} rank={index + 1} />
+            {filteredTools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} rank={tool.rank} />
             ))}
           </div>
           <div ref={ref} className="flex justify-center items-center py-8">

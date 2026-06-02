@@ -5,6 +5,7 @@ export interface Tool {
   contextKey?: string; // Raw context key for Firestore queries (always Vietnamese)
   developer: string;
   ranking?: number; // Optional: current rank, might be dynamically calculated
+  rank?: number; // Computed ranking order
   description: string;
   longDescription?: string;
   logoUrl: string; // URL to the tool's logo
