@@ -34,27 +34,27 @@ Thực hiện theo `workflows/publish_news.md`:
   "authorId": "nam",
   "category": [{ "id": "xu-huong", "name": "Xu hướng" }],
   "charts": [],
-  "content": "<p>Nội dung tiếng Việt...</p>",
-  "vi": {
-    "title": "Tiêu đề tiếng Việt",
-    "summary": "Tóm tắt tiếng Việt",
-    "content": "<p>Nội dung tiếng Việt...</p>"
-  },
-  "en": {
-    "title": "English title",
-    "summary": "English summary",
-    "content": "<p>English content...</p>"
+  "content": {
+    "vi": "<p>Nội dung tiếng Việt...</p>",
+    "en": "<p>English content...</p>"
   },
   "imageUrl": "/image/news%2Fslug.webp",
-  "language": "vi",
-  "languages": ["vi", "en"],
-  "link": "https://...",
   "post": false,
   "publishedAt": "Timestamp",
   "source": "https://...",
-  "summary": "Tóm tắt tiếng Việt",
+  "slug": {
+    "vi": "slug-tieng-viet",
+    "en": "english-slug"
+  },
+  "summary": {
+    "vi": "Tóm tắt tiếng Việt (dài khoảng 6-7 dòng)...",
+    "en": "English summary (about 6-7 lines long)..."
+  },
   "tag": ["AI", "keyword2"],
-  "title": "Tiêu đề tiếng Việt",
+  "title": {
+    "vi": "Tiêu đề tiếng Việt (dưới 60 ký tự)",
+    "en": "English title (under 60 characters)"
+  },
   "viewCount": 0
 }
 ```

@@ -1,7 +1,7 @@
 /**
  * Bước 4: Đăng bài song ngữ lên Firestore và dọn dẹp thư mục.
  * Format song ngữ dùng đúng schema hiện có:
- * title: { vi, en }, summary: { vi, en }, content: { vi, en }
+ * slug: { vi, en }, title: { vi, en }, summary: { vi, en }, content: { vi, en }
  *
  * Usage: npx tsx .agent/skills/publish-new/scripts/publish_to_firestore.ts --slug "slug"
  */
@@ -60,13 +60,19 @@ function toLocalizedField(field: LocalizedField | undefined, viFallback = '', en
 
 async function main() {
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+  const slugField = toLocalizedField(data.slug, '', '');
   const title = toLocalizedField(data.title, data.titleVi, data.titleEn);
   const summary = toLocalizedField(data.summary, data.summaryVi, data.summaryEn);
   const content = toLocalizedField(data.content, data.contentVi, data.contentEn);
 
+  // Document ID dùng slug.vi
+  const docSlug = slugField.vi || slug;
+
   console.log('Đăng bài song ngữ lên Firestore...');
-  console.log(`   VI: ${title.vi}`);
-  console.log(`   EN: ${title.en}`);
+  console.log(`   Slug VI: ${slugField.vi}`);
+  console.log(`   Slug EN: ${slugField.en}`);
+  console.log(`   Title VI: ${title.vi}`);
+  console.log(`   Title EN: ${title.en}`);
 
   const newsDoc = {
     author: data.author || 'Nam',
@@ -74,13 +80,12 @@ async function main() {
     category: data.category || [{ id: 'xu-huong', name: 'Xu hướng' }],
     charts: data.charts || [],
     content,
-    imageUrl: `/image/news%2F${slug}.webp`,
+    imageUrl: `/image/news%2F${docSlug}.webp`,
     post: false,
     publishedAt: data.publishedAt
       ? admin.firestore.Timestamp.fromDate(new Date(data.publishedAt))
       : admin.firestore.FieldValue.serverTimestamp(),
-    slug: data.slug || slug,
-    slugEn: data.slugEn || '',
+    slug: slugField,
     source: data.source || data.link || 'Tổng hợp',
     summary,
     tag: data.tag || [],
@@ -89,7 +94,6 @@ async function main() {
   };
 
   try {
-    const docSlug = data.slug || slug;
     const docRef = db.collection('news').doc(docSlug);
     await docRef.set(newsDoc);
 
