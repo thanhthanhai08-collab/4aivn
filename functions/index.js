@@ -337,6 +337,46 @@ exports.initModelStructure = onDocumentCreated(
 );
 
 
+// --- HÀM HELPER HỖ TRỢ SONG NGỮ CHO TOOLS ---
+function mergeLocalizedField(existingField, newFieldVi, newFieldEn) {
+    if (typeof existingField === 'object' && existingField !== null) {
+        return {
+            vi: existingField.vi || newFieldVi || '',
+            en: existingField.en || newFieldEn || newFieldVi || ''
+        };
+    }
+    if (typeof existingField === 'string' && existingField) {
+        return {
+            vi: existingField,
+            en: newFieldEn || existingField
+        };
+    }
+    return {
+        vi: newFieldVi || '',
+        en: newFieldEn || newFieldVi || ''
+    };
+}
+
+function mergeLocalizedArrayField(existingField, newFieldVi = [], newFieldEn = []) {
+    if (typeof existingField === 'object' && existingField !== null && !Array.isArray(existingField)) {
+        return {
+            vi: (existingField.vi && existingField.vi.length > 0) ? existingField.vi : newFieldVi,
+            en: (existingField.en && existingField.en.length > 0) ? existingField.en : newFieldEn
+        };
+    }
+    if (Array.isArray(existingField) && existingField.length > 0) {
+        return {
+            vi: existingField,
+            en: newFieldEn.length > 0 ? newFieldEn : existingField
+        };
+    }
+    return {
+        vi: newFieldVi,
+        en: newFieldEn
+    };
+}
+
+
 exports.initToolStructure = onDocumentCreated(
     { 
         document: "tools/{toolId}", 
@@ -355,13 +395,34 @@ exports.initToolStructure = onDocumentCreated(
 
         // 2. Định nghĩa Schema để ép kiểu dữ liệu JSON ở Bước 2
         const ToolOutputSchema = z.object({
-            description: z.string().describe('Mô tả ngắn gọn khoảng 30 từ.'),
-            longDescription: z.string().describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp.'),
-            features: z.array(z.string()).describe('Mảng gồm 5 tính năng nổi bật nhất.'),
-            whoIsItFor: z.array(z.string()).describe('Mảng các đối tượng người dùng phù hợp.'),
-            useCases: z.array(z.string()).describe('Mảng các ví dụ thực tế sử dụng công cụ.'),
-            pricingPlans: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...).'),
-            context: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding).'),
+            description: z.object({
+                vi: z.string().describe('Mô tả ngắn gọn khoảng 30 từ bằng tiếng Việt.'),
+                en: z.string().describe('Mô tả ngắn gọn khoảng 30 từ bằng tiếng Anh.')
+            }).describe('Mô tả ngắn gọn khoảng 30 từ.'),
+            longDescription: z.object({
+                vi: z.string().describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp bằng tiếng Việt.'),
+                en: z.string().describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp bằng tiếng Anh.')
+            }).describe('Mô tả chi tiết bằng định dạng HTML chuyên nghiệp.'),
+            features: z.object({
+                vi: z.array(z.string()).describe('Mảng gồm 5 tính năng nổi bật nhất bằng tiếng Việt.'),
+                en: z.array(z.string()).describe('Mảng gồm 5 tính năng nổi bật nhất bằng tiếng Anh.')
+            }).describe('Mảng gồm 5 tính năng nổi bật nhất.'),
+            whoIsItFor: z.object({
+                vi: z.array(z.string()).describe('Mảng các đối tượng người dùng phù hợp bằng tiếng Việt.'),
+                en: z.array(z.string()).describe('Mảng các đối tượng người dùng phù hợp bằng tiếng Anh.')
+            }).describe('Mảng các đối tượng người dùng phù hợp.'),
+            useCases: z.object({
+                vi: z.array(z.string()).describe('Mảng các ví dụ thực tế sử dụng công cụ bằng tiếng Việt.'),
+                en: z.array(z.string()).describe('Mảng các ví dụ thực tế sử dụng công cụ bằng tiếng Anh.')
+            }).describe('Mảng các ví dụ thực tế sử dụng công cụ.'),
+            pricingPlans: z.object({
+                vi: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...) bằng tiếng Việt.'),
+                en: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...) bằng tiếng Anh.')
+            }).describe('Thông tin các gói giá (Free, Pro, Enterprise...).'),
+            context: z.object({
+                vi: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding) bằng tiếng Việt.'),
+                en: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding) bằng tiếng Anh.')
+            }).describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding).'),
             link: z.string().url().describe('URL trang chủ chính thức.')
         });
 
@@ -382,7 +443,7 @@ exports.initToolStructure = onDocumentCreated(
                 2. Sử dụng "googleSearch" để tìm thêm các thông tin về bảng giá (pricing), các đánh giá từ người dùng và các tính năng thực tế nếu trang chủ không ghi rõ.
                 3. Thu thập mọi dữ liệu có thể về: Tính năng, đối tượng sử dụng, ví dụ thực tế và các mức giá chính xác như ở đường link.
                 
-                Hãy tổng hợp dữ liệu tìm được một cách chi tiết nhất bằng Tiếng Việt.`,
+                Hãy tổng hợp dữ liệu tìm được một cách chi tiết nhất bằng cả Tiếng Việt và Tiếng Anh.`,
                 config: {
                     tools: [
                         { googleSearch: {} }, 
@@ -401,13 +462,13 @@ exports.initToolStructure = onDocumentCreated(
              */
             const { output } = await ai.generate({
                 model: "googleai/gemini-2.5-flash",
-                prompt: `Dựa vào dữ liệu nghiên cứu dưới đây, hãy viết một bài giới thiệu công cụ AI chuyên nghiệp cho website AI
+                prompt: `Dựa vào dữ liệu nghiên cứu dưới đây, hãy viết một bài giới thiệu công cụ AI chuyên nghiệp cho website AI bằng cả tiếng Việt và tiếng Anh.
                 
                 DỮ LIỆU NGHIÊN CỨU:
                 ${rawResearchData}
 
                 YÊU CẦU:
-                - Ngôn ngữ: Tiếng Việt.
+                - Ngôn ngữ: Tạo cả tiếng Việt và tiếng Anh cho các trường tương ứng theo schema.
                 - longDescription: Viết dưới dạng HTML (sử dụng thẻ <p>) để hiển thị đẹp trên web.
                 - Trả về đúng định dạng JSON theo yêu cầu.`,
                 output: { schema: ToolOutputSchema }
@@ -423,13 +484,13 @@ exports.initToolStructure = onDocumentCreated(
              * Ưu tiên giữ lại dữ liệu nếu người dùng đã nhập tay trước đó.
              */
             const updatePayload = {
-                description: data.description || output.description,
-                longDescription: data.longDescription || output.longDescription,
-                whoIsItFor: (data.whoIsItFor && data.whoIsItFor.length > 0) ? data.whoIsItFor : output.whoIsItFor,
-                useCases: (data.useCases && data.useCases.length > 0) ? data.useCases : output.useCases,
-                features: (data.features && data.features.length > 0) ? data.features : output.features,
-                pricingPlans: (data.pricingPlans && data.pricingPlans.length > 0) ? data.pricingPlans : output.pricingPlans,
-                context: data.context || output.context,
+                description: mergeLocalizedField(data.description, output.description?.vi, output.description?.en),
+                longDescription: mergeLocalizedField(data.longDescription, output.longDescription?.vi, output.longDescription?.en),
+                whoIsItFor: mergeLocalizedArrayField(data.whoIsItFor, output.whoIsItFor?.vi, output.whoIsItFor?.en),
+                useCases: mergeLocalizedArrayField(data.useCases, output.useCases?.vi, output.useCases?.en),
+                features: mergeLocalizedArrayField(data.features, output.features?.vi, output.features?.en),
+                pricingPlans: mergeLocalizedArrayField(data.pricingPlans, output.pricingPlans?.vi, output.pricingPlans?.en),
+                context: mergeLocalizedField(data.context, output.context?.vi, output.context?.en),
                 name: data.name || event.params.toolId,
                 link: data.link || output.link,
                 
