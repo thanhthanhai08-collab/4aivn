@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/lib/types';
@@ -16,6 +17,28 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
     publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
   } as NewsArticle;
 }
+
+const getAllArticlesCached = unstable_cache(
+  async (locale: string = 'vi'): Promise<NewsArticle[]> => {
+    try {
+      const articlesQuery = query(
+        collection(db, 'news'),
+        where('post', '==', true),
+        orderBy('publishedAt', 'desc')
+      );
+      const snapshot = await getDocs(articlesQuery);
+      return snapshot.docs.map((item) => serializeArticle(item.id, item.data(), locale));
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      return [];
+    }
+  },
+  ['all-articles'],
+  { revalidate: 60, tags: ['news'] }
+);
+
+/** Localized and serializable articles for the server-rendered news index. */
+export const getAllArticles = cache(getAllArticlesCached);
 
 export const getArticle = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;

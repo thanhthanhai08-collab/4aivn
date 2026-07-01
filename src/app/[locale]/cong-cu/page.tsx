@@ -1,259 +1,36 @@
-// src/app/cong-cu/page.tsx
-"use client";
-
-import React, { useState, useMemo, useEffect, Suspense, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
-import { Link } from "@/i18n/routing";
-import Image from "next/image";
-import { ToolCard } from "@/components/tools/tool-card";
-import { ToolFilters } from "@/components/tools/tool-filters";
-import type { Tool } from "@/lib/types";
 import { AppLayout } from "@/components/layout/app-layout";
-import { Skeleton } from "@/components/ui/skeleton";
-import { db } from "@/lib/firebase";
-import { collection, getDocs, query, orderBy, limit, where, startAfter, type QueryDocumentSnapshot, doc, getDoc } from "firebase/firestore";
-import { useInView } from "react-intersection-observer";
-import { Loader2 } from "lucide-react";
-import { useLocale } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import { getLocalized } from "@/lib/i18n-helpers";
+import { ToolsPageClient } from "@/components/tools/tools-page-client";
+import { getAllTools } from "@/lib/get-tool";
 
-const PAGE_SIZE = 100;
-type RankedTool = Tool & { rank: number };
-
-// --- SKELETON LOADING ---
-function ToolsSkeleton() {
-  const locale = useLocale();
-  return (
-    <div className="container py-8">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-headline font-bold text-foreground">{locale === 'en' ? 'AI Tools Collection' : 'Tổng hợp các công cụ AI'}</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          {locale === 'en' ? 'Discover and compare a wide range of AI tools.' : 'Khám phá và so sánh một loạt các công cụ AI.'}
-        </p>
-      </header>
-      <Skeleton className="h-40 w-full mb-8 rounded-lg" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {[...Array(8)].map((_, i) => (
-          <Skeleton key={i} className="h-64 w-full rounded-lg" />
-        ))}
-      </div>
-    </div>
-  );
+interface ToolsPageProps {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ search_query?: string; category?: string }>;
 }
 
-// --- COMPONENT CON CHỨA LOGIC CHÍNH ---
-function ToolsContent() {
-  const searchParams = useSearchParams();
-  const locale = useLocale();
-  const initialSearchQuery = searchParams.get('search_query') || "";
-  const initialCategory = searchParams.get('category') || "all";
-  
-  const [searchTerm, setSearchTerm] = useState(initialSearchQuery);
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
-  
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const [allTools, setAllTools] = useState<Tool[]>([]);
-  const lastDocRef = React.useRef<QueryDocumentSnapshot | null>(null);
-  const isMoreLoadingRef = React.useRef(false);
-  const hasMoreRef = React.useRef(true);
+export default async function ToolsPage({ params, searchParams }: ToolsPageProps) {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const tools = await getAllTools(locale);
 
-  const { ref, inView } = useInView({
-    threshold: 0,
-    triggerOnce: false,
-  });
-
-  const fetchTools = useCallback(async (isFirstLoad = false, category = "all") => {
-    if (isFirstLoad) {
-      setIsLoading(true);
-      lastDocRef.current = null;
-      setAllTools([]);
-      hasMoreRef.current = true;
-    } else if (isMoreLoadingRef.current || !hasMoreRef.current) {
-      return;
-    } else {
-      setIsMoreLoading(true);
-    }
-    
-    isMoreLoadingRef.current = true;
-  
-    try {
-      const toolsRef = collection(db, "tools");
-      let q = query(
-        toolsRef,
-        where("post", "==", true),
-        orderBy("averageRating", "desc"),
-        orderBy("ratingCount", "desc"),
-        orderBy("__name__")
-      );
-  
-      if (category !== "all") {
-        // category value is the raw Vietnamese contextKey for Firestore query
-        q = query(q, where("context.vi", "==", category));
-      }
-      
-      if (isFirstLoad) {
-         q = query(q, limit(PAGE_SIZE));
-      } else if (lastDocRef.current) {
-         q = query(q, startAfter(lastDocRef.current), limit(PAGE_SIZE));
-      }
-  
-      const snapshot = await getDocs(q);
-      const newTools = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          contextKey: getLocalized(data.context, 'vi'),
-          context: getLocalized(data.context, locale),
-          description: getLocalized(data.description, locale),
-        } as Tool;
-      });
-  
-      if (isFirstLoad) {
-        setAllTools(newTools);
-      } else {
-        setAllTools(prev => {
-          const existingIds = new Set(prev.map(t => t.id));
-          const uniqueNewTools = newTools.filter(t => !existingIds.has(t.id));
-          return [...prev, ...uniqueNewTools];
-        });
-      }
-  
-      const newLastDoc = snapshot.docs[snapshot.docs.length - 1];
-      lastDocRef.current = newLastDoc || null;
-      hasMoreRef.current = snapshot.docs.length === PAGE_SIZE;
-
-    } catch (error) {
-      console.error("Error fetching tools:", error);
-    } finally {
-      if (isFirstLoad) setIsLoading(false);
-      setIsMoreLoading(false);
-      isMoreLoadingRef.current = false;
-    }
-  }, [locale]);
-  
-  // Effect for initial load and filter changes
-  useEffect(() => {
-    fetchTools(true, selectedCategory);
-  }, [selectedCategory, fetchTools]); // Re-fetch when category or locale changes. Search is client-side.
-
-  // Effect for infinite scroll
-  useEffect(() => {
-    if (inView) {
-      fetchTools(false, selectedCategory);
-    }
-  }, [inView, fetchTools, selectedCategory]);
-  
-  useEffect(() => { setSearchTerm(initialSearchQuery); }, [initialSearchQuery]);
-  useEffect(() => { setSelectedCategory(initialCategory); }, [initialCategory]);
-
-  // Build category list: { key (Vietnamese for query), label (localized for display) }
-  const categories = useMemo(() => {
-    const seen = new Map<string, string>(); // contextKey → localized context
-    allTools.forEach(tool => {
-      if (tool.contextKey && !seen.has(tool.contextKey)) {
-        seen.set(tool.contextKey, tool.context);
-      }
-    });
-    return Array.from(seen.entries())
-      .map(([key, label]) => ({ key, label }))
-      .sort((a, b) => a.label.localeCompare(b.label));
-  }, [allTools]);
-
-  const rankedTools = useMemo<RankedTool[]>(() => {
-    return allTools.map((tool, index) => ({
-      ...tool,
-      rank: index + 1,
-    }));
-  }, [allTools]);
-
-  const filteredTools = useMemo(() => {
-    // Search term filtering is done on the client-side after data is fetched.
-    return rankedTools.filter((tool) => {
-      return searchTerm === "" || 
-             (tool.name && tool.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-             (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    });
-  }, [searchTerm, rankedTools]);
-
-  return (
-    <div className="container py-8">
-      {/* BREADCRUMB CHO TRANG DANH SÁCH */}
-      <nav aria-label="Breadcrumb" className="mb-6 flex items-center text-sm font-medium hidden">
-        <ol className="flex items-center text-muted-foreground">
-          <li className="flex items-center">
-            <Link 
-              href="/" 
-              className="hover:text-primary transition-colors flex items-center group"
-            >
-              {locale === 'en' ? 'Home' : 'Trang chủ'}
-            </Link>
-          </li>
-          <li className="flex items-center before:content-['/'] before:mx-2 before:text-muted-foreground/30">
-            <span className="text-foreground font-semibold">
-              {locale === 'en' ? 'All Tools' : 'Tất cả công cụ'}
-            </span>
-          </li>
-        </ol>
-      </nav>
-
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-headline font-bold text-foreground">{locale === 'en' ? 'AI Tools Collection' : 'Tổng hợp các công cụ AI'}</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          {locale === 'en' ? 'Discover and compare a wide range of AI tools.' : 'Khám phá và so sánh một loạt các công cụ AI.'}
-        </p>
-      </header>
-
-      <ToolFilters
-        categories={categories}
-        onSearchChange={setSearchTerm}
-        onCategoryChange={(category) => {
-          setSelectedCategory(category);
-          // When category changes, we trigger a full reload.
-          fetchTools(true, category);
-        }}
-        initialSearchTerm={searchTerm}
-      />
-
-      {isLoading ? (
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, i) => (
-            <Skeleton key={i} className="h-64 w-full rounded-lg" />
-          ))}
-        </div>
-      ) : filteredTools.length > 0 ? (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} rank={tool.rank} />
-            ))}
-          </div>
-          <div ref={ref} className="flex justify-center items-center py-8">
-            {isMoreLoading && <Loader2 className="h-8 w-8 animate-spin text-primary" />}
-          </div>
-        </>
-      ) : (
-        <div className="text-center py-16">
-          <p className="text-xl text-muted-foreground">
-            {initialSearchQuery || selectedCategory !== 'all'
-              ? (locale === 'en' ? 'No tools found matching your criteria.' : 'Không tìm thấy công cụ nào phù hợp với tiêu chí của bạn.')
-              : (locale === 'en' ? 'No tools found.' : 'Không tìm thấy công cụ nào.')}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// --- COMPONENT CHÍNH (EXPORT DEFAULT) ---
-export default function ToolsPage() {
   return (
     <AppLayout>
-      <Suspense fallback={<ToolsSkeleton />}>
-        <ToolsContent />
-      </Suspense>
+      <main className="container py-8 md:py-12">
+        <header className="mb-8 text-center md:mb-12">
+          <h1 className="text-4xl font-headline font-bold text-foreground">
+            {locale === "en" ? "AI Tools Collection" : "Tổng hợp các công cụ AI"}
+          </h1>
+          <p className="mt-2 text-lg text-muted-foreground">
+            {locale === "en"
+              ? "Discover and compare a wide range of AI tools."
+              : "Khám phá và so sánh một loạt các công cụ AI."}
+          </p>
+        </header>
+
+        <ToolsPageClient
+          tools={tools}
+          initialSearchTerm={query.search_query ?? ""}
+          initialCategory={query.category ?? "all"}
+        />
+      </main>
     </AppLayout>
   );
 }

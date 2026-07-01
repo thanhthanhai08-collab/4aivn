@@ -18,16 +18,21 @@ interface ToolFiltersProps {
   onCategoryChange: (category: string) => void;
   categories: CategoryItem[];
   initialSearchTerm?: string;
+  initialCategory?: string;
 }
 
-export function ToolFilters({ onSearchChange, onCategoryChange, categories, initialSearchTerm = "" }: ToolFiltersProps) {
+export function ToolFilters({ onSearchChange, onCategoryChange, categories, initialSearchTerm = "", initialCategory = "all" }: ToolFiltersProps) {
   const t = useTranslations("tool_filters");
   const [currentSearchTerm, setCurrentSearchTerm] = useState(initialSearchTerm);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
   useEffect(() => {
     setCurrentSearchTerm(initialSearchTerm);
   }, [initialSearchTerm]);
+
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentSearchTerm(e.target.value);
