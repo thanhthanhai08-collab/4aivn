@@ -190,7 +190,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
             "name": "4AIVN",
             "logo": {
                 "@type": "ImageObject",
-                "url": `${BASE_URL}/logo.png`
+                "url": `${BASE_URL}/icon-192.png`
             }
         },
         "description": description

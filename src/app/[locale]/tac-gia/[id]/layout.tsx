@@ -46,7 +46,9 @@ export async function generateMetadata(
   const description = author.bio || (locale === "en" 
     ? `Explore in-depth AI articles and insights by ${author.name} on ${siteName}.`
     : `Khám phá các bài báo, bài viết AI chuyên sâu được thực hiện bởi chuyên gia ${author.name} trên ${siteName}.`);
-  const imageUrl = author.avatarUrl || '/og-image.jpg';
+  const imageUrl = author.avatarUrl
+    ? (author.avatarUrl.startsWith('http') ? author.avatarUrl : `${BASE_URL}${author.avatarUrl}`)
+    : `${BASE_URL}/icon-192.png`;
   const canonicalUrl = locale === 'en' ? `${BASE_URL}/en/author/${authorId}` : `${BASE_URL}/tac-gia/${authorId}`;
 
   return {
@@ -55,8 +57,9 @@ export async function generateMetadata(
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        'vi-VN': `${BASE_URL}/tac-gia/${authorId}`,
-        'en-US': `${BASE_URL}/en/author/${authorId}`,
+        'vi': `${BASE_URL}/tac-gia/${authorId}`,
+        'en': `${BASE_URL}/en/author/${authorId}`,
+        'x-default': `${BASE_URL}/en/author/${authorId}`,
       },
     },
     openGraph: {
@@ -124,7 +127,9 @@ export default async function AuthorDetailLayout({ children, params }: Props) {
         "@type": "Person",
         "name": author.name,
         "url": canonicalUrl,
-        "image": author.avatarUrl,
+        "image": author.avatarUrl
+          ? (author.avatarUrl.startsWith('http') ? author.avatarUrl : `${BASE_URL}${author.avatarUrl}`)
+          : `${BASE_URL}/icon-192.png`,
         "description": author.bio,
         "jobTitle": "Author",
         "worksFor": {
