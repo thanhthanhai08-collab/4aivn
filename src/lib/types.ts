@@ -39,6 +39,7 @@ export interface NewsArticle {
   summary?: string;
   viewCount?: number;
   publishedAt: string; // ISO date string
+  updatedAt?: string; // ISO date string; falls back to publishedAt for legacy articles
   imageUrl: string;
   authorImageUrl?: string;
   link?: string;
@@ -46,6 +47,7 @@ export interface NewsArticle {
   isBookmarked?: boolean;
   tag?: string[]; // Add tags for filtering related articles
   category?: { id: string; name: string; }[];
+  faq?: { question: string; answer: string }[];
   post?: boolean; // Controls visibility
   charts?: any[]; // To hold chart configuration from Firestore
 }

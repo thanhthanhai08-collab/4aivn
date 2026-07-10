@@ -11,6 +11,27 @@ type Props = {
 // This should be your actual domain
 const BASE_URL = "https://4aivn.com";
 
+function truncateDescription(text: string, max = 160): string {
+  if (text.length <= max) return text;
+  return text.slice(0, max).replace(/\s+\S*$/, "") + "…";
+}
+
+function getArticleSeoData(article: {
+  summary?: string;
+  content?: string;
+  imageUrl?: string;
+}) {
+  const descriptionSource = article.summary || article.content?.replace(/<[^>]*>/g, "") || "";
+  const imageUrl = article.imageUrl
+    ? (article.imageUrl.startsWith("http") ? article.imageUrl : `${BASE_URL}${article.imageUrl}`)
+    : undefined;
+
+  return {
+    description: truncateDescription(descriptionSource),
+    imageUrl,
+  };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale } = await params;
 
@@ -32,8 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
 
-    const description = article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160);
-    const imageUrl = article.imageUrl ? (article.imageUrl.startsWith('http') ? article.imageUrl : `${BASE_URL}${article.imageUrl}`) : undefined;
+    const { description, imageUrl } = getArticleSeoData(article);
 
     const slugVi = getLocalizedSlug(article.slug || article.id, 'vi') || article.id;
     const slugEn = getLocalizedSlug(article.slug || article.id, 'en') || article.id;
@@ -46,6 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         languages: {
           'vi': `${BASE_URL}/${slugVi}`,
           'en': `${BASE_URL}/en/${slugEn}`,
+          'x-default': `${BASE_URL}/${slugVi}`,
         }
       },
       openGraph: {
@@ -89,6 +110,8 @@ export default async function NewsDetailLayout({ children, params }: Props) {
     const hasCategory = article.category && article.category.length > 0 && article.category[0].id;
 
     const isEn = locale === 'en';
+    const { description, imageUrl } = getArticleSeoData(article);
+    const hasFaq = article.faq && article.faq.length > 0;
 
     const breadcrumbSchema = {
       "@context": "https://schema.org",
@@ -127,8 +150,13 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "@context": "https://schema.org",
         "@type": "NewsArticle",
         "headline": article.title,
-        "image": [article.imageUrl],
+        "image": imageUrl ? [imageUrl] : [],
         "datePublished": article.publishedAt,
+        "dateModified": article.updatedAt || article.publishedAt,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": isEn ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
+        },
         "author": [{
           "@type": "Person",
           "name": article.author || "4AIVN",
@@ -141,8 +169,21 @@ export default async function NewsDetailLayout({ children, params }: Props) {
                 "url": `${BASE_URL}/logo.png`
             }
         },
-        "description": article.summary?.slice(0, 160) || article.content?.replace(/<[^>]*>/g, "").slice(0, 160)
+        "description": description
     };
+
+    const faqSchema = hasFaq ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": article.faq!.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer,
+        },
+      })),
+    } : null;
 
     return (
       <>
@@ -154,6 +195,12 @@ export default async function NewsDetailLayout({ children, params }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
+        {faqSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          />
+        )}
         {children}
       </>
     );
