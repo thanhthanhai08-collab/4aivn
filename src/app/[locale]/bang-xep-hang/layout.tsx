@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     : "Bảng xếp hạng cập nhật liên tục các mô hình ngôn ngữ (LLM AI) dựa trên hiệu năng, diểm thông minh, độ trễ và đánh giá người dùng.";
 
   const canonicalUrl = isEn ? `${BASE_URL}/en/rankings` : `${BASE_URL}/bang-xep-hang`;
+  const socialImageUrl = `${BASE_URL}/icon-512.png`;
 
   return {
     title,
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         'vi': `${BASE_URL}/bang-xep-hang`,
         'en': `${BASE_URL}/en/rankings`,
+        'x-default': `${BASE_URL}/en/rankings`,
       }
     },
     openGraph: {
@@ -32,6 +34,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: canonicalUrl,
       siteName: "4AIVN",
       type: "website",
+      images: [{ url: socialImageUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [socialImageUrl],
     },
   };
 }
@@ -65,11 +74,26 @@ export default async function RankingsLayout({
     ],
   };
 
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": isEn ? "AI Rankings" : "Bảng xếp hạng AI",
+    "description": isEn
+      ? "Continuously updated rankings of AI models based on performance and user reviews."
+      : "Bảng xếp hạng các mô hình AI được cập nhật dựa trên hiệu năng và đánh giá người dùng.",
+    "url": isEn ? `${BASE_URL}/en/rankings` : `${BASE_URL}/bang-xep-hang`,
+    "isPartOf": { "@type": "WebSite", "name": "4AIVN", "url": BASE_URL },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
       />
       {children}
     </>

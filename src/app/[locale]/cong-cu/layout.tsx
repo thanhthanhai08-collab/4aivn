@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     : "Khám phá thế giới AI với danh sách công cụ được cập nhật mỗi ngày.";
 
   const canonicalUrl = isEn ? `${BASE_URL}/en/tools` : `${BASE_URL}/cong-cu`;
+  const socialImageUrl = `${BASE_URL}/icon-512.png`;
 
   return {
     title,
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         'vi': `${BASE_URL}/cong-cu`,
         'en': `${BASE_URL}/en/tools`,
+        'x-default': `${BASE_URL}/en/tools`,
       }
     },
     openGraph: {
@@ -36,6 +38,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: canonicalUrl,
       siteName: "4AIVN",
       type: "website",
+      images: [{
+        url: socialImageUrl,
+        width: 1200,
+        height: 630,
+        alt: title,
+      }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: ogDescription,
+      images: [socialImageUrl],
     },
   };
 }
@@ -70,12 +84,31 @@ export default async function ToolsLayout({
     ],
   };
 
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": isEn ? "AI Tools" : "Tất cả công cụ AI",
+    "description": isEn
+      ? "A directory of AI tools categorized and reviewed by 4AIVN."
+      : "Danh mục các công cụ AI được 4AIVN phân loại và đánh giá.",
+    "url": isEn ? `${BASE_URL}/en/tools` : `${BASE_URL}/cong-cu`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "4AIVN",
+      "url": BASE_URL,
+    },
+  };
+
   return (
     <>
       {/* Script này chỉ chạy ở trang /cong-cu và các trang con, nhưng trang con [id] sẽ ghi đè schema của nó lên nếu cần */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
       />
       {children}
     </>

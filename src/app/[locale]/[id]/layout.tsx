@@ -16,6 +16,24 @@ function truncateDescription(text: string, max = 160): string {
   return text.slice(0, max).replace(/\s+\S*$/, "") + "…";
 }
 
+function formatSchemaDate(value: unknown): string | undefined {
+  const date = value instanceof Date
+    ? value
+    : value && typeof value === "object" && "toDate" in value && typeof value.toDate === "function"
+      ? value.toDate()
+      : typeof value === "string" || typeof value === "number"
+        ? new Date(value)
+        : undefined;
+
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return undefined;
+
+  const localDate = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+  const pad = (number: number) => String(number).padStart(2, "0");
+
+  return `${localDate.getUTCFullYear()}-${pad(localDate.getUTCMonth() + 1)}-${pad(localDate.getUTCDate())}`
+    + `T${pad(localDate.getUTCHours())}:${pad(localDate.getUTCMinutes())}:${pad(localDate.getUTCSeconds())}+07:00`;
+}
+
 function getArticleSeoData(article: {
   summary?: string;
   content?: string;
@@ -66,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         languages: {
           'vi': `${BASE_URL}/${slugVi}`,
           'en': `${BASE_URL}/en/${slugEn}`,
-          'x-default': `${BASE_URL}/${slugVi}`,
+          'x-default': `${BASE_URL}/en/${slugEn}`,
         }
       },
       openGraph: {
@@ -112,6 +130,11 @@ export default async function NewsDetailLayout({ children, params }: Props) {
     const isEn = locale === 'en';
     const { description, imageUrl } = getArticleSeoData(article);
     const hasFaq = article.faq && article.faq.length > 0;
+    const datePublished = formatSchemaDate(article.publishedAt);
+    const dateModified = formatSchemaDate(article.updatedAt) || datePublished;
+    const authorUrl = article.authorId
+      ? (isEn ? `${BASE_URL}/en/author/${article.authorId}` : `${BASE_URL}/tac-gia/${article.authorId}`)
+      : undefined;
 
     const breadcrumbSchema = {
       "@context": "https://schema.org",
@@ -151,8 +174,8 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "@type": "NewsArticle",
         "headline": article.title,
         "image": imageUrl ? [imageUrl] : [],
-        "datePublished": article.publishedAt,
-        "dateModified": article.updatedAt || article.publishedAt,
+        "datePublished": datePublished,
+        "dateModified": dateModified,
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": isEn ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
@@ -160,6 +183,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "author": [{
           "@type": "Person",
           "name": article.author || "4AIVN",
+          ...(authorUrl ? { "url": authorUrl } : {}),
         }],
         "publisher": {
             "@type": "Organization",

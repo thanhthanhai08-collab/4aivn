@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         vi: 'https://4aivn.com',
         en: 'https://4aivn.com/en',
+        'x-default': 'https://4aivn.com/en',
       },
     },
     openGraph: {
@@ -94,16 +95,33 @@ export default async function LocaleLayout({
 
   // Load messages for the locale
   const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const isEn = locale === 'en';
+  const websiteUrl = isEn ? 'https://4aivn.com/en' : 'https://4aivn.com';
+  const searchUrl = isEn
+    ? 'https://4aivn.com/en/search?q={search_term_string}'
+    : 'https://4aivn.com/tim-kiem?q={search_term_string}';
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "4AIVN",
+    "url": websiteUrl,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": searchUrl,
+      "query-input": "required name=search_term_string",
+    },
+  };
 
   return (
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
             {children}

@@ -18,6 +18,10 @@ function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     tool.pricingPlans = getLocalizedArray(data.pricingPlans, locale);
     tool.useCases = getLocalizedArray(data.useCases, locale);
     tool.whoIsItFor = getLocalizedArray(data.whoIsItFor, locale);
+    tool.faq = data.faq?.map((item: any) => ({
+        question: getLocalized(item.question, locale),
+        answer: getLocalized(item.answer, locale),
+    }));
     if (tool.updatedAt?.toDate) tool.updatedAt = tool.updatedAt.toDate().toISOString();
     if (tool.createdAt?.toDate) tool.createdAt = tool.createdAt.toDate().toISOString();
     return tool as Tool;

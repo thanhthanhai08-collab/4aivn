@@ -13,6 +13,10 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
     content: getLocalized(data.content, locale),
     summary: getLocalized(data.summary, locale),
     author: getLocalized(data.author, locale),
+    faq: data.faq?.map((item: any) => ({
+      question: getLocalized(item.question, locale),
+      answer: getLocalized(item.answer, locale),
+    })),
     slug: data.slug,
     publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
   } as NewsArticle;

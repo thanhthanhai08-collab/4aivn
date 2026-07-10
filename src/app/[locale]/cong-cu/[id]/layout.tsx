@@ -54,6 +54,7 @@ export async function generateMetadata(
       languages: {
         'vi': `${BASE_URL}/cong-cu/${id}`,
         'en': `${BASE_URL}/en/tools/${id}`,
+        'x-default': `${BASE_URL}/en/tools/${id}`,
       }
     },
     openGraph: {
@@ -86,6 +87,21 @@ export default async function ToolDetailLayout({ children, params }: Props) {
 
   // Nếu không có dữ liệu thì chỉ render children (để page.tsx xử lý lỗi 404 sau)
   if (!tool) return <>{children}</>;
+
+  const imageUrl = tool.imageUrl
+    ? (tool.imageUrl.startsWith("http") ? tool.imageUrl : `${BASE_URL}${tool.imageUrl}`)
+    : undefined;
+  const hasRatings = Number(tool.ratingCount || 0) > 0 && Number(tool.averageRating || 0) > 0;
+  const aggregateRating = hasRatings
+    ? {
+        "@type": "AggregateRating",
+        "ratingValue": tool.averageRating,
+        "reviewCount": tool.ratingCount,
+        "bestRating": "5",
+        "worstRating": "1",
+      }
+    : undefined;
+  const hasFaq = Array.isArray(tool.faq) && tool.faq.length > 0;
 
   // --- CẤU HÌNH SCHEMA JSON-LD ---
   
@@ -131,20 +147,28 @@ export default async function ToolDetailLayout({ children, params }: Props) {
     "applicationCategory": tool.context,
     "operatingSystem": "Web",
     "description": tool.description,
-    "image": tool.imageUrl, // Sử dụng imageUrl
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": tool.averageRating || "0",
-      "reviewCount": tool.ratingCount || "0",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
+    "image": imageUrl,
+    "url": isEn ? `${BASE_URL}/en/tools/${id}` : `${BASE_URL}/cong-cu/${id}`,
+    ...(aggregateRating ? { aggregateRating } : {}),
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "VND"
     }
   };
+
+  const faqSchema = hasFaq ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": tool.faq!.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer,
+      },
+    })),
+  } : null;
 
   return (
     <>
@@ -157,6 +181,12 @@ export default async function ToolDetailLayout({ children, params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       
       {/* Render nội dung trang chi tiết (page.tsx) */}
       {children}

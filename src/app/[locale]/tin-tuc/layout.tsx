@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     : "Khám phá các bài viết sâu sắc về AI, từ đánh giá công cụ, hướng dẫn kỹ thuật đến các xu hướng định hình tương lai.";
 
   const canonicalUrl = isEn ? `${BASE_URL}/en/news` : `${BASE_URL}/tin-tuc`;
+  const socialImageUrl = `${BASE_URL}/icon-512.png`;
 
   return {
     title,
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         'vi': `${BASE_URL}/tin-tuc`,
         'en': `${BASE_URL}/en/news`,
+        'x-default': `${BASE_URL}/en/news`,
       }
     },
     openGraph: {
@@ -36,6 +38,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: canonicalUrl,
       siteName: "4AIVN",
       type: "website",
+      images: [{ url: socialImageUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: ogDescription,
+      images: [socialImageUrl],
     },
   };
 }
@@ -69,11 +78,26 @@ export default async function NewsLayout({
     ],
   };
 
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": isEn ? "AI News" : "Tin tức AI",
+    "description": isEn
+      ? "AI news, analysis, technical guides, and the latest trends from Vietnam and around the world."
+      : "Tin tức, phân tích, hướng dẫn kỹ thuật và xu hướng AI mới nhất tại Việt Nam và trên thế giới.",
+    "url": isEn ? `${BASE_URL}/en/news` : `${BASE_URL}/tin-tuc`,
+    "isPartOf": { "@type": "WebSite", "name": "4AIVN", "url": BASE_URL },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
       />
       {children}
     </>

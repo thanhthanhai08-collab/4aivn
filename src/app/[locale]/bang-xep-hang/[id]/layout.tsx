@@ -47,6 +47,9 @@ export async function generateMetadata(
     : `Đánh giá chi tiết, thông số kỹ thuật và điểm chuẩn của mô hình AI ${model.name}.`);
 
   const canonicalUrl = isEn ? `${BASE_URL}/en/rankings/${id}` : `${BASE_URL}/bang-xep-hang/${id}`;
+  const imageUrl = model.logoUrl
+    ? (model.logoUrl.startsWith('http') ? model.logoUrl : `${BASE_URL}${model.logoUrl}`)
+    : `${BASE_URL}/og-image.jpg`;
 
   return {
       title,
@@ -56,6 +59,7 @@ export async function generateMetadata(
         languages: {
           'vi': `${BASE_URL}/bang-xep-hang/${id}`,
           'en': `${BASE_URL}/en/rankings/${id}`,
+          'x-default': `${BASE_URL}/en/rankings/${id}`,
         }
       },
       openGraph: {
@@ -66,7 +70,7 @@ export async function generateMetadata(
           type: 'article',
           images: [
               {
-                  url: model.logoUrl || '/og-image.jpg',
+                  url: imageUrl,
                   width: 1200,
                   height: 630,
                   alt: model.name,
@@ -77,7 +81,7 @@ export async function generateMetadata(
           card: 'summary_large_image',
           title: ogTitle,
           description: ogDescription,
-          images: [model.logoUrl || '/og-image.jpg'],
+          images: [imageUrl],
       },
   };
 }
@@ -94,6 +98,20 @@ export default async function ModelDetailLayout({ children, params }: Props) {
     const model = await getModel(id, locale);
 
     if (!model) return <>{children}</>;
+
+    const imageUrl = model.logoUrl
+      ? (model.logoUrl.startsWith('http') ? model.logoUrl : `${BASE_URL}${model.logoUrl}`)
+      : undefined;
+    const hasRatings = Number(model.ratingCount || 0) > 0 && Number(model.averageRating || 0) > 0;
+    const aggregateRating = hasRatings
+      ? {
+          "@type": "AggregateRating",
+          "ratingValue": model.averageRating,
+          "reviewCount": model.ratingCount,
+          "bestRating": "5",
+          "worstRating": "1",
+        }
+      : undefined;
 
     // 1. Schema Breadcrumb chuẩn Google
     const breadcrumbSchema = {
@@ -129,14 +147,9 @@ export default async function ModelDetailLayout({ children, params }: Props) {
       "applicationCategory": "Artificial Intelligence",
       "operatingSystem": "All",
       "description": model.description,
-      "image": model.logoUrl,
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": model.averageRating || "5",
-        "reviewCount": model.ratingCount || "1",
-        "bestRating": "5",
-        "worstRating": "1"
-      }
+      "image": imageUrl,
+      "url": isEn ? `${BASE_URL}/en/rankings/${id}` : `${BASE_URL}/bang-xep-hang/${id}`,
+      ...(aggregateRating ? { aggregateRating } : {}),
     };
 
     return (

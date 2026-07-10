@@ -24,6 +24,7 @@ export interface Tool {
   viewCount?: number;
   averageRating?: number;
   post?: boolean; // Controls visibility
+  faq?: { question: LocalizedField; answer: LocalizedField }[];
 }
 
 import { LocalizedField } from "./i18n-helpers";
@@ -47,7 +48,7 @@ export interface NewsArticle {
   isBookmarked?: boolean;
   tag?: string[]; // Add tags for filtering related articles
   category?: { id: string; name: string; }[];
-  faq?: { question: string; answer: string }[];
+  faq?: { question: LocalizedField; answer: LocalizedField }[];
   post?: boolean; // Controls visibility
   charts?: any[]; // To hold chart configuration from Firestore
 }
