@@ -27,7 +27,7 @@ env:
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     value: "AIzaSyBEV5I4r5kHJ7k_29zXQ2e2jSeYcB20amc"
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-    value: "clean-ai-hub.firebaseapp.com"
+    value: "4aivn.com"
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
     value: "clean-ai-hub"
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
