@@ -45,7 +45,7 @@ const getAllToolsCached = unstable_cache(
         }
     },
     ['all-tools'],
-    { revalidate: 60, tags: ['tools'] }
+    { revalidate: 1, tags: ['tools'] }
 );
 
 /** Ranked, localized and serializable tools for server-rendered list pages. */

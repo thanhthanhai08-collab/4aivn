@@ -38,7 +38,7 @@ const getAllArticlesCached = unstable_cache(
     }
   },
   ['all-articles'],
-  { revalidate: 60, tags: ['news'] }
+  { revalidate: 1, tags: ['news'] }
 );
 
 /** Localized and serializable articles for the server-rendered news index. */

@@ -56,7 +56,7 @@ const getAllModelsCached = unstable_cache(
         }
     },
     ['all-models'],
-    { revalidate: 60, tags: ['models'] }
+    { revalidate: 1, tags: ['models'] }
 );
 
 /** Ranked, localized and serializable models for server-rendered list pages. */

@@ -102,16 +102,14 @@ export default async function ModelDetailLayout({ children, params }: Props) {
     const imageUrl = model.logoUrl
       ? (model.logoUrl.startsWith('http') ? model.logoUrl : `${BASE_URL}${model.logoUrl}`)
       : undefined;
-    const hasRatings = Number(model.ratingCount || 0) > 0 && Number(model.averageRating || 0) > 0;
-    const aggregateRating = hasRatings
-      ? {
-          "@type": "AggregateRating",
-          "ratingValue": model.averageRating,
-          "reviewCount": model.ratingCount,
-          "bestRating": "5",
-          "worstRating": "1",
-        }
-      : undefined;
+    const ratingValue = Number(model.averageRating);
+    const reviewCount = Number(model.ratingCount);
+    const hasRealReviews =
+      Number.isFinite(ratingValue) &&
+      ratingValue >= 1 &&
+      ratingValue <= 5 &&
+      Number.isInteger(reviewCount) &&
+      reviewCount > 0;
 
     // 1. Schema Breadcrumb chuẩn Google
     const breadcrumbSchema = {
@@ -149,7 +147,15 @@ export default async function ModelDetailLayout({ children, params }: Props) {
       "description": model.description,
       "image": imageUrl,
       "url": isEn ? `${BASE_URL}/en/rankings/${id}` : `${BASE_URL}/bang-xep-hang/${id}`,
-      ...(aggregateRating ? { aggregateRating } : {}),
+      ...(hasRealReviews ? {
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": ratingValue,
+          "reviewCount": reviewCount,
+          "bestRating": 5,
+          "worstRating": 1,
+        }
+      } : {}),
     };
 
     return (

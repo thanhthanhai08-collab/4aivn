@@ -91,16 +91,14 @@ export default async function ToolDetailLayout({ children, params }: Props) {
   const imageUrl = tool.imageUrl
     ? (tool.imageUrl.startsWith("http") ? tool.imageUrl : `${BASE_URL}${tool.imageUrl}`)
     : undefined;
-  const hasRatings = Number(tool.ratingCount || 0) > 0 && Number(tool.averageRating || 0) > 0;
-  const aggregateRating = hasRatings
-    ? {
-        "@type": "AggregateRating",
-        "ratingValue": tool.averageRating,
-        "reviewCount": tool.ratingCount,
-        "bestRating": "5",
-        "worstRating": "1",
-      }
-    : undefined;
+  const ratingValue = Number(tool.averageRating);
+  const reviewCount = Number(tool.ratingCount);
+  const hasRealReviews =
+    Number.isFinite(ratingValue) &&
+    ratingValue >= 1 &&
+    ratingValue <= 5 &&
+    Number.isInteger(reviewCount) &&
+    reviewCount > 0;
   const hasFaq = Array.isArray(tool.faq) && tool.faq.length > 0;
 
   // --- CẤU HÌNH SCHEMA JSON-LD ---
@@ -149,7 +147,15 @@ export default async function ToolDetailLayout({ children, params }: Props) {
     "description": tool.description,
     "image": imageUrl,
     "url": isEn ? `${BASE_URL}/en/tools/${id}` : `${BASE_URL}/cong-cu/${id}`,
-    ...(aggregateRating ? { aggregateRating } : {}),
+    ...(hasRealReviews ? {
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": ratingValue,
+        "reviewCount": reviewCount,
+        "bestRating": 5,
+        "worstRating": 1,
+      }
+    } : {}),
     "offers": {
       "@type": "Offer",
       "price": "0",
