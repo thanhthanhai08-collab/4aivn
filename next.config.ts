@@ -26,21 +26,12 @@ const nextConfig: NextConfig = {
         source: '/image/:path*',
         destination: 'https://firebasestorage.googleapis.com/v0/b/clean-ai-hub.firebasestorage.app/o/:path*?alt=media',
       },
-      {
-        /**
-         * Forward các request /__/auth/:path* sang Firebase Auth handler của project.
-         * Bắt buộc để Firebase Authentication hoạt động đúng khi dùng custom domain (4aivn.com).
-         * Xem: https://firebase.google.com/docs/auth/web/custom-domain
-         */
-        source: '/__/auth/:path*',
-        destination: 'https://clean-ai-hub.firebaseapp.com/__/auth/:path*',
-      },
     ];
   },
 
   images: {
     // Tắt unoptimized để Next.js tự động nén ảnh sang WebP/AVIF giúp tải nhanh hơn
-    unoptimized: false, 
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
@@ -65,7 +56,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
         port: '',
-        pathname: '/**', 
+        pathname: '/**',
       },
     ],
   },
