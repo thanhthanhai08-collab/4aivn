@@ -38,6 +38,8 @@ Tạo JSON cuối cùng theo `scripts/rewrite_article.md`, gồm:
 - Object `vi`: title, summary, content tiếng Việt
 - Object `en`: title, summary, content tiếng Anh
 - Metadata chung: tags, category, source, imagePrompt, author
+- FAQ song ngữ: tối thiểu 3 câu hỏi và câu trả lời bám sát nội dung bài
+- `updatedAt`: thời điểm cập nhật bài, được publish script ghi dưới dạng Firestore Timestamp
 
 Output: `news-data/{slug}/{slug}.json`
 

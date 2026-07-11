@@ -58,12 +58,39 @@ function toLocalizedField(field: LocalizedField | undefined, viFallback = '', en
   };
 }
 
+type FaqItem = { question?: LocalizedField; answer?: LocalizedField };
+
+function buildFaq(data: any, title: { vi: string; en: string }, summary: { vi: string; en: string }) {
+  if (Array.isArray(data.faq) && data.faq.length > 0) {
+    return data.faq.map((item: FaqItem) => ({
+      question: toLocalizedField(item.question),
+      answer: toLocalizedField(item.answer),
+    }));
+  }
+
+  return [
+    {
+      question: { vi: `${title.vi} là gì?`, en: `What is ${title.en}?` },
+      answer: { vi: summary.vi || `${title.vi} là chủ đề được 4AIVN giới thiệu và phân tích.`, en: summary.en || `${title.en} is a topic covered and analyzed by 4AIVN.` },
+    },
+    {
+      question: { vi: `Vì sao ${title.vi} đáng chú ý?`, en: `Why is ${title.en} notable?` },
+      answer: { vi: `Bài viết giải thích những thông tin và điểm đáng chú ý nhất liên quan đến ${title.vi}.`, en: `The article explains the key information and notable points related to ${title.en}.` },
+    },
+    {
+      question: { vi: `Ai nên quan tâm đến ${title.vi}?`, en: `Who should be interested in ${title.en}?` },
+      answer: { vi: `Nội dung phù hợp với độc giả quan tâm đến AI, công nghệ và chủ đề được đề cập trong bài viết.`, en: `It is relevant to readers interested in AI, technology, and the subject covered in the article.` },
+    },
+  ];
+}
+
 async function main() {
   const data = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
   const slugField = toLocalizedField(data.slug, '', '');
   const title = toLocalizedField(data.title, data.titleVi, data.titleEn);
   const summary = toLocalizedField(data.summary, data.summaryVi, data.summaryEn);
   const content = toLocalizedField(data.content, data.contentVi, data.contentEn);
+  const faq = buildFaq(data, title, summary);
 
   // Document ID dùng slug.vi
   const docSlug = slugField.vi || slug;
@@ -85,12 +112,16 @@ async function main() {
     publishedAt: data.publishedAt
       ? admin.firestore.Timestamp.fromDate(new Date(data.publishedAt))
       : admin.firestore.FieldValue.serverTimestamp(),
+    updatedAt: data.updatedAt
+      ? admin.firestore.Timestamp.fromDate(new Date(data.updatedAt))
+      : admin.firestore.FieldValue.serverTimestamp(),
     slug: slugField,
     source: data.source || data.link || 'Tổng hợp',
     summary,
     tag: data.tag || [],
     title,
-    viewCount: data.viewCount || 0
+    viewCount: data.viewCount || 0,
+    faq
   };
 
   try {

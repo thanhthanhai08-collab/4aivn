@@ -18,6 +18,7 @@ Nhiệm vụ cuối cùng là duyệt lại bài viết HTML, sửa lỗi chính
 9. Nếu có ảnh/video trong bài, dùng cùng placeholder `[IMAGE:url|Alt Text|Caption]` hoặc `[VIDEO:id|Title|Caption]` ở cả hai ngôn ngữ, dịch Alt/Caption tương ứng.
 10. Tags dùng chung cho cả bài, gồm 5-8 tag liên quan đến công nghệ, AI và công cụ được nhắc đến.
 11. `imagePrompt` viết bằng tiếng Anh cho ảnh bìa 16:9.
+12. `faq` phải có ít nhất 3 câu hỏi/trả lời song ngữ, bám sát nội dung bài.
 
 ## Cấu trúc đầu ra JSON
 Lưu kết quả vào file `{slug}.json` với cấu trúc:
@@ -40,6 +41,12 @@ Lưu kết quả vào file `{slug}.json` với cấu trúc:
     "vi": "Nội dung HTML tiếng Việt",
     "en": "English HTML content"
   },
+  "faq": [
+    {
+      "question": { "vi": "Câu hỏi tiếng Việt", "en": "English question" },
+      "answer": { "vi": "Câu trả lời tiếng Việt", "en": "English answer" }
+    }
+  ],
   "tag": ["Tag1", "Tag2"],
   "imagePrompt": "English prompt for cover image",
   "category": [{ "id": "xu-huong", "name": "Xu hướng" }],

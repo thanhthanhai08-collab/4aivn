@@ -41,6 +41,7 @@ Thực hiện theo `workflows/publish_news.md`:
   "imageUrl": "/image/news%2Fslug.webp",
   "post": false,
   "publishedAt": "Timestamp",
+  "updatedAt": "Timestamp",
   "source": "https://...",
   "slug": {
     "vi": "slug-tieng-viet",
@@ -55,9 +56,17 @@ Thực hiện theo `workflows/publish_news.md`:
     "vi": "Tiêu đề tiếng Việt (dưới 60 ký tự)",
     "en": "English title (under 60 characters)"
   },
-  "viewCount": 0
+  "viewCount": 0,
+  "faq": [
+    {
+      "question": { "vi": "Câu hỏi tiếng Việt", "en": "English question" },
+      "answer": { "vi": "Câu trả lời tiếng Việt", "en": "English answer" }
+    }
+  ]
 }
 ```
+
+`updatedAt` phải là Firestore Timestamp và được cập nhật mỗi lần publish. `faq` là mảng song ngữ, tối thiểu 3 câu hỏi/trả lời bám sát nội dung bài; nếu JSON không có FAQ, script publish sẽ tạo fallback.
 
 ## Báo cáo sau khi hoàn tất
 
