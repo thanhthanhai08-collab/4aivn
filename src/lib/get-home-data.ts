@@ -38,13 +38,15 @@ export const getLatestNews = cache(async (locale: string = 'vi'): Promise<NewsAr
     const querySnapshot = await getDocs(newsQuery);
     return querySnapshot.docs.map(doc => {
       const data = doc.data();
+      const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
       return {
         id: doc.id,
         ...data,
         title: getLocalized(data.title, locale),
         content: getLocalized(data.content, locale),
         summary: getLocalized(data.summary, locale),
-        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+        publishedAt,
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
       } as NewsArticle;
     });
   } catch (error) {

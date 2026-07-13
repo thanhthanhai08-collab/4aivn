@@ -77,7 +77,8 @@ export interface UserProfileData {
 export interface ChatAttachment {
   name: string;
   mimeType: string;
-  url: string; 
+  url?: string;
+  path?: string;
 }
 
 export interface ChatMessage {

@@ -2,7 +2,7 @@
  * @fileoverview Cloud Functions for Firebase (v2).
  */
 
-const { onDocumentWritten, onDocumentCreated, onDocumentUpdated } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten, onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
@@ -630,14 +630,14 @@ exports.initNews = onDocumentCreated(
 );
 
 // --- CẤU HÌNH SEARCH ---
-const FRESH_DURATION = 1000 * 60 * 30; // 30 phút
-const WEBHOOK_KEY = "key_bi_mat_4aivn"; // Thay đổi mã này để bảo mật
-
+const FRESH_DURATION = 1000 * 60 * 5; // 5 phút
+const SEARCH_CACHE_SIGNAL_PATH = "internal/search-cache";
 // --- BIẾN TOÀN CỤC (Lưu trên RAM) ---
 let cache = {
   data: [],
   index: null,
-  timestamp: 0
+  timestamp: 0,
+  signalVersion: 0,
 };
 let refreshPromise = null;
 
@@ -664,7 +664,7 @@ function bilingualSearchText(...fields) {
 /**
  * Helper: Cập nhật dữ liệu từ Firestore vào RAM
  */
-async function refreshData() {
+async function refreshData(signalVersion = cache.signalVersion) {
   if (refreshPromise) return refreshPromise;
 
   refreshPromise = (async () => {
@@ -709,7 +709,8 @@ async function refreshData() {
       cache = {
         data: newData,
         index: newIndex,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        signalVersion,
       };
       console.log("CACHE: Đã làm mới chỉ mục tìm kiếm.");
     } catch (e) {
@@ -722,36 +723,49 @@ async function refreshData() {
   return refreshPromise;
 }
 
+async function getSearchCacheSignalVersion() {
+  const signalSnapshot = await db.doc(SEARCH_CACHE_SIGNAL_PATH).get();
+  const version = signalSnapshot.get("version");
+  return version?.toMillis ? version.toMillis() : 0;
+}
+
+async function ensureSearchCache(signalVersion) {
+  await refreshData(signalVersion);
+
+  // A refresh that started before the publish signal may have returned an
+  // older snapshot. Run once more after it finishes in that race condition.
+  if (cache.signalVersion < signalVersion) {
+    await refreshData(signalVersion);
+  }
+}
+
 /**
  * 1. API SEARCH NEWS (Có tích hợp Webhook Refresh)
  */
 exports.searchNews = onRequest({ 
   region: "asia-southeast1",
-  maxInstances: 5 
+  maxInstances: 5,
 }, async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
 
   const queryParam = (req.query.q || "").trim();
   const locale = req.query.locale === "en" || req.query.lang === "en" ? "en" : "vi";
-  // Kiểm tra nếu có lệnh ép làm mới từ Trigger
-  const isForceRefresh = req.query.refresh_key === WEBHOOK_KEY;
-
   try {
     const now = Date.now();
+    const signalVersion = await getSearchCacheSignalVersion();
     const needsInitialLoad = !cache.index;
+    const wasPublished = signalVersion > cache.signalVersion;
     const isExpired = now - cache.timestamp > FRESH_DURATION;
 
-    // Nếu ép làm mới hoặc lần đầu tiên: Đợi lấy dữ liệu xong mới chạy tiếp
-    if (isForceRefresh || needsInitialLoad) {
-      await refreshData();
-      if (isForceRefresh && !queryParam) {
-        return res.status(200).json({ message: "Dữ liệu đã được cập nhật đồng bộ!" });
-      }
+    // Bài vừa xuất bản hoặc instance vừa khởi động: phải đợi dữ liệu mới trước
+    // khi tìm kiếm để bài mới xuất hiện ngay ở request tiếp theo.
+    if (needsInitialLoad || wasPublished) {
+      await ensureSearchCache(signalVersion);
     } 
-    // Nếu chỉ hết hạn 30 phút: Cập nhật ngầm, trả kết quả cũ trước
+    // Khi cache hết hạn: cập nhật ngầm, trả kết quả cũ trước.
     else if (isExpired) {
-      refreshData(); 
+      refreshData(signalVersion);
     }
 
     if (!queryParam) {
@@ -787,36 +801,24 @@ exports.searchNews = onRequest({
 
 
 /**
- * 2. TRIGGER: Tự động phát hiện khi bài viết được chuyển từ false -> true
+ * Marks every search instance stale when an article is published. Unlike the
+ * old HTTP refresh key, this signal is private to Admin SDK/Cloud Functions.
  */
-exports.onNewsPublished = onDocumentUpdated({
+exports.onNewsPublished = onDocumentWritten({
     document: "news/{postId}",
     region: "asia-southeast1",
 }, async (event) => {
-    const before = event.data?.before.data();
-    const after = event.data?.after.data();
-  
-    // ✅ Chỉ chạy khi post thay đổi từ false/null → true
-    // Mọi thay đổi khác (viewCount, rating...) đều bỏ qua
+    const before = event.data?.before?.exists ? event.data.before.data() : null;
+    const after = event.data?.after?.exists ? event.data.after.data() : null;
     const postJustPublished = before?.post !== true && after?.post === true;
-    if (!postJustPublished) return null;  // ← thoát ngay, không tốn tiền
-    
-    console.log(`Phát hiện bài viết mới xuất bản: ${event.params.postId}`);
-      
-    // Gọi Webhook đến chính hàm searchNews để ép nạp lại cache
-    const functionUrl = `https://asia-southeast1-clean-ai-hub.cloudfunctions.net/searchNews?refresh_key=${WEBHOOK_KEY}`;
-      
-    try {
-      const response = await fetch(functionUrl);
-      if (response.ok) {
-        console.log("Kích hoạt làm mới cache tìm kiếm thành công.");
-      } else {
-          const errorText = await response.text();
-          console.error(`Lỗi khi kích hoạt Webhook: ${response.status}`, errorText);
-      }
-    } catch (err) {
-      console.error("Lỗi mạng khi gọi Webhook:", err);
-    }
+    if (!postJustPublished) return null;
+
+    await db.doc(SEARCH_CACHE_SIGNAL_PATH).set({
+      version: admin.firestore.FieldValue.serverTimestamp(),
+      newsId: event.params.postId,
+    });
+    console.log(`Đã đánh dấu cache tìm kiếm cần cập nhật: ${event.params.postId}`);
+    return null;
 });
 
 
@@ -830,6 +832,37 @@ const GREETINGS = ['chào', 'hi', 'hello', 'chào bạn', 'xin chào'];
 // Khởi tạo một lần để tái sử dụng
 let chatbotAI;
 let fileManager;
+const CHAT_MAX_MESSAGE_LENGTH = 10000;
+const CHAT_MAX_FILE_SIZE = 5 * 1024 * 1024;
+const CHAT_ALLOWED_TYPES = new Set([
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+const chatRateLimits = new Map();
+
+function applyChatCors(req, res) {
+    const origin = req.get("origin");
+    const allowedOrigins = new Set([
+        "https://4aivn.com",
+        "https://www.4aivn.com",
+    ]);
+    if (origin && (allowedOrigins.has(origin) || /^http:\/\/localhost:\d+$/.test(origin))) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+    }
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+}
+
+function enforceChatRateLimit(uid) {
+    const now = Date.now();
+    const windowStart = now - 60 * 1000;
+    const recent = (chatRateLimits.get(uid) || []).filter((value) => value > windowStart);
+    if (recent.length >= 10) return false;
+    recent.push(now);
+    chatRateLimits.set(uid, recent);
+    return true;
+}
 
 exports.chatbot = onRequest(
     { 
@@ -841,17 +874,40 @@ exports.chatbot = onRequest(
     }, 
     async (req, res) => {
         // --- CẤU HÌNH HEADER & SSE ---
-        res.setHeader('Access-Control-Allow-Origin', '*'); 
-        res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        applyChatCors(req, res);
         if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
+        if (req.method !== 'POST') { res.status(405).json({error: 'METHOD_NOT_ALLOWED'}); return; }
+
+        const authorization = req.get('authorization') || '';
+        if (!authorization.startsWith('Bearer ')) {
+            res.status(401).json({error: 'AUTH_REQUIRED'});
+            return;
+        }
+
+        let decodedToken;
+        try {
+            decodedToken = await admin.auth().verifyIdToken(authorization.slice(7));
+        } catch {
+            res.status(401).json({error: 'INVALID_AUTH_TOKEN'});
+            return;
+        }
+
+        if (!enforceChatRateLimit(`uid:${decodedToken.uid}`) ||
+            !enforceChatRateLimit(`ip:${req.ip || 'unknown'}`)) {
+            res.status(429).json({error: 'RATE_LIMIT'});
+            return;
+        }
         
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
         try {
-            const { message, userId, messagesId, attachment } = req.body;
+            const {message, messagesId, attachment} = req.body || {};
+            const userId = decodedToken.uid;
+            if (typeof messagesId !== 'string' || !/^msg_\d{10,16}$/.test(messagesId)) {
+                throw new Error('INVALID_MESSAGE_ID');
+            }
             
             if (!message && !attachment) {
                 res.write(`data: ${JSON.stringify({ error: "Thiếu thông tin đầu vào" })}\n\n`);
@@ -859,6 +915,9 @@ exports.chatbot = onRequest(
                 return;
             }
             const userMessage = message || "Mô tả tệp đính kèm này.";
+            if (typeof userMessage !== 'string' || userMessage.length > CHAT_MAX_MESSAGE_LENGTH) {
+                throw new Error('INVALID_MESSAGE');
+            }
 
             // --- LỌC CHÀO HỎI ---
             if (GREETINGS.includes(userMessage.toLowerCase().trim()) && !attachment) {
@@ -891,38 +950,52 @@ exports.chatbot = onRequest(
             const promptParts = [{ text: userMessage }];
             const bucket = storage.bucket("gs://clean-ai-hub.firebasestorage.app");
 
-            if (attachment && attachment.path && attachment.mimeType) {
-                const file = bucket.file(attachment.path);
-                const [fileBuffer] = await file.download();
-
-                if (attachment.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-                    // Xử lý DOCX với mammoth
-                    const { value } = await mammoth.extractRawText({ buffer: fileBuffer });
-                    promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value}`;
-                } else {
-                    // Xử lý Ảnh/PDF với Gemini File API
-                    const tempFilePath = path.join(os.tmpdir(), attachment.fileName || 'upload');
-                    await fs.writeFile(tempFilePath, fileBuffer);
-                    
-                    const uploadResult = await fileManager.uploadFile(tempFilePath, {
-                        mimeType: attachment.mimeType,
-                        displayName: attachment.fileName,
-                    });
-
-                    await fs.unlink(tempFilePath); // Dọn dẹp file tạm
-
-                    // Đính kèm file đã upload vào prompt
-                    promptParts.push({ 
-                        media: { 
-                            url: uploadResult.file.uri, 
-                            contentType: attachment.mimeType 
-                        } 
-                    });
+            if (attachment?.path) {
+                const expectedPrefix = `chatbot/${userId}/${messagesId}/`;
+                if (typeof attachment.path !== 'string' ||
+                    !attachment.path.startsWith(expectedPrefix) ||
+                    attachment.path.includes('..')) {
+                    throw new Error('INVALID_ATTACHMENT_PATH');
                 }
-                
+
+                const file = bucket.file(attachment.path);
+                const [metadata] = await file.getMetadata();
+                const contentType = metadata.contentType || '';
+                const size = Number(metadata.size || 0);
+                if (size <= 0 || size > CHAT_MAX_FILE_SIZE ||
+                    (!contentType.startsWith('image/') && !CHAT_ALLOWED_TYPES.has(contentType))) {
+                    throw new Error('INVALID_ATTACHMENT');
+                }
+
+                const [fileBuffer] = await file.download();
+                const safeDisplayName = path.basename(attachment.fileName || attachment.path);
+
+                if (contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    const {value} = await mammoth.extractRawText({buffer: fileBuffer});
+                    promptParts[0].text += `\n\n--- Nội dung từ tài liệu ---\n${value.slice(0, 50000)}`;
+                } else {
+                    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'chatbot-'));
+                    const tempFilePath = path.join(tempDir, 'upload');
+                    try {
+                        await fs.writeFile(tempFilePath, fileBuffer, {flag: 'wx'});
+                        const uploadResult = await fileManager.uploadFile(tempFilePath, {
+                            mimeType: contentType,
+                            displayName: safeDisplayName,
+                        });
+                        promptParts.push({
+                            media: {
+                                url: uploadResult.file.uri,
+                                contentType,
+                            },
+                        });
+                    } finally {
+                        await fs.rm(tempDir, {recursive: true, force: true});
+                    }
+                }
+
                 attachmentForFirestore = {
-                    name: attachment.fileName || 'upload',
-                    mimeType: attachment.mimeType,
+                    name: safeDisplayName,
+                    mimeType: contentType,
                     path: attachment.path,
                 };
             }
@@ -975,9 +1048,6 @@ exports.chatbot = onRequest(
                 };
     
                 if (attachmentForFirestore) {
-                    const bucketName = "clean-ai-hub.firebasestorage.app";
-                    const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(attachmentForFirestore.path)}?alt=media`;
-                    attachmentForFirestore.url = publicUrl;
                     userHistoryDoc.attachments = [attachmentForFirestore];
                 }
     

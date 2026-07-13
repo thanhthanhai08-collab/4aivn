@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview Summarizes news articles about AI.
  *
@@ -13,6 +12,7 @@ import {z} from 'genkit';
 const SummarizeNewsArticleInputSchema = z.object({
   articleContent: z
     .string()
+    .max(50_000)
     .describe('The content of the news article to be summarized.'),
 });
 export type SummarizeNewsArticleInput = z.infer<typeof SummarizeNewsArticleInputSchema>;

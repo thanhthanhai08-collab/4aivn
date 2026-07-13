@@ -1,0 +1,168 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated()
+        && (request.auth.token.admin == true
+          || request.auth.uid == "UTGM1t0AT2cx33zhboLnyK4atqI3");
+    }
+
+    function isRegisteredUser() {
+      return isAuthenticated()
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isRegisteredOwner(userId) {
+      return isRegisteredUser() && request.auth.uid == userId;
+    }
+
+    function validRating(ratingId) {
+      return isRegisteredOwner(ratingId)
+        && request.resource.data.keys().hasOnly([
+          'starRating', 'oldRating', 'reviewText', 'userId', 'displayName',
+          'photoURL', 'updatedAt'
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.starRating is int
+        && request.resource.data.starRating >= 1
+        && request.resource.data.starRating <= 5
+        && (!('reviewText' in request.resource.data)
+          || (request.resource.data.reviewText is string
+            && request.resource.data.reviewText.size() <= 1000))
+        && (!('displayName' in request.resource.data)
+          || (request.resource.data.displayName is string
+            && request.resource.data.displayName.size() <= 100))
+        && (!('photoURL' in request.resource.data)
+          || request.resource.data.photoURL == null
+          || request.resource.data.photoURL is string);
+    }
+
+    function validViewIncrement() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['viewCount'])
+        && ((!('viewCount' in resource.data)
+            && request.resource.data.viewCount == 1)
+          || (resource.data.viewCount is int
+            && request.resource.data.viewCount == resource.data.viewCount + 1));
+    }
+
+    match /models/{modelId} {
+      allow read: if true;
+      allow write: if isAdmin();
+
+      match /ratings/{ratingId} {
+        allow read: if true;
+        allow create, update: if validRating(ratingId);
+        allow delete: if isRegisteredOwner(ratingId) || isAdmin();
+      }
+    }
+
+    match /tools/{toolId} {
+      allow read: if true;
+      allow update: if isAdmin() || validViewIncrement();
+      allow create, delete: if isAdmin();
+
+      match /ratings/{ratingId} {
+        allow read: if true;
+        allow create, update: if validRating(ratingId);
+        allow delete: if isRegisteredOwner(ratingId) || isAdmin();
+      }
+    }
+
+    match /news/{newsId} {
+      allow read: if true;
+      allow update: if isAdmin() || validViewIncrement();
+      allow create, delete: if isAdmin();
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if isRegisteredUser()
+          && request.resource.data.keys().hasOnly([
+            'articleId', 'userId', 'userName', 'userEmail',
+            'userPhotoURL', 'text', 'createdAt'
+          ])
+          && request.resource.data.articleId == newsId
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 2000
+          && request.resource.data.createdAt == request.time;
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    match /settings/{settingsId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /authors/{authorId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /contacts/{contactId} {
+      allow create: if request.resource.data.keys().hasOnly([
+          'name', 'email', 'subject', 'message', 'createdAt', 'status', 'userId'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.subject is string
+        && request.resource.data.subject.size() <= 200
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.status == 'new'
+        && request.resource.data.createdAt == request.time
+        && ((!isAuthenticated() && request.resource.data.userId == null)
+          || (isAuthenticated()
+            && request.resource.data.userId == request.auth.uid));
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /news-category/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /user-data/{userId} {
+      allow read, create, update, delete: if isRegisteredOwner(userId) || isAdmin();
+
+      match /{allSubcollections=**} {
+        allow read, write: if isRegisteredOwner(userId) || isAdmin();
+      }
+    }
+
+    match /chatbot/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+
+      match /messages/{messageId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isAdmin();
+
+        match /history/{historyId} {
+          allow read: if isOwner(userId) || isAdmin();
+          allow write: if isAdmin();
+        }
+      }
+    }
+
+    match /{path=**}/benchmarks/{benchmarkId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

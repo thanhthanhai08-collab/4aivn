@@ -30,6 +30,7 @@ import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { getLocalized, getLocalizedArray } from "@/lib/i18n-helpers";
+import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -449,7 +450,7 @@ function ToolDetailContent() {
              {tool.longDescription && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">{t("whatIs", { name: tool.name })}</h2>
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(tool.longDescription) }} />
                 </section>
             )}
 

@@ -1,8 +1,6 @@
 // src/lib/user-data-service.ts
-'use server';
-
 import { db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentData, collection, getDocs, query, where, increment } from "firebase/firestore";
+import { doc, getDoc, setDoc, arrayUnion, arrayRemove, runTransaction, DocumentData, collection, getDocs, increment } from "firebase/firestore";
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 import type { Tool, AIModel, NewsArticle, ToolReview, UserProfileData } from "./types";
@@ -44,26 +42,14 @@ export async function getAllToolReviews(toolId: string): Promise<ToolReview[]> {
     try {
         const ratingsSnapshot = await getDocs(ratingsColRef);
 
-        const userIds = ratingsSnapshot.docs.map(doc => doc.id);
-        if (userIds.length === 0) return [];
-
-        // Fetch user data in parallel
-        const userDocsQuery = query(collection(db, USER_DATA_COLLECTION), where('__name__', 'in', userIds));
-        const userDocsSnapshot = await getDocs(userDocsQuery);
-        const usersDataMap = new Map<string, UserProfileData>();
-        userDocsSnapshot.forEach(doc => {
-            usersDataMap.set(doc.id, doc.data() as UserProfileData);
-        });
-
         ratingsSnapshot.forEach(ratingDoc => {
             const ratingData = ratingDoc.data();
-            const userData = usersDataMap.get(ratingDoc.id);
 
             if (ratingData.reviewText && ratingData.reviewText.trim() !== '') {
                 reviews.push({
                     userId: ratingDoc.id,
-                    userName: userData?.displayName || "Người dùng ẩn danh",
-                    userPhotoURL: userData?.photoURL || null,
+                    userName: ratingData.displayName || "Người dùng ẩn danh",
+                    userPhotoURL: ratingData.photoURL || null,
                     rating: ratingData.starRating,
                     text: ratingData.reviewText,
                 });
@@ -171,6 +157,8 @@ export async function setToolRating(uid: string, toolId: string, newRating: numb
         starRating: newRating,
         reviewText: reviewText, // Pass review text to the function trigger document as well
         userId: uid,
+        displayName: displayName || "Người dùng ẩn danh",
+        photoURL: photoURL,
         updatedAt: new Date().toISOString()
     };
     await setDoc(ratingDocRef, ratingPayload, { merge: true })

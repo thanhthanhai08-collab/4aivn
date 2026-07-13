@@ -6,13 +6,15 @@ import type { AIModel, NewsArticle, BenchmarkData } from '@/lib/types';
 import { getLocalized } from './i18n-helpers';
 
 function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+    const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
     return {
         id,
         ...data,
         title: getLocalized(data.title, locale),
         content: getLocalized(data.content, locale),
         summary: getLocalized(data.summary, locale),
-        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+        publishedAt,
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
     } as NewsArticle;
 }
 

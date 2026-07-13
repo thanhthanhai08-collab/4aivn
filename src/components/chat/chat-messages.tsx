@@ -48,7 +48,10 @@ export function ChatMessages({ messages, isLoadingAiResponse }: ChatMessagesProp
               <div className="space-y-1">
                 {message.attachments.map((att, index) => {
                   const isImage = att.mimeType.startsWith("image/");
-                  
+                  if (!att.url) {
+                    return <div key={index} className="p-3 text-sm text-muted-foreground">{att.name}</div>;
+                  }
+
                   if (isImage) {
                     return (
                       <Dialog key={index}>

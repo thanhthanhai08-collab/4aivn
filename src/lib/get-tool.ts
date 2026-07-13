@@ -52,6 +52,7 @@ const getAllToolsCached = unstable_cache(
 export const getAllTools = cache(getAllToolsCached);
 
 function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+    const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
     return {
         id,
         ...data,
@@ -59,7 +60,8 @@ function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): New
         content: getLocalized(data.content, locale),
         summary: getLocalized(data.summary, locale),
         author: getLocalized(data.author, locale),
-        publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+        publishedAt,
+        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
     } as NewsArticle;
 }
 

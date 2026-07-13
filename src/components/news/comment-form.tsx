@@ -56,7 +56,7 @@ export function CommentForm({ articleId, onCommentAdded }: CommentFormProps) {
 
     try {
       // Perform the actual server action in the background
-      await addComment(articleId, currentUser, trimmedText);
+      await addComment(articleId, trimmedText);
       // Success is handled by the real-time listener updating the comment list.
     } catch (error) {
       console.error("Error adding comment:", error);

@@ -1,32 +1,20 @@
-'use server';
-
-import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, collection, addDoc, serverTimestamp, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-// A server-side check would be more complex, involving session management.
-// For this prototype, we'll rely on the client-side guard before calling the action.
-async function verifyAdmin() {
-    // This is a placeholder. A robust implementation would validate the user session.
-    // For now, we trust the client-side guard.
+const ADMIN_COLLECTIONS = new Set(['tools', 'models', 'news']);
+
+function assertAdminCollection(collectionName: string) {
+    if (!ADMIN_COLLECTIONS.has(collectionName)) {
+        throw new Error('Hạng mục quản trị không hợp lệ.');
+    }
 }
 
 export async function togglePostStatus(collectionName: string, docId: string, currentStatus: boolean) {
-    await verifyAdmin();
+    assertAdminCollection(collectionName);
     try {
         const docRef = doc(db, collectionName, docId);
         await updateDoc(docRef, { post: !currentStatus });
 
-        // Revalidate paths to reflect changes immediately
-        revalidatePath('/admin');
-        if (collectionName === 'tools') revalidatePath('/cong-cu');
-        if (collectionName === 'models') revalidatePath('/bang-xep-hang');
-        if (collectionName === 'news') revalidatePath('/tin-tuc');
-        if (docId) {
-             revalidatePath(`/${docId}`);
-             revalidatePath(`/cong-cu/${docId}`);
-             revalidatePath(`/bang-xep-hang/${docId}`);
-        }
     } catch (error) {
         console.error("Failed to toggle post status:", error);
         throw new Error("Không thể cập nhật trạng thái.");
@@ -34,7 +22,7 @@ export async function togglePostStatus(collectionName: string, docId: string, cu
 }
 
 export async function addOrUpdateItem(collectionName: string, data: any, itemId?: string) {
-    await verifyAdmin();
+    assertAdminCollection(collectionName);
     try {
         // Create a mutable copy to avoid modifying the original form data
         const dataToSave = { ...data };
@@ -74,15 +62,6 @@ export async function addOrUpdateItem(collectionName: string, data: any, itemId?
             await addDoc(collection(db, collectionName), payload);
         }
 
-        revalidatePath('/admin');
-        if (collectionName === 'tools') revalidatePath('/cong-cu');
-        if (collectionName === 'models') revalidatePath('/bang-xep-hang');
-        if (collectionName === 'news') revalidatePath('/tin-tuc');
-        if (itemId) {
-             revalidatePath(`/${itemId}`);
-             revalidatePath(`/cong-cu/${itemId}`);
-             revalidatePath(`/bang-xep-hang/${itemId}`);
-        }
     } catch (error) {
         console.error(`Failed to save item in ${collectionName}:`, error);
         throw new Error("Không thể lưu mục này.");

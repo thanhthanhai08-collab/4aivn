@@ -9,8 +9,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, MessageSquare, History, Loader2, ArrowDown } from "lucide-react";
 import { db, auth, storage } from "@/lib/firebase"; 
-import { ref, uploadBytes } from "firebase/storage";
-import { onAuthStateChanged, type User as FirebaseUser } from "firebase/auth";
+import { getBlob, ref, uploadBytes } from "firebase/storage";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { 
   collection, query, orderBy, getDocs, limit, 
   doc, where
@@ -88,17 +88,25 @@ export default function ChatPage() {
         const q = query(historyRef, orderBy("timestamp", "asc"));
         const querySnapshot = await getDocs(q);
         
-        const formattedMessages: ChatMessage[] = [];
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
-            formattedMessages.push({
-                id: doc.id,
+        const formattedMessages = await Promise.all(querySnapshot.docs.map(async (historyDoc) => {
+            const data = historyDoc.data();
+            const attachments = await Promise.all((data.attachments || []).map(async (attachment: ChatAttachment) => {
+              if (!attachment.path) return attachment;
+              try {
+                const blob = await getBlob(ref(storage, attachment.path));
+                return {...attachment, url: URL.createObjectURL(blob)};
+              } catch {
+                return attachment;
+              }
+            }));
+            return {
+                id: historyDoc.id,
                 text: data.parts[0]?.text || '',
                 sender: data.role === 'user' ? 'user' : 'ai',
                 timestamp: data.timestamp?.toDate()?.getTime() || Date.now(),
-                attachments: data.attachments || [],
-            });
-        });
+                attachments,
+            } as ChatMessage;
+        }));
         setMessages(formattedMessages);
       
     } catch (e) {
@@ -129,19 +137,18 @@ export default function ChatPage() {
   useEffect(() => {
     if (!isMounted) return;
     
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      let idToUse = "";
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        idToUse = user.uid;
-      } else {
-        let guestId = localStorage.getItem("guest_chat_id");
-        if (!guestId) {
-          guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-          localStorage.setItem("guest_chat_id", guestId);
-        }
-        idToUse = guestId;
+        setCurrentUserId(user.uid);
+        return;
       }
-      setCurrentUserId(idToUse);
+      try {
+        const credential = await signInAnonymously(auth);
+        setCurrentUserId(credential.user.uid);
+      } catch (error) {
+        console.error("Anonymous chat authentication failed:", error);
+        setCurrentUserId("");
+      }
     });
 
     return () => unsubscribe();
@@ -216,12 +223,16 @@ export default function ChatPage() {
 
         while (currentRetry < MAX_RETRIES && !success) {
           try {
+            const token = await auth.currentUser?.getIdToken();
+            if (!token) throw new Error("AUTH_REQUIRED");
             const response = await fetch("https://asia-southeast1-clean-ai-hub.cloudfunctions.net/chatbot", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
               body: JSON.stringify({
                 message: text,
-                userId: currentUserId,
                 messagesId: currentMessagesId,
                 attachment: attachmentPayload,
               }),

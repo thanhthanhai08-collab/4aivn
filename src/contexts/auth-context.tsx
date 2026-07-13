@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Unsubscribe from previous profile listener
       unsubscribeProfile();
 
-      if (user) {
+      if (user && !user.isAnonymous) {
         // Set up a real-time listener for the user's profile data in Firestore
         const userDocRef = doc(db, "user-data", user.uid);
         unsubscribeProfile = onSnapshot(userDocRef, (docSnap) => {

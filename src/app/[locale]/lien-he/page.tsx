@@ -47,7 +47,7 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus('loading');
     
-    const result = await submitContactForm(formData, currentUser?.uid);
+    const result = await submitContactForm(formData);
     
     if (result.success) {
       setStatus('success');

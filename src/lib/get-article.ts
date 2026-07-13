@@ -6,6 +6,7 @@ import type { NewsArticle } from '@/lib/types';
 import { getLocalized } from './i18n-helpers';
 
 function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
+  const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
   return {
     id,
     ...data,
@@ -18,7 +19,8 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
       answer: getLocalized(item.answer, locale),
     })),
     slug: data.slug,
-    publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString(),
+    publishedAt,
+    updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
   } as NewsArticle;
 }
 

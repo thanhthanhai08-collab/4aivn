@@ -13,7 +13,6 @@ import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
 import { enUS } from 'date-fns/locale/en-US';
 import { useTranslations, useLocale } from "next-intl";
-import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
 import { getComments } from "@/lib/comments-service";
@@ -42,6 +41,7 @@ import { doc, increment, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
 import { getLocalizedSlug } from "@/lib/i18n-helpers";
+import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 
 // Helper function to extract YouTube ID
 function getYouTubeId(urlOrId: string): string {
@@ -208,7 +208,7 @@ const renderContent = (article: NewsArticle) => {
     
     const trimmedPart = part.trim();
     if (trimmedPart.startsWith('<') || trimmedPart.includes('</p>') || trimmedPart.includes('</h')) {
-      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: trimmedPart }} />;
+      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(trimmedPart) }} />;
     } else if (trimmedPart) {
       return trimmedPart.split('\n').map((line, lineIndex) => (
         line.trim() ? <p key={`${index}-p-${lineIndex}`}>{line}</p> : null
@@ -248,7 +248,7 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
   const router = useRouter();
   const dateLocale = locale === 'en' ? enUS : vi;
   
-  const [summary, setSummary] = useState<string | null>(article?.summary || null);
+  const summary = article?.summary || null;
   const [comments, setComments] = useState<Comment[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
   
@@ -258,22 +258,6 @@ export function NewsDetailClient({ article, latestNews, relatedNews }: Props) {
     // Run view count increment and summary check
     const id = article.id;
     incrementNewsViewCount(id);
-
-    const docRef = doc(db, "news", id);
-
-    if (!article.summary) {
-        summarizeNewsArticle({ articleContent: article.content })
-          .then(async (res) => {
-              const newSummary = res.summary;
-              setSummary(newSummary);
-              try {
-                  await updateDoc(docRef, { [`summary.${locale}`]: newSummary });
-              } catch (updateError) {
-                  console.error("Failed to save summary:", updateError);
-              }
-          })
-          .catch(err => console.error("Error summarizing article:", err));
-    }
 
     if (currentUser) {
         getUserProfileData(currentUser.uid).then(userData => {

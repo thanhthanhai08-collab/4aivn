@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview A chatbot that forwards user messages to a Make.com webhook.
  *
@@ -11,8 +10,8 @@ import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const DemoChatbotInputSchema = z.object({
-  message: z.string().describe('The user message to the chatbot.'),
-  imageUrl: z.string().optional().describe('The data URI of the image sent by the user.'),
+  message: z.string().max(10_000).describe('The user message to the chatbot.'),
+  imageUrl: z.string().url().max(2_000).optional().describe('The image URL sent by the user.'),
 });
 export type DemoChatbotInput = z.infer<typeof DemoChatbotInputSchema>;
 
@@ -32,7 +31,10 @@ const demoChatbotFlow = ai.defineFlow(
     outputSchema: DemoChatbotOutputSchema,
   },
   async (input) => {
-    const webhookUrl = 'https://hook.eu2.make.com/8k75c3njhovava1pnna4ubukxi6bqtil';
+    const webhookUrl = process.env.MAKE_WEBHOOK_URL;
+    if (!webhookUrl) {
+      throw new Error('MAKE_WEBHOOK_URL is not configured.');
+    }
 
     try {
       // Construct the payload to send to the webhook
@@ -50,6 +52,7 @@ const demoChatbotFlow = ai.defineFlow(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(10_000),
       });
 
       if (!response.ok) {
@@ -70,8 +73,7 @@ const demoChatbotFlow = ai.defineFlow(
       // Provide a user-friendly error message.
       return {
         response: JSON.stringify({
-          error: `Sorry, there was an issue processing your request.`,
-          details: error.message || 'Please try again later.'
+          error: `Sorry, there was an issue processing your request.`
         }, null, 2)
       };
     }

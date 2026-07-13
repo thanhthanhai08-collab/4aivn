@@ -1,16 +1,14 @@
 // src/lib/comments-actions.ts
-'use server';
-
-import { db } from "@/lib/firebase";
-import type { User } from "@/lib/types";
-import { collection, addDoc, serverTimestamp, doc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
 const NEWS_COLLECTION = "news";
 
 // Add a new comment to an article's sub-collection
-export async function addComment(articleId: string, user: User, text: string): Promise<void> {
+export async function addComment(articleId: string, text: string): Promise<void> {
+  const user = auth.currentUser;
   if (!user) {
     throw new Error("User must be logged in to comment.");
   }

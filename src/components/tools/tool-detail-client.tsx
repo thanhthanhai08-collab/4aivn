@@ -8,6 +8,7 @@ import type { Tool, NewsArticle, ToolReview } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/auth-context";
 import { AppLayout } from "@/components/layout/app-layout";
@@ -23,7 +24,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useLocale, useTranslations } from "next-intl";
-import { getLocalizedSlug } from "@/lib/i18n-helpers";
+import { getLocalized, getLocalizedSlug } from "@/lib/i18n-helpers";
+import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -93,6 +95,13 @@ export function ToolDetailClient({
   const [allReviews, setAllReviews] = useState<ToolReview[]>(initialReviews);
   const t = useTranslations("toolDetail");
   const locale = useLocale();
+  const localizedFaq = (tool.faq ?? [])
+    .map((item, index) => ({
+      id: `faq-${index}`,
+      question: getLocalized(item.question, locale).trim(),
+      answer: getLocalized(item.answer, locale).trim(),
+    }))
+    .filter((item) => item.question.length > 0 && item.answer.length > 0);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -268,7 +277,7 @@ export function ToolDetailClient({
              {tool.longDescription && (
                 <section>
                     <h2 className="text-2xl font-bold font-headline mb-4">{t("whatIs", { name: tool.name })}</h2>
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: tool.longDescription }} />
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(tool.longDescription) }} />
                 </section>
             )}
 
@@ -321,6 +330,26 @@ export function ToolDetailClient({
                           ))}
                       </ul>
                   </div>
+              </section>
+            )}
+
+            {localizedFaq.length > 0 && (
+              <section aria-labelledby="tool-faq-heading">
+                <h2 id="tool-faq-heading" className="text-2xl font-bold font-headline mb-4">
+                  {t("frequentlyAskedQuestions")}
+                </h2>
+                <Accordion type="single" collapsible className="w-full rounded-lg border px-4">
+                  {localizedFaq.map((item) => (
+                    <AccordionItem key={item.id} value={item.id}>
+                      <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
+                        {item.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="whitespace-pre-line text-base leading-relaxed text-muted-foreground">
+                        {item.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </section>
             )}
             

@@ -13,7 +13,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { vi } from 'date-fns/locale';
 import { enUS } from 'date-fns/locale/en-US';
-import { summarizeNewsArticle } from "@/ai/flows/summarize-news-article";
 import { NewsCard } from "@/components/news/news-card";
 import { useAuth } from "@/contexts/auth-context";
 import { getComments } from "@/lib/comments-service";
@@ -43,6 +42,7 @@ import { db } from "@/lib/firebase";
 import { DynamicChart } from "@/components/news/charts/DynamicChart";
 import { useParams } from "next/navigation";
 import { getLocalized } from "@/lib/i18n-helpers";
+import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 import { useLocale, useTranslations } from "next-intl";
 
 const renderContent = (article: NewsArticle) => {
@@ -161,7 +161,7 @@ const renderContent = (article: NewsArticle) => {
     
     const trimmedPart = part.trim();
     if (trimmedPart.startsWith('<') || trimmedPart.includes('</p>') || trimmedPart.includes('</h')) {
-      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: trimmedPart }} />;
+      return <div key={`${index}-html`} dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(trimmedPart) }} />;
     } else if (trimmedPart) {
       return trimmedPart.split('\n').map((line, lineIndex) => (
         line.trim() ? <p key={`${index}-p-${lineIndex}`}>{line}</p> : null
@@ -214,10 +214,6 @@ function NewsDetailContent() {
             
             if (fetchedArticle.summary) {
                 setSummary(fetchedArticle.summary);
-            } else if (fetchedArticle.content) { // Check content exists before summarizing
-                summarizeNewsArticle({ articleContent: fetchedArticle.content })
-                  .then(res => setSummary(res.summary))
-                  .catch(err => console.error("Error summarizing article for preview:", err));
             }
 
             if (currentUser) {

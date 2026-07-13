@@ -118,13 +118,15 @@ function NewsCategoryContent() {
 
                 const newsData = articlesSnapshot.docs.map(doc => {
                     const data = doc.data();
+                    const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
                     return {
                         id: doc.id,
                         ...data,
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
-                        publishedAt: data.publishedAt.toDate().toISOString(),
+                        publishedAt,
+                        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                     } as NewsArticle;
                 });
 
@@ -135,13 +137,15 @@ function NewsCategoryContent() {
 
                 const latestNewsData = latestNewsSnapshot.docs.map(doc => {
                     const data = doc.data();
+                    const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
                     return {
                         id: doc.id,
                         ...data,
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
-                        publishedAt: data.publishedAt.toDate().toISOString(),
+                        publishedAt,
+                        updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                     } as NewsArticle;
                 });
                 setLatestNews(latestNewsData);
@@ -180,13 +184,15 @@ function NewsCategoryContent() {
             const querySnapshot = await getDocs(q);
             const newData = querySnapshot.docs.map(doc => {
                 const data = doc.data();
+                const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
                 return {
                     id: doc.id,
                     ...data,
                     title: getLocalized(data.title, locale),
                     content: getLocalized(data.content, locale),
                     summary: getLocalized(data.summary, locale),
-                    publishedAt: data.publishedAt.toDate().toISOString(),
+                    publishedAt,
+                    updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                 } as NewsArticle;
             });
 
