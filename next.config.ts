@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
 
   images: {
     // Tắt unoptimized để Next.js tự động nén ảnh sang WebP/AVIF giúp tải nhanh hơn
-    unoptimized: false, 
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
@@ -56,7 +56,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
         port: '',
-        pathname: '/**', 
+        pathname: '/**',
       },
     ],
   },
