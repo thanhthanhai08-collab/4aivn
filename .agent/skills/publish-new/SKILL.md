@@ -23,8 +23,11 @@ Thực hiện theo `workflows/publish_news.md`:
 - Bước 2b: lập dàn ý.
 - Bước 2c: viết bài tiếng Việt trong `write.html`.
 - Bước 3: tạo JSON song ngữ với root fields tiếng Việt và object `vi`, `en`.
+- Bước 3 bắt buộc giữ `title.vi` và `title.en` không quá 60 ký tự Unicode; nếu dài hơn phải rút gọn trước khi tiếp tục.
 - Bước 4: tạo ảnh bìa 16:9.
 - Bước 5: publish lên Firestore bằng `scripts/publish_to_firestore.ts`.
+
+Script publish luôn chạy validation độ dài tiêu đề và phải dừng trước khi ghi Firestore nếu một trong hai title vượt quá 60 ký tự.
 
 ## Schema Firestore collection `news`
 

@@ -8,7 +8,7 @@ Nhiệm vụ cuối cùng là duyệt lại bài viết HTML, sửa lỗi chính
 
 ## Quy tắc thực hiện
 1. `slug`, `title`, `summary`, `content` phải là object song ngữ `{ "vi": "...", "en": "..." }`.
-2. `title` (cho cả "vi" và "en") phải ngắn gọn và dưới 60 ký tự.
+2. `title` (cho cả "vi" và "en") phải ngắn gọn và không quá 60 ký tự Unicode. Đếm và xác nhận độ dài từng title trước khi lưu JSON; nếu vượt giới hạn, bắt buộc rút gọn.
 3. `slug` là dạng map, ví dụ: `"slug": { "vi": "tieng-viet-slug", "en": "english-slug" }`.
 4. `summary` (cho cả "vi" và "en") phải viết sâu sắc, tóm tắt đủ ý chính và dài khoảng 6-7 dòng văn bản (khoảng 100-150 từ cho mỗi ngôn ngữ).
 5. Không dùng schema cũ như `vi: { title, summary, content }` hay `en: { title, summary, content }`.

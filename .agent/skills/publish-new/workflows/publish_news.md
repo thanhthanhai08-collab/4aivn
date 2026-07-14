@@ -37,6 +37,7 @@ Tạo JSON cuối cùng theo `scripts/rewrite_article.md`, gồm:
 - Root fields tiếng Việt: `title`, `summary`, `content`
 - Object `vi`: title, summary, content tiếng Việt
 - Object `en`: title, summary, content tiếng Anh
+- `title.vi` và `title.en`: không quá 60 ký tự Unicode; phải kiểm tra độ dài trước khi tạo JSON cuối.
 - Metadata chung: tags, category, source, imagePrompt, author
 - FAQ song ngữ: tối thiểu 3 câu hỏi và câu trả lời bám sát nội dung bài
 - `updatedAt`: thời điểm cập nhật bài, được publish script ghi dưới dạng Firestore Timestamp
@@ -56,6 +57,7 @@ news-data/{slug}/{slug}.webp
 
 ### Bước 5 - Đăng Firestore và dọn dẹp
 Publish document với `post: false` để duyệt trước.
+Script phải từ chối publish trước khi ghi Firestore nếu `title.vi` hoặc `title.en` vượt quá 60 ký tự.
 ```bash
 npx tsx .agent/skills/publish-new/scripts/publish_to_firestore.ts --slug "{slug}"
 ```

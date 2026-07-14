@@ -9,6 +9,7 @@ import * as admin from 'firebase-admin';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
+import { validateTitleLengths } from './validate_article';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
@@ -91,6 +92,7 @@ async function main() {
   const summary = toLocalizedField(data.summary, data.summaryVi, data.summaryEn);
   const content = toLocalizedField(data.content, data.contentVi, data.contentEn);
   const faq = buildFaq(data, title, summary);
+  const titleLengths = validateTitleLengths(title);
 
   // Document ID dùng slug.vi
   const docSlug = slugField.vi || slug;
@@ -100,6 +102,7 @@ async function main() {
   console.log(`   Slug EN: ${slugField.en}`);
   console.log(`   Title VI: ${title.vi}`);
   console.log(`   Title EN: ${title.en}`);
+  console.log(`   Title length VI/EN: ${titleLengths.vi}/${titleLengths.en} (max 60)`);
 
   const newsDoc = {
     author: data.author || 'Nam',
