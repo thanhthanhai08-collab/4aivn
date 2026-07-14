@@ -116,6 +116,9 @@ body {
   .prose {
     @apply text-foreground;
   }
+  .prose h1 {
+    @apply text-3xl font-bold font-headline mb-4;
+  }
   .prose h2 {
     @apply text-2xl font-bold font-headline mb-4;
   }
@@ -127,6 +130,9 @@ body {
   }
   .prose ul {
     @apply list-disc pl-6 mb-4 space-y-2;
+  }
+  .prose ol {
+    @apply list-decimal pl-6 mb-4 space-y-2;
   }
   .prose li {
     @apply pl-2;
@@ -151,6 +157,20 @@ body {
   }
   .prose aside.callout--info {
     border-left-color: #00BFFF;
+  }
+  .prose table {
+    @apply my-6 w-full border-collapse text-base;
+  }
+  .prose thead {
+    @apply bg-muted/50;
+  }
+  .prose th,
+  .prose td {
+    @apply border border-border px-3 py-2 text-left align-top;
+    overflow-wrap: anywhere;
+  }
+  .prose th {
+    @apply font-semibold;
   }
 }
 
