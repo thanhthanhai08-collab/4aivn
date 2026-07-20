@@ -20,7 +20,11 @@ const locales = [
 
 import { useParams } from 'next/navigation';
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  iconOnly?: boolean;
+}
+
+export function LanguageSwitcher({ iconOnly = false }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -29,6 +33,7 @@ export function LanguageSwitcher() {
   const t = useTranslations('languageSwitcher');
 
   const currentLocale = locales.find(l => l.code === locale) || locales[0];
+  const alternateLocale = locales.find(l => l.code !== locale) || locales[1];
 
   function handleLocaleChange(newLocale: 'vi' | 'en') {
     // Lưu vào localStorage cho lần sau
@@ -47,13 +52,13 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
-          className="h-9 px-2 text-sm font-medium gap-1.5"
+          size={iconOnly ? "icon" : "sm"}
+          className={iconOnly ? "h-9 w-9" : "h-9 px-2 text-sm font-medium gap-1.5"}
           disabled={isPending}
+          aria-label={t('switchTo', { language: alternateLocale.fullLabel })}
         >
           <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">{currentLocale.label}</span>
-          <span className="sm:hidden">vi/en</span>
+          {!iconOnly && <span>{currentLocale.label}</span>}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[140px]">

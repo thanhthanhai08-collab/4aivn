@@ -419,6 +419,16 @@ exports.initToolStructure = onDocumentCreated(
                 vi: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...) bằng tiếng Việt.'),
                 en: z.array(z.string()).describe('Thông tin các gói giá (Free, Pro, Enterprise...) bằng tiếng Anh.')
             }).describe('Thông tin các gói giá (Free, Pro, Enterprise...).'),
+            faq: z.array(z.object({
+                question: z.object({
+                    vi: z.string().describe('Câu hỏi thường gặp bằng tiếng Việt.'),
+                    en: z.string().describe('Câu hỏi thường gặp bằng tiếng Anh.')
+                }),
+                answer: z.object({
+                    vi: z.string().describe('Câu trả lời rõ ràng bằng tiếng Việt.'),
+                    en: z.string().describe('Câu trả lời rõ ràng bằng tiếng Anh.')
+                })
+            })).min(3).max(6).describe('Từ 3 đến 6 câu hỏi thường gặp thực tế về công cụ.'),
             context: z.object({
                 vi: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding) bằng tiếng Việt.'),
                 en: z.string().describe('Lĩnh vực cốt lõi (ví dụ: Productivity, Design, Coding) bằng tiếng Anh.')
@@ -441,7 +451,7 @@ exports.initToolStructure = onDocumentCreated(
                 HƯỚNG DẪN:
                 1. Sử dụng "urlContext" để truy cập và đọc nội dung trực tiếp tại: ${data.link}.
                 2. Sử dụng "googleSearch" để tìm thêm các thông tin về bảng giá (pricing), các đánh giá từ người dùng và các tính năng thực tế nếu trang chủ không ghi rõ.
-                3. Thu thập mọi dữ liệu có thể về: Tính năng, đối tượng sử dụng, ví dụ thực tế và các mức giá chính xác như ở đường link.
+                3. Thu thập mọi dữ liệu có thể về: Tính năng, đối tượng sử dụng, ví dụ thực tế, các mức giá chính xác và câu hỏi thường gặp như ở đường link.
                 
                 Hãy tổng hợp dữ liệu tìm được một cách chi tiết nhất bằng cả Tiếng Việt và Tiếng Anh.`,
                 config: {
@@ -470,6 +480,7 @@ exports.initToolStructure = onDocumentCreated(
                 YÊU CẦU:
                 - Ngôn ngữ: Tạo cả tiếng Việt và tiếng Anh cho các trường tương ứng theo schema.
                 - longDescription: Viết dưới dạng HTML (sử dụng thẻ <p>) để hiển thị đẹp trên web.
+                - faq: Tạo từ 3 đến 6 câu hỏi và câu trả lời thực tế, hữu ích về công cụ; mỗi mục phải có đủ tiếng Việt và tiếng Anh.
                 - Trả về đúng định dạng JSON theo yêu cầu.`,
                 output: { schema: ToolOutputSchema }
             });
@@ -490,6 +501,7 @@ exports.initToolStructure = onDocumentCreated(
                 useCases: mergeLocalizedArrayField(data.useCases, output.useCases?.vi, output.useCases?.en),
                 features: mergeLocalizedArrayField(data.features, output.features?.vi, output.features?.en),
                 pricingPlans: mergeLocalizedArrayField(data.pricingPlans, output.pricingPlans?.vi, output.pricingPlans?.en),
+                faq: Array.isArray(data.faq) && data.faq.length > 0 ? data.faq : output.faq,
                 context: mergeLocalizedField(data.context, output.context?.vi, output.context?.en),
                 name: data.name || event.params.toolId,
                 link: data.link || output.link,

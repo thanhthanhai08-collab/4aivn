@@ -109,6 +109,10 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
              <div className="h-8 w-20 animate-pulse rounded-md bg-muted"></div> // Skeleton for login button
           )}
 
+          <div className="md:hidden">
+            <LanguageSwitcher iconOnly />
+          </div>
+
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild aria-controls={menuId}>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -150,10 +154,6 @@ export function SiteHeader({ hideSearch = false }: SiteHeaderProps) {
                   </div>
                 </form>
               )}
-
-              <div className="mb-4 px-2 block md:hidden">
-                <LanguageSwitcher />
-              </div>
 
               <div className="flex flex-col space-y-3 px-2">
                 {navItems.map((item) => (
