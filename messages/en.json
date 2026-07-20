@@ -286,6 +286,7 @@
     "cookiePolicy": "Cookie Policy",
     "about": "About Us",
     "contactUs": "Contact Us",
+    "faq": "Frequently Asked Questions",
     "phone": "Phone"
   },
   "preview": {
@@ -450,6 +451,54 @@
     "successTitle": "Sent Successfully!",
     "successDesc": "Thank you for contacting us. We will reply soon.",
     "sendAnother": "Send Another Message"
+  },
+  "faq": {
+    "metaTitle": "Frequently Asked Questions | 4AIVN",
+    "metaDescription": "Answers to common questions about 4AIVN content, AI rankings, tool reviews, and how to use the website.",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Helpful answers about 4AIVN, our ranking data, and how we evaluate AI tools.",
+    "items": {
+      "1": {
+        "question": "What is 4AIVN?",
+        "answer": "4AIVN is a platform for AI news, tools, models, and practical knowledge, serving readers in Vietnam and around the world."
+      },
+      "2": {
+        "question": "Do I need an account to use 4AIVN?",
+        "answer": "You can read news and browse tools and rankings without an account. Some community or personalized features may require you to sign in."
+      },
+      "3": {
+        "question": "How is the AI ranking data updated?",
+        "answer": "Rankings are updated using performance data, product specifications, and community ratings. The latest published data is loaded directly when you visit the page."
+      },
+      "4": {
+        "question": "How does 4AIVN evaluate AI tools?",
+        "answer": "We consider features, usability, pricing, reliability, suitability for different needs, and feedback from the community."
+      },
+      "5": {
+        "question": "Are articles or reviews sponsored?",
+        "answer": "Sponsored content or affiliate links, when present, are clearly disclosed. Commercial relationships do not determine 4AIVN's editorial conclusions."
+      },
+      "6": {
+        "question": "Can I suggest an AI tool for 4AIVN to feature?",
+        "answer": "Yes. Send the tool details through our Contact page. The 4AIVN team will review its relevance and quality before publication."
+      },
+      "7": {
+        "question": "Why might tool information or pricing differ from the provider's website?",
+        "answer": "Providers can change features, prices, or terms at any time. Check the tool's official website before subscribing or making a payment."
+      },
+      "8": {
+        "question": "Can I reuse content published on 4AIVN?",
+        "answer": "You may share links and brief excerpts with attribution. Copying or redistributing complete content must comply with our terms of service and applicable copyright rules."
+      },
+      "9": {
+        "question": "How do I report inaccurate information or request a correction?",
+        "answer": "Send the content URL and a clear description through our Contact page or email 4aivn@gmail.com. We will review it and update the content when appropriate."
+      },
+      "10": {
+        "question": "How can I contact 4AIVN?",
+        "answer": "Use the form on our Contact page, email 4aivn@gmail.com, or call 0973.490.497."
+      }
+    }
   },
   "chatbot": {
     "newChat": "New Chat",

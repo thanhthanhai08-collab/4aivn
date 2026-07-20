@@ -144,6 +144,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...createEntries('/bang-xep-hang', '/rankings', { changeFrequency: 'daily', priority: 0.9 }),
     ...createEntries('/chatbot', '/chatbot', { changeFrequency: 'monthly', priority: 0.7 }),
     ...createEntries('/gioi-thieu', '/about', { changeFrequency: 'monthly', priority: 0.5 }),
+    ...createEntries('/cau-hoi-thuong-gap', '/faq', { changeFrequency: 'monthly', priority: 0.6 }),
     ...createEntries('/lien-he', '/contact', { changeFrequency: 'monthly', priority: 0.5 }),
     ...createEntries('/chinh-sach-quyen-rieng-tu', '/privacy-policy', { changeFrequency: 'yearly', priority: 0.3 }),
     ...createEntries('/dieu-khoan-dich-vu', '/terms-of-service', { changeFrequency: 'yearly', priority: 0.3 }),

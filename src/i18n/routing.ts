@@ -32,6 +32,7 @@ export const routing = defineRouting({
     '/tim-kiem': { vi: '/tim-kiem', en: '/search' },
     '/gioi-thieu': { vi: '/gioi-thieu', en: '/about' },
     '/lien-he': { vi: '/lien-he', en: '/contact' },
+    '/cau-hoi-thuong-gap': { vi: '/cau-hoi-thuong-gap', en: '/faq' },
     '/chinh-sach-quyen-rieng-tu': { vi: '/chinh-sach-quyen-rieng-tu', en: '/privacy-policy' },
     '/dieu-khoan-dich-vu': { vi: '/dieu-khoan-dich-vu', en: '/terms-of-service' },
     '/dieu-khoan-su-dung-ai': { vi: '/dieu-khoan-su-dung-ai', en: '/ai-terms-of-use' },

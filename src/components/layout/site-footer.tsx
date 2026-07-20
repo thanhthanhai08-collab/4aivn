@@ -37,6 +37,7 @@ const featuredTopics = [
   { href: "/dieu-khoan-su-dung-ai", label: "aiTerms" },
   { href: "/chinh-sach-cookie", label: "cookiePolicy" },
   { href: "/gioi-thieu", label: "about" },
+  { href: "/cau-hoi-thuong-gap", label: "faq" },
   { href: "/lien-he", label: "contactUs" },
 ];
 

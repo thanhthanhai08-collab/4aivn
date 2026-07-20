@@ -286,6 +286,7 @@
     "cookiePolicy": "Chính sách Cookies",
     "about": "Giới thiệu",
     "contactUs": "Liên hệ",
+    "faq": "Câu hỏi thường gặp",
     "phone": "Điện thoại"
   },
   "preview": {
@@ -450,6 +451,54 @@
     "successTitle": "Gửi thành công!",
     "successDesc": "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ trả lời sớm.",
     "sendAnother": "Gửi tin nhắn mới"
+  },
+  "faq": {
+    "metaTitle": "Câu hỏi thường gặp | 4AIVN",
+    "metaDescription": "Giải đáp các câu hỏi thường gặp về nội dung, bảng xếp hạng, đánh giá công cụ AI và cách sử dụng 4AIVN.",
+    "title": "Câu hỏi thường gặp",
+    "subtitle": "Những thông tin hữu ích giúp bạn hiểu rõ hơn về 4AIVN, dữ liệu xếp hạng và cách chúng tôi đánh giá các công cụ AI.",
+    "items": {
+      "1": {
+        "question": "4AIVN là gì?",
+        "answer": "4AIVN là nền tảng tổng hợp tin tức, công cụ, mô hình và kiến thức về trí tuệ nhân tạo dành cho người dùng Việt Nam và quốc tế."
+      },
+      "2": {
+        "question": "Tôi có cần tạo tài khoản để sử dụng 4AIVN không?",
+        "answer": "Bạn có thể đọc tin tức, xem công cụ và bảng xếp hạng mà không cần tài khoản. Một số tính năng cộng đồng hoặc cá nhân hóa có thể yêu cầu đăng nhập."
+      },
+      "3": {
+        "question": "Dữ liệu bảng xếp hạng AI được cập nhật như thế nào?",
+        "answer": "Bảng xếp hạng được cập nhật từ dữ liệu hiệu năng, thông số sản phẩm và đánh giá cộng đồng. Dữ liệu công khai mới nhất được tải trực tiếp khi bạn truy cập trang."
+      },
+      "4": {
+        "question": "4AIVN đánh giá công cụ AI dựa trên tiêu chí nào?",
+        "answer": "Chúng tôi xem xét tính năng, trải nghiệm sử dụng, mức giá, độ tin cậy, mức độ phù hợp với từng nhu cầu và phản hồi của cộng đồng."
+      },
+      "5": {
+        "question": "Các bài viết và đánh giá có được tài trợ không?",
+        "answer": "Nội dung tài trợ hoặc liên kết tiếp thị, nếu có, sẽ được công bố rõ ràng. Các mối quan hệ thương mại không quyết định kết luận biên tập của 4AIVN."
+      },
+      "6": {
+        "question": "Tôi có thể đề xuất một công cụ AI để 4AIVN giới thiệu không?",
+        "answer": "Có. Bạn có thể gửi thông tin công cụ qua trang Liên hệ. Đội ngũ 4AIVN sẽ xem xét mức độ phù hợp và chất lượng trước khi đăng tải."
+      },
+      "7": {
+        "question": "Tại sao thông tin hoặc giá của công cụ có thể khác website nhà cung cấp?",
+        "answer": "Nhà cung cấp có thể thay đổi tính năng, giá hoặc điều khoản bất kỳ lúc nào. Hãy kiểm tra website chính thức của công cụ trước khi đăng ký hoặc thanh toán."
+      },
+      "8": {
+        "question": "Tôi có thể sử dụng nội dung trên 4AIVN cho mục đích khác không?",
+        "answer": "Bạn có thể chia sẻ đường dẫn và trích dẫn ngắn kèm nguồn. Việc sao chép hoặc phân phối lại toàn bộ nội dung cần tuân thủ điều khoản dịch vụ và quy định bản quyền."
+      },
+      "9": {
+        "question": "Làm thế nào để báo thông tin sai hoặc nội dung cần chỉnh sửa?",
+        "answer": "Vui lòng gửi đường dẫn nội dung và mô tả chi tiết qua trang Liên hệ hoặc email 4aivn@gmail.com. Chúng tôi sẽ kiểm tra và cập nhật khi cần thiết."
+      },
+      "10": {
+        "question": "Tôi có thể liên hệ 4AIVN bằng cách nào?",
+        "answer": "Bạn có thể dùng biểu mẫu tại trang Liên hệ, gửi email đến 4aivn@gmail.com hoặc gọi số 0973.490.497."
+      }
+    }
   },
   "chatbot": {
     "newChat": "Chat mới",

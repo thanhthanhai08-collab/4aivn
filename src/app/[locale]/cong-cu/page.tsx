@@ -2,6 +2,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { ToolsPageClient } from "@/components/tools/tools-page-client";
 import { getAllTools } from "@/lib/get-tool";
 
+export const dynamic = "force-dynamic";
+
 interface ToolsPageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ search_query?: string; category?: string }>;

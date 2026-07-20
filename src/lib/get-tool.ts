@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { unstable_cache } from 'next/cache';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { Tool, NewsArticle, ToolReview } from '@/lib/types';
@@ -27,29 +26,23 @@ function serializeTool(id: string, data: any, locale: string = 'vi'): Tool {
     return tool as Tool;
 }
 
-const getAllToolsCached = unstable_cache(
-    async (locale: string = 'vi'): Promise<Tool[]> => {
-        try {
-            const toolsQuery = query(
-                collection(db, 'tools'),
-                where('post', '==', true),
-                orderBy('averageRating', 'desc'),
-                orderBy('ratingCount', 'desc'),
-                orderBy('__name__')
-            );
-            const snapshot = await getDocs(toolsQuery);
-            return snapshot.docs.map((item) => serializeTool(item.id, item.data(), locale));
-        } catch (error) {
-            console.error('Error fetching tools:', error);
-            return [];
-        }
-    },
-    ['all-tools'],
-    { revalidate: 1, tags: ['tools'] }
-);
-
 /** Ranked, localized and serializable tools for server-rendered list pages. */
-export const getAllTools = cache(getAllToolsCached);
+export const getAllTools = cache(async (locale: string = 'vi'): Promise<Tool[]> => {
+    try {
+        const toolsQuery = query(
+            collection(db, 'tools'),
+            where('post', '==', true),
+            orderBy('averageRating', 'desc'),
+            orderBy('ratingCount', 'desc'),
+            orderBy('__name__')
+        );
+        const snapshot = await getDocs(toolsQuery);
+        return snapshot.docs.map((item) => serializeTool(item.id, item.data(), locale));
+    } catch (error) {
+        console.error('Error fetching tools:', error);
+        return [];
+    }
+});
 
 function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
     const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();

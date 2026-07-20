@@ -3,6 +3,8 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { NewsPageClient } from "@/components/news/news-page-client";
 import { getAllArticles } from "@/lib/get-article";
 
+export const dynamic = "force-dynamic";
+
 export default async function NewsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const [articles, t] = await Promise.all([

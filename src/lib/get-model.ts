@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { unstable_cache } from 'next/cache';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { AIModel, NewsArticle, BenchmarkData } from '@/lib/types';
@@ -36,33 +35,27 @@ function serializeModel(id: string, data: any, locale: string = 'vi', rank?: num
     return model as AIModel;
 }
 
-const getAllModelsCached = unstable_cache(
-    async (locale: string = 'vi'): Promise<AIModel[]> => {
-        try {
-            const modelsQuery = query(
-                collection(db, 'models'),
-                where('post', '==', true),
-                orderBy('intelligenceScore', 'desc'),
-                orderBy('contextLengthToken', 'desc'),
-                orderBy('pricePerMillionTokens', 'asc'),
-                orderBy('latencyFirstChunkSeconds', 'asc'),
-                orderBy('speedTokensPerSecond', 'desc')
-            );
-            const snapshot = await getDocs(modelsQuery);
-            return snapshot.docs.map((item, index) =>
-                serializeModel(item.id, item.data(), locale, index + 1)
-            );
-        } catch (error) {
-            console.error('Error fetching models:', error);
-            return [];
-        }
-    },
-    ['all-models'],
-    { revalidate: 1, tags: ['models'] }
-);
-
 /** Ranked, localized and serializable models for server-rendered list pages. */
-export const getAllModels = cache(getAllModelsCached);
+export const getAllModels = cache(async (locale: string = 'vi'): Promise<AIModel[]> => {
+    try {
+        const modelsQuery = query(
+            collection(db, 'models'),
+            where('post', '==', true),
+            orderBy('intelligenceScore', 'desc'),
+            orderBy('contextLengthToken', 'desc'),
+            orderBy('pricePerMillionTokens', 'asc'),
+            orderBy('latencyFirstChunkSeconds', 'asc'),
+            orderBy('speedTokensPerSecond', 'desc')
+        );
+        const snapshot = await getDocs(modelsQuery);
+        return snapshot.docs.map((item, index) =>
+            serializeModel(item.id, item.data(), locale, index + 1)
+        );
+    } catch (error) {
+        console.error('Error fetching models:', error);
+        return [];
+    }
+});
 
 export const getModel = cache(async (id: string, locale: string = 'vi') => {
   if (!id || id.includes('.')) return null;

@@ -3,6 +3,8 @@ import { RankingsPageClient } from "@/components/rankings/rankings-page-client";
 import { getAllModels } from "@/lib/get-model";
 import { getAllTools } from "@/lib/get-tool";
 
+export const dynamic = "force-dynamic";
+
 export default async function RankingsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const [models, tools] = await Promise.all([getAllModels(locale), getAllTools(locale)]);
