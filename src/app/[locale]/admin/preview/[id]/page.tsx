@@ -44,12 +44,29 @@ import { useParams } from "next/navigation";
 import { getLocalized } from "@/lib/i18n-helpers";
 import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 import { useLocale, useTranslations } from "next-intl";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
+const toIsoDate = (value: any): string => {
+  if (!value) return new Date().toISOString();
+  const date = typeof value.toDate === 'function' ? value.toDate() : new Date(value);
+  return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
+};
+
+function getYouTubeId(urlOrId: string): string {
+  if (!urlOrId) return "";
+  const url = urlOrId.trim();
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+
+  if (match) return match[1];
+  return url.length === 11 ? url : "";
+}
 
 const renderContent = (article: NewsArticle) => {
   if (!article || !article.content) return null;
 
   // Regex to find placeholders like [CHART_1], [IMAGE:...] and legacy placeholders
-  const combinedRegex = /(\[CHART_(?:\d+)\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
+  const combinedRegex = /(\[CHART_(?:\d+)\]|\[VIDEO:.*?\]|\[IMAGE:.*?\]|\[BENCHMARK_CHART\]|\[ACTIVITIES_CHART\]|\[SATISFACTION_CHART\]|\[PROFITABILITY_CHART\]|\[NANO_BANANA_CHART\]|\[IMAGE_EDITING_CHART\]|\[BROWSER_MARKET_SHARE_CHART\]|\[AI_BROWSER_MARKET_GROWTH_CHART\]|\[AI_BROWSER_FOCUS_CHART\]|\[HUMAN_ROBOT_COLLABORATION_CHART\]|\[ATLAS_SECURITY_CHART\]|\[GPT5_V1_TOKEN_CHART\]|\[SIMA2_BENCHMARK_CHART\]|\[GEMINI_3_BENCHMARK_CHART\])/g;
 
   const parts = article.content.split(combinedRegex).filter(part => part);
 
@@ -133,6 +150,32 @@ const renderContent = (article: NewsArticle) => {
         return null;
     }
 
+    const videoMatch = part.match(/^\[VIDEO:(.*?)\|(.*?)\|(.*?)\]$/);
+    if (videoMatch) {
+      const [, rawId, videoTitle, videoHint] = videoMatch;
+      const videoId = getYouTubeId(rawId);
+
+      return (
+        <figure key={`video-${index}`} className="not-prose w-full my-8 flex flex-col items-center">
+          <div className="relative w-full pb-[56.25%] rounded-2xl overflow-hidden shadow-2xl border border-border bg-black transition-transform hover:scale-[1.01] duration-300">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1`}
+              title={videoTitle.trim() || `Video: ${article.title}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+          {videoHint && videoHint.trim() !== "" && (
+            <figcaption className="mt-4 text-center text-sm md:text-base text-muted-foreground italic max-w-[90%]">
+              {videoHint.trim()}
+            </figcaption>
+          )}
+        </figure>
+      );
+    }
+
     const imageMatch = part.match(/^\[IMAGE:(.*?)\|(.*?)\|(.*?)\]$/);
     if (imageMatch) {
       const [, src, alt, hint] = imageMatch;
@@ -189,12 +232,14 @@ function NewsDetailContent() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
+  const [faq, setFaq] = useState<Array<{ question: string; answer: string }>>([]);
   
   useEffect(() => {
     const fetchArticleData = async () => {
         if (!id) return;
         
         setIsLoading(true);
+        try {
         const docRef = doc(db, "news", id);
         const docSnap = await getDoc(docRef);
 
@@ -206,15 +251,19 @@ function NewsDetailContent() {
                 title: getLocalized(data.title, locale),
                 content: getLocalized(data.content, locale),
                 summary: getLocalized(data.summary, locale),
-                // Handle both Timestamp and ISO string for preview flexibility
-                publishedAt: data.publishedAt?.toDate ? data.publishedAt.toDate().toISOString() : new Date().toISOString(),
+                author: getLocalized(data.author, locale),
+                publishedAt: toIsoDate(data.publishedAt),
             } as NewsArticle;
 
             setArticle(fetchedArticle);
-            
-            if (fetchedArticle.summary) {
-                setSummary(fetchedArticle.summary);
-            }
+            setSummary(fetchedArticle.summary || null);
+            setFaq((Array.isArray(data.faq) ? data.faq : [])
+              .map((item: any) => ({
+                question: getLocalized(item?.question, locale),
+                answer: getLocalized(item?.answer, locale),
+              }))
+              .filter((item: { question: string; answer: string }) => item.question && item.answer));
+            setIsLoading(false);
 
             if (currentUser) {
                 getUserProfileData(currentUser.uid).then(userData => {
@@ -222,7 +271,8 @@ function NewsDetailContent() {
                 });
             }
             
-            // Fetch related and latest news as usual for a full preview experience
+            // Related content should never prevent the primary preview from rendering.
+            try {
             const latestNewsQuery = query(
                 collection(db, "news"),
                 where("post", "==", true),
@@ -262,7 +312,8 @@ function NewsDetailContent() {
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
-                        publishedAt: data.publishedAt.toDate().toISOString(),
+                        author: getLocalized(data.author, locale),
+                        publishedAt: toIsoDate(data.publishedAt),
                     } as NewsArticle;
                 })
                 .filter(item => item.id !== id)
@@ -279,22 +330,34 @@ function NewsDetailContent() {
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
-                        publishedAt: data.publishedAt.toDate().toISOString(),
+                        author: getLocalized(data.author, locale),
+                        publishedAt: toIsoDate(data.publishedAt),
                     } as NewsArticle;
                 })
                 .filter(item => item.id !== id)
                 .slice(0, 3);
 
             setRelatedNews(relatedData);
+            } catch (relatedError) {
+              console.error("Error fetching related news preview data:", relatedError);
+              setLatestNews([]);
+              setRelatedNews([]);
+            }
 
         } else {
           setArticle(null);
         }
         setIsLoading(false);
+        } catch (error) {
+          console.error("Error preparing news preview data:", error);
+          setArticle(null);
+          setFaq([]);
+          setIsLoading(false);
+        }
     };
 
     fetchArticleData();
-  }, [id, currentUser]);
+  }, [id, currentUser, locale]);
 
   useEffect(() => {
     if (!id) return;
@@ -460,6 +523,22 @@ function NewsDetailContent() {
                         {renderContent(article)}
                     </div>
 
+                    {faq.length > 0 && (
+                      <section className="mt-12" aria-labelledby="preview-news-faq-heading">
+                        <h2 id="preview-news-faq-heading" className="text-2xl font-bold font-headline mb-4">
+                          {locale === 'en' ? 'Frequently asked questions' : 'Câu hỏi thường gặp'}
+                        </h2>
+                        <Accordion type="single" collapsible className="w-full">
+                          {faq.map((item, index) => (
+                            <AccordionItem key={`${item.question}-${index}`} value={`faq-${index}`}>
+                              <AccordionTrigger className="text-left">{item.question}</AccordionTrigger>
+                              <AccordionContent className="text-base leading-7 text-muted-foreground">{item.answer}</AccordionContent>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </section>
+                    )}
+
                     <footer className="mt-12 pt-6 border-t">
                         {article.link && (
                             <div className="flex items-center space-x-1">
@@ -545,7 +624,7 @@ function NewsDetailContent() {
                 <h2 className="text-3xl font-headline font-bold text-center mb-10 text-foreground">
                 {tNewsDetail("relatedArticles")}
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {relatedNews.map((article) => (
                     <NewsCard key={article.id} article={article} />
                 ))}

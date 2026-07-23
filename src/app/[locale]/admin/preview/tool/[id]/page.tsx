@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { ExternalLink, Star, Heart, CheckCircle, Sparkles, Newspaper, ChevronRight, ArrowLeft } from "lucide-react";
 import type { Tool, NewsArticle, ToolReview } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -25,12 +25,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToolCardSmall } from "@/components/tools/tool-card-small";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, type Timestamp, getDoc } from "firebase/firestore";
+import { collection, getDocs, orderBy, limit, query, where, doc, onSnapshot, getDoc } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { getLocalized, getLocalizedArray } from "@/lib/i18n-helpers";
+import { getLocalized, getLocalizedArray, getLocalizedSlug } from "@/lib/i18n-helpers";
 import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
+const serializePreviewTool = (id: string, data: any, locale: string): Tool => ({
+  id,
+  ...data,
+  contextKey: getLocalized(data.context, 'vi'),
+  context: getLocalized(data.context, locale),
+  description: getLocalized(data.description, locale),
+  longDescription: getLocalized(data.longDescription, locale),
+  features: getLocalizedArray(data.features, locale),
+  pricingPlans: getLocalizedArray(data.pricingPlans, locale),
+  useCases: getLocalizedArray(data.useCases, locale),
+  whoIsItFor: getLocalizedArray(data.whoIsItFor, locale),
+  averageRating: Number(data.averageRating) || 0,
+  ratingCount: Number(data.ratingCount) || 0,
+} as Tool);
 
 const ReviewsList = ({ reviews }: { reviews: ToolReview[] }) => {
     const t = useTranslations("toolDetail");
@@ -95,6 +111,12 @@ function ToolDetailContent() {
   const locale = useLocale();
   const tPreview = useTranslations("preview");
   const t = useTranslations("toolDetail");
+  const router = useRouter();
+
+  const handleExplore = () => {
+    window.open("https://omg10.com/4/11049129", "_blank", "noopener,noreferrer");
+    router.push("/bang-xep-hang");
+  };
   
 
   // Effect for public tool data (real-time)
@@ -107,18 +129,7 @@ function ToolDetailContent() {
       // Don't check for post === true in preview mode
       if (docSnap.exists()) {
         const data = docSnap.data();
-        const foundTool = {
-          id: docSnap.id,
-          ...data,
-          contextKey: getLocalized(data.context, 'vi'),
-          context: getLocalized(data.context, locale),
-          description: getLocalized(data.description, locale),
-          longDescription: getLocalized(data.longDescription, locale),
-          features: getLocalizedArray(data.features, locale),
-          pricingPlans: getLocalizedArray(data.pricingPlans, locale),
-          useCases: getLocalizedArray(data.useCases, locale),
-          whoIsItFor: getLocalizedArray(data.whoIsItFor, locale),
-        } as Tool;
+        const foundTool = serializePreviewTool(docSnap.id, data, locale);
         setTool(foundTool);
       } else {
         setTool(null);
@@ -195,7 +206,13 @@ function ToolDetailContent() {
               return {
                 id: doc.id,
                 ...data,
-                publishedAt: (data.publishedAt as Timestamp).toDate().toISOString()
+                title: getLocalized(data.title, locale),
+                content: getLocalized(data.content, locale),
+                summary: getLocalized(data.summary, locale),
+                author: getLocalized(data.author, locale),
+                publishedAt: data.publishedAt?.toDate?.()?.toISOString()
+                  || data.publishedAt
+                  || new Date().toISOString()
               } as NewsArticle
             });
             setRelatedNews(latestNews);
@@ -207,7 +224,7 @@ function ToolDetailContent() {
             
             // Complementary Tools
             const allToolsSnapshot = await getDocs(query(collection(db, "tools"), where("post", "==", true)));
-            const allTools = allToolsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Tool));
+            const allTools = allToolsSnapshot.docs.map(doc => serializePreviewTool(doc.id, doc.data(), 'vi'));
             const uniqueCategories = Array.from(new Set(allTools.map(t => t.context).filter(Boolean))).sort();
             const otherCategories = uniqueCategories.filter(cat => cat !== (tool.contextKey || tool.context));
             const selectedCategories = [...otherCategories].sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -223,7 +240,7 @@ function ToolDetailContent() {
             const complementarySnapshots = await Promise.all(complementaryPromises);
             const diverseComplementaryTools = complementarySnapshots.map(snap => {
                 if (!snap.empty) {
-                    return { id: snap.docs[0].id, ...snap.docs[0].data() } as Tool;
+                    return serializePreviewTool(snap.docs[0].id, snap.docs[0].data(), locale);
                 }
                 return null;
             }).filter((t): t is Tool => t !== null);
@@ -231,13 +248,13 @@ function ToolDetailContent() {
 
             // Similar Tools
             const similarData = similarToolsSnapshot.docs
-                .map(doc => ({ id: doc.id, ...doc.data() } as Tool))
+                .map(doc => serializePreviewTool(doc.id, doc.data(), locale))
                 .filter(t => t.id !== tool.id)
                 .slice(0, 4);
             setSimilarTools(similarData);
             
             // Featured Tools
-            setFeaturedTools(featuredToolsSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Tool)).filter(t => t.id !== tool.id).slice(0, 3));
+            setFeaturedTools(featuredToolsSnapshot.docs.map(doc => serializePreviewTool(doc.id, doc.data(), locale)).filter(t => t.id !== tool.id).slice(0, 3));
             
             // Reviews
             setAllReviews(allReviewsData);
@@ -355,6 +372,13 @@ function ToolDetailContent() {
   }
 
   const averageRating = tool.averageRating || 0;
+  const localizedFaq = (tool.faq ?? [])
+    .map((item, index) => ({
+      id: `faq-${index}`,
+      question: getLocalized(item.question, locale),
+      answer: getLocalized(item.answer, locale),
+    }))
+    .filter((item) => item.question && item.answer);
 
   return (
     <AppLayout>
@@ -380,7 +404,7 @@ function ToolDetailContent() {
             <section>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                   <div className="flex items-center space-x-4">
-                      <Image src={tool.logoUrl} alt={`${tool.context} ${tool.name} logo`} width={64} height={64} className="rounded-lg" priority />
+                      {tool.logoUrl && <Image src={tool.logoUrl} alt={`${tool.context} ${tool.name} logo`} width={64} height={64} className="rounded-lg" priority />}
                       <div>
                            <div className="flex items-center gap-3">
                             <h1 className="text-3xl font-bold font-headline">{tool.name}</h1>
@@ -393,11 +417,13 @@ function ToolDetailContent() {
                          <Heart className={`mr-2 h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : ""}`} />
                          {isFavorite ? t("favorited") : t("favorite")}
                       </Button>
-                      <Button asChild>
-                         <a href={tool.link} target="_blank" rel="noopener noreferrer">
-                          {t("visitPage")} <ExternalLink className="ml-2 h-4 w-4" />
-                         </a>
-                      </Button>
+                      {tool.link && (
+                        <Button asChild>
+                           <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                            {t("visitPage")} <ExternalLink className="ml-2 h-4 w-4" />
+                           </a>
+                        </Button>
+                      )}
                   </div>
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-6">
@@ -505,6 +531,26 @@ function ToolDetailContent() {
                   </div>
               </section>
             )}
+
+            {localizedFaq.length > 0 && (
+              <section aria-labelledby="tool-faq-heading">
+                <h2 id="tool-faq-heading" className="text-2xl font-bold font-headline mb-4">
+                  {t("frequentlyAskedQuestions")}
+                </h2>
+                <Accordion type="single" collapsible className="w-full rounded-lg border px-4">
+                  {localizedFaq.map((item) => (
+                    <AccordionItem key={item.id} value={item.id}>
+                      <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
+                        {item.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="whitespace-pre-line text-base leading-relaxed text-muted-foreground">
+                        {item.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </section>
+            )}
             
             <section>
                  <Card>
@@ -608,12 +654,12 @@ function ToolDetailContent() {
                 <h2 className="flex items-center"><Sparkles className="mr-2 h-5 w-5 text-amber-500"/> {t("featuredTools")}</h2>
               </CardHeader>
               <CardContent className="space-y-4">
-                  {featuredTools.map(t => (
-                    <Link key={t.id} href={{ pathname: '/cong-cu/[id]', params: { id: t.id } }} className="flex items-center space-x-3 group">
-                       <Image src={t.logoUrl} alt={t.name} width={40} height={40} className="rounded-md"/>
+                  {featuredTools.map(ft => (
+                    <Link key={ft.id} href={{ pathname: '/cong-cu/[id]', params: { id: ft.id } }} className="flex items-center space-x-3 group">
+                       <Image src={ft.logoUrl || ''} alt={ft.name} width={40} height={40} className="rounded-md"/>
                        <div>
-                          <p className="font-semibold group-hover:text-primary">{t.name}</p>
-                          <p className="text-sm text-muted-foreground">{t.context}</p>
+                          <p className="font-semibold group-hover:text-primary">{ft.name}</p>
+                          <p className="text-sm text-muted-foreground">{ft.context}</p>
                        </div>
                     </Link>
                   ))}
@@ -626,16 +672,19 @@ function ToolDetailContent() {
                   <h2 className="flex items-center"><Newspaper className="mr-2 h-5 w-5 text-primary"/> {t("relatedNews")}</h2>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {relatedNews.map((article) => (
-                      <Link key={article.id} href={{ pathname: '/tin-tuc/[id]', params: { id: article.id } }} className="flex items-center space-x-3 group">
+                  {relatedNews.map((article) => {
+                    const slug = getLocalizedSlug(article.slug || article.id, locale) || article.id;
+                    return (
+                      <Link key={article.id} href={`/${slug}` as any} className="flex items-center space-x-3 group">
                          <div className="relative w-16 h-16 shrink-0">
-                            <Image src={article.imageUrl!} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
+                            <Image src={article.imageUrl || ''} alt={article.title} fill className="rounded-md object-cover" sizes="64px"/>
                          </div>
                          <div>
                             <p className="font-semibold text-sm leading-tight group-hover:text-primary line-clamp-2">{article.title}</p>
                          </div>
                       </Link>
-                  ))}
+                    );
+                  })}
                 </CardContent>
               </Card>
             )}
@@ -647,8 +696,8 @@ function ToolDetailContent() {
                 <p className="mb-4 text-sm text-muted-foreground">
                     {t("exploreRankingsDesc")}
                 </p>
-                <Button asChild>
-                    <Link href="/bang-xep-hang">{t("explore")}</Link>
+                <Button onClick={handleExplore}>
+                    {t("explore")}
                 </Button>
             </Card>
           </aside>

@@ -22,13 +22,14 @@ import {
 import { O3PerformanceInsightsChart } from "@/components/models/o3-performance-insights-chart";
 import { O3DetailedBenchmarkCharts } from "@/components/models/o3-detailed-benchmark-charts";
 import { NewsListItem } from "@/components/news/news-list-item";
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where, type Timestamp, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDocs, limit, orderBy, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { ModelCard } from "@/components/models/model-card";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { getLocalized } from "@/lib/i18n-helpers";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 // Helper function to format context length for display
 const formatContextLength = (tokenValue?: number): string => {
@@ -42,6 +43,20 @@ const formatContextLength = (tokenValue?: number): string => {
   return String(tokenValue);
 };
 
+const formatFirestoreDate = (value: any, locale: string): string | undefined => {
+  if (!value) return undefined;
+  const date = typeof value.toDate === 'function' ? value.toDate() : new Date(value);
+  return Number.isNaN(date.getTime())
+    ? undefined
+    : date.toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN');
+};
+
+const toOptionalNumber = (value: unknown): number | undefined => {
+  if (value === null || value === undefined || value === '') return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
 function ModelPreviewContent() {
   const params = useParams();
   const id = params.id as string;
@@ -49,8 +64,10 @@ function ModelPreviewContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [currentRating, setCurrentRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [relatedNews, setRelatedNews] = useState<NewsArticle[]>([]);
   const [sameDeveloperModels, setSameDeveloperModels] = useState<AIModel[]>([]);
+  const [faq, setFaq] = useState<Array<{ question: string; answer: string }>>([]);
   
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -66,10 +83,10 @@ function ModelPreviewContent() {
 
     // Set up a real-time listener for the model document
     const unsubscribe = onSnapshot(modelDocRef, async (docSnap) => {
+      try {
         // We DON'T check for `post === true` in preview mode
         if (docSnap.exists()) {
             const data = docSnap.data();
-            const releaseDateTimestamp = data.releaseDate as Timestamp;
             
             let benchmarksData: BenchmarkData[] = [];
             const benchmarksColRef = collection(db, "models", id, "benchmarks");
@@ -87,13 +104,28 @@ function ModelPreviewContent() {
                 id: docSnap.id,
                 ...data,
                 description: getLocalized(data.description, locale),
-                releaseDate: releaseDateTimestamp ? releaseDateTimestamp.toDate().toLocaleDateString('vi-VN') : undefined,
+                releaseDate: formatFirestoreDate(data.releaseDate, locale),
+                intelligenceScore: toOptionalNumber(data.intelligenceScore),
+                contextLengthToken: toOptionalNumber(data.contextLengthToken),
+                pricePerMillionTokens: toOptionalNumber(data.pricePerMillionTokens),
+                speedTokensPerSecond: toOptionalNumber(data.speedTokensPerSecond),
+                latencyFirstChunkSeconds: toOptionalNumber(data.latencyFirstChunkSeconds),
+                averageRating: toOptionalNumber(data.averageRating),
+                ratingCount: toOptionalNumber(data.ratingCount),
                 benchmarks: benchmarksData,
             } as AIModel;
 
             setModel(foundModel);
+            setFaq((Array.isArray(data.faq) ? data.faq : [])
+              .map((item: any) => ({
+                question: getLocalized(item?.question, locale),
+                answer: getLocalized(item?.answer, locale),
+              }))
+              .filter((item: { question: string; answer: string }) => item.question && item.answer));
+            setIsLoading(false);
 
             // Fetch related data for a full preview experience
+            try {
             if (foundModel.name) {
                 const newsQuery = query(
                     collection(db, "news"),
@@ -106,7 +138,11 @@ function ModelPreviewContent() {
                 const newsData = newsSnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
-                    publishedAt: doc.data().publishedAt.toDate().toISOString(),
+                    title: getLocalized(doc.data().title, locale),
+                    summary: getLocalized(doc.data().summary, locale),
+                    publishedAt: doc.data().publishedAt?.toDate?.()?.toISOString()
+                      || doc.data().publishedAt
+                      || new Date().toISOString(),
                 } as NewsArticle));
                 setRelatedNews(newsData);
             }
@@ -123,18 +159,36 @@ function ModelPreviewContent() {
                     .map(d => ({ 
                         id: d.id, 
                         ...d.data(),
-                        releaseDate: (d.data().releaseDate as Timestamp)?.toDate().toLocaleDateString('vi-VN'),
+                        description: getLocalized(d.data().description, locale),
+                        releaseDate: formatFirestoreDate(d.data().releaseDate, locale),
+                        intelligenceScore: toOptionalNumber(d.data().intelligenceScore),
+                        contextLengthToken: toOptionalNumber(d.data().contextLengthToken),
+                        pricePerMillionTokens: toOptionalNumber(d.data().pricePerMillionTokens),
+                        speedTokensPerSecond: toOptionalNumber(d.data().speedTokensPerSecond),
+                        latencyFirstChunkSeconds: toOptionalNumber(d.data().latencyFirstChunkSeconds),
+                        averageRating: toOptionalNumber(d.data().averageRating),
+                        ratingCount: toOptionalNumber(d.data().ratingCount),
                     } as AIModel))
                     .filter(m => m.id !== id)
                     .slice(0, 6);
                 setSameDeveloperModels(devModels);
             }
-            setIsLoading(false);
+            } catch (relatedError) {
+              console.error("Error fetching related model preview data:", relatedError);
+              setRelatedNews([]);
+              setSameDeveloperModels([]);
+            }
         } else {
             console.error("Model not found!");
             setIsLoading(false);
             setModel(null);
         }
+      } catch (error) {
+        console.error("Error preparing model preview data:", error);
+        setModel(null);
+        setFaq([]);
+        setIsLoading(false);
+      }
     }, (error) => {
         console.error("Error listening to model data:", error);
         setIsLoading(false);
@@ -170,10 +224,54 @@ function ModelPreviewContent() {
     }
   }, [currentUser, id]);
 
-  // Action handlers can be kept for a realistic preview
-  const handleFavoriteToggle = async () => { /* ... implementation from original file ... */ };
-  const handleRating = async (rating: number) => { /* ... implementation from original file ... */ };
-  const handleShare = () => { /* ... implementation from original file ... */ };
+  const handleFavoriteToggle = async () => {
+    if (!currentUser || !model) {
+      toast({ title: t("loginToFav"), description: t("loginToFavDesc"), variant: "destructive" });
+      return;
+    }
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+
+    try {
+      await toggleModelFavorite(currentUser.uid, model.id, isFavorite);
+      toast({ title: newFavoriteState ? t("favAdded") : t("favRemoved") });
+    } catch (error) {
+      console.error("Failed to update favorite status:", error);
+      setIsFavorite(!newFavoriteState);
+      toast({ title: t("error"), description: t("favError"), variant: "destructive" });
+    }
+  };
+
+  const handleRating = async (rating: number) => {
+    if (!currentUser || !model) {
+      toast({ title: t("loginToReview"), description: t("loginToReviewDesc"), variant: "destructive" });
+      return;
+    }
+
+    try {
+      await setModelRating(currentUser.uid, model.id, rating, currentRating);
+      toast({ title: t("reviewSent"), description: t("reviewSentDesc", { name: model.name, rating }) });
+    } catch (error) {
+      console.error("Failed to save rating:", error);
+      toast({ title: t("error"), description: t("reviewError"), variant: "destructive" });
+    }
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast({
+        title: t("copiedLink"),
+        description: t("copiedLinkDesc"),
+      });
+    }).catch((error) => {
+      console.error("Failed to copy link:", error);
+      toast({
+        title: t("error"),
+        description: t("copyError"),
+        variant: "destructive",
+      });
+    });
+  };
 
 
   if (isLoading) {
@@ -237,7 +335,7 @@ function ModelPreviewContent() {
                       <CardHeader>
                           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                               <div className="flex items-center space-x-4">
-                              <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" priority />
+                              {model.logoUrl && <Image src={model.logoUrl} alt={`${model.name} logo`} width={64} height={64} className="rounded-lg" priority />}
                               <div>
                                   <h1 className="text-3xl font-bold font-headline">{model.name}</h1>
                                   <p className="text-muted-foreground">{model.developer}</p>
@@ -265,16 +363,24 @@ function ModelPreviewContent() {
                           <CardTitle className="text-xl font-headline">{t("rateModel")}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                          <div className="flex items-center space-x-1 mb-2">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                              <button key={star} onClick={() => handleRating(star)} aria-label={`Đánh giá ${star} sao`} className="group">
-                              <Star
-                                  className={`h-7 w-7 cursor-pointer transition-all duration-200 group-hover:fill-amber-300 group-hover:text-amber-400 ${
-                                  star <= currentRating ? "fill-amber-400 text-amber-500" : "text-gray-300"
+                          <div className="flex items-center space-x-1 mb-2" onMouseLeave={() => setHoverRating(0)}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                key={star}
+                                onClick={() => handleRating(star)}
+                                onMouseEnter={() => setHoverRating(star)}
+                                aria-label={`Đánh giá ${star} sao`}
+                                className="group outline-none"
+                              >
+                                <Star
+                                  className={`h-7 w-7 cursor-pointer transition-all duration-150 ${
+                                    star <= (hoverRating || currentRating)
+                                      ? "fill-amber-400 text-amber-500 scale-110"
+                                      : "text-gray-300"
                                   }`}
-                              />
+                                />
                               </button>
-                          ))}
+                            ))}
                           </div>
                            <p className="text-sm text-muted-foreground">{t("yourRating")} {currentRating > 0 ? `${currentRating} sao` : t("notRated")}</p>
                           {(model.averageRating ?? 0) > 0 && <p className="text-sm text-muted-foreground mt-1">{t("averageRating", { avg: (model.averageRating ?? 0).toFixed(1), count: model.ratingCount || 0 })}</p>}
@@ -362,6 +468,22 @@ function ModelPreviewContent() {
                 <p className="text-muted-foreground mb-6">{t("benchmarksDesc", { name: model.name })}</p>
                 <O3DetailedBenchmarkCharts currentModel={model} />
               </section>
+
+              {faq.length > 0 && (
+                <section aria-labelledby="preview-model-faq-heading">
+                  <h2 id="preview-model-faq-heading" className="text-2xl font-bold font-headline mb-4">
+                    {locale === 'en' ? 'Frequently asked questions' : 'Câu hỏi thường gặp'}
+                  </h2>
+                  <Accordion type="single" collapsible className="w-full">
+                    {faq.map((item, index) => (
+                      <AccordionItem key={`${item.question}-${index}`} value={`faq-${index}`}>
+                        <AccordionTrigger className="text-left">{item.question}</AccordionTrigger>
+                        <AccordionContent className="text-base leading-7 text-muted-foreground">{item.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </section>
+              )}
 
               {sameDeveloperModels.length > 0 && (
                 <section>
