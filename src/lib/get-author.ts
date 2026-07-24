@@ -19,7 +19,7 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
 }
 
 export const getAuthor = cache(async (id: string, locale: string = 'vi'): Promise<Author | null> => {
-  if (!id || id.includes('.')) return null;
+  if (!id) return null;
 
   try {
     const docRef = doc(db, 'authors', id);

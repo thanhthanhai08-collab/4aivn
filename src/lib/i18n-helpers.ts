@@ -31,9 +31,9 @@ export function getLocalizedSlug(
   locale: string
 ): string {
   if (!slug) return '';
-  if (typeof slug === 'string') return slug;
+  if (typeof slug === 'string') return slug.trim();
   const loc = locale as 'vi' | 'en';
-  return slug[loc] || slug['vi'] || '';
+  return (slug[loc] || slug['vi'] || '').trim();
 }
 
 /**
@@ -41,6 +41,22 @@ export function getLocalizedSlug(
  */
 export function isLocalizedMap(field: LocalizedField | undefined | null): field is { vi: string; en: string } {
   return typeof field === 'object' && field !== null && 'vi' in field;
+}
+
+/**
+ * Returns true only when a real English variant exists and differs from the
+ * Vietnamese source. This prevents copied Vietnamese content from being
+ * exposed as a separate /en page and indexed as a duplicate.
+ */
+export function hasDistinctEnglishTranslation(
+  field: LocalizedField | undefined | null
+): boolean {
+  if (!field || typeof field === 'string') return false;
+
+  const vi = field.vi?.replace(/\s+/g, ' ').trim();
+  const en = field.en?.replace(/\s+/g, ' ').trim();
+
+  return Boolean(en && en !== vi);
 }
 
 /**

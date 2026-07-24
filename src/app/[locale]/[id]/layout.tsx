@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale } = await params;
 
   try {
-    if (!id || id.includes('.')) {
+    if (!id) {
       return {
         title: locale === 'en' ? "Article not found" : "Bài viết không tồn tại",
         robots: "noindex, nofollow",
@@ -75,22 +75,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const slugVi = getLocalizedSlug(article.slug || article.id, 'vi') || article.id;
     const slugEn = getLocalizedSlug(article.slug || article.id, 'en') || article.id;
+    const viUrl = `${BASE_URL}/${slugVi}`;
+    const enUrl = `${BASE_URL}/en/${slugEn}`;
+    const hasEnglishTranslation = article.hasEnglishTranslation === true;
+    const canonicalUrl = locale === 'en' && hasEnglishTranslation ? enUrl : viUrl;
 
     return {
       title: article.title,
       description: description,
       alternates: {
-        canonical: locale === 'en' ? `${BASE_URL}/en/${slugEn}` : `${BASE_URL}/${slugVi}`,
-        languages: {
-          'vi': `${BASE_URL}/${slugVi}`,
-          'en': `${BASE_URL}/en/${slugEn}`,
-          'x-default': `${BASE_URL}/en/${slugEn}`,
-        }
+        canonical: canonicalUrl,
+        languages: hasEnglishTranslation
+          ? { 'vi': viUrl, 'en': enUrl, 'x-default': enUrl }
+          : { 'vi': viUrl, 'x-default': viUrl },
       },
       openGraph: {
         title: article.title,
         description: description,
-        url: `${BASE_URL}/${id}`,
+        url: canonicalUrl,
         siteName: "4AIVN",
         images: imageUrl ? [{ url: imageUrl }] : [],
         type: "article",
@@ -117,7 +119,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
   const { id, locale } = await params;
 
   try {
-    if (!id || id.includes('.')) {
+    if (!id) {
       return <>{children}</>;
     }
   
@@ -129,6 +131,11 @@ export default async function NewsDetailLayout({ children, params }: Props) {
 
     const isEn = locale === 'en';
     const { description, imageUrl } = getArticleSeoData(article);
+    const slugVi = getLocalizedSlug(article.slug || article.id, 'vi') || article.id;
+    const slugEn = getLocalizedSlug(article.slug || article.id, 'en') || slugVi;
+    const canonicalUrl = isEn && article.hasEnglishTranslation
+      ? `${BASE_URL}/en/${slugEn}`
+      : `${BASE_URL}/${slugVi}`;
     const hasFaq = article.faq && article.faq.length > 0;
     const datePublished = formatSchemaDate(article.publishedAt);
     const dateModified = formatSchemaDate(article.updatedAt) || datePublished;
@@ -164,7 +171,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
           "@type": "ListItem",
           "position": hasCategory ? 4 : 3,
           "name": article.title,
-          "item": isEn ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
+          "item": canonicalUrl,
         },
       ],
     };
@@ -178,7 +185,7 @@ export default async function NewsDetailLayout({ children, params }: Props) {
         "dateModified": dateModified,
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": isEn ? `${BASE_URL}/en/${id}` : `${BASE_URL}/${id}`,
+          "@id": canonicalUrl,
         },
         "author": [{
           "@type": "Person",

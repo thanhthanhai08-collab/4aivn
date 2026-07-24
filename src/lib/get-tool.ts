@@ -59,7 +59,7 @@ function serializeNewsArticle(id: string, data: any, locale: string = 'vi'): New
 }
 
 export const getTool = cache(async (id: string, locale: string = 'vi') => {
-  if (!id || id.includes('.')) return null;
+  if (!id) return null;
 
   try {
     const docRef = doc(db, 'tools', id);

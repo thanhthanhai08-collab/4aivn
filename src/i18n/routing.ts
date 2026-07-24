@@ -4,6 +4,9 @@ import { createNavigation } from 'next-intl/navigation';
 export const routing = defineRouting({
   locales: ['vi', 'en'],
   defaultLocale: 'vi',
+  // Keep unprefixed URLs permanently Vietnamese. Browser language and the
+  // NEXT_LOCALE cookie must not turn canonical VI URLs into redirects to /en.
+  localeDetection: false,
   localePrefix: 'as-needed', // vi không prefix, en có /en/
   pathnames: {
     // Trang chủ

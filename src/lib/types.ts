@@ -51,6 +51,7 @@ export interface NewsArticle {
   faq?: { question: LocalizedField; answer: LocalizedField }[];
   post?: boolean; // Controls visibility
   charts?: any[]; // To hold chart configuration from Firestore
+  hasEnglishTranslation?: boolean; // Derived from the original localized content
 }
 
 export interface User {

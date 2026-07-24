@@ -1,12 +1,32 @@
 import { MetadataRoute } from "next";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { hasDistinctEnglishTranslation } from "@/lib/i18n-helpers";
 
-export const revalidate = 86400; // 24 tiếng
+// Refresh soon after a Firestore document is published, disabled or deleted.
+export const revalidate = 3600;
 
 const BASE_URL = "https://4aivn.com";
 
-type SitemapOptions = { lastModified?: Date; changeFrequency?: any; priority?: number };
+type SitemapOptions = {
+  lastModified?: Date;
+  changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority?: number;
+  includeEnglish?: boolean;
+};
+
+function toDate(value: unknown): Date | undefined {
+  const date = value && typeof value === "object" && "toDate" in value
+    && typeof value.toDate === "function"
+    ? value.toDate()
+    : value instanceof Date
+      ? value
+      : typeof value === "string" || typeof value === "number"
+        ? new Date(value)
+        : undefined;
+
+  return date instanceof Date && !Number.isNaN(date.getTime()) ? date : undefined;
+}
 
 // Tạo 2 entry: một cho VI, một cho EN — cả hai đều có alternates hreflang
 function createEntries(
@@ -14,30 +34,31 @@ function createEntries(
   enPath: string,
   options: SitemapOptions
 ): MetadataRoute.Sitemap {
-  const cleanVi = viPath.startsWith("/") ? viPath : `/${viPath}`;
-  const cleanEn = enPath.startsWith("/") ? enPath : `/${enPath}`;
+  const trimmedViPath = viPath.trim();
+  const trimmedEnPath = enPath.trim();
+  const cleanVi = trimmedViPath.startsWith("/") ? trimmedViPath : `/${trimmedViPath}`;
+  const cleanEn = trimmedEnPath.startsWith("/") ? trimmedEnPath : `/${trimmedEnPath}`;
 
   const urlVi = cleanVi === "/" ? BASE_URL : `${BASE_URL}${cleanVi}`;
   const urlEn = cleanEn === "/" ? `${BASE_URL}/en` : `${BASE_URL}/en${cleanEn}`;
+  const includeEnglish = options.includeEnglish !== false;
 
   const alternates = {
-    languages: {
-      vi: urlVi,
-      en: urlEn,
-    },
+    languages: includeEnglish
+      ? { vi: urlVi, en: urlEn, "x-default": urlEn }
+      : { vi: urlVi, "x-default": urlVi },
   };
 
   const shared = {
-    lastModified: options.lastModified || new Date(),
+    ...(options.lastModified ? { lastModified: options.lastModified } : {}),
     changeFrequency: options.changeFrequency,
     priority: options.priority,
     alternates,
   };
 
-  return [
-    { url: urlVi, ...shared },
-    { url: urlEn, ...shared },
-  ];
+  return includeEnglish
+    ? [{ url: urlVi, ...shared }, { url: urlEn, ...shared }]
+    : [{ url: urlVi, ...shared }];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -48,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const newsSnap = await getDocs(collection(db, "news"));
     newsSnap.forEach((doc) => {
       const data = doc.data();
-      if (data.post) {
+      if (data.post === true) {
         // Lấy slug theo từng locale: bài cũ slug là string, bài mới slug là { vi, en }
         const slugField = data.slug;
         let slugVi: string;
@@ -72,9 +93,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           `/${slugVi}`,
           `/${slugEn}`,
           {
-            lastModified: data.publishedAt?.toDate?.() || new Date(),
+            lastModified: toDate(data.updatedAt) || toDate(data.publishedAt),
             changeFrequency: 'daily',
             priority: 0.8,
+            includeEnglish: hasDistinctEnglishTranslation(data.content),
           }
         ));
       }
@@ -87,6 +109,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         `/tin-tuc/${doc.id}`,
         `/news/${doc.id}`,
         {
+          lastModified: toDate(doc.data().updatedAt) || toDate(doc.data().createdAt),
           changeFrequency: 'monthly',
           priority: 0.7,
         }
@@ -96,10 +119,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 3. Lấy Công cụ AI (Collection: tools) -> routes to /cong-cu/[id] or /en/tools/[id]
     const toolsSnap = await getDocs(collection(db, "tools"));
     toolsSnap.forEach((doc) => {
+      const data = doc.data();
+      if (data.post !== true) return;
       dynamicUrls.push(...createEntries(
         `/cong-cu/${doc.id}`,
         `/tools/${doc.id}`,
         {
+          lastModified: toDate(data.updatedAt) || toDate(data.createdAt),
           changeFrequency: 'weekly',
           priority: 0.7,
         }
@@ -109,10 +135,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 4. Lấy Bảng xếp hạng Models (Collection: models) -> /bang-xep-hang/[id] or /en/rankings/[id]
     const modelsSnap = await getDocs(collection(db, "models"));
     modelsSnap.forEach((doc) => {
+      const data = doc.data();
+      if (data.post !== true) return;
       dynamicUrls.push(...createEntries(
         `/bang-xep-hang/${doc.id}`,
         `/rankings/${doc.id}`,
         {
+          lastModified: toDate(data.updatedAt) || toDate(data.createdAt),
           changeFrequency: 'weekly',
           priority: 0.9,
         }
@@ -122,10 +151,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 5. Lấy Tác giả (Collection: authors) -> /tac-gia/[id] or /en/author/[id]
     const authorsSnap = await getDocs(collection(db, "authors"));
     authorsSnap.forEach((doc) => {
+      const data = doc.data();
       dynamicUrls.push(...createEntries(
         `/tac-gia/${doc.id}`,
         `/author/${doc.id}`,
         {
+          lastModified: toDate(data.updatedAt) || toDate(data.createdAt),
           changeFrequency: 'monthly',
           priority: 0.6,
         }
@@ -134,10 +165,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   } catch (error) {
     console.error("Lỗi khi tạo sitemap động:", error);
+    // Let ISR keep serving the last successful sitemap instead of caching a
+    // partial static-only sitemap when Firestore is temporarily unavailable.
+    throw error;
   }
 
   // KẾT HỢP TRANG TĨNH VÀ TRANG ĐỘNG (mỗi createEntries trả về [vi, en])
-  return [
+  const entries = [
     ...createEntries('/', '/', { changeFrequency: 'daily', priority: 1.0 }),
     ...createEntries('/tin-tuc', '/news', { changeFrequency: 'daily', priority: 0.9 }),
     ...createEntries('/cong-cu', '/tools', { changeFrequency: 'daily', priority: 0.9 }),
@@ -152,4 +186,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...createEntries('/chinh-sach-cookie', '/cookie-policy', { changeFrequency: 'yearly', priority: 0.3 }),
     ...dynamicUrls,
   ];
+
+  // A legacy document can share the same localized slug as a newer document.
+  // Keep exactly one entry per live route.
+  return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
 }

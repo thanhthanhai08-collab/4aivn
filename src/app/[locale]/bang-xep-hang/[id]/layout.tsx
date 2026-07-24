@@ -15,7 +15,7 @@ export async function generateMetadata(
   const { id, locale } = await params;
   const isEn = locale === 'en';
   
-  if (!id || id.includes('.')) {
+  if (!id) {
       return { title: isEn ? 'Model not found' : 'Không tìm thấy model' };
   }
 
@@ -91,7 +91,7 @@ export default async function ModelDetailLayout({ children, params }: Props) {
   const isEn = locale === 'en';
 
   try {
-    if (!id || id.includes('.')) {
+    if (!id) {
       return <>{children}</>;
     }
 

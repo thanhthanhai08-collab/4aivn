@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id, locale } = await params;
   
   try {
-    if (!id || id.includes('.')) {
+    if (!id) {
       return { title: "Danh mục không tồn tại" };
     }
 
@@ -56,6 +56,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       description: categoryDesc,
       alternates: {
         canonical: `${BASE_URL}/${locale === 'en' ? 'en/news' : 'tin-tuc'}/${id}`,
+        languages: {
+          'vi': `${BASE_URL}/tin-tuc/${id}`,
+          'en': `${BASE_URL}/en/news/${id}`,
+          'x-default': `${BASE_URL}/en/news/${id}`,
+        },
       },
       openGraph: {
         title: locale === 'en' ? `${categoryName} News` : `Tin tức về ${categoryName}`,
@@ -78,7 +83,7 @@ export default async function NewsCategoryLayout({ children, params }: Props) {
     const { id, locale } = await params;
     
     try {
-        if (!id || id.includes('.')) {
+        if (!id) {
             return <>{children}</>;
         }
     
@@ -118,7 +123,7 @@ export default async function NewsCategoryLayout({ children, params }: Props) {
                 "@type": "ListItem",
                 "position": 1,
                 "name": locale === 'en' ? "Home" : "Trang chủ",
-                "item": BASE_URL,
+                "item": locale === 'en' ? `${BASE_URL}/en` : BASE_URL,
             },
             {
                 "@type": "ListItem",

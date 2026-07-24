@@ -18,7 +18,7 @@ import { vi } from "date-fns/locale";
 import { enUS } from "date-fns/locale/en-US";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { getLocalized, getLocalizedSlug } from "@/lib/i18n-helpers";
+import { getLocalized, getLocalizedSlug, hasDistinctEnglishTranslation } from "@/lib/i18n-helpers";
 
 const PAGE_SIZE = 12;
 
@@ -125,10 +125,11 @@ function NewsCategoryContent() {
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
+                        hasEnglishTranslation: hasDistinctEnglishTranslation(data.content),
                         publishedAt,
                         updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                     } as NewsArticle;
-                });
+                }).filter(article => locale !== 'en' || article.hasEnglishTranslation);
 
                 setArticles(newsData);
                 const lastVisible = articlesSnapshot.docs[articlesSnapshot.docs.length - 1];
@@ -144,10 +145,11 @@ function NewsCategoryContent() {
                         title: getLocalized(data.title, locale),
                         content: getLocalized(data.content, locale),
                         summary: getLocalized(data.summary, locale),
+                        hasEnglishTranslation: hasDistinctEnglishTranslation(data.content),
                         publishedAt,
                         updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                     } as NewsArticle;
-                });
+                }).filter(article => locale !== 'en' || article.hasEnglishTranslation);
                 setLatestNews(latestNewsData);
 
             } catch (error) {
@@ -191,10 +193,11 @@ function NewsCategoryContent() {
                     title: getLocalized(data.title, locale),
                     content: getLocalized(data.content, locale),
                     summary: getLocalized(data.summary, locale),
+                    hasEnglishTranslation: hasDistinctEnglishTranslation(data.content),
                     publishedAt,
                     updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
                 } as NewsArticle;
-            });
+            }).filter(article => locale !== 'en' || article.hasEnglishTranslation);
 
             setArticles(prev => [...prev, ...newData]);
             const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];

@@ -2,7 +2,7 @@ import { cache } from 'react';
 import { doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import type { NewsArticle } from '@/lib/types';
-import { getLocalized } from './i18n-helpers';
+import { getLocalized, hasDistinctEnglishTranslation } from './i18n-helpers';
 
 function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArticle {
   const publishedAt = data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || new Date().toISOString();
@@ -18,6 +18,7 @@ function serializeArticle(id: string, data: any, locale: string = 'vi'): NewsArt
       answer: getLocalized(item.answer, locale),
     })),
     slug: data.slug,
+    hasEnglishTranslation: hasDistinctEnglishTranslation(data.content),
     publishedAt,
     updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt || publishedAt,
   } as NewsArticle;
@@ -32,7 +33,9 @@ export const getAllArticles = cache(async (locale: string = 'vi'): Promise<NewsA
       orderBy('publishedAt', 'desc')
     );
     const snapshot = await getDocs(articlesQuery);
-    return snapshot.docs.map((item) => serializeArticle(item.id, item.data(), locale));
+    return snapshot.docs
+      .map((item) => serializeArticle(item.id, item.data(), locale))
+      .filter((article) => locale !== 'en' || article.hasEnglishTranslation);
   } catch (error) {
     console.error('Error fetching articles:', error);
     return [];
@@ -40,7 +43,7 @@ export const getAllArticles = cache(async (locale: string = 'vi'): Promise<NewsA
 });
 
 export const getArticle = cache(async (id: string, locale: string = 'vi') => {
-  if (!id || id.includes('.')) return null;
+  if (!id) return null;
 
   try {
     const docRef = doc(db, 'news', id);
@@ -57,7 +60,7 @@ export const getArticle = cache(async (id: string, locale: string = 'vi') => {
 });
 
 export const getArticleBySlug = cache(async (slug: string, locale: string = 'vi') => {
-  if (!slug || slug.includes('.')) return null;
+  if (!slug) return null;
 
   try {
     // Try as document ID first (legacy)
@@ -113,11 +116,12 @@ export const getLatestNews = cache(async (excludeId: string, locale: string = 'v
       collection(db, "news"),
       where("post", "==", true),
       orderBy("publishedAt", "desc"),
-      limit(4)
+      limit(12)
     );
     const latestSnapshot = await getDocs(latestNewsQuery);
     return latestSnapshot.docs
       .map(doc => serializeArticle(doc.id, doc.data(), locale))
+      .filter(item => locale !== 'en' || item.hasEnglishTranslation)
       .filter(item => item.id !== excludeId)
       .slice(0, 3);
   } catch (error) {
@@ -137,20 +141,21 @@ export const getRelatedNews = cache(async (article: NewsArticle, locale: string 
         where("post", "==", true),
         where("tag", "array-contains-any", article.tag),
         orderBy("publishedAt", "desc"),
-        limit(5)
+        limit(12)
       );
     } else {
       relatedQuery = query(
         collection(db, "news"),
         where("post", "==", true),
         orderBy("publishedAt", "desc"),
-        limit(5)
+        limit(12)
       );
     }
 
     const relatedSnapshot = await getDocs(relatedQuery);
     return relatedSnapshot.docs
       .map(doc => serializeArticle(doc.id, doc.data(), locale))
+      .filter(item => locale !== 'en' || item.hasEnglishTranslation)
       .filter(item => item.id !== excludeId)
       .sort((a, b) => {
         const calculateScore = (art: NewsArticle) => {

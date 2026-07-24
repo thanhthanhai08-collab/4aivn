@@ -36,9 +36,25 @@ export function LanguageSwitcher({ iconOnly = false }: LanguageSwitcherProps) {
   const alternateLocale = locales.find(l => l.code !== locale) || locales[1];
 
   function handleLocaleChange(newLocale: 'vi' | 'en') {
+    if (newLocale === locale) return;
+
     // Lưu vào localStorage cho lần sau
     if (typeof window !== 'undefined') {
       localStorage.setItem('preferred-locale', newLocale);
+
+      // Metadata contains the authoritative localized URL. Follow it directly
+      // for pages whose Vietnamese and English slugs are different.
+      const alternate = document.querySelector<HTMLLinkElement>(
+        `link[rel="alternate"][hreflang="${newLocale}"]`
+      );
+
+      if (alternate?.href) {
+        const target = new URL(alternate.href);
+        window.location.replace(
+          `${window.location.origin}${target.pathname}${target.search}${target.hash}`
+        );
+        return;
+      }
     }
 
     startTransition(() => {

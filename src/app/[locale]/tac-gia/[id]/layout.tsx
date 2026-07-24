@@ -22,7 +22,7 @@ export async function generateMetadata(
 
   const t = await getTranslations({ locale, namespace: "authorDetail" });
 
-  if (!authorId || authorId.includes('.')) {
+  if (!authorId) {
     return { title: t("authorNotFound") };
   }
 
@@ -96,7 +96,7 @@ export default async function AuthorDetailLayout({ children, params }: Props) {
   let personSchema = null;
 
   try {
-    if (authorId && !authorId.includes('.')) {
+    if (authorId) {
       author = await getAuthor(authorId, locale);
     }
 

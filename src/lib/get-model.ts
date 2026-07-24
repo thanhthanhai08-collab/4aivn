@@ -58,7 +58,7 @@ export const getAllModels = cache(async (locale: string = 'vi'): Promise<AIModel
 });
 
 export const getModel = cache(async (id: string, locale: string = 'vi') => {
-  if (!id || id.includes('.')) return null;
+  if (!id) return null;
 
   try {
     const docRef = doc(db, 'models', id);

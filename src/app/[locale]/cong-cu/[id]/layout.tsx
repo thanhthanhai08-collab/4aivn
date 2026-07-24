@@ -17,7 +17,7 @@ export async function generateMetadata(
   const { id, locale } = await params;
   const isEn = locale === 'en';
   
-  if (!id || id.includes('.')) {
+  if (!id) {
     return {
       title: isEn ? "Tool not found" : "Công cụ không tồn tại",
     };
@@ -78,8 +78,8 @@ export default async function ToolDetailLayout({ children, params }: Props) {
   const { id, locale } = await params;
   const isEn = locale === 'en';
 
-  if (!id || id.includes('.')) {
-      return <>{children}</>;
+  if (!id) {
+    return <>{children}</>;
   }
 
   // Fetch dữ liệu trên Server để tạo Schema bằng react.cache helper
